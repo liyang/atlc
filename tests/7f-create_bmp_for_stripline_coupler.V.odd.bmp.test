@@ -26,8 +26,8 @@ MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test_stripline_couple
 rm $top_builddir/tmp/test_stripline_coupler.V.odd.bmp
 #if [ $MD5SUM != 96287924c19b3bbe3908736d69a43dcc ] ; then
 if [ $MD5SUM != 50a960b3d718c3d3ceeac55819555cf2 ] ; then
-  echo "FAILED (checksum error):" $0 >> tests.log
-  echo "FAILED (checksum error):" $0 
+  echo "FAILED:" $0 >> tests.log
+  echo "FAILED:" $0 
   exit 1
 else
   echo "PASSED:" $0 >> tests.log

@@ -4,8 +4,8 @@ MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test_stripline_couple
 rm $top_builddir/tmp/test_stripline_coupler.V.even.bmp
 #if [ $MD5SUM != 4ad9743416e230a554645301ca0c809b ] ; then
 if [ $MD5SUM != 8574e3dcfcdbcb7cadcbcc8c2f465d24 ] ; then
-  echo "FAILED (checksum error):" $0 >> tests.log
-  echo "FAILED (checksum error):" $0 
+  echo "FAILED:" $0 >> tests.log
+  echo "FAILED:" $0 
   exit 1
 else
   echo "PASSED:" $0 >> tests.log

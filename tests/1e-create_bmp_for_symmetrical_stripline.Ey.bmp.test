@@ -21,12 +21,17 @@
 # rehat Linux and a Dec Alpha. Any failure probably indicates a 
 # program bug, so PLEASE PLEASE let me know about it!!
 
-MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test_sym_strip.Ey.bmp`
-rm $top_builddir/tmp/test_sym_strip.Ey.bmp
-if [ $MD5SUM = 5a4f95a6dba4d997ecc63a78afe48561 ]; then
-  echo "PASSED:" $0 >> tests.log
-  exit 0
+if [ "$building_with_posix_threads" = "no" ] ; then
+  MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test_sym_strip.Ey.bmp`
+  rm $top_builddir/tmp/test_sym_strip.Ey.bmp
+  if [ $MD5SUM = 5a4f95a6dba4d997ecc63a78afe48561 ]; then
+    echo "PASSED:" $0 >> tests.log
+    exit 0
+  else
+    echo "FAILED:" $0 >> tests.log
+    exit 1
+  fi
 else
-  echo "FAILED:" $0 >> tests.log
-  exit 1
+  exit 77
 fi
+

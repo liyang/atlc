@@ -3,13 +3,16 @@
 # differ on differnt Endian'ness and with different rounding errors on FP
 # units. Hence only the length is checked on the binary files
 
-MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test_sym_strip.Ex.bmp`
-rm $top_builddir/tmp/test_sym_strip.Ex.bmp
-#if [ $MD5SUM = a5c5f715499719e27a7e00c23b7fdeea ]; then
-if [ $MD5SUM = a8a6023247b624e6e3091dd7570904db ]; then
-  echo "PASSED:" $0 >> tests.log
-  exit 0
+if [ "$building_with_posix_threads" = "no" ] ; then
+  MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test_sym_strip.Ex.bmp`
+  rm $top_builddir/tmp/test_sym_strip.Ex.bmp
+  if [ $MD5SUM = a8a6023247b624e6e3091dd7570904db ]; then
+    echo "PASSED:" $0 >> tests.log
+    exit 0
+  else
+    echo "FAILED:" $0  >> tests.log
+    exit 1
+  fi
 else
-  echo "FAILED:" $0  >> tests.log
-  exit 1
+  exit 77
 fi

@@ -26,7 +26,7 @@
 MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test_stripline_coupler.U.odd.bmp`
 rm $top_builddir/tmp/test_stripline_coupler.U.odd.bmp
 if [ $MD5SUM != 09f68e1466d68bf8a03e1f90eff411bb ] ; then
-  echo "FAILED (checksum error):" $0 >> tests.log
+  echo "FAILED:" $0 >> tests.log
   exit 1
 else
   echo "PASSED:" $0 >> tests.log

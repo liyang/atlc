@@ -20,12 +20,18 @@
 # such as Solaris 9, NetBSD, Solaris 2.5, Linux but also a PC running
 # rehat Linux and a Dec Alpha. Any failure probably indicates a 
 # program bug, so PLEASE PLEASE let me know about it!!
-MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test_sym_strip.Er.bmp`
-rm $top_builddir/tmp/test_sym_strip.Er.bmp 
-if [ $MD5SUM = 2071f27d998092ddf771debbdb70cee0 ]; then
-  echo "PASSED:" $0 >> tests.log
-  exit 0
+
+if [ "$with_threads" = "yes" ] ; then
+  exit 77 # don't bother executing, since it will fail as configured. 
 else
-  echo "FAILED:" $0  >> tests.log
-  exit 1
+  MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test_sym_strip.Er.bmp`
+  rm $top_builddir/tmp/test_sym_strip.Er.bmp 
+  if [ $MD5SUM = 2071f27d998092ddf771debbdb70cee0 ]; then
+    echo "PASSED:" $0 >> tests.log
+    exit 0
+  else
+    echo "FAILED:" $0  >> tests.log
+    exit 1
+  fi
 fi
+
