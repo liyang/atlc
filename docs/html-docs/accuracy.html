@@ -4,7 +4,7 @@
 
 <META name="generator" content="bluefish & vi">
 <META http-equiv="CONTENT-TYPE" content="text/html; charset=iso-8859-1">
-<META name="AUTHOR" content="Dr. David Kirkby, drkirkby@ntlworld.com">
+<meta name="author" content="Dr. David Kirkby">
 <META name="DESCRIPTION" content="Accuracy of atlc - Arbitrary Transmission Line Calculator">
 <META name="KEYWORDS" content="cad Transmission line calculator atlc accuracy finite difference">
 <TITLE>Accuracy of atlc - Arbitrary Transmission Line Calculator</TITLE>
@@ -14,6 +14,7 @@
 <H1>Accuracy and run-times of <CODE>atlc</code></H1>
 atlc is very accurate, as the data below will confirm. In a total of 31 tests performed on standard two-conductor transmission lines the maximum error was only 0.945 % and the rms error was 0.259  %. On a <a href="accuracy.html#Accuracy_coupler">directional coupler</a>, the maximum error was 0.927%, but the typical error was around 0.6%.  Read on if you wish to know how these figures were arrived at. <p>
 In order to test the accuracy of  <CODE>atlc</code>, some simple geometries were devised, for which there are known exact analytical solutions. Three cases were considered for two-wire lines - the <a href="accuracy.html#Accuracy_coax">standard coaxial cable</a>, an off-centre or <a href="accuracy.html#Accuracy_eccentric_coax">eccentric coaxial cable</a> and a   <a href="accuracy.html#Accuracy_symmetrical_strip">symmetrical strip transmission line</a>. For three-wires, which can be used two make a 4-port directional coupler, the  accuracy was compared using <a href="accuracy.html#Accuracy_coupler">two edge-on strip lines.</a>.
+<p>In order to verify atlc is running properly on each system, extensive testing is performed on different platforms. However, after running make, it is highly reccomended to run make check, which will verify atlc is behaving as expected, and there are no issues related to the particular platform, operating system, comiler or optimisation flags used. At the bottom of the page, there is an explanation of how <a href="make-check.html"><code>make check</code></a> works. </p>
 <STRONG><H2><a name="Accuracy_coax" >Comparisons between atlc and a round coaxial cable</a></H2></STRONG>
 <p>
 
@@ -519,11 +520,6 @@ This structure, which has a w/H value of 1.442786, has a theoretical impedance c
 Notes:
 <p>
 <OL>
-<LI>
-Due to their large size, the *ohm-*.bmp files are not distributed with the
-<EM>atlc</EM> package. Instead, they are created in the
-examples directory, when <code>make check</code> is run.  
-</LI>
 <LI>Run times are given when compiled single-threaded, with Sun WorkShop 6 update 2 C 5.3 2001/05/15 compiler, with on a Sun Ultra 80 workstation with 4x450 MHz CPUs
 and 2 Gb of RAM.</LI> <LI>Only 1 CPU in the Ultra 80 would have been used, since <code>atlc</code>
 was compiled single-threaded.</LI>
