@@ -383,7 +383,7 @@ without the threads\nlibrary.\n",1);
     extension .bmp. We need to be sure this is the case, so if not, we
     append .bmp
       
-    Currently the fields on copulers are not properly defined
+    Currently the fields on couplers are not properly defined
     so I won't plot them. */
       
     if(write_field_images==TRUE && coupler==FALSE)

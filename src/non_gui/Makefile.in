@@ -82,12 +82,12 @@ WXWINDOWS = @WXWINDOWS@
 am__include = @am__include@
 am__quote = @am__quote@
 install_sh = @install_sh@
-bin_PROGRAMS = atlc_old rect_in_rect circ_in_circ rect_cen_in_rect \
-circ_in_rect rect_in_circ readbin sym_strip make_coupler \
-design_coupler
+bin_PROGRAMS = atlc rect_in_rect circ_in_circ rect_cen_in_rect \
+circ_in_rect rect_in_circ readbin sym_strip \
+design_coupler generate_coupler_bitmap
 
 
-atlc_old_SOURCES = nrutil.c atlc_old.c read_bitmap_file_headers.c \
+atlc_SOURCES = nrutil.c atlc.c read_bitmap_file_headers.c \
 byteswap.c string.c setup_arrays.c finite_difference_single_threaded.c \
 finite_difference_multi_threaded.c usage_atlc.c write_fields.c\
 check_for_shorts.c print_data.c bmp.h definitions.h Erdata.h \
@@ -149,31 +149,30 @@ elliptic_integral.c get_options.c definitions.h error_and_exit.c \
 print_copyright.c
 
 
-make_coupler_SOURCES = make_coupler.c usage_make_coupler.c \
+generate_coupler_bitmap_SOURCES = generate_coupler_bitmap.c usage_generate_coupler_bitmap.c \
 calculate_Zodd_and_Zeven.c get_options.c definitions.h \
 calculate_integer_values.c write_bitmap.c \
 string.c nrutil.c write_bitmap_out.c byteswap.c \
 align_bitmap_image.c fill_make_coupler.c \
 check_error.c  definitions.h  error_and_exit.c \
-get_Er1_and_Er2_colours.c print_copyright.c
+get_Er1_and_Er2_colours.c print_copyright.c 
 
 
 design_coupler_SOURCES = design_coupler.c usage_design_coupler.c \
-get_options.c print_copyright.c
+get_options.c print_copyright.c calculate_Zodd_and_Zeven.c 
 
 
 EXTRA_DIST = create tests DO_NOT_EDIT_THIS_FILE
 subdir = src/non_gui
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_CLEAN_FILES =
-bin_PROGRAMS = atlc_old$(EXEEXT) rect_in_rect$(EXEEXT) \
-	circ_in_circ$(EXEEXT) rect_cen_in_rect$(EXEEXT) \
-	circ_in_rect$(EXEEXT) rect_in_circ$(EXEEXT) readbin$(EXEEXT) \
-	sym_strip$(EXEEXT) make_coupler$(EXEEXT) \
-	design_coupler$(EXEEXT)
+bin_PROGRAMS = atlc$(EXEEXT) rect_in_rect$(EXEEXT) circ_in_circ$(EXEEXT) \
+	rect_cen_in_rect$(EXEEXT) circ_in_rect$(EXEEXT) \
+	rect_in_circ$(EXEEXT) readbin$(EXEEXT) sym_strip$(EXEEXT) \
+	design_coupler$(EXEEXT) generate_coupler_bitmap$(EXEEXT)
 PROGRAMS = $(bin_PROGRAMS)
 
-am_atlc_old_OBJECTS = nrutil.$(OBJEXT) atlc_old.$(OBJEXT) \
+am_atlc_OBJECTS = nrutil.$(OBJEXT) atlc.$(OBJEXT) \
 	read_bitmap_file_headers.$(OBJEXT) byteswap.$(OBJEXT) \
 	string.$(OBJEXT) setup_arrays.$(OBJEXT) \
 	finite_difference_single_threaded.$(OBJEXT) \
@@ -187,10 +186,10 @@ am_atlc_old_OBJECTS = nrutil.$(OBJEXT) atlc_old.$(OBJEXT) \
 	error_and_exit.$(OBJEXT) do_fd_calculation.$(OBJEXT) \
 	swap_conductor_voltages.$(OBJEXT) print_copyright.$(OBJEXT) \
 	print_data2.$(OBJEXT)
-atlc_old_OBJECTS = $(am_atlc_old_OBJECTS)
-atlc_old_LDADD = $(LDADD)
-atlc_old_DEPENDENCIES =
-atlc_old_LDFLAGS =
+atlc_OBJECTS = $(am_atlc_OBJECTS)
+atlc_LDADD = $(LDADD)
+atlc_DEPENDENCIES =
+atlc_LDFLAGS =
 am_circ_in_circ_OBJECTS = circ_in_circ.$(OBJEXT) \
 	usage_circ_in_circ.$(OBJEXT) write_bitmap.$(OBJEXT) \
 	get_Er1_and_Er2_colours.$(OBJEXT) \
@@ -219,23 +218,24 @@ circ_in_rect_DEPENDENCIES =
 circ_in_rect_LDFLAGS =
 am_design_coupler_OBJECTS = design_coupler.$(OBJEXT) \
 	usage_design_coupler.$(OBJEXT) get_options.$(OBJEXT) \
-	print_copyright.$(OBJEXT)
+	print_copyright.$(OBJEXT) calculate_Zodd_and_Zeven.$(OBJEXT)
 design_coupler_OBJECTS = $(am_design_coupler_OBJECTS)
 design_coupler_LDADD = $(LDADD)
 design_coupler_DEPENDENCIES =
 design_coupler_LDFLAGS =
-am_make_coupler_OBJECTS = make_coupler.$(OBJEXT) \
-	usage_make_coupler.$(OBJEXT) calculate_Zodd_and_Zeven.$(OBJEXT) \
-	get_options.$(OBJEXT) calculate_integer_values.$(OBJEXT) \
-	write_bitmap.$(OBJEXT) string.$(OBJEXT) nrutil.$(OBJEXT) \
-	write_bitmap_out.$(OBJEXT) byteswap.$(OBJEXT) \
-	align_bitmap_image.$(OBJEXT) fill_make_coupler.$(OBJEXT) \
-	check_error.$(OBJEXT) error_and_exit.$(OBJEXT) \
-	get_Er1_and_Er2_colours.$(OBJEXT) print_copyright.$(OBJEXT)
-make_coupler_OBJECTS = $(am_make_coupler_OBJECTS)
-make_coupler_LDADD = $(LDADD)
-make_coupler_DEPENDENCIES =
-make_coupler_LDFLAGS =
+am_generate_coupler_bitmap_OBJECTS = generate_coupler_bitmap.$(OBJEXT) \
+	usage_generate_coupler_bitmap.$(OBJEXT) \
+	calculate_Zodd_and_Zeven.$(OBJEXT) get_options.$(OBJEXT) \
+	calculate_integer_values.$(OBJEXT) write_bitmap.$(OBJEXT) \
+	string.$(OBJEXT) nrutil.$(OBJEXT) write_bitmap_out.$(OBJEXT) \
+	byteswap.$(OBJEXT) align_bitmap_image.$(OBJEXT) \
+	fill_make_coupler.$(OBJEXT) check_error.$(OBJEXT) \
+	error_and_exit.$(OBJEXT) get_Er1_and_Er2_colours.$(OBJEXT) \
+	print_copyright.$(OBJEXT)
+generate_coupler_bitmap_OBJECTS = $(am_generate_coupler_bitmap_OBJECTS)
+generate_coupler_bitmap_LDADD = $(LDADD)
+generate_coupler_bitmap_DEPENDENCIES =
+generate_coupler_bitmap_LDFLAGS =
 am_readbin_OBJECTS = readbin.$(OBJEXT) byteswap.$(OBJEXT) \
 	usage_readbin.$(OBJEXT) get_options.$(OBJEXT) \
 	error_and_exit.$(OBJEXT) print_copyright.$(OBJEXT)
@@ -302,7 +302,7 @@ LIBS = @LIBS@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
 @AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/align_bitmap_image.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/atlc_old.Po ./$(DEPDIR)/byteswap.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/atlc.Po ./$(DEPDIR)/byteswap.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/calculate_Zodd_and_Zeven.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/calculate_colour_data.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/calculate_integer_values.Po \
@@ -335,10 +335,10 @@ am__depfiles_maybe = depfiles
 @AMDEP_TRUE@	./$(DEPDIR)/find_maximum_values.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/finite_difference_multi_threaded.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/finite_difference_single_threaded.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/generate_coupler_bitmap.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/get_Er1_and_Er2_colours.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/get_file_pointer_with_right_filename.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/get_options.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/make_coupler.Po ./$(DEPDIR)/nrutil.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/get_options.Po ./$(DEPDIR)/nrutil.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/print_copyright.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/print_data.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/print_data2.Po \
@@ -355,7 +355,7 @@ am__depfiles_maybe = depfiles
 @AMDEP_TRUE@	./$(DEPDIR)/usage_circ_in_circ.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/usage_circ_in_rect.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/usage_design_coupler.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/usage_make_coupler.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/usage_generate_coupler_bitmap.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/usage_readbin.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/usage_rect_cen_in_rect.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/usage_rect_in_circ.Po \
@@ -369,13 +369,13 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 CFLAGS = @CFLAGS@
-DIST_SOURCES = $(atlc_old_SOURCES) $(circ_in_circ_SOURCES) \
+DIST_SOURCES = $(atlc_SOURCES) $(circ_in_circ_SOURCES) \
 	$(circ_in_rect_SOURCES) $(design_coupler_SOURCES) \
-	$(make_coupler_SOURCES) $(readbin_SOURCES) \
+	$(generate_coupler_bitmap_SOURCES) $(readbin_SOURCES) \
 	$(rect_cen_in_rect_SOURCES) $(rect_in_circ_SOURCES) \
 	$(rect_in_rect_SOURCES) $(sym_strip_SOURCES)
 DIST_COMMON = Makefile.am Makefile.in
-SOURCES = $(atlc_old_SOURCES) $(circ_in_circ_SOURCES) $(circ_in_rect_SOURCES) $(design_coupler_SOURCES) $(make_coupler_SOURCES) $(readbin_SOURCES) $(rect_cen_in_rect_SOURCES) $(rect_in_circ_SOURCES) $(rect_in_rect_SOURCES) $(sym_strip_SOURCES)
+SOURCES = $(atlc_SOURCES) $(circ_in_circ_SOURCES) $(circ_in_rect_SOURCES) $(design_coupler_SOURCES) $(generate_coupler_bitmap_SOURCES) $(readbin_SOURCES) $(rect_cen_in_rect_SOURCES) $(rect_in_circ_SOURCES) $(rect_in_rect_SOURCES) $(sym_strip_SOURCES)
 
 all: all-am
 
@@ -412,9 +412,9 @@ uninstall-binPROGRAMS:
 
 clean-binPROGRAMS:
 	-test -z "$(bin_PROGRAMS)" || rm -f $(bin_PROGRAMS)
-atlc_old$(EXEEXT): $(atlc_old_OBJECTS) $(atlc_old_DEPENDENCIES) 
-	@rm -f atlc_old$(EXEEXT)
-	$(LINK) $(atlc_old_LDFLAGS) $(atlc_old_OBJECTS) $(atlc_old_LDADD) $(LIBS)
+atlc$(EXEEXT): $(atlc_OBJECTS) $(atlc_DEPENDENCIES) 
+	@rm -f atlc$(EXEEXT)
+	$(LINK) $(atlc_LDFLAGS) $(atlc_OBJECTS) $(atlc_LDADD) $(LIBS)
 circ_in_circ$(EXEEXT): $(circ_in_circ_OBJECTS) $(circ_in_circ_DEPENDENCIES) 
 	@rm -f circ_in_circ$(EXEEXT)
 	$(LINK) $(circ_in_circ_LDFLAGS) $(circ_in_circ_OBJECTS) $(circ_in_circ_LDADD) $(LIBS)
@@ -424,9 +424,9 @@ circ_in_rect$(EXEEXT): $(circ_in_rect_OBJECTS) $(circ_in_rect_DEPENDENCIES)
 design_coupler$(EXEEXT): $(design_coupler_OBJECTS) $(design_coupler_DEPENDENCIES) 
 	@rm -f design_coupler$(EXEEXT)
 	$(LINK) $(design_coupler_LDFLAGS) $(design_coupler_OBJECTS) $(design_coupler_LDADD) $(LIBS)
-make_coupler$(EXEEXT): $(make_coupler_OBJECTS) $(make_coupler_DEPENDENCIES) 
-	@rm -f make_coupler$(EXEEXT)
-	$(LINK) $(make_coupler_LDFLAGS) $(make_coupler_OBJECTS) $(make_coupler_LDADD) $(LIBS)
+generate_coupler_bitmap$(EXEEXT): $(generate_coupler_bitmap_OBJECTS) $(generate_coupler_bitmap_DEPENDENCIES) 
+	@rm -f generate_coupler_bitmap$(EXEEXT)
+	$(LINK) $(generate_coupler_bitmap_LDFLAGS) $(generate_coupler_bitmap_OBJECTS) $(generate_coupler_bitmap_LDADD) $(LIBS)
 readbin$(EXEEXT): $(readbin_OBJECTS) $(readbin_DEPENDENCIES) 
 	@rm -f readbin$(EXEEXT)
 	$(LINK) $(readbin_LDFLAGS) $(readbin_OBJECTS) $(readbin_LDADD) $(LIBS)
@@ -450,7 +450,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/align_bitmap_image.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atlc_old.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atlc.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/byteswap.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/calculate_Zodd_and_Zeven.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/calculate_colour_data.Po@am__quote@
@@ -484,10 +484,10 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/find_maximum_values.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/finite_difference_multi_threaded.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/finite_difference_single_threaded.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/generate_coupler_bitmap.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/get_Er1_and_Er2_colours.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/get_file_pointer_with_right_filename.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/get_options.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/make_coupler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/nrutil.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/print_copyright.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/print_data.Po@am__quote@
@@ -506,7 +506,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/usage_circ_in_circ.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/usage_circ_in_rect.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/usage_design_coupler.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/usage_make_coupler.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/usage_generate_coupler_bitmap.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/usage_readbin.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/usage_rect_cen_in_rect.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/usage_rect_in_circ.Po@am__quote@

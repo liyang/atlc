@@ -273,7 +273,7 @@ void ERR(char *s, char c, char **argv);
 char *index2(char *str, char c);
 void do_fd_calculation(double *capacitance, double *inductance,double *Zo, double *Zodd, double *Zeven, int whichZ, double *velocity, double *vf, FILE *where_to_print, double cutoff, int dielectrics_to_consider_just_now, char * filename, int requirement_for_fd_calculations_Q);
 void swap_conductor_voltages(int way_to_swap);
-void usage_make_coupler(void);
+void usage_generate_coupler_bitmap(void);
 double calculate_integer_values(struct data *optimise, int n, int accuarcy_level);
 void calculate_Zodd_and_Zeven(double *Zodd, double *Zeven, double *Zo, double w, double H, double s, double er);
 void usage_design_coupler(void);
