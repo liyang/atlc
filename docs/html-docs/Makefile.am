@@ -30,6 +30,7 @@ generate_for_coupler.html \
 generators.html \
 index.html \
 index2.html \
+installing.html \
 make-check.html \
 man-pages.html \
 options.html \
@@ -70,6 +71,7 @@ generate_for_coupler.html \
 generators.html \
 index.html \
 index2.html \
+installing.html \
 make-check.html \
 man-pages.html \
 options.html \
