@@ -111,7 +111,7 @@ extern int main(int argc, char **argv) /* Read parameters from command line */
       Er_on_command_line[data.dielectrics_on_command_line].other_colour/(256);
       Er_on_command_line[data.dielectrics_on_command_line].red=\
       Er_on_command_line[data.dielectrics_on_command_line].other_colour/(256*256);
-      *end++; /* Gets rid of '=' sign which we put on the command line */
+      end++; /* Gets rid of '=' sign which we put on the command line */
       Er_on_command_line[data.dielectrics_on_command_line].epsilon=atof(end);
       if (data.verbose_level > 1)
         printf("r=%x g=%x b=%x col=%x Er=%f\n",\

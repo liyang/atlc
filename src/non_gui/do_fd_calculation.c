@@ -249,7 +249,7 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
       dielectrics_to_consider_just_now=2;
       data->dielectrics_to_consider_just_now=2;
       if(data->verbose_level >= 2)
-        fprintf(stderr,"Now taking into account the permittivities of the different dielectrics to compute Zeven\n");
+        printf("Now taking into account the permittivities of the different dielectrics to compute Zeven\n");
       do /* Start a finite calculation */
       {
         capacitance_old=capacitance;

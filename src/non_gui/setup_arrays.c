@@ -47,12 +47,12 @@ void setup_arrays(struct transmission_line_properties *data)
    struct pixels pixels_found;
    int conductor_found;
    int w,h, offset=-3, colour_mixture, i, z;
-   data->dielectrics_in_bitmap=0;
    /* int total_pixels_found; */
    unsigned char red, green, blue;
    int dielectric_found;
    int new_colour_in_image;
    int total_pixels_found;
+   data->dielectrics_in_bitmap=0;
    pixels_found.red=0;
    pixels_found.green=0;
    pixels_found.blue=0;
