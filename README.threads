@@ -1,72 +1,13 @@
 This file is README.threads
 
-atlc is written as a multi-threaded application, to exploit multiple
-CPUs if you have them AND your operating systems supports multiple 
-CPUs. 
+Prior to verison 4.5.1, atlc could be configured to use 
+mutltiple-threads to exploit multi-processors. This has 
+been disabled, as I have some concerns the code may not 
+be 100% correct and whilst is it unlikely, the results 
+could be wrong. It is very unlikely, but its a chance
+I don't want to take, so multi-threaded support has 
+been disabled. 
 
-'atlc' has been tested on a quad processeor Sun Ultra 80 running 
-Solaris 9, a PC running Solaris 8 (x86) using a dual processor system, a
-dual processor SGI Octane 10000 running IRIX 6.5.16, a quad processor 
-IBM/RS6000 F50 running AIX 5.2 and a dual processor Sun SPARCstation 20
-running Redhat 6.2. Some problems have been noticed on the 
-IBM RS/6000, as the results differ slighlty from one run to the next on
-the IBM. (see BUGS or docs/html-docs/BUGS.html). On the Sun SPARCstation
-20 running Redhat 6.2, the results are useless. 
-
-atlc has been built with thread support on other systems, but since
-in these have only one CPU, it has been difficult to test 
-them fully. This includes a PC running Redhhat 7.2, a Dec Alpha running
-Tru64 5.1B, an HP C3000 running HP-UX 11. On all these single processor
-systems, thread support seems to work okay, although there is not a lot
-of point in using it. 
-
-If an operating system does not support multiple CPU
-(as currently OpenBSD does not), then trying to compile with thread
-support will be a pointless exercise and probably result in 
-compilation problems. As it will be if there is only one CPU present. 
-
-To use atlc with multiple CPUs, a POSIX compatable thread library is 
-necessary. Solaris threads in Sun's Solaris are fine, and most other
-systems have a suitable thread library. If not, installing the GNU
-Portable Threads Library (pth)
-
-http://www.gnu.org/software/pth/
-
-should be okay. To configure with support for threads, run:
-configure --with-threads. 
-
-By default, the programme will run four threads simultaneously. 
-This is generally optimal for a quad processor machine. With a dual 
-processor machine, it would be
-advantageous to run 2 threads. The number of threads that the system
-creates by default is in the file definitions.h, as a parameter
-MAX_THREADS.  
-
-So in summary you must:
-1) Have an operating system that supports multiple CPUs.
-2) Have a POSIX threaded library. If not build the GNU pth http://www.gnu.org/software/pth/
-3) configure atlc with the --with-threads option. 
-4) To gain anything from using atlc in this way, you must have multiple CPUs.
-
-You may specify the number of threads the programme uses on atlc's
-command line (-t option), but for a permanent change, compile it into
-atlc by changing the number in definitions.h Since I use a quad
-processor machine (Sun Ultra 80), it is for now at least defaulting to 4
-threads.  There is probably not a lot to be gained by dropping it to two
-on a dual processor machine, but perhaps a bit. On a machine with more than 4 
-CPUs, the parameter should be increased either on the command 
-line or permanently in the source code. 
-
-Note, even if configured with --with-threads, passing the option -t0 to
-atlc during runtime will force the use of a single threaded algorithm,
-which should be faster on machines with only one CPU.
-
-Versions of atlc prior to 4.3.0 used different algorithms for
-single and multi-threaded versions, meaning the results differed
-very slightly, making testing difficult. As from version 4.3.0, this
-has been eliminated, buy using an algorithm suitable for single or 
-multiple threads.
-
-Dr. David Kirkby, 15th August 2003 Re: 4.3.7
+Dr. David Kirkby, 16th October 2003 Re: 4.5.1
 
 
