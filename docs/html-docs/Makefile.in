@@ -71,8 +71,6 @@ LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LTLIBOBJS = @LTLIBOBJS@
 MAKEINFO = @MAKEINFO@
-MPICC = @MPICC@
-MPILIBS = @MPILIBS@
 OBJEXT = @OBJEXT@
 PACKAGE = @PACKAGE@
 PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
@@ -126,7 +124,6 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-with_extra_benchmark_data = @with_extra_benchmark_data@
 
 SUBDIRS = jpgs
 
@@ -158,6 +155,7 @@ generate_for_coupler.html \
 generators.html \
 index.html \
 index2.html \
+make-check.html \
 man-pages.html \
 options.html \
 readbin.1.html \
@@ -195,6 +193,7 @@ generate_for_coupler.html \
 generators.html \
 index.html \
 index2.html \
+make-check.html \
 man-pages.html \
 options.html \
 readbin.1.html \

@@ -69,8 +69,6 @@ LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LTLIBOBJS = @LTLIBOBJS@
 MAKEINFO = @MAKEINFO@
-MPICC = @MPICC@
-MPILIBS = @MPILIBS@
 OBJEXT = @OBJEXT@
 PACKAGE = @PACKAGE@
 PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
@@ -124,7 +122,6 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-with_extra_benchmark_data = @with_extra_benchmark_data@
 bin_PROGRAMS = atlc create_bmp_for_rect_in_rect \
 create_bmp_for_circ_in_circ create_bmp_for_rect_cen_in_rect \
 create_bmp_for_circ_in_rect create_bmp_for_rect_in_circ \
@@ -156,7 +153,8 @@ exit_codes.h
 
 
 atlc_CPPFLAGS = -DNEED_MPI_CODE @PTHREAD_CFLAGS@
-atlc_LDADD = @PTHREAD_LIBS@ @LIBS@ @MPILIBS@
+#atlc_LDADD = @PTHREAD_LIBS@ @LIBS@ @MPILIBS@
+atlc_LDADD = @PTHREAD_LIBS@ @LIBS@ 
 
 create_bmp_for_rect_in_rect_SOURCES = create_bmp_for_rect_in_rect.c \
 usage_create_bmp_for_rect_in_rect.c write_bitmap.c \

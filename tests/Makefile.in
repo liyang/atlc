@@ -69,8 +69,6 @@ LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LTLIBOBJS = @LTLIBOBJS@
 MAKEINFO = @MAKEINFO@
-MPICC = @MPICC@
-MPILIBS = @MPILIBS@
 OBJEXT = @OBJEXT@
 PACKAGE = @PACKAGE@
 PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
@@ -124,39 +122,43 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-with_extra_benchmark_data = @with_extra_benchmark_data@
 
 # This is tests/Makefile.am.
 # MPI_16a_PI computes the value of PI and uses distributed processing
 # to do it. This test it is not always executed. 
 AUTOMAKE_OPTIONS = gnits
 
-check_PROGRAMS = MPI_16a_PI \
+
+# check_PROGRAMS = MPI_16a_PI 
+check_PROGRAMS = \
 benchmark \
 Test_threads_a \
 Test_threads_b
 
 
-MPI_16a_PI_SOURCES = MPI_16a_PI.c 
-MPI_16a_PI_LDADD = @MPILIBS@ @LIBS@
 
+#MPI_16a_PI_SOURCES = MPI_16a_PI.c 
+#MPI_16a_PI_LDADD = @MPILIBS@ @LIBS@
 benchmark_SOURCES = \
 benchmark.c \
-try_portable.c \
-try_hpux.c \
 try_aix.c \
-try_tru64.c \
+try_hpux.c \
+try_linux.c \
+try_portable.c \
 try_solaris.c \
+try_tru64.c \
 defs.h
 
 
 Test_threads_a_SOURCES = Test_threads_a.c
 Test_threads_a_CPPFLAGS = @PTHREAD_CFLAGS@
-Test_threads_a_LDADD = @PTHREAD_LIBS@ @LIBS@ @GSL_LIBS@ @MPILIBS@ 
+#Test_threads_a_LDADD = @PTHREAD_LIBS@ @LIBS@ @GSL_LIBS@ @MPILIBS@ 
+Test_threads_a_LDADD = @PTHREAD_LIBS@ @LIBS@ @GSL_LIBS@ 
 
 Test_threads_b_SOURCES = Test_threads_b.c
 Test_threads_b_CPPFLAGS = @PTHREAD_CFLAGS@
-Test_threads_b_LDADD = @PTHREAD_LIBS@ @LIBS@ @GSL_LIBS@ @MPILIBS@ 
+#Test_threads_b_LDADD = @PTHREAD_LIBS@ @LIBS@ @GSL_LIBS@ @MPILIBS@ 
+Test_threads_b_LDADD = @PTHREAD_LIBS@ @LIBS@ @GSL_LIBS@ 
 
 TESTS_ENVIRONMENT = \
 top_builddir=$(top_builddir) \
@@ -253,11 +255,12 @@ Test_threads_b \
 14b-check-circ-in-rect.test \
 14c-check-circ-in-rect.test \
 14d-check-circ-in-rect.test  \
-MPI_16a_PI \
 WARNING--The-next-test+benchmark-takes-a-long-while.test \
 benchmark.test 
 
 
+
+#MPI_16a_PI 
 EXTRA_DIST = \
 benchmark.test \
 Test_threads_a.c \
@@ -431,12 +434,8 @@ DISTCLEANFILES = tests.log test.txt benchmark.foo.html tests.html benchmark.foo.
 subdir = tests
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_CLEAN_FILES =
-check_PROGRAMS = MPI_16a_PI$(EXEEXT) benchmark$(EXEEXT) \
-	Test_threads_a$(EXEEXT) Test_threads_b$(EXEEXT)
-am_MPI_16a_PI_OBJECTS = MPI_16a_PI.$(OBJEXT)
-MPI_16a_PI_OBJECTS = $(am_MPI_16a_PI_OBJECTS)
-MPI_16a_PI_DEPENDENCIES =
-MPI_16a_PI_LDFLAGS =
+check_PROGRAMS = benchmark$(EXEEXT) Test_threads_a$(EXEEXT) \
+	Test_threads_b$(EXEEXT)
 am_Test_threads_a_OBJECTS = Test_threads_a-Test_threads_a.$(OBJEXT)
 Test_threads_a_OBJECTS = $(am_Test_threads_a_OBJECTS)
 Test_threads_a_DEPENDENCIES =
@@ -445,9 +444,9 @@ am_Test_threads_b_OBJECTS = Test_threads_b-Test_threads_b.$(OBJEXT)
 Test_threads_b_OBJECTS = $(am_Test_threads_b_OBJECTS)
 Test_threads_b_DEPENDENCIES =
 Test_threads_b_LDFLAGS =
-am_benchmark_OBJECTS = benchmark.$(OBJEXT) try_portable.$(OBJEXT) \
-	try_hpux.$(OBJEXT) try_aix.$(OBJEXT) try_tru64.$(OBJEXT) \
-	try_solaris.$(OBJEXT)
+am_benchmark_OBJECTS = benchmark.$(OBJEXT) try_aix.$(OBJEXT) \
+	try_hpux.$(OBJEXT) try_linux.$(OBJEXT) try_portable.$(OBJEXT) \
+	try_solaris.$(OBJEXT) try_tru64.$(OBJEXT)
 benchmark_OBJECTS = $(am_benchmark_OBJECTS)
 benchmark_LDADD = $(LDADD)
 benchmark_DEPENDENCIES =
@@ -456,20 +455,20 @@ benchmark_LDFLAGS =
 DEFAULT_INCLUDES =  -I. -I$(srcdir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
-@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/MPI_16a_PI.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/Test_threads_a-Test_threads_a.Po \
+@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/Test_threads_a-Test_threads_a.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/Test_threads_b-Test_threads_b.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/benchmark.Po ./$(DEPDIR)/try_aix.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/try_hpux.Po ./$(DEPDIR)/try_portable.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/try_hpux.Po ./$(DEPDIR)/try_linux.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/try_portable.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/try_solaris.Po ./$(DEPDIR)/try_tru64.Po
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-DIST_SOURCES = $(MPI_16a_PI_SOURCES) $(Test_threads_a_SOURCES) \
-	$(Test_threads_b_SOURCES) $(benchmark_SOURCES)
+DIST_SOURCES = $(Test_threads_a_SOURCES) $(Test_threads_b_SOURCES) \
+	$(benchmark_SOURCES)
 DIST_COMMON = README Makefile.am Makefile.in
-SOURCES = $(MPI_16a_PI_SOURCES) $(Test_threads_a_SOURCES) $(Test_threads_b_SOURCES) $(benchmark_SOURCES)
+SOURCES = $(Test_threads_a_SOURCES) $(Test_threads_b_SOURCES) $(benchmark_SOURCES)
 
 all: all-am
 
@@ -483,9 +482,6 @@ Makefile:  $(srcdir)/Makefile.in  $(top_builddir)/config.status
 
 clean-checkPROGRAMS:
 	-test -z "$(check_PROGRAMS)" || rm -f $(check_PROGRAMS)
-MPI_16a_PI$(EXEEXT): $(MPI_16a_PI_OBJECTS) $(MPI_16a_PI_DEPENDENCIES) 
-	@rm -f MPI_16a_PI$(EXEEXT)
-	$(LINK) $(MPI_16a_PI_LDFLAGS) $(MPI_16a_PI_OBJECTS) $(MPI_16a_PI_LDADD) $(LIBS)
 Test_threads_a-Test_threads_a.$(OBJEXT): Test_threads_a.c
 Test_threads_a$(EXEEXT): $(Test_threads_a_OBJECTS) $(Test_threads_a_DEPENDENCIES) 
 	@rm -f Test_threads_a$(EXEEXT)
@@ -504,12 +500,12 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/MPI_16a_PI.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Test_threads_a-Test_threads_a.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Test_threads_b-Test_threads_b.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/benchmark.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/try_aix.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/try_hpux.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/try_linux.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/try_portable.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/try_solaris.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/try_tru64.Po@am__quote@
