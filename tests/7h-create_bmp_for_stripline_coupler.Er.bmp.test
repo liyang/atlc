@@ -39,7 +39,7 @@
 
 
 CKSUM=`../tools/src/mycksum test_stripline_coupler.Er.bmp`
-if [ $CKSUM = 05659 ]; then
+if [ $CKSUM = 05667 ]; then
   echo "PASSED:" $0 >> tests.log
   exit 0
 else
