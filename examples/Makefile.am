@@ -1,6 +1,7 @@
 # This is Makefile.am, which is processed by automake
 
 examplesdir = $(datadir)/atlc/examples
+
 examples_DATA= \
 100-Ohm-201b.bmp \
 100-Ohm-401b.bmp \
@@ -190,6 +191,7 @@ wide-9pixel.bmp \
 wide-9pixel.bmp.txt 
 
 EXTRA_DIST = \
+very-small.bmp \
 100-Ohm-201b.bmp \
 100-Ohm-401b.bmp \
 100ohm-201h.bmp \
@@ -372,6 +374,7 @@ twin-wire4.bmp \
 twin-wire4.bmp.txt \
 ushape.bmp \
 ushape.bmp.txt \
+undefined_permittivities.bmp \
 very-odd.bmp \
 very-odd.bmp.txt \
 wide-9pixel.bmp \
