@@ -1,4 +1,4 @@
-Testing stated at Fri Jan 10 15:46:16 GMT 2003
+Testing stated at Sun Jan 12 01:08:50 GMT 2003
 PASSED: ./1a-create_bmp_for_symmmetrical_stripline.bmp.test
 PASSED: ./1b-create_bmp_for_symmmetrical_stripline.txt.test
 PASSED: ./1c-create_bmp_for_symmmetrical_stripline.E.bmp.test
@@ -23,10 +23,10 @@ PASSED: ./2g-create_bmp_for_rect_in_rect.U.bmp.test
 PASSED: ./2h-create_bmp_for_rect_in_rect.V.bmp.test
 PASSED: ./3a-rect_cen_in_rect.bmp.test
 PASSED: ./3b-rect_cen_in_rect.txt.test
-PASSED: ./7a-generate_coupler_bitmap.bmp.test
-PASSED: ./7b-generate_coupler_bitmap.bmp.test
-PASSED: ./7c-generate_coupler_bitmap.Ex.test
-PASSED: ./7d-generate_coupler_bitmap.txt.test
+PASSED: ./7a-create_bmp_for_stripline_coupler.bmp.test
+PASSED: ./7b-create_bmp_for_stripline_coupler.bmp.test
+PASSED: ./7c-create_bmp_for_stripline_coupler.Ex.test
+PASSED: ./7d-create_bmp_for_stripline_coupler.Ey.test
 PASSED: ./8a-design_coupler.bmp.test
 PASSED: ./9a-create-25-Ohm-201b.bmp.test
 PASSED: ./9b-create-25-Ohm-401b.bmp.test
