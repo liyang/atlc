@@ -34,7 +34,6 @@
 #endif  /* End of including header files likely to be on Solaris system */
 
 #include "defs.h"
-#define BYTES_PER_MB  1048576
 
 int try_solaris(struct computer_data *data)
 
@@ -66,13 +65,6 @@ int try_solaris(struct computer_data *data)
   if(max_CPUs >=1 )
     sprintf(data->max_cpus,"%ld",max_CPUs);
 
-  /* Obtain the number of CPUs online on the Solaris system */
-  CPUs_online=0;
-  CPUs_online=(long) sysconf(_SC_NPROCESSORS_ONLN);
-  if( CPUs_online >= 1 )
-    sprintf(data->cpus,"%ld",CPUs_online);
-
-
   /* Obtain the of CPU and FPU on the Solaris box */
   if( processor_info((processorid_t) 0, &infop) == 0)
   {
@@ -83,25 +75,6 @@ int try_solaris(struct computer_data *data)
       sprintf(data->mhz,"%d",clock_speed_in_MHz);
   }
 
-
-  /* Obtain the RAM on the Solaris system. This is a bit of a hack
-  using doubles for this, but longs overflow and long long is not
-  strictly in the ANSI standard. */
-
-  if ((long) sysconf(_SC_PHYS_PAGES) > 0L)
-  {
-    if ((long) sysconf(_SC_PAGESIZE) > 0L)
-    {
-      ram=(double) sysconf(_SC_PAGESIZE);
-      ram*= (double) sysconf(_SC_PHYS_PAGES);
-      {
-        ram=ram/BYTES_PER_MB;
-	/* print as a long, despite making sure rounding errors have not
-	screw use up */
-        sprintf(data->memory,"%ld",(long) (ram+0.05));
-      }
-    }
-  }
 
   /* Obtain operating system informaton, which should have 
   been found with try_portable.c */

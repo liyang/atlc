@@ -64,15 +64,18 @@ int main(int argc, char **argv)
 
 /* Trying to get information about the hardware is likely to break
 on some platforms, as it is very platform specific. If the option 
---enable-hardware-info is given, the software will try to obtain
-such information. It is useful, for benchmarking purposes and to 
+--disble-hardware-info is given, the software will not try to obtain
+such information. 
+
+The information is useful, for benchmarking purposes and to 
 obtain the efficiency of a multi-processor machine if the number
 of CPUs can be found. */
 
 #ifdef TRY_TO_GET_HARDWARE_INFO 
-  try_portable(&data);
+  try_portable(&data);  /* Use uname, which is platform independant */
 
-  try_aix(&data); 
+  try_aix(&data);      /* Try to find if the system is AIX and if so get data */
+  try_bsd(&data); 
   try_hpux(&data);
   try_irix(&data);
   try_linux(&data); 

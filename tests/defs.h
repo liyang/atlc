@@ -13,6 +13,7 @@
 #define PROBABLY_SOLARIS   8         /* Runs on Suns and PCs             */
 #define PROBABLY_TRU64     9         /* Runs on Decs, Compaqs and HPs    */
 #define PROBABLY_UNICOS   10         /* Runs on Cray supercomputers      */
+#define PROBABLY_BSD      11
 
 typedef struct computer_data{
 char mhz[MAX_SIZE];                  /* Speed in MHz. Note its a string */

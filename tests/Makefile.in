@@ -131,6 +131,7 @@ AUTOMAKE_OPTIONS = gnits
 
 # check_PROGRAMS = MPI_16a_PI 
 check_PROGRAMS = \
+sysdata \
 benchmark \
 Test_threads_a \
 Test_threads_b
@@ -142,6 +143,21 @@ Test_threads_b
 benchmark_SOURCES = \
 benchmark.c \
 try_aix.c \
+try_bsd.c \
+try_hpux.c \
+try_irix.c \
+try_linux.c \
+try_portable.c \
+try_solaris.c \
+try_tru64.c \
+try_unicos.c \
+defs.h
+
+
+sysdata_SOURCES = \
+sysdata.c \
+try_aix.c \
+try_bsd.c \
 try_hpux.c \
 try_irix.c \
 try_linux.c \
@@ -438,8 +454,8 @@ DISTCLEANFILES = tests.log test.txt benchmark.foo.html tests.html benchmark.foo.
 subdir = tests
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_CLEAN_FILES =
-check_PROGRAMS = benchmark$(EXEEXT) Test_threads_a$(EXEEXT) \
-	Test_threads_b$(EXEEXT)
+check_PROGRAMS = sysdata$(EXEEXT) benchmark$(EXEEXT) \
+	Test_threads_a$(EXEEXT) Test_threads_b$(EXEEXT)
 am_Test_threads_a_OBJECTS = Test_threads_a-Test_threads_a.$(OBJEXT)
 Test_threads_a_OBJECTS = $(am_Test_threads_a_OBJECTS)
 Test_threads_a_DEPENDENCIES =
@@ -449,20 +465,29 @@ Test_threads_b_OBJECTS = $(am_Test_threads_b_OBJECTS)
 Test_threads_b_DEPENDENCIES =
 Test_threads_b_LDFLAGS =
 am_benchmark_OBJECTS = benchmark.$(OBJEXT) try_aix.$(OBJEXT) \
-	try_hpux.$(OBJEXT) try_irix.$(OBJEXT) try_linux.$(OBJEXT) \
-	try_portable.$(OBJEXT) try_solaris.$(OBJEXT) \
-	try_tru64.$(OBJEXT) try_unicos.$(OBJEXT)
+	try_bsd.$(OBJEXT) try_hpux.$(OBJEXT) try_irix.$(OBJEXT) \
+	try_linux.$(OBJEXT) try_portable.$(OBJEXT) \
+	try_solaris.$(OBJEXT) try_tru64.$(OBJEXT) try_unicos.$(OBJEXT)
 benchmark_OBJECTS = $(am_benchmark_OBJECTS)
 benchmark_LDADD = $(LDADD)
 benchmark_DEPENDENCIES =
 benchmark_LDFLAGS =
+am_sysdata_OBJECTS = sysdata.$(OBJEXT) try_aix.$(OBJEXT) \
+	try_bsd.$(OBJEXT) try_hpux.$(OBJEXT) try_irix.$(OBJEXT) \
+	try_linux.$(OBJEXT) try_portable.$(OBJEXT) \
+	try_solaris.$(OBJEXT) try_tru64.$(OBJEXT) try_unicos.$(OBJEXT)
+sysdata_OBJECTS = $(am_sysdata_OBJECTS)
+sysdata_LDADD = $(LDADD)
+sysdata_DEPENDENCIES =
+sysdata_LDFLAGS =
 
 DEFAULT_INCLUDES =  -I. -I$(srcdir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
 @AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/Test_threads_a-Test_threads_a.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/Test_threads_b-Test_threads_b.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/benchmark.Po ./$(DEPDIR)/try_aix.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/benchmark.Po ./$(DEPDIR)/sysdata.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/try_aix.Po ./$(DEPDIR)/try_bsd.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/try_hpux.Po ./$(DEPDIR)/try_irix.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/try_linux.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/try_portable.Po \
@@ -473,9 +498,9 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 DIST_SOURCES = $(Test_threads_a_SOURCES) $(Test_threads_b_SOURCES) \
-	$(benchmark_SOURCES)
+	$(benchmark_SOURCES) $(sysdata_SOURCES)
 DIST_COMMON = README Makefile.am Makefile.in
-SOURCES = $(Test_threads_a_SOURCES) $(Test_threads_b_SOURCES) $(benchmark_SOURCES)
+SOURCES = $(Test_threads_a_SOURCES) $(Test_threads_b_SOURCES) $(benchmark_SOURCES) $(sysdata_SOURCES)
 
 all: all-am
 
@@ -500,6 +525,9 @@ Test_threads_b$(EXEEXT): $(Test_threads_b_OBJECTS) $(Test_threads_b_DEPENDENCIES
 benchmark$(EXEEXT): $(benchmark_OBJECTS) $(benchmark_DEPENDENCIES) 
 	@rm -f benchmark$(EXEEXT)
 	$(LINK) $(benchmark_LDFLAGS) $(benchmark_OBJECTS) $(benchmark_LDADD) $(LIBS)
+sysdata$(EXEEXT): $(sysdata_OBJECTS) $(sysdata_DEPENDENCIES) 
+	@rm -f sysdata$(EXEEXT)
+	$(LINK) $(sysdata_LDFLAGS) $(sysdata_OBJECTS) $(sysdata_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT) core *.core
@@ -510,7 +538,9 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Test_threads_a-Test_threads_a.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Test_threads_b-Test_threads_b.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/benchmark.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sysdata.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/try_aix.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/try_bsd.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/try_hpux.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/try_irix.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/try_linux.Po@am__quote@

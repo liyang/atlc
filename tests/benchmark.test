@@ -40,13 +40,13 @@ else
   echo "                  BENCHMARK DATA" >> tests.log
   echo "                  <STRONG><div align="center">BENCHMARK DATA</div></STRONG> <BR>" > tests.html
 
-  echo "Hardware data working reasonably well on AIX, HP-UX, Solaris, Tru64"
-  echo "Hardware data working reasonably well on AIX, HP-UX, Solaris, Tru64" >> tests.log
-  echo "Hardware data working reasonably well on AIX, HP-UX, Solaris, Tru64 <BR>" >> tests.html
+  echo "Hardware data working reasonably well on AIX, HP-UX, Solaris, Tru64,"
+  echo "Hardware data working reasonably well on AIX, HP-UX, Solaris, Tru64," >> tests.log
+  echo "Hardware data working reasonably well on AIX, HP-UX, Solaris, Tru64, <BR>" >> tests.html
 
-  echo "and UNICOS, but not too well on Linux and poorly on *BSD and IRIX" 
-  echo "and UNICOS, but not too well on Linux and poorly on *BSD and IRIX" >> tests.log
-  echo "and UNICOS, but not too well on Linux and poorly on *BSD and IRIX <BR>" >> tests.html
+  echo "IRIX and UNICOS, but not too well on Linux and poorly on *BSD" 
+  echo "IRIX and UNICOS, but not too well on Linux and poorly on *BSD" >> tests.log
+  echo "IRIX and UNICOS, but not too well on Linux and poorly on *BSD <BR>" >> tests.html
 
   echo "Any help to write code to gather data on other OS's would be appreciated" 
   echo "Any help to write code to gather data on other OS's would be appreciated" >> tests.log
@@ -76,9 +76,9 @@ else
   echo "RAM is $ram Mb." >> tests.log
   echo "RAM is $ram Mb.<BR>" >> tests.html
 
-  echo "L1 data cache is $L1data; L1 instruction cache is $L1instruction; L2 cache is $L2"
-  echo "L1 data cache is $L1data; L1 instruction cache is $L1instruction; L2 cache is $L2" >> tests.log
-  echo "L1 data cache is $L1data; L1 instruction cache is $L1instruction; L2 cache is $L2<BR>" >> tests.html
+  echo "L1 data cache is $L1data kb; L1 instruction cache is $L1instruction kb; L2 cache is $L2 kb"
+  echo "L1 data cache is $L1data kb; L1 instruction cache is $L1instruction kb; L2 cache is $L2 kb" >> tests.log
+  echo "L1 data cache is $L1data kb; L1 instruction cache is $L1instruction kb; L2 cache is $L2 kb<BR>" >> tests.html
 
   if [ "x$built_with_posix_threads" = "xyes" ] ; then
     echo "Run times: T_sequential is $t1 s. T_parallel is $t2 s."

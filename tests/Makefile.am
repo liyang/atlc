@@ -6,6 +6,7 @@ AUTOMAKE_OPTIONS = gnits
 # check_PROGRAMS = MPI_16a_PI 
 
 check_PROGRAMS = \
+sysdata \
 benchmark \
 Test_threads_a \
 Test_threads_b
@@ -16,6 +17,7 @@ Test_threads_b
 benchmark_SOURCES = \
 benchmark.c \
 try_aix.c \
+try_bsd.c \
 try_hpux.c \
 try_irix.c \
 try_linux.c \
@@ -25,6 +27,18 @@ try_tru64.c \
 try_unicos.c \
 defs.h
 
+sysdata_SOURCES = \
+sysdata.c \
+try_aix.c \
+try_bsd.c \
+try_hpux.c \
+try_irix.c \
+try_linux.c \
+try_portable.c \
+try_solaris.c \
+try_tru64.c \
+try_unicos.c \
+defs.h
 
 Test_threads_a_SOURCES = Test_threads_a.c
 Test_threads_a_CPPFLAGS = @PTHREAD_CFLAGS@

@@ -47,38 +47,19 @@ int try_linux(struct computer_data *data)
 #ifdef HAVE_LINUX_IP_H      /* I don't want to include this, but it is proof 
 			       that the system is Linux */
 
-  double ram;
-
   /* Obtain the maximum number of CPUs supported on the Linux system */
 
   /* Obtain the number of CPUs online on the Linux system */
 
-
   /* Obtain the of CPU and FPU on the Linux box */
 
-  /* Obtain the RAM on the Linux system if possible */
-
-#ifdef _SC_PHYS_PAGES
-#ifdef _SC_PAGESIZE
-  if ((long) sysconf(_SC_PHYS_PAGES) > 0L)
-  {
-    if ((long) sysconf(_SC_PAGESIZE) > 0L)
-    {
-      ram= (double) sysconf(_SC_PAGESIZE);
-      ram*= (double) sysconf(_SC_PHYS_PAGES);
-      {
-        ram=ram/(double) BYTES_PER_MB;
-        sprintf(data->memory,"%ld",(long) (ram+0.5));
-      }
-    }
-  }
-#endif
-#endif
+  /* Obtain the RAM on the Linux system if possible. Currently this is 
+  done in try_portable.c, but is not 100% accurate on Linux */
 
   /* Obtain operating system informaton */
-  /* This is done using uname() in try_portable.c */
 
-  /* Obtain the manufacturer */
+  /* Obtain the manufacturer - I don't think this will be too possible,
+   but it might be, but clearly some boxes are going to be generic. */
 
   /* Obtain the Platform */
 

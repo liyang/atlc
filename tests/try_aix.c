@@ -164,9 +164,6 @@ int try_aix(struct computer_data *data)
     strcpy(data->mhz,"67");
     strcpy(data->cpu_type,"Power2");
   }
-#ifdef _SC_NPROCESSORS_ONLN
-  sprintf(data->cpus,"%ld",sysconf(_SC_NPROCESSORS_ONLN));
-#endif
 
 #ifdef _SC_AIX_REALMEM
   sprintf(data->memory,"%ld",sysconf(_SC_AIX_REALMEM)/1024);
