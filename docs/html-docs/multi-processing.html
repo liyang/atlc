@@ -12,29 +12,18 @@
 <H1>Multi-processing with atlc</H1>
 </p>The executable program <CODE>atlc</CODE>, which is part of the <EM>atlc</EM> package of programs,  can be quite CPU intensive. This is especially troublesome if atlc is executed  a large number of times in an itterative loop, as the program <EM>desgin_coupler</EM> will do if asked to find the phyical dimensions of  a directional coupler.  </p>
 
-To reduced execution time, the program atlc can be configured to support multiple processors in one of two very diferent ways. <OL>
-	<LI><STRONG>Use of multiple CPUs on a multi-processor computer.</STRONG> This obviously requires a compute with more than one CPU, but also a POSIX compatable thread library. Most systems, including GNU/Linux, normally  have such a library  installed, although a minimal setup of the operating system might well not have such a library present. You can if you wish use the GNU Pth  library at <a href="http://www.gnu.org/software/pth/">http://www.gnu.org/software/pth/ </a>In order to configure atlc as a multi-threaded program for use on multiple CPUs, use the <CODE>--with-threads</CODE> option to the <CODE>configure</CODE> script i.e. run
+To reduced execution time, the program atlc can be configured to support multiple processors This obviously requires a computer with more than one CPU, but also a POSIX compatable thread library. Most systems, including GNU/Linux, normally  have such a library installed, although a minimal setup of the operating system might well not have such a library present. You can if you wish try using the GNU Pth library at <a href="http://www.gnu.org/software/pth/">http://www.gnu.org/software/pth/ </a>, although <em>atlc</em> has not been tested with Pth. In order to configure atlc as a multi-threaded program for use on multiple CPUs, use the <CODE>--with-threads</CODE> option to the <CODE>configure</CODE> script i.e. run
 <br>
 <CODE>
 <br>
-configure --with-threads<br>
+configure --enable-hardware-info --with-threads<br>
 make <br>
 make check <br>
 make install<br>
 <br></CODE>
-
-
-
-</LI>
-	<LI><STRONG>Use of the processing power of a number of CPUs on a network of computers.</STRONG>The code for this is experimental and has been temporarily disabled, since it did not work properly. So only attempt to use it if you are willing to put some effort into the development.  The distributed processing uses the Message Passing Interface (MPI) and requires the MPICH libraries from  <a href="http://www-unix.mcs.anl.gov/mpi/mpich/indexold.html">http://www-unix.mcs.anl.gov/mpi/mpich/indexold.htm</a> In order to experiment with this, configure <EM>atlc</EM> with the  <CODE>--with-mpi</CODE> option to the <CODE>configure</CODE> script</A> i.e. run
+Again, you should try building with the <code>--enable-hardware-info</code>. That option is especially useful on multi-processor machines, as it indicates some performance parameters. However, it might just cause compilation to fail on some systems, so is currently not enabled by default,
+although I might change that. 
 <br>
-<CODE>
-<br>
-configure --with-mpi<br>
-make <br>
-make check <br>
-make install<br>
-<br></CODE>
 See here <a href="building.html">for detailed building instuctions</a> which includes how to configure<EM> atlc</EM> with support for more than one processor. 
 </LI>
 
