@@ -283,9 +283,10 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
 		data->Er=1.0;
       data->Zodd=sqrt(data->Lodd_vacuum/data->Codd);  /* Standard formula for Zo */
       velocity_of_light_in_vacuum=1.0/(sqrt(MU_0 * EPSILON_0)); /* around 3x10^8 m/s */
-      data->velocity_odd=1.0/pow(data->L_vacuum*data->Codd,0.5);
-      data->velocity_factor_odd=data->velocity/velocity_of_light_in_vacuum;
-      data->relative_permittivity_odd=sqrt(data->velocity_factor); /* ??? XXXXXX */
+      // FPE trapdata->velocity_odd=1.0/pow(data->L_vacuum*data->Codd,0.5);
+      data->velocity_odd=1.0/pow(data->Lodd_vacuum*data->Codd,0.5);
+      data->velocity_factor_odd=data->velocity_odd/velocity_of_light_in_vacuum;
+      data->relative_permittivity_odd=sqrt(data->velocity_factor_odd); /* ??? XXXXXX */
       data->Er_odd=data->Codd/data->Codd_vacuum;
       data->Zdiff=2.0*data->Zodd;
       /* Print text if uses wants it */
@@ -376,7 +377,7 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
 		data->Er_even=1.0;
       data->Zeven=sqrt(data->Leven_vacuum/data->Ceven);  /* Standard formula for Zo */
       velocity_of_light_in_vacuum=1.0/(sqrt(MU_0 * EPSILON_0)); /* around 3x10^8 m/s */
-      data->velocity_even=1.0/pow(data->Leven_vacuum*data->C,0.5);
+      data->velocity_even=1.0/pow(data->Leven_vacuum*data->Ceven,0.5);
       data->velocity_factor_even=data->velocity_even/velocity_of_light_in_vacuum;
       data->relative_permittivity_even=sqrt(data->velocity_factor_even); /* ??? XXXXXX */
       data->Er_even=data->Ceven/data->Ceven_vacuum;
