@@ -254,7 +254,7 @@ the problem. */
 
 struct Bitmap_File_Head_Struct
 {
-  char   zzMagic[2];	/* 00 "BM" */
+  unsigned char   zzMagic[2];	/* 00 "BM" */
   int32   bfSize;      /* 02 */
   short  zzHotX;	/* 06 */
   short  zzHotY;	/* 08 */
@@ -285,7 +285,6 @@ struct Bitmap_Head_Struct
 
 int main(int argc, char **argv);
 void byteswap_doubles(double *a);
-void byteswap_ints(int *a);
 void byteswap_shortss(short *a);
 void read_bitmap_file_headers(char *filename, int *offset, size_t *size, int *width, int *height);
 void get_data_interactively(void);
@@ -301,8 +300,8 @@ void swap_bytes4(unsigned char *buffer, int offset, int *answer);
 void free_ustring(unsigned char *v, long nl, long nh);
 int **imatrix(long nrl, long nrh, long ncl, long nch);
 void setup_arrays(struct transmission_line_properties *data);
-double finite_difference_single_threaded(int iterations);
-double finite_difference_multi_threaded(int iterations);
+double finite_difference_single_threaded();
+double finite_difference_multi_threaded();
 #ifdef ENABLE_MPI
 void do_columns(int start_col, int num_cols, int calculate_edges, int direction);
 void mpi_worker(int rank);
@@ -312,12 +311,15 @@ void *do_columns(void *thread_arg);
 void usage_atlc(void);
 void write_fields_for_two_conductor_lines(char *filename, struct transmission_line_properties data);
 void write_fields_for_directional_couplers(char *filename, struct transmission_line_properties data, int odd_or_even);
-char **cmatrix(long nrl, long nrh, long ncl, long nch);
+
+char          **cmatrix(long nrl, long nrh, long ncl, long nch);
 unsigned char **ucmatrix(long nrl, long nrh, long ncl, long nch);
+signed char **scmatrix(long nrl, long nrh, long ncl, long nch);
+
 int *ivector(long nl, long nh);
 void get_Er1_and_Er2_colours(int *colour_Er1, int *colour_Er2);
-int convert_create_bmp_for_rect_in_rect_dimensions_to_integers(int bmp_size);
-int convert_create_bmp_for_circ_in_circ_dimensions_to_integers(int bmp_size);
+void convert_create_bmp_for_rect_in_rect_dimensions_to_integers(int bmp_size);
+void convert_create_bmp_for_circ_in_circ_dimensions_to_integers(int bmp_size);
 unsigned char *ustring(long nl,long nh);
 void write_bitmap(FILE *image_data_fp, struct transmission_line_properties foo);
 void usage_create_bmp_for_rect_in_rect(void);
@@ -334,17 +336,20 @@ void check_error(double user, int create_bmp_for_rect_in_rect, double gridsize, 
 void check_parameters_for_create_bmp_for_circ_in_circ(void);
 void fill_image_vector_with_data(unsigned char *image_vector, int colour_Er1, int colour_Er2, struct transmission_line_properties x);
 void usage_create_bmp_for_circ_in_circ(void);
-int convert_create_bmp_for_rect_in_circ_dimensions_to_integers(int accuracy_level);
+void convert_create_bmp_for_rect_in_circ_dimensions_to_integers(int accuracy_level);
 void usage_create_bmp_for_rect_in_circ(void);
-int convert_create_bmp_for_circ_in_rect_dimensions_to_integers(int accuracy_level);
+void convert_create_bmp_for_circ_in_rect_dimensions_to_integers(int accuracy_level);
 void usage_create_bmp_for_circ_in_rect(void);
 void check_for_shorts(void);
 void usage_symmetrical_strip(void);
 void fill_image_vector_for_thin_strip(int W,int H, int w, unsigned char *unaligned_image_vector);
 double K_over_Kdash(double k);
 double calculate_symmetrical_stripline_impedance(int H, int w);
-char **charmatrix(long nrl, long nrh, long ncl, long nch);
-void free_iharmatrix(int **m, long nrl, long nrh, long ncl, long nch);
+
+void free_cmatrix(char **m, long nrl, long nrh, long ncl, long nch);
+void free_ucmatrix(unsigned char **m, long nrl, long nrh, long ncl, long nch);
+void free_scmatrix(signed char **m, long nrl, long nrh, long ncl, long nch);
+
 int print_data(FILE *fp, char *filename, double Er, double C, double L, double Zo, double
 Zodd, double Zeven, int whichZ, double v, double vf);
 void check_for_boundaries(void);
@@ -369,9 +374,9 @@ void calculate_Zodd_and_Zeven(double *Zodd, double *Zeven, double *Zo, double w,
 void usage_design_coupler(void);
 void print_copyright(const char *s);
 void give_examples_of_using_design_coupler(void);
-void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_to_print_fp, char *inputfile_filename);
-int print_data_for_directional_couplers(struct transmission_line_properties data, FILE *where_to_print_fp, char *inputfile_name);
-int print_data_for_two_conductor_lines(struct transmission_line_properties data, FILE *where_to_print_fp, char *inputfile_name);
+void do_fd_calculation(struct transmission_line_properties *data, FILE *where_to_print_fp, char *inputfile_filename);
+void print_data_for_directional_couplers(struct transmission_line_properties data, FILE *where_to_print_fp, char *inputfile_name);
+void print_data_for_two_conductor_lines(struct transmission_line_properties data, FILE *where_to_print_fp, char *inputfile_name);
 void set_data_to_sensible_starting_values(struct transmission_line_properties *data);
 void check_parameters_of_create_bmp_for_microstrip_coupler(struct transmission_line_properties pcb);
 void convert_create_create_bmp_for_coupled_microstrip_dimensions_to_integers(struct transmission_line_properties *pcb);
@@ -388,3 +393,4 @@ void free_imatrix(int **m, long nrl, long nrh, long ncl, long nch);
 void *worker(void *thread_arg);
 void free_ivector(int *v, long nl, long nh);
 double check_convergence(double **grid1, double **grid2, int w, int h);
+void error_check(char *s);
