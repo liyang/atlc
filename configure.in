@@ -1,12 +1,14 @@
-dnl Process this file with autoconf to produce a configure script.
+dnl Process this file with autoconf to produce a configure script.D
 
-AC_INIT(atlc, 5.0.0, drkirkby@ntlworld.com)
-AM_INIT_AUTOMAKE(atlc, 5.0.0, drkirkby@ntlworld.com)
+AC_INIT(atlc, 4.1.2, drkirkby@ntlworld.com)
+dnl AM_CONFIG_HEADER(config.h)
+AM_INIT_AUTOMAKE(atlc, 4.1.2, drkirkby@ntlworld.com)
 
 dnl Checks for programs.
 AC_PROG_CC
 AC_PROG_CXX
 AC_PROG_CXXCPP
+AC_PROG_RANLIB
 AC_ISC_POSIX
 
 AC_OUTPUT_COMMANDS([exit])
@@ -14,10 +16,12 @@ dnl Checks for libraries.
 AC_CHECK_LIB(m,main)
 AC_CHECK_LIB(gslcblas,main)
 AC_CHECK_LIB(gsl,main)
+AC_FUNC_ALLOCA
 		
 dnl Checks for header files.
 AC_STDC_HEADERS
 AC_HAVE_HEADERS(stdio.h math.h errno.h stdlib.h string.h thread.h pthread.h pthreads.h)
+dnl AC_HAVE_HEADERS(gsl/gsl_sf_bessel.h)
 
 
 dnl check to see if the machine is big endian
@@ -96,7 +100,11 @@ src/Makefile                                    \
 src/non_gui/Makefile                            \
 src/gui/Makefile                                \
 man/Makefile                                    \
+man/man1/Makefile                               \
 examples/Makefile                               \
+tools/Makefile                                  \
+tools/src/Makefile                              \
+tests/Makefile                                  \
 docs/Makefile                                   \
 docs/html-docs/Makefile                         \
 docs/html-docs/jpgs/Makefile                    \
