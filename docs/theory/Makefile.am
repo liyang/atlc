@@ -1,1 +1,1 @@
-EXTRA_DIST = README
+EXTRA_DIST = README theory2.doc
