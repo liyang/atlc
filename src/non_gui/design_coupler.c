@@ -81,19 +81,22 @@ the paramters w and s.
 int main(int argc, char **argv) /* Read parameters from command line */
 {
   int q;
+  int calculate_physical_dimensions=FALSE;
   double er, Zo=-1, length=-1, fmin, fmax, fmean, fstep=-1, cf,  Zodd, Zeven; 
   double f, fq, c, cq, w, s, error, error_max=1e30;
   double wanted_coupling_factor_in_dB, step=0.05;
   double Zo_x=-1, Zeven_x=-1, Zodd_x=-1, best_s=-1, best_w=-1, height_of_box=1.0;
   double best_Zodd=-1, best_Zeven=-1, best_Zo=-1;
-  while((q=get_options(argc,argv,"Cl:s:Z:H:")) != -1)
+  while((q=get_options(argc,argv,"cPL:s:Z:H:")) != -1)
   switch (q) 
   {
-    case 'C':
+    case 'c':
+    calculate_physical_dimensions=TRUE;
+    case 'P':
     print_copyright((char *) "2002");
     exit(1);
     break;
-    case 'l':
+    case 'L':
     length=atof(my_optarg);
     break;
     case 'H':
@@ -120,7 +123,7 @@ int main(int argc, char **argv) /* Read parameters from command line */
   fmax=atof(argv[my_optind+2]);
   fmean=(fmin+fmax)/2.0;
   if(fstep <0 )
-    fstep=(fmax-fmin)/10.0;
+    fstep=(fmax-fmin)/4.0;
   if (wanted_coupling_factor_in_dB < 0.0 )
   {
     fprintf(stderr,"Enter the coupling factor as a positive number\n");
@@ -154,7 +157,9 @@ int main(int argc, char **argv) /* Read parameters from command line */
   factor c */
 
   cq=1.0/pow(10,wanted_coupling_factor_in_dB/20.0);   /* We cant c to be this IF its a quarter wave long */
-  c=cq*pow(sin(M_PI*fmean/fq),2.0); /* This is what is now needed for some given length (and so fq) */
+  c=cq*pow(sin(0.5*M_PI*fmean/fq),2.0); /* X This is what is now needed for some given length (and so fq) */
+  c=cq*pow(sin(0.5*M_PI*fmean/fq),2.0); /* This is what is now needed for some given length (and so fq) */
+  printf("c=%f\n",c);
 
   /* After mucking around with Mathematica a bit, I found it was
   possible to invert the equations */
@@ -177,19 +182,21 @@ int main(int argc, char **argv) /* Read parameters from command line */
   fprintf(stderr,"\nDrive Port 1, coupler out of port 2 and terminate the other ports in Zo\n");
   printf("Such a coupler will have the response indicated below.\n\n");
   printf("cq=%f fq=%f\n",cq, fq);
-  for(f=fmin; f<fmax; f+=fstep)
+  for(f=fmin; f<=fmax; f+=fstep)
   {
     cf=20*log10(c);
-    cf=20*log10(cq*pow(sin(M_PI*f/fq),2.0)); /* This is what is now needed for some given length (and so fq) */
+    cf=20*log10(cq*pow(sin(0.5*M_PI*f/fq),2.0)); /* This is what is now needed for some given length (and so fq) */
+    //cf=20*log10(cq/pow(sin(0.5*M_PI*f/fq),2.0)); /* This is what is now needed for some given length (and so fq) */
     printf("frequency = %f MHz coupling is %f dB down on the main arm\n",f,cf);
   }
     printf("You may force the length to be any value you want using the -l option\n");
-    printf("You may try to find a coupler with these dimensions using the -i option\n");
-    printf("Currently the -i option is not that fast, as it uses a brain-dead algorithm\n");
+    printf("You may try to find a coupler with these dimensions using the -c option\n");
+    printf("Currently the -c option is not that fast, as it uses a brain-dead algorithm\n");
+    if(calculate_physical_dimensions==TRUE)
+    {
     er=1.0;
     for(s = 0.02; s<=100; s+=step)
     {
-      printf("*");
       for(w = 0.02; w<= 11.0; w += step)
       {
 	/* Results are calculated assuming the box is one unit (mm, inch
@@ -213,7 +220,6 @@ int main(int argc, char **argv) /* Read parameters from command line */
     /* Now try to get closer */
     for(s = best_s-step; s<=best_s+step; s+=step/1000)
     {
-      printf("x");
       for(w = best_w-step; w<= best_w+step; w += step/1000)
       {
 	/* Results are calculated assuming the box is one unit (mm, inch
@@ -236,5 +242,6 @@ int main(int argc, char **argv) /* Read parameters from command line */
     printf("Best results for two infinitly thin striplines of width s, separated by w\n");
     printf("and  placed centrally between two infinity wide parallel plates of height H is:\n");
     printf("H =%f w = %f s = %f which gives Zo = %f Zodd = %f Zeven = %f\n",height_of_box, height_of_box*best_w, height_of_box*best_s, best_Zo, best_Zodd, best_Zeven);
+    }
     exit(0);
 }
