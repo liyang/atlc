@@ -14,6 +14,7 @@
 # The following are around 50 Ohm transmission lines. 
 ../src/sym_strip 1 201 290 50-Ohm-201b.bmp
 ../src/sym_strip 1 401 578 50-Ohm-401b.bmp
+../src/sym_strip 1 801 578 50-Ohm-401b.bmp
 
 # The following are around 100 Ohm transmission lines. 
 ../src/sym_strip 1 201 101 100-Ohm-201b.bmp
