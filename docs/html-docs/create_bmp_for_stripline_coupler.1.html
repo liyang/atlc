@@ -5,35 +5,35 @@
 
 </PRE>
 <H2>NAME</H2><PRE>
-     <B>create_coupler_bitmap</B> - bitmap generator  for  coupler  with
-     thin  striplines  between  two  infinitly  wide groundplanes
-     (part of <B>atlc</B>)
+     <B>create_bmp_for_stripline_coupler</B>  -  bitmap  generator   for
+     coupler  with  thin  striplines  between  two infinitly wide
+     groundplanes (part of <B>atlc</B>)
 
 
 </PRE>
 <H2>SYNOPSIS</H2><PRE>
-     <B>create_coupler_bitmap</B> <B>[-C]</B> <B>[-b</B> <B>bitmapsize]</B> <B>[-v]</B>  <B>H</B>  <B>w</B>  <B>s</B>  <B>Er</B>
-     <B>outputfile</B>
+     <B>create_bmp_for_stripline_coupler</B> <B>[-C]</B> <B>[-b</B> <B>bitmapsize]</B> <B>[-v]</B> <B>H</B>
+     <B>w</B> <B>s</B> <B>Er</B> <B>outputfile</B>
 
 
 </PRE>
 <H2>DESCRIPTION</H2><PRE>
-     <B>create_coupler_bitmap</B> is a pre-processor for <B>atlc</B>, the  fin-
-     ite  difference programme that is used to calculate the pro-
-     perties of a two and three conductor electrical transmission
-     lines    of   arbitrary   cross   section.   The   programme
-     <B>create_coupler_bitmap</B> is used as a fast  way  of  generating
-     bitmaps  (there is no need to use a graphics programme), for
-     a pair of 1 pixel thick conductors of width w, spaced a dis-
-     tance  s apart, inside a pair of groundplanes of  separation
-     H. This has an exact analytical answer, when  the  inner  is
-     infinitely  thin and the overall width W is infinitely wide.
-     This theoretical impedance  is  calculated  and  printed  to
-     stderr if:
-     a) The -v option is given on create_coupler_bitmap's command
-     line. AND
-     b) create_coupler_bitmap was linked against the gsl  library
-     at http://sources.redhat.com/gsl/
+     <B>create_bmp_for_stripline_coupler</B>  is  a  pre-processor   for
+     <B>atlc</B>, the finite difference programme that is used to calcu-
+     late the properties of a two and three conductor  electrical
+     transmission lines of arbitrary cross section. The programme
+     <B>create_bmp_for_stripline_coupler</B> is used as a  fast  way  of
+     generating  bitmaps (there is no need to use a graphics pro-
+     gramme), for a pair of 1 pixel thick conductors of width  w,
+     spaced  a distance s apart, inside a pair of groundplanes of
+     separation H. This has an exact analytical answer, when  the
+     inner  is  infinitely thin and the overall width W is infin-
+     itely wide. This theoretical  impedance  is  calculated  and
+     printed to stderr if:
+     a)      The      -v      option      is       given       on
+     create_bmp_for_stripline_coupler's command line. AND
+     b) create_bmp_for_stripline_coupler was linked  against  the
+     gsl library at http://sources.redhat.com/gsl/
 
      -----------------------------------------------------  ^
      |                                                   |  |
@@ -51,8 +51,8 @@
      enough that making it any larger will have negligable effect
      on the results.  The dielectric is assumed that of vacuum.
 
-     The bitmaps produced by <B>create_coupler_bitmap</B> are 24-bit bit
-     colour bitmaps, as are required by <B>atlc</B>.
+     The bitmaps produced by <B>create_bmp_for_stripline_coupler</B> are
+     24-bit bit colour bitmaps, as are required by <B>atlc</B>.
 
 
 
@@ -85,9 +85,12 @@
      the
 
 
-     eg1. create_coupler_bitmap  1.23 0.7 1.2 1.0  coupler.bmp
-     eg2. create_coupler_bitmap -b 8 1.23 0.7 3.3  small.bmp
-     eg3. create_coupler_bitmap -v 12 1.23 0.7 4.8  theory.bmp
+     eg1.  create_bmp_for_stripline_coupler   1.23  0.7  1.2  1.0
+     coupler.bmp
+     eg2. create_bmp_for_stripline_coupler  -b  8  1.23  0.7  3.3
+     small.bmp
+     eg3. create_bmp_for_stripline_coupler -v  12  1.23  0.7  4.8
+     theory.bmp
 
 
 
@@ -105,12 +108,15 @@
 
 </PRE>
 <H2>SEE ALSO</H2><PRE>
-     <B>atlc(1)</B>,                 <B>create_bmp_for_rect_cen_in_rect(1)</B>,
-     <B>create_bmp_for_circ_in_circ(1)</B>.
-     <B>create_bmp_for_rect_in_rect(1)</B>,
-     <B>create_bmp_for_circ_in_rect(1)</B>.
-     <B>create_bmp_for_rect_in_circ(1)</B>,        <B>readbin(1)</B>        and
-     <B>create_bmp_for_symmetrical_stripline(1)</B>.
+     <B>atlc(1)</B>                       <B>create_bmp_for_circ_in_circ(1)</B>
+     <B>create_bmp_for_circ_in_rect(1)</B>
+     <B>create_bmp_for_microstrip_coupler(1)</B>
+     <B>create_bmp_for_rect_cen_in_rect(1)</B>
+     <B>create_bmp_for_rect_cen_in_rect_coupler(1)</B>
+     <B>create_bmp_for_rect_in_circ(1)</B>
+     <B>create_bmp_for_rect_in_rect(1)</B>
+     <B>create_bmp_for_symmetrical_stripline(1)</B>    <B>design_coupler(1)</B>
+     <B>find_optimal_dimensions_for_microstrip_coupler(1)</B> <B>readbin(1)</B>
 
      http://atlc.sourceforge.net                - Home page
      http://sourceforge.net/projects/atlc       - Download area
@@ -168,30 +174,11 @@
 
 
 
-
-
-
-
-
-
 </PRE>
 <HR>
 <ADDRESS>
 Man(1) output converted with
 <a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
 </ADDRESS>
-<a href="http://homepage.ntlworld.com/drkirkby/list1.html"></a>
-<a href="http://homepage.ntlworld.com/drkirkby/list2.html"></a>
-<a href="http://homepage.ntlworld.com/drkirkby/list3.html"></a>
-<a href="http://homepage.ntlworld.com/drkirkby/list4.html"></a>
-<a href="http://homepage.ntlworld.com/drkirkby/list5.html"></a>
-<a href="http://homepage.ntlworld.com/drkirkby/list6.html"></a>
-<a href="http://homepage.ntlworld.com/drkirkby/list7.html"></a>
-<BR>
-<BR>
-<A href="http://sourceforge.net"> <IMG
-src="http://sourceforge.net/sflogo.php?group_id=25836&amp;type=5"
-width="210" height="62" border="0" alt="SourceForge.net
-Logo"></A>
 </BODY>
 </HTML>

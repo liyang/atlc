@@ -50,7 +50,8 @@
 </PRE>
 <H2>OPTIONS</H2><PRE>
      <B>-C</B>
-     print copyright, licencing and copying information. <B>-s</B>
+     print copyright, licencing and copying information.
+     <B>-s</B>
      Skip writing the Ex, Ey, E, V, U and Er bitmap (.bmp)  files
      <B>-S</B>
      Skip writing the Ex, Ey, E, V, U and Er binary (.bin) files
@@ -62,7 +63,6 @@
      tions must be within 01% for the programme to  stop  iterat-
      ing.  Setting  to a smaller positive number gives more accu-
      racy, but takes longer.
-
 
      <B>-d</B> <B>rrggbb=Er</B>
      is used to indicate the colour 0xrrggbb  in  the  bitmap  is
@@ -84,12 +84,13 @@
      <B>-t</B> <B>threads</B>
      tells atlc to run using that number  of  threads,  to  speed
      calculation.  This option is only valid if atlc was compiled
-     with the --with-mp option to configure. The pthreads library
-     (or similar) <B>must</B> be installed in order to compile with sup-
-     port for more than one CPU. Generally, setting the number of
-     threads  to  the  number  of  cpus is a good idea, but it is
-     worth experimenting. The number can be  changed  permanently
-     by editing the parameter MAX_THREADS in definitions.h.
+     with the --with-threads option to  configure.  The  pthreads
+     library  (or  similar) <B>must</B> be installed in order to compile
+     with support for more than one CPU. Generally,  setting  the
+     number  of threads to the number of cpus is a good idea, but
+     it is worth experimenting. The number can  be  changed  per-
+     manently   by   editing   the   parameter   MAX_THREADS   in
+     definitions.h.
 
 
 </PRE>
@@ -171,6 +172,7 @@
      final result is printed.
 
 
+
 </PRE>
 <H2>FILES</H2><PRE>
      bitmapfile.bmp
@@ -206,13 +208,16 @@
 
 </PRE>
 <H2>SEE ALSO</H2><PRE>
-     <B>create_bmp_for_rect_cen_in_rect(1)</B>,
-     <B>create_bmp_for_circ_in_circ(1)</B>.
-     <B>create_bmp_for_rect_in_rect(1)</B>,
-     <B>create_bmp_for_circ_in_rect(1)</B>.
-     <B>create_bmp_for_rect_in_circ(1)</B>,        <B>readbin(1)</B>        and
-     <B>create_bmp_for_sym_strip(1)</B>.
-
+     <B>atlc(1)</B>                       <B>create_bmp_for_circ_in_circ(1)</B>
+     <B>create_bmp_for_circ_in_rect(1)</B>
+     <B>create_bmp_for_microstrip_coupler(1)</B>
+     <B>create_bmp_for_rect_cen_in_rect(1)</B>
+     <B>create_bmp_for_rect_cen_in_rect_coupler(1)</B>
+     <B>create_bmp_for_rect_in_circ(1)</B>
+     <B>create_bmp_for_rect_in_rect(1)</B>
+     <B>create_bmp_for_stripline_coupler(1)</B>
+     <B>create_bmp_for_symmetrical_stripline(1)</B>    <B>design_coupler(1)</B>
+     <B>find_optimal_dimensions_for_microstrip_coupler(1)</B> <B>readbin(1)</B>
      http://atlc.sourceforge.net                - Home page
      http://sourceforge.net/projects/atlc       - Download area
      atlc-X.Y.Z/docs/html-docs/index.html       - HTML docs
@@ -220,12 +225,6 @@
      atlc-X.Y.Z/examples                        - examples
      http://www.david-kirkby.co.uk              - my home page
      http://www.david-kirkby.co.uk/ham          - ham radio pages
-
-
-
-
-
-
 
 
 </PRE>

@@ -127,7 +127,7 @@ It is possible the user may wish to change the default. If this is done, the pro
 Given that it is time consuming to calculate the electric fields, it seems silly to expect the user to re-run <COde>atlc</code>, if the images are too light or dark. It would be more sensible to have a sepparate programme that is able to generate the bitamps quickly from the binary files. A programme with a name something like bin2bmp may be added later to do this. <STRONG>Note also that the the <CODE>-i image_fiddle_factor</CODE> will be replaced with a <CODE>-g gamma </CODE>option later, when a more scientific method is developed for this. The current method really is a fiddle!!</STRONG>
 <br><br>
 <strong><a name="-p">-t threads</a></STRONG><br>
-If the computer has multiple processors, you should be able to gain an increase in performance by using them. To do this, but must install pthreads, and configured with the <CODE>--with-mp</CODE> option. One this is done, the programme will be optimised to use 2 cpus. If you have more than 2, you might want to use the <CODE>-t</CODE> option. <br>
+If the computer has multiple processors, you should be able to gain an increase in performance by using them. To do this, but must install pthreads, and configured with the <CODE>--with-threads</CODE> option. One this is done, the programme will be optimised to use 2 cpus. If you have more than 2, you might want to use the <CODE>-t</CODE> option. <br>
 If you attempt do to do this on a version of <COde>atlc</code> that has not be compiled with multi-processor support, it will exit with an error message. <br><br>
 <strong><a name="-v">-v</a></STRONG><br>
 This is the verbose option, so it prints extra data to stdout. <br>
