@@ -23,13 +23,13 @@ int main (int argc, char **argv)
     fprintf(stderr,"file1 and file2 are not of the same length\n");
     exit(2);
   }
-  mem1=(unsigned char *) malloc(length1);
+  mem1=(unsigned char *) malloc((size_t)length1);
   if(mem1 == NULL)
   {
     fprintf(stderr,"Failed to allocate memory in locatediff #mem1\n");
     exit(1);
   }
-  mem2=(unsigned char *) malloc(length2);
+  mem2=(unsigned char *) malloc((size_t)length2);
   if(mem2 == NULL)
   {
     fprintf(stderr,"Failed to allocate memory in locatediff #mem2\n");
@@ -37,8 +37,8 @@ int main (int argc, char **argv)
   }
   fseek(fp1,0,SEEK_SET);
   fseek(fp2,0,SEEK_SET);
-  fread((void *) mem1,1,length1, fp1);
-  fread((void *) mem2,1,length2, fp2);
+  fread((void *) mem1,1,(size_t)length1, fp1);
+  fread((void *) mem2,1,(size_t)length2, fp2);
   for(i=0; i<length1; ++i)
   {
     if(mem1[i] != mem2[i])
