@@ -133,6 +133,7 @@ double cutoff; /* How small the error in subsequent itterations must be */
 int compute, display; /* none, ZO, ZODD, ZEVEN. ZEVEN_VAC, ZODD_VAC; */
 
 int verbose_level; /* 0, 1 or 2 */
+int should_binary_data_be_written_tooQ;
 int dielectrics_to_consider_just_now;
 int non_vacuum_dielectric_found;
 int dielectric_found;
@@ -232,7 +233,8 @@ void get_data_interactively(void);
 double finite_difference(int iterations);
 void do_columns(int *thread);
 void usage_atlc(void);
-void write_fields(char * filename);
+void write_fields_for_two_conductor_lines(char *filename, struct transmission_line_data data);
+void write_fields_for_directional_couplers(char *filename, struct transmission_line_data data);
 char **cmatrix(long nrl, long nrh, long ncl, long nch);
 unsigned char **ucmatrix(long nrl, long nrh, long ncl, long nch);
 int *ivector(long nl, long nh);
