@@ -87,7 +87,6 @@ even if sizeof(short)=8 and sizeof(int)=8. See below for that. */
 
    Bitmap_File_Head.zzMagic[0x0] = bmp_buff[0];
    Bitmap_File_Head.zzMagic[0x1] = bmp_buff[1];
-   //Bitmap_File_Head.bfSize = bmp_buff[0x2] + (bmp_buff[3] + (bmp_buff[4] + (bmp_buff[5] << 8) << 8) <<8);
    Bitmap_File_Head.bfSize = bmp_buff[0x2] + ((bmp_buff[3] + ((bmp_buff[4] + (bmp_buff[5] << 8)) << 8)) <<8);
    Bitmap_File_Head.zzHotX = bmp_buff[0x6] + (bmp_buff[7] << 8);
    Bitmap_File_Head.zzHotY = bmp_buff[0x8] + (bmp_buff[0x09] << 8);
