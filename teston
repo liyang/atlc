@@ -89,7 +89,6 @@ do
   echo $EX4b 
   echo $EX5a  
   echo $EX5b 
-  echo "exiting 1"
   exit 1
   esac
   done
@@ -116,8 +115,7 @@ if [ $# -ne 2 ] ; then
   echo $EX4b 
   echo $EX5a  
   echo $EX5b 
-  echo "exiting 2"
-  exit
+  exit  2
 fi
 
 REMOTE_HOST=`echo $* | awk '{print $1}'`
@@ -138,37 +136,48 @@ else
   SCP=scp
 fi
 REMOTE_HOME=`$SSH $USERNAME@$REMOTE_HOST pwd`
-echo $REMOTE_HOST
 # Create a file 'remote_test.$REMOTE_HOST' on the local machine, which we want
 # executed elsewhere. 
-echo "#!/bin/sh" > remote-test.$TMP_NAME$REMOTE_HOST
-echo "# Script produced on $LOCAL_HOST at $DATE using 'teston' " >> remote-test.$TMP_NAME$REMOTE_HOST
-echo rm -f  $REMOTE_HOME/$REMOTE_HOST/$TMP_DIR$VER.tar >> remote-test.$TMP_NAME$REMOTE_HOST
+echo "#!/bin/sh" | tee > remote-test.$TMP_NAME$REMOTE_HOST.out > remote-test.$TMP_NAME$REMOTE_HOST
+echo "# Script created on $LOCAL_HOST at $DATE using 'teston' " >> remote-test.$TMP_NAME$REMOTE_HOST
+echo "# to run on the remote host $REMOTE_HOST " >> remote-test.$TMP_NAME$REMOTE_HOST
+echo "Output from the script created on $LOCAL_HOST at $DATE using 'teston' " >> remote-test.$TMP_NAME$REMOTE_HOST.out
+#echo rm -f  $REMOTE_HOME/$REMOTE_HOST/$TMP_DIR$VER.tar >> remote-test.$TMP_NAME$REMOTE_HOST
+#echo rm -fR  $REMOTE_HOME/$REMOTE_HOST/$TMP_DIR >> remote-test.$TMP_NAME$REMOTE_HOST
+#echo chmod -R 644 $REMOTE_HOME/$REMOTE_HOST/$TMP_DIR$VER >> remote-test.$TMP_NAME$REMOTE_HOST
+#echo rm -fR  $REMOTE_HOME/$REMOTE_HOST/$TMP_DIR$VER >> remote-test.$TMP_NAME$REMOTE_HOST
+#echo rm -fR  $REMOTE_HOME/$REMOTE_HOST/$TMP_DIR$VER-build >> remote-test.$TMP_NAME$REMOTE_HOST
+#echo mkdir $REMOTE_HOME/$REMOTE_HOST/$TMP_DIR >> remote-test.$TMP_NAME$REMOTE_HOST
 echo cd $REMOTE_HOME/$REMOTE_HOST/$TMP_DIR >> remote-test.$TMP_NAME$REMOTE_HOST
 echo gzip -d $REMOTE_HOME/$REMOTE_HOST/$TMP_DIR$VER.tar.gz >> remote-test.$TMP_NAME$REMOTE_HOST
 echo tar xf $REMOTE_HOME/$REMOTE_HOST/$TMP_DIR$VER.tar >> remote-test.$TMP_NAME$REMOTE_HOST
 echo mkdir $REMOTE_HOME/$REMOTE_HOST/$TMP_DIR$VER-build >> remote-test.$TMP_NAME$REMOTE_HOST
 echo cd $REMOTE_HOME/$REMOTE_HOST/$TMP_DIR$VER-build >> remote-test.$TMP_NAME$REMOTE_HOST
+#echo time $REMOTE_HOME/$REMOTE_HOST/$TMP_DIR$VER/configure $CONFIG_OPTIONS $CONFIGURE_OUTPUT >> remote-test.$TMP_NAME$REMOTE_HOST 2> remote-test.$TMP_NAME$REMOTE_HOST
 echo $REMOTE_HOME/$REMOTE_HOST/$TMP_DIR$VER/configure $CONFIG_OPTIONS $CONFIGURE_OUTPUT >> remote-test.$TMP_NAME$REMOTE_HOST
-echo $MAKE $MAKE_OPTIONS $MAKE_OUTPUT >> remote-test.$TMP_NAME$REMOTE_HOST
+echo time $MAKE $MAKE_OPTIONS $MAKE_OUTPUT >> remote-test.$TMP_NAME$REMOTE_HOST
 if [ $DELETE_FILES_AFTER_USE = "yes" ] ; then 
   rm -r $REMOTE_HOME/$REMOTE_HOST/$TMP_DIR$VER >> remote-test.$TMP_NAME$REMOTE_HOST
 fi 
 chmod 755 remote-test.$TMP_NAME$REMOTE_HOST
 
 # mkdir $REMOTE_HOST on the remote machine
+$SSH $USERNAME@$REMOTE_HOST rm -fR $REMOTE_HOST/$TMP_DIR 2> /dev/null
 $SSH $USERNAME@$REMOTE_HOST mkdir $REMOTE_HOST 2> /dev/null
 $SSH $USERNAME@$REMOTE_HOST mkdir $REMOTE_HOST/$TMP_DIR 2> /dev/null
 
 # Copy via scp/scp2 the script file in addition to the package
 # (somename.tar.gz) to the remote machine.
 
-$SCP -p remote-test.$REMOTE_HOST $USERNAME@$REMOTE_HOST:$REMOTE_HOST/$TMP_DIR
+$SCP -p remote-test.$TMP_NAME$REMOTE_HOST $USERNAME@$REMOTE_HOST:$REMOTE_HOST/$TMP_DIR
 $SCP $VER.tar.gz $USERNAME@$REMOTE_HOST:$REMOTE_HOST/$TMP_DIR
  
 
 # Execute the script on the distant machine.
-$SSH $USERNAME@$REMOTE_HOST $REMOTE_HOST/$TMP_DIR/remote-test.$TMP_NAME$REMOTE_HOST 
+cat remote-test.$TMP_NAME$REMOTE_HOST >> remote-test.$TMP_NAME$REMOTE_HOST.out
+$SSH $USERNAME@$REMOTE_HOST $REMOTE_HOST/$TMP_DIR/remote-test.$TMP_NAME$REMOTE_HOST | tee -a remote-test.$TMP_NAME$REMOTE_HOST.out
+END_DATE=`date`
+echo "Script finished at $END_DATE using 'teston' " | tee -a remote-test.$TMP_NAME$REMOTE_HOST.out
 
 # Clean up the local file after ourselves. 
 if [ DELETE_FILES_AFTER_USE = "yes" ] ; then 
