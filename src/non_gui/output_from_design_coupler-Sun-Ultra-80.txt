@@ -1,0 +1,43 @@
+
+For a 20.000000 dB 50.000000 Ohm coupler with a length of 0.300000 m,
+you need to have an odd-mode impedance Zodd to be 42.540817 Ohms and 
+an even mode impedance Zeven to be 58.767089 Ohms
+
+ 20.000 dB down <-- ************************** ---> 50.000000 Ohm termination
+
+Drive this port --> ************************** ---> 50.000000 Ohm termination
+                    <------  0.3000000 m ---->
+
+Drive Port 1, coupler out of port 2 and terminate the other ports in Zo
+Such a coupler will have the response indicated below.
+
+length =0.300000 mean=145.000000 vcf=0.160168 vcf_for_quarter_wave_line=0.100000 
+frequency = 144.000000 MHz coupling is -20.085217 dB down on the main arm
+frequency = 144.500000 MHz coupling is -20.042470 dB down on the main arm
+frequency = 145.000000 MHz coupling is -20.000000 dB down on the main arm
+frequency = 145.500000 MHz coupling is -19.957804 dB down on the main arm
+frequency = 146.000000 MHz coupling is -19.915882 dB down on the main arm
+
+You may force the length to be any value you want using the -L option - it does not have to be 0.300000 metres long
+Please be patient - this will take a few minutes or so
+|-----------^------------------------------------------------------------------|
+|           |                                                                  |
+|           |              <---w---><-----s----><---w-->                       |
+|           H              ---------            --------                       |
+|           |                                                                  |
+|           |   Er=1.0 (air)                                                   |
+------------v------------------------------------------------------------------
+<-----------------------------------------W----------------------------------->
+H =1.000000 w = 1.340000 s = 0.100000
+W must be *at least* 7.780000, but larger does not matter.
+These dimensions give Zo = 50.000000 Zodd = 42.540817 Zeven = 58.767089 Ohms
+****NOTE ****
+Although H is shown as 1.0, it can be 1 mm, 1 cm or even 1 m. It is important
+that w is 1.340000 times whatever H is, and that s is 0.100000 times whatever H is, but the absolute numbers are irrelavant.
+If you know the height H of your enclosure, use the -H option to indicate
+its value. This will ensure all the dimensions are scaled automatically for you.
+****NOTE 2****
+The length *must* be 0.300000 m if you use these dimensions for W, H, w and s.
+If 0.300000 m is inconvenient, change it with the -L option and recalculate to get new values of W, H, w and s
+See: http://atlc.sourceforge.net
+See: http://atlc.sourceforge.net/couplers.html
