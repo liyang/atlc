@@ -142,11 +142,11 @@ MPI_16a_PI_LDADD = @MPILIBS@ @LIBS@
 
 benchmark_SOURCES = \
 benchmark.c \
-get_portable_data.c \
+try_portable.c \
 try_hpux.c \
+try_aix.c \
 try_tru64.c \
 try_solaris.c \
-try_portable.c \
 defs.h
 
 
@@ -445,9 +445,9 @@ am_Test_threads_b_OBJECTS = Test_threads_b-Test_threads_b.$(OBJEXT)
 Test_threads_b_OBJECTS = $(am_Test_threads_b_OBJECTS)
 Test_threads_b_DEPENDENCIES =
 Test_threads_b_LDFLAGS =
-am_benchmark_OBJECTS = benchmark.$(OBJEXT) get_portable_data.$(OBJEXT) \
-	try_hpux.$(OBJEXT) try_tru64.$(OBJEXT) try_solaris.$(OBJEXT) \
-	try_portable.$(OBJEXT)
+am_benchmark_OBJECTS = benchmark.$(OBJEXT) try_portable.$(OBJEXT) \
+	try_hpux.$(OBJEXT) try_aix.$(OBJEXT) try_tru64.$(OBJEXT) \
+	try_solaris.$(OBJEXT)
 benchmark_OBJECTS = $(am_benchmark_OBJECTS)
 benchmark_LDADD = $(LDADD)
 benchmark_DEPENDENCIES =
@@ -459,8 +459,7 @@ am__depfiles_maybe = depfiles
 @AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/MPI_16a_PI.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/Test_threads_a-Test_threads_a.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/Test_threads_b-Test_threads_b.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/benchmark.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/get_portable_data.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/benchmark.Po ./$(DEPDIR)/try_aix.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/try_hpux.Po ./$(DEPDIR)/try_portable.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/try_solaris.Po ./$(DEPDIR)/try_tru64.Po
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
@@ -509,7 +508,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Test_threads_a-Test_threads_a.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Test_threads_b-Test_threads_b.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/benchmark.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/get_portable_data.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/try_aix.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/try_hpux.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/try_portable.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/try_solaris.Po@am__quote@
