@@ -3,31 +3,36 @@
 # to do it. This test it is not always executed. 
 AUTOMAKE_OPTIONS = gnits
 
-check_PROGRAMS = MPI_16a_PI \
+# check_PROGRAMS = MPI_16a_PI 
+
+check_PROGRAMS = \
 benchmark \
 Test_threads_a \
 Test_threads_b
 
-MPI_16a_PI_SOURCES = MPI_16a_PI.c 
-MPI_16a_PI_LDADD = @MPILIBS@ @LIBS@
+#MPI_16a_PI_SOURCES = MPI_16a_PI.c 
+#MPI_16a_PI_LDADD = @MPILIBS@ @LIBS@
 
 benchmark_SOURCES = \
 benchmark.c \
-try_portable.c \
-try_hpux.c \
 try_aix.c \
-try_tru64.c \
+try_hpux.c \
+try_linux.c \
+try_portable.c \
 try_solaris.c \
+try_tru64.c \
 defs.h
 
 
 Test_threads_a_SOURCES = Test_threads_a.c
 Test_threads_a_CPPFLAGS = @PTHREAD_CFLAGS@
-Test_threads_a_LDADD = @PTHREAD_LIBS@ @LIBS@ @GSL_LIBS@ @MPILIBS@ 
+#Test_threads_a_LDADD = @PTHREAD_LIBS@ @LIBS@ @GSL_LIBS@ @MPILIBS@ 
+Test_threads_a_LDADD = @PTHREAD_LIBS@ @LIBS@ @GSL_LIBS@ 
 
 Test_threads_b_SOURCES = Test_threads_b.c
 Test_threads_b_CPPFLAGS = @PTHREAD_CFLAGS@
-Test_threads_b_LDADD = @PTHREAD_LIBS@ @LIBS@ @GSL_LIBS@ @MPILIBS@ 
+#Test_threads_b_LDADD = @PTHREAD_LIBS@ @LIBS@ @GSL_LIBS@ @MPILIBS@ 
+Test_threads_b_LDADD = @PTHREAD_LIBS@ @LIBS@ @GSL_LIBS@ 
 
 TESTS_ENVIRONMENT = \
 top_builddir=$(top_builddir) \
@@ -124,9 +129,10 @@ Test_threads_b \
 14b-check-circ-in-rect.test \
 14c-check-circ-in-rect.test \
 14d-check-circ-in-rect.test  \
-MPI_16a_PI \
 WARNING--The-next-test+benchmark-takes-a-long-while.test \
 benchmark.test 
+
+#MPI_16a_PI 
 
 EXTRA_DIST = \
 benchmark.test \
