@@ -41,7 +41,7 @@ Out[10]= {{vij ->
 */
 #include "definitions.h"
 
-extern int width, height, **cell_type, dielectrics_to_consider_just_now;
+extern int width, height, **cell_type;
 extern double r, **Er, **Vij;
 void update_voltage_array(int i)
 {
