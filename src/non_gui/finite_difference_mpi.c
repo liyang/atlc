@@ -142,7 +142,7 @@ void mpi_worker(int rank) {
 
   /* allocate matrixes big enough to contain the
 	 assigned strip and supporting data */
-  cell_type=imatrix(0,num_cols+4,0,height);
+  cell_type=cmatrix(0,num_cols+4,0,height);
   Vij=dmatrix(0,num_cols+4,0,height);
   Er=dmatrix(0,num_cols+4,0,height);
  
