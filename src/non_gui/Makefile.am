@@ -8,6 +8,7 @@ find_optimal_dimensions_for_microstrip_coupler \
 create_bmp_for_rect_cen_in_rect_coupler
 
 atlc_SOURCES = atlc.c read_bitmap_file_headers.c \
+check_convergence.c \
 byteswap.c memory.c setup_arrays.c \
 finite_difference_single_threaded.c \
 finite_difference_multi_threaded.c \
@@ -86,8 +87,6 @@ check_parameters_of_create_bmp_for_circ_in_circ.c \
 check_error.c get_options.c definitions.h exit_with_msg_and_exit_code.c \
 print_copyright.c Erdata.h
 create_bmp_for_circ_in_circ_LDADD = @LIBS@ @GSL_LIBS@
-
-
 
 create_bmp_for_circ_in_rect_SOURCES = create_bmp_for_circ_in_rect.c \
 convert_create_bmp_for_circ_in_rect_dimensions_to_integers.c \
