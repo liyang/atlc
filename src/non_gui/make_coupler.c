@@ -52,7 +52,7 @@ int main(int argc, char **argv)
   FILE *image_data_fp;
   struct data optimise;
 
-  while((q=get_options(argc,argv,"Cb:f:v")) != -1)
+  while((q=get_options(argc,argv,"Cb:v")) != -1)
   switch (q) 
   {
     case 'C':
@@ -66,24 +66,32 @@ int main(int argc, char **argv)
       verbose=TRUE;
     break;
   }
-  if( bmp_size < 6 || (argc-my_optind != 4) || bmp_size>28)
+  if( bmp_size < 6 || (argc-my_optind != 5) || bmp_size>28)
   {
     usage_make_coupler();
     exit(1);
   }
-
   HH=atof(argv[my_optind]);
   ww=atof(argv[my_optind+1]);
   ss=atof(argv[my_optind+2]);
-  //er=atof(argv[my_optind+3]);
-  er=1.0;
-  image_data_fp=fopen(argv[my_optind+3],"wb");
-  if(er <1.0)
+  if(HH<0 || ww <0 || ss<0)
   {
-    fprintf(stderr,"Er must be 1.0 or more \n");
+    fprintf(stderr,"Sorry, W, H and s must all be greater than 0\n");
+    exit(8);
+  }
+  er=atof(argv[my_optind+3]);
+  Er1=er;
+  Er2=er;
+  if(er < 1.0)
+  {
+    fprintf(stderr,"Sorry, you can't have a dielectric constand Er of less than 1.0\n");
     exit(1);
   }
-
+  if( (image_data_fp=fopen(argv[my_optind+4],"wb")) ==NULL)
+  {
+    fprintf(stderr,"Can't open binary file %s for writing\n",argv[my_optind+4]);
+    exit(2);
+  }
   WW=2.0*ww+ss+RATIO*HH;
   optimise.float_values[0]=WW            ;   /* minimum width as a float*/
   optimise.float_values[1]=HH;               /* height in floats */
@@ -111,15 +119,17 @@ int main(int argc, char **argv)
   H=optimise.best[1];
   w=optimise.best[2];
   s=optimise.best[3];
-
   write_bitmap(image_data_fp);
-  if(verbose)
-  {
-    calculate_Zodd_and_Zeven(&Zodd, &Zeven, &Zo, w, H-10, s, 1.0);
-    printf("Wanted:            Zodd=%f Zeven=%f Zo=%f\n", Zodd, Zeven, Zo);
+  calculate_Zodd_and_Zeven(&Zodd, &Zeven, &Zo, ww, HH, ss, er);
+  printf("The actual dimensions you gave have theoretical imedances of:\n");
+  //printf("   Zodd= %f Zeven= %f Zo= %f (Ohms)\n\n", Zodd, Zeven, Zo);
 
-    calculate_Zodd_and_Zeven(&Zodd, &Zeven, &Zo, ww, HH, ss, 1.0);
-    printf("Actually modelled: Zodd=%f Zeven=%f Zo=%f\n", Zodd, Zeven, Zo);
-  }
+  printf("        Zodd= %f Zeven= %f Zo= %f (Ohms) ww=%f HH=%f ss=%f er=%f\n\n", Zodd, Zeven, Zo,ww,HH,ss,er);
+  calculate_Zodd_and_Zeven(&Zodd, &Zeven, &Zo, w, H-10, s, er);
+  printf("The bitmap produced (which approximates what you want) should have:\n");
+  printf("   Zodd= %f Zeven= %f Zo= %f (Ohms)\n", Zodd, Zeven, Zo);
+
+
+
   exit(0);
 }
