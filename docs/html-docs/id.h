@@ -21,5 +21,6 @@ enum
   ID_ShowTip = 19,
   ID_Save = 20,
   ID_Close = 21,
+  ID_FileMenuClose = 22,
   ID_About
 };
