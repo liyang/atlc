@@ -82,7 +82,7 @@ int main(int argc, char **argv) /* Read parameters from command line */
 {
   int q;
   int calculate_physical_dimensions=FALSE;
-  double er, Zo=-1, length=-1, fmin, fmax, fmean, fstep=-1, cf,  Zodd, Zeven; 
+  double lq, lolq, er, Zo=-1, lambda, length=-1, fmin, fmax, fmean, fstep=-1, cf,  Zodd, Zeven; 
   double f, fq, c, cq, w, s, error, error_max=1e30;
   double wanted_coupling_factor_in_dB, step=0.05;
   double Zo_x=-1, Zeven_x=-1, Zodd_x=-1, best_s=-1, best_w=-1, height_of_box=1.0;
@@ -122,6 +122,7 @@ int main(int argc, char **argv) /* Read parameters from command line */
   fmin=atof(argv[my_optind+1]);
   fmax=atof(argv[my_optind+2]);
   fmean=(fmin+fmax)/2.0;
+  printf("length=%f\n",length);
   if(fstep <0 )
     fstep=(fmax-fmin)/4.0;
   if (wanted_coupling_factor_in_dB < 0.0 )
@@ -137,8 +138,11 @@ int main(int argc, char **argv) /* Read parameters from command line */
   if (Zo < 0.0)
     Zo=50.0; 
   if(length<0.0)
-    length=75.0/fmean;  /* By default, make it a quareter wave long */
-  fq=300.0/length; /* Frequency at which the length a quarter wave */
+    length=75.0/fmean;  /* By default, make it a quarter wave long */
+  fq=fmean;
+  lq=300/fmean;
+  //lolq=length/lq;
+  lolq=lq/length;
 
   /* The following sent in an email by Paul AA1L, sums the theory up 
   You make Zo=50=sqrt(Zoo*Zoe) and
@@ -157,14 +161,11 @@ int main(int argc, char **argv) /* Read parameters from command line */
   factor c */
 
   cq=1.0/pow(10,wanted_coupling_factor_in_dB/20.0);   /* We cant c to be this IF its a quarter wave long */
-  c=cq*pow(sin(0.5*M_PI*fmean/fq),2.0); /* X This is what is now needed for some given length (and so fq) */
-  c=cq*pow(sin(0.5*M_PI*fmean/fq),2.0); /* This is what is now needed for some given length (and so fq) */
-  printf("c=%f\n",c);
+  c=cq;
 
   /* After mucking around with Mathematica a bit, I found it was
   possible to invert the equations */
   
-  fq=75/length;
   Zodd = sqrt(1-c)*Zo/sqrt(1+c);
   Zeven=Zo*Zo/Zodd;
 
@@ -184,9 +185,16 @@ int main(int argc, char **argv) /* Read parameters from command line */
   printf("cq=%f fq=%f\n",cq, fq);
   for(f=fmin; f<=fmax; f+=fstep)
   {
+    fq=65/fmean;
+
     cf=20*log10(c);
     cf=20*log10(cq*pow(sin(0.5*M_PI*f/fq),2.0)); /* This is what is now needed for some given length (and so fq) */
-    //cf=20*log10(cq/pow(sin(0.5*M_PI*f/fq),2.0)); /* This is what is now needed for some given length (and so fq) */
+
+    //cf=20*log10(cq*pow(sin(0.5*M_PI*f/fq),2.0)); /* This is what is now needed for some given length (and so fq) */
+    //cf=20*log10(cq*pow(sin(0.5*M_PI*f/fq),2.0)); /* This is what is now needed for some given length (and so fq) */
+    //cf=20*log10(c*pow(sin(0.5*M_PI*f/fq),2.0)); /* This is what is now needed for some given length (and so fq) */
+    //f*=
+    cf=20*log10(cq*pow(sin(0.5*M_PI*f/fq),2.0)); /* This is what is now needed for some given length (and so fq) */
     printf("frequency = %f MHz coupling is %f dB down on the main arm\n",f,cf);
   }
     printf("You may force the length to be any value you want using the -l option\n");
