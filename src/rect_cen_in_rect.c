@@ -52,8 +52,10 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
       case '?':
       printf("read a ? exiting\n");
    }
+   //printf("argc=%d my_optind=%d\n", argc, my_optind);
    if(argc-my_optind ==5)
    {
+     //printf("hello\n");
 
       WW=atof(argv[my_optind]);
       HH=atof(argv[my_optind+1]);
