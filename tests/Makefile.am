@@ -28,8 +28,7 @@ TESTS =  \
 3a-create_bmp_for_rect_cen_in_rect.bmp.test \
 3b-create_bmp_for_rect_cen_in_rect.txt.test \
 4a-create_bmp_for_microstrip_coupler.test \
-5a-check-s_and_-S_options_of_atlc-2D.test \
-5b-check-s_and_-S_options_of_atlc-3D.test \
+5a-check-s_and_-S_options_of_atlc-2conductor.test \
 6a-create_and_check_25ohm_201Pixel_high_symmetrical_stripline.test \
 6b-create_25ohm_401Pixel_high_symmetrical_stripline.test \
 6c-create_25ohm_801Pixel_high_symmetrical_stripline.test \
@@ -68,6 +67,7 @@ TESTS =  \
 9h-create-200-Ohm-401b.bmp.test \
 9i-create-200-Ohm-801b.bmp.test \
 10a-create-lots-of-examples-check-last-one.test \
+10b-create-lots-of-examples-check-last-one.test \
 11a-verify-checksum-of-supplied-test-coupler1.bmp.test \
 11b-verify-checksum-of-created-test-coupler1.Ex.odd.bmp.test \
 11c-verify-checksum-of-created-test-coupler1.Ey.odd.bmp.test \
@@ -83,6 +83,7 @@ TESTS =  \
 
 EXTRA_DIST = \
 10a-create-lots-of-examples-check-last-one.test \
+10b-create-lots-of-examples-check-last-one.test \
 11a-verify-checksum-of-supplied-test-coupler1.bmp.test \
 11b-verify-checksum-of-created-test-coupler1.Ex.odd.bmp.test \
 11c-verify-checksum-of-created-test-coupler1.Ey.odd.bmp.test \
@@ -120,8 +121,7 @@ EXTRA_DIST = \
 3a-create_bmp_for_rect_cen_in_rect.bmp.test \
 3b-create_bmp_for_rect_cen_in_rect.txt.test \
 4a-create_bmp_for_microstrip_coupler.test \
-5a-check-s_and_-S_options_of_atlc-2D.test \
-5b-check-s_and_-S_options_of_atlc-3D.test \
+5a-check-s_and_-S_options_of_atlc-2conductor.test \
 6a-create_and_check_25ohm_201Pixel_high_symmetrical_stripline.test \
 6b-create_25ohm_401Pixel_high_symmetrical_stripline.test \
 6c-create_25ohm_801Pixel_high_symmetrical_stripline.test \
