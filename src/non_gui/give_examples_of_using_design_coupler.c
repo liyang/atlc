@@ -51,17 +51,29 @@ void give_examples_of_using_design_coupler(void)
   printf("<-----------------------------------------W----------------------------------->\n");
   printf("The program reports: H = 1.0, ; w = 1.44 ; s = 0.44\n");
 
-  printf("The height of the box is H must be small compared to the length, (perhaps\n");
-  printf("no more than 7%c of the length), or 17.5 mm in this case, with a length of 250 mm,\n",'%');
-  printf("otherwise fringing effects will be significant. The width of the structure W\n");
+  printf("The height of the box is H must be small compared to the length, (perhaps no\n");
+  printf("more than 7%c of the length), or 17.5 mm in this case, with a length of 250 mm\n",'%');
+  printf("otherwise fringing effects will be significant. The width of the structure\n");
   printf("should be as large as possible. The program suggests making this 5*H+2*w+s. The\n");
   printf("7%c and 5*H+2*w+s are educated gueeses, rather than exact figures. There is\n",'%');
   printf("no problem in making the width  larger than than 5*H+2*w+s, as long as the\n");
-  printf("length is kept at 100 mm. The RATIO of the dimensions H, w and s (but not the\n");
+  printf("length is kept at 250 mm. The RATIO of the dimensions H, w and s (but not the\n");
   printf("length) must be kept constant. W just needs to be sufficiently large - it is\n");
   printf("uncritical.  \n\n");
-  printf("If you happened to have some 6.3 mm sqaure brass available, then using\n");
-  printf("this for the side walls would mean H becoming 6.3 mm and the dimensions w and s\n");
-  printf("being; s=6.3*0.02=0.126 mm the size walls would mean H becoming 6.3 and the dimensions w and s\n");
+  printf("If you happened to have some 15 mm sqaure brass available, then using that\n");
+  printf("for the side walls would mean H becoming 15*1.0 = 15 mm, ");
+  printf("w = 15*1.44 = 21.6 mm  and s = 15*0.44 = 6.6 mm\n\n");
+  printf("There is no need to compute the above calculations with a calculator, as using\n");
+  printf("The -H option allows one to specify the height H. The program then reports the\n");
+  printf("exact dimensions for the lenth L, height H, w, s and suggests a minimum width\n");
+  printf("for W.\n\n");
+  printf("In summary we have:\n");
+  printf("                   30 dB coupler +1.02 dB / -0.78 dB for 130 to 170 MHz\n");
+  printf("                   Length L = 250 mm, height H = 15 mm, stripline spacing s\n");
+  printf("                   = 6.6 mm, stripline width w = 21.6 mm, width W >= 124 mm\n");
+  printf("By default, design_coupler prints a lot of information to the screen.\n");
+  printf("This can be reduced by the -q option or reduced to only one line with -Q\n");
+  printf("Other options include -Z to change the impedance from the default 50 Ohms\n");
+  printf("and -C to see the fully copyright, Licencing and distrubution information\n");
   exit(0);
 }
