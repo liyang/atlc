@@ -10,6 +10,9 @@ made, but it help to determine why code might not work later
 on, if its known whether these are defined or not. Problems
 reported by someone indicate problems, which would be easier
 to track with this option enabled. 
+Added a check for errno.h, as it was needed on Suse. Prior to this
+many files had #ifdef HAVE_ERRNO_H, but obviously the inclusion of
+errno.h was not critical on those systems. On Suse it was. 
 
 tests/try_portable.c
 check the return value or uname, to see if it fails or 
