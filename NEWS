@@ -1,16 +1,16 @@
-NEWS for realease 4.2.8 on 11/1/03.
- 
-A new developer, Patrick Kelsey, has agreed to help. 
+NEWS for realease 4.2.11-alpha on 13/3/03.
 
-This is the probably last 4.x.y release, although there
-may be a relase or two if bugs are found. Work is now
-starting on version 5.
+This release has a bug, in that some of the tests, 
+fail sometimes, pass on others. 
 
-Version 5 will support MPI (message passing interface), 
-but the 5.0.0 release is likely to have some bugs
+Although not tested well at all, and not reccomened
+for general use, version 4.2.11-alpha supports
+support MPI (message passing interface), 
+but the release has bugs and does not work at all on
+Solaris. 
 (as all codes does I guess). The 4.x.y should be the 
 more stable (at least initally) but hopefully the 
-MPI support in version 5.x.y will be of use to  
+MPI support in version 5.0.0 will be of use to  
 someone who runs atlc a lot and has access to a network
 of computers. 
 
@@ -19,11 +19,11 @@ now develope an error, rather than produce an incorrect
 result.         
 
 The output from atlc run on all the bitmaps in the 
-example directory are included - they are small files
+examples directory are included - they are small files
 and might be useful to people. 
 
 Running the binary programs incorrectly will print
 a version number. 
 
-Dr. David Kirkby 11/1/03
+Dr. David Kirkby 13/3/03
 
