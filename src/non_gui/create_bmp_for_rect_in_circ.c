@@ -46,7 +46,7 @@ int fileflag=FALSE;
 
 extern int main(int argc, char **argv) /* Read parameters from command line here   */
 {
-   int  bmp_size=DEFAULT_BMPSIZE;
+   int  bmp_size=DEFAULT_BMP_SIZE;
    int q;
    struct transmission_line_properties not_used;
    FILE *image_data_fp=stdout;

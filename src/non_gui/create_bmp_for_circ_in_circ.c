@@ -60,7 +60,7 @@ and convert_create_bmp_for_rect_in_rect_dimensions_to_integers.c
 
 extern int main(int argc, char **argv) /* Read parameters from command line here   */
 {
-   int  bmp_size=DEFAULT_BMPSIZE;
+   int  bmp_size=DEFAULT_BMP_SIZE;
    int q;
    FILE *image_data_fp;
    char *filename;

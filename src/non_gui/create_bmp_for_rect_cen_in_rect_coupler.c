@@ -27,7 +27,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 extern int main(int argc, char **argv) /* Read parameters from command line here   */
 {
 #ifdef GGG
-   int  bmp_size=DEFAULT_BMPSIZE;
+   int  bmp_size=DEFAULT_BMP_SIZE;
    int q;
    FILE *image_data_fp=stdout;
    struct transmission_line_properties not_used;

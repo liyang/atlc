@@ -45,7 +45,7 @@ int main(int argc, char **argv) /* Read parameters from command line here   */
    int q;
    pcb.verbose_level=0;
 
-   pcb.bmp_size=DEFAULT_BMPSIZE;
+   pcb.bmp_size=DEFAULT_BMP_SIZE;
    pcb.WW=-1;
    pcb.HH=-1;
 

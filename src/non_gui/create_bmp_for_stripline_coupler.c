@@ -48,7 +48,7 @@ int main(int argc, char **argv)
 {
   double er, return_error;
   double Zodd, Zeven, Zo;
-  int bmp_size=DEFAULT_COUPLER_BITMAP_SIZE, q; 
+  int bmp_size=DEFAULT_COUPLER_BMP_SIZE, q; 
   FILE *image_data_fp;
   struct transmission_line_properties optimise;
   struct transmission_line_properties foo;
