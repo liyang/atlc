@@ -4,12 +4,29 @@ Put a bit more info in the README.windows
 
 Added a function do_fd_calculation() and therefore added the file
 do_fd_calculation.c This helps clean up atlc.c a lot, since a lot of
-repetition has been removed. 
+repetition has been removed. It needed quite a bit in it to handle the
+case of coupled lines and all the different things that have to be
+printed in this case. 
 
 Changed setup_arrays.c so that it now sets a variable 'coupler' to TRUE
 if there is a blue ( - 1 V) conductor. 
 
-Made a start towared  handling the coupler. 
+Got resuls out from the coupler. No idea if they are right. Pretty sure
+they are wrong in fact. 
+
+Corrected a typo in FAQ.html which meant the local copy of the QEX
+paper could not be downloaded from the FAQ.
+
+Answered that loss can't be measured in the FAQ.
+
+Started to write a programme calc_coupler which will determine the odd
+and even mode impedance (Zodd and Zeven) for a coupler consisting of two
+infinitely thin striplines between two groundplaces. I got the equations
+from an e-mail sent to me by AA1LL / KB1CZP <aa1ll@email.com>. This has
+resulted in added new files calc_coupler.c and usage_calc_coupler.c. Its
+also meant that the GNU scientific library GSL is now needed to build
+this programme. 
+
 
 ********************Version 3.0.7 Dated 6/4/2002**************************
 **************************************************************************
@@ -347,6 +364,10 @@ programmes (usage_rect_in_rect etc)
 
 Added quit a few comments to atlc.c, and generally made the code tidier,
 with more consistant indenting. 
+
+Added a file/function swap_conductor voltages, which converts +1V to -1V
+and visa-versa. This is needed to compute the impedance of coupled
+lines. 
 
 **************************Version 2.32 Dated 9/3/2002***************************
 ********************************************************************************
