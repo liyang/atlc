@@ -17,9 +17,7 @@ dnl Checks for header files.
 AC_STDC_HEADERS
 AC_HAVE_HEADERS(stdio.h math.h errno.h stdlib.h string.h thread.h pthread.h pthreads.h)
 
-dnl Check for the GNU scientific library header files. 
 
-AC_HAVE_HEADERS(gsl/gsl_sf_ellint.h gsl/gsl_complex.h gsl/gsl_complex_math.h)
 
 AC_HAVE_HEADERS("intelligent life")
 
@@ -59,6 +57,10 @@ dnl Only use -O3 if we have gcc
 if test "x$GCC" = "xyes"; then
   CFLAGS="$CFLAGS -O3"
 fi
+
+dnl Check for the GNU scientific library header files. 
+
+AC_HAVE_HEADERS(gsl/gsl_sf_ellint.h,,AC_MSG_WARN(To get full functionality you should install the GNU \nscientific library (gsl) available at http://sources.redhat.com/gsl. Without \ngsl it will be impossible to evalute the theoretical impedance of a coupler\nusing \"make_coupler\"))
 
 AC_OUTPUT([\
 Makefile                                        \
