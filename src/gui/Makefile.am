@@ -1,8 +1,8 @@
-bin_PROGRAMS = checksum
+bin_PROGRAMS = atlc
 
-checksum_SOURCES = checksum.cpp
+checksum_SOURCES = atlc.cpp
 
 INCLUDES = @EXTRA_WXWINDOWS_CFLAGS@
-checksum_LDADD =  @EXTRA_WXWINDOWS_LIBS@
+atlc_LDADD =  @EXTRA_WXWINDOWS_LIBS@
 
 EXTRA_DIST = README
