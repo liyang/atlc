@@ -14,7 +14,6 @@
 # The following are around 50 Ohm transmission lines. 
 ../src/sym_strip 1 201 290 50-Ohm-201b.bmp
 ../src/sym_strip 1 401 578 50-Ohm-401b.bmp
-../src/sym_strip 1 801 578 50-Ohm-401b.bmp
 
 # The following are around 100 Ohm transmission lines. 
 ../src/sym_strip 1 201 101 100-Ohm-201b.bmp
@@ -53,9 +52,17 @@ echo eccentric-m.bmp
 ../src/circ_in_circ 500  50 200 1 > eccentric-m.bmp
 echo eccentric-n.bmp
 ../src/circ_in_circ -b 10 500  50 200 1 > eccentric-n.bmp
+../src/sym_strip 1 201 301 wide.bmp
+../src/rect_in_rect 268 100 10 40 25 200 100 45 1.0 4.8 > pcb2.bmp
+../src/rect_cen_in_rect 268 100 100 50 4.8 > central.bmp 
+../src/circ_in_circ 100 30 25 1.006 > off-centre2.bmp
+../src/circ_in_rect 20 200 100 50 -5 10.2 > cir.bmp
 
-../src/make_coupler 1.0 1.0 1.0 1.0 1.0 coupler1.bmp
-../src/make_coupler 2.0 1.0 1.0 1.0 1.0 coupler2.bmp
-../src/make_coupler 3.0 1.0 1.0 1.0 1.0 coupler3.bmp
-../src/make_coupler 4.0 1.0 1.0 1.0 1.0 coupler4.bmp
-../src/make_coupler 5.0 1.0 1.0 1.0 1.0 coupler5.bmp
+../src/make_coupler 1.0  1.0 1.0   coupler1.bmp
+../src/make_coupler 2.0  1.0 1.0   coupler2.bmp
+../src/make_coupler 3.0  1.0 1.0   coupler3.bmp
+../src/make_coupler 4.0  1.0 1.0   coupler4.bmp
+../src/make_coupler 5.0  1.0 1.0   coupler5.bmp
+../src/make_coupler 1.0  1.0 0.5   coupler6.bmp
+../src/make_coupler 1.0  1.0 0.1   coupler7.bmp
+../src/make_coupler 0.25 1.0 1.0   coupler8.bmp
