@@ -37,7 +37,7 @@ void usage_atlc(void)
   fprintf(stderr,"  -C       \n      Print Licence and copying information\n");
   fprintf(stderr,"  -s       \n      Skip writing the Ex, Ey, E, V, U and Er files bitmap (.bmp) files\n");
   fprintf(stderr,"  -S       \n      Skip writing the Ex, Ey, E, V, U and Er files binary (.bin) files\n");
-  fprintf(stderr,"  -v       \n      Verbose option. Print extra data (-vv or -vvv gives even more)\n\n");
+  fprintf(stderr,"  -v       \n      Be verbose (-vv -vvv or -vvvv gives progressively more information)\n\n");
   fprintf(stderr,"  -c cutoff\n      where 'cutoff' sets the cutoff criteria - see html docs or man page.\n");
   fprintf(stderr,"  -d rrggbb=Er\n      where the colour rrggbb (in hex) is a (d)ielectric of permittivity Er.\n");
   fprintf(stderr,"  -i factor\n      which lightens (factor>%.1f) or darkens (1.0 <factor<%.1f) output bitmaps.\n",
@@ -57,5 +57,4 @@ void usage_atlc(void)
   fprintf(stderr,"There are no plans to add multi-processor support to Windoze, but if this is a\n");
   fprintf(stderr,"Unix executable, then re-run 'configure' using the '--with-mp' option\n");
 #endif
-  exit(0);
 }
