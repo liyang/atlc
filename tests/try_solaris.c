@@ -97,6 +97,7 @@ int try_solaris(struct computer_data *data)
 #endif
 #endif
 #endif
-#endif
+#else  
   return(-1);
+#endif
 }
