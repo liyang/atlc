@@ -23,11 +23,11 @@
 # Check the Ex.even file created by running 7a
 touch $top_builddir/tmp/test_stripline_coupler.Ex.even.bmp
 MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test_stripline_coupler.Ex.even.bmp`
-rm $top_builddir/tmp/test_stripline_coupler.Ex.even.bmp
 if [ $MD5SUM != 1342b3280d6c2833ea9b0bdd1e31eb1d ] ; then
   echo "FAILED:(checksum failure)" $0 >> tests.log
   exit 1
 else
+  rm $top_builddir/tmp/test_stripline_coupler.Ex.even.bmp
   echo "PASSED:" $0 >> tests.log
   exit 0
 fi

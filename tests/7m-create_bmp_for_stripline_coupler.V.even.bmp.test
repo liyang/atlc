@@ -3,11 +3,11 @@
 touch $top_builddir/tmp/test_stripline_coupler.V.even.bmp
 
 MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test_stripline_coupler.V.even.bmp`
-rm -f $top_builddir/tmp/test_stripline_coupler.V.even.bmp
 if [ $MD5SUM != 683b7385af4da467559b2fd1df8787ae ] ; then
     echo "FAILED:" $0 >> tests.log
     exit 1
 else
+    rm -f $top_builddir/tmp/test_stripline_coupler.V.even.bmp
     echo "PASSED:" $0 >> tests.log
     exit 0
 fi
