@@ -45,13 +45,16 @@ void fill_image_vector_with_data(unsigned char *image_vector, int colour_Er1, in
    int left_edge_red;
    left_edge_red=W/2 - w -s/2;
    left_edge_blue=(W+s)/2;
-   if(verbose)
-     printf("\nw=%d s=%d W=%d H=%d\n", w, s, W, H);
+   //if(verbose)
+     printf("\nw=%d s=%d W=%d H=%d Er1=%x Er2=%x in fill..data for couplers\n", w, s, W, H,colour_Er1, colour_Er2);
    for(j=0;j<H;++j)
    {
       for(i=0;i<W; ++i)
       {
-         red=0xff; green=0xff; blue=0xff;
+         red=colour_Er1/(256*256); /* Fill in areas with Er1 */
+         green=colour_Er1/256;
+         blue=colour_Er1%256;
+
 	 /* Put a small border in green. Only one pixel is needed, but
 	 I'll put a few more. */
 
