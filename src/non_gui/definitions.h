@@ -194,6 +194,15 @@ struct max_values
 double Ex_or_Ey_max, E_max, V_max, U_max, permittivity_max;
 };
 
+
+struct fit_doubles_to_integers{
+int n_min, n_max, n;
+int m, *in;
+double *out, good, acceptable;
+double largest_errror;
+double rms_errror;
+};
+
 #ifdef ENABLE_MPI
 struct strip {
   int start_col;
