@@ -68,7 +68,7 @@ unsigned char *image_data;
 int width=-1, height=-1;
 extern int errno;
 size_t size;
-static int number_of_workers=MAX_THREADS; 
+int number_of_workers=MAX_THREADS; 
 int non_vacuum_found=FALSE;
 int dielectrics_to_consider_just_now;
 int coupler=FALSE;
