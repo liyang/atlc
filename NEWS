@@ -1,28 +1,17 @@
-NEWS for realease 4.3.0 on 23 May 2003.
+NEWS for realease 4.3.2 on 12 June 2003.
 
-A bug, preventing atlc from runningt properly on multiple
-processors has been fixed. This is the main change. 
+A benchmark has been added, so that one can check the 
+speed of execution. This shouuld also be able to gather
+some hardware information such as
+a) CPU type
+b) FPU type
+c) CPU speed
+c) RAM 
+d) Number of CPUs
+e) Maximum number of CPUs support by system.
 
-atlc should no longer fail any test on a multi-processor
-system configured with --with-threads. The algorithm used
-for both single processor and multiple processor (i.e. 
-threaded code is the same). 
+Currently, the above data has only been gathered on 
+Solaris and Tru64, but some may work on other platforms.
 
-The -t option to atlc, which sets the number of threads 
-when configured for multiple processors can be set to 0
-to use entirely the single-threaded algorithm. If set to
-one, it will use the multi-threaded algoritm, but use
-only one thread. If set to some other number, it will use
-that number of threads and be optimal for the same number
-of cpus. 
-
-Support for distributed programming has been temporarily removed.
-Someone else added the code, but since he is no longer involved in
-the development, it is difficult for me to follow. So I'll remove
-the MPI specific code and will re-implement this. 
-
-A test has been added to make sure atlc can handle the -d option 
-
-
-Dr. David Kirkby 23/5/2003
+Dr. David Kirkby 12/6/2003
 
