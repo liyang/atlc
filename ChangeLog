@@ -8,6 +8,11 @@ running 'make clean' will not delete the example files
 created, but running 'make distclean' will. 
 Added a lot of txt files (see note below). 
 
+man
+News names for man pages 
+
+lots of changes to files name 'cvsignore
+
 examples/twin-wire4.bmp
 Added to the CVS repositry. Had prevously ignored this
 large file. 
