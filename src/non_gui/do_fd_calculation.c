@@ -32,6 +32,91 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 
 extern int append_flag;
 extern int dielectrics_to_consider_just_now, coupler;
+
+
+#ifdef ENABLE_MPI
+
+#include <mpi.h>
+
+extern struct strip strip_map[MAX_PES+1];
+extern int num_pes;
+extern double **Vij;
+extern int height;
+
+
+MPI_Request Vij_rcv_requests[MAX_PES];
+MPI_Status Vij_rcv_statuses[MAX_PES];
+
+void mpi_send_current_data() {
+  int i, start_col, num_cols;
+  int control;
+
+  for(i=1; i<num_pes; i++) {
+
+	start_col = strip_map[i].start_col;
+	num_cols = strip_map[i].num_cols;
+
+	control = CONTROL_VALUE_RECEIVE_DATA;
+	MPI_Send(&control,
+			 1,
+			 MPI_INT,
+			 i,
+			 MSG_TAG_CONTROL,
+			 MPI_COMM_WORLD);
+
+	/* send initial contents of
+	   voltage matrix strip */
+	MPI_Send(Vij[start_col - 1],
+			 (num_cols+2)*height,
+			 MPI_DOUBLE,
+			 i,
+			 MSG_TAG_VIJ,
+			 MPI_COMM_WORLD);
+  
+	/* send current value of dielectrics_to_consider_just_now */
+	MPI_Send(&dielectrics_to_consider_just_now,
+			 1,
+			 MPI_INT,
+			 i,
+			 MSG_TAG_DIELECTRICS,
+			 MPI_COMM_WORLD);
+
+  }
+
+}
+
+
+
+void mpi_receive_updated_vij_strips() {
+  int i;
+  int control;
+
+  control = CONTROL_VALUE_SEND_DATA;
+  for(i=1; i<num_pes; i++) {
+	MPI_Send(&control,
+			 1,
+			 MPI_INT,
+			 i,
+			 MSG_TAG_CONTROL,
+			 MPI_COMM_WORLD);
+
+	MPI_Irecv(Vij[strip_map[i].start_col],
+			  strip_map[i].num_cols*height,
+			  MPI_DOUBLE,
+			  i,
+			  MSG_TAG_VIJ,
+			  MPI_COMM_WORLD,
+			  &Vij_rcv_requests[i-1]);
+  }
+
+  /* wait for all of the voltage strips to be received before
+	 returning */
+  MPI_Waitall(num_pes-1, Vij_rcv_requests, Vij_rcv_statuses);
+}
+
+#endif /* ENABLE_MPI */
+
+
 void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_to_print_fp, char *inputfile_filename)
 {
   double capacitance_old, capacitance;
@@ -43,10 +128,15 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
     if(data->verbose_level >= 2)
       printf("Solving assuming a vacuum dielectric\n");
     capacitance=VERY_LARGE; /* Can be anything large */
+	dielectrics_to_consider_just_now=1;
+	data->dielectrics_to_consider_just_now=1;
+
+#ifdef ENABLE_MPI
+	mpi_send_current_data();
+#endif /* ENABLE_MPI */
+
     do /* Start a finite calculation */
     {
-      dielectrics_to_consider_just_now=1;
-      data->dielectrics_to_consider_just_now=1;
       capacitance_old=capacitance;
       capacitance=finite_difference(ITERATIONS);
       data->C_vacuum=capacitance;
@@ -57,10 +147,10 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
       if (data->dielectrics_in_bitmap == 1) /* Just get C by simple scaling of Er */
       {
         data->C=capacitance*data->found_this_dielectric;  /* Scaled by the single dielectric constant */
-	data->Er=data->found_this_dielectric;
+		data->Er=data->found_this_dielectric;
       }
       else
-	data->Er=1.0;
+		data->Er=1.0;
       data->Zo=sqrt(data->L_vacuum/data->C);  /* Standard formula for Zo */
       data->Zodd=sqrt(data->L_vacuum/data->C);  /* Standard formula for Zo */
       velocity_of_light_in_vacuum=1.0/(sqrt(MU_0 * EPSILON_0)); /* around 3x10^8 m/s */
@@ -70,6 +160,11 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
       if(data->verbose_level > 0 ) // Only needed if intermediate results wanted. 
         print_data_for_two_conductor_lines(*data, where_to_print_fp, inputfile_filename);
     } while (fabs((capacitance_old-capacitance)/capacitance_old) > data->cutoff); /* end of FD loop */
+
+#ifdef ENABLE_MPI
+	mpi_receive_updated_vij_strips();
+#endif /* ENABLE_MPI */
+
     if((data->write_binary_field_imagesQ == TRUE || data->write_bitmap_field_imagesQ == TRUE) && data->dielectrics_in_bitmap==1 )
       write_fields_for_two_conductor_lines(inputfile_filename, *data);
     if(data->verbose_level == 0 && data->dielectrics_in_bitmap==1 )
@@ -89,6 +184,11 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
       data->dielectrics_to_consider_just_now=2; /* Any number > 1 */
 
       capacitance=VERY_LARGE; /* Can be anything large */
+
+#ifdef ENABLE_MPI
+	  mpi_send_current_data();
+#endif /* ENABLE_MPI */
+
       do /* Start a finite calculation */
       {
         capacitance_old=capacitance;
@@ -99,10 +199,14 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
         data->velocity=1.0/pow(data->L_vacuum*data->C_non_vacuum,0.5);
         data->velocity_factor=data->velocity/velocity_of_light_in_vacuum;
         data->relative_permittivity=sqrt(data->velocity_factor); /* ??? XXXXXX */
-	data->Er=data->C/data->C_vacuum;
+		data->Er=data->C/data->C_vacuum;
         if(data->verbose_level > 0 ) // Only needed if intermediate results wanted. 
           print_data_for_two_conductor_lines(*data, where_to_print_fp, inputfile_filename);
       } while (fabs((capacitance_old-capacitance)/capacitance_old) > data->cutoff); /* end of FD loop */
+
+#ifdef ENABLE_MPI
+	  mpi_receive_updated_vij_strips();
+#endif /* ENABLE_MPI */
 
       /* We must print the results now, but only bother if the verbose level was 
       not not incremented on the command line, otherwide there will be two duplicate
@@ -117,7 +221,7 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
   else if (data->couplerQ==TRUE)
   {
     /* The properties of a couplers will be computed in 2 or 4 stages
-    1) Compute the odd-mode impedance, assuming a vacuum dielectic, or
+    1) Compute the odd-mode impedance, assuming a vacuum dielectric, or
     if there is just one dielectric, that one.
 
     2) Compute the odd-mode impedance, taking into account the effect of
@@ -125,13 +229,13 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
 
     at this point, the negative voltages will be turned into positive ones. 
 
-    3) Compute the even-mode impedance, assuming a vacuum dielectic, or
+    3) Compute the even-mode impedance, assuming a vacuum dielectric, or
     if there is just one dielectric, that one.
 
     4) Compute the even-mode impedance, taking into account the effect of
     multiple dielectrics, IF NECESSARY  */
 
-    /* Stage 1 - compute the odd mode impedance assuming single dielectic */
+    /* Stage 1 - compute the odd mode impedance assuming single dielectric */
     data->display = Z_ODD_SINGLE_DIELECTRIC;
     dielectrics_to_consider_just_now=1;
     data->dielectrics_to_consider_just_now=1;
@@ -139,6 +243,11 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
     capacitance=VERY_LARGE; /* Can be anything large */
     if(data->verbose_level >= 2)
       printf("Solving assuming a vacuum dielectric to compute the odd-mode impedance\n");
+
+#ifdef ENABLE_MPI
+	mpi_send_current_data();
+#endif /* ENABLE_MPI */
+
     do /* Start a finite difference calculation */
     {
       capacitance_old=capacitance;
@@ -152,7 +261,7 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
       if (data->dielectrics_in_bitmap == 1) /* Just get C by simple scaling of Er */
         data->Codd*=data->found_this_dielectric;  /* Scaled by the single dielectric constant */
       else
-	data->Er=1.0;
+		data->Er=1.0;
       data->Zodd=sqrt(data->Lodd_vacuum/data->Codd);  /* Standard formula for Zo */
       velocity_of_light_in_vacuum=1.0/(sqrt(MU_0 * EPSILON_0)); /* around 3x10^8 m/s */
       data->velocity_odd=1.0/pow(data->L_vacuum*data->Codd,0.5);
@@ -164,6 +273,11 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
       if(data->verbose_level>=1)
         print_data_for_directional_couplers(*data, where_to_print_fp, inputfile_filename);
     } while (fabs((capacitance_old-capacitance)/capacitance_old) > data->cutoff); /* end of FD loop */
+
+#ifdef ENABLE_MPI
+	mpi_receive_updated_vij_strips();
+#endif /* ENABLE_MPI */
+
     /* display bitpamps/binary files if this is the last odd-mode computation */
     if((data->write_binary_field_imagesQ == TRUE || data->write_bitmap_field_imagesQ == TRUE) && data->dielectrics_in_bitmap==1 )
       write_fields_for_directional_couplers(inputfile_filename, *data, ODD);
@@ -180,6 +294,10 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
       dielectrics_to_consider_just_now=2;
       data->dielectrics_to_consider_just_now=2;
 
+#ifdef ENABLE_MPI
+	  mpi_send_current_data();
+#endif /* ENABLE_MPI */
+
       do /* Start a finite calculation */
       {
         capacitance_old=capacitance;
@@ -190,16 +308,21 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
         data->velocity_odd=1.0/pow(data->L_vacuum*data->C,0.5);
         data->velocity_factor_odd=data->velocity/velocity_of_light_in_vacuum;
         data->relative_permittivity_odd=sqrt(data->velocity_factor); /* ??? XXXXXX */
-	data->Er_odd=data->Codd/data->Codd_vacuum;
-	data->Zdiff=2.0*data->Zodd;
-	if(data->verbose_level>=1)
+		data->Er_odd=data->Codd/data->Codd_vacuum;
+		data->Zdiff=2.0*data->Zodd;
+		if(data->verbose_level>=1)
           print_data_for_directional_couplers(*data, where_to_print_fp, inputfile_filename);
       } while (fabs((capacitance_old-capacitance)/capacitance_old) > data->cutoff); /* end of FD loop */
+
+#ifdef ENABLE_MPI
+	  mpi_receive_updated_vij_strips();
+#endif /* ENABLE_MPI */
+
       if((data->write_binary_field_imagesQ == TRUE || data->write_bitmap_field_imagesQ == TRUE) && data->dielectrics_in_bitmap!=1 )
         write_fields_for_directional_couplers(inputfile_filename, *data, ODD);
     } /* end of stage 2 for couplers */
 
-    /* Stage 3 - compute the even-mode impedance assuming single dielectic */
+    /* Stage 3 - compute the even-mode impedance assuming single dielectric */
 
     /* Since we want the even mode impedance now, we swap all the -1V
     metallic conductors for +1V */
@@ -213,6 +336,11 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
         printf("Now assuming a vacuum dielectric to compute Zeven\n");
 
     capacitance=VERY_LARGE; /* Can be anything large */
+
+#ifdef ENABLE_MPI
+	mpi_send_current_data();
+#endif /* ENABLE_MPI */
+
     do /* Start a finite difference calculation */
     {
       capacitance_old=capacitance;
@@ -226,7 +354,7 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
       if (data->dielectrics_in_bitmap == 1) /* Just get C by simple scaling of Er */
         data->Ceven*=data->found_this_dielectric;  /* Scaled by the single dielectric constant */
       else
-	data->Er_even=1.0;
+		data->Er_even=1.0;
       data->Zeven=sqrt(data->Leven_vacuum/data->Ceven);  /* Standard formula for Zo */
       velocity_of_light_in_vacuum=1.0/(sqrt(MU_0 * EPSILON_0)); /* around 3x10^8 m/s */
       data->velocity_even=1.0/pow(data->Leven_vacuum*data->C,0.5);
@@ -235,21 +363,31 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
       data->Er_even=data->Ceven/data->Ceven_vacuum;
       data->Zcomm=data->Zeven/2.0;
       data->Zo=sqrt(data->Zodd * data->Zeven);
-	if(data->verbose_level>=1)
-          print_data_for_directional_couplers(*data, where_to_print_fp, inputfile_filename);
+	  if(data->verbose_level>=1)
+		print_data_for_directional_couplers(*data, where_to_print_fp, inputfile_filename);
       /* display bitpamps/binary files if this is the last even-mode computation */
     } while (fabs((capacitance_old-capacitance)/capacitance_old) > data->cutoff); /* end of FD loop */
+
+#ifdef ENABLE_MPI
+	mpi_receive_updated_vij_strips();
+#endif /* ENABLE_MPI */
+
     if((data->write_binary_field_imagesQ == TRUE || data->write_bitmap_field_imagesQ == TRUE) && data->dielectrics_in_bitmap==1)
       write_fields_for_directional_couplers(inputfile_filename, *data, EVEN);
 
     capacitance=VERY_LARGE; /* Can be anything large */
-    /* Stage 4 - compute the even-mode impedance assuming multiple dielectics IF NECESSARY */
+    /* Stage 4 - compute the even-mode impedance assuming multiple dielectrics IF NECESSARY */
     if ( data->dielectrics_in_bitmap >1)
     {
       dielectrics_to_consider_just_now=2;
       data->dielectrics_to_consider_just_now=2;
       if(data->verbose_level >= 2)
         printf("Now taking into account the permittivities of the different dielectrics to compute Zeven\n");
+
+#ifdef ENABLE_MPI
+	  mpi_send_current_data();
+#endif /* ENABLE_MPI */
+
       do /* Start a finite calculation */
       {
         capacitance_old=capacitance;
@@ -260,13 +398,18 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
         data->velocity_even=1.0/pow(data->L_vacuum*data->C,0.5);
         data->velocity_factor_even=data->velocity/velocity_of_light_in_vacuum;
         data->relative_permittivity_even=sqrt(data->velocity_factor); /* ??? XXXXXX */
-	data->Er_even=data->Ceven/data->Ceven_vacuum;
-	data->Zdiff=2.0*data->Zodd;
+		data->Er_even=data->Ceven/data->Ceven_vacuum;
+		data->Zdiff=2.0*data->Zodd;
         data->Zcomm=data->Zeven/2.0; //XXXXXXx
-	data->Zo=sqrt(data->Zeven*data->Zodd);
-	if(data->verbose_level>=1)
+		data->Zo=sqrt(data->Zeven*data->Zodd);
+		if(data->verbose_level>=1)
           print_data_for_directional_couplers(*data, where_to_print_fp, inputfile_filename);
       } while (fabs((capacitance_old-capacitance)/capacitance_old) > data->cutoff); /* end of FD loop */
+
+#ifdef ENABLE_MPI
+	  mpi_receive_updated_vij_strips();
+#endif /* ENABLE_MPI */
+
       if(data->write_binary_field_imagesQ == TRUE || data->write_bitmap_field_imagesQ == TRUE)
         write_fields_for_directional_couplers(inputfile_filename, *data, EVEN);
     } /* end of stage 4 */

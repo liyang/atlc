@@ -47,13 +47,11 @@ extern struct strip strip_map[MAX_PES+1];
    we could make them local to finite_difference,
    and only allocate them on PE 0.
 */
-MPI_Request Vij_rcv_requests[MAX_PES];
-MPI_Status Vij_rcv_statuses[MAX_PES];
 MPI_Request energy_rcv_requests[MAX_PES];
 double energies[MAX_PES];
 
 /*
-  the job of a worker PE is to work on a strip
+  the job of a worker PE is to work on a columnar strip
   of the voltage array for a given number of iterations,
   then send off the results to PE 0.
 
@@ -94,7 +92,7 @@ void mpi_worker(int rank) {
   int strip_params[2];
   int start_col, num_cols;
   MPI_Status status;
-  int done;
+  int control, done;
   int i,j,iterations;
   MPI_Request send_requests[2];
   MPI_Status send_statuses[2];
@@ -173,160 +171,160 @@ void mpi_worker(int rank) {
    * sent only once in the lifetime of the program *
    *************************************************/
 
+  done = 0;
   do {
 
 	/* recieve a control word that tells
 	   the PE whether to set off on another
 	   set of iterations, or to exit */
-	MPI_Recv(&done,
+
+	MPI_Recv(&control,
 			 1,
 			 MPI_INT,
 			 0,
 			 MSG_TAG_CONTROL,
 			 MPI_COMM_WORLD,
 			 &status);
-	
-	if (done) {
+
+	switch (control) {
+	case CONTROL_VALUE_RECEIVE_DATA:
+	  /* receive the strip of the voltage matrix
+		 that we are to update. this is sent by PE 0. */
+	  MPI_Recv(Vij[1],
+			   (num_cols+2)*height,
+			   MPI_DOUBLE,
+			   0,
+			   MSG_TAG_VIJ,
+			   MPI_COMM_WORLD,
+			   &status);
+
+	  /* receive the current value of 
+		 dielectrics_to_consider_just_now.
+		 this is sent by PE 0. */
+	  MPI_Recv(&dielectrics_to_consider_just_now,
+			   1,
+			   MPI_INT,
+			   0,
+			   MSG_TAG_DIELECTRICS,
+			   MPI_COMM_WORLD,
+			   &status);
+
+	  break;
+	case CONTROL_VALUE_SEND_DATA:
+	  /* send our strip to PE 0 */
+	  MPI_Send(Vij[2],
+			   num_cols*height,
+			   MPI_DOUBLE,
+			   0,
+			   MSG_TAG_VIJ,
+			   MPI_COMM_WORLD);
+	  break;
+	case CONTROL_VALUE_DO_ITERATIONS:
+	  /* receive the number of iterations we are
+		 to compute for. this is sent by PE 0 at
+		 the beginning of finite_difference. */
+	  MPI_Recv(&iterations,
+			   1,
+			   MPI_INT,
+			   0,
+			   MSG_TAG_ITERATIONS,
+			   MPI_COMM_WORLD,
+			   &status);
+
+	  i=0;
+	  do {
+
+		/* update our strip of the voltage matrix */
+		do_columns(2, num_cols, 0);
+
+		/* send the columns that the neighbor PEs
+		   require to the nieghbor PEs */
+		MPI_Isend(Vij[num_cols+1],
+				  height,
+				  MPI_DOUBLE,
+				  (rank+1)%num_pes,
+				  MSG_TAG_VIJ_RBORDER,
+				  MPI_COMM_WORLD,
+				  &send_requests[1]);
+
+		MPI_Isend(Vij[2],
+				  height,
+				  MPI_DOUBLE,
+				  rank-1,
+				  MSG_TAG_VIJ_LBORDER,
+				  MPI_COMM_WORLD,
+				  &send_requests[0]);
+
+		/* receive the columns that we need
+		   to update the columns adjacent
+		   to our strip edges from the neighbor
+		   PEs */
+		MPI_Irecv(Vij[num_cols + 3],
+				  height,
+				  MPI_DOUBLE,
+				  (rank+1)%num_pes,
+				  MSG_TAG_VIJ_LBORDER,
+				  MPI_COMM_WORLD,
+				  &rcv_requests[0]);
+	  
+		MPI_Irecv(Vij[0],
+				  height,
+				  MPI_DOUBLE,
+				  rank-1,
+				  MSG_TAG_VIJ_RBORDER,
+				  MPI_COMM_WORLD,
+				  &rcv_requests[1]);
+
+		/* update the columns adjacent to our strip
+		   edges */
+		MPI_Waitany(2, 
+					rcv_requests, 
+					&index,
+					&status);
+
+		if (0 == index) {
+		  update_voltage_array(num_cols + 2,0);
+		} else {
+		  update_voltage_array(1,0);
+		}
+
+		MPI_Waitany(2, 
+					rcv_requests, 
+					&index,
+					&status);
+
+		if (0 == index) {
+		  update_voltage_array(num_cols + 2,0);
+		} else {
+		  update_voltage_array(1,0);
+		}
+
+
+		MPI_Waitall(2, send_requests, send_statuses);
+	  
+		i++;
+	  } while(i < iterations);
+
+
+	  energy_per_metre=0.0;
+	  for(i=2;i<2+num_cols;++i)
+		for(j=0;j<height;++j) { 
+		  energy_per_metre+=find_energy_per_metre(i,j);
+		}
+
+	  MPI_Send(&energy_per_metre,
+			   1,
+			   MPI_DOUBLE,
+			   0,
+			   MSG_TAG_ENERGY,
+			   MPI_COMM_WORLD);
+	  break;
+	case CONTROL_VALUE_EXIT:
+	  done = 1;
 	  break;
 	}
-
-	/* receive the strip of the voltage matrix
-	   that we are to update. this is sent by PE 0
-	   at the beginning of finite_difference */
-	MPI_Recv(Vij[1],
-			 (num_cols+2)*height,
-			 MPI_DOUBLE,
-			 0,
-			 MSG_TAG_VIJ,
-			 MPI_COMM_WORLD,
-			 &status);
-
-	/* receive the number of iterations we are
-	   to compute for. this is sent by PE 0 at
-	   the beginning of finite_difference. */
-	MPI_Recv(&iterations,
-			 1,
-			 MPI_INT,
-			 0,
-			 MSG_TAG_ITERATIONS,
-			 MPI_COMM_WORLD,
-			 &status);
-
-	/* receive the current value of 
-	   dielectrics_to_consider_just_now.
-	   this is sent by PE 0 at the
-	   beginning of finite_difference. */
-	MPI_Recv(&dielectrics_to_consider_just_now,
-			 1,
-			 MPI_INT,
-			 0,
-			 MSG_TAG_DIELECTRICS,
-			 MPI_COMM_WORLD,
-			 &status);
-  
-	i=0;
-	do {
-
-	  /* update our strip of the voltage matrix */
-	  do_columns(2, num_cols, 0);
-
-	  /* send the columns that the neighbor PEs
-		 require to the nieghbor PEs */
-	  MPI_Isend(Vij[num_cols+1],
-				height,
-				MPI_DOUBLE,
-				(rank+1)%num_pes,
-				MSG_TAG_VIJ_RBORDER,
-				MPI_COMM_WORLD,
-				&send_requests[1]);
-
-	  MPI_Isend(Vij[2],
-				height,
-				MPI_DOUBLE,
-				rank-1,
-				MSG_TAG_VIJ_LBORDER,
-				MPI_COMM_WORLD,
-				&send_requests[0]);
-
-	  /* receive the columns that we need
-		 to update the columns adjacent
-		 to our strip edges from the neighbor
-		 PEs */
-	  MPI_Irecv(Vij[num_cols + 3],
-				height,
-				MPI_DOUBLE,
-				(rank+1)%num_pes,
-				MSG_TAG_VIJ_LBORDER,
-				MPI_COMM_WORLD,
-				&rcv_requests[0]);
-	  
-	  MPI_Irecv(Vij[0],
-				height,
-				MPI_DOUBLE,
-				rank-1,
-				MSG_TAG_VIJ_RBORDER,
-				MPI_COMM_WORLD,
-				&rcv_requests[1]);
-
-	  /* update the columns adjacent to our strip
-		 edges */
-	  MPI_Waitany(2, 
-				  rcv_requests, 
-				  &index,
-				  &status);
-
-	  if (0 == index) {
-		update_voltage_array(num_cols + 2,0);
-	  } else {
-		update_voltage_array(1,0);
-	  }
-
-	  MPI_Waitany(2, 
-				  rcv_requests, 
-				  &index,
-				  &status);
-
-	  if (0 == index) {
-		update_voltage_array(num_cols + 2,0);
-	  } else {
-		update_voltage_array(1,0);
-	  }
-
-
-	  MPI_Waitall(2, send_requests, send_statuses);
-	  
-	  i++;
-	} while(i < iterations);
-
-	/* after all of the iterations are complete,
-	   send our strip to PE 0 */
-	MPI_Isend(Vij[2],
-			  num_cols*height,
-			  MPI_DOUBLE,
-			  0,
-			  MSG_TAG_VIJ,
-			  MPI_COMM_WORLD,
-			  &send_requests[0]);
-
-	/* while the strip is being sent, compute
-	   the energy_per_meter and then send that
-	   to PE 0 */
-	energy_per_metre=0.0;
-	for(i=2;i<2+num_cols;++i)
-	  for(j=0;j<height;++j) { 
-		energy_per_metre+=find_energy_per_metre(i,j);
-	  }
-
-	MPI_Send(&energy_per_metre,
-			 1,
-			 MPI_DOUBLE,
-			 0,
-			 MSG_TAG_ENERGY,
-			 MPI_COMM_WORLD);
-
-	MPI_Waitall(1, send_requests, send_statuses);
 	
-  } while (1);
+  } while (0 == done);
   
 }
 
@@ -355,7 +353,6 @@ double finite_difference(int accuracy)
 {
   int i, j, a;
   double capacitance_per_metre=0.0, energy_per_metre;
-  int start_col, num_cols;
   int left_start_col, left_num_cols;
   int right_start_col, right_num_cols;
   MPI_Status status;
@@ -368,11 +365,8 @@ double finite_difference(int accuracy)
 
   for(i=1; i<num_pes; i++) {
 
-	start_col = strip_map[i].start_col;
-	num_cols = strip_map[i].num_cols;
-
 	/* arm worker */
-	control = 0;
+	control = CONTROL_VALUE_DO_ITERATIONS;
 	MPI_Send(&control,
 			 1,
 			 MPI_INT,
@@ -380,15 +374,6 @@ double finite_difference(int accuracy)
 			 MSG_TAG_CONTROL,
 			 MPI_COMM_WORLD);
 
-	/* send initial contents of
-	   voltage matrix strip */
-	MPI_Send(Vij[start_col - 1],
-			 (num_cols+2)*height,
-			 MPI_DOUBLE,
-			 i,
-			 MSG_TAG_VIJ,
-			 MPI_COMM_WORLD);
-	
 	/* send the iteration count */
 	MPI_Send(&accuracy,
 			 1,
@@ -396,15 +381,6 @@ double finite_difference(int accuracy)
 			 i,
 			 MSG_TAG_ITERATIONS,
 			 MPI_COMM_WORLD);
-			 
-	/* send current value of dielectrics_to_consider_just_now */
-	MPI_Send(&dielectrics_to_consider_just_now,
-			 1,
-			 MPI_INT,
-			 i,
-			 MSG_TAG_DIELECTRICS,
-			 MPI_COMM_WORLD);
-			 
   }
 
   /* these are the parameters of the left and right
@@ -470,17 +446,8 @@ double finite_difference(int accuracy)
 
   }  /* end of accuracy loop */
 
-  /* set up receives the updated voltage matrix
-	 strips and for the energies from the worker 
-	 PEs */
+  /* set up receives for the energies from the worker PEs */
   for(i=1; i<num_pes; i++) {
-	MPI_Irecv(Vij[strip_map[i].start_col],
-			  strip_map[i].num_cols*height,
-			  MPI_DOUBLE,
-			  i,
-			  MSG_TAG_VIJ,
-			  MPI_COMM_WORLD,
-			  &Vij_rcv_requests[i-1]);
 	MPI_Irecv(&energies[i-1],
 			  1,
 			  MPI_DOUBLE,
@@ -525,10 +492,6 @@ double finite_difference(int accuracy)
 	capacitance_per_metre=2*energy_per_metre;
   else if (coupler==TRUE)
 	capacitance_per_metre=energy_per_metre;
-
-  /* wait for all of the voltage strips to be received before
-	 returning */
-  MPI_Waitall(num_pes-1, Vij_rcv_requests, Vij_rcv_statuses);
 
   return(capacitance_per_metre);
 }
