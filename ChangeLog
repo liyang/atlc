@@ -1,3 +1,19 @@
+****** Version 4.4.1 Released August 31th 2003 ****
+docs/html-docs/index2.html
+Changed a typo or two. Added an entry for Unixware, as someone emailed
+me to say iversion 4.0.0 works on UnixWare. 
+
+tools/src/locatediff.c
+Corrected an error so this now works. A change recently caused this to
+break. It now reads both files. 
+
+tests/try_irix.c
+Much improved, finds information about cache and main ram on IRIX now
+
+tests/benchmark.test  
+information now prints the fact the IRIX information is good, not 
+poor as in prior versions. 
+
 ****** Version 4.4.0 Released August 30th 2003 ****
 BUGS 
 Added  0 - those I don't know about, 
