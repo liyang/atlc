@@ -87,3 +87,6 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #define PERMITTIVITY_LESS_THAN_1                                  62
 #define VARIABLE_NOT_INITIALISED                                  63
 #define GAP_BETWEEN_CONDUCTORS_TOO_SMALL                          64
+#define VOLTAGE_NOT_MINUS_ONE_V_AS_EXPECTED                       65
+#define VOLTAGE_NOT_PLUS_ONE_V_AS_EXPECTED                        66
+#define VOLTAGE_NOT_ZERO_V_AS_EXPECTED                            67
