@@ -40,13 +40,17 @@ else
   echo "                  BENCHMARK DATA" > tests.log
   echo "                  <STRONG><div align="center">BENCHMARK DATA</div></STRONG> <BR>" > tests.html
 
-  echo "To get hardware data, atlc MUST be configured with --enable-hardware-info"
-  echo "To get hardware data, atlc MUST be configured with --enable-hardware-info" > tests.log
-  echo "To get hardware data, atlc MUST be configured with --enable-hardware-info<BR>" >> tests.html
+  echo "Hardware data working reasonably well on AIX, HP-UX, Solaris, Tru64"
+  echo "Hardware data working reasonably well on AIX, HP-UX, Solaris, Tru64" >> tests.log
+  echo "Hardware data working reasonably well on AIX, HP-UX, Solaris, Tru64 <BR>" >> tests.log
 
-  echo "Hardware data working 95% on Solaris, less so on other OS's"
-  echo "Hardware data working 95% on Solaris, less so on other OS's" >> tests.log
-  echo "Hardware data working 95% on Solaris, less so on other OS's<BR><BR>" >> tests.html
+  echo "and UNICOS, but not too well on Linux and poorly on *BSD and IRIX" 
+  echo "and UNICOS, but not too well on Linux and poorly on *BSD and IRIX" >> tests.log
+  echo "and UNICOS, but not too well on Linux and poorly on *BSD and IRIX <BR>" >> tests.html
+
+  echo "Any help to write code to gather data on other OS's would be appreciated" 
+  echo "Any help to write code to gather data on other OS's would be appreciated" >> tests.log
+  echo "Any help to write code to gather data on other OS's would be appreciated<BR><BR>" >> tests.html
 
   echo " "
   echo "Hardware provider is $hw_provider. Hardware platform is $hw_platform."
