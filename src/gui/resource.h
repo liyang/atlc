@@ -30,6 +30,7 @@ enum
     ID_Cut,
     ID_Paste,
     ID_RunFD,
+    DIALOG_BTN,
     ID_ShowTip
 };
 
