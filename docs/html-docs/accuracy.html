@@ -13,7 +13,7 @@
 <H1>Accuracy and run-times of <CODE>atlc</code></H1>
 atlc is very accurate, as the data below will confirm. In a total of 31 tests performed on standard two-conductor transmission lines the maximum error was only 0.945 % and the rms error was 0.259  %. On a <a href="accuracy.html#Accuracy_coupler">directional coupler</a>, the maximum error was 0.927%, but the typical error was around 0.6%.  Read on if you wish to know how these figures were arrived at. 
 
-<p>In order to test the accuracy of  <CODE>atlc</code>, some simple geometries were devised, for which there are known exact analytical solutions. Three cases were considered for two-wire transmission lines - the <a href="accuracy.html#Accuracy_coax">standard coaxial cable</a>, an off-centre or <a href="accuracy.html#Accuracy_eccentric_coax">eccentric coaxial cable</a> and a <a href="accuracy.html#Accuracy_symmetrical_strip">symmetrical strip transmission line</a>. For three-wires, which can be used to make a 4-port directional coupler, the  accuracy was compared using <a href="accuracy.html#Accuracy_coupler">two edge-on strip lines.</a>, as that is the only case I am aware of that has an exact analytical solution.
+<p>In order to test the accuracy of  <CODE>atlc</code>, some simple geometries were devised, for which there are known exact analytical solutions. Three cases were considered for two-wire transmission lines - the <a href="accuracy.html#Accuracy_coax">standard coaxial cable</a>, an off-centre or <a href="accuracy.html#Accuracy_eccentric_coax">eccentric coaxial cable</a> and a <a href="accuracy.html#Accuracy_symmetrical_strip">symmetrical strip transmission line</a>. For three-wires, which can be used to make a 4-port directional coupler, the  accuracy was compared using <a href="accuracy.html#Accuracy_coupler">two edge-on strip lines.</a>, as that is the only case I am aware of that has an exact analytical solution. No significant tested has been peformed with mulitple dielectrics, due mainly to the lack of any exact analytical equations. I've made limited comparisions to other numerical techniques, but it is difficult to know what causes any differences in this case. 
 
 <H2><a name="Accuracy_coax" ><strong>Comparisons between atlc and a round coaxial cabl</strong>e</a></H2>
 <p>
@@ -572,7 +572,7 @@ ko'=sqrt(1-(ko^2))<p>
 
 Those equations are taken from Matthaei, Young and Jones, <EM>Microwave Filters, Impedance Matching Networks and Coupling Structures</EM>,  Artech House, Dedham, MA., 1980. I'm very grateful to Paul Gili AA1LL / KB1CZP  <a href="mailto:aa1ll@email.com">aa1l@email.com</a>  for providing me with these equations, references and nomographs. 
 <p>
-A programme <CODE>create_bmp_for_coupler</CODE> was written to automatically generate bitmaps given the height H between the groundplanes, the conductor widths w and spacing s. Ideally this needs simulating from -infinity to +infinity, but that is not practical. It was assumed that if the complete structure width W was equal to 2*w+s+8*H that would be adequate (this seemed <EM>about right</EM>, but I've no proof it is optimal). As well as producing a bitmap, <CODE>create_bmp_for_coupler</CODE>also calculate the theoretical values of impedance. In order to perform calculations of the theoetical impedance, <CODE>create_bmp_for_coupler </CODE> uses the GNU scientific library <a href="http://sources.redhat.com/gsl">gsl</a>  for the elliptic integral calculations. Hence to obtain the theoretical values, gsl, available at <a href="http://sources.redhat.com/gsl">http://sources.redhat.com/gsl</a>,  <STRONG>must</STRONG> be installed. The bitmaps will still be produced without the gsl library.</p>
+A programme <CODE>create_bmp_for_stripline_coupler</CODE> was written to automatically generate bitmaps given the height H between the groundplanes, the conductor widths w and spacing s. Ideally this needs simulating from -infinity to +infinity, but that is not practical. It was assumed that if the complete structure width W was equal to 2*w+s+8*H that would be adequate (this seemed <EM>about right</EM>, but I've no proof it is optimal). As well as producing a bitmap, <CODE>create_bmp_for_stripline_coupler</CODE>also calculates the theoretical values of impedance. </p>
 <TABLE border align="left">
 <TR>
 <TD><STRONG>Filename</STRONG></TD>
@@ -693,7 +693,7 @@ Note, because of the need to simulate a large width W, these calculations are mu
 <a href="http://atlc.sourceforge.net">Return to the atlc homepage</a>
 
 <br><br>
-atlc is written and supported by <a href="mailto: drkirkby@ntlworld.com?subject=atlc%20-%20Arbitrary%20Transmission%20Line%20Calculator">Dr. David Kirkby (G8WRB)</A> It it issued under the <a href="http://www.gnu.org/copyleft/gpl.html">GNU General Public License</A>
+atlc is written and supported by <a href="jpgs/home-email.jpg">Dr. David Kirkby (G8WRB)</A> It it issued under the <a href="http://www.gnu.org/copyleft/gpl.html">GNU General Public License</A>
 <br>
 <BR>
 <BR>

@@ -29,7 +29,6 @@ An early version for <EM>atlc</EM> forms part of the <a href="http://www.netbsd.
 </OL>
 To install <EM>altc</EM> you should download the souce code from <a href="http://sourceforge.net/projects/atlc/"><COde>atlc</code>'s download area on SourceForge.</A> It is preferable to also have following software too, although none, apart from a compatible version of <CODE>make</CODE>, are essential. 
 <OL>
-	<LI>The <a href="http://sources.redhat.com/gsl/">GNU scientific library (gsl).</a> While not essentail, this is <STRONG>highly reccomended</STRONG>.</LI>
 	<LI><a href="http://www.gnu.org/software/make/make.html">GNU make</a>, sometimes installed as <CODE>gmake</CODE>. Sun's version of make in <CODE>/usr/ccs/bin/make</CODE> is <STRONG>not</STRONG> suitable, although IBM's version in AIX 5.2 works fine, as does HP's in HP-UX 11 and Tru64 5.1B. If you find you have an unsuitable version of make (and Sun's is the only one known), the GNU one (often called gmake) works fine. </LI>
 <LI>If you have a system with more than one CPU, <EM>atlc</EM> can be configured to use any number of CPUs in parallel to speed execution, using a POSIX compatable thread library, or pthreads. Just add the option <code>--with-threads</code>. Sun's Solaris implementation works fine, as does IBM's AIX and SGI's IRIX, but any other POSIX library should work. If you have multiple CPUs and don't have a thread library, you should trying installing  <a href="http://www.gnu.org/software/pth">GNU Portable Threads</A>, although <em>atlc</em> has not been tested with this. <STRONG>If your computer has only one CPU, there is no point in building atlc to use multiple threads, as it will run slower!</STRONG></LI>
 </OL>
@@ -43,7 +42,7 @@ Extract the compressed file, using gunzip, or gzip -d.
 % make check  <STRONG> // This is very important, as it checks the binaries.</STRONG>
 </PRE>
 <p>The code tries to gather information about the hardware. This is by its very nature less portable than other parts of <em>atlc</em>. If a compilation or linking problem occurs during <code>make check</code> phase, then re-configure using <code>configure --disable-hardware-info</code>. Please let me know about such failures. </p>
-A total of 90 self-tests are performed in the <CODE>make check</CODE> stage.  <strong>No tests should fail</strong> but several will be skipped. Four tests make use of the t <a href="http://sources.redhat.com/gsl/">gsl library</a> and so will be skipped unless that is present. Two tests are used to check the operation of the POSIX threads, so will be skipped unless configured with <CODE>--with-threads</CODE>. 
+A total of 90 self-tests are performed in the <CODE>make check</CODE> stage.  <strong>No tests should fail</strong>. Two tests are used to check the operation of the POSIX threads, so will be skipped unless configured with <CODE>--with-threads</CODE>. 
 <br><br>
 
 Finally you can install the software if you wish. 
@@ -63,7 +62,7 @@ Options to the <code>configure</code> script, can be listed by running <CODE>con
 <p>
 
 <br>
-atlc is written and supported by <a href="mailto: drkirkby@ntlworld.com?subject=atlc%20-%20Arbitrary%20Transmission%20Line%20Calculator">Dr. David Kirkby (G8WRB)</A> It it issued under the <a href="http://www.gnu.org/copyleft/gpl.html">GNU General Public License</A>
+atlc is written and supported by <a href="jpgs/home-email.jpg">Dr. David Kirkby (G8WRB)</A> It it issued under the <a href="http://www.gnu.org/copyleft/gpl.html">GNU General Public License</A>
 <br>
 <BR>
 <BR>

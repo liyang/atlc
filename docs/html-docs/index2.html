@@ -1,8 +1,8 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 TRANSITIONAL//EN">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 TRANSITIONAL//EN">
 <HTML>
 <HEAD>
 <TITLE>Homepage of atlc - Arbitrary Transmission Line Calculator</TITLE>
-<META name="generator" content="Mostly bluefish & vi. Sometimes netscape">
+<META name="generator" content="Mostly bluefish and vi. Sometimes netscape">
 <META http-equiv="CONTENT-TYPE" content="text/html; charset=iso-8859-1">
 <meta name="author" content="Dr. David Kirkby">
 <META name="DESCRIPTION" content="Transmission lines, transmission line, atlc, calculator, transmission-lines, transmission-line">
@@ -14,7 +14,16 @@
 <p>
 <EM>atlc</EM> is a computer aided design (CAD) package for the design and analysis of electrical transmission lines and directional couplers of totally arbitrary cross section and an arbitrary number of different dielectrics.  By analysis, it is assumed one requires finding the electrical properties of transmission lines or couplers, where the physical dimensions are known. By design, it is assumed one requires a transmission line or coupler to have certain electrical properties and one wishes to find how to physically realise such a structure.</p>
 <P><EM>atlc</EM>  likely to be of use to radio amateurs, professional RF engineers, students and academics.</P> 
-<p>Great effort has been put into making <em>atlc</em> portable to any hardware that can run a UNIX operating system. In addition to the normal PCs, <em>atlc</em> has been tested on a <a href="http://wuarchive.wustl.edu/mirrors/NetBSD/NetBSD-current/pkgsrc/cad/atlc/README.html">Sony Playstation 2</a> as well as the <a href="http://www.cray-cyber.org/systems/yel.php">Cray YMP-EL</a> supercomputer, which is available for free public access at <a href="http://www.cray-cyber.org/general/start.php">Cray-Cyber network</a>. It has also been tested on <a href="http://www.debian.org/">Debian</a> Linux, <a href="http://www.slackware.com/">Slackware</a> Linux, <a href="http://www.gentoo.org/">Gentoo</a> Linux, <a href="<a href="http://www.redhat.com">Redhat </a> Linux, <a href="http://www.suse.com">Suse</a> Linux, IBM's <a href="http://www.ibm.com/servers/aix/">AIX</a>, Apples's <a href="http://www.apple.com/macosx/">OS X for Mac</a>, HP's <a href="http://www.hp.com/products1/unix/operating/">HP-UX</A> (both PA-RISC and Itanium), <a href="http://www.sgi.com/">SGI's IRIX</a>, Sun's <a href="http://www.sun.com/solaris/">Solaris</a>, SCO's <a href="http://www.caldera.com/products/unixware/">UnixWare</a>, HP's <a href="http://h30097.www3.hp.com/">Tru64</a>, Cray's <a href="http://www.cray.com/products/software/unicos.html">UNICOS</a>, <a href="http://www.netbsd.org/">NetBSD</a>, <a href="http://www.openbsd.org/">OpenBSD</a> and <a href="http://www.freebsd.org/">FreeBSD</a>. If you run <em>atlc</em> on any other operating system, please let me know. On some systems, <em>atlc</em> can use multiple-processors if present, to reduce executation time. There are some minor problems on some systems, but you should be able to use <em>atlc</em> on any UNIX system.</p>
+
+
+
+<p>Great effort has been put into making <em>atlc</em> portable. Whilst written under UNIX, <em>atlc's</em> portability means pre-compiled command-line Windows binaries have been produced by Mark Chun KH6HPQ and others from the source code without any changes at all. A port to <a href="http://www.openvms.org">OpenVMS</a> in a possibility, although the main development is aimed very much at UNIX. </p>
+
+<p> In addition to the the commmon Linux PC, <em>atlc</em> has been tested on a <a href="http://wuarchive.wustl.edu/mirrors/NetBSD/NetBSD-current/pkgsrc/cad/atlc/README.html">Sony Playstation 2</a> as well as the <a href="http://www.cray-cyber.org/systems/yel.php">Cray YMP-EL</a> supercomputer, which is available for free public access at <a href="http://www.cray-cyber.org/general/start.php">Cray-Cyber network</a>. 
+
+It has also been tested on <a href="http://www.debian.org/">Debian</a> Linux, <a href="http://www.slackware.com/">Slackware</a> Linux, <a href="http://www.gentoo.org/">Gentoo</a> Linux, <a href="http://www.redhat.com">Redhat </a> Linux, <a href="http://www.suse.com">Suse</a> Linux, IBM's <a href="http://www.ibm.com/servers/aix/">AIX</a>, Apples's <a href="http://www.apple.com/macosx/">OS X for Mac</a>, 
+
+HP's <a href="http://www.hp.com/products1/unix/operating/">HP-UX</A> (both PA-RISC and Itanium), SGI's <a href="http://www.sgi.com/">IRIX</a>, Sun's <a href="http://www.sun.com/solaris/">Solaris</a>, SCO's <a href="http://www.caldera.com/products/unixware/">UnixWare</a>, HP's <a href="http://h30097.www3.hp.com/">Tru64</a>, Cray's <a href="http://www.cray.com/products/software/unicos.html">UNICOS</a>, <a href="http://www.netbsd.org/">NetBSD</a>, <a href="http://www.openbsd.org/">OpenBSD</a> and <a href="http://www.freebsd.org/">FreeBSD</a>. If you run <em>atlc</em> on any other operating system, please let me know. On some systems, <em>atlc</em> can use multiple-processors if present, to reduce executation time. There are some minor problems on some systems (most notably earler versions of Linux on Sun workstations), but you should be able to use <em>atlc</em> on any UNIX system as well as under 32-bit versions of Microsoft Windows.</p>
 
 
 <TABLE>
@@ -46,8 +55,7 @@ There are 12 programs that comprise the package <EM>atlc</EM>. One of the progra
 <p>In any example which has been checked against exact analytical solutions, the <a href="accuracy.html">errors</a> in <code>atlc</code> are under 1% and usually under 0.4%</p>
 In order to perform 1, 2, 3 or 4 above, the programme  <COde>atlc</code> needs to know shape of the transmission line's cross section. This cross section is stored in a data file, which happens to be a Windows bitmap file. The  bitmap file is read by <COde>atlc</code>, following which the  programme performs the analysis. <br><br>There are two ways to generate the bitmap for <COde>atlc</code>. 
 <OL>
-        <LI> As you might expect, you can draw the transmission line's cross-section in a graphics programme such as <A HREF="http://www.gimp.org">Gimp</A>, <A HREF="http://www.adobe.com/products/photoshop/main.html">Photoshop</A>, Windows <A HREF="http://www.microsoft.com">Paint</A>, Corel Photopaint etc. The programme must be able to save images as bitmap (.BMP or .bmp) files, in 24-bit (true colour) mode. The graphics programme can run under whatever operating system you like.  If for example you have some U-section brass and some hollow rectangular tube, and wanted to know the properties of a transmission line formed from these, you might draw something like this, and save it as a file, which we might call <CODE>ushape.bmp</CODE><br><br></LI>
-       <img src="jpgs/ushape.jpg" ALT="U-section" > <br><br>
+        <LI> As you might expect, you can draw the transmission line's cross-section in a graphics programme such as <A HREF="http://www.gimp.org">Gimp</A>, <A HREF="http://www.adobe.com/products/photoshop/main.html">Photoshop</A>, Windows <A HREF="http://www.microsoft.com">Paint</A>, Corel Photopaint etc. The programme must be able to save images as bitmap (.BMP or .bmp) files, in 24-bit (true colour) mode. The graphics programme can run under whatever operating system you like.  If for example you have some U-section brass and some hollow rectangular tube, and wanted to know the properties of a transmission line formed from these, you might draw something like this, and save it as a file, which we might call <CODE>ushape.bmp</CODE><br><br><img src="jpgs/ushape.jpg" ALT="U-section" > </LI>
 	<LI> In the case of simple cross-sections, the bitmaps can be generated automatically. Currently 7 such programmes have been written:
 	<OL>
 <LI><CODE>create_bmp_for_circ_in_circ</CODE></LI>
@@ -90,31 +98,27 @@ x.bmp 2 Er=1.00 Zo= 85.44 Ohms C= 39.0 pF/m L= 285.0 nH/m v= 2.998e+08 m/s v_f= 
 
 How to use  <CODE>create_bmp_for_circ_in_circ</CODE> (or any other program) is best determined by reading the Unix man page, seeing an <a href="generators.html">example</a> or by running the program with no arguments, where it will print a usage message. An html version of the  <a href="create_bmp_for_circ_in_circ.1.html">man page for <CODE>create_bmp_for_circ_in_circ</CODE> </a> is available, but the all-important diagram is not clear. <br>
 <br>
-
- 
-<p>atlc is written and supported by <a href="mailto: drkirkby@ntlworld.com?subject=atlc%20-%20Arbitrary%20Transmission%20Line%20Calculator">Dr. David Kirkby (G8WRB)</A> It is issued under the GNU General Public License. <p>
-<a href="http://atlc.sourceforge.net">Return to the <EM>atlc</EM> homepage</a>
 <a href="http://atlc.sourceforge.net">Return to the atlc homepage</a>
-<a href="http://homepage.ntlworld.com/drkirkby/list1.html"></a>
-<a href="http://homepage.ntlworld.com/drkirkby/list2.html"></a>
-<a href="http://homepage.ntlworld.com/drkirkby/list3.html"></a>
-<a href="http://homepage.ntlworld.com/drkirkby/list4.html"></a>
-<a href="http://homepage.ntlworld.com/drkirkby/list5.html"></a>
-<a href="http://homepage.ntlworld.com/drkirkby/list6.html"></a>
-<a href="http://homepage.ntlworld.com/drkirkby/list7.html"></a>
-<a href="http://www.medphys.ucl.ac.uk/~davek/email1.html"></a>
-<a href="http://www.medphys.ucl.ac.uk/~davek/email2.html"></a>
-<a href="http://www.medphys.ucl.ac.uk/~davek/email3.html"></a>
-<a href="http://www.medphys.ucl.ac.uk/~davek/email4.html"></a>
-<a href="http://www.medphys.ucl.ac.uk/~davek/email5.html"></a>
-<a href="http://www.medphys.ucl.ac.uk/~davek/email6.html"></a>
-<a href="http://www.medphys.ucl.ac.uk/~davek/email7.html"></a>
+
+<br><br>
+atlc is written and supported by <a href="jpgs/home-email.jpg">Dr. David Kirkby (G8WRB)</A> It it issued under the <a href="http://www.gnu.org/copyleft/gpl.html">GNU General Public License</A>
+<br>
 <BR>
 <BR>
+
 <A href="http://sourceforge.net"> <IMG
 src="http://sourceforge.net/sflogo.php?group_id=25836&amp;type=5"
 width="210" height="62" border="0" alt="SourceForge.net
-Logo"></A>
-
+Logo"></A><a href="http://validator.w3.org/check/referer"><img border="0"
+src="valid-html40.gif"
+alt="Valid HTML 4.01!" height="31" width="88"></a>
+<a href="http://bluefish.openoffice.nl/"><img SRC="jpgs/bluefish.jpg" WIDTH="88" HEIGHT="31" ALT="Bluefish"></a>
+<p><a href="http://homepage.ntlworld.com/drkirkby/list1.html">.</a>
+<a href="http://homepage.ntlworld.com/drkirkby/list2.html">.</a>
+<a href="http://homepage.ntlworld.com/drkirkby/list3.html">.</a>
+<a href="http://homepage.ntlworld.com/drkirkby/list4.html">.</a>
+<a href="http://homepage.ntlworld.com/drkirkby/list5.html">.</a>
+<a href="http://homepage.ntlworld.com/drkirkby/list6.html">.</a>
+<a href="http://homepage.ntlworld.com/drkirkby/list7.html">.</a>
 </BODY>
 </HTML>
