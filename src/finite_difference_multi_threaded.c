@@ -21,7 +21,7 @@ in books. Hence I suspect it is not efficient */
 
 #include "definitions.h"
 
-
+extern int coupler;
 extern int width, height;
 extern double **Vij, **Er;
 extern int **cell_type;
@@ -65,7 +65,7 @@ double finite_difference(int accuracy)
 {
   int i, j, a, y, z, thread_number, *id_arg, ret;
   int inc;
-  double capacitance_per_metre, energy_per_metre;
+  double capacitance_per_metre=0.0, energy_per_metre;
   /* We split the width into max_threads regions, and calculate the voltage at
   each point using a different thread for each. To do this safely, a single line
   of calculations must be missed between each set. ie with a 256 wide image, we
