@@ -27,15 +27,24 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 extern int width, height, **cell_type;
 extern double **Er, **Vij;
 
-void find_maximum_values(struct max_values *maximum_values)
+void find_maximum_values(struct max_values *maximum_values, int zero_elementsQ)
 {
   double U, V, Ex, Ey, E, permittivity;
   int i, j;
-  maximum_values->E_max=0.0;
-  maximum_values->Ex_or_Ey_max=0.0;
-  maximum_values->V_max=0.0;
-  maximum_values->U_max=0.0;
-  maximum_values->permittivity_max=0.0;
+
+  /* It makes sense to draw the even and odd mode images on the same
+  scale, so if its a coupler, they elements are not zeroed if the
+  function is called when doing the even mode, which is done
+  after the odd mode */
+
+  if(zero_elementsQ==ZERO_ELEMENTS_FIRST)
+  {
+    maximum_values->E_max=0.0;
+    maximum_values->Ex_or_Ey_max=0.0;
+    maximum_values->V_max=0.0;
+    maximum_values->U_max=0.0;
+    maximum_values->permittivity_max=0.0;
+  }
   for(i=0;i<width;++i)
   {
     for(j=0;j<height;++j)
@@ -81,20 +90,19 @@ void find_maximum_values(struct max_values *maximum_values)
       if(fabs(Ex) > maximum_values->Ex_or_Ey_max)
         maximum_values->Ex_or_Ey_max=fabs(Ex);
 
-      if(fabs(Ey)>maximum_values->Ex_or_Ey_max)
-        maximum_values->Ex_or_Ey_max=fabs(Ey);
       if(fabs(Ex)>maximum_values->Ex_or_Ey_max)
         maximum_values->Ex_or_Ey_max=fabs(Ex);
       if(fabs(Ey)>maximum_values->Ex_or_Ey_max)
         maximum_values->Ex_or_Ey_max=fabs(Ey);
+      if(fabs(E)>maximum_values->E_max)
+        maximum_values->E_max=fabs(E);
       if(fabs(V) > maximum_values->V_max)
         maximum_values->V_max=fabs(V); 
       if(U > maximum_values->U_max)
         maximum_values->U_max=U; 
       if(permittivity >maximum_values->permittivity_max )
-      {
         maximum_values->permittivity_max=permittivity; 
-      }
     }
   }
+  printf("Ex_or_Ey_max=%f E_max=%f V_max=%f U_max=%g Er_max=%f\n",maximum_values->Ex_or_Ey_max, maximum_values->E_max, maximum_values->V_max, maximum_values->U_max, maximum_values->permittivity_max);
 }

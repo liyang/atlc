@@ -85,7 +85,7 @@ void write_fields_for_two_conductor_lines(char * filename, struct transmission_l
 
   /* Find maximum of the parameters */
 
-  find_maximum_values(&(maximum_values)); /* sets stucture maximum_values */
+  find_maximum_values(&(maximum_values), ZERO_ELEMENTS_FIRST); /* sets stucture maximum_values */
 
 
   /* Calculate the colours for Ex */
@@ -234,5 +234,4 @@ void write_fields_for_two_conductor_lines(char * filename, struct transmission_l
   fwrite(&(image_dat[0]),size,1,permittivity_bmp_fp);
   fclose(permittivity_bin_fp);
   fclose(permittivity_bmp_fp);
-  exit(8);
 }
