@@ -54,6 +54,7 @@ simulation. */
 #define NEG_TO_POS                         -1
 #define METAL_ER  1e9
 
+#define DONT_ZERO_ELEMENTS  0       
 #define ZERO_ELEMENTS_FIRST 1       
 
 #ifndef TRUE 
@@ -311,12 +312,9 @@ int align_bitmap_image(int W, int H, unsigned char *unaligned_image, unsigned ch
 void fill_create_bmp_for_rect_in_rect(char *image_vector, int colour_Er1, int colour_Er2);
 void check_create_bmp_for_rect_in_rect_ints(void);
 //void check_create_bmp_for_rect_in_rect_doubles(void);
-void exit_with_msg_and_exit_code(char error_text[], int exitnumber);
-void check_error(double user, int create_bmp_for_rect_in_rect, double gridsize, char
-*name);
+void exit_with_msg_and_exit_code(const char *error_text, int exitnumber);
+void check_error(double user, int create_bmp_for_rect_in_rect, double gridsize, const char *name);
 //void check_create_bmp_for_rect_in_rect_doubles(void);
-void exit_with_msg_and_exit_code(char error_text[], int exitnumber);
-void check_error(double user, int create_bmp_for_rect_in_rect, double gridsize, char *name);
 void check_parameters_for_create_bmp_for_circ_in_circ(void);
 void fill_image_vector_with_data(unsigned char *image_vector, int colour_Er1, int colour_Er2, struct transmission_line_properties x);
 void usage_create_bmp_for_circ_in_circ(void);
@@ -336,7 +334,7 @@ Zodd, double Zeven, int whichZ, double v, double vf);
 void check_for_boundaries(void);
 double find_energy_per_metre(int i, int j);
 void update_voltage_array(int i, int calculate_edges);
-FILE *get_file_pointer_with_right_filename(char *filename, char *ext);
+FILE *get_file_pointer_with_right_filename(char *filename, const char *ext);
 void find_maximum_values(struct max_values *maximum_values, int zero_elementsQ);
 void calculate_colour_data(double x, double xmax, int w, int h, int offset, unsigned char *image_dat, char image_type,
 unsigned char *red, unsigned char *green, unsigned char *blue);
@@ -344,16 +342,16 @@ double find_Ex(int w, int h) ;
 double find_Ey(int w, int h);
 double find_E(int w, int h);
 double voltage_ij(int i, int j);
-int get_options(int argc, char **argv, char *opts);
+int get_options(int argc, char **argv, const char *opts);
 void usage_readbin(void);
 void ERR(char *s, char c, char **argv);
-char *index2(char *str, char c);
+char *index2(const char *str, char c);
 void swap_conductor_voltages(int way_to_swap);
 void usage_create_bmp_for_stripline_coupler(void);
 double calculate_integer_values(struct transmission_line_properties *optimise, int n, int accuarcy_level);
 void calculate_Zodd_and_Zeven(double *Zodd, double *Zeven, double *Zo, double w, double H, double s, double er);
 void usage_design_coupler(void);
-void print_copyright(char *s);
+void print_copyright(const char *s);
 void give_examples_of_using_design_coupler(void);
 void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_to_print_fp, char *inputfile_filename);
 int print_data_for_directional_couplers(struct transmission_line_properties data, FILE *where_to_print_fp, char *inputfile_name);
