@@ -1,3 +1,75 @@
+****** Version 4.6.0 Realeased ??? November 2003  
+top level directory:
+
+atlc/update 
+has been modified so it updates the NEWS.html file. 
+
+atlc/examples directory.
+Have removed the following files from the distribution:
+atlc/examples/100-Ohm-201b.bmp \
+atlc/examples/100-Ohm-401b.bmp \
+atlc/examples/200-Ohm-201b.E.bmp \
+atlc/examples/200-Ohm-201b.Er.bmp \
+atlc/examples/200-Ohm-201b.Ex.bmp \
+atlc/examples/200-Ohm-201b.Ey.bmp \
+atlc/examples/200-Ohm-201b.U.bmp \
+atlc/examples/200-Ohm-201b.V.bmp \
+atlc/examples/200-Ohm-201b.bmp \
+atlc/examples/200-Ohm-401b.bmp \
+atlc/examples/200-Ohm-801b.bmp \
+atlc/examples/25-Ohm-201b.bmp \
+atlc/examples/25-Ohm-401b.bmp \
+atlc/examples/25-Ohm-401h.bmp \
+atlc/examples/25-Ohm-801h.bmp \
+atlc/examples/50-Ohm-201h.bmp \
+atlc/examples/50-Ohm-401h.bmp 
+
+I'm not sure they were that usful, given there are plenty of 
+files like 50ohm-201h.bmp etc. 
+
+Remove atlc/examples/13inner_22outer_coax.bmp.txt too, as there was
+no 13inner_22outer_coax.bmp to match up with it. 
+
+atlc/docs/html-docs/accuracy.html 
+Completed updated all results to those obtained with ver 4.6.0
+Put into 4 sections detailing:   
+Section 1. Two conductor Transmission Lines with a Uniform Dielectric
+Section 2. Two-conductor Transmission Lines with a non-uniform dielectric
+Section 3. Accuracy of atlc with coupled lines
+Section 4. Conclusions about the accuracy of atlc
+
+Added a completly new section:
+2.1 Comparision of atlc and a dual dielectric coaxial cable
+
+
+
+atlc/src/non_gui/create_bmp_for_symmetrical_stripline.c
+This no longer computes the theretical impedance if the 
+structure is too narrow. Only computes if the -v option
+is added. 
+
+atlc/src/create_bmp_for_circ_in_circ.c
+Will now print sensible error messages if the inner conductor is too big
+or if the inner and outer will touch since the offset is too large
+
+atlc/src/set_oddity_value.c
+This sets a global array unsigned char **oddity; to a value describing
+if the pixel is matallic, has conductors to the right/left etc.
+cell_type was not adequate for this, since once you had set one cell,
+you did not know the result for those around it. #
+
+atlc/src/non_gui/print_data_for_directional_couplers.c
+No longer fails to print intermediate values of impedance if 
+verbose is >2 as it did before. 
+
+atlc/src/non_gui/write_fields_for_two_conductor_lines.c
+This can now write the oddity values from set_oddity_value()
+to a bitmap file, although this has been commented out by default. 
+
+atlc/src/
+A huge number of changes were made to this release. Not every
+one is fully documented, as to do so I would have spent as long
+documenting the code as writing it. 
 ****** Version 4.5.1 Released 16th October 2003   ****
 A problem with multiple dielectrics has been discoved, and aslo with 
 multi-threaded operating. As such, both have been disabled. This affects
