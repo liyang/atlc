@@ -72,42 +72,41 @@ void update_voltage_array(int i, int calculate_edges)
 {
   int j, type;
   double a, b, c, d, e, f, g, h;
+  double r_over_4=0.25*r, one_minus_r=(1-r);
   for(j=1; j<height-1; ++j)
   {
     type = cell_type[i][j];
-    if(type >=DIELECTRIC) /*only update dielectrics, not conductors*/
+
+    if(type == DIELECTRIC) /* Same dielectric all around */
+      Vij[i][j]=r_over_4*(Vij[i][j+1]+Vij[i+1][j]+Vij[i][j-1]+Vij[i-1][j])+one_minus_r*Vij[i][j];
+
+    if(type >DIELECTRIC) /*only update dielectrics, not conductors*/
     {
-      if(type == DIELECTRIC)
-        Vij[i][j]=r*(Vij[i][j+1]+Vij[i+1][j]+Vij[i][j-1]+Vij[i-1][j])/4.0+(1-r)*Vij[i][j];
-      //else  if (type == DIFFERENT_DIELECTRIC_NEARBY || type==METAL_NEARBY)
-      else  
-      {
-        a=(Er[i][j] * Er[i][j-1] * Vij[i][j-1])/(Er[i][j] + Er[i][j-1]);
-        b=(Er[i][j] * Er[i][j+1] * Vij[i][j+1])/(Er[i][j] + Er[i][j+1]);
-        c=(Er[i][j] * Er[i-1][j] * Vij[i-1][j])/(Er[i][j] + Er[i-1][j]);
-        d=(Er[i][j] * Er[i+1][j] * Vij[i+1][j])/(Er[i][j] + Er[i+1][j]);
-     
-        e=(Er[i][j] * Er[i][j-1])/(Er[i][j]+Er[i][j-1]);
-        f=(Er[i][j] * Er[i][j+1])/(Er[i][j]+Er[i][j+1]);
-        g=(Er[i][j] * Er[i-1][j])/(Er[i][j]+Er[i-1][j]);
-        h=(Er[i][j] * Er[i+1][j])/(Er[i][j]+Er[i+1][j]);
+      a=(Er[i][j] * Er[i][j-1] * Vij[i][j-1])/(Er[i][j] + Er[i][j-1]);
+      b=(Er[i][j] * Er[i][j+1] * Vij[i][j+1])/(Er[i][j] + Er[i][j+1]);
+      c=(Er[i][j] * Er[i-1][j] * Vij[i-1][j])/(Er[i][j] + Er[i-1][j]);
+      d=(Er[i][j] * Er[i+1][j] * Vij[i+1][j])/(Er[i][j] + Er[i+1][j]);
+    
+      e=(Er[i][j] * Er[i][j-1])/(Er[i][j]+Er[i][j-1]);
+      f=(Er[i][j] * Er[i][j+1])/(Er[i][j]+Er[i][j+1]);
+      g=(Er[i][j] * Er[i-1][j])/(Er[i][j]+Er[i-1][j]);
+      h=(Er[i][j] * Er[i+1][j])/(Er[i][j]+Er[i+1][j]);
                         
-        Vij[i][j]=r*(a+b+c+d)/(e+f+g+h) + (1-r)*Vij[i][j];
-      }
-      /* the following few lines calculate the voltages at the edges.
+      Vij[i][j]=r*(a+b+c+d)/(e+f+g+h) + (1-r)*Vij[i][j];
+    }
+    /* the following few lines calculate the voltages at the edges.
       They are not accurate, but better than no calculation at all */
 
-	  if (calculate_edges) {
-		if(i==1 && cell_type[0][j]>=0)
-		  Vij[0][j]=(Vij[0][j+1]+Vij[0][j-1])/2.0; //ok
-		if(i==width-2 && cell_type[width-1][j] >= DIELECTRIC)
-		  Vij[width-1][j]=(Vij[width-1][j+1]+Vij[width-1][j-1])/2.0;
-	  } /* calculate_edges */
-
-	  if(j==1 && cell_type[i][0]>=0)
-		Vij[i][0]=(Vij[i][j-1]+Vij[i][j+1])/2.0;
-	  if(j==height-2 && cell_type[i][height-1]>=DIELECTRIC)
-		Vij[i][height-1]=(Vij[i][j-1]+Vij[i][j+1])/2.0;
-    }
+     if (calculate_edges) 
+     {
+       if(i==1 && cell_type[0][j]>=0)
+	  Vij[0][j]=(Vij[0][j+1]+Vij[0][j-1])/2.0; //ok
+       if(i==width-2 && cell_type[width-1][j] >= DIELECTRIC)
+	  Vij[width-1][j]=(Vij[width-1][j+1]+Vij[width-1][j-1])/2.0;
+       if(j==1 && cell_type[i][0]>=0)
+	  Vij[i][0]=(Vij[i][j-1]+Vij[i][j+1])/2.0;
+       if(j==height-2 && cell_type[i][height-1]>=DIELECTRIC)
+	  Vij[i][height-1]=(Vij[i][j-1]+Vij[i][j+1])/2.0;
+      } /* calculate_edges */
   }
 }
