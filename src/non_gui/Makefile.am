@@ -1,4 +1,5 @@
 bin_PROGRAMS = atlc create_bmp_for_rect_in_rect \
+create_any_bitmap \
 create_bmp_for_circ_in_circ create_bmp_for_rect_cen_in_rect \
 create_bmp_for_circ_in_rect create_bmp_for_rect_in_circ \
 readbin create_bmp_for_symmetrical_stripline \
@@ -26,7 +27,6 @@ write_fields_for_directional_couplers.c \
 exit_codes.h definitions.h
 
 atlc_CPPFLAGS = -DNEED_MPI_CODE @PTHREAD_CFLAGS@
-#atlc_LDADD = @PTHREAD_LIBS@ @LIBS@ @MPILIBS@
 atlc_LDADD = @PTHREAD_LIBS@ @LIBS@ 
 
 
@@ -43,6 +43,12 @@ exit_codes.h definitions.h
 
 create_bmp_for_rect_in_rect_LDADD = @LIBS@ 
 
+create_any_bitmap_SOURCES = \
+create_any_bitmap.c \
+exit_with_msg_and_exit_code.c \
+definitions.h \
+exit_codes.h \
+usage_create_any_bitmap.c
 
 create_bmp_for_rect_cen_in_rect_coupler_SOURCES = \
 create_bmp_for_rect_cen_in_rect_coupler.c \
@@ -52,7 +58,6 @@ write_bitmap_out.c  \
 align_bitmap_image.c check_error.c exit_with_msg_and_exit_code.c \
 print_copyright.c \
 exit_codes.h definitions.h
-#create_bmp_for_rect_cen_in_rect_coupler_LDADD = @LIBS@ 
 
 
 create_bmp_for_rect_cen_in_rect_SOURCES = create_bmp_for_rect_cen_in_rect.c \
@@ -110,10 +115,11 @@ memory.c write_bitmap_out.c  \
 align_bitmap_image.c fill_rect_in_circ.c check_parameters_of_create_bmp_for_rect_in_circ.c \
 check_error.c get_options.c definitions.h exit_with_msg_and_exit_code.c \
 print_copyright.c Erdata.h
-create_bmp_for_rect_in_circ_LDADD = @LIBS@ 
 
-readbin_SOURCES = readbin.c definitions.h byteswap.c usage_readbin.c \
+readbin_SOURCES = \
+readbin.c \
 get_options.c exit_with_msg_and_exit_code.c print_copyright.c \
+usage_readbin.c byteswap.c \
 memory.c 
 readbin_LDADD = @LIBS@ 
 
@@ -134,15 +140,21 @@ calculate_integer_values.c write_bitmap.c \
 memory.c write_bitmap_out.c  \
 align_bitmap_image.c fill_make_coupler.c \
 check_error.c exit_with_msg_and_exit_code.c \
-get_Er1_and_Er2_colours.c print_copyright.c 
-create_bmp_for_stripline_coupler_LDADD = @LIBS@ @GSL_LIBS@
-create_bmp_for_stripline_coupler_CFLAGS = @CFLAGS@ @GSL_CFLAGS@
+get_Er1_and_Er2_colours.c print_copyright.c  \
+gsl_types.h \
+gsl_definitions.h \
+gsl_sf_ellint_Kcomp.c
+create_bmp_for_stripline_coupler_LDADD = @LIBS@ 
+create_bmp_for_stripline_coupler_CFLAGS = @CFLAGS@ 
 
 design_coupler_SOURCES = design_coupler.c usage_design_coupler.c \
 get_options.c print_copyright.c calculate_Zodd_and_Zeven.c \
-give_examples_of_using_design_coupler.c exit_with_msg_and_exit_code.c
-design_coupler_LDADD = @LIBS@ @GSL_LIBS@
-design_coupler_CFLAGS = @CFLAGS@ @GSL_CFLAGS@
+give_examples_of_using_design_coupler.c exit_with_msg_and_exit_code.c \
+gsl_types.h \
+gsl_definitions.h \
+gsl_sf_ellint_Kcomp.c
+design_coupler_LDADD = @LIBS@ 
+design_coupler_CFLAGS = @CFLAGS@ 
 
 find_optimal_dimensions_for_microstrip_coupler_SOURCES = \
 find_optimal_dimensions_for_microstrip_coupler.c \
