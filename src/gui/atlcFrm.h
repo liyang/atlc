@@ -22,13 +22,7 @@ class atlcFrame: public wxFrame
     void OnQuit(wxCommandEvent& event);   // public functions. 
     void OnClose(wxCloseEvent& event); // Note close is xwxCloseEvent, not wxCommandEvent
 
-    // Generate Bitmap menue
-
-    void OnRectInRect(wxCommandEvent& event);
-    void OnCircInCirc(wxCommandEvent& event);
-    void OnRectInCirc(wxCommandEvent& event);
-    void OnCircInRect(wxCommandEvent& event);
-    void OnSymStrip(wxCommandEvent& event);
+    //void OnSymStrip(wxCommandEvent& event);
     void OnCoupler(wxCommandEvent& event);
 
     //Tools menue

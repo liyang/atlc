@@ -9,6 +9,7 @@
 #include "atlcFrm.h"
 #include "RoundCoaxFrm.h"
 #include "FiniteDifferenceFrame.h"
+#include "EccentricCoaxFrame.h"
 #include "resource.h"
 // ----------------------------------------------------------------------------
 // resources
@@ -34,7 +35,6 @@
 BEGIN_EVENT_TABLE(atlcFrame, wxFrame)
     EVT_MENU(ID_Open, atlcFrame::OnOpen)
     EVT_MENU(ID_Quit, atlcFrame::OnQuit)
-    EVT_MENU(ID_RectInRect, atlcFrame::OnRectInRect)
     EVT_MENU(ID_Help, atlcFrame::OnHelp)
     EVT_MENU(ID_About, atlcFrame::OnAbout)
     EVT_MENU(ID_RoundCoax, atlcFrame::OnRoundCoax)
@@ -57,7 +57,7 @@ atlcFrame::atlcFrame(const wxString& title, const wxPoint& pos, const wxSize& si
        : wxFrame((wxFrame *)NULL, -1, title, pos, size)
 {
   // set the frame icon
-  // SetIcon(wxICON(atlc));
+  SetIcon(wxICON(atlc));
 
   // create a menu bar
   wxMenu *FileMenu = new wxMenu("", wxMENU_TEAROFF);
@@ -74,6 +74,7 @@ atlcFrame::atlcFrame(const wxString& title, const wxPoint& pos, const wxSize& si
   "Calculate properties using an accurate, very general but slow numerical technique.");   
   CalculateMenu->AppendSeparator();
   CalculateMenu->Append( ID_RoundCoax, "&Round Coaxial cable (exact)","Calculate properties standard round coaxial cable");   
+  CalculateMenu->Append( ID_EccentricCoax, "&Eccentric Coaxial cable (exact)","Calculate properties eccentric coaxial cable");   
   CalculateMenu->Append( ID_SquareCoax, "&Square Coaxial cable (exact)","Calculate properties coaxial cable with a square outer (exact??)");   
   CalculateMenu->Append( ID_Stripline, "&Edge on stripline (exact)","Calculate properties of thin edge-on conductors between groundplanes");   
   CalculateMenu->Append( ID_Stripline, "&Edge on stripline coupler (exact)","Calculate properties of two thin edge-on conductors.");   
@@ -156,14 +157,6 @@ This may be copied and distribted under the terms of the GNU General Public Lice
         "About atlc", wxOK | wxICON_INFORMATION, this);
 }
 
-void atlcFrame::OnRectInRect(wxCommandEvent& WXUNUSED(event))
-{
-}
-
-void atlcFrame::OnCircInCirc(wxCommandEvent& WXUNUSED(event))
-{
-}
-
 void atlcFrame::OnCoupler(wxCommandEvent& WXUNUSED(event))
 {
 }
@@ -198,6 +191,9 @@ void atlcFrame::OnSquareCoax(wxCommandEvent& WXUNUSED(event))
 
 void atlcFrame::OnEccentricCoax(wxCommandEvent& WXUNUSED(event))
 {
+  EccentricCoaxFrame *frame = new EccentricCoaxFrame("Eccentric Coax",wxPoint(50,50),wxSize(400,300) );
+
+  frame->Show(TRUE);
 }
 void atlcFrame::OnCalculateChecksum(wxCommandEvent& WXUNUSED(event))
 {

@@ -14,7 +14,7 @@
 // ----------------------------------------------------------------------------
 // the application icon
 #if defined(__WXGTK__) || defined(__WXMOTIF__)
-    #include "atlc.xpm"
+    #include "coax.xpm"
 #endif
 
 // ----------------------------------------------------------------------------
@@ -41,6 +41,7 @@ END_EVENT_TABLE()
 RoundCoaxFrame::RoundCoaxFrame(const wxString& title, const wxPoint& pos, const wxSize& size)
 :wxFrame((wxFrame *)NULL, -1, title, pos, size)
 {
+  SetIcon(wxICON(coax));
   wxMenu *FileMenu = new wxMenu;  /* Left most menue */
   wxMenu *HelpMenu = new wxMenu;
   wxMenuBar *menuBar = new wxMenuBar;

@@ -1,3 +1,6 @@
+#ifndef ATLC_GUI_H
+#define ATLC_GUI_H
+
 #ifdef __GNUG__
 #pragma implementation "help.cpp"
 #pragma interface "help.cpp"
@@ -49,4 +52,4 @@ enum
   ID_FileMenuClose = 22,
   ID_About
 };
-
+#endif
