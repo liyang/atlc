@@ -42,9 +42,12 @@ void usage_atlc(void)
   fprintf(stderr,"  -d rrggbb=Er\n      where the colour rrggbb (in hex) is a (d)ielectric of permittivity Er.\n");
   fprintf(stderr,"  -i factor\n      which lightens (factor>%.1f) or darkens (1.0 <factor<%.1f) output bitmaps.\n",
   IMAGE_FIDDLE_FACTOR,IMAGE_FIDDLE_FACTOR);
-  fprintf(stderr,"  -r rate_multiplier\n      where 'rate_multiplier' sets the rate multipler (called r in source code)\n");
+  fprintf(stderr,"  -r rate_multiplier\n      where 'rate_multiplier' sets the rate multipler (called r in source code)\n");  
 #ifdef ENABLE_MP
   fprintf(stderr,"  -t THREADs. \n      Where THREADs is the number of threads to use (normally best set to \n      the number of cpus). The default is %d.\n",MAX_THREADS);
+#endif
+#ifdef ENABLE_MPI
+  fprintf(stderr,"  -w weights\n     where weights is a colon-separated list of weights to use when dividing up the work amongst the processors.\n"); 
 #endif
 #ifndef ENABLE_MP
   fprintf(stderr,"****************NOTE******************************\n");

@@ -31,6 +31,13 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 
 void error_and_exit(char s[], int exitnumber)
 {
-   fprintf(stderr,"%s\n",s);
-   exit(exitnumber);
+  if ((NULL != s) && (s[0] != '\0')) {
+	fprintf(stderr,"%s\n",s);
+  }
+
+#ifdef ENABLE_MPI
+  MPI_Finalize();
+#endif
+
+  exit(exitnumber);
 }

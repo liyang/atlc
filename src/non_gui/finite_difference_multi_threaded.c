@@ -78,7 +78,7 @@ void *do_columns(void *thread_arg)
     added a hack to that, to take care of the situation when i==width-2.
     to compute v(i==width-1) */
     if(i!=width-1)
-      update_voltage_array(i);
+      update_voltage_array(i,1);
   }
 }
 
@@ -135,7 +135,7 @@ double finite_difference(int accuracy)
     for(thread_number=0;thread_number<max_threads-1;++thread_number)
     {
       i+=inc+1;
-      update_voltage_array(i);
+      update_voltage_array(i,1);
     }
     /* Now the voltage matrix has been calculated once. Note the
     voltages calculated are slightly different from those of the

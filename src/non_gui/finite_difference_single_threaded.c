@@ -22,7 +22,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 
 */
 
-#ifndef ENABLE_MP
+#if !defined(ENABLE_MP) && !defined(ENABLE_MPI)
 
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
@@ -57,7 +57,7 @@ double finite_difference(int number_of_iterations)
   {
     for(i=1; i<width-1; ++i)
     {
-      update_voltage_array(i); /* finds new v[i][j] for all j's */
+      update_voltage_array(i,1); /* finds new v[i][j] for all j's */
     }  
   }
   /* Once the voltage distribution is found, the energy in the field may be 

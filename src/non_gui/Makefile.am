@@ -5,8 +5,10 @@ design_coupler create_bmp_for_stripline_coupler create_bmp_for_microstrip_couple
 find_optimal_dimensions_for_microstrip_coupler
 
 atlc_SOURCES = nrutil.c atlc.c read_bitmap_file_headers.c \
-byteswap.c string.c setup_arrays.c finite_difference_single_threaded.c \
-finite_difference_multi_threaded.c usage_atlc.c \
+byteswap.c string.c setup_arrays.c \
+finite_difference_single_threaded.c \
+finite_difference_multi_threaded.c \
+finite_difference_mpi.c usage_atlc.c \
 check_for_shorts.c bmp.h definitions.h Erdata.h \
 check_for_boundaries.c find_energy_per_metre.c \
 update_voltage_array.c get_file_pointer_with_right_filename.c \

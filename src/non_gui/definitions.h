@@ -114,6 +114,23 @@ Laboratory's list of physical constants found on the web. */
 #define DEFAULT_WMAX 5.0
 #define DEFAULT_WSTEP 0.5
 
+
+#ifdef ENABLE_MPI
+#define MAX_PES 256
+#define MSG_TAG_WIDTH_HEIGHT 1
+#define MSG_TAG_STRIP_PARAMS 2
+#define MSG_TAG_CELL_TYPE    3
+#define MSG_TAG_ER           4
+#define MSG_TAG_CONTROL      5
+#define MSG_TAG_ITERATIONS   6
+#define MSG_TAG_VIJ          7
+#define MSG_TAG_VIJ_LBORDER  8
+#define MSG_TAG_VIJ_RBORDER  9
+#define MSG_TAG_ENERGY      10
+#define MSG_TAG_DIELECTRICS 11
+#endif /* ENABLE_MPI */
+
+
 extern char *my_optarg;
 /* I needed to invent add my_ in front of the usual name for optind,
 opterr, optopt etc, since they are defined by the system, and I'm using
@@ -176,6 +193,13 @@ struct max_values
 {
 double Ex_or_Ey_max, E_max, V_max, U_max, permittivity_max;
 };
+
+#ifdef ENABLE_MPI
+struct strip {
+  int start_col;
+  int num_cols;
+};
+#endif /* ENABLE_MPI */
 
 /* The following code has been revised, since it was bought to my
 attention by Dan (mcmahill@mtl.mit.edu) that the code was broken for
@@ -245,7 +269,12 @@ void free_ustring(unsigned char *v, long nl, long nh);
 int **imatrix(long nrl, long nrh, long ncl, long nch);
 void setup_arrays(struct transmission_line_properties *data);
 double finite_difference(int iterations);
-void *do_columns(void *thread);
+#ifdef ENABLE_MPI
+void do_columns(int start_col, int num_cols, int calculate_edges);
+void mpi_worker(int rank);
+#else
+void *do_columns(void *thread_arg);
+#endif /* ENABLE_MPI */
 void usage_atlc(void);
 void write_fields_for_two_conductor_lines(char *filename, struct transmission_line_properties data);
 void write_fields_for_directional_couplers(char *filename, struct transmission_line_properties data, int odd_or_even);
@@ -291,7 +320,7 @@ int print_data(FILE *fp, char *filename, double Er, double C, double L, double Z
 Zodd, double Zeven, int whichZ, double v, double vf);
 void check_for_boundaries(void);
 double find_energy_per_metre(int i, int j);
-void update_voltage_array(int i);
+void update_voltage_array(int i, int calculate_edges);
 FILE *get_file_pointer_with_right_filename(char *filename, char *ext);
 void find_maximum_values(struct max_values *maximum_values, int zero_elementsQ);
 void calculate_colour_data(double x, double xmax, int w, int h, int offset, unsigned char *image_dat, char image_type);
