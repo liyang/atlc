@@ -33,7 +33,7 @@ Dr. David Kirkby, e-mail drkirkby at ntlworld.com
 #include "Erdata.h"
 
 /* We need to set up the permittivity and cell_type arrays. A
-complication arrises if a diaectric is found, that is not vacuum. 
+complication arrises if a dielectric is found, that is not vacuum. 
 If it is the only dielectric found, we calaculate C by saying C=C*Er. If
 there are more than one dielectric, we need to calculate it twice. */
 
@@ -53,7 +53,7 @@ void setup_arrays(struct transmission_line_properties *data)
    struct pixels pixels_found;
    int conductor_found;
    int conductors = 0;
-   int w,h, offset=-3, colour_mixture, i, z;
+   int w,h, offset=-3, colour, i, z;
    unsigned char red, green, blue;
    int dielectric_found;
    int new_colour_in_image;
@@ -63,11 +63,8 @@ void setup_arrays(struct transmission_line_properties *data)
    pixels_found.blue=0;
    pixels_found.white=0; 
    pixels_found.other_colour=0; 
-   for(h=0;h<height;h++)
-   {
-      for (w=0; w<width;++w)
-      {
-	 cell_type[w][height-1-h]=0;
+   for(h=0;h<height;h++) {
+      for (w=0; w<width;++w) {
          dielectric_found=FALSE;
          conductor_found=FALSE;
 	 offset+=3;
@@ -80,49 +77,53 @@ void setup_arrays(struct transmission_line_properties *data)
 	 blue=image_data[offset];
 	 green=image_data[offset+1];
 	 red=image_data[offset+2];
-	 colour_mixture=256*256*red+256*green+blue;
-	 if( colour_mixture == 0xff0000 ) /* +1V red */
+	 colour=256*256*red+256*green+blue;
+	 if( colour == 0xff0000 ) /* +1V red */
 	 {
-	    cell_type[w][height-1-h]=CONDUCTOR_PLUS_ONE_V;
-	    Vij[w][height-1-h]=1.0;
-	    Er[w][height-1-h]=METAL_ER;
+	    cell_type[w][h]=CONDUCTOR_PLUS_ONE_V;
+	    Vij[w][h]=1.0;
+	    Er[w][h]=METAL_ER;
 	    conductor_found=TRUE;
 	    pixels_found.red++;
+	    /* printf("+1 V PPPPPPP\n"); */
          }
-	 else if( colour_mixture == 0x00ff00 ) /* 0v green */
+	 else if( colour == 0x00ff00 ) /* 0v green */
 	 {
-	    cell_type[w][height-1-h]=CONDUCTOR_ZERO_V;
-	    Vij[w][height-1-h]=0.0;
+	    cell_type[w][h]=CONDUCTOR_ZERO_V;
+	    Vij[w][h]=0.0;
 	    conductor_found=TRUE;
 	    pixels_found.green++;
-	    Er[w][height-1-h]=METAL_ER;
+	    Er[w][h]=METAL_ER;
+	    /* printf("0 V ZZZZZZZ\n"); */
          }
-	 else if( colour_mixture == 0x0000ff ) /* -1V blue */
+	 else if( colour == 0x0000ff ) /* -1V blue */
 	 {
-	    cell_type[w][height-1-h]=CONDUCTOR_MINUS_ONE_V;
-	    Vij[w][height-1-h]=-1.0;
+	    cell_type[w][h]=CONDUCTOR_MINUS_ONE_V;
+	    Vij[w][h]=-1.0;
 	    conductor_found=TRUE;
 	    pixels_found.blue++;
-	    Er[w][height-1-h]=METAL_ER;
+	    Er[w][h]=METAL_ER;
 	    coupler=TRUE;
 	    data->couplerQ=TRUE;
+	    printf("-1 V MMMMMMM\n");
          }
 	 else /* A dielectric */
 	 {
-	    if(colour_mixture == 0xffffff ) /* White */
+	    /* printf("DIELECTRIC DDDDDDD\n"); */
+	    if(colour == 0xffffff ) /* White */
 	       pixels_found.white++; /* Vacuum */
 	    else
 	       pixels_found.other_colour++; /* Some other dielectric */
-	    cell_type[w][height-1-h]=DIELECTRIC;
-	    Vij[w][height-1-h]=0.0;
+	    cell_type[w][h]=DIELECTRIC;
+	    Vij[w][h]=0.0;
 	    for(z=0;z<NUMBER_OF_DIELECTRICS_DEFINED;++z)
 	    {
 	       /* Check to see if the colour is one of the 10 known
 	       about, without any need to define on the command line
 	       */
-	       if (colour_mixture == colours[z])
+	       if (colour == colours[z])
 	       {
-	          Er[w][height-1-h]=Ers[z];
+	          Er[w][h]=Ers[z];
 	          dielectric_found=TRUE;
 		  if(z != 0)
 		  {
@@ -133,9 +134,9 @@ void setup_arrays(struct transmission_line_properties *data)
             }
             for(i=0;i<data->dielectrics_on_command_line;++i)
             {
-	       if (Er_on_command_line[i].other_colour ==  colour_mixture)
+	       if (Er_on_command_line[i].other_colour ==  colour)
 	       {
-	          Er[w][height-1-h]=Er_on_command_line[i].epsilon;
+	          Er[w][h]=Er_on_command_line[i].epsilon;
 	          dielectric_found=TRUE;
 		  data->found_this_dielectric=Er_on_command_line[i].epsilon;
 		  non_vacuum_found=TRUE;
@@ -160,19 +161,17 @@ void setup_arrays(struct transmission_line_properties *data)
 	    new_colour_in_image=TRUE;
             for (i=0; i< data->dielectrics_in_bitmap; ++i)
 	    {
-	       if (Er_in_bitmap[i].other_colour == colour_mixture) /* a known colour */
+	       if (Er_in_bitmap[i].other_colour == colour) /* a known colour */
 	       {
 	          new_colour_in_image=FALSE;
-	          if(colour_mixture != 0xffffff)
-	          {
+	          if(colour != 0xffffff)
 		     non_vacuum_found=TRUE;
-                  }
 	       }
             } 
 	    if(new_colour_in_image==TRUE)
 	    {
 	      (data->dielectrics_in_bitmap)++;
-	      Er_in_bitmap[i].other_colour=colour_mixture;
+	      Er_in_bitmap[i].other_colour=colour;
 	      Er_in_bitmap[i].red=red;
 	      Er_in_bitmap[i].green=green;
 	      Er_in_bitmap[i].blue=blue;
@@ -206,15 +205,12 @@ void setup_arrays(struct transmission_line_properties *data)
      printf("Number of Conductors  = %d \n", conductors);
    }
    /* The following should not be necessary, but may be as a test */
-   /* I'd like to Miguel Berg for noticcing a servere bug, where the
+   /* I'd like to Miguel Berg for noticing a servere bug, where the
    indeces of w and h were transposed, leading to crashes on Windoze
    XP */
-   for(h=0;h<height;h++)
-   {
-     for (w=0; w<width;++w)
-     {
-       if((Vij[w][h] > 1.0) || (Vij[w][h]<-1.0))
-       {
+   for(h=0;h<height;h++) {
+     for (w=0; w<width;++w) {
+       if((Vij[w][h] > 1.0) || (Vij[w][h]<-1.0)) {
          fprintf(stderr,"Sorry, something is wrong Vij[%d][%d]=%f in %s %d\n",w,h,Vij[w][h], __FILE__,__LINE__);
 	 exit_with_msg_and_exit_code("Exiting ....",VOLTAGE_OUT_OF_RANGE);
        }

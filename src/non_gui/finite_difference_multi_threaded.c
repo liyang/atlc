@@ -64,7 +64,7 @@ double finite_difference_multi_threaded()
 extern int coupler;
 extern int width, height;
 extern double **Vij, **Er;
-extern signed char **cell_type;
+extern signed char **oddity;
 extern int number_of_workers; 
 
 
@@ -260,9 +260,9 @@ void *worker(void *arg) {
       else
 	jstart=2;
       for(j=jstart ; j < height-1 ; j+=2){
-        if(cell_type[i][j] == DIELECTRIC) /* Same dielectric all around */
+        if(oddity[i][j] == ORDINARY_INTERIOR_POINT) /* Same dielectric all around */
           Vij[i][j]=r_over_4*(Vij[i][j+1]+Vij[i+1][j]+Vij[i][j-1]+Vij[i-1][j])+one_minus_r*Vij[i][j];
-        else if(cell_type[i][j] > DIELECTRIC) /* only update dielectrics, not conductors */
+        else if(oddity[i][j] > ORDINARY_INTERIOR_POINT) /* only update dielectrics, not conductors */
         {
           a=(Er[i][j] * Er[i][j-1] * Vij[i][j-1])/(Er[i][j] + Er[i][j-1]);
           b=(Er[i][j] * Er[i][j+1] * Vij[i][j+1])/(Er[i][j] + Er[i][j+1]);
@@ -285,9 +285,9 @@ void *worker(void *arg) {
       else
 	jstart=1;
       for(j=jstart ; j < height -1; j+=2){
-        if(cell_type[i][j] == DIELECTRIC) /* Same dielectric all around */
+        if(oddity[i][j] == ORDINARY_INTERIOR_POINT) /* Same dielectric all around */
           Vij[i][j]=r_over_4*(Vij[i][j+1]+Vij[i+1][j]+Vij[i][j-1]+Vij[i-1][j])+one_minus_r*Vij[i][j];
-        else if(cell_type[i][j] > DIELECTRIC) /* only update dielectrics, not conductors */
+        else if(oddity[i][j] > ORDINARY_INTERIOR_POINT) /* only update dielectrics, not conductors */
         {
           a=(Er[i][j] * Er[i][j-1] * Vij[i][j-1])/(Er[i][j] + Er[i][j-1]);
           b=(Er[i][j] * Er[i][j+1] * Vij[i][j+1])/(Er[i][j] + Er[i][j+1]);

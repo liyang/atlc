@@ -37,7 +37,7 @@ Dr. David Kirkby, e-mail drkirkby at ntlworld.com
 extern int coupler;
 extern int width, height;
 extern double **Vij, **Er;
-extern signed char **cell_type;
+extern signed char **oddity;
 extern int num_pes;
 extern int dielectrics_to_consider_just_now;
 extern struct strip strip_map[MAX_PES+1];
@@ -143,17 +143,17 @@ void mpi_worker(int rank) {
 
   /* allocate matrixes big enough to contain the
 	 assigned strip and supporting data */
-  cell_type=cmatrix(0,num_cols+4,0,height);
+  oddity=cmatrix(0,num_cols+4,0,height);
   Vij=dmatrix(0,num_cols+4,0,height);
   Er=dmatrix(0,num_cols+4,0,height);
  
-  /* get the cell_type data to use in computing 
+  /* get the oddity data to use in computing 
 	 the assigned strip */
-  MPI_Recv(cell_type[0],
+  MPI_Recv(oddity[0],
 		   (num_cols+4)*height,
 		   MPI_DOUBLE,
 		   0,
-		   MSG_TAG_CELL_TYPE,
+		   MSG_TAG_NODE_TYPE,
 		   MPI_COMM_WORLD,
 		   &status);
 
@@ -206,7 +206,7 @@ void mpi_worker(int rank) {
 			   1,
 			   MPI_INT,
 			   0,
-			   MSG_TAG_DIELECTRICS,
+			   MSG_TAG_ORDINARY_INTERIOR_POINTS,
 			   MPI_COMM_WORLD,
 			   &status);
 

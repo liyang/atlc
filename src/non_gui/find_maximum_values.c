@@ -26,7 +26,7 @@ Dr. David Kirkby, e-mail drkirkby at ntlworld.com
 #include "definitions.h"
 
 extern int width, height;
-extern signed char **cell_type;
+extern signed char **oddity;
 extern double **Er, **Vij;
 
 void find_maximum_values(struct max_values *maximum_values, int zero_elementsQ)
@@ -53,7 +53,7 @@ void find_maximum_values(struct max_values *maximum_values, int zero_elementsQ)
     {
       V=Vij[i][j];
       U=find_energy_per_metre(i,j);
-      if(cell_type[i][j]>=DIELECTRIC)
+      if(oddity[i][j]>=ORDINARY_INTERIOR_POINT)
       {
 	if(i==0)       
 	  Ex=2*Er[i+1][j]*(Vij[i][j]-Vij[i+1][j])/(Er[i+1][j]+Er[i][j]);
