@@ -50,7 +50,7 @@ int max_threads=MAX_THREADS, non_vacuum_found=FALSE;
 int append_flag=FALSE;
 int verbose=FALSE;
 int dielectrics_to_consider_just_now;
-int coupler;
+int coupler=FALSE;
 double r=1.95;
 
 extern int main(int argc, char **argv) /* Read parameters from command line */
@@ -205,12 +205,6 @@ without the threads\nlibrary.\n",1);
 
     setup_arrays(&dielectrics_in_bitmap, dielectrics_on_command_line);
     check_for_boundaries();
-    if(coupler==TRUE)
-    {
-      printf("**WARNING** This has a negative conductor and is therefore \
-      \nconsidered in atlc as a coupler. This is highly expeimental and \
-      \nexpected to be suspect\n");
-    }
     /* Now 'v' has the voltages at each grid element, 'Er' 
     the permittivites and 'cell_type' is either FIXED or variable, 
     indicating a dielectric (VARIABLE) or a metal */
@@ -226,13 +220,21 @@ without the threads\nlibrary.\n",1);
       argv[my_optind],REQUIRE_FD_CALCULATIONS);
     else if(coupler==TRUE)
     {
+      printf("**WARNING** This has a negative conductor and is therefore \
+      \nconsidered in atlc as a coupler. This is highly experimental and \
+      \nexpected to be suspect\n");
+
       do_fd_calculation(&capacitance, &inductance, &Zo, &Zodd, &Zeven, Z_ODD, \
       &velocity, &vf, stdout, cutoff, dielectrics_to_consider_just_now, \
       argv[my_optind],REQUIRE_FD_CALCULATIONS);
+
       swap_conductor_voltages(NEG_TO_POS);
+
       do_fd_calculation(&capacitance, &inductance, &Zo, &Zodd, &Zeven, Z_ALL, \
       &velocity, &vf, stdout, cutoff, dielectrics_to_consider_just_now, \
       argv[my_optind],REQUIRE_FD_CALCULATIONS);
+
+      //swap_conductor_voltages(POS_TO_NEG);
     }
     /* The calculation of inductance above is correct, and does not
     need to be altered. However, if there are multiple dielectrics,
@@ -285,10 +287,20 @@ without the threads\nlibrary.\n",1);
 #endif
     if(dielectrics_in_bitmap > 1)
     {
-      print_data(stdout,argv[my_optind],-1.0,capacitance,\
-      inductance,Zo,Zodd,Zeven,Z0,velocity,vf);
-      print_data(resultfile_fp,argv[my_optind],-1.0,capacitance,\
-      inductance,Zo,Zodd,Zeven,Z0,velocity,vf);
+      if(coupler==FALSE)
+      {
+        print_data(stdout,argv[my_optind],-1.0,capacitance,\
+        inductance,Zo,Zodd,Zeven,Z0,velocity,vf);
+        print_data(resultfile_fp,argv[my_optind],-1.0,capacitance,\
+        inductance,Zo,Zodd,Zeven,Z0,velocity,vf);
+      }
+      else if (coupler==TRUE)
+      {
+        print_data(stdout,argv[my_optind],-1.0,capacitance,\
+        inductance,Zo,Zodd,Zeven,Z_ALL,velocity,vf);
+        print_data(resultfile_fp,argv[my_optind],-1.0,capacitance,\
+        inductance,Zo,Zodd,Zeven,Z_ALL,velocity,vf);
+      }
       if(append_flag==TRUE)
       {
         appendfile_fp=fopen(appendfile,"a");
@@ -313,17 +325,36 @@ without the threads\nlibrary.\n",1);
       }
       else
       {
-         print_data(stdout,argv[my_optind],1.0,capacitance,inductance,\
-	 Zo,Zodd,Zeven,Z0,velocity,vf);
-         print_data(resultfile_fp,argv[my_optind],1.0,capacitance,\
-	 inductance,Zo,Zodd,Zeven,Z0,velocity,vf);
-	 if(append_flag==TRUE)
-	 {
+        if(coupler==FALSE)
+        {
+          print_data(stdout,argv[my_optind],1.0,capacitance,inductance,\
+	  Zo,Zodd,Zeven,Z0,velocity,vf);
+
+          print_data(resultfile_fp,argv[my_optind],1.0,capacitance,\
+	  inductance,Zo,Zodd,Zeven,Z0,velocity,vf);
+        }
+	else if(coupler==TRUE)
+	{
+          print_data(stdout,argv[my_optind],1.0,capacitance,inductance,\
+	  Zo,Zodd,Zeven,Z_ALL,velocity,vf);
+
+          print_data(resultfile_fp,argv[my_optind],1.0,capacitance,\
+	  inductance,Zo,Zodd,Zeven,Z_ALL,velocity,vf);
+        }
+	if(append_flag==TRUE && coupler==FALSE)
+	{
 	   appendfile_fp=fopen(appendfile,"a");
            print_data(appendfile_fp,argv[my_optind],1.0,capacitance,\
 	   inductance,Zo,Zodd,Zeven,Z0,velocity,vf);
            fclose(appendfile_fp);
-	 }
+	}
+	else if(append_flag==TRUE && coupler==TRUE)
+	{
+	   appendfile_fp=fopen(appendfile,"a");
+           print_data(appendfile_fp,argv[my_optind],1.0,capacitance,\
+	   inductance,Zo,Zodd,Zeven,Z_ALL,velocity,vf);
+           fclose(appendfile_fp);
+	}
       }
       /* The function write_fields needs to have a file with the
       extension .bmp. We need to be sure this is the case, so if not, we

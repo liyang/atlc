@@ -209,6 +209,7 @@ int convert_circ_in_circ_dimensions_to_integers(int bmp_size);
 unsigned char *ustring(long nl,long nh);
 void write_bitmap(FILE *image_data_fp);
 void usage_rect_in_rect(void);
+void usage_calc_coupler(void);
 void usage_rect_cen_in_rect(void);
 void write_bitmap_out(unsigned char *image_data, FILE *image_data_fp,int image_size, int W, int H);
 void byteswap_ints( int *a);
