@@ -39,7 +39,7 @@ else
   echo " "
   echo "                  BENCHMARK DATA"
   echo "To get hardware data, atlc MUST be configured with --enable-hardware-info"
-  echo "Hardware data working fully on Solaris, partially working on other OS's"
+  echo "Hardware data working 95% on Solaris, less so on other OS's"
   echo " "
   echo "Hardware provider is $hw_provider. Hardware platform is $hw_platform."
   echo "Hardware provider is $hw_provider. Hardware platform is $hw_platform." >> tests.log
