@@ -32,7 +32,6 @@ int main(int argc, char **argv)
 {
   time_t start1, finished1;
   struct computer_data data;
-  int operating_system=0;
 
   char *str;
   FILE *fp;
@@ -71,11 +70,12 @@ obtain the efficiency of a multi-processor machine if the number
 of CPUs can be found. */
 
 #ifdef TRY_TO_GET_HARDWARE_INFO 
-  operating_system=try_portable(&data);
-  operating_system=try_hpux(&data);
-  operating_system=try_solaris(&data);
-  operating_system=try_tru64(&data); 
-  operating_system=try_aix(&data); 
+  try_portable(&data);
+  try_hpux(&data);
+  try_solaris(&data);
+  try_tru64(&data); 
+  try_aix(&data); 
+  try_linux(&data); 
 #endif
 
 
