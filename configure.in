@@ -23,9 +23,24 @@ dnl AC_CHECK_LIB(mopt,main)
 
 dnl check for the optimised
 dnl AC_CHECK_LIB(copt,main)
-AC_CHECK_LIB(gslcblas,main)
-AC_CHECK_LIB(gsl,main)
-		
+
+gsl_inc_count=0
+AC_HAVE_HEADERS(gsl/gsl_sf_ellint.h,[gsl_inc_count=$(($gsl_inc_count + 1))])
+AC_HAVE_HEADERS(gsl/gsl_sf_bessel.h,[gsl_inc_count=$(($gsl_inc_count + 1))])
+
+gsl_lib_count=0
+AC_CHECK_LIB(gslcblas,main,[gsl_lib_count=$(($gsl_lib_count + 1))])
+AC_CHECK_LIB(gsl,main,[gsl_lib_count=$(($gsl_lib_count + 1))],,-lgslcblas)
+
+gsl_not_installed=0
+gsl_incomplete=0
+
+if test $gsl_inc_count == 0 && test $gsl_lib_count == 0; then
+   gsl_not_installed=1
+elif test $gsl_inc_count != 2 || test $gsl_lib_count != 2; then  
+   gsl_incomplete=1
+fi
+
 
 dnl Checks for header files.
 AC_STDC_HEADERS
@@ -131,11 +146,19 @@ fi
 
 dnl Check for the GNU scientific library header files. 
 
-AC_HAVE_HEADERS(gsl/gsl_sf_ellint.h,,AC_MSG_WARN([
-	To get full functionality you should install the GNU scientific 
-	library (gsl) available at http://sources.redhat.com/gsl. Without gsl
-	it will be impossible to evalute the theoretical impedance of 
-	a coupler  using \"design_coupler\"]))
+if test $gsl_not_installed == 1; then
+  AC_MSG_WARN([To get full functionality you should install the GNU scientific 
+	       library (gsl) available at http://sources.redhat.com/gsl. Without gsl
+	       it will be impossible to evaluate the theoretical impedance of 
+	       a coupler  using \"design_coupler\".])
+elif test $gsl_incomplete == 1; then
+  AC_MSG_WARN([Some of the gsl headers and libraries were found, but others are
+               missing.  Since the installation appears to be broken, the use
+               of gsl will be disabled.  Without gsl, it will be impossible to
+	       evaluate the theoretical impedance of a coupler using \"design_coupler\".])
+else
+  AC_DEFINE(HAVE_GSL)
+fi
 
 AC_OUTPUT([\
 Makefile                                        \
