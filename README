@@ -8,8 +8,16 @@ IMPORTANT - if altc won't compile on your system, configure with the
 option --without-hardware-info. It should then compile. 
 *********************************************************************
 
-The sources are kept in src/non_gui, as a version with a GUI is planned
-(not started yet). 
+atlc is available as source code in a file atlc-version.tar.gz, or as
+pre-built binaries for some systems (SPARC 4u, Debian Linux i386,
+Windows and a much older version of atlc has been built on about 30
+different platforms and run on NetBSD.
+
+See the file INSTALL if building from sources. Online documentation may
+be found at http://atlc.sourceforge.net/
+
+The sources are kept in src/non_gui, as a version with a GUI was
+planned, but I don't think it will happen in the near future.
 
 This is the directory layout. .
 ./docs 
@@ -35,19 +43,9 @@ rather than 'make install'. If you later want to install the
 examples, run 'make install-data'
 
 A Windows version (not graphical) can be found in an earlier distribution 
-(3.0.7). I'm not going to update that, so get a UNIX box if you want 
+(4.4.4). I'm not going to update that, so get a UNIX box if you want 
 to use the latest versions. 
 
-A version with a GUI that should run on Macs, Windoze and UNIX is
-planned. This however is expected to be some time from now. 
+If wishing to contact me by email, mail me on drkirkby at ntlworld.com
 
-Please note I'm English, so spellings should be English and dates are in
-the format Day/Month/Year, not the American way of Month/Day/Year. Hence
-3/4/02 is the 3rd of April, and not the 4th of March. 
-
-
-If wishing to contact me by email, can I suggest you copy a message to
-both drkirkby@ntlworld.com and davek@medphys.ucl.ac.uk This will allow
-me to see it in the shortest possible time. 
-
-Dr. David Kirkby, G8WRB. 19/07/03
+Dr. David Kirkby, G8WRB. 11th October 2003 Re: atlc-4.5.0
