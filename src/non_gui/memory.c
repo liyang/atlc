@@ -54,8 +54,13 @@ unsigned char *ustring(long nl,long nh)
   unsigned char *v;
 
   v=(unsigned char *)malloc((size_t) (sizeof(unsigned char)* (nh-nl+1)));
-  if (!v) 
+  if (!v) {
+    fprintf(stderr,"Can't allocate %ld bytes\n",nh-nl+1); 
+    while(1)
+    {
+    } 
     exit_with_msg_and_exit_code("Memory allocation failure in ustring()",MEMORY_ALLOCATION_ERROR_IN_USTRING);
+  }
   return v-nl;
 }
 

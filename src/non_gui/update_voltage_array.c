@@ -38,78 +38,79 @@ void update_voltage_array(int nmax, int imin, int imax, int jmin, int jmax, doub
   int k, i, j, n;  
   unsigned char oddity_value;
   double Va, Vb, Vl, Vr, ERa, ERb, ERl, ERr;
-  double Vnew;
+  double Vnew, g;
 
+  if (dielectrics_to_consider_just_now==1)
+    g=r;
+  else 
+    g=1; 
   for(n=0; n  < nmax; ++n)
     for(k=0; k < 4; ++k)
       for (i = k&1 ? imax : imin;   k&1 ? i >=imin : i <= imax ;  k&1 ? i-- : i++)
         for (j = (k==0 || k ==3) ? jmin : jmax; (k ==0 || k == 3)  ? j <= jmax : j >= jmin ; (k == 0 || k ==3) ?  j++ : j--){
           oddity_value=oddity[i][j];
-          if( oddity_value == CONDUCTOR_MINUS_ONE_V ){  
-            V_to[i][j]=-1.0;
+
+          if( oddity_value == CONDUCTOR_ZERO_V ){  
+            V_to[i][j]=0.0;
           }
 
           else if( oddity_value == CONDUCTOR_PLUS_ONE_V ){  
             V_to[i][j]=1.0;
           }
 
-          else if( oddity_value == CONDUCTOR_ZERO_V ){  
-            V_to[i][j]=0.0;
+          else if( oddity_value == CONDUCTOR_MINUS_ONE_V ){  
+            V_to[i][j]=-1.0;
           }
 
           else if( oddity_value == TOP_LEFT_CORNER ) {  /* top left */
             Vnew=0.5*(V_from[1][0]+V_from[0][1]);               
-            V_to[i][j]=r*Vnew+(1-r)*V_from[i][j];
-	  // printf("done top left corner %d %d \n",i,j);
+            V_to[i][j]=g*Vnew+(1-g)*V_from[i][j];
           }
           else if( oddity_value == TOP_RIGHT_CORNER ) {
             Vnew=0.5*(V_from[width-2][0]+V_from[width-1][1]);         /* top right */
-            V_to[i][j]=r*Vnew+(1-r)*V_from[i][j];
-	    // printf("done top right corner %d %d \n",i,j);
+            V_to[i][j]=g*Vnew+(1-g)*V_from[i][j];
           }
 
           else if(oddity_value == BOTTOM_LEFT_CORNER) {
             Vnew=0.5*(V_from[0][height-2]+V_from[1][height-1]);       /* bottom left */
-            V_to[i][j]=r*Vnew+(1-r)*V_from[i][j];
-	    // printf("done bottomleft corner %d %d \n",i,j);
+            V_to[i][j]=g*Vnew+(1-g)*V_from[i][j];
           }
 
           else if( oddity_value == BOTTOM_RIGHT_CORNER) {   
             Vnew=0.5*(V_from[width-2][height-1]+V_from[width-1][height-2]); /* bottom right */
-            V_to[i][j]=r*Vnew+(1-r)*V_from[i][j];
-	    // printf("done bottom right corner %d %d \n",i,j);
+            V_to[i][j]=g*Vnew+(1-g)*V_from[i][j];
           }
 
           /* Now the sides */
 
           else if( oddity_value == ORDINARY_POINT_LEFT_EDGE ){  /* left hand side  */
             Vnew=0.25*(V_from[0][j-1]+V_from[0][j+1] + 2*V_from[1][j]);
-            V_to[i][j]=r*Vnew+(1-r)*V_from[i][j];
+            V_to[i][j]=g*Vnew+(1-g)*V_from[i][j];
           }
 
           else if( oddity_value == ORDINARY_POINT_RIGHT_EDGE){   /* right hand side */
             Vnew=0.25*(V_from[width-1][j+1]+V_from[width-1][j-1]+2*V_from[width-2][j]);
-            V_to[i][j]=r*Vnew+(1-r)*V_from[i][j];
+            V_to[i][j]=g*Vnew+(1-g)*V_from[i][j];
           }
         
           else if( oddity_value == ORDINARY_POINT_TOP_EDGE ){ /* top row */ 
             Vnew=0.25*(V_from[i-1][0]+V_from[i+1][0]+2*V_from[i][1]);
-            V_to[i][j]=r*Vnew+(1-r)*V_from[i][j];
+            V_to[i][j]=g*Vnew+(1-g)*V_from[i][j];
           }
 
           else if( oddity_value == ORDINARY_POINT_BOTTOM_EDGE ){   /* bottom row */ 
             Vnew=0.25*(V_from[i-1][height-1]+V_from[i+1][height-1]+2*V_from[i][height-2]);
-            V_to[i][j]=r*Vnew+(1-r)*V_from[i][j];
+            V_to[i][j]=g*Vnew+(1-g)*V_from[i][j];
           }
 
-          else if ( oddity_value == ORDINARY_INTERIOR_POINT || (oddity_value==DIFFERENT_DIELECTRIC_LOCALLY && dielectrics_to_consider_just_now == 1) ) {
+          else if ( oddity_value == ORDINARY_INTERIOR_POINT || (oddity_value>=DIFFERENT_DIELECTRIC_ABOVE_AND_RIGHT && oddity_value < UNDEFINED_ODDITY && dielectrics_to_consider_just_now == 1) ) {
             Va=V_from[i][j-1]; 
             Vb=V_from[i][j+1];
             Vl=V_from[i-1][j];
             Vr=V_from[i+1][j];
 
             Vnew=(Va+Vb+Vl+Vr)/4.0;
-            V_to[i][j]=r*Vnew+(1-r)*V_from[i][j];
+            V_to[i][j]=g*Vnew+(1-g)*V_from[i][j];
 	  }
 
 	  /* I'm not sure the following equations, which compute the voltage  
@@ -135,7 +136,7 @@ void update_voltage_array(int nmax, int imin, int imax, int jmin, int jmax, doub
             Vr=V_from[i+1][j];
 
             Vnew=0.25*(4*Va/3+2*Vb/3+Vl+Vr);
-            V_to[i][j]=r*Vnew+(1-r)*V_from[i][j];
+            V_to[i][j]=g*Vnew+(1-g)*V_from[i][j];
           }
 
           else if( oddity_value == METAL_BELOW ){   
@@ -145,7 +146,7 @@ void update_voltage_array(int nmax, int imin, int imax, int jmin, int jmax, doub
             Vr=V_from[i+1][j];
 
             Vnew=0.25*(4*Vb/3+2*Va/3+Vl+Vr);
-            V_to[i][j]=r*Vnew+(1-r)*V_from[i][j];
+            V_to[i][j]=g*Vnew+(1-g)*V_from[i][j];
           }
 
           else if( oddity_value == METAL_LEFT ){   
@@ -155,7 +156,7 @@ void update_voltage_array(int nmax, int imin, int imax, int jmin, int jmax, doub
             Vr=V_from[i+1][j];
 
             Vnew=0.25*(4*Vl/3+2*Vr/3+Va+Vb);
-            V_to[i][j]=r*Vnew+(1-r)*V_from[i][j];
+            V_to[i][j]=g*Vnew+(1-g)*V_from[i][j];
           }
 
           else if( oddity_value == METAL_RIGHT ){   
@@ -165,7 +166,7 @@ void update_voltage_array(int nmax, int imin, int imax, int jmin, int jmax, doub
             Vr=V_from[i+1][j];
 
             Vnew=0.25*(4*Vr/3+2*Vl/3+Va+Vb);
-            V_to[i][j]=r*Vnew+(1-r)*V_from[i][j];
+            V_to[i][j]=g*Vnew+(1-g)*V_from[i][j];
           }
 
           else if( oddity_value == METAL_ABOVE_AND_RIGHT ){   
@@ -175,7 +176,7 @@ void update_voltage_array(int nmax, int imin, int imax, int jmin, int jmax, doub
             Vr=V_from[i+1][j];
 
             Vnew=0.25*(4*Vr/3+4*Va/3 +2*Vl/3 + 2*Vb/3);
-            V_to[i][j]=r*Vnew+(1-r)*V_from[i][j];
+            V_to[i][j]=g*Vnew+(1-g)*V_from[i][j];
           }
 
           else if( oddity_value == METAL_ABOVE_AND_LEFT ){   
@@ -185,7 +186,7 @@ void update_voltage_array(int nmax, int imin, int imax, int jmin, int jmax, doub
             Vr=V_from[i+1][j];
 
             Vnew=0.25*(4*Vl/3+4*Va/3+2*Vr/3+2*Vb/3);
-            V_to[i][j]=r*Vnew+(1-r)*V_from[i][j];
+            V_to[i][j]=g*Vnew+(1-g)*V_from[i][j];
           }
 
           else if( oddity_value == METAL_BELOW_AND_LEFT ){   
@@ -195,7 +196,7 @@ void update_voltage_array(int nmax, int imin, int imax, int jmin, int jmax, doub
             Vr=V_from[i+1][j];
 
             Vnew=0.25*(4*Vl/3+4*Vb/3+2*Vr/3+2*Va/3);
-            V_to[i][j]=r*Vnew+(1-r)*V_from[i][j];
+            V_to[i][j]=g*Vnew+(1-g)*V_from[i][j];
           }
 
           else if( oddity_value == METAL_BELOW_AND_RIGHT ){   
@@ -205,7 +206,7 @@ void update_voltage_array(int nmax, int imin, int imax, int jmin, int jmax, doub
             Vr=V_from[i+1][j];
 
             Vnew=0.25*(4*Vb/3+4*Vr/3+2*Va/3+2*Vl/3);
-            V_to[i][j]=r*Vnew+(1-r)*V_from[i][j];
+            V_to[i][j]=g*Vnew+(1-g)*V_from[i][j];
           }
 
 	  /* Again, when there is a change of permittivity, my equations may
@@ -216,7 +217,8 @@ void update_voltage_array(int nmax, int imin, int imax, int jmin, int jmax, doub
 	  The same applies for other directions of change in Er. */
 
 
-          else if(dielectrics_to_consider_just_now > 1 && oddity_value == DIFFERENT_DIELECTRIC_LOCALLY){  
+          else if(dielectrics_to_consider_just_now > 1){
+
             Va=V_from[i][j-1]; 
             Vb=V_from[i][j+1];
             Vl=V_from[i-1][j];
@@ -228,10 +230,10 @@ void update_voltage_array(int nmax, int imin, int imax, int jmin, int jmax, doub
             ERr=Er[i+1][j];
 
             Vnew=(Va * ERa + Vb * ERb + Vl * ERl + Vr * ERr)/(ERa + ERb + ERl + ERr);
-            V_to[i][j]=r*Vnew+(1-r)*V_from[i][j];
+            V_to[i][j]=g*Vnew+(1-g)*V_from[i][j];
 
 	  }
-	  else if ( (dielectrics_to_consider_just_now == 1 && oddity_value != DIFFERENT_DIELECTRIC_LOCALLY) || (dielectrics_to_consider_just_now > 1)) {
+	  else if ( (dielectrics_to_consider_just_now == 1 && oddity_value == UNDEFINED_ODDITY) || (dielectrics_to_consider_just_now > 1)) {
             fprintf(stderr,"Internal error in update_voltage_array.c\n");
             fprintf(stderr,"i=%d j=%d oddity[%d][%d]=%d\n",i,j,i,j,oddity[i][j]);
             exit(INTERNAL_ERROR);

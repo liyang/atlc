@@ -37,52 +37,45 @@ Dr. David Kirkby, e-mail drkirkby at ntlworld.com
 #define       FREE_ARG char*
 #define       NR_END 1
 
-#define    UNDEFINED_ODDITY                                                  255
 #define    CONDUCTOR_MINUS_ONE_V                                               5 
 #define    CONDUCTOR_ZERO_V                                                   10 
 #define    CONDUCTOR_PLUS_ONE_V                                               15 
 
 #define    CONDUCTOR_FLOATING                                                 20
-#define    DIELECTRIC                                                         30
 
-#define    ORDINARY_INTERIOR_POINT                                            50
-#define    ORDINARY_POINT_BOTTOM_EDGE                                         55
-#define    ORDINARY_POINT_TOP_EDGE                                            60
-#define    ORDINARY_POINT_LEFT_EDGE                                      65
-#define    ORDINARY_POINT_RIGHT_EDGE                                     70
-#define    TOP_LEFT_CORNER                                 75
-#define    BOTTOM_RIGHT_CORNER                                80
-#define    TOP_RIGHT_CORNER                                    85
-#define    BOTTOM_LEFT_CORNER                                   90
-#define    DIELECTRIC_ROW_INTERFACE_DIELECTRIC_TO_TOP                         95
-#define    DIELECTRIC_ROW_INTERFACE_DIELECTRIC_TO_BOTTOM                     100
-#define    DIELECTRIC_COLUMN_INTERFACE_DIELECTRIC_TO_LEFT_HAND_EDGE          105
-#define    DIELECTRIC_COLUMN_INTERFACE_DIELECTRIC_TO_RIGHT_HAND_EDGE         110
-#define    ANGLE_DIELECTRIC_ACUTE_FIRST_QUADRANT                             115
-#define    ANGLE_DIELECTRIC_ACUTE_SECOND_QUADRANT                            120
-#define    ANGLE_DIELECTRIC_ACUTE_THIRD_QUADRANT                             125
-#define    ANGLE_DIELECTRIC_ACUTE_FOURTH_QUADRANT                            135
-#define    ANGLE_DIELECTRIC_OBTUSE_FIRST_QUADRANT                            140
-#define    ANGLE_DIELECTRIC_OBTUSE_SECOND_QUADRANT                           145
-#define    ANGLE_DIELECTRIC_OBTUSE_THIRD_QUADRANT                            150
-#define    ANGLE_DIELECTRIC_OBTUSE_FOURTH_QUADRANT                           155
-#define    DIELECTRIC_INTERFACE_TO_BOTTOM_EDGE_DIELECTRIC_TO_LEFT_HAND_EDGE  160
-#define    DIELECTRIC_INTERFACE_TO_BOTTOM_EDGE_DIELECTRIC_TO_RIGHT_HAND_EDGE 165
-#define    DIELECTRIC_INTERFACE_TO_TOP_EDGE_DIELECTRIC_TO_LEFT_HAND_EDGE     170
-#define    DIELECTRIC_INTERFACE_TO_TOP_EDGE_DIELECTRIC_TO_RIGHT_HAND_EDGE    175
-#define    DIELECTRIC_INTERFACE_TO_LEFT_HAND_EDGE_DIELECTRIC_TO_TOP          180
-#define    DIELECTRIC_INTERFACE_TO_LEFT_HAND_EDGE_DIELECTRIC_TO_BOTTOM       185
-#define    DIELECTRIC_INTERFACE_TO_RIGHT_HAND_EDGE_DIELECTRIC_TO_TOP         190
-#define    DIELECTRIC_INTERFACE_TO_RIGHT_HAND_EDGE_DIELECTRIC_TO_BOTTOM      200
-#define    METAL_LEFT                                                        205
-#define    METAL_RIGHT                                                       210
-#define    METAL_ABOVE                                                       215
-#define    METAL_BELOW                                                       220
-#define    METAL_BELOW_AND_LEFT                                              225
-#define    METAL_BELOW_AND_RIGHT                                             230
-#define    METAL_ABOVE_AND_LEFT                                              235
-#define    METAL_ABOVE_AND_RIGHT                                             240
+#define    METAL_LEFT                                                         25
+#define    METAL_RIGHT                                                        30
+#define    METAL_ABOVE                                                        35
+#define    METAL_BELOW                                                        40
+#define    METAL_BELOW_AND_LEFT                                               45
+#define    METAL_BELOW_AND_RIGHT                                              50
+#define    METAL_ABOVE_AND_LEFT                                               55 
+#define    METAL_ABOVE_AND_RIGHT                                              60
 
+#define    DIELECTRIC                                                         65 /* not for oddity */
+#define    ORDINARY_INTERIOR_POINT                                            70
+
+#define    TOP_LEFT_CORNER                                                    75
+#define    BOTTOM_RIGHT_CORNER                                                80
+#define    TOP_RIGHT_CORNER                                                   85
+#define    BOTTOM_LEFT_CORNER                                                 90
+#define    ORDINARY_POINT_BOTTOM_EDGE                                         95
+#define    ORDINARY_POINT_TOP_EDGE                                           100
+#define    ORDINARY_POINT_LEFT_EDGE                                          105
+#define    ORDINARY_POINT_RIGHT_EDGE                                         110
+#define    DIFFERENT_DIELECTRIC_LOCALLY                                      115
+
+#define    DIFFERENT_DIELECTRIC_ABOVE_AND_RIGHT                              120
+#define    DIFFERENT_DIELECTRIC_BELOW_AND_LEFT                               125
+#define    DIFFERENT_DIELECTRIC_BELOW_AND_RIGHT                              135
+#define    DIFFERENT_DIELECTRIC_VERTICALLY                                   140
+#define    DIFFERENT_DIELECTRIC_HORIZONTALLY                                 145
+#define    DIFFERENT_DIELECTRIC_BELOW                                        150
+#define    DIFFERENT_DIELECTRIC_LEFT                                         155
+#define    DIFFERENT_DIELECTRIC_RIGHT                                        160
+#define    DIFFERENT_DIELECTRIC_ABOVE_AND_LEFT                               165
+
+#define    UNDEFINED_ODDITY                                                  255
 
 /* The following two determine what happens when a coupler is present
 and the voltages have to be swapped from negative to positive in the
@@ -309,7 +302,6 @@ void free_cmatrix(char **m, long nrl, long nrh, long ncl, long nch);
 char *string(long nl,long nh);
 void free_string(char *v, long nl, long nh);
 void swap_bytes2(unsigned char *buffer, int offset, short *answer);
-//int **imatrix(long nrl, long nrh, long ncl, long nch);
 void swap_bytes4(unsigned char *buffer, int offset, int *answer);
 void free_ustring(unsigned char *v, long nl, long nh);
 void setup_arrays(struct transmission_line_properties *data);
@@ -355,7 +347,7 @@ void free_scmatrix(signed char **m, long nrl, long nrh, long ncl, long nch);
 
 int print_data(FILE *fp, char *filename, double Er, double C, double L, double Zo, double
 Zodd, double Zeven, int whichZ, double v, double vf);
-void set_oddity_from_Greens_paper(void);
+void set_oddity_value(void);
 double find_energy_per_metre(int i, int j);
 FILE *get_file_pointer_with_right_filename(char *filename, const char *ext);
 void find_maximum_values(struct max_values *maximum_values, int zero_elementsQ);
@@ -391,7 +383,6 @@ void check_parameters_of_create_bmp_for_rect_in_rect(void);
 void usage_create_bmp_for_symmetrical_stripline(void);
 void check_parameters_for_find_optimal_dimensions_for_microstrip_coupler (double h,double t,double Er1,double Er2,double ideal_Zodd,double ideal_Zeven);
 double *dvector(long nl, long nh);
-//void free_imatrix(int **m, long nrl, long nrh, long ncl, long nch);
 void *worker(void *thread_arg);
 void free_ivector(int *v, long nl, long nh);
 double check_convergence(double **grid1, double **grid2, int w, int h);
@@ -413,10 +404,7 @@ void check_for_boundaries(void);
 #define SEVEN
 #define EIGHT
 #define NINE
-/* 
-//#define TEN
-//#define ELEVEN
-//#define TWELVE
-//#define THIRTEEN
-*/
 #define HUNDRED
+
+#define I 58
+#define J 241

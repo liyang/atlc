@@ -11,7 +11,6 @@ double find_Ex(int i, int j)
   double Ex=0.0;
   unsigned char odd;
   odd = oddity[i][j];
-
   if(odd > CONDUCTOR_FLOATING) {
 
     if (odd == TOP_LEFT_CORNER || odd == BOTTOM_LEFT_CORNER) 
@@ -38,7 +37,7 @@ double find_Ex(int i, int j)
     else if (odd == ORDINARY_INTERIOR_POINT || odd == METAL_ABOVE || odd == METAL_BELOW)
       Ex=0.5*(Vij[i-1][j]-Vij[i+1][j]);
 
-    else if (odd == DIFFERENT_DIELECTRIC_LOCALLY)
+    else if (odd >= DIFFERENT_DIELECTRIC_ABOVE_AND_RIGHT && odd < UNDEFINED_ODDITY  )
       Ex=0.5*(Vij[i-1][j]-Vij[i+1][j]);
 
     else{
@@ -78,7 +77,7 @@ double find_Ey(int i, int j)
     else if (odd == METAL_BELOW || odd == METAL_BELOW_AND_LEFT || odd == METAL_BELOW_AND_RIGHT)
       Ey=Vij[i][j]-Vij[i][j-1];
 
-    else if(odd == DIFFERENT_DIELECTRIC_LOCALLY || odd == ORDINARY_INTERIOR_POINT || odd == METAL_RIGHT || odd == METAL_LEFT)
+    else if(odd >= DIFFERENT_DIELECTRIC_LOCALLY || odd == ORDINARY_INTERIOR_POINT || odd == METAL_RIGHT || odd == METAL_LEFT)
       Ey=0.5*(Vij[i][j+1]-Vij[i][j-1]);
 
     else{

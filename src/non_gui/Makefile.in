@@ -130,12 +130,15 @@ create_bmp_for_rect_cen_in_rect_coupler
 
 
 atlc_SOURCES = atlc.c read_bitmap_file_headers.c \
+update_voltage_array.c \
+check_for_boundaries.c \
 memory.c setup_arrays.c \
 finite_difference_single_threaded.c \
 finite_difference_multi_threaded.c \
 usage_atlc.c \
 check_for_shorts.c bmp.h definitions.h Erdata.h \
-check_for_boundaries.c find_energy_per_metre.c \
+find_energy_per_metre.c \
+set_oddity_from_Greens_paper.c \
 get_file_pointer_with_right_filename.c \
 find_maximum_values.c calculate_colour_data.c find_electric_fields.c \
 get_options.c exit_with_msg_and_exit_code.c do_fd_calculation.c \
@@ -317,13 +320,15 @@ bin_PROGRAMS = atlc$(EXEEXT) create_bmp_for_rect_in_rect$(EXEEXT) \
 PROGRAMS = $(bin_PROGRAMS)
 
 am_atlc_OBJECTS = atlc-atlc.$(OBJEXT) \
-	atlc-read_bitmap_file_headers.$(OBJEXT) atlc-memory.$(OBJEXT) \
+	atlc-read_bitmap_file_headers.$(OBJEXT) \
+	atlc-update_voltage_array.$(OBJEXT) \
+	atlc-check_for_boundaries.$(OBJEXT) atlc-memory.$(OBJEXT) \
 	atlc-setup_arrays.$(OBJEXT) \
 	atlc-finite_difference_single_threaded.$(OBJEXT) \
 	atlc-finite_difference_multi_threaded.$(OBJEXT) \
 	atlc-usage_atlc.$(OBJEXT) atlc-check_for_shorts.$(OBJEXT) \
-	atlc-check_for_boundaries.$(OBJEXT) \
 	atlc-find_energy_per_metre.$(OBJEXT) \
+	atlc-set_oddity_from_Greens_paper.$(OBJEXT) \
 	atlc-get_file_pointer_with_right_filename.$(OBJEXT) \
 	atlc-find_maximum_values.$(OBJEXT) \
 	atlc-calculate_colour_data.$(OBJEXT) \
@@ -530,8 +535,10 @@ am__depfiles_maybe = depfiles
 @AMDEP_TRUE@	./$(DEPDIR)/atlc-print_data_for_two_conductor_lines.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/atlc-read_bitmap_file_headers.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/atlc-set_data_to_sensible_starting_values.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/atlc-set_oddity_from_Greens_paper.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/atlc-setup_arrays.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/atlc-swap_conductor_voltages.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/atlc-update_voltage_array.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/atlc-usage_atlc.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/atlc-write_fields_for_directional_couplers.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/atlc-write_fields_for_two_conductor_lines.Po \
@@ -662,6 +669,8 @@ clean-binPROGRAMS:
 	-test -z "$(bin_PROGRAMS)" || rm -f $(bin_PROGRAMS)
 atlc-atlc.$(OBJEXT): atlc.c
 atlc-read_bitmap_file_headers.$(OBJEXT): read_bitmap_file_headers.c
+atlc-update_voltage_array.$(OBJEXT): update_voltage_array.c
+atlc-check_for_boundaries.$(OBJEXT): check_for_boundaries.c
 atlc-memory.$(OBJEXT): memory.c
 atlc-setup_arrays.$(OBJEXT): setup_arrays.c
 atlc-finite_difference_single_threaded.$(OBJEXT): \
@@ -670,8 +679,9 @@ atlc-finite_difference_multi_threaded.$(OBJEXT): \
 	finite_difference_multi_threaded.c
 atlc-usage_atlc.$(OBJEXT): usage_atlc.c
 atlc-check_for_shorts.$(OBJEXT): check_for_shorts.c
-atlc-check_for_boundaries.$(OBJEXT): check_for_boundaries.c
 atlc-find_energy_per_metre.$(OBJEXT): find_energy_per_metre.c
+atlc-set_oddity_from_Greens_paper.$(OBJEXT): \
+	set_oddity_from_Greens_paper.c
 atlc-get_file_pointer_with_right_filename.$(OBJEXT): \
 	get_file_pointer_with_right_filename.c
 atlc-find_maximum_values.$(OBJEXT): find_maximum_values.c
@@ -799,8 +809,10 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atlc-print_data_for_two_conductor_lines.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atlc-read_bitmap_file_headers.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atlc-set_data_to_sensible_starting_values.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atlc-set_oddity_from_Greens_paper.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atlc-setup_arrays.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atlc-swap_conductor_voltages.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atlc-update_voltage_array.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atlc-usage_atlc.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atlc-write_fields_for_directional_couplers.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atlc-write_fields_for_two_conductor_lines.Po@am__quote@
@@ -947,6 +959,50 @@ atlc-read_bitmap_file_headers.obj: read_bitmap_file_headers.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(atlc_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o atlc-read_bitmap_file_headers.obj `if test -f 'read_bitmap_file_headers.c'; then $(CYGPATH_W) 'read_bitmap_file_headers.c'; else $(CYGPATH_W) '$(srcdir)/read_bitmap_file_headers.c'`
 
+atlc-update_voltage_array.o: update_voltage_array.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(atlc_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT atlc-update_voltage_array.o -MD -MP -MF "$(DEPDIR)/atlc-update_voltage_array.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o atlc-update_voltage_array.o `test -f 'update_voltage_array.c' || echo '$(srcdir)/'`update_voltage_array.c; \
+@am__fastdepCC_TRUE@	then mv "$(DEPDIR)/atlc-update_voltage_array.Tpo" "$(DEPDIR)/atlc-update_voltage_array.Po"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/atlc-update_voltage_array.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='update_voltage_array.c' object='atlc-update_voltage_array.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/atlc-update_voltage_array.Po' tmpdepfile='$(DEPDIR)/atlc-update_voltage_array.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(atlc_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o atlc-update_voltage_array.o `test -f 'update_voltage_array.c' || echo '$(srcdir)/'`update_voltage_array.c
+
+atlc-update_voltage_array.obj: update_voltage_array.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(atlc_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT atlc-update_voltage_array.obj -MD -MP -MF "$(DEPDIR)/atlc-update_voltage_array.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o atlc-update_voltage_array.obj `if test -f 'update_voltage_array.c'; then $(CYGPATH_W) 'update_voltage_array.c'; else $(CYGPATH_W) '$(srcdir)/update_voltage_array.c'`; \
+@am__fastdepCC_TRUE@	then mv "$(DEPDIR)/atlc-update_voltage_array.Tpo" "$(DEPDIR)/atlc-update_voltage_array.Po"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/atlc-update_voltage_array.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='update_voltage_array.c' object='atlc-update_voltage_array.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/atlc-update_voltage_array.Po' tmpdepfile='$(DEPDIR)/atlc-update_voltage_array.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(atlc_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o atlc-update_voltage_array.obj `if test -f 'update_voltage_array.c'; then $(CYGPATH_W) 'update_voltage_array.c'; else $(CYGPATH_W) '$(srcdir)/update_voltage_array.c'`
+
+atlc-check_for_boundaries.o: check_for_boundaries.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(atlc_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT atlc-check_for_boundaries.o -MD -MP -MF "$(DEPDIR)/atlc-check_for_boundaries.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o atlc-check_for_boundaries.o `test -f 'check_for_boundaries.c' || echo '$(srcdir)/'`check_for_boundaries.c; \
+@am__fastdepCC_TRUE@	then mv "$(DEPDIR)/atlc-check_for_boundaries.Tpo" "$(DEPDIR)/atlc-check_for_boundaries.Po"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/atlc-check_for_boundaries.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='check_for_boundaries.c' object='atlc-check_for_boundaries.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/atlc-check_for_boundaries.Po' tmpdepfile='$(DEPDIR)/atlc-check_for_boundaries.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(atlc_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o atlc-check_for_boundaries.o `test -f 'check_for_boundaries.c' || echo '$(srcdir)/'`check_for_boundaries.c
+
+atlc-check_for_boundaries.obj: check_for_boundaries.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(atlc_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT atlc-check_for_boundaries.obj -MD -MP -MF "$(DEPDIR)/atlc-check_for_boundaries.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o atlc-check_for_boundaries.obj `if test -f 'check_for_boundaries.c'; then $(CYGPATH_W) 'check_for_boundaries.c'; else $(CYGPATH_W) '$(srcdir)/check_for_boundaries.c'`; \
+@am__fastdepCC_TRUE@	then mv "$(DEPDIR)/atlc-check_for_boundaries.Tpo" "$(DEPDIR)/atlc-check_for_boundaries.Po"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/atlc-check_for_boundaries.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='check_for_boundaries.c' object='atlc-check_for_boundaries.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/atlc-check_for_boundaries.Po' tmpdepfile='$(DEPDIR)/atlc-check_for_boundaries.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(atlc_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o atlc-check_for_boundaries.obj `if test -f 'check_for_boundaries.c'; then $(CYGPATH_W) 'check_for_boundaries.c'; else $(CYGPATH_W) '$(srcdir)/check_for_boundaries.c'`
+
 atlc-memory.o: memory.c
 @am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(atlc_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT atlc-memory.o -MD -MP -MF "$(DEPDIR)/atlc-memory.Tpo" \
 @am__fastdepCC_TRUE@	  -c -o atlc-memory.o `test -f 'memory.c' || echo '$(srcdir)/'`memory.c; \
@@ -1079,28 +1135,6 @@ atlc-check_for_shorts.obj: check_for_shorts.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(atlc_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o atlc-check_for_shorts.obj `if test -f 'check_for_shorts.c'; then $(CYGPATH_W) 'check_for_shorts.c'; else $(CYGPATH_W) '$(srcdir)/check_for_shorts.c'`
 
-atlc-check_for_boundaries.o: check_for_boundaries.c
-@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(atlc_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT atlc-check_for_boundaries.o -MD -MP -MF "$(DEPDIR)/atlc-check_for_boundaries.Tpo" \
-@am__fastdepCC_TRUE@	  -c -o atlc-check_for_boundaries.o `test -f 'check_for_boundaries.c' || echo '$(srcdir)/'`check_for_boundaries.c; \
-@am__fastdepCC_TRUE@	then mv "$(DEPDIR)/atlc-check_for_boundaries.Tpo" "$(DEPDIR)/atlc-check_for_boundaries.Po"; \
-@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/atlc-check_for_boundaries.Tpo"; exit 1; \
-@am__fastdepCC_TRUE@	fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='check_for_boundaries.c' object='atlc-check_for_boundaries.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/atlc-check_for_boundaries.Po' tmpdepfile='$(DEPDIR)/atlc-check_for_boundaries.TPo' @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(atlc_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o atlc-check_for_boundaries.o `test -f 'check_for_boundaries.c' || echo '$(srcdir)/'`check_for_boundaries.c
-
-atlc-check_for_boundaries.obj: check_for_boundaries.c
-@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(atlc_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT atlc-check_for_boundaries.obj -MD -MP -MF "$(DEPDIR)/atlc-check_for_boundaries.Tpo" \
-@am__fastdepCC_TRUE@	  -c -o atlc-check_for_boundaries.obj `if test -f 'check_for_boundaries.c'; then $(CYGPATH_W) 'check_for_boundaries.c'; else $(CYGPATH_W) '$(srcdir)/check_for_boundaries.c'`; \
-@am__fastdepCC_TRUE@	then mv "$(DEPDIR)/atlc-check_for_boundaries.Tpo" "$(DEPDIR)/atlc-check_for_boundaries.Po"; \
-@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/atlc-check_for_boundaries.Tpo"; exit 1; \
-@am__fastdepCC_TRUE@	fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='check_for_boundaries.c' object='atlc-check_for_boundaries.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/atlc-check_for_boundaries.Po' tmpdepfile='$(DEPDIR)/atlc-check_for_boundaries.TPo' @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(atlc_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o atlc-check_for_boundaries.obj `if test -f 'check_for_boundaries.c'; then $(CYGPATH_W) 'check_for_boundaries.c'; else $(CYGPATH_W) '$(srcdir)/check_for_boundaries.c'`
-
 atlc-find_energy_per_metre.o: find_energy_per_metre.c
 @am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(atlc_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT atlc-find_energy_per_metre.o -MD -MP -MF "$(DEPDIR)/atlc-find_energy_per_metre.Tpo" \
 @am__fastdepCC_TRUE@	  -c -o atlc-find_energy_per_metre.o `test -f 'find_energy_per_metre.c' || echo '$(srcdir)/'`find_energy_per_metre.c; \
@@ -1122,6 +1156,28 @@ atlc-find_energy_per_metre.obj: find_energy_per_metre.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/atlc-find_energy_per_metre.Po' tmpdepfile='$(DEPDIR)/atlc-find_energy_per_metre.TPo' @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(atlc_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o atlc-find_energy_per_metre.obj `if test -f 'find_energy_per_metre.c'; then $(CYGPATH_W) 'find_energy_per_metre.c'; else $(CYGPATH_W) '$(srcdir)/find_energy_per_metre.c'`
+
+atlc-set_oddity_from_Greens_paper.o: set_oddity_from_Greens_paper.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(atlc_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT atlc-set_oddity_from_Greens_paper.o -MD -MP -MF "$(DEPDIR)/atlc-set_oddity_from_Greens_paper.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o atlc-set_oddity_from_Greens_paper.o `test -f 'set_oddity_from_Greens_paper.c' || echo '$(srcdir)/'`set_oddity_from_Greens_paper.c; \
+@am__fastdepCC_TRUE@	then mv "$(DEPDIR)/atlc-set_oddity_from_Greens_paper.Tpo" "$(DEPDIR)/atlc-set_oddity_from_Greens_paper.Po"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/atlc-set_oddity_from_Greens_paper.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='set_oddity_from_Greens_paper.c' object='atlc-set_oddity_from_Greens_paper.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/atlc-set_oddity_from_Greens_paper.Po' tmpdepfile='$(DEPDIR)/atlc-set_oddity_from_Greens_paper.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(atlc_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o atlc-set_oddity_from_Greens_paper.o `test -f 'set_oddity_from_Greens_paper.c' || echo '$(srcdir)/'`set_oddity_from_Greens_paper.c
+
+atlc-set_oddity_from_Greens_paper.obj: set_oddity_from_Greens_paper.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(atlc_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT atlc-set_oddity_from_Greens_paper.obj -MD -MP -MF "$(DEPDIR)/atlc-set_oddity_from_Greens_paper.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o atlc-set_oddity_from_Greens_paper.obj `if test -f 'set_oddity_from_Greens_paper.c'; then $(CYGPATH_W) 'set_oddity_from_Greens_paper.c'; else $(CYGPATH_W) '$(srcdir)/set_oddity_from_Greens_paper.c'`; \
+@am__fastdepCC_TRUE@	then mv "$(DEPDIR)/atlc-set_oddity_from_Greens_paper.Tpo" "$(DEPDIR)/atlc-set_oddity_from_Greens_paper.Po"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/atlc-set_oddity_from_Greens_paper.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='set_oddity_from_Greens_paper.c' object='atlc-set_oddity_from_Greens_paper.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/atlc-set_oddity_from_Greens_paper.Po' tmpdepfile='$(DEPDIR)/atlc-set_oddity_from_Greens_paper.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(atlc_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o atlc-set_oddity_from_Greens_paper.obj `if test -f 'set_oddity_from_Greens_paper.c'; then $(CYGPATH_W) 'set_oddity_from_Greens_paper.c'; else $(CYGPATH_W) '$(srcdir)/set_oddity_from_Greens_paper.c'`
 
 atlc-get_file_pointer_with_right_filename.o: get_file_pointer_with_right_filename.c
 @am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(atlc_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT atlc-get_file_pointer_with_right_filename.o -MD -MP -MF "$(DEPDIR)/atlc-get_file_pointer_with_right_filename.Tpo" \

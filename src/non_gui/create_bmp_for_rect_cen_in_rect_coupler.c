@@ -48,7 +48,6 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
    }
    if(argc-my_optind ==6)
    {
-     //printf("hello\n");
 
       WW=atof(argv[my_optind]);
       HH=atof(argv[my_optind+1]);

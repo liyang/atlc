@@ -121,9 +121,11 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
   write_bitmap_out(aligned_image_vector, fp, size_of_image, W, H);
   /* write_bitmap_out closes the file pointer */
   Zo=calculate_symmetrical_stripline_impedance(H-2*BORDER,w);
-  if(verbose >=1)
+  if(verbose >=1 && W >= RATIO*H + w )
     printf("Zo is theoretically %f Ohms (assuming W is infinite)\n",Zo);
-  exit_with_msg_and_exit_code("",OKAY);
+  else{
+    exit_with_msg_and_exit_code("A theoretical value for Zo can't be computed as the width W is too small",1);
+  }
   return(OKAY); /* This does not get executed, but keeps the compiler
   happier, as otherwise it gives a warning about control reaching the
   end of a non-void function */

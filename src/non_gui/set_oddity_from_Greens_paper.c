@@ -39,7 +39,7 @@ extern double **Er;
 #include <stdlib.h>
 #endif
 
-void set_oddity_from_Greens_paper(void) 
+void set_oddity_value(void) 
 {
   int i, j;
   double er, ERa, ERb, ERl, ERr;
@@ -97,7 +97,7 @@ void set_oddity_from_Greens_paper(void)
       else if ( (i == 0 || i == width-1 || j == 0 || j == height-1 ) && (oddity[i][j]==UNDEFINED_ODDITY)) {
 	fprintf(stderr,"Internal error: one of the edge points (%d,%d) is still undefined\n",i,j);
 	fprintf(stderr, "ZZZZZZZZZZZZZ width=%d height=%d\n", width, height);
-	fprintf(stderr,"Error set_oddity_from_Greens_paper.c\n");
+	fprintf(stderr,"Error set_oddity_value.c\n");
 	exit(INTERNAL_ERROR);
       }
     } /* end of for(j=0;j<height-0;++j) { */
@@ -157,13 +157,12 @@ void set_oddity_from_Greens_paper(void)
       else if ( cr <= CONDUCTOR_PLUS_ONE_V )
 	oddity[i][j]= METAL_RIGHT;
 
-      else if ( ERb != er || ERr != er || ERl != er || ERa != er )
-	oddity[i][j]= DIFFERENT_DIELECTRIC_LOCALLY; 
-
-#ifdef MORE2
-      else if ( ERb != er  && ERr != er)
-	oddity[i][j]= DIFFERENT_DIELECTRIC_BELOW_AND_RIGHT; 
-
+      else if ( ERb != ERa)
+	oddity[i][j]= DIFFERENT_DIELECTRIC_VERTICALLY; 
+ 
+      else if ( ERl != ERr )
+	oddity[i][j]= DIFFERENT_DIELECTRIC_HORIZONTALLY;      
+/*
       else if ( ERa != er  && ERr != er)
 	oddity[i][j]= DIFFERENT_DIELECTRIC_ABOVE_AND_RIGHT; 
 
@@ -178,14 +177,12 @@ void set_oddity_from_Greens_paper(void)
 
       else if ( ERb != er )
 	oddity[i][j]= DIFFERENT_DIELECTRIC_BELOW; 
-
       else if ( ERl != er )
 	oddity[i][j]= DIFFERENT_DIELECTRIC_LEFT; 
 
       else if ( ERr != er )
 	oddity[i][j]= DIFFERENT_DIELECTRIC_RIGHT; 
-#endif
-	
+*/
       else
 	oddity[i][j]= ORDINARY_INTERIOR_POINT;
     }/* end of for i=0 to width-1 */

@@ -63,6 +63,7 @@ void setup_arrays(struct transmission_line_properties *data)
    pixels_found.blue=0;
    pixels_found.white=0; 
    pixels_found.other_colour=0; 
+
    for(h=0;h<height;h++)
    {
       for (w=0; w<width;++w)
@@ -144,12 +145,18 @@ void setup_arrays(struct transmission_line_properties *data)
          }
          if((dielectric_found == FALSE) && (conductor_found==FALSE))
          {
-            fprintf(stderr,"Error#7: The colour r=0x%x g=0x%x b=0x%x (0x%02x%02x%02x) exists in the image at pixel %d,%d but\n",red,green,blue,red,green,blue,w,h);
-	    fprintf(stderr,"the program does not know how to interpret this colour. This is not a\n");
+            fprintf(stderr,"Error#7: The colour r=0x%x g=0x%x b=0x%x (0x%02x%02x%02x) exists at pixel %d,%d.\n",red,green,blue,red,green,blue,w,h);
+	    fprintf(stderr,"However, atlc does not know how to interpret this colour. This is not a\n");
 	    fprintf(stderr,"conductor (pure red, green or blue), nor is it one of the %d dielectrics that\n",NUMBER_OF_DIELECTRICS_DEFINED);
 	    fprintf(stderr,"are predefined in Erdata.h, nor is a corresponding dielectric constant defined\n");
-	    fprintf(stderr,"on the command line line with the -d option\n");
-	    fprintf(stderr,"e.g. atlc -d %02x%02x%02x=1.9 file.bmp if this colour has a permittivity of 1.9\n",red,green,blue);
+	    fprintf(stderr,"on the command line with the -d option. Sometimes this occurs when a\n");
+	    fprintf(stderr,"graphics package is used to make the bitmap, but it performs some form of\n");
+	    fprintf(stderr,"anti-aliasing or smooting. If this is the case, redraw the image turning such\n"); 
+	    fprintf(stderr,"options off. If this is not the case then re-run atlc adding the -d option\n");
+	    fprintf(stderr,"to define the relative permittivity of the dielectric\n\n");
+	    fprintf(stderr,"e.g. atlc -d %02x%02x%02x=1.9 %s  \n\n",red,green,blue, inputfile_name);
+	    fprintf(stderr,"if this colour has a permittivity of 1.9. If there are multiple undefined\n");
+	    fprintf(stderr,"dielectrics, then there will need to be multiple copies of the -d option given.\n");
 	    exit_with_msg_and_exit_code("",UNDEFINED_COLOUR_IN_BITMAP);
          }
          /* We need to keep a record of the number of dielectrics in the image, 

@@ -48,7 +48,9 @@ extern double **Vij;
 extern double **Er;
 extern unsigned char *bmp_buff;
 extern int width, height, errno;
+#ifdef WRITE_ODDITY_DATA
 extern unsigned char **oddity;
+#endif
 
 /* Write the following files, assuming an input of example.bmp 
 where example.bmp is a 2 conductor transmission lines. For
@@ -85,13 +87,15 @@ void write_fields_for_two_conductor_lines(char * filename, struct transmission_l
   FILE *E_bin_fp=NULL, *V_bin_fp, *U_bin_fp=NULL;
   FILE *Ex_bmp_fp=NULL, *Ey_bmp_fp=NULL;
   FILE *E_bmp_fp=NULL, *V_bmp_fp=NULL, *U_bmp_fp=NULL;
+#ifdef WRITE_ODDITY_DATA
   FILE *oddity_bmp_fp=NULL;
+  double odd;
+#endif
   unsigned char r, g, b;
   FILE *permittivity_bin_fp=NULL, *permittivity_bmp_fp=NULL;
   struct max_values maximum_values;
   int offset=-3, w, h;
   double V, E, Ex, Ey, U;
-  double odd;
 
   unsigned char *image_data_Ex=NULL; 
   unsigned char *image_data_Ey=NULL;
@@ -99,7 +103,9 @@ void write_fields_for_two_conductor_lines(char * filename, struct transmission_l
   unsigned char *image_data_U=NULL; 
   unsigned char *image_data_V=NULL;
   unsigned char *image_data_Er=NULL;
+#ifdef WRITE_ODDITY_DATA
   unsigned char *image_data_oddity=NULL;
+#endif 
 
 
   if(data.write_binary_field_imagesQ==TRUE)
@@ -157,7 +163,9 @@ void write_fields_for_two_conductor_lines(char * filename, struct transmission_l
     image_data_V=ustring(0L,(long) size);
     image_data_Er=ustring(0L,(long) size);
     image_data_U=ustring(0L,(long) size);
+#ifdef WRITE_ODDITY_DATA
     image_data_oddity=ustring(0L,(long) size);
+#endif
 
     Ex_bmp_fp=get_file_pointer_with_right_filename(filename,".Ex.bmp");
     Ey_bmp_fp=get_file_pointer_with_right_filename(filename,".Ey.bmp");
@@ -165,7 +173,9 @@ void write_fields_for_two_conductor_lines(char * filename, struct transmission_l
     V_bmp_fp=get_file_pointer_with_right_filename(filename,".V.bmp");
     U_bmp_fp=get_file_pointer_with_right_filename(filename,".U.bmp");
     permittivity_bmp_fp=get_file_pointer_with_right_filename(filename,".Er.bmp");
+#ifdef WRITE_ODDITY_DATA
     oddity_bmp_fp=get_file_pointer_with_right_filename(filename,".oddity.bmp");
+#endif
 
     if( fwrite(bmp_buff,0x36,1,Ex_bmp_fp) != 1)
       exit_with_msg_and_exit_code("failed to write file with the pointer Ex_bmp_fp in write_fields_for_two_conductor_lines.c",WRITE_FAILURE);
@@ -180,8 +190,10 @@ void write_fields_for_two_conductor_lines(char * filename, struct transmission_l
     if( fwrite(bmp_buff,0x36,1,permittivity_bmp_fp) != 1)
       exit_with_msg_and_exit_code("failed to write file with the pointer permittivity_bmp_fp in write_fields_for_two_conductor_lines.c",WRITE_FAILURE);
 
+#ifdef WRITE_ODDITY_DATA
     if( fwrite(bmp_buff,0x36,1,oddity_bmp_fp) != 1)
       exit_with_msg_and_exit_code("failed to write file with the pointer oddity_bmp_fp in write_fields_for_two_conductor_lines.c",WRITE_FAILURE);
+#endif 
 
     offset=-3;
     for(h=height-1;h>=0;h--)
@@ -194,7 +206,6 @@ void write_fields_for_two_conductor_lines(char * filename, struct transmission_l
         Ex=find_Ex(w,h);
         Ey=find_Ey(w,h);
         E=find_E(w,h); 
-	odd=(double) oddity[w][h];
         U=find_energy_per_metre(w,h);
         calculate_colour_data(Ex, maximum_values.Ex_or_Ey_max, w, h, offset,image_data_Ex, COLOUR,&r,&g,&b,IMAGE_FIDDLE_FACTOR);
         calculate_colour_data(Ey, maximum_values.Ex_or_Ey_max, w, h, offset,image_data_Ey, COLOUR,&r,&g,&b,IMAGE_FIDDLE_FACTOR);
@@ -202,7 +213,11 @@ void write_fields_for_two_conductor_lines(char * filename, struct transmission_l
         calculate_colour_data(U, maximum_values.U_max, w, h, offset,image_data_U, MONOCHROME,&r,&g,&b,IMAGE_FIDDLE_FACTOR);
         calculate_colour_data(Vij[w][h], maximum_values.V_max, w, h, offset,image_data_V, COLOUR,&r,&g,&b,IMAGE_FIDDLE_FACTOR);
         calculate_colour_data(Er[w][h], MAX_ER, w, h, offset,image_data_Er, MIXED,&r,&g,&b,IMAGE_FIDDLE_FACTOR);
+#ifdef WRITE_ODDITY_DATA
+	odd=(double) oddity[w][h];
         calculate_colour_data(odd, 255 , w, h, offset,image_data_oddity, MONOCHROME,&r,&g,&b,1.0);
+#endif
+
       }
     }
 
@@ -238,11 +253,12 @@ void write_fields_for_two_conductor_lines(char * filename, struct transmission_l
     if( fclose(permittivity_bmp_fp) != 0)
       exit_with_msg_and_exit_code("Error#18: Unable to close file in write_fields_for_two_conductor_lines.c",CANT_CLOSE_FILE);
 
+#ifdef WRITE_ODDITY_DATA
     if( fwrite((void *) &(image_data_oddity[0]),size, 1, oddity_bmp_fp) != 1)
       exit_with_msg_and_exit_code("Error#19: Failed to write bitmap file in write_fields_for_two_conductor_lines.c",WRITE_FAILURE);
     if( fclose(oddity_bmp_fp) != 0)
       exit_with_msg_and_exit_code("Error#20: Unable to close file in write_fields_for_two_conductor_lines.c",CANT_CLOSE_FILE);
-
+#endif
 
     free_ustring(image_data_Ex,0L,(long)size);
     free_ustring(image_data_Ey,0L,(long)size);

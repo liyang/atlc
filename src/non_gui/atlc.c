@@ -267,22 +267,13 @@ hence built without the mpi\nlibrary.\n",1);
     /* We now fill the following 3 arrays with the correct data, based on the 
     contents of the bitmap image */
 
-    //printf("cell_type 0,0 =%d cell_type 6,6=%d prior to setup arrays\n", cell_type[0][0],cell_type[6][6]);
     setup_arrays(&data);
-    //printf("cell_type 0,0 =%d cell_type 6,6=%d after setup arrays, prior to set_oddity_from_Greens_paper\n", cell_type[0][0],cell_type[6][6]);
-    set_oddity_from_Greens_paper();
-    //printf("oddity 0,0 =%d oddity 6,6=%d after  set_oddity_from_Greens_paper\n", oddity[0][0],oddity[6][6]);
-    //printf("cell_type 0,0 =%d cell_type 6,6=%d after  set_oddity_from_Greens_paper\n", cell_type[0][0],cell_type[6][6]);
-    //check_for_boundaries();
-    //printf("oddity 0,0 =%d oddity 6,6=%d prior to do_fd_calculation\n", oddity[0][0],oddity[6][6]);
-    //printf("cell_type 0,0 =%d cell_type 6,6=%d prior to do_fd_calculation\n", cell_type[0][0],cell_type[6][6]);
+    set_oddity_value();
 
     /* If there are multiple dielectrics, the impedance calculations
     needs to be done twice. We start by doing them once, for an vacuum
     dielectric. If necessary, they will be done again */
     do_fd_calculation(&data, size, where_to_print_fp,outputfile_name);
-    //printf("oddity(0,0) =%d oddity(6,6)=%d after do_fd_calculation\n", oddity[0][0],oddity[6][6]);
-    //printf("cell_type(0,0) =%d cell_type(6,6)=%d after do_fd_calculation\n", cell_type[0][0],cell_type[6][6]);
   }
   else
   {

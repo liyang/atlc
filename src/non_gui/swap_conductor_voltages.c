@@ -52,10 +52,10 @@ void swap_conductor_voltages()
     for(j=0;j<height;++j)
     {
       pixel=oddity[i][j];
-      if(pixel==CONDUCTOR_MINUS_ONE_V)
+      if(pixel==CONDUCTOR_MINUS_ONE_V){
         Vij[i][j]=+1.0;
-      else if(pixel >= 0)
-        Vij[i][j]=0.0;
+	oddity[i][j]=CONDUCTOR_PLUS_ONE_V;
+      }
     }
   }
 }

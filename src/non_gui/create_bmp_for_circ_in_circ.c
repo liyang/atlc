@@ -96,6 +96,12 @@ int main(int argc, char **argv) /* Read parameters from command line here   */
       dd=atof(argv[my_optind+1]);
       hh=atof(argv[my_optind+2]);
       Er1=atof(argv[my_optind+3]);
+      if( dd > DD)
+	exit_with_msg_and_exit_code("Error: The Inner conductor is larger than the outer conductor!!!", 1);
+      else if (DD == dd) 
+	exit_with_msg_and_exit_code("Error: The inner and outer conductors are of the same size!!!", 1);
+      else if (dd/2 + hh >= DD/2)
+	exit_with_msg_and_exit_code("Error: The inner and outer conductors will touch!!!", 1);
       filename=strncpy(filename, argv[my_optind+4],1000);
       if( (image_data_fp=fopen(filename,"wb")) == NULL)
 	exit_with_msg_and_exit_code("Can't open file in create_bmp_for_circ_in_circ.c", CANT_OPEN_FOR_WRITING);
