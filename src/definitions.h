@@ -33,6 +33,11 @@ simulation. */
 #define TRUE 1
 #define FALSE 0
 #endif
+
+#define DONT_CARE                          0
+#define ODD                                1
+#define EVEN                               2
+
 #define MAX_DIFFERENT_PERMITTIVITIES   10000
 #define MAX_ER 12
 
@@ -75,45 +80,18 @@ Power Machintosh powerpc running Darwin Kernel Version 5.3 gave this as
 a warning. Hence I'll avoid the problem by adding my_ */
 
 extern int my_optind, my_opterr, my_optopt;
-/*
-typedef struct tpool_work {
-	void               (*routine)();
-	void                *arg;
-	struct tpool_work   *next;
-} tpool_work_t;
 
-typedef struct tpool {
-	int                 num_threads;
-        int                 max_queue_size;
-        int                 do_not_block_when_full;
-	pthread_t           *threads;
-        int                 cur_queue_size;
-	tpool_work_t        *queue_head;
-	tpool_work_t        *queue_tail;
-	int                 queue_closed;
-        int                 shutdown;
-        pthread_mutex_t     queue_lock;
-        pthread_cond_t      queue_not_empty;
-        pthread_cond_t      queue_not_full;
-	pthread_cond_t      queue_empty;
-} *tpool_t;
+struct data{
+double float_values[10];
+int int_values[10];
+int importance[10];
+int odd_or_even[10];
+int best[10];
+};
 
-void tpool_init(
-           tpool_t          *tpoolp,
-           int              num_threads, 
-           int              max_queue_size,
-           int              do_not_block_when_full);
-
-int tpool_add_work(
-           tpool_t          tpool,
-           void             (*routine)(),
-	   void             *arg);
-
-int tpool_destroy(
-           tpool_t          tpool,
-           int              finish);
-
-*/
+#define NOT_IMPORTANT 0   /* The importance to attach to getting the */
+#define IMPORTANT 1       /* best value of integers for the grid */
+#define MOST_IMPORTANT 2
 
 struct pixels
 {
@@ -260,3 +238,5 @@ void ERR(char *s, char c, char **argv);
 char *index2(char *str, char c);
 void do_fd_calculation(double *capacitance, double *inductance,double *Zo, double *Zodd, double *Zeven, int whichZ, double *velocity, double *vf, FILE *where_to_print, double cutoff, int dielectrics_to_consider_just_now, char * filename, int requirement_for_fd_calculations_Q);
 void swap_conductor_voltages(int way_to_swap);
+void usage_make_coupler(void);
+double calculate_integer_values(struct data *optimise, int n, int accuarcy_level);

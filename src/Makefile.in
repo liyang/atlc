@@ -38,7 +38,7 @@ pkgdatadir = $(datadir)/@PACKAGE@
 pkglibdir = $(libdir)/@PACKAGE@
 pkgincludedir = $(includedir)/@PACKAGE@
 
-top_builddir = .
+top_builddir = ..
 
 ACLOCAL = @ACLOCAL@
 AUTOCONF = @AUTOCONF@
@@ -58,8 +58,11 @@ NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
 CC = @CC@
+MAKEINFO = @MAKEINFO@
+PACKAGE = @PACKAGE@
+VERSION = @VERSION@
 
-bin_PROGRAMS = atlc rect_in_rect circ_in_circ rect_cen_in_rect circ_in_rect rect_in_circ readbin sym_strip calc_coupler
+bin_PROGRAMS = atlc rect_in_rect circ_in_circ rect_cen_in_rect circ_in_rect rect_in_circ readbin sym_strip make_coupler 
 
 
 atlc_SOURCES = nrutil.c atlc.c read_bitmap_file_headers.c byteswap.c string.c setup_arrays.c finite_difference_single_threaded.c finite_difference_multi_threaded.c usage_atlc.c write_fields.c check_for_shorts.c print_data.c bmp.h definitions.h Erdata.h check_for_boundaries.c find_energy_per_metre.c update_voltage_array.c get_file_pointer_with_right_filename.c find_maximum_values.c calculate_colour_data.c find_electric_fields.c get_options.c error_and_exit.c do_fd_calculation.c swap_conductor_voltages.c
@@ -86,7 +89,8 @@ readbin_SOURCES = readbin.c definitions.h byteswap.c usage_readbin.c get_options
 sym_strip_SOURCES = sym_strip.c fill_image_vector_for_sym_strip.c usage_sym_strip.c string.c nrutil.c write_bitmap_out.c align_bitmap_image.c byteswap.c calculate_sym_strip_impedance.c elliptic_integral.c get_options.c definitions.h error_and_exit.c
 
 
-calc_coupler_SOURCES = calc_coupler.c usage_calc_coupler.c elliptic_integral.c 
+make_coupler_SOURCES = make_coupler.c usage_make_coupler.c calculate_Zodd_and_Zeven.c get_options.c definitions.h calculate_integer_values.c write_bitmap.c string.c nrutil.c write_bitmap_out.c byteswap.c align_bitmap_image.c fill_make_coupler.c check_error.c  definitions.h  error_and_exit.c get_Er1_and_Er2_colours.c
+
 
 EXTRA_DIST = create winatlc tests DO_NOT_EDIT_THIS_FILE
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
@@ -161,11 +165,14 @@ elliptic_integral.o get_options.o error_and_exit.o
 sym_strip_LDADD = $(LDADD)
 sym_strip_DEPENDENCIES = 
 sym_strip_LDFLAGS = 
-calc_coupler_OBJECTS =  calc_coupler.o usage_calc_coupler.o \
-elliptic_integral.o
-calc_coupler_LDADD = $(LDADD)
-calc_coupler_DEPENDENCIES = 
-calc_coupler_LDFLAGS = 
+make_coupler_OBJECTS =  make_coupler.o usage_make_coupler.o \
+calculate_Zodd_and_Zeven.o get_options.o calculate_integer_values.o \
+write_bitmap.o string.o nrutil.o write_bitmap_out.o byteswap.o \
+align_bitmap_image.o fill_make_coupler.o check_error.o error_and_exit.o \
+get_Er1_and_Er2_colours.o
+make_coupler_LDADD = $(LDADD)
+make_coupler_DEPENDENCIES = 
+make_coupler_LDFLAGS = 
 CFLAGS = @CFLAGS@
 COMPILE = $(CC) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
@@ -174,20 +181,17 @@ DIST_COMMON =  Makefile.am Makefile.in configure configure.in install-sh \
 missing mkinstalldirs
 
 
-PACKAGE = @PACKAGE@
-VERSION = @VERSION@
-
 DISTFILES = $(DIST_COMMON) $(SOURCES) $(HEADERS) $(TEXINFOS) $(EXTRA_DIST)
 
 TAR = gtar
 GZIP_ENV = --best
 DEP_FILES =  .deps/align_bitmap_image.P .deps/atlc.P .deps/byteswap.P \
-.deps/calc_coupler.P .deps/calculate_colour_data.P \
-.deps/calculate_sym_strip_impedance.P .deps/check_circ_in_circ.P \
-.deps/check_circ_in_rect.P .deps/check_error.P \
-.deps/check_for_boundaries.P .deps/check_for_shorts.P \
-.deps/check_rect_in_circ.P .deps/check_rect_in_rect.P \
-.deps/circ_in_circ.P .deps/circ_in_rect.P \
+.deps/calculate_Zodd_and_Zeven.P .deps/calculate_colour_data.P \
+.deps/calculate_integer_values.P .deps/calculate_sym_strip_impedance.P \
+.deps/check_circ_in_circ.P .deps/check_circ_in_rect.P \
+.deps/check_error.P .deps/check_for_boundaries.P \
+.deps/check_for_shorts.P .deps/check_rect_in_circ.P \
+.deps/check_rect_in_rect.P .deps/circ_in_circ.P .deps/circ_in_rect.P \
 .deps/convert_circ_in_circ_dimensions_to_integers.P \
 .deps/convert_circ_in_rect_dimensions_to_integers.P \
 .deps/convert_rect_in_circ_dimensions_to_integers.P \
@@ -195,40 +199,36 @@ DEP_FILES =  .deps/align_bitmap_image.P .deps/atlc.P .deps/byteswap.P \
 .deps/do_fd_calculation.P .deps/elliptic_integral.P \
 .deps/error_and_exit.P .deps/fill_circ_in_circ.P \
 .deps/fill_circ_in_rect.P .deps/fill_image_vector_for_sym_strip.P \
-.deps/fill_rect_in_circ.P .deps/fill_rect_in_rect.P \
-.deps/find_electric_fields.P .deps/find_energy_per_metre.P \
-.deps/find_maximum_values.P .deps/finite_difference_multi_threaded.P \
+.deps/fill_make_coupler.P .deps/fill_rect_in_circ.P \
+.deps/fill_rect_in_rect.P .deps/find_electric_fields.P \
+.deps/find_energy_per_metre.P .deps/find_maximum_values.P \
+.deps/finite_difference_multi_threaded.P \
 .deps/finite_difference_single_threaded.P \
 .deps/get_Er1_and_Er2_colours.P \
 .deps/get_file_pointer_with_right_filename.P .deps/get_options.P \
-.deps/nrutil.P .deps/print_data.P .deps/read_bitmap_file_headers.P \
-.deps/readbin.P .deps/rect_cen_in_rect.P .deps/rect_in_circ.P \
-.deps/rect_in_rect.P .deps/setup_arrays.P .deps/string.P \
-.deps/swap_conductor_voltages.P .deps/sym_strip.P \
-.deps/update_voltage_array.P .deps/usage_atlc.P \
-.deps/usage_calc_coupler.P .deps/usage_circ_in_circ.P \
-.deps/usage_circ_in_rect.P .deps/usage_readbin.P \
+.deps/make_coupler.P .deps/nrutil.P .deps/print_data.P \
+.deps/read_bitmap_file_headers.P .deps/readbin.P \
+.deps/rect_cen_in_rect.P .deps/rect_in_circ.P .deps/rect_in_rect.P \
+.deps/setup_arrays.P .deps/string.P .deps/swap_conductor_voltages.P \
+.deps/sym_strip.P .deps/update_voltage_array.P .deps/usage_atlc.P \
+.deps/usage_circ_in_circ.P .deps/usage_circ_in_rect.P \
+.deps/usage_make_coupler.P .deps/usage_readbin.P \
 .deps/usage_rect_cen_in_rect.P .deps/usage_rect_in_circ.P \
 .deps/usage_rect_in_rect.P .deps/usage_sym_strip.P .deps/write_bitmap.P \
 .deps/write_bitmap_out.P .deps/write_fields.P
-SOURCES = $(atlc_SOURCES) $(rect_in_rect_SOURCES) $(circ_in_circ_SOURCES) $(rect_cen_in_rect_SOURCES) $(circ_in_rect_SOURCES) $(rect_in_circ_SOURCES) $(readbin_SOURCES) $(sym_strip_SOURCES) $(calc_coupler_SOURCES)
-OBJECTS = $(atlc_OBJECTS) $(rect_in_rect_OBJECTS) $(circ_in_circ_OBJECTS) $(rect_cen_in_rect_OBJECTS) $(circ_in_rect_OBJECTS) $(rect_in_circ_OBJECTS) $(readbin_OBJECTS) $(sym_strip_OBJECTS) $(calc_coupler_OBJECTS)
+SOURCES = $(atlc_SOURCES) $(rect_in_rect_SOURCES) $(circ_in_circ_SOURCES) $(rect_cen_in_rect_SOURCES) $(circ_in_rect_SOURCES) $(rect_in_circ_SOURCES) $(readbin_SOURCES) $(sym_strip_SOURCES) $(make_coupler_SOURCES)
+OBJECTS = $(atlc_OBJECTS) $(rect_in_rect_OBJECTS) $(circ_in_circ_OBJECTS) $(rect_cen_in_rect_OBJECTS) $(circ_in_rect_OBJECTS) $(rect_in_circ_OBJECTS) $(readbin_OBJECTS) $(sym_strip_OBJECTS) $(make_coupler_OBJECTS)
 
 all: all-redirect
 .SUFFIXES:
 .SUFFIXES: .S .c .o .s
 $(srcdir)/Makefile.in: Makefile.am $(top_srcdir)/configure.in $(ACLOCAL_M4) 
-	cd $(top_srcdir) && $(AUTOMAKE) --gnu Makefile
+	cd $(top_srcdir) && $(AUTOMAKE) --gnu src/Makefile
 
 Makefile: $(srcdir)/Makefile.in  $(top_builddir)/config.status $(BUILT_SOURCES)
 	cd $(top_builddir) \
-	  && CONFIG_FILES=$@ CONFIG_HEADERS= $(SHELL) ./config.status
+	  && CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= $(SHELL) ./config.status
 
-
-config.status: $(srcdir)/configure $(CONFIG_STATUS_DEPENDENCIES)
-	$(SHELL) ./config.status --recheck
-$(srcdir)/configure: $(srcdir)/configure.in $(ACLOCAL_M4) $(CONFIGURE_DEPENDENCIES)
-	cd $(srcdir) && $(AUTOCONF)
 
 mostlyclean-binPROGRAMS:
 
@@ -303,9 +303,9 @@ sym_strip: $(sym_strip_OBJECTS) $(sym_strip_DEPENDENCIES)
 	@rm -f sym_strip
 	$(LINK) $(sym_strip_LDFLAGS) $(sym_strip_OBJECTS) $(sym_strip_LDADD) $(LIBS)
 
-calc_coupler: $(calc_coupler_OBJECTS) $(calc_coupler_DEPENDENCIES)
-	@rm -f calc_coupler
-	$(LINK) $(calc_coupler_LDFLAGS) $(calc_coupler_OBJECTS) $(calc_coupler_LDADD) $(LIBS)
+make_coupler: $(make_coupler_OBJECTS) $(make_coupler_DEPENDENCIES)
+	@rm -f make_coupler
+	$(LINK) $(make_coupler_LDFLAGS) $(make_coupler_OBJECTS) $(make_coupler_LDADD) $(LIBS)
 
 tags: TAGS
 
@@ -336,49 +336,16 @@ distclean-tags:
 
 maintainer-clean-tags:
 
-distdir = $(PACKAGE)-$(VERSION)
-top_distdir = $(distdir)
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 
-# This target untars the dist file and tries a VPATH configuration.  Then
-# it guarantees that the distribution is self-contained by making another
-# tarfile.
-distcheck: dist
-	-rm -rf $(distdir)
-	GZIP=$(GZIP_ENV) $(TAR) zxf $(distdir).tar.gz
-	mkdir $(distdir)/=build
-	mkdir $(distdir)/=inst
-	dc_install_base=`cd $(distdir)/=inst && pwd`; \
-	cd $(distdir)/=build \
-	  && ../configure --srcdir=.. --prefix=$$dc_install_base \
-	  && $(MAKE) $(AM_MAKEFLAGS) \
-	  && $(MAKE) $(AM_MAKEFLAGS) dvi \
-	  && $(MAKE) $(AM_MAKEFLAGS) check \
-	  && $(MAKE) $(AM_MAKEFLAGS) install \
-	  && $(MAKE) $(AM_MAKEFLAGS) installcheck \
-	  && $(MAKE) $(AM_MAKEFLAGS) dist
-	-rm -rf $(distdir)
-	@banner="$(distdir).tar.gz is ready for distribution"; \
-	dashes=`echo "$$banner" | sed s/./=/g`; \
-	echo "$$dashes"; \
-	echo "$$banner"; \
-	echo "$$dashes"
-dist: distdir
-	-chmod -R a+r $(distdir)
-	GZIP=$(GZIP_ENV) $(TAR) chozf $(distdir).tar.gz $(distdir)
-	-rm -rf $(distdir)
-dist-all: distdir
-	-chmod -R a+r $(distdir)
-	GZIP=$(GZIP_ENV) $(TAR) chozf $(distdir).tar.gz $(distdir)
-	-rm -rf $(distdir)
+subdir = src
+
 distdir: $(DISTFILES)
-	-rm -rf $(distdir)
-	mkdir $(distdir)
-	-chmod 777 $(distdir)
 	here=`cd $(top_builddir) && pwd`; \
-	top_distdir=`cd $(distdir) && pwd`; \
+	top_distdir=`cd $(top_distdir) && pwd`; \
 	distdir=`cd $(distdir) && pwd`; \
 	cd $(top_srcdir) \
-	  && $(AUTOMAKE) --include-deps --build-dir=$$here --srcdir-name=$(top_srcdir) --output-dir=$$top_distdir --gnu Makefile
+	  && $(AUTOMAKE) --include-deps --build-dir=$$here --srcdir-name=$(top_srcdir) --output-dir=$$top_distdir --gnu src/Makefile
 	@for file in $(DISTFILES); do \
 	  d=$(srcdir); \
 	  if test -d $$d/$$file; then \
@@ -471,7 +438,6 @@ distclean-am:  distclean-binPROGRAMS distclean-compile distclean-tags \
 		distclean-depend distclean-generic clean-am
 
 distclean: distclean-am
-	-rm -f config.status
 
 maintainer-clean-am:  maintainer-clean-binPROGRAMS \
 		maintainer-clean-compile maintainer-clean-tags \
@@ -481,7 +447,6 @@ maintainer-clean-am:  maintainer-clean-binPROGRAMS \
 	@echo "it deletes files that may require special tools to rebuild."
 
 maintainer-clean: maintainer-clean-am
-	-rm -f config.status
 
 .PHONY: mostlyclean-binPROGRAMS distclean-binPROGRAMS clean-binPROGRAMS \
 maintainer-clean-binPROGRAMS uninstall-binPROGRAMS install-binPROGRAMS \

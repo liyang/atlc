@@ -50,6 +50,11 @@ align_bitmap_image.c byteswap.c calculate_sym_strip_impedance.c\
 elliptic_integral.c get_options.c definitions.h error_and_exit.c
 
 make_coupler_SOURCES = make_coupler.c usage_make_coupler.c \
-calculate_Zodd_and_Zeven.c get_options.c definitions.h 
+calculate_Zodd_and_Zeven.c get_options.c definitions.h \
+calculate_integer_values.c write_bitmap.c \
+string.c nrutil.c write_bitmap_out.c byteswap.c \
+align_bitmap_image.c fill_make_coupler.c \
+check_error.c  definitions.h  error_and_exit.c \
+get_Er1_and_Er2_colours.c
 
 EXTRA_DIST = create winatlc tests DO_NOT_EDIT_THIS_FILE
