@@ -197,5 +197,5 @@ void setup_arrays(struct transmission_line_properties *data)
          fprintf(stderr,"Sorry, something is wrong Vij[%d][%d]=%f\n",h,w,Vij[h][w]);
      }
    } 
-  /*check_for_shorts();*/
+  check_for_shorts();
 } /* end of function */
