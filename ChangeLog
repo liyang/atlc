@@ -1,3 +1,15 @@
+******Version 4.2.10 Released 30 Jan 2003 ********
+Corrected a bug in setup_arrays.c, that could cause the 
+program to crash on some machines (noticibly Windoze
+XP)
+
+Minor changes to docs/html-docs/*.html, adding the 
+Sourceforge Logo to web pages. 
+
+docs/html-docs/accuracy.html
+Added information on timing for stripline.
+Extended analysis to 400 Ohms, which is a bit of a disaster
+
 ******Version 4.2.9 Released 14 Jan 2003 ********
 There are only bug fixes - no new features. 
 
