@@ -64,7 +64,7 @@ int     my_optind = 1;
 int     my_optopt;
 char    *my_optarg;
 
-void ERR(char *s, char c, char **argv)  
+void ERR(const char *s, char c, char **argv)  
 {
 	if(my_opterr)
 	{
@@ -91,8 +91,12 @@ char *index2(const char *str, char c)
 int get_options(int argc, char **argv, const char *opts)
 {
 	static int sp = 1;
-	register int c;
-	register char *cp;
+	/* register int c;
+	 register char *cp; */
+        int c;
+        char tmp;
+	char *cp;
+        cp=&tmp;
 
 	if(sp == 1)
 	{

@@ -218,7 +218,7 @@ int main(int argc, char **argv) /* Read parameters from command line */
   to the coupled port. Normally, the vcf will be less than 1.0. for a 20
   dB couplier is it 0.1 */
 
-  vcf_for_quarter_wave_line=1.0/pow(10,wanted_coupling_factor_in_dB/20.0); 
+  vcf_for_quarter_wave_line=1.0/pow(10.0,wanted_coupling_factor_in_dB/20.0); 
 
   fq=75/length; /* frequency at which line is a quarter wave long */
 

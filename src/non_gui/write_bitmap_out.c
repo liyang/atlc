@@ -184,7 +184,7 @@ void write_bitmap_out(unsigned char *byte_aligned_image_data, FILE *image_data_f
   
 
    /* Finally write the image */
-   fwrite(byte_aligned_image_data,sizeof_image,1,image_data_fp);
+   fwrite(byte_aligned_image_data,(size_t) sizeof_image,1,image_data_fp);
    if( fclose(image_data_fp) != 0)
      exit_with_msg_and_exit_code("failed to close file in write_bitmap_out.c",CANT_CLOSE_FILE);
 }

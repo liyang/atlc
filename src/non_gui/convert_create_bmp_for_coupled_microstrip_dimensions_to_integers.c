@@ -57,8 +57,8 @@ void convert_create_create_bmp_for_coupled_microstrip_dimensions_to_integers(str
 
 
    /* scale grid size,  according to a command line option */
-   lowest*=(int) 0.5+pow(2,pcb->bmp_size);
-   highest*=(int) 0.5+pow(2,pcb->bmp_size);
+   lowest*=(int) 0.5+pow(2.0,(double)pcb->bmp_size);
+   highest*=(int) 0.5+pow(2.0,(double)pcb->bmp_size);
 
    max_gridsize=sqrt(pcb->WW*pcb->HH/(double )lowest);  /* minimum dimension in m */
    min_gridsize=sqrt(pcb->WW*pcb->HH/(double )highest);

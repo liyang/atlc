@@ -71,7 +71,7 @@ int main(int argc, char **argv)
     if( fseek(fp,0,SEEK_SET) != 0)
       exit_with_msg_and_exit_code("failed to fseek in readbin.c #2", FSEEK_FAILURE);
 
-    if (fread(&(data[0]), 1, length,fp) != length)
+    if (fread(&(data[0]), 1, (size_t) length,fp) != length)
       exit_with_msg_and_exit_code("can't read all fo the file in readbin.c", CANT_READ_ALL_OF_FILE);
     for(i=0;i<length/sizeof(double);++i)
     {

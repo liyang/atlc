@@ -120,9 +120,7 @@ void write_fields_for_directional_couplers(char * filename, struct transmission_
 
   static struct max_values maximum_values;
   int offset=-3, w, h; 
-#ifndef HAVE_MEMSET
-  int memory_location;
-#endif
+  size_t memory_location;
   double E, Ex, Ey, U;
 
   if(data.write_binary_field_imagesQ==TRUE && odd_or_even == ODD)
@@ -173,20 +171,12 @@ void write_fields_for_directional_couplers(char * filename, struct transmission_
   if(data.write_bitmap_field_imagesQ==TRUE && odd_or_even == ODD)
   {
     /* Allocate ram to store the bitmaps before they are written to disk */
-    image_data_Ex=ustring(0,size);
-    image_data_Ey=ustring(0,size);
-    image_data_E=ustring(0,size);
-    image_data_V=ustring(0,size);
-    image_data_Er=ustring(0,size);
-    image_data_U=ustring(0,size);
-#ifdef HAVE_MEMSET /* There might be portability issues using (void) memset */
-    (void) memset((void *) image_data_Ex,0,size);
-    (void) memset((void *) image_data_Ey,0,size);
-    (void) memset((void *) image_data_E,0,size);
-    (void) memset((void *) image_data_U,0,size);
-    (void) memset((void *) image_data_V,0,size);
-    (void) memset((void *) image_data_Er,0,size); 
-#else 
+    image_data_Ex=ustring(0L,(long) size);
+    image_data_Ey=ustring(0L,(long) size);
+    image_data_E=ustring(0L,(long) size);
+    image_data_V=ustring(0L,(long) size);
+    image_data_Er=ustring(0L,(long) size);
+    image_data_U=ustring(0L,(long) size);
     for(memory_location=0; memory_location < size; ++memory_location)
     {
       image_data_Ex[memory_location]=0;
@@ -196,8 +186,6 @@ void write_fields_for_directional_couplers(char * filename, struct transmission_
       image_data_V[memory_location]=0;
       image_data_Er[memory_location]=0;
     }
-#endif /* End of #ifdef HAVE_MEMSET */
-
     /* Find maximum of the parameters */
     find_maximum_values(&(maximum_values),ZERO_ELEMENTS_FIRST); /* sets stucture maximum_values */
     Ex_odd_bmp_fp=get_file_pointer_with_right_filename(filename,".Ex.odd.bmp");
@@ -264,12 +252,12 @@ void write_fields_for_directional_couplers(char * filename, struct transmission_
       exit_with_msg_and_exit_code("Error#34: Unable to close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
     if( fclose(permittivity_bmp_fp) != 0)
       exit_with_msg_and_exit_code("Error#35: Unable to close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
-    free_ustring(image_data_Ex,0,size);
-    free_ustring(image_data_Ey,0,size);
-    free_ustring(image_data_E,0,size);
-    free_ustring(image_data_V,0,size);
-    free_ustring(image_data_U,0,size);
-    free_ustring(image_data_Er,0,size);
+    free_ustring(image_data_Ex,0L,(long) size);
+    free_ustring(image_data_Ey,0L,(long) size);
+    free_ustring(image_data_E,0L,(long) size);
+    free_ustring(image_data_V,0L,(long) size);
+    free_ustring(image_data_U,0L,(long) size);
+    free_ustring(image_data_Er,0L,(long)size);
   } /* End of writing odd bitmap files  and therefore *all* odd files */
 
   if(data.write_binary_field_imagesQ==TRUE && odd_or_even == EVEN)
@@ -321,12 +309,12 @@ void write_fields_for_directional_couplers(char * filename, struct transmission_
   if(data.write_bitmap_field_imagesQ==TRUE &&  odd_or_even == EVEN)
   {
     /* Allocate ram to store the bitmaps before they are written to disk */
-    image_data_Ex=ustring(0,size);
-    image_data_Ey=ustring(0,size);
-    image_data_E=ustring(0,size);
-    image_data_V=ustring(0,size);
-    image_data_Er=ustring(0,size);
-    image_data_U=ustring(0,size);
+    image_data_Ex=ustring(0L,(long) size);
+    image_data_Ey=ustring(0L,(long) size);
+    image_data_E=ustring(0L,(long) size);
+    image_data_V=ustring(0L,(long) size);
+    image_data_Er=ustring(0L,(long) size);
+    image_data_U=ustring(0L,(long) size);
 #ifdef HAVE_MEMSET
     (void) memset((void *) image_data_Ex,0,size);
     (void) memset((void *) image_data_Ey,0,size);
@@ -418,11 +406,11 @@ void write_fields_for_directional_couplers(char * filename, struct transmission_
       exit_with_msg_and_exit_code("Error#35: Unable to close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
 
     /* Free ram used to store the bitmaps before they were written to disk */
-    free_ustring(image_data_Ex,0,size);
-    free_ustring(image_data_Ey,0,size);
-    free_ustring(image_data_E,0,size);
-    free_ustring(image_data_V,0,size);
-    free_ustring(image_data_U,0,size);
-    free_ustring(image_data_Er,0,size);
+    free_ustring(image_data_Ex,0L,(long) size);
+    free_ustring(image_data_Ey,0L,(long) size);
+    free_ustring(image_data_E,0L,(long) size);
+    free_ustring(image_data_V,0L,(long) size);
+    free_ustring(image_data_U,0L,(long) size);
+    free_ustring(image_data_Er,0L,(long) size);
   } /* End of writing even bitmap files */
 }

@@ -127,7 +127,7 @@ int main(int argc, char **argv)
     calculate_Zodd_and_Zeven(&Zodd, &Zeven, &Zo, ww, HH, ss, er);
     printf("The actual dimensions you gave have theoretical imedances of:\n");
     printf("        Zodd= %f Zeven= %f Zo= %f (Ohms) ww=%f HH=%f ss=%f er=%f\n\n", Zodd, Zeven, Zo,ww,HH,ss,er);
-    calculate_Zodd_and_Zeven(&Zodd, &Zeven, &Zo, w, H-10, s, er);
+    calculate_Zodd_and_Zeven(&Zodd, &Zeven, &Zo, (double) w, (double) H-10, (double) s, er);
     printf("The bitmap produced (which approximates what you want) should have:\n");
     printf("   Zodd= %f Zeven= %f Zo= %f (Ohms)\n", Zodd, Zeven, Zo);
   }

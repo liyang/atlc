@@ -27,15 +27,14 @@ from the book 'Numerical Recipes in C' by Press et al. */
 #include <stdlib.h>
 #endif
 
+#ifdef HAVE_SYS_TYPES
+#include <sys/types.h>
+#endif
+
 #include "definitions.h"
 #include "exit_codes.h"
 
 #define NR_END 1
-
-#ifndef size_t         /* gcc needs this */
-#define size_t int
-#endif
-
 
 char *string(long nl,long nh)
 {

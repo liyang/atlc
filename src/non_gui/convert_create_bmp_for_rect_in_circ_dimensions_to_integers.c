@@ -56,8 +56,8 @@ void convert_create_bmp_for_rect_in_circ_dimensions_to_integers(int accuracy_lev
    double error, error_min=VERY_LARGE, gridsize, best_grid_size=-1;
 
    /* scale grid size,  according to a command line option */
-   lowest*=(int) 0.5+pow(2,accuracy_level);
-   highest*=(int) 0.5+pow(2,accuracy_level);
+   lowest*=(int) 0.5+pow(2.0,(double) accuracy_level);
+   highest*=(int) 0.5+pow(2.0,(double) accuracy_level);
 
    for(i=min;i<=max;++i)
    {

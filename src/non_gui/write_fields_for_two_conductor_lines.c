@@ -135,12 +135,12 @@ void write_fields_for_two_conductor_lines(char * filename, struct transmission_l
     find_maximum_values(&(maximum_values), ZERO_ELEMENTS_FIRST); /* sets stucture maximum_values */
 
     /* Allocate ram to store the bitmaps before they are written to disk */
-    image_data_Ex=ustring(0,size);
-    image_data_Ey=ustring(0,size);
-    image_data_E=ustring(0,size);
-    image_data_V=ustring(0,size);
-    image_data_Er=ustring(0,size);
-    image_data_U=ustring(0,size);
+    image_data_Ex=ustring(0L,(long) size);
+    image_data_Ey=ustring(0L,(long) size);
+    image_data_E=ustring(0L,(long) size);
+    image_data_V=ustring(0L,(long) size);
+    image_data_Er=ustring(0L,(long) size);
+    image_data_U=ustring(0L,(long) size);
 
     Ex_bmp_fp=get_file_pointer_with_right_filename(filename,".Ex.bmp");
     Ey_bmp_fp=get_file_pointer_with_right_filename(filename,".Ey.bmp");
@@ -212,11 +212,11 @@ void write_fields_for_two_conductor_lines(char * filename, struct transmission_l
     if( fclose(permittivity_bmp_fp) != 0)
       exit_with_msg_and_exit_code("Error#18: Unable to close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
 
-    free_ustring(image_data_Ex,0,size);
-    free_ustring(image_data_Ey,0,size);
-    free_ustring(image_data_E,0,size);
-    free_ustring(image_data_V,0,size);
-    free_ustring(image_data_U,0,size);
-    free_ustring(image_data_Er,0,size);
+    free_ustring(image_data_Ex,0L,(long)size);
+    free_ustring(image_data_Ey,0L,(long)size);
+    free_ustring(image_data_E,0L,(long)size);
+    free_ustring(image_data_V,0L,(long)size);
+    free_ustring(image_data_U,0L,(long)size);
+    free_ustring(image_data_Er,0L,(long)size);
   }
 }

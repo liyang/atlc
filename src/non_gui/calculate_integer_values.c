@@ -45,8 +45,8 @@ double calculate_integer_values(struct transmission_line_properties *optimise,in
  
   /* Let the number of pixel in the image be between 2^n and 2^(n+2) */
 
-  min_pixels=(int) pow(2.0,accuracy_level-1);
-  max_pixels=(int) pow(2.0,accuracy_level+1);
+  min_pixels=(int) pow(2.0,(double)(accuracy_level-1));
+  max_pixels=(int) pow(2.0,(double)(accuracy_level+1));
 
   /* Although the stucture W by H has an exact area of W*H, we will    
   allocate some pixels to  this, which will be much smaller than
