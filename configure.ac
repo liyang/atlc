@@ -13,7 +13,7 @@
 # checks for system services
 # AC_OUTPUT([file...])
 
-AC_INIT([atlc], [4.3.5], [drkirkby@ntlworld.com])
+AC_INIT([atlc], [4.3.7], [drkirkby@ntlworld.com])
 AM_INIT_AUTOMAKE
 AC_PREREQ([2.57])
 AC_CONFIG_SRCDIR([tools/src/myfilelength.c])
@@ -42,6 +42,7 @@ AC_CHECK_HEADERS([stdio.h math.h malloc.h stdlib.h string.h time.h ])
 AC_CHECK_HEADERS([strings.h sys/types.h machine/hal_sysinfo.h sys/sysinfo.h ])
 AC_CHECK_HEADERS([sys/processor.h sched.h sys/param.h sys/pstat.h sys/unistd.h ])
 AC_CHECK_HEADERS([ sys/utsname.h sys/systeminfo.h unistd.h aixfont.h ])
+AC_CHECK_HEADERS([ linux/ip.h  ])
 
 # Checks for typedefs
 AC_HEADER_STDBOOL
@@ -52,8 +53,7 @@ AC_TYPE_SIZE_T
 
 # checks for compiler characteristics
 AC_C_BIGENDIAN
-#AC_CHECK_TYPE([long long],AC_DEFINE([ HAVE_LONG_LONG ] ))
-AC_CHECK_TYPES([long long])
+#AC_CHECK_TYPES([long long])
 AC_CHECK_SIZEOF([int])
 AC_CHECK_SIZEOF([long])
 AC_CHECK_SIZEOF([size_t])
@@ -63,7 +63,6 @@ AC_FUNC_STRTOD
 AC_CHECK_FUNCS([memset strchr strtol processor_info getsysinfo pthread_num_processors_np ])
 AC_CHECK_FUNCS([ cpu_get_max pstat pstat_getdynamic pstat_getprocessor uname sysconf sysinfo ])
 AC_CHECK_FUNCS([ cpusetcreate cpucountset cpu_get_num ])
-AC_CHECK_SIZEOF([long long])
 
 # checks for system services
 
@@ -119,15 +118,6 @@ AC_ARG_ENABLE(hardware-info, AC_HELP_STRING([--enable-hardware-info],[ Find out 
 systems)]), AC_DEFINE([TRY_TO_GET_HARDWARE_INFO],[1]))
 
 # Put a usage message so the user can use threads if wanted. 
-AC_ARG_WITH(benchmark,
-		   AC_HELP_STRING([--with-extra-benchmark-data],
-		   [provides more data on the benchmark. This is less portable, so might not build (default is NO)]))
-if test "x$with_extra_benchmark_data" = "xyes"; then
-  AC_SUBST(with_extra_benchmark_data,yes)
-  AC_DEFINE([WITH_EXTRA_BENCHMARK_DATA])
-fi
-
-# Put a usage message so the user can use threads if wanted. 
 AC_ARG_WITH(threads,
 		   AC_HELP_STRING([--with-threads],
 		   [support thread-based parallel computation, using a POSIX thread library (default is NO)]))
@@ -144,29 +134,29 @@ if test "x$with_threads" = "xyes"; then
 fi
 
 # MPI and MPE Support
-AC_ARG_WITH(mpi, AC_HELP_STRING([--with-mpi=[mpi_install_prefix]],[support MPI-based parallel computation (needs MPICH installed)]))
-AC_ARG_WITH(mpe, AC_HELP_STRING([--with-mpe=[mpi_install_prefix]],[implies --with-mpi and additionally links in MPE logging support]))
- 
- if test "x$with_mpi" != "x" \
- || test "x$with_mpe" != "x"; then
-
-  if test "x$with_threads" = "xyes"; then
-     AC_MSG_ERROR([it does not make sense to use --with-threads with --with-mpi or --with-mpe])
-  fi  
-  ACX_MPI(    [AC_DEFINE([ENABLE_MPI],[1],[Enable the use of MPICH library]) ] ,[],[AC_MSG_ERROR([Could not determine how to link MPI program])])
-  CC="$MPICC"
-  if test "x$with_mpe" = "xyes" ; then
-    LIBS="$MPILIBS -lmpe $LIBS"
-  else
-    LIBS="$MPILIBS $LIBS"
-  fi
+#AC_ARG_WITH(mpi, AC_HELP_STRING([--with-mpi=[mpi_install_prefix]],[support MPI-based parallel computation (needs MPICH installed)]))
+#AC_ARG_WITH(mpe, AC_HELP_STRING([--with-mpe=[mpi_install_prefix]],[implies --with-mpi and additionally links in MPE logging support]))
+# 
+# if test "x$with_mpi" != "x" \
+# || test "x$with_mpe" != "x"; then
+#
+#  if test "x$with_threads" = "xyes"; then
+#     AC_MSG_ERROR([it does not make sense to use --with-threads with --with-mpi or --with-mpe])
+#  fi  
+#  ACX_MPI(    [AC_DEFINE([ENABLE_MPI],[1],[Enable the use of MPICH library]) ] ,[],[AC_MSG_ERROR([Could not determine how to link MPI program])])
+#  CC="$MPICC"
+#  if test "x$with_mpe" = "xyes" ; then
+#    LIBS="$MPILIBS -lmpe $LIBS"
+#  else
+#    LIBS="$MPILIBS $LIBS"
+#  fi
   #AC_CHECK_PROG(mpirun,mpirun,yes,no,$PATH)
   #if test "x$mpirun" = "xyes"; then
   #  AC_MSG_NOTICE([Don't forget, 'mpirun' MUST be used to call atlc. Don't run atlc directly!!])
   #else
   #  AC_MSG_WARN([The program 'mpirun' needed to run atlc, can't be found])
   #fi
-fi
+#fi
 
 #if test "x$with_mpi" != "x"  || test "x$with_mpe" != "x"; then
 # If there is no gsl, no mpe and no mpi, then we must have -lm
