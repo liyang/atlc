@@ -1,4 +1,8 @@
-1) Sun's make programme in /usr/ccs/bin/make is not able to compile this
+1) Pre-compiled Solaris 9 binaries are available in pkgadd format
+on the Sourceforge site and might appear on www.sunfreeware.com too
+soon.
+
+2) Sun's make programme in /usr/ccs/bin/make is not able to compile this
 properly, giving an error message like 
 
 mksh: Fatal error in reader: = missing from replacement macro reference
@@ -11,7 +15,7 @@ it.
 Use GNU make to build atlc. This is often installed on systems as gmake.
 Other make versions like smake may work, but I've never tried them. 
 
-2) If you have a copy of Sun's cc compiler, the following 
+3) If you have a copy of Sun's cc compiler, the following 
 CFLAGS are suggested. Using Sun's compiler will give about a 25% reduction 
 in run times. 
 
@@ -20,15 +24,9 @@ in run times.
 If you find a better set of options for Sun's cc, that still allow all
 the tests to pass, then please let me know. 
  
-3) pth does *not* need to be installed in configuring this for multiple
+4) pth does *not* need to be installed in configuring this for multiple
 processors on a Sun. Sun has its own threaded library.
 
-4) Someone has requested that 'atlc' be added to the www.sunfreeware.com
-web site for Solaris 8 SPARC (which means it will almost certainly work on 
-Solaris 9 too). This should happen at some time in the near future
-(month or two).
-
-
-Dr. David Kirkby, 6th September 2003
+Dr. David Kirkby, 11th October 2003 Re: atlc-4.5.0
 
 
