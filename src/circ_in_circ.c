@@ -57,9 +57,13 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
    FILE *image_data_fp=stdout;
    double Zo, x, HHH;
 
-   while((q=get_options(argc,argv,"b:f:v")) != -1)
+   while((q=get_options(argc,argv,"Cb:f:v")) != -1)
    switch (q) 
    {
+      case 'C': 
+	print_copyright((char *) "2002");
+	exit(1);
+      break;
       case 'b':
       bmp_size=atol(my_optarg); 
       break;

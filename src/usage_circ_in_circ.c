@@ -38,6 +38,7 @@ void usage_circ_in_circ(void)
       fprintf(stderr,"  Er is the relative permettivity of the dielectric.\n");
       fprintf(stderr,"  D, d and O are either all in mm or all in inches (but not a mixture!!)\n\n");   
       fprintf(stderr,"options are:\n");
+      fprintf(stderr,"  -C         \n     Print copyright, licencing and distribution information\n");
       fprintf(stderr,"  -b bmp_size\n     Sets the size of the bitmap, in the range 1 to 15 (default %d).\n",DEFAULT_BMPSIZE);
       fprintf(stderr,"  -f outfile \n     Write output to 'outfile' instead of stdout\n");
       fprintf(stderr,"  -v         \n     Write diagnostic information to stderr\n\n");

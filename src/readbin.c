@@ -40,9 +40,13 @@ int main(int argc, char **argv)
   int q;
   int one=0, zero=0, minusone=0, other=0, length, i, reverse=0;
   int metal_er=0;
-  while((q=get_options(argc,argv,"r")) != -1)
+  while((q=get_options(argc,argv,"Cr")) != -1)
   switch (q)
   {
+    case 'C':
+      print_copyright("2002");
+      exit(1);
+    break;
     case 'r':
       reverse=1;
     break;
