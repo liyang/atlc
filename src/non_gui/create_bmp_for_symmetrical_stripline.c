@@ -45,16 +45,20 @@ int verbose=0;
 extern int main(int argc, char **argv) /* Read parameters from command line here   */
 {
   int W, H, w, size_of_image, q;
+  int user_requires_effectively_infinite_width=FALSE;
   double Zo;
   unsigned char *unaligned_image_vector, *aligned_image_vector;
   FILE *fp;
 
-  while((q=get_options(argc,argv,"Cv")) != -1)
+  while((q=get_options(argc,argv,"Cvi")) != -1)
   switch (q) 
   {
     case 'C':
       print_copyright((char *) "2002");
       exit(1);
+    break;
+    case 'i':
+      user_requires_effectively_infinite_width=TRUE;
     break;
     case 'v':
       verbose++;
@@ -76,22 +80,21 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
     printf("H needs to be odd, so the inner conductor (1 pixel high) will fit\
     centrally. Hence H has been increased to %d pixels\n",H);
   }
-  w=atoi(argv[3]);
-  if(H <= 200)
+  w=atoi(argv[my_optind+2]);
+  if ((W < RATIO*H + w) && user_requires_effectively_infinite_width==TRUE)
   {
-    fprintf(stderr,"To be accurate, make H at least 201 pixels\n");
-    exit(1);
-  }
-  if (W < RATIO*H + w)
-  {
-    fprintf(stderr,"For this to be a valid test, W must exceed w + %dxH\n",RATIO);
+    fprintf(stderr,"For this to be a valid test of atlc, the width should be\n");
+    fprintf(stderr,"infinite. Since you used the -i option (indicationg you\n");
+    fprintf(stderr,"want the width W to effectively infinite, W must exceed w + %dxH.\n",RATIO);
     fprintf(stderr,"Therefore W has been is set to %d\n",RATIO*H+w );
     W=RATIO*H+w;
   }
+  if(W <= 5 || H <= 5)
+    error_and_exit("W or H is under 6, which is stupid (remember these are pixels !! in this program)\n",12);
   aligned_image_vector=ustring(0,(W+3)*3*H+100);
   unaligned_image_vector=ustring(0,(W+3)*3*H+100);
 
-  if((fp=fopen(argv[4],"w")) == NULL)
+  if((fp=fopen(argv[my_optind+3],"w")) == NULL)
   {
     fprintf(stderr,"Error in opening file in create_bmp_for_symmetrical_stripline\n");
     exit(1);
