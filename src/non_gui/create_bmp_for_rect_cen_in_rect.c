@@ -30,6 +30,7 @@ inner and rectangular outer */
 #endif  
 
 #include "definitions.h"
+#include "exit_codes.h" 
 
 #ifdef WINDOWS
 #pragma hrdstop
@@ -80,7 +81,7 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
       if((image_data_fp=fopen(argv[my_optind+5],"w"))==NULL)
       {
 	 fprintf(stderr,"Can't write to %s. Exiting ...\n",my_optarg);
-	 exit(1);
+	 exit_with_msg_and_exit_code("",CANT_OPEN_FOR_WRITING);
       }
 
       /* To make the program easier to write, rect_cen_in_rect uses 
@@ -99,5 +100,5 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
    }
    else
       usage_create_bmp_for_rect_cen_in_rect();
-   exit(0);
+   return(OKAY);
 }
