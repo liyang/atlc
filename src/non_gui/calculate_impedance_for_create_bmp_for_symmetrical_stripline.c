@@ -39,32 +39,23 @@ It uses the method given in "Filed Theory of Guided Waves, Colen R.E.,
 2nd edition, pp 259-273, IEEE Press, (1990). */
 
 #include "definitions.h"
+#include "exit_codes.h"
 
-double calculate_thin_strip_impedance(int H, int w)
+extern int verbose;
+double calculate_symmetrical_stripline_impedance(int H, int w)
 {
   double Zo=-1;
   double mu=4*M_PI*1e-7, x0, v0,  c, l, k;
-  if (w/H<24.0) 
-  {
-    x0=pow(cosh(M_PI*w/(2.0*H)),2.0);
-    printf("w=%d H=%d w/H=%f xo=%f\n",w,H,(double)w/H,x0);
-    k=1.0/sqrt(x0);
-    v0=K_over_Kdash(k);
-    c=4*EPSILON_0/v0;
-    l=mu*EPSILON_0/c;
-    Zo=sqrt(l/c);
-  }
-  else
-  {
-  /*
-    K=M_PI/2.0;
-    KDASH=(log(2.0)+M_PI*w)/(4.0*H);
-    v0=K/KDASH;
-    c=4*Eo/v0;
-    l=mu*Eo/c;
-    Zo=sqrt(l/c);
-    */
-  }
+  x0=pow(cosh(M_PI*w/(2.0*H)),2.0);
+  if (verbose >=2)
+    printf("w=%d H=%d w/H=%f xo=%g\n",w,H,(double)w/H,x0);
+  if((double) w / (double) H > 226.369458)
+    error_and_exit("Bitmap is written fine, but can't compute impedance", THE_WIDTH_w_DIVIDED_BY_THE_HEIGHT_H_IS_TOO_LARGE);
+  k=1.0/sqrt(x0);
+  v0=K_over_Kdash(k);
+  c=4*EPSILON_0/v0;
+  l=mu*EPSILON_0/c;
+  Zo=sqrt(l/c);
   return(Zo);
 }
 
