@@ -197,5 +197,9 @@ even if sizeof(short)=8 and sizeof(int)=8. See below for that. */
    *height=Bitmap_Head.biHeight;
    *offset=Bitmap_File_Head.bfOffs;
    *size=Bitmap_Head.biSizeIm;
-
+   if( *size < 3 * (*width) * (*height) )
+   {
+     fprintf(stderr,"Internal error in read_bitmap_file_headers.c\n"); 
+     exit(1);
+  }
 }
