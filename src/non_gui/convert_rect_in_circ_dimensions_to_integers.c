@@ -80,7 +80,7 @@ int convert_rect_in_circ_dimensions_to_integers(int accuracy_level)
          error+=pow((xx-x*gridsize)/xx,2.0);
       if(y>0)
           error+=pow((yy-y*gridsize)/yy,2.0);
-      if(error < error_min)
+      if(error < error_min-TINY)
       {
           error_min=error;
           best_D=D;

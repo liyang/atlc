@@ -76,7 +76,7 @@ int convert_circ_in_circ_dimensions_to_integers(int accuracy_level)
       error+=pow((dd-d*gridsize)/dd,2.0);
       if(h>0)
           error+=pow((hh-h*gridsize)/hh,2.0);
-      if(error < error_min)
+      if(error < (error_min-TINY))
       {
           error_min=error;
           best_D=D;
