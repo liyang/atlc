@@ -17,7 +17,14 @@
 <CODE>% atlc pcb.bmp</CODE><br><br>
 <CODE>atlc</CODE> will produce:
 <OL>
-	<LI>A single line of text showing its results. The line can be quite long, so it may appear to span multiple lines, but all the results are on one line of text. Multiple lines will be produced if the -v option is used to show intermediate results.</LI>
+	<LI>A single line of text on the standard output. It is not
+	written to a file, but can be done so using the &gt or appended
+	to a file using &gt&gt. The line can be a little long, so it may appear to span multiple lines, but all the results are on one line of text. Multiple lines will be produced if the -v option is used to show intermediate results.
+	A new option -L will be added to atlc. This will force the
+	results to be printed to 14 significant figures and is intended
+	for testsing only. If the -L option is added, the line will
+	appear very long indeed.
+	</LI>
 	<LI>Some bitmap files, ending in .bmp, showing images of the transmission lines properties.</LI>
 	<LI>Some binary files, ending in .bin, which are likely to be of academic interest only, showing the similar information to the bitmap files, but in an exact, quanatative manner, rather than an image made to <EM>look nice </EM></LI>
 </OL>
