@@ -1,0 +1,141 @@
+.TH generate_coupler_bitmap 1 "atlc-4.1.0 11/12/02" "Dr. David Kirkby"
+.ds n 5
+.SH NAME
+\fBgenerate_coupler_bitmap\fR - bitmap generator for coupler with thin striplines between two infinitly wide groundplanes (part of \fBatlc\fR)
+.SH SYNOPSIS
+\fBgenerate_coupler_bitmap [-C] [-b bitmapsize] [-v] H w s Er outputfile\fR
+.br
+.SH DESCRIPTION
+\fBgenerate_coupler_bitmap\fR is a pre-processor for \fBatlc\fR, the finite difference 
+programme that is used to calculate the 
+properties of a two and three conductor electrical transmission lines of arbitrary 
+cross section. The programme \fBgenerate_coupler_bitmap\fR is used as a fast way of
+generating bitmaps (there is no need to use a graphics programme), for a
+pair of 1 pixel thick conductors of width w, spaced a distance s apart, 
+inside a pair of
+groundplanes of  separation H. This has an exact analytical
+answer, when the inner is infinitely thin and the overall width W is infinitely
+wide. This theoretical impedance is calculated and printed to stderr if:
+.br
+a) The -v option is given on generate_coupler_bitmap's command line. AND
+.br
+b) generate_coupler_bitmap was linked against the gsl library at http://sources.redhat.com/gsl/
+.P
+-----------------------------------------------------  ^
+.br
+|                                                   |  |
+.br                                                     
+|                  Er                               |  |
+.br                                                     
+|                                                   |  |
+.br                                                     
+|            -----------       -----------          |  H
+.br
+|            <----w----><--s--><----w---->          |  |
+.br       
+|                                                   |  |
+.br
+|                                                   |  |
+.br
+|                                                   |  |
+.br
+-----------------------------------------------------  v
+.br
+<-------------------------W------------------------->
+.br
+
+The overall width W is calculated internally to be large enough that
+making it any larger will have negligable effect on the results.
+The dielectric is assumed that of vacuum.
+.PP 
+.br
+The bitmaps produced by \fBgenerate_coupler_bitmap\fR are 24-bit bit colour bitmaps, as are required by \fBatlc\fR.
+
+.SH OPTIONS
+.PP
+\fB-C \fR
+.br
+Print the full copyright information and exit.
+.PP
+.br
+\fB-b bitmapsize\fR
+.br
+is used to set the size of the bitmap, and so the accuracy to which atlc
+is able to calculate the coupler's properties. The default
+value for 'bitmapsize' is normally 18 although this can be set at
+compile time. (see 'DEFAULT_COUPLER_BITMAP_SIZE' in definitions.h). The value can be set anywhere from 6 to 28. The size of bitmap produced will be
+between 2^(bitmapsize-1) and 2^(bitmapsize+1), so if its set to 28 the
+bitmap could be as big as 512 Mb, which would take an eternity to
+compute. 
+.PP
+\fB-v \fR
+.br
+Print some extra data to stdout on the theoetical impedance of the
+structure. This is useful to compare with the numerical result from
+\fBatlc\fR
+.SH EXAMPLES
+.br
+In the first example, a standard coupler is created, where the 
+
+
+eg1. generate_coupler_bitmap  1.23 0.7 1.2 1.0  coupler.bmp
+.br
+eg2. generate_coupler_bitmap -b 8 1.23 0.7 3.3  small.bmp 
+.br
+eg3. generate_coupler_bitmap -v 12 1.23 0.7 4.8  theory.bmp  
+.br
+
+
+
+
+
+
+
+
+
+
+
+
+
+.P
+.SH SEE ALSO
+atlc(1), rect_cen_in_rect(1), circ_in_circ(1). rect_in_rect(1), circ_in_rect(1).
+rect_in_circ(1), readbin(1) and sym_strip(1).
+.P 
+.br
+http://atlc.sourceforge.net                - Home page 
+.br
+http://sourceforge.net/projects/atlc       - Download area
+.br
+atlc-X.Y.Z/docs/html-docs/index.html       - HTML docs
+.br
+atlc-X.Y.Z/docs/qex-december-1996/atlc.pdf - theory paper
+.br
+atlc-X.Y.Z/examples                        - examples
+.br
+http://www.david-kirkby.co.uk              - my home page
+.br
+http://www.david-kirkby.co.uk/ham          - ham radio pages
+.br
+.SH AUTHOR
+Dr. David Kirkby PhD, email drkirkby@ntlworld.com, G8WRB.
+.SH "COPYRIGHT"
+.IX Header "COPYRIGHT"
+Copyright (c) 2002 Dr. David Kirkby. 
+.PP
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+.pp
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+.p
+You should have received a copy of the GNU General Public License (in
+the file COPYING) along with this program. You may get a full copy of it
+by running the programme with the -C option. Otherwise you can write to the 
+Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, 
+MA  02111-1307, USA.
