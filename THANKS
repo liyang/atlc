@@ -2,10 +2,16 @@ Thanks to everyone who has helped in some way, reporting problems
 etc. Particular thanks are due to 
 
  
-Holger Waechtler <holger@convergence.de> for spotting several bugs. I
-Randall DuCharme <ad5gb@yahoo.com> much help, especially with WxWindows and building Windoze versions.
+Holger Waechtler <holger@convergence.de> for spotting several bugs. 
+Randall DuCharme <ad5gb@yahoo.com> much help, especially with WxWindows and 
+building Windoze versions.
 "AA1LL / KB1CZP" <aa1ll@email.com> for coupled line help. 
 "Treibergs, Valts" <treibev@ectinfo.com> for spotting the bug with -s and -S on 2 conductor lines. 
 Patrick Kelsey <kelsey@ieee.org> for help with MPI support. 
+David Anderson GM4JJJ for testing. 
+Steve Thompson G8GSQ for testing and finding a real bug affecting Suse. 
+Bdale Garbee for finding a bug in the way hardware information was displayed.
+Ron Patterson for also finding a bug about hardware information.
 
-Dr. David Kirkby, 11/1/03.
+
+Dr. David Kirkby, 21st Aug 2003. 
