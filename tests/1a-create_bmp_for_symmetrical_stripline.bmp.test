@@ -1,8 +1,9 @@
-#!/bin/sh
+# !/bin/sh
  
 # If the user is building in a different directory to the 
 # source, we want to be able to install the examples, 
 # so copy those over. 
+
 echo "Testing started at" `date` "on" `hostname` >  $top_builddir/tests/tests.log
 mkdir $top_builddir/tmp 2>/dev/null >/dev/null
 $top_builddir/src/non_gui/create_bmp_for_symmetrical_stripline 950 201 68 $top_builddir/tmp/test_sym_strip.bmp > /dev/null
@@ -15,3 +16,4 @@ else
   echo "FAILED:" $0  >> tests.log 
   exit 1
 fi
+exit 0

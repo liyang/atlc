@@ -1,4 +1,5 @@
 #!/bin/sh
+touch $top_builddir/tmp/test_rect_in_rect.U.bmp
 MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test_rect_in_rect.U.bmp`
 rm $top_builddir/tmp/test_rect_in_rect.U.bmp
 if [ $MD5SUM = aca7e8a2e70b43469d61b1bef4474797 ]; then

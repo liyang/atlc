@@ -20,8 +20,12 @@
 # such as Solaris 9, NetBSD, Solaris 2.5, Linux but also a PC running
 # rehat Linux and a Dec Alpha. Any failure probably indicates a 
 # program bug, so PLEASE PLEASE let me know about it!!
-echo $building_with_posix_threads
-if [ "$building_with_posix_threads" = "yes" ] ; then
+#echo $built_with_posix_threads
+ 
+touch $top_builddir/tmp/test_rect_in_rect.E.bmp
+
+if [ "$built_with_posix_threads" = "yes" ] ; then
+  rm $top_builddir/tmp/test_rect_in_rect.E.bmp
   exit 77
 else
   MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test_rect_in_rect.E.bmp`

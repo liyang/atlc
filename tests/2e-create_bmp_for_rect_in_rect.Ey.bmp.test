@@ -1,7 +1,8 @@
 #!/bin/sh
-
-if [ "$building_with_posix_threads" = "yes" ] ; then
-  else 77
+touch $top_builddir/tmp/test_rect_in_rect.Ey.bmp
+if [ "$built_with_posix_threads" = "yes" ] ; then
+  rm $top_builddir/tmp/test_rect_in_rect.Ey.bmp
+  exit 77
 else
   MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test_rect_in_rect.Ey.bmp`
   rm $top_builddir/tmp/test_rect_in_rect.Ey.bmp

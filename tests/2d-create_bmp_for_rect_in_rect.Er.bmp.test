@@ -22,7 +22,10 @@
 # program bug, so PLEASE PLEASE let me know about it!!
 # Dr. David Kirkby, drkirkby@ntlworld.com
 
-if [ "$building_with_posix_threads" = "yes" ] ; then
+touch $top_builddir/tmp/test_rect_in_rect.Er.bmp
+
+if [ "$built_with_posix_threads" = "yes" ] ; then
+  rm $top_builddir/tmp/test_rect_in_rect.Er.bmp
   exit 77
 else
 

@@ -12,7 +12,7 @@ if [ $ZoTheory = 50.026376  ]  ; then
     exit 0
 else
   echo "FAILED:" $0 >> tests.log
-  echo "The following test will always fail if the gsl libary is not linked in"
+  echo "The following test will always fail if the gsl library is not linked in"
   exit 1
 fi
 

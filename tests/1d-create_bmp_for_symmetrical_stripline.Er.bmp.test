@@ -1,4 +1,4 @@
-#!/bin/sh
+# !/bin/sh
 
 # This is one of a set of test that generate checksums after files are
 # created. Generally a bitmap if first produced by a program such as sym_strip, 
@@ -21,7 +21,10 @@
 # rehat Linux and a Dec Alpha. Any failure probably indicates a 
 # program bug, so PLEASE PLEASE let me know about it!!
 
-if [ "$with_threads" = "yes" ] ; then
+touch $top_builddir/tmp/test_sym_strip.Er.bmp
+echo $built_with_posix_threads
+if [ "$built_with_posix_threads" = "yes" ] ; then
+  rm $top_builddir/tmp/test_sym_strip.Er.bmp 
   exit 77 # don't bother executing, since it will fail as configured. 
 else
   MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test_sym_strip.Er.bmp`

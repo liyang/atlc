@@ -24,6 +24,7 @@
 $top_builddir/src/non_gui/create_bmp_for_stripline_coupler -vv -b 16 1 1 1 1.0 $top_builddir/tmp/test_stripline_coupler.bmp > $top_builddir/tmp/test_stripline_coupler.bmp.pre-atlc.txt
 rm $top_builddir/tmp/test_stripline_coupler.bmp.pre-atlc.txt
 
+touch $top_builddir/tmp/test_stripline_coupler.bmp
 MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test_stripline_coupler.bmp`
 if [ $MD5SUM = 70e1fd121d8437cebd18916090f6b7d0 ]; then
   echo "PASSED:" $0 >> tests.log 

@@ -21,7 +21,11 @@ cp  $top_srcdir/examples/test-coupler2.bmp $top_builddir/tmp
 
 
 # Check the -S and -s options together allow no .bmp or .bin files
-$top_builddir/src/non_gui/atlc -s -S $top_builddir/tmp/test-coupler2.bmp > $top_builddir/tmp/test-coupler2.bmp.txt
+if [ "$mpirun_found" = "yes" ] ; then
+  mpirun -np 2 $top_builddir/src/non_gui/atlc -s -S $top_builddir/tmp/test-coupler2.bmp > $top_builddir/tmp/test-coupler2.bmp.txt
+else
+  $top_builddir/src/non_gui/atlc -s -S $top_builddir/tmp/test-coupler2.bmp > $top_builddir/tmp/test-coupler2.bmp.txt
+fi
 if [ -f $top_builddir/tmp/test-coupler2.Ex.even.bmp ]  || [ -f $top_builddir/tmp/test-coupler2.Ey.odd.bin ] || [ -f $top_builddir/tmp/test-coupler2.Er.bin ] ; then
   echo "FAILED:" $0 >> tests.log 
   exit 1

@@ -5,23 +5,53 @@
 # atlc is then called, and its eastimate calaculated, which will differ 
 # slightly from the theoretical data 
 
-ZoTheory=`$top_builddir/src/non_gui/create_bmp_for_symmetrical_stripline -v 1134 201 290 $top_builddir/tmp/50ohm-201h.bmp | awk '{print $4}'`
-Zoatlc=`$top_builddir/src/non_gui/atlc -S $top_builddir/tmp/50ohm-201h.bmp | awk '{print $6}'`
+#: ${ZoTheory='ksdkj'}
+#: ${Zoatlc='iofdklkljf'}
+
+if [ "x$built_with_posix_threads" = "xyes" ] ; then
+  exit 77
+elif [ "x$mpirun_found" = "xyes" ]  ; then
+  ZoTheory=`$top_builddir/src/non_gui/create_bmp_for_symmetrical_stripline -v 1134 201 290 $top_builddir/tmp/50ohm-201h.bmp | awk '{print $4}'`
+  Zoatlc=`mpirun -np 2 $top_builddir/src/non_gui/atlc -S $top_builddir/tmp/50ohm-201h.bmp | awk '{print $6}'`
+else
+  ZoTheory=`$top_builddir/src/non_gui/create_bmp_for_symmetrical_stripline -v 1134 201 290 $top_builddir/tmp/50ohm-201h.bmp | awk '{print $4}'`
+  Zoatlc=`$top_builddir/src/non_gui/atlc -S $top_builddir/tmp/50ohm-201h.bmp | awk '{print $6}'`
+fi
+
+touch $top_builddir/tmp/50ohm-201h.bmp $top_builddir/tmp/50ohm-201h.Ex.bmp
 MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/50ohm-201h.bmp`
 EXMD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/50ohm-201h.Ex.bmp`
-rm $top_builddir/tmp/50ohm-201h.bmp $top_builddir/tmp/50ohm-201h.Ex.bmp
-rm $top_builddir/tmp/50ohm-201h.Ey.bmp $top_builddir/tmp/50ohm-201h.E.bmp
-rm $top_builddir/tmp/50ohm-201h.U.bmp $top_builddir/tmp/50ohm-201h.V.bmp
-rm $top_builddir/tmp/50ohm-201h.Er.bmp
 
-# echo "Zo theory = " $ZoTheory "Zo altc= " $Zoatlc " cksum of bitmap" 
-# echo $MD5SUM "cksum of .Ex.bmp= " $EXMD5SUM
+rm -f $top_builddir/tmp/50ohm-201h.bmp $top_builddir/tmp/50ohm-201h.Ex.bmp
+rm -f $top_builddir/tmp/50ohm-201h.Ey.bmp $top_builddir/tmp/50ohm-201h.E.bmp
+rm -f $top_builddir/tmp/50ohm-201h.U.bmp $top_builddir/tmp/50ohm-201h.V.bmp
+rm -f $top_builddir/tmp/50ohm-201h.Er.bmp
+
+#echo "Zoth=$ZoTheory Zoatlc=$Zoatlc md5=$MD5SUM exmd5=$EXMD5SUM"
+
+if test -z "$ZoTheory"  ;  then
+echo 1
+  exit 1
+fi
+
+if test -z "$Zoatlc"  ; then
+  exit 1
+fi
+
+if test -z "$MD5SUM"  ; then
+  exit 1
+fi
+
+if test -z "$EXMD5SUM"  ; then
+  exit 1
+fi
+
+echo $ZoTheory $Zoatlc $MD5SUM $EXMD5SUM
 if [ $ZoTheory = 49.989477  ] && [ $Zoatlc = 49.85 ] && [ $MD5SUM = dae5292fe04dfd64abe1ae4e926d7365 ] && [ $EXMD5SUM = 4154e0e98b2c875dd4b88ef4ec19357c ]; then
-#if [ $ZoTheory = 49.989477  ] && [ $Zoatlc = 49.85 ] && [ $MD5SUM = dae5292fe04dfd64abe1ae4e926d7365 ] && [ $EXMD5SUM = 49627eb62042f28a11e4bec7b19eeb01 ]; then
     echo "PASSED:" $0 >> tests.log
     exit 0
 else
-  echo "The following test will always fail if the gsl libary is not linked in"
+  echo "The following test will always fail if the gsl library is not linked in"
   echo "FAILED:" $0 >> tests.log
   exit 1
 fi

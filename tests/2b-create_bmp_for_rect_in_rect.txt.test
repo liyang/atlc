@@ -1,10 +1,10 @@
 #!/bin/sh
 # Currenty (13th April 2003) this test only works when atlc is
-#configured as a single-threaded or multi-threaded.  If configured for
+#configured as a single-built_with_posix_threads or multi-built_with_posix_threads.  If configured for
 #the MPICH libraries, atlc gives a huge number of error messages. 
 
-#Note the results from the multi-threaded calcluation differ a little
-#from those of the single threaded case that the single-threaded case,
+#Note the results from the multi-built_with_posix_threads calcluation differ a little
+#from those of the single built_with_posix_threads case that the single-built_with_posix_threads case,
 #but the difference is so small it is not noticed on this particular
 #test, but it is on some of the othes, so they must be skipped too. 
 
@@ -12,10 +12,19 @@ if [ "$mpirun_found" = "yes" ] ; then
   mpirun -np 2 $top_builddir/src/non_gui/atlc  -S $top_builddir/tmp/test_rect_in_rect.bmp > $top_builddir/tmp/test_rect_in_rect.txt
 else 
   $top_builddir/src/non_gui/atlc  -S $top_builddir/tmp/test_rect_in_rect.bmp > $top_builddir/tmp/test_rect_in_rect.txt
+fi
+  touch $top_builddir/tmp/test_rect_in_rect.txt
 
   # The capacitance should be 121.0 pF/m and is in column 9
+
   CAP=`cat $top_builddir/tmp/test_rect_in_rect.txt | awk '{print $9}'`
-  rm $top_builddir/tmp/test_rect_in_rect.txt $top_builddir/tmp/test_rect_in_rect.bmp
+
+if [ -z "$CAP"  ] ; then
+  exit 1 
+fi
+
+  rm -f $top_builddir/tmp/test_rect_in_rect.txt $top_builddir/tmp/test_rect_in_rect.bmp
+
   if [ $CAP = 121.0 ]; then
     echo "PASSED:" $0 >> tests.log
     exit 0
@@ -23,4 +32,3 @@ else
     echo "FAILED:" $0 >> tests.log
     exit 1
   fi
-fi

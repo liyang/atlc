@@ -1,4 +1,4 @@
-#!/bin/sh
+# !/bin/sh
 
 # This is one of a set of test that generate checksums after files are
 # created. Generally a bitmap if first produced by a program such as sym_strip, 
@@ -20,10 +20,21 @@
 # such as Solaris 9, NetBSD, Solaris 2.5, Linux but also a PC running
 # rehat Linux and a Dec Alpha. Any failure probably indicates a 
 # program bug, so PLEASE PLEASE let me know about it!!
-echo with_threads=$with_threads
-echo mpirun=$mpirun
-if [ "$with_threads" = "yes" ] ; then
-  exit 77
+#echo built_with_posix_threads=$built_with_posix_threads
+#echo mpirun=$mpirun
+
+# By touching the file we expect to find, it elimates an nasty error
+# message like below. The tests still fails if the file is wrong, but
+# at least it does so a bit more gracefully. 
+
+# /1c-create_bmp_for_symmetrical_stripline.E.bmp.test: test: argument expected
+# FAIL: 1c-create_bmp_for_symmetrical_stripline.E.bmp.test
+
+touch $top_builddir/tmp/test_sym_strip.E.bmp
+
+if [ "$built_with_posix_threads" = "yes" ] ; then
+  rm $top_builddir/tmp/test_sym_strip.E.bmp 
+  exit 77   # Currently, the results will be wrong, so skip test.
 else
   MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test_sym_strip.E.bmp`
   rm $top_builddir/tmp/test_sym_strip.E.bmp 

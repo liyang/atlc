@@ -1,19 +1,29 @@
 #!/bin/sh
 # Check that the inductance per metre calculated from
 # tests.bmp is the correct value.
-
 # .bin files are unchecked, so let removed them.
 rm -f test.*.bin
 
-$top_builddir/src/non_gui/atlc -s -S $top_builddir/tmp/test.bmp > $top_builddir/tmp/test.txt
-rm $top_builddir/tmp/test.bmp
+if [ -n "$mpirun_found" ] ; then
+  mpirun -np 2 $top_builddir/src/non_gui/atlc -s -S $top_builddir/tmp/test.bmp > $top_builddir/tmp/test.txt 2> /dev/null
+else
+  $top_builddir/src/non_gui/atlc -s -S $top_builddir/tmp/test.bmp > $top_builddir/tmp/test.txt
+fi
+
 # Check the inductance per metre, which should be in column 12 and 
 # should be 340.8 nH/m
-Zo=`cat $top_builddir/tmp/test.txt | awk '{print $12}'`
+
+Lo=`cat $top_builddir/tmp/test.txt | awk '{print $12}'`
 rm $top_builddir/tmp/test.txt
-if [ $Zo = 340.8 ]; then
+
+if [ -z "$Lo" ]; then
+  exit 1
+fi
+
+if [ $Lo = 340.8 ]; then
   echo "PASSED:" $0 >> tests.log
   exit 0
 else
+  echo "FAILED:" $0 >> tests.log
   exit 1
 fi

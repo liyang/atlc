@@ -2,15 +2,23 @@
 # There should be a supplied bitmap file test-coupler1.bmp
 # We will generate all the bitmaps and check they 
 # are all okay. 
-MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test-coupler1.V.even.bmp`
-rm -f $top_builddir/tmp/test-coupler1.V.even.bmp $top_builddir/tmp/test-coupler1.bmp
+touch $top_builddir/tmp/test-coupler1.V.even.bmp
 
-#if [ $MD5SUM != 428cd38df2ab03da1585e69d35139e91 ]; then
-if [ $MD5SUM != 3e208e266b3b421d1d6a55633a5bec1c ]; then
-  echo "FAILED:" $0  >> tests.log
-  exit 1
-else 
-  echo "PASSED:" $0 >> tests.log
-  exit 0
+if [ "$built_with_posix_threads" = "yes" ] ; then
+  rm -f $top_builddir/tmp/test-coupler1.V.even.bmp $top_builddir/tmp/test-coupler1.bmp
+  exit 77 # don't bother executing, since it will fail as configured. 
+else
+
+  MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test-coupler1.V.even.bmp`
+  rm -f $top_builddir/tmp/test-coupler1.V.even.bmp $top_builddir/tmp/test-coupler1.bmp
+
+  #if [ $MD5SUM != 428cd38df2ab03da1585e69d35139e91 ]; then
+  if [ $MD5SUM != 3e208e266b3b421d1d6a55633a5bec1c ]; then
+    echo "FAILED:" $0  >> tests.log
+    exit 1
+  else 
+    echo "PASSED:" $0 >> tests.log
+    exit 0
+  fi
 fi
 

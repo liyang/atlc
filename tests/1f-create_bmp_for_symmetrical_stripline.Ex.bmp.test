@@ -1,9 +1,14 @@
-#!/bin/sh
+# !/bin/sh
 # It is pointless checking the checksum's on binary files as they will
 # differ on differnt Endian'ness and with different rounding errors on FP
 # units. Hence only the length is checked on the binary files
 
-if [ "$building_with_posix_threads" = "no" ] ; then
+touch $top_builddir/tmp/test_sym_strip.Ex.bmp
+
+if [ "$built_with_posix_threads" = "yes" ] ; then
+  rm $top_builddir/tmp/test_sym_strip.Ex.bmp
+  exit 77
+else
   MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test_sym_strip.Ex.bmp`
   rm $top_builddir/tmp/test_sym_strip.Ex.bmp
   if [ $MD5SUM = a8a6023247b624e6e3091dd7570904db ]; then
@@ -13,6 +18,4 @@ if [ "$building_with_posix_threads" = "no" ] ; then
     echo "FAILED:" $0  >> tests.log
     exit 1
   fi
-else
-  exit 77
 fi
