@@ -50,7 +50,7 @@ RoundCoaxFrame::RoundCoaxFrame(const wxString& title, const wxPoint& pos, const 
   wxMenuBar *menuBar = new wxMenuBar;
   CreateStatusBar();
   SetStatusText( "Computer Zo using an exact analystical method" );
-  FileMenu->Append( ID_Save, "&Save as Bitmap","Save Results to a text file"); //HACK, needs changing.  
+  //FileMenu->Append( ID_Save, "&Save as Bitmap","Save Results to a text file"); //HACK, needs changing.  
   FileMenu->Append( ID_FileMenuClose, "&Close" , "Close this windows only");
   HelpMenu->Append( ID_Help, "&Help" , "Help");
   SetMenuBar( menuBar );
