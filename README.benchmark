@@ -101,7 +101,9 @@ $ make check
 
 
 Notes:
-1) Ignore columns mark'ed gsl and MPCIH.
+1) Ignore columns mark'ed gsl and MPCIH.  GSL functionality
+has been built into atlc and MPICH functionality has been
+removed. 
 
 2) t_seq is the time in seconds to execute, using a 
 sequential algorithm which does *not* exploit multiple CPUs. 
@@ -146,10 +148,4 @@ to improve on these results.
 
 -- 
 Dr. David Kirkby,
-Senior Research Fellow,
-Department of Medical Physics,
-University College London,
-11-20 Capper St, London, WC1E 6JA.
-Tel: 020 7679 6408 Fax: 020 7679 6269
-Internal telephone: ext 46408
-e-mail davek@medphys.ucl.ac.uk
+28th September 2003
