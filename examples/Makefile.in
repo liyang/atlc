@@ -59,9 +59,6 @@ ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EGREP = @EGREP@
 EXEEXT = @EXEEXT@
-GSL_CFLAGS = @GSL_CFLAGS@
-GSL_CONFIG = @GSL_CONFIG@
-GSL_LIBS = @GSL_LIBS@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
@@ -116,7 +113,6 @@ libdir = @libdir@
 libexecdir = @libexecdir@
 localstatedir = @localstatedir@
 mandir = @mandir@
-no_gsl = @no_gsl@
 oldincludedir = @oldincludedir@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
@@ -128,6 +124,7 @@ target_alias = @target_alias@
 examplesdir = $(datadir)/atlc/examples
 
 examples_DATA = \
+dual-dielectric-coax.bmp \
 100-Ohm-201b.bmp \
 100-Ohm-401b.bmp \
 100ohm-201h.bmp \
@@ -171,9 +168,7 @@ examples_DATA = \
 50ohm-401h.bmp \
 50ohm-801h.bmp \
 aliased.bmp \
-aliased.bmp.txt \
 an_odd_er.bmp \
-an_odd_er.bmp.txt \
 bigger_not_in_centre.bmp \
 bigger_not_in_centre.bmp.txt \
 coax-500-100.bmp \
@@ -211,7 +206,6 @@ coupler.bmp.txt \
 create_for_Makefile.am \
 cvsignore \
 ex2.bmp \
-ex2.bmp.txt \
 ground-negative-short.bmp \
 microstrip_coupler.bmp \
 mix.bmp \
@@ -219,13 +213,10 @@ mix.bmp.txt \
 multi-dielectric.bmp \
 multi-dielectric.bmp.txt \
 not-aliased.bmp \
-not-aliased.bmp.txt \
 not_in_centre.bmp \
 not_in_centre.bmp.txt \
 odd-coupler.bmp \
-odd-coupler.bmp.txt \
 off-centre-coax.bmp \
-off-centre-coax.bmp.txt \
 offset.bmp \
 offset.bmp.txt \
 pcb-coupler.bmp \
@@ -317,6 +308,7 @@ wide-9pixel.bmp.txt
 
 
 EXTRA_DIST = \
+dual-dielectric-coax.bmp \
 very-small.bmp \
 100-Ohm-201b.bmp \
 100-Ohm-401b.bmp \
@@ -361,9 +353,7 @@ very-small.bmp \
 50ohm-401h.bmp \
 50ohm-801h.bmp \
 aliased.bmp \
-aliased.bmp.txt \
 an_odd_er.bmp \
-an_odd_er.bmp.txt \
 bigger_not_in_centre.bmp \
 bigger_not_in_centre.bmp.txt \
 coax-500-100.bmp \
@@ -401,7 +391,6 @@ coupler.bmp.txt \
 create_for_Makefile.am \
 cvsignore \
 ex2.bmp \
-ex2.bmp.txt \
 ground-negative-short.bmp \
 microstrip_coupler.bmp \
 mix.bmp \
@@ -409,13 +398,10 @@ mix.bmp.txt \
 multi-dielectric.bmp \
 multi-dielectric.bmp.txt \
 not-aliased.bmp \
-not-aliased.bmp.txt \
 not_in_centre.bmp \
 not_in_centre.bmp.txt \
 odd-coupler.bmp \
-odd-coupler.bmp.txt \
 off-centre-coax.bmp \
-off-centre-coax.bmp.txt \
 offset.bmp \
 offset.bmp.txt \
 pcb-coupler.bmp \
@@ -508,11 +494,12 @@ wide-9pixel.bmp.txt
 
 subdir = examples
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
+CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 DIST_SOURCES =
 DATA = $(examples_DATA)
 
-DIST_COMMON = Makefile.am Makefile.in
+DIST_COMMON = README Makefile.am Makefile.in
 all: all-am
 
 .SUFFIXES:

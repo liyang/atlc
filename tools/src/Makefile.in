@@ -57,9 +57,6 @@ ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EGREP = @EGREP@
 EXEEXT = @EXEEXT@
-GSL_CFLAGS = @GSL_CFLAGS@
-GSL_CONFIG = @GSL_CONFIG@
-GSL_LIBS = @GSL_LIBS@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
@@ -114,7 +111,6 @@ libdir = @libdir@
 libexecdir = @libexecdir@
 localstatedir = @localstatedir@
 mandir = @mandir@
-no_gsl = @no_gsl@
 oldincludedir = @oldincludedir@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
@@ -123,18 +119,31 @@ sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 
-bin_PROGRAMS = mymd5sum myfilelength locatediff
+bin_PROGRAMS = mymd5sum myfilelength locatediff dualcoax coax
 myfilelength_SOURCES = myfilelength.c 
 locatediff_SOURCES = locatediff.c
-mymd5sum_SOURCES = mymd5sum.c 
-EXTRA_DIST = md5.h
+mymd5sum_SOURCES = mymd5sum.c md5.h
+dualcoax_SOURCES = dualcoax.c
+coax_SOURCES = coax.c
+EXTRA_DIST = md5.h 
 subdir = tools/src
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
+CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 bin_PROGRAMS = mymd5sum$(EXEEXT) myfilelength$(EXEEXT) \
-	locatediff$(EXEEXT)
+	locatediff$(EXEEXT) dualcoax$(EXEEXT) coax$(EXEEXT)
 PROGRAMS = $(bin_PROGRAMS)
 
+am_coax_OBJECTS = coax.$(OBJEXT)
+coax_OBJECTS = $(am_coax_OBJECTS)
+coax_LDADD = $(LDADD)
+coax_DEPENDENCIES =
+coax_LDFLAGS =
+am_dualcoax_OBJECTS = dualcoax.$(OBJEXT)
+dualcoax_OBJECTS = $(am_dualcoax_OBJECTS)
+dualcoax_LDADD = $(LDADD)
+dualcoax_DEPENDENCIES =
+dualcoax_LDFLAGS =
 am_locatediff_OBJECTS = locatediff.$(OBJEXT)
 locatediff_OBJECTS = $(am_locatediff_OBJECTS)
 locatediff_LDADD = $(LDADD)
@@ -151,19 +160,20 @@ mymd5sum_LDADD = $(LDADD)
 mymd5sum_DEPENDENCIES =
 mymd5sum_LDFLAGS =
 
-DEFAULT_INCLUDES =  -I. -I$(srcdir)
+DEFAULT_INCLUDES =  -I. -I$(srcdir) -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
-@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/locatediff.Po \
+@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/coax.Po ./$(DEPDIR)/dualcoax.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/locatediff.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/myfilelength.Po ./$(DEPDIR)/mymd5sum.Po
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-DIST_SOURCES = $(locatediff_SOURCES) $(myfilelength_SOURCES) \
-	$(mymd5sum_SOURCES)
+DIST_SOURCES = $(coax_SOURCES) $(dualcoax_SOURCES) $(locatediff_SOURCES) \
+	$(myfilelength_SOURCES) $(mymd5sum_SOURCES)
 DIST_COMMON = README Makefile.am Makefile.in
-SOURCES = $(locatediff_SOURCES) $(myfilelength_SOURCES) $(mymd5sum_SOURCES)
+SOURCES = $(coax_SOURCES) $(dualcoax_SOURCES) $(locatediff_SOURCES) $(myfilelength_SOURCES) $(mymd5sum_SOURCES)
 
 all: all-am
 
@@ -198,6 +208,12 @@ uninstall-binPROGRAMS:
 
 clean-binPROGRAMS:
 	-test -z "$(bin_PROGRAMS)" || rm -f $(bin_PROGRAMS)
+coax$(EXEEXT): $(coax_OBJECTS) $(coax_DEPENDENCIES) 
+	@rm -f coax$(EXEEXT)
+	$(LINK) $(coax_LDFLAGS) $(coax_OBJECTS) $(coax_LDADD) $(LIBS)
+dualcoax$(EXEEXT): $(dualcoax_OBJECTS) $(dualcoax_DEPENDENCIES) 
+	@rm -f dualcoax$(EXEEXT)
+	$(LINK) $(dualcoax_LDFLAGS) $(dualcoax_OBJECTS) $(dualcoax_LDADD) $(LIBS)
 locatediff$(EXEEXT): $(locatediff_OBJECTS) $(locatediff_DEPENDENCIES) 
 	@rm -f locatediff$(EXEEXT)
 	$(LINK) $(locatediff_LDFLAGS) $(locatediff_OBJECTS) $(locatediff_LDADD) $(LIBS)
@@ -214,6 +230,8 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/coax.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dualcoax.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/locatediff.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/myfilelength.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mymd5sum.Po@am__quote@

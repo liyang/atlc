@@ -59,9 +59,6 @@ ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EGREP = @EGREP@
 EXEEXT = @EXEEXT@
-GSL_CFLAGS = @GSL_CFLAGS@
-GSL_CONFIG = @GSL_CONFIG@
-GSL_LIBS = @GSL_LIBS@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
@@ -116,7 +113,6 @@ libdir = @libdir@
 libexecdir = @libexecdir@
 localstatedir = @localstatedir@
 mandir = @mandir@
-no_gsl = @no_gsl@
 oldincludedir = @oldincludedir@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
@@ -147,6 +143,8 @@ create_bmp_for_rect_in_circ.1.html \
 create_bmp_for_rect_in_rect.1.html \
 create_bmp_for_stripline_coupler.1.html \
 create_bmp_for_symmetrical_stripline.1.html \
+create_bmp_for_rect_cen_in_rect_coupler.1 \
+design_coupler.1.html \
 determine_dimensions_of_couplers.html \
 errors.html \
 examples.html \
@@ -155,6 +153,7 @@ generate_for_coupler.html \
 generators.html \
 index.html \
 index2.html \
+installing.html \
 make-check.html \
 man-pages.html \
 options.html \
@@ -188,6 +187,8 @@ create_bmp_for_rect_in_circ.1.html \
 create_bmp_for_rect_in_rect.1.html \
 create_bmp_for_stripline_coupler.1.html \
 create_bmp_for_symmetrical_stripline.1.html \
+create_bmp_for_rect_cen_in_rect_coupler.1 \
+design_coupler.1.html \
 determine_dimensions_of_couplers.html \
 errors.html \
 examples.html \
@@ -196,6 +197,7 @@ generate_for_coupler.html \
 generators.html \
 index.html \
 index2.html \
+installing.html \
 make-check.html \
 man-pages.html \
 options.html \
@@ -214,6 +216,7 @@ CLEANFILES =
 DISTCLEANFILES = 
 subdir = docs/html-docs
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
+CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 DIST_SOURCES =
 DATA = $(html_DATA)
