@@ -50,6 +50,7 @@ int max_threads=MAX_THREADS, non_vacuum_found=FALSE;
 int append_flag=FALSE;
 int verbose=FALSE;
 int dielectrics_to_consider_just_now;
+int coupler;
 double r=1.95;
 
 extern int main(int argc, char **argv) /* Read parameters from command line */
@@ -57,7 +58,7 @@ extern int main(int argc, char **argv) /* Read parameters from command line */
   long i;
   int q, offset, dielectrics_on_command_line=0, dielectrics_in_bitmap=0;
   int write_field_images=1;
-  double capacitance, inductance, Zo, velocity, vf, c_old;
+  double capacitance, inductance, Zo, velocity, vf;
   double cutoff=0.0001, c;
   char *end, *output_filename, *input_filename;
   char *appendfile;
@@ -204,7 +205,12 @@ without the threads\nlibrary.\n",1);
 
     setup_arrays(&dielectrics_in_bitmap, dielectrics_on_command_line);
     check_for_boundaries();
-
+    if(coupler==TRUE)
+    {
+      printf("**WARNING** This has a negative conductor and is therefore \
+      \nconsidered in atlc as a coupler. This is highly expeimental and \
+      \nexpected to be suspect\n");
+    }
     /* Now 'v' has the voltages at each grid element, 'Er' 
     the permittivites and 'cell_type' is either FIXED or variable, 
     indicating a dielectric (VARIABLE) or a metal */
@@ -214,7 +220,7 @@ without the threads\nlibrary.\n",1);
     dielectric. If necessary, they will be done again */
 
     dielectrics_to_consider_just_now=1;
-    do_fd_calculation(&capacitance, &inductance, &Zo, &velocity, &vf, stdout, cutoff, dielectrics_to_consider_just_now, argv[my_optind]);
+    do_fd_calculation(&capacitance, &inductance, &Zo, &velocity, &vf, stdout, cutoff, dielectrics_to_consider_just_now, argv[my_optind],REQUIRE_FD_CALCULATIONS);
     /* The calculation of inductance above is correct, and does not
     need to be altered. However, if there are multiple dielectrics,
     then the capacitance needs to be computed again, this time taking
@@ -226,43 +232,17 @@ without the threads\nlibrary.\n",1);
     if(dielectrics_in_bitmap > 1) /* Only do if there is a mixed dielectric */
     {
       dielectrics_to_consider_just_now=dielectrics_in_bitmap;
-      do_fd_calculation(&capacitance, &inductance, &Zo, &velocity, &vf, stdout, cutoff, dielectrics_to_consider_just_now, argv[my_optind]);
-#ifdef GG
-      capacitance=VERY_LARGE; /* Can be anything large */
-      do
-      {
-        c_old=capacitance;
-        dielectrics_to_consider_just_now=dielectrics_in_bitmap;
-        capacitance=finite_difference(100);
-        Zo=sqrt(inductance/capacitance);
-        velocity=1.0/pow(inductance*capacitance,0.5);
-        c=1.0/(sqrt(MU_0*EPSILON_0));
-        vf=velocity/c;
-        if(verbose)
-        {
-          print_data(stdout,argv[my_optind],-1.0,capacitance,inductance,Zo,velocity,vf);
-	  if(append_flag==TRUE)
-	  {
-	    appendfile_fp=fopen(appendfile,"a");
-	    if(appendfile_fp==NULL)
-	    {
-	      fprintf(stderr,"Error #7 Can't open %s for appending\n",appendfile);
-	      exit(7);
-            }
-	    print_data(appendfile_fp,argv[my_optind],-1.0,capacitance,inductance,Zo,velocity,vf);
-            fclose(appendfile_fp);
-	  }
-        }/* end of if(verbose==TRUE) */
-      }while (fabs((c_old-capacitance)/c_old) > cutoff);
-#endif
+      do_fd_calculation(&capacitance, &inductance, &Zo, &velocity, &vf, stdout, cutoff, dielectrics_to_consider_just_now, argv[my_optind],REQUIRE_FD_CALCULATIONS);
     }
     /* Now we have findished all the time-consuming Fintite difference 
     bits */
 
     /* If there is more than one dielectric, but it is not vacuum, then
     the original calculation of C assuming vacuum just needs scaling by
-    the relative permittivity of the dielectric. Very easy to do */
-
+    the relative permittivity of the dielectric. Very easy to do 
+    and there is *NO* need for any more finite difference calculations*/
+    printf("tt\n");
+#ifndef GG
     if((dielectrics_in_bitmap == 1) && (non_vacuum_found==TRUE))
     {
       capacitance*=found_this_dielectric;
@@ -289,7 +269,7 @@ without the threads\nlibrary.\n",1);
         }
       }
     } /* end of checking for a single dielectric, that is not vacuum */
-
+#endif
     if(dielectrics_in_bitmap > 1)
     {
       print_data(stdout,argv[my_optind],-1.0,capacitance,\

@@ -18,7 +18,7 @@ extern double **Vij, **Er;
 extern unsigned char *image_data;
 extern int **cell_type, non_vacuum_found;
 extern double found_this_dielectric;
-
+extern int coupler;
 int colour_found, conductor_found, dielectric_found;
 void setup_arrays(int *dielectrics_in_bitmap, int dielectrics_on_command_line)
 {
@@ -70,6 +70,7 @@ void setup_arrays(int *dielectrics_in_bitmap, int dielectrics_on_command_line)
 	    conductor_found=TRUE;
 	    pixels_found.blue++;
 	    Er[w][height-1-h]=METAL_ER;
+	    coupler=TRUE;
          }
 	 else /* A dielectric */
 	 {

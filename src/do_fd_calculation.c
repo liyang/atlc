@@ -6,7 +6,10 @@
 
 extern int verbose;
 extern int append_flag;
-void do_fd_calculation(double *capacitance, double *inductance, double *Zo, double *velocity,double *vf,FILE *where_to_print, double cutoff, int dielectrics_to_consider_just_now, char * filename)
+extern double found_this_dielectric; 
+
+void do_fd_calculation(double *capacitance, double *inductance, double *Zo, double *velocity,double *vf,FILE *where_to_print, double cutoff, int dielectrics_to_consider_just_now, char * filename ,
+int a_requirement_for_fd_calculations_Q)
 {
   double c_old, c;
   FILE *appendfile_fp;
@@ -18,18 +21,17 @@ void do_fd_calculation(double *capacitance, double *inductance, double *Zo, doub
     {
       c_old=*capacitance; 
 
-      /* Calcuate the capacitance, using 100 iterations in a finite
-      differnce loop. There are two routines called finite_difference,
+      /* Calculate the capacitance, using 100 iterations in a finite
+      difference loop. There are two routines called finite_difference,
       one in the file finite_difference_multi_threaded.c and another 
       in the file finite_difference_single_threaded.c. The function has
       the same name in each, but is difference, depending on whether or
       not the programme is using multiple processors */
       *capacitance=finite_difference(100);
-
-      /* Once the capacitance is know, we can calculate L, Zo  and the
-      velocity of propogation */
       if(dielectrics_to_consider_just_now == 1)
         *inductance=MU_0*EPSILON_0/(*capacitance);
+      /* Once the capacitance is know, we can calculate L, Zo  and the
+      velocity of propogation */
       *Zo=sqrt((*inductance)/(*capacitance));
       *velocity=1.0/pow((*inductance)*(*capacitance),0.5);
       //printf("\ndie_now=%d nc=%g ind = %g vel=%f\n\n",dielectrics_to_consider_just_now,*capacitance, *inductance, *velocity);

@@ -191,3 +191,19 @@ else
 fi
 
 
+#../src/rect_in_rect -b 4 -f test-6.bmp 500 100 20 240 20 460 50 40 4.8 4.8
+#CKSUM=`sum test-6.bmp  | awk '{print $1}'`
+#if [ $CKSUM = 19648 ]; then
+#  echo Passed test 6a
+#else
+#  echo Failed test 6a indicating rect_in_rect didn't give the right bitmap when Er is 4.8.
+#fi
+
+#../src/atlc test-6.bmp > /dev/null
+#CKSUM=`cat test-6.txt | awk '{print $11}' | sum | awk '{print $1}'`
+#if [ $CKSUM = 59454 ]; then
+#  echo Passed test 6b
+#else
+#  echo Failed test 6b indicating atlc failed to calculate the correct impedance when Er is 4.8 everywhere.
+#fi
+
