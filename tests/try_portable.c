@@ -34,15 +34,21 @@ extern int errno;
 
 int try_portable(struct computer_data *data)
 {
-  int ret, i, string_length;
+
+/* Check for both uname and sysconf. Any UNIX system should 
+have both, but since someone has done a Windows port, I  
+will start by assming neither sysconf or uname exist */
 
 #ifdef _SC_PHYS_PAGES
 #ifdef _SC_PAGESIZE
+#ifdef HAVE_SYSCONF  /* Most UNIX systems have it */
   double ram;
 #endif
 #endif
+#endif
 
-#ifdef HAVE_UNAME
+#ifdef HAVE_UNAME /* Most if not all UNIX system have it */
+  int ret, i, string_length;
   struct utsname operating_system;
 
   ret=uname(&operating_system);
@@ -55,7 +61,7 @@ int try_portable(struct computer_data *data)
 #endif /* #ifdef HAVE_ERRNO_H */
     return(ret);
   }
-  else
+  else  /* the call to uname succeesed */
   {
     /* There is a distint posibility that some data in the operating
     system structure will have spaces in it. This will screw things
@@ -104,7 +110,7 @@ int try_portable(struct computer_data *data)
       if (data->machine[i] == ' ')
         data->machine[i]='_';
     }
-
+  } /* end of code executed if uname() passed */
 #endif /* End of #ifdef HAVE_UNAME */
 
 /* Try to get the number of processors online. This seems to be 
@@ -152,8 +158,6 @@ I hope that makes some sense */
   }
 #endif /* End of HAVE__SC_PHYS_PAGES */
 #endif  /* End of  HAVE__SC_PHYS_PAGES */
-
 #endif /* End of #ifdef HAVE_SYSCONF */
-    return(0);
-  }
+  return(0);
 }
