@@ -6,6 +6,8 @@
         #include "wx/wx.h"
 #endif
 #include "wx/wxprec.h"
+#include <wx/textdlg.h>
+#include <wx/stattext.h>
 #include "RoundCoaxFrm.h"
 #include "resource.h"
 
@@ -14,7 +16,7 @@
 // ----------------------------------------------------------------------------
 // the application icon
 #if defined(__WXGTK__) || defined(__WXMOTIF__)
-    #include "coax.xpm"
+    #include "RoundCoax.xpm"
 #endif
 
 // ----------------------------------------------------------------------------
@@ -34,6 +36,7 @@ BEGIN_EVENT_TABLE(RoundCoaxFrame, wxFrame)
     EVT_MENU(ID_Help, RoundCoaxFrame::OnHelp)
     EVT_MENU(ID_FileMenuClose, RoundCoaxFrame::OnFileMenuClose)
     EVT_CLOSE(RoundCoaxFrame::OnClose) //QUESTION - What is This ???
+    EVT_BUTTON(DIALOG_BTN, RoundCoaxFrame::OnClick)
 END_EVENT_TABLE()
 
 
@@ -41,7 +44,7 @@ END_EVENT_TABLE()
 RoundCoaxFrame::RoundCoaxFrame(const wxString& title, const wxPoint& pos, const wxSize& size)
 :wxFrame((wxFrame *)NULL, -1, title, pos, size)
 {
-  SetIcon(wxICON(coax));
+  SetIcon(wxICON(RoundCoax));
   wxMenu *FileMenu = new wxMenu;  /* Left most menue */
   wxMenu *HelpMenu = new wxMenu;
   wxMenuBar *menuBar = new wxMenuBar;
@@ -53,6 +56,27 @@ RoundCoaxFrame::RoundCoaxFrame(const wxString& title, const wxPoint& pos, const 
   SetMenuBar( menuBar );
   menuBar->Append( FileMenu, "&File" );
   menuBar->Append( HelpMenu, "&Help" );
+  RoundCoaxPanel = new wxPanel(this, -1, wxDefaultPosition, wxDefaultSize,wxTAB_TRAVERSAL, "RoundCoaxPanel"); 
+  wxPoint myPoint(400,400);
+  wxPoint myPoint2(100,100);
+  wxPoint myPoint3(200,200);
+  //ErTextCtrl = new wxTextCtrl(this, -1, "1.0", myPoint, wxDefaultSize,0,wxDefaultValidator, "Relative permittivity Er");
+  //dTextCtrl = new wxTextCtrl(this, -1, "1.0", myPoint2, wxDefaultSize,0,wxDefaultValidator, "Inner diameter d");
+  //DTextCtrl = new wxTextCtrl(this, -1, "1.0", myPoint3, wxDefaultSize,0,wxDefaultValidator, "Outer Diameter D");
+
+  //dTextEntryDialog = new wxTextEntryDialog(this, "Enter diamater of outer conductor (D)", "ff",wxCENTRE, myPoint3);
+  //ErStaticText = new wxStaticText(this,4,"Outer diameter", wxPoint(100,100), wxSize(100,100), wxALIGN_LEFT , "foo");
+  //dStaticText = new wxStaticText(this,-1,"Inner diameter");
+  wxPoint(100,100);
+  wxFlexGridSizer *dialogSizer = new wxFlexGridSizer(3,2,5,5);
+  dialogSizer-> Add ( new wxStaticText(this,-1,"Inner diameter (d)",wxPoint(100,100)), 0, wxALIGN_CENTRE_VERTICAL);
+  dialogSizer-> Add ( new wxTextCtrl(this, 1), 0, wxALIGN_CENTRE_VERTICAL);
+  dialogSizer-> Add ( new wxStaticText(this,-1,"Outer diameter (D)"), 0, wxALIGN_CENTRE_VERTICAL);
+  dialogSizer-> Add ( new wxTextCtrl(this, 1),0, wxALIGN_CENTRE_VERTICAL);
+  dialogSizer-> Add ( new wxStaticText(this,-1,"Relative permittivity (Er"), 0, wxALIGN_CENTRE_VERTICAL);
+  dialogSizer-> Add ( new wxTextCtrl(this, 1), 0, wxALIGN_CENTRE_VERTICAL);
+  SetSizer(dialogSizer);
+  Layout();
 }
 
 void RoundCoaxFrame::OnHelp(wxCommandEvent& WXUNUSED(event))
@@ -72,4 +96,10 @@ void RoundCoaxFrame::OnClose(wxCloseEvent& event)
 void RoundCoaxFrame::OnFileMenuClose(wxCommandEvent& event)
 {
   wxWindow::Close(TRUE); //Force a closure, window can not resist 
+}
+
+void RoundCoaxFrame::OnClick(wxCommandEvent& WXUNUSED(event))
+{
+  //wxWindow::Close(TRUE); //Force a closure, window can not resist 
+  wxMessageBox("Will now compute Zo", "Event", wxOK | wxICON_INFORMATION, this);
 }
