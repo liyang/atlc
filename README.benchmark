@@ -1,0 +1,109 @@
+Here are some benchmarks, collected on a number of different computers
+using Here are some benchmarks, collected on a number of different computers
+using version ***version 4.3.1*** of the code. Any comparisions should be
+made to this version only. 
+
+HARDWARE and EXECUTION TIMES:
+-----------------------------------------
+
+Hostname      Machine                CPU(s)   t_seq  t_par speedup
+efficiency
+----------------------------------------------------------------
+blackbird     Sun SPARCstation 20     75 MHz  1601   N/A     N/A   N/A
+bluetit       Sun SPARCstation 20  2x125 MHz  1141   682     1.67  0.837
+cheetah       PC, Solaris 8 (x86)  2x450 MHz   410   255     1.61  0.804
+crow          Sun SPARCstation 20     75 MHz  3457  3522     0.98  0.982
+dobermann[cc] Dec Alpha PW 600a      600 MHz   950   N/A     N/A   N/A 
+dove          Sun SPARCstation 20     75 MHz  1647   N/A     N/A   N/A
+robin         HP C3000               400 MHz   157   N/A     N/A   N/A  
+sparrow[cc]   Sun Ultra 80         4x450 MHz   272   83      3.28  0.819
+sparrow[gcc]  Sun Ultra 80         4x450 MHz   261   86      3.03  0.759
+tiger         Pentium II PC          350 MHz   333   N/A     N/A   N/A  
+woodpecker    Sun SPARCstation 20  2x125 MHz  1035   FAIL    FAIL  FAIL
+
+
+CACHE + RAM SIZES - Cache data might not be 100% accurate.
+hostname      Machine                      RAM             Cache
+-----------------------------------------------------------
+blackbird     Sun SPARCstation 20         256 Mb   1.000 Mb
+bluetit       Sun SPARCstation 20         320 Mb   0.250 Mb
+cheetah       PC, Solaris 8 (x86)         768 Mb   0.544 Mb 16kb L1 data+16 kb L1 inst. + 512 kb L2
+crow          Sun SPARCstation 20         320 Mb   1.000 Mb
+dobermann     Dec Alpha PW 600a          1024 Mb   4.000 Mb 
+dove          Sun SPARCstation 20         288 Mb   1.000 Mb
+robin         HP C3000                   1536 Mb   1.500 Mb (1 Mb data, 0.5 Mb instruction)
+sparrow       Sun Ultra 80               4096 Mb   4.000 Mb 
+tiger         Pentium II PC               128 Mb   0.544 Mb 16 kb L1 data+16 kb L1 inst. + 512 kb L2 
+woodpecker    Sun SPARCstation 20         224 Mb   0.250 Mb 
+
+
+hostname     OS-version    kernel        gsl  compiler      MPCIH
+---------------------------------------------------------------------
+blackbird    NetBSD  1.6                 1.1  gcc-2.93.3      NI
+bluetit      Solaris 2.5                 0.5  gcc-2.93.3      NI
+cheetah      Solaris 8 x86               ---  gcc-3.2.3       NI
+crow         OpenBSD 3.2                 ---  gcc-2.93.3      NI
+dobermann    Tru64 5.1B                  1.4  V6.5-011        NI
+dove         Debian  ???  2.2.20         1.2  gcc-2.96        NI
+robin        HP-UX  11                   ---  gcc-3.2.2       NI
+sparrow[gcc] Solaris 9   112233-03       1.3  gcc-3.2.2    1.2.5
+sparrow[cc]  Solaris 9   112233-03       1.3  cc-5.3       1.2.5
+tiger        Redhat  7.2  2.4.10-5       0.8  gcc-2.96     1.2.5
+woodpecker   Linux 6.2   2.2.14-5.0smp   1.0  egcs-2.91.66    NI
+
+IMPORTANT: If you wish to compare your machines performance,
+use atlc-4.3.1.tar.gz, NOT an earlier realease, NOT
+a later released  
+
+$ configure --with-threads
+$ make check
+
+
+Notes:
+1) Ignore columns mark'ed gsl and MPCIH.
+
+2) t_seq is the time in seconds to execute, using a 
+sequential algorithm which does *not* exploit multiple CPUs. 
+
+3) t_par is the time to execute, using an identical 
+algorithm to above, but written to exploit multiple CPUs,
+using POSIX threads.
+
+4) 'speedup' is defined as the ratio of t_par/t_seq. 
+
+5) 'efficiency' is speedup/number_of_CPUs present. Ideally 
+this would be 1.0. 
+
+6) Tests on 'woodpecker' a Sun SPARC 20 running Redhat 
+Linux, failed when built for parallel operation, so 
+results are not shown, despite the fact his machine 
+had dual processors and the kernel was supposed to support
+multiple CPUs. I think the thread support is Redhat 6.2 
+for SPARC is suspect.
+
+7) Data for both gcc and cc are given on the Sun Ultra 80 (sparrow).
+
+8) I suspect the code does not make good use of the 
+cache, and will in future be changed to make better 
+use of the cache. However, quite why the 600 MHz 
+Dec Alpha, running Compaq's compiler performs so badly 
+is a mystery. 
+
+9) This is essentially floating point intensive. IO 
+should have little effect, although all machines 
+have 10,000 rpm SCSI disks, of various vintages. There is
+some integer arithmetic, but is is small compared to the
+floating point.
+
+
+10) Machines had differing memory from 128 Mb to 
+4 Gb, but none should be swapping. 
+-- 
+Dr. David Kirkby,
+Senior Research Fellow,
+Department of Medical Physics,
+University College London,
+11-20 Capper St, London, WC1E 6JA.
+Tel: 020 7679 6408 Fax: 020 7679 6269
+Internal telephone: ext 46408
+e-mail davek@medphys.ucl.ac.uk
