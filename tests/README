@@ -10,19 +10,12 @@ are tested for binary files, as it would be pointless.
 to those expected. 
 
 The checksum of the files checked is compared to what is known to be 
-the correct checksum using a program 'mycksum' which is a cut-down version of
-the GNU program 'sum'. Using my own version avoids the need for the user to 
-have the GNU textutils installed and avoids the possibility that they have
-'textutils' installed but have another version of 'sum' (such as the one 
-supplied by Sun with Solaris), which generates a different checksum. 
+the correct checksum using a program 'mymd5sum' which is an md5 checksum
+program. I decided to distribute this, since it's not on all systems and
+when it is it is known as different names. The output format differs too
 
-SOME OF THE TESTS ARE KNOWN TO GIVE DIFFERENT RESULTS EACH
-TIME THEY ARE RUN, THERE ARE:
-
-7j-create_bmp_for_stripline_coupler.Ex.even.bmp.test
-7k-create_bmp_for_stripline_coupler.Ey.even.bmp.test
-11h-verify-checksum-of-created-test-coupler1.Ex.even.bmp.test
-11i-verify-checksum-of-created-test-coupler1.Ey.even.bmp.test
+6m-create_400ohm_1551Pixel_high_symmetrical_stripline.test is included
+but is not run, as it take too much ram and will fail on systems with
 
 Dr. David Kirkby,
 email drkirkby@ntlworld.com and/or davek@medphys.ucl.ac.uk 
