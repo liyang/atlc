@@ -1,16 +1,89 @@
 # This is Makefile.am, which is processed by automake
-EXTRA_DIST = README 13inner_22outer_coax.bmp aliased.bmp an_odd_er.bmp \
-bigger_not_in_centre.bmp coax-500-100.bmp coax-500-200.bmp coax-500-25.bmp \
-coax-500-400-Er=100.bmp coax-500-400.bmp coax-500-50.bmp coax2.bmp \
-coaxtest.bmp coaxtest2.bmp enclosed-microstrip.bmp ex2.bmp \
-mix.bmp multi-dielectric.bmp not-aliased.bmp not_in_centre.bmp \
-off-centre-coax.bmp offset.bmp pcb.bmp positive-ground-short.bmp \
-positive-negative-short.bmp test.bmp test3.bmp test4.bmp test6.bmp test7.bmp \
-twin-wire.bmp twin-wire2.bmp twin-wire3.bmp twin-wire4.bmp \
-ushape.bmp very-odd.bmp wide-9pixel.bmp coupler.bmp odd-coupler.bmp\
-pcb-coupler.bmp rect9.bmp cop1.bmp
+EXTRA_DIST = README \
+13inner_22outer_coax.bmp \
+13inner_22outer_coax.bmp.txt \
+aliased.bmp \
+aliased.bmp.txt \
+an_odd_er.bmp \
+an_odd_er.bmp.txt \
+bigger_not_in_centre.bmp \
+bigger_not_in_centre.bmp.txt \
+coax-500-100.bmp \
+coax-500-100.bmp.txt \
+coax-500-200-Er=100.bmp \
+coax-500-200-Er=100.bmp.txt \
+coax-500-200.bmp \
+coax-500-200.bmp.txt \
+coax-500-25.bmp \
+coax-500-25.bmp.txt \
+coax-500-400.bmp \
+coax-500-400.bmp.txt \
+coax-500-50.bmp \
+coax-500-50.bmp.txt \
+coax2.bmp \
+coax2.bmp.txt \
+coaxtest.bmp \
+coaxtest.bmp.txt \
+coaxtest2.bmp \
+coaxtest2.bmp.txt \
+cop1.bmp \
+cop1.bmp.txt \
+coupler.bmp \
+coupler.bmp.txt \
+enclosed-microstrip.bmp \
+enclosed-microstrip.bmp.txt \
+ex2.bmp \
+ex2.bmp.txt \
+ground-negative-short.bmp \
+ground-negative-short.bmp.txt \
+mix.bmp \
+mix.bmp.txt \
+multi-dielectric.bmp \
+multi-dielectric.bmp.txt \
+not-aliased.bmp \
+not-aliased.bmp.txt \
+not_in_centre.bmp \
+not_in_centre.bmp.txt \
+odd-coupler.bmp \
+odd-coupler.bmp.txt \
+off-centre-coax.bmp \
+off-centre-coax.bmp.txt \
+offset.bmp \
+offset.bmp.txt \
+pcb-coupler.bmp \
+pcb-coupler.bmp.txt \
+pcb.bmp \
+pcb.bmp.txt \
+positive-ground-short.bmp \
+positive-ground-short.bmp.txt \
+positive-negative-short.bmp \
+positive-negative-short.bmp.txt \
+test.bmp \
+test.bmp.txt \
+test3.bmp \
+test3.bmp.txt \
+test4.bmp \
+test4.bmp.txt \
+test6.bmp \
+test6.bmp.txt \
+test7.bmp \
+test7.bmp.txt \
+twin-wire.bmp \
+twin-wire.bmp.txt \
+twin-wire2.bmp \
+twin-wire2.bmp.txt \
+twin-wire3.bmp \
+twin-wire3.bmp.txt \
+ushape.bmp \
+ushape.bmp.txt \
+very-odd.bmp \
+very-odd.bmp.txt \
+wide-9pixel.bmp \
+wide-9pixel.bmp.txt 
 
-CLEANFILES = eccentric-a.bmp \
+CLEANFILES =
+
+DISTCLEANFILES = eccentric-a.bmp \
 eccentric-b.bmp \
 eccentric-c.bmp \
 eccentric-d.bmp \
@@ -67,5 +140,83 @@ cop1.V.even.bin \
 cop1.V.even.bmp \
 cop1.V.odd.bin \
 cop1.V.odd.bmp \
-cop1.txt
-
+coax2.E.bin \
+coax2.Er.bin \
+coax2.Ex.bin \
+coax2.Ey.bin \
+coax2.U.bin \
+coax2.V.bin \
+pcb.E.bin \
+pcb.Er.bin \
+pcb.Ex.bin \
+pcb.Ey.bin \
+pcb.U.bin \
+pcb.V.bin \
+twin-wire.E.bin \
+twin-wire.Er.bin \
+twin-wire.Ex.bin \
+twin-wire.Ey.bin \
+twin-wire.U.bin \
+twin-wire.V.bin \
+twin-wire.E.bmp \
+twin-wire.Er.bmp \
+twin-wire.Ex.bmp \
+twin-wire.Ey.bmp \
+twin-wire.U.bmp \
+twin-wire.V.bmp \
+ushape.E.bin \
+ushape.Er.bin \
+ushape.Ex.bin \
+ushape.Ey.bin \
+ushape.U.bin \
+ushape.V.bin \
+coax2.Er.bmp \
+coax2.Ex.bmp \
+coax2.Ey.bmp \
+coax2.U.bmp \
+coax2.E.bmp \
+coax2.E.bmp \
+pcb.Er.bmp \
+pcb.Ex.bmp \
+pcb.Ey.bmp \
+pcb.U.bmp \
+pcb.V.bmp \
+pcb-coupler.E.even.bin \
+pcb-coupler.E.odd.bin \
+pcb-coupler.Er.bin \
+pcb-coupler.Ex.even.bin \
+pcb-coupler.Ex.odd.bin \
+pcb-coupler.Ey.even.bin \
+pcb-coupler.Ey.odd.bin \
+pcb-coupler.U.even.bin \
+pcb-coupler.U.odd.bin \
+pcb-coupler.V.even.bin \
+pcb-coupler.V.odd.bin \
+pcb-coupler.E.odd.bin \
+pcb-coupler.E.odd.bmp \
+pcb-coupler.Ex.odd.bin \
+pcb-coupler.Ex.odd.bmp \
+pcb-coupler.Ey.odd.bin \
+pcb-coupler.Ey.odd.bmp \
+pcb-coupler.U.odd.bin \
+pcb-coupler.U.odd.bmp \
+pcb-coupler.V.odd.bin \
+pcb-coupler.V.odd.bmp \
+pcb-coupler.E.even.bmp \
+pcb-coupler.Ex.even.bmp \
+pcb-coupler.Ey.even.bmp \
+pcb-coupler.U.even.bmp \
+pcb-coupler.V.even.bmp \
+pcb-coupler.Er.bmp \
+cop1.E.even.bmp \
+cop1.E.odd.bmp \
+cop1.Er.bmp \
+cop1.Ex.even.bmp \
+cop1.Ex.odd.bmp \
+cop1.Ey.even.bmp \
+cop1.Ey.odd.bmp \
+cop1.U.even.bmp \
+cop1.U.odd.bmp \
+cop1.V.even.bmp \
+cop1.V.odd.bmp \
+cop1.bmp
