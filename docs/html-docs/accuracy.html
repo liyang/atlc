@@ -2,11 +2,11 @@
 <HTML>
 <HEAD>
 
-<META name="generator" content="Mostly bluefish & vi. Sometimes netscape">
+<META name="generator" content="bluefish & vi">
 <META http-equiv="CONTENT-TYPE" content="text/html; charset=iso-8859-1">
 <META name="AUTHOR" content="Dr. David Kirkby, drkirkby@ntlworld.com">
 <META name="DESCRIPTION" content="Accuracy of atlc - Arbitrary Transmission Line Calculator">
-<META name="KEYWORDS" content="Transmission line calculator atlc accuracy finite difference">
+<META name="KEYWORDS" content="cad Transmission line calculator atlc accuracy finite difference">
 <TITLE>Accuracy of atlc - Arbitrary Transmission Line Calculator</TITLE>
 </HEAD>
 <BODY>
@@ -18,7 +18,7 @@ In order to test the accuracy of  <CODE>atlc</code>, some simple geometries were
 <p>
 
 <img src="jpgs/coax2.jpg" ALT="coaxial line" align="left">One obvious case is the round coaxial cable, which has a well known and exact formula for its impedance. In the case of an vacuum dielectric, it is simply <p><STRONG>Zo=60.0*log<sub>e</sub>(D/d)</STRONG><p>, where D is the inner diameter of the outer conductor and d is the outer diameter of the inner conductor. <br>
-Circular conductors can never be defined exactly using a square grid, so differences between the exact answer and <CODE>atlc's</code> answer are due to:
+Circular conductors can never be defined exactly using a square grid, so differences between the exact answer and <CODE>atlc</code>'s answer are due to:
 <UL>
 <LI>Errors in representing a circle on a square grid</LI>
 <LI>Errors in the method <COde>atlc</code> uses. </LI>
@@ -297,11 +297,41 @@ create_bmp_for_circ_in_circ 500 200 0 1 eccentric-c.bmp</CODE>
 <STRONG><H2><a name="Accuracy_symmetrical_strip" >Comparisions between atlc and a symmetrical strip transmission line</A></H2></STRONG>
 Another obvious test is a symmetrical strip transmission line - see diagramme below. <p>
 <img src="jpgs/symmetrical_strip.jpg" ALT="Symmetrical Strip Transmission Line"><p>
-This has an exact analytical solution, dependent on the ratio of the width of the inner conductor w, to the distance between the two outer conductors H.  This assumes that the outer conductors extend to plus and minus infinity and the inner conductor is infinitely thin. This structure has the advantage of requiring no curves, so can be represented more accurately with the square grid used in <CODE>atlc.</CODE> However, its impossible to have an inner conductor that is less than 1 pixel high and it is impossible to make the dimension W  infinity wide as it was take an infinite amount of disk space, RAM and CPU time).  However, if the width W is made at least 4xH+w, then making it any larger does not seem to have much affect on the result. Hence the results below were obtained by setting the internal W equal to 4 times the internal height plus the inner width W. The actual bitmaps used by atlc are 10 pixels higher and 10 pixels wider, to enforce a boundary. The programme <CODE>create_bmp_for_symmetrical_stripline</CODE> can be used to quickly produce suitable bitmaps for such circumstances. It enforces having the width W of the  equal to at least w+4*h, as well as H being at least 201 pixels. It must be odd, since the one pixel inner conductor must fit centrally between the two outer conductors.<br>
-<CODE>create_bmp_for_symmetrical_stripline 1200 201 290 50-201.bmp<br>
-w=290 H=201 w/H=1.442786 xo=23.753772<br>
-Zo is theoretically 49.989477 Ohms (assuming W is infinite)<br></CODE>
+This has an exact analytical solution, dependent on the ratio of the 
+width of the inner conductor w, to the distance between the two outer 
+conductors H.  This assumes that the outer conductors extend to plus 
+and minus infinity and the inner conductor is infinitely thin. This 
+structure has the advantage of requiring no curves, so can be 
+represented accurately with the square grid used in <CODE>atlc.</CODE> </p>
+<p>
+However, its impossible to have an inner conductor that is less than 1 pixel 
+high and it is impossible to make the dimension W infinitely wide as it 
+was take an infinite amount of disk space, RAM and CPU time. However, if 
+the width W is made at least 4xH+w, then making it any larger does not 
+seem to have much affect on the result.</p>
+The <code>-i</code> option to <CODE>create_bmp_for_symmetrical_stripline</code>,
+forces the width
+W to be equal to 4 times the internal height plus the inner conductor's 
+width w (unless the user specified a larger value of W). Hence, when
+the <code>-i</code> option is used, a valid test of <code>atlc</code>'s 
+accuracy can be made<br>
+Without the <code>-i</code> option, you can made the width W and height 
+H any value
+you want above >=5 pixels, although H must be odd, for the inner conductor
+to fit equally between the two outer confuctors. As always, the bitmaps created  
+are 10 pixels higher and 10 pixels wider, to enforce a green metallic boundary. 
 <br>
+<br>
+<CODE>create_bmp_for_symmetrical_stripline -vv -i 0 201 290 50-201.bmp<br>
+<br>
+For this to be a valid test of atlc, the width should be<br>
+infinite. Since you used the -i option (indicationg you<br>
+want the width W to effectively infinite, W must exceed w + 4xH.<br>
+Therefore W has been is set to 1134<br>
+w=290 H=201 w/H=1.442786 xo=23.7538<br>
+Zo is theoretically 49.989477 Ohms (assuming W is infinite)<br>
+<br>
+</code>
 This structure, which has a w/H value of 1.442786, has a theoretical impedance close to 50 Ohms (49.989477 to be precise). atlc calculates this to be 49.8457 Ohms, an error of only 0.087%, when using a  grid 1134x201. Increasing the number of pixels to 2222x401,  the results are surprisingly somewhat worst with an error of 0.191%. I have no explanation for this. but increasing the pixels further to 4399x801, results in a larger error still, as atlc reports this as 49.9127.<p>
 <TABLE border align="bottom">
 <TR>
@@ -312,10 +342,11 @@ This structure, which has a w/H value of 1.442786, has a theoretical impedance c
 <TD><STRONG>w/H</STRONG></TD>
 <TD><STRONG>Zo<sup>exact</sup></STRONG></TD>
 <TD><STRONG>Zo<sup>atlc</sup></STRONG></TD>
-<TD><STRONG>Error (%)</STRONG></TD>
+<TD><STRONG>Error</STRONG></TD>
+<TD><STRONG>Time</STRONG></TD>
 </TR>
 <TR>
-<TD>25-201</TD>
+<TD>25ohm-201h.bmp</TD>
 <TD>1512</TD>
 <TD>201</TD>
 <TD>668</TD>
@@ -323,10 +354,11 @@ This structure, which has a w/H value of 1.442786, has a theoretical impedance c
 <TD>25.018</TD>
 <TD>24.919</TD>
 <TD>-0.392%</TD>
+<TD>0h:00m:20s</TD>
 
 </TR>
 <TR>
-<TD>25-401</TD>
+<TD>25ohm-401h.bmp</TD>
 <TD>2978</TD>
 <TD>401</TD>
 <TD>1334</TD>
@@ -334,20 +366,22 @@ This structure, which has a w/H value of 1.442786, has a theoretical impedance c
 <TD>24.996</TD>
 <TD>24.938</TD>
 <TD>-0.409%</TD>
+<TD>0h:04m:10s</TD>
 
 </TR>
 <TR>
-<TD>25-801</TD>
-<TD>2978</TD>
-<TD>401</TD>
-<TD>1334</TD>
+<TD>25ohm-801h.bmp</TD>
+<TD>6000</TD>
+<TD>801</TD>
+<TD>2664</TD>
 <TD>3.3267</TD>
-<TD>24.996</TD>
+<TD>25.001</TD>
 <TD>24.938</TD>
 <TD>-0.409%</TD>
+<TD>0h:48m:09s</TD>
 </TR>
 <TR>
-<td>50-201</td>
+<td>50ohm-201h.bmp</td>
 <TD>1134</TD>
 <TD>201</TD>
 <TD>290</TD>
@@ -355,10 +389,11 @@ This structure, which has a w/H value of 1.442786, has a theoretical impedance c
 <TD>49.989</TD>
 <TD>49.846</TD>
 <TD>+0.087%</TD>
+<TD>0h:00m:15s</TD>
 
 </TR>
 <TR>
-<TD>50-401</TD>
+<TD>50ohm-401h.bmp</TD>
 <TD>2222</TD>
 <TD>401</TD>
 <TD>578</TD>
@@ -366,21 +401,23 @@ This structure, which has a w/H value of 1.442786, has a theoretical impedance c
 <TD>50.026</TD>
 <TD>49.931</TD>
 <TD>-0.191%</TD>
+<TD>0h:03m:38s</TD>
 
 </TR>
 <TR>
-<TD>50-801</TD>
+<TD>50ohm-801h.bmp</TD>
 <TD>4399</TD>
 <TD>801</TD>
 <TD>1155</TD>
 <TD>1.4419</TD>
 <TD>50.012</TD>
-<TD>Zo atlc</TD>
-<TD>error</TD>
+<TD>49.91</TD>
+<TD>-0.20%</TD>
+<TD>0h:47m:08s</TD>
 
 </TR>
 <TR>
-<TD>100-201</TD>
+<TD>100ohm-201h.bmp</TD>
 <TD>945</TD>
 <TD>201</TD>
 <TD>101</TD>
@@ -388,10 +425,11 @@ This structure, which has a w/H value of 1.442786, has a theoretical impedance c
 <TD>100.161</TD>
 <TD>100.093</TD>
 <TD>-0.068%</TD>
+<TD>0h:00m:14s</TD>
 
 </TR>
 <TR>
-<TD>100-401</TD>
+<TD>100ohm-401h.bmp</TD>
 <TD>1846</TD>
 <TD>401</TD>
 <TD>202</TD>
@@ -399,22 +437,24 @@ This structure, which has a w/H value of 1.442786, has a theoretical impedance c
 <TD>100.02</TD>
 <TD>99.911</TD>
 <TD>-0.329%</TD>
+<TD>0h:03m:16s</TD>
 
 </TR>
 <TR>
-<TD>100-801</TD>
-<TD>1846</TD>
-<TD>401</TD>
-<TD>202</TD>
+<TD>100ohm-801h.bmp</TD>
+<TD>3647</TD>
+<TD>801</TD>
+<TD>403</TD>
 <TD>0.5037</TD>
-<TD>100.02</TD>
-<TD>99.912</TD>
-<TD>-0.329%</TD>
+<TD>100.09</TD>
+<TD>99.90</TD>
+<TD>-0.19%</TD>
+<TD>0h:37m:25s</TD>
 
 </TR>
 
 <TR>
-<TD>200-201</TD>
+<TD>200ohm-201h.bmp</TD>
 <TD>862</TD>
 <TD>201</TD>
 <TD>18</TD>
@@ -422,10 +462,11 @@ This structure, which has a w/H value of 1.442786, has a theoretical impedance c
 <TD>200.81</TD>
 <TD>202.716</TD>
 <TD>+0.945%</TD>
+<TD>0h:00m:13s</TD>
 
 </TR>
 <TR>
-<TD>200-401</TD>
+<TD>200ohm-401h.bmp</TD>
 <TD>1680</TD>
 <TD>401</TD>
 <TD>36</TD>
@@ -433,10 +474,11 @@ This structure, which has a w/H value of 1.442786, has a theoretical impedance c
 <TD>200.669</TD>
 <TD>201.182</TD>
 <TD>+0.255%</TD>
-
+<TD>0h:03m:16s</TD>
 </TR>
+
 <TR>
-<TD>200-801</TD>
+<TD>200ohm-801h</TD>
 <TD>3317</TD>
 <TD>801</TD>
 <TD>73</TD>
@@ -444,17 +486,63 @@ This structure, which has a w/H value of 1.442786, has a theoretical impedance c
 <TD>199.771</TD>
 <TD>199.634</TD>
 <TD>-0.068%</TD>
-
+<TD>0h:37m:13s</TD>
 </TR>
+
+<TR>
+<TD>400ohm-1551h</TD>
+<TD>6439</TD>
+<TD>1551</TD>
+<TD>5</TD>
+<TD>0.00322</TD>
+<TD>400.040</TD>
+<TD>412.26</TD>
+<TD>+3.05%</TD>
+<TD>6h:11m:55s</TD>
+</TR>
+
+
+<TR>
+<TD>400ohm-76610h</TD>
+<TD>31109</TD>
+<TD>7750</TD>
+<TD>25</TD>
+<TD>0.00323</TD>
+<TD>400.085</TD>
+<TD>out of RAM</TD>
+<TD></TD>
+<TD></TD>
+</TR>
+
 </TABLE>
 <p>
 Notes:
 <p>
 <OL>
 <LI>
-Due to their large size, most of the  files *Ohm*.bmp are not distributed with <CODE>atlc</CODE>. but may be produced easily with the aid of a script called <CODE>create</CODE> in the examples directory. The script create calls a programme <CODE>create_bmp_for_symmetrical_stripline</CODE>, which was developed for the purpose of producing symmetrical stripline bitmaps. 
+Due to their large size, the *ohm-*.bmp files are not distributed with the
+<EM>atlc</EM> package. Instead, they are created in the
+examples directory, when <code>make check</code> is run.  
 </LI>
-<LI>Run times were up to 1977 s when atlc was compiled with support for multiple processors and up to 3447 s when it was not.</LI></OL>
+<LI>Run times are given when compiled single-threaded, with Sun WorkShop 6 update 2 C 5.3 2001/05/15 compiler, with on a Sun Ultra 80 workstation with 4x450 MHz CPUs
+and 2 Gb of RAM.</LI> <LI>Only 1 CPU in the Ultra 80 would have been used, since <code>atlc</code>
+was compiled single-threaded.</LI>
+<LI>
+The -s and -S options were given to <code>atlc</code> so that it did
+not create bitmap files. Without these options, run times would be a
+little longer, due to the time to write the files to disk. </LI>
+<LI>Using gcc-3.2, the run times are about 30% longer. </LI>
+<LI>Compiled as a multi-threaded application to use all 4 CPUs in a Sun
+Ultra 80, the run times reduce by a factor of approximately 3.5.</LI>
+<LI>The result for the first 400 Ohm transmission line analysed (400ohm-1551h.bmp) is very poor (3.5% error)
+since only 5 pixels could be used for the width of the inner conductor.
+The results from this test are not included when calculating the overall
+accuracy of atlc, since using only 5 pixels is not a fair test.
+An attempt at using 25 pixels for the inner conductor's width, where accuracy should
+have been better, created a 689 Mb bitmap file, which could not be analysed, as
+the RAM in the computer (2 Gb) was insufficient.</LI>
+
+</OL>
  <H2><a name="Accuracy_coupler">Accuracy of <CODE>atlc</CODE> with coupled lines</a></H2>
 Testing the accuracy of <CODE>atlc</CODE> with coupled lines is more difficult that with single isolated lines, since there is to my knowledge only one structure for which exact analytical results exist. For two infinitely thin conductors halfway between two infinitely wide groundplanes (see below)
 <p>
