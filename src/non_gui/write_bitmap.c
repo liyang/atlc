@@ -67,10 +67,10 @@ void write_bitmap(FILE *image_data_fp)
 
    /* Fill a vector with the initial (original) data on the 
    tline. This is not aligned in any way */
-   /* The following function 'fill_image_vector_diwth_data' is *not* in the file
-   fill_image_vector_eith_data.c, but instead different versions of it are 
+   /* The following function 'fill_image_vector_with_data' is *not* in the file
+   fill_image_vector_with_data.c, but instead different versions of it are 
    located in files fill_rect_with_rect.c, fill_circ_with_circ.c, 
-   fill_rect_with_circ.c and fill_cirec_with_rect.c */
+   fill_rect_with_circ.c and fill_circ_with_rect.c */
    fill_image_vector_with_data(unaligned_image_vector, colour_Er1, colour_Er2);
    
    /* put into the vector, in reverse order - i.e. from bottom to top and 
