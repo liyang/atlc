@@ -9,6 +9,11 @@ else
   cp $top_srcdir/examples/25ohm-401h.bmp $top_builddir/tmp
   ret=`$top_builddir/tests/benchmark $top_builddir/src/non_gui/atlc $top_builddir/tmp/25ohm-401h.bmp `
   rm -f $top_builddir/tmp/25ohm-401h.bmp
+
+#  cp $top_srcdir/examples/twin-wire3.bmp $top_builddir/tmp
+#  ret=`$top_builddir/tests/benchmark $top_builddir/src/non_gui/atlc $top_builddir/tmp/twin-wire3.bmp `
+#  rm -f $top_builddir/tmp/twin-wire3.bmp
+
   exitcode=`echo $ret | awk '{print $1}'`
   t1=`echo $ret | awk '{print $2}'`
   t2=`echo $ret | awk '{print $3}'`
@@ -27,9 +32,15 @@ else
   machine=`echo $ret | awk '{print $16}'`
   hw_provider=`echo $ret | awk '{print $17}'`
   hw_platform=`echo $ret | awk '{print $18}'`
+  L1data=`echo $ret | awk '{print $19}'`
+  L1instruction=`echo $ret | awk '{print $20}'`
+  L2=`echo $ret | awk '{print $21}'`
   filename=foo
   echo " "
-  echo "   BENCHMARK DATA (hardware data currently only under Solaris)"
+  echo "                  BENCHMARK DATA"
+  echo "To get hardware data, atlc MUST be configured with --enable-hardware-info"
+  echo "Hardware data working fully on Solaris, partially working on other OS's"
+  echo " "
   echo "Hardware provider is $hw_provider. Hardware platform is $hw_platform."
   echo "Hardware provider is $hw_provider. Hardware platform is $hw_platform." >> tests.log
   echo "Hardware provider is $hw_provider. Hardware platform is $hw_platform." >> benchmark.$filename.html
@@ -46,13 +57,16 @@ else
   echo "RAM is $ram Mb."
   echo "RAM is $ram Mb." >> tests.log
   echo "<BR>RAM is $ram Mb." >> benchmark.$filename.html
+  echo "L1 data cache is $L1data; L1 instruction cache is $L1instruction; L2 cache is $L2"
+  echo "L1 data cache is $L1data; L1 instruction cache is $L1instruction; L2 cache is $L2" >> tests.log
+  echo "<BR>L1 data cache is $L1data; L1 instruction cache is $L1instruction; L2 cache is $L2" >> benchmark.$filename.html
   if [ "x$built_with_posix_threads" = "xyes" ] ; then
     echo "Run times: T_sequential is $t1 s. T_parallel is $t2 s."
     echo "Run times: T_sequential is $t1 s. T_parallel is $t2 s." >> tests.log
     echo "<BR>Run times: T_sequential is $t1 s. T_parallel is $t2 s." >> benchmark.$filename.html
-    echo "SpeedupisT_parallel/T_sequential is $speedup. Efficiency is Speedup/N_cpus is $efficiency"
-    echo "SpeedupisT_parallel/T_sequential is $speedup. Efficiency is Speedup/N_cpus is $efficiency" >> tests.log
-    echo "<BR>SpeedupisT_parallel/T_sequential is $speedup. Efficiency is Speedup/N_cpus is $efficiency" >> benchmark.$filename.html
+    echo "Speedup=T_sequential/T_parallel is $speedup. Efficiency=Speedup/N_cpus is $efficiency"
+    echo "Speedup=T_sequential/T_parallel is $speedup. Efficiency=Speedup/N_cpus is $efficiency" >> tests.log
+    echo "<BR>Speedup=T_sequential/T_parallel is $speedup. Efficiency=Speedup/N_cpus is $efficiency" >> benchmark.$filename.html
   else
     echo "Run times: T_sequential is $t1 s. Not configured for parallel operation."
     echo "Run times: T_sequential is $t1 s. Not configured for parallel operation." >> tests.log
