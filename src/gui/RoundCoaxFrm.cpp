@@ -39,6 +39,7 @@ BEGIN_EVENT_TABLE(RoundCoaxFrame, wxFrame)
     EVT_BUTTON(DIALOG_BTN, RoundCoaxFrame::OnClick)
 END_EVENT_TABLE()
 
+wxTextCtrl *idval, *odval, *erval;
 
 // RoundCoax frame constructor
 RoundCoaxFrame::RoundCoaxFrame(const wxString& title, const wxPoint& pos, const wxSize& size)
@@ -61,14 +62,27 @@ RoundCoaxFrame::RoundCoaxFrame(const wxString& title, const wxPoint& pos, const 
 
   RoundCoaxPanel = new wxPanel(this, -1, wxDefaultPosition, wxDefaultSize,wxTAB_TRAVERSAL, "RoundCoaxPanel"); 
   wxFlexGridSizer *dialogSizer = new wxFlexGridSizer(3,2,5,5);
-  dialogSizer-> Add ( new wxStaticText(this,-1,"Inner diameter (d)",wxPoint(100,100)), 0, wxALIGN_CENTRE_VERTICAL);
-  dialogSizer-> Add ( new wxTextCtrl(this, 1), 0, wxALIGN_CENTRE_VERTICAL);
-  dialogSizer-> Add ( new wxStaticText(this,-1,"Outer diameter (D)"), 0, wxALIGN_CENTRE_VERTICAL);
-  dialogSizer-> Add ( new wxTextCtrl(this, 1),0, wxALIGN_CENTRE_VERTICAL);
-  dialogSizer-> Add ( new wxStaticText(this,-1,"Relative permittivity (Er"), 0, wxALIGN_CENTRE_VERTICAL);
-  dialogSizer-> Add ( new wxTextCtrl(this, 1), 0, wxALIGN_CENTRE_VERTICAL);
-  SetSizer(dialogSizer);
+  wxStaticText *id = new wxStaticText(RoundCoaxPanel,-1,"Inner diameter (d)",wxPoint(-1,-1));
+  dialogSizer-> Add(id,1, wxEXPAND|wxALL,10);
+  idval = new wxTextCtrl(RoundCoaxPanel,-1,wxString(""), wxPoint(-1,-1),wxSize(-1,-1),0,wxTextValidator(wxFILTER_NUMERIC,NULL),wxString(""));
+  dialogSizer-> Add (idval, 1, wxEXPAND|wxALL,10); 
+  wxStaticText *od = new wxStaticText(RoundCoaxPanel,-1,"Outer diameter (D)",wxPoint(-1,-1));
+  dialogSizer-> Add(od,1, wxEXPAND|wxALL,10);
+  odval = new wxTextCtrl(RoundCoaxPanel,-1,wxString(""), wxPoint(-1,-1),wxSize(-1,-1),0,wxTextValidator(wxFILTER_NUMERIC,NULL),wxString(""));
+  dialogSizer-> Add (odval, 1, wxEXPAND|wxALL,10); 
+  wxStaticText *er = new wxStaticText(RoundCoaxPanel,-1,"Relative permittivity (Er)",wxPoint(-1,-1));
+  dialogSizer-> Add(er,1, wxEXPAND|wxALL,10);
+  erval = new wxTextCtrl(RoundCoaxPanel,-1,wxString(""), wxPoint(-1,-1),wxSize(-1,-1),0,wxTextValidator(wxFILTER_NUMERIC,NULL),wxString(""));
+  dialogSizer-> Add (erval, 1, wxEXPAND|wxALL,10); 
+  RoundCoaxPanel->SetSizer(dialogSizer);
+  dialogSizer->Fit(RoundCoaxPanel);
+  wxBoxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
+  topsizer->Add(dialogSizer,1,wxEXPAND|wxALL,5);
+  SetSizer(topsizer);
+  topsizer->Fit(this);
+  topsizer->SetSizeHints(this); 
   Layout();
+  Refresh();
 }
 
 void RoundCoaxFrame::OnHelp(wxCommandEvent& WXUNUSED(event))
