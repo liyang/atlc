@@ -1,10 +1,19 @@
 AUTOMAKE_OPTIONS = gnits
 
-#TESTS_ENVIRONMENT = srcdir=`pwd` top_srcdir=`cd $(top_srcdir) ; pwd` \
-#top_builddir=`pwd`
+# cpi computes the value of PI and uses distributed processing
+# it is not always built. 
 
-TESTS_ENVIRONMENT = top_builddir=$(top_builddir) top_srcdir=$(top_srcdir)
+bin_PROGRAMS = MPI_16a_PI             
+MPI_16a_PI_SOURCES = MPI_16a_PI.c 
+MPI_16a_PI_LDADD = @MPILIBS@ @LIBS@
 
+check_PROGRAMS = MPI_16a_PI           
+
+
+TESTS_ENVIRONMENT = top_builddir=$(top_builddir) \
+top_srcdir=$(top_srcdir)  built_with_posix_threads=$(built_with_posix_threads)
+
+#top_srcdir=$(top_srcdir)  @built_with_posix_threads@
 
 TESTS =  \
 1a-create_bmp_for_symmetrical_stripline.bmp.test \
@@ -91,7 +100,9 @@ TESTS =  \
 14a-check-circ-in-rect.test \
 14b-check-circ-in-rect.test \
 14c-check-circ-in-rect.test \
-14d-check-circ-in-rect.test 
+14d-check-circ-in-rect.test  \
+15a-undefined_permittivities.test \
+MPI_16a_PI         
 
 EXTRA_DIST = \
 10a-create-lots-of-examples-check-last-one.test \
@@ -116,6 +127,8 @@ EXTRA_DIST = \
 14b-check-circ-in-rect.test \
 14c-check-circ-in-rect.test \
 14d-check-circ-in-rect.test \
+15a-undefined_permittivities.test \
+MPI_16a_PI.c      \
 1a-create_bmp_for_symmetrical_stripline.bmp.test \
 1b-create_bmp_for_symmetrical_stripline.txt.test \
 1c-create_bmp_for_symmetrical_stripline.E.bmp.test \
@@ -252,7 +265,8 @@ test_sym_strip.V.bmp \
 test_sym_strip.bmp \
 test_sym_strip.txt \
 test-coupler2.bmp.txt \
-microstrip_coupler.bmp
+microstrip_coupler.bmp \
+undefined_permittivities.bmp 
 
 DISTCLEANFILES = tests.log test.txt
 
