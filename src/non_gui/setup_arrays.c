@@ -188,13 +188,19 @@ void setup_arrays(struct transmission_line_properties *data)
      pixels_found.white+pixels_found.other_colour;
      printf("Total number of pixels (sum of all above) =  %8d \n",total_pixels_found);
    }
-   /* The following should not be necessary, but may be as a test */
+
+    /* The following should not be necessary, but may be as a test */
+    /* I'd like to Miguel Berg for noticing a servere bug, where the
+    indeces of w and h were transposed, leading to crashes on Windoze XP */
    for(h=0;h<height;h++)
    {
      for (w=0; w<width;++w)
      {
-       if((Vij[h][w] > 1.0) || (Vij[h][w]<-1.0))
-         fprintf(stderr,"Sorry, something is wrong Vij[%d][%d]=%f\n",h,w,Vij[h][w]);
+       if((Vij[w][h] > 1.0) || (Vij[w][h]<-1.0))
+       {
+         fprintf(stderr,"Sorry, something is wrong Vij[%d][%d]=%f\n",h,w,Vij[w][h]);
+	 exit(1);
+       }
      }
    } 
   check_for_shorts();
