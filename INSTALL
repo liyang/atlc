@@ -3,7 +3,7 @@ Specific Installation Instructions for atlc.
 
    These are *not* generic installation instructions, but have been
    edited somewhat to be specific for atlc. Some of the edits 
-   are *very* important.  In particular, see secions 1, 2 and 7.
+   are *very* important.  In particular, see secions 1, 2 3, 6, and 8.
 
    The `configure' shell script attempts to guess correct values for
 various system-dependent variables used during compilation.  It uses
@@ -26,36 +26,40 @@ it or regenerate `configure' using a newer version of `autoconf'.
 
 The simplest way to compile this package is:
 
-  1 Make sure you have the GNU scientific library (gsl) installed.
-    See
-    http://sources.redhat.com/gsl/
-    ftp://ftp.gnu.org/pub/gnu/gsl/ to download
+  1) Make sure you have the GNU scientific library (gsl) installed.
+     See
+     http://sources.redhat.com/gsl/
+     ftp://ftp.gnu.org/pub/gnu/gsl/ to download
 
-    atlc will build without it, but some functionality is reduced
-    and some of the self-checks will fail when you run
-    'make check' (which you *must* do, not only to test the 
-    program, but to create some of the examples).
+     atlc will build without it, but some functionality is reduced
+     and some of the self-checks will fail when you run
+     'make check' (which you *must* do, not only to test the 
+     program, but to create some of the examples).
 
-    I've tested this with version 1.1 and the 1.2, which was the
-    latest version at the time of writing. 
+     I've tested this with version 1.1 and 1.2, which was the
+     latest version at the time of writing. 
 
   2) *IF* you have a multi-procressor machine, install the pthreads
      (pth) library:
      http://www.gnu.org/software/pth/
      if you wish to take advantage of running your CPUs in 
      parallel. 
-     If you have another threaed library like that
+     If you have another thread library like that
      which is inluded with Sun's Solaris, there is no need to
      bother with pth.
 
-  3) Unzip the compressed tar file
+  3) If you have access to a network of computers and wish to take advantages
+     of atlc's distributed program ability, download the MPICH library
+     from http://www-unix.mcs.anl.gov/mpi/mpich/indexold.html
+
+  4) Unzip the compressed tar file
      gzip -d atlc-x.y.tar.gz
 
 
-  4) Extract the tar archieve
+  5) Extract the tar archieve
      tar xvf atlc-x..y.z.tar
 
-  5. `cd' to atlc-X.Y.z (whatever X, Y and Z are for the specific
+  6) `cd' to atlc-X.Y.z (whatever X, Y and Z are for the specific
       vesion) and type
      `./configure' to configure the package for your system.  If you're
      using `csh' on an old version of System V, you might need to type
@@ -65,22 +69,32 @@ The simplest way to compile this package is:
      Running `configure' takes awhile.  While running, it prints some
      messages telling which features it is checking for.
 
-     If you have a threaded library, use the option:
-     configure --with-mp
+     If you want threaded library, use the option:
+     configure --with-threads
 
-  6. Type `make' to compile the package.
+     If you want to build with the MPI library for distributed program
+     support, use the --with-mpi option:
 
-  7. Type 'make check' to run quite a few checks and to build the
+     configure --mpi
+
+     If you want to build with the MPI library, but adding logging
+     support, use the --with-mpi option:
+
+     configure --mpi
+
+  7) Type `make' to compile the package.
+
+  8) Type 'make check' to run quite a few checks and to build the
      bitmaps that are not supplied. THIS STAGE IS IMPORTANT.
-     NOTE: If you have multiple CPUs and gernally build things
+     NOTE: If you have multiple CPUs and generally build things
      in parallel, do not do this with the 'make check' stage, as
      it will break parallel builds. Hence do *NOT* do
      make -j2 check
 
-  8  Type 'make install' if you wish to install the programs
+  8) Type 'make install' if you wish to install the programs
      centrally. 
 
-  9. You can remove the program binaries and object files from the
+  9) You can remove the program binaries and object files from the
      source code directory by typing `make clean'.  To also remove the
      files that `configure' created (so you can compile the package for
      a different kind of computer), type `make distclean'.  There is
@@ -145,7 +159,7 @@ option `--program-prefix=PREFIX' or `--program-suffix=SUFFIX'.
 Optional Features
 =================
 
-specific options are --with-mp to build a threaded version for
+specific options are --with-threads to build a threaded version for
 multi-processor machines. The option --with-gui will not build 
 anything useful. I'm new to C++, so there is only a test program or two. 
 
