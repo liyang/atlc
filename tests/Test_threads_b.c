@@ -21,8 +21,9 @@ so we would expect jibberish output */
 #ifdef ENABLE_POSIX_THREADS
 #include <pthread.h>
 
-void increment(int *);
-void decrement(int *);
+void *increment(void *y);
+void *decrement(void *z);
+
 int  check_array();
 
 int r1 = 0, r2 = 0;
@@ -51,13 +52,13 @@ int main(int argc, char **argv)
 #endif 
   for(i=1; i<=100; ++i)
   {
-     if( pthread_create(&thread1, NULL, (void *) increment, (void *) &r1) != 0)
+     if( pthread_create(&thread1, NULL, increment, (void *) &r1) != 0)
      {
         perror("Thread 1 not created properly");
         exit(1);
       }
 
-     if( pthread_create(&thread2, NULL, (void *) decrement, (void *) &r2) != 0)
+     if( pthread_create(&thread2, NULL, decrement, (void *) &r2) != 0)
      {
         perror("Thread 2 not created properly");
         exit(1);
@@ -83,7 +84,7 @@ int main(int argc, char **argv)
 }
 
 #ifdef ENABLE_POSIX_THREADS
-void increment(int *pnum_times)
+void *increment(void *pnum_times)
 {
   int i, j;
   if( pthread_mutex_lock(&array_mutex) != 0)
@@ -101,10 +102,11 @@ void increment(int *pnum_times)
     perror("pthread_mutex_unlock failed");
     exit(1);
   }
+  return(0);
 
 }
 
-void decrement(int *pnum_times)
+void *decrement(void *pnum_times)
 {
   int i,j;
 
@@ -130,6 +132,7 @@ void decrement(int *pnum_times)
     exit(1);
   }
 #endif
+  return 0;
 }
 
 int check_array()
