@@ -37,11 +37,14 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #include "definitions.h"
 #include "exit_codes.h"
 
-unsigned char *bitmap_file_buffer;
+unsigned char *bmp_buff;
+
 /* We make the bitmap header public, as we write it back 
 later, when saving bmp files. It saves a lot of hassle,
 just writing what we read back, rather than correctly 
 calculating all the data in the header correctly */
+
+/* #define DEBUG */
 
 void read_bitmap_file_headers(char *filename, int *offset, size_t *size, int *width, int *height)
 {
@@ -50,7 +53,7 @@ void read_bitmap_file_headers(char *filename, int *offset, size_t *size, int *wi
    struct Bitmap_File_Head_Struct Bitmap_File_Head;
    struct Bitmap_Head_Struct Bitmap_Head;
    int ColormapSize, Maps;
-   bitmap_file_buffer=ustring(0,0x50);
+   bmp_buff=ustring(0,0x50);
    if(strcmp(filename,"-")==0)
    {
       fp=stdin;   
@@ -62,67 +65,52 @@ void read_bitmap_file_headers(char *filename, int *offset, size_t *size, int *wi
       fprintf(stderr,"cannot open %s\n", filename);
       exit_with_msg_and_exit_code("",CANT_OPEN_FILE_FOR_READING);
    }
-   /* Read the .bmp file header into a bitmap_file_buffer */
-   if (!(fread(bitmap_file_buffer, 1,0x36,fp))||(strncmp((char *) bitmap_file_buffer,"BM",2)))
+   /* Read the .bmp file header into a bmp_buff */
+   if (!(fread(bmp_buff, 1,0x36,fp))||(strncmp((char *) bmp_buff,"BM",2)))
    {
       fprintf(stderr,"%s is not a valid BMP file\n", filename);
       exit_with_msg_and_exit_code("",NOT_A_VALID_BITMAP_FILE);
    }
-#ifdef WORDS_BIGENDIAN
-   swap_bytes4(bitmap_file_buffer,0x02,(int *) &Bitmap_File_Head.bfSize);
-   swap_bytes2(bitmap_file_buffer,0x06,(short *) &Bitmap_File_Head.zzHotX);
-   swap_bytes2(bitmap_file_buffer,0x08,(short *) &Bitmap_File_Head.zzHotY);
-   swap_bytes4(bitmap_file_buffer,0x0A,(int *) &Bitmap_File_Head.bfOffs);
-   swap_bytes4(bitmap_file_buffer,0x0E,(int *) &Bitmap_File_Head.biSize);
-#else
-   (void) memcpy(&Bitmap_File_Head.bfSize,bitmap_file_buffer+0x2,4);
-   (void) memcpy(&Bitmap_File_Head.zzHotX,bitmap_file_buffer+0x6,2);
-   (void) memcpy(&Bitmap_File_Head.zzHotY,bitmap_file_buffer+0x8,2);
-   (void) memcpy(&Bitmap_File_Head.bfOffs,bitmap_file_buffer+0xa,4);
-   (void) memcpy(&Bitmap_File_Head.biSize,bitmap_file_buffer+0xe,4);
+
+/* On most machines, sizeof(short)==2 and sizeof(int)==4. This is so no matter
+if the machine is 32 or 64 bis. An exception is the Cray Y-MP, which has  
+sizeof(short)=8
+sizeof(int)=8
+sizeof(long)=8.
+
+In this case, it is much more difficult to write the header for the bitmap. But in
+the aid of portability, this is done. So these is a section of code that will work
+even if sizeof(short)=8 and sizeof(int)=8. See below for that. */
+
+
+   /* Read the bmp_buff into the two structures we want */
+
+   Bitmap_File_Head.zzMagic[0x0] = bmp_buff[0];
+   Bitmap_File_Head.zzMagic[0x1] = bmp_buff[1];
+   Bitmap_File_Head.bfSize = bmp_buff[0x2] + (bmp_buff[3] + (bmp_buff[4] + (bmp_buff[5] << 8) << 8) <<8);
+   Bitmap_File_Head.zzHotX = bmp_buff[0x6] + (bmp_buff[7] << 8);
+   Bitmap_File_Head.zzHotY = bmp_buff[0x8] + (bmp_buff[0x09] << 8);
+   Bitmap_File_Head.bfOffs = bmp_buff[0x0a] + (bmp_buff[0xb] + (bmp_buff[0xc] + (bmp_buff[0x0d] << 8) << 8) <<8);
+   Bitmap_File_Head.biSize = bmp_buff[0x0E] + (bmp_buff[0x0f] + (bmp_buff[0x10] + (bmp_buff[0x11] << 8) << 8) <<8);
+#ifdef DEBUG
+   printf("Bitmap_File_Head.bfSize = %d \n",Bitmap_File_Head.bfSize);
+   printf("Bitmap_File_Head.zzHotX = %d\n",Bitmap_File_Head.zzHotX);
+   printf("Bitmap_File_Head.zzHotY = %d\n",Bitmap_File_Head.zzHotY);
+   printf("Bitmap_File_Head.bfOffs = %d\n",Bitmap_File_Head.bfOffs);
+   printf("Bitmap_File_Head.biSize = %d\n\n",Bitmap_File_Head.biSize); 
 #endif
-   /*
-   printf("bfSize = %ld \n",Bitmap_File_Head.bfSize);
-   printf("zzHotX %d\n",Bitmap_File_Head.zzHotX);
-   printf("zzHotY %d\n",Bitmap_File_Head.zzHotY);
-   printf("bfOffs %ld\n",Bitmap_File_Head.bfOffs);
-   printf("biSize %ld\n\n",Bitmap_File_Head.biSize); 
-   */
-   /* What kind of bitmap is it? */  
-     
-   if (Bitmap_File_Head.biSize == 12) /* OS/2 1.x ? */
-   {
-      fprintf(stderr,"Sorry, this appears to be a OS2 format bitmap, which atlc can't read\n");
-      exit_with_msg_and_exit_code("",OS2_FORMAT_BMP_FILE);
-   }
-   if (Bitmap_File_Head.biSize != 40) /* Windows 3.x */
-   {
-      fprintf(stderr,"This appears not to be a Windows format bitmap - perhaps OS2 ? Exiting ...\n");
-      exit_with_msg_and_exit_code("This appears not to be a Windows format bitmap - perhaps OS2 ? Exiting ..",NOT_A_WINDOZE_FORMAT_BITMAP);
-   }
-#ifdef WORDS_BIGENDIAN
-   swap_bytes4(bitmap_file_buffer,0x12,(int *) &Bitmap_Head.biWidth);
-   swap_bytes4(bitmap_file_buffer,0x16,(int *) &Bitmap_Head.biHeight);
-   swap_bytes2(bitmap_file_buffer,0x1A,(short *) &Bitmap_Head.biPlanes);
-   swap_bytes2(bitmap_file_buffer,0x1C,(short *) &Bitmap_Head.biBitCnt);
-   swap_bytes4(bitmap_file_buffer,0x1E,(int *) &Bitmap_Head.biCompr);
-   swap_bytes4(bitmap_file_buffer,0x22,(int *) &Bitmap_Head.biSizeIm);
-   swap_bytes4(bitmap_file_buffer,0x26,(int *) &Bitmap_Head.biXPels);
-   swap_bytes4(bitmap_file_buffer,0x2A,(int *) &Bitmap_Head.biYPels);
-   swap_bytes4(bitmap_file_buffer,0x2E,(int *) &Bitmap_Head.biClrUsed);
-   swap_bytes4(bitmap_file_buffer,0x32,(int *) &Bitmap_Head.biClrImp);
-#else
-   (void) memcpy(&Bitmap_Head.biWidth,bitmap_file_buffer+0x12,4);
-   (void) memcpy(&Bitmap_Head.biHeight,bitmap_file_buffer+0x16,4);
-   (void) memcpy(&Bitmap_Head.biPlanes,bitmap_file_buffer+0x1a,2);
-   (void) memcpy(&Bitmap_Head.biBitCnt,bitmap_file_buffer+0x1c,2);
-   (void) memcpy(&Bitmap_Head.biCompr,bitmap_file_buffer+0x1e,4);
-   (void) memcpy(&Bitmap_Head.biSizeIm,bitmap_file_buffer+0x22,4);
-   (void) memcpy(&Bitmap_Head.biXPels,bitmap_file_buffer+0x26,4);
-   (void) memcpy(&Bitmap_Head.biYPels,bitmap_file_buffer+0x2a,4);
-   (void) memcpy(&Bitmap_Head.biClrUsed,bitmap_file_buffer+0x2e,4);
-   (void) memcpy(&Bitmap_Head.biClrImp,bitmap_file_buffer+0x32,4);
-#endif
+
+   Bitmap_Head.biWidth=bmp_buff[0x12] + (bmp_buff[0x13] + (bmp_buff[0x14] + (bmp_buff[0x15] << 8) << 8) <<8);
+   Bitmap_Head.biHeight=bmp_buff[0x16] + (bmp_buff[0x17] + (bmp_buff[0x18] + (bmp_buff[0x19] << 8) << 8) <<8);
+   Bitmap_Head.biPlanes = bmp_buff[0x1A] + (bmp_buff[0x1b] << 8);
+   Bitmap_Head.biBitCnt = bmp_buff[0x1C] + (bmp_buff[0x1d] << 8);
+   Bitmap_Head.biCompr= bmp_buff[0x1E] + (bmp_buff[0x1f] + (bmp_buff[0x20] + (bmp_buff[0x21] << 8) << 8) <<8);
+   Bitmap_Head.biSizeIm=bmp_buff[0x22] + (bmp_buff[0x23] + (bmp_buff[0x24] + (bmp_buff[0x25] << 8) << 8) <<8);
+   Bitmap_Head.biXPels  = bmp_buff[0x26] + (bmp_buff[0x27] + (bmp_buff[0x28] + (bmp_buff[0x29] << 8) << 8) <<8);
+   Bitmap_Head.biYPels= bmp_buff[0x2A] + (bmp_buff[0x2b] + (bmp_buff[0x2c] + (bmp_buff[0x2d] << 8) << 8) <<8);
+   Bitmap_Head.biClrUsed = bmp_buff[0x2E] + (bmp_buff[0x2f] + (bmp_buff[0x30] + (bmp_buff[0x31] << 8) << 8) <<8);
+   Bitmap_Head.biClrImp  = bmp_buff[0x32] + (bmp_buff[0x33] + (bmp_buff[0x34] + (bmp_buff[0x35] << 8) << 8) <<8);
+
    Maps=4;
    if(Bitmap_Head.biBitCnt!=24)
    {
@@ -131,18 +119,18 @@ void read_bitmap_file_headers(char *filename, int *offset, size_t *size, int *wi
       fprintf(stderr,"image using 24-bit colour\n");
       exit_with_msg_and_exit_code("mage using 24-bit colour",BITMAP_NOT_24_BIT);
    }
-   /*
-   printf("Bitmap_Head.biWidth   =%ld =0x%x\n",Bitmap_Head.biWidth,Bitmap_Head.biWidth);
-   printf("Bitmap_Head.biHeight  =%ld =0x%x\n",Bitmap_Head.biHeight,Bitmap_Head.biHeight);
+#ifdef DEBUG
+   printf("Bitmap_Head.biWidth   =%d =0x%x\n",Bitmap_Head.biWidth,Bitmap_Head.biWidth);
+   printf("Bitmap_Head.biHeight  =%d =0x%x\n",Bitmap_Head.biHeight,Bitmap_Head.biHeight);
    printf("Bitmap_Head.biPlanes  =%d =0x%x\n",Bitmap_Head.biPlanes,Bitmap_Head.biPlanes);
    printf("Bitmap_Head.biBitCnt  =%d =0x%x\n",Bitmap_Head.biBitCnt,Bitmap_Head.biBitCnt);
-   printf("Bitmap_Head.biCompr   =%ld =0x%x\n",Bitmap_Head.biCompr,Bitmap_Head.biCompr );
-   printf("Bitmap_Head.biSizeIm  =%ld =0x%x\n",Bitmap_Head.biSizeIm,Bitmap_Head.biSizeIm);
-   printf("Bitmap_Head.biXPels   =%ld =0x%x\n",Bitmap_Head.biXPels,Bitmap_Head.biXPels);
-   printf("Bitmap_Head.biYPels   =%ld =0x%x\n",Bitmap_Head.biYPels,Bitmap_Head.biYPels);
-   printf("Bitmap_Head.biClrUsed =%ld =0x%x\n",Bitmap_Head.biClrUsed,Bitmap_Head.biClrUsed);
-   printf("Bitmap_Head.biClrImp  =%ld =0x%x\n",Bitmap_Head.biClrImp,Bitmap_Head.biClrImp);
-   */
+   printf("Bitmap_Head.biCompr   =%d =0x%x\n",Bitmap_Head.biCompr,Bitmap_Head.biCompr );
+   printf("Bitmap_Head.biSizeIm  =%d =0x%x\n",Bitmap_Head.biSizeIm,Bitmap_Head.biSizeIm);
+   printf("Bitmap_Head.biXPels   =%d =0x%x\n",Bitmap_Head.biXPels,Bitmap_Head.biXPels);
+   printf("Bitmap_Head.biYPels   =%d =0x%x\n",Bitmap_Head.biYPels,Bitmap_Head.biYPels);
+   printf("Bitmap_Head.biClrUsed =%d =0x%x\n",Bitmap_Head.biClrUsed,Bitmap_Head.biClrUsed);
+   printf("Bitmap_Head.biClrImp  =%d =0x%x\n",Bitmap_Head.biClrImp,Bitmap_Head.biClrImp);
+#endif
    ColormapSize = (Bitmap_File_Head.bfOffs - Bitmap_File_Head.biSize - 14) / Maps;
 
    if ((Bitmap_Head.biClrUsed == 0) && (Bitmap_Head.biBitCnt <= 8))
@@ -174,4 +162,5 @@ void read_bitmap_file_headers(char *filename, int *offset, size_t *size, int *wi
    *height=Bitmap_Head.biHeight;
    *offset=Bitmap_File_Head.bfOffs;
    *size=Bitmap_Head.biSizeIm;
+
 }
