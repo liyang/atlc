@@ -34,7 +34,8 @@ double find_energy_per_metre(int w, int h)
 {
   double energy_per_metre=0;
   double Ex, Ey;
-  if(cell_type[w][h] >= 0)
+
+  if(cell_type[w][h] >= 0 )
   {
     Ex=find_Ex(w,h);
     Ey=find_Ey(w,h);

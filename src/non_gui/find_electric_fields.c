@@ -46,12 +46,9 @@ Note, a bitmap has the following pixel nomecture.
 double find_Ex(int i, int j) 
 {
   double Ex;
-  if(cell_type[i][j]>=0)
+  if(cell_type[i][j]>=0 && i > 0 && i < width-1)
   {
-    if(i>0 && i <width-1)
-      Ex=0.5*(Vij[i-1][j]-Vij[i+1][j]);
-    else
-      Ex=0; /* for now */
+    Ex=0.5*(Vij[i-1][j]-Vij[i+1][j]);
     if((cell_type[i][j]&METAL_LEFT)==METAL_LEFT)
       Ex=(Vij[i][j]-Vij[i+1][j]);
     if((cell_type[i][j]&METAL_RIGHT)==METAL_RIGHT)
@@ -65,12 +62,9 @@ double find_Ex(int i, int j)
 double find_Ey(int i, int j)
 {
   double Ey;
-  if(cell_type[i][j]>=0)
+  if(cell_type[i][j]>=0 && j > 0 && j< height-1)
   {
-    if(j > 0 && j < height-2)
-      Ey=0.5*(Vij[i][j+1]-Vij[i][j-1]);
-    else
-      Ey=0; /* for now */
+    Ey=0.5*(Vij[i][j+1]-Vij[i][j-1]);
     if((cell_type[i][j]&METAL_ABOVE)==METAL_ABOVE)
       Ey=(Vij[i][j+1]-Vij[i][j]);
     if((cell_type[i][j]&METAL_BELOW)==METAL_BELOW)
