@@ -6,7 +6,6 @@ SUBDIRS =  . src m4 man docs examples tools tests
 
 EXTRA_DIST = \
 README \
-README.checks \
 README.cvs \
 README.help \
 README.mpi \
@@ -22,4 +21,4 @@ teston \
 TODO
 
 CLEANFILES = examplestest-coupler2.bmp.txt
-DISTCLEANFILES = examplestest-coupler2.bmp.txt
+DISTCLEANFILES = examplestest-coupler2.bmp.txt tmp/atlc-zero-bytes
