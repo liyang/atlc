@@ -62,7 +62,7 @@ POST_UNINSTALL = :
 CC = gcc
 MAKEINFO = makeinfo
 PACKAGE = atlc
-VERSION = 3.1.0
+VERSION = 4.0.0
 
 SUBDIRS = jpgs
 EXTRA_DIST = *.html
