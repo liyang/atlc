@@ -23,14 +23,15 @@
 ../src/non_gui/circ_in_circ 100 30 25 1.006 > ../examples/off-centre2.bmp >/dev/null 2>/dev/null
 ../src/non_gui/circ_in_rect 20 200 100 50 -5 10.2 > ../examples/cir.bmp >/dev/null 2>/dev/null
 
-../src/non_gui/generate_coupler_bitmap 1.0  1.0 1.0 1.0  ../examples/coupler1.bmp >/dev/null 2>/dev/null
-../src/non_gui/generate_coupler_bitmap 2.0  1.0 1.0 1.0  ../examples/coupler2.bmp >/dev/null 2>/dev/null
-../src/non_gui/generate_coupler_bitmap 3.0  1.0 1.0 1.0  ../examples/coupler3.bmp >/dev/null 2>/dev/null
-../src/non_gui/generate_coupler_bitmap 4.0  1.0 1.0 1.0  ../examples/coupler4.bmp >/dev/null 2>/dev/null
-../src/non_gui/generate_coupler_bitmap 5.0  1.0 1.0 1.0006  ../examples/coupler5.bmp >/dev/null 2>/dev/null
-../src/non_gui/generate_coupler_bitmap 1.0  1.0 0.5 3.335  ../examples/coupler6.bmp >/dev/null 2>/dev/null
-../src/non_gui/generate_coupler_bitmap 1.0  1.0 0.1 2.33  ../examples/coupler7.bmp >/dev/null 2>/dev/null
-../src/non_gui/generate_coupler_bitmap 0.25 1.0 1.0 4.8  ../examples/coupler8.bmp >/dev/null 2>/dev/null
+../src/non_gui/generate_coupler_bitmap 1.0  1.0 1.0 1.0  ../examples/coupler1.bmp  > test.txt
+../src/non_gui/generate_coupler_bitmap 2.0  1.0 1.0 1.0  ../examples/coupler2.bmp  > test.txt
+../src/non_gui/generate_coupler_bitmap 3.0  1.0 1.0 1.0  ../examples/coupler3.bmp  > test.txt
+../src/non_gui/generate_coupler_bitmap 4.0  1.0 1.0 1.0  ../examples/coupler4.bmp  > test.txt
+../src/non_gui/generate_coupler_bitmap 5.0  1.0 1.0 1.0006  ../examples/coupler5.bmp  > test.txt
+../src/non_gui/generate_coupler_bitmap 1.0  1.0 0.5 3.335  ../examples/coupler6.bmp  > test.txt
+../src/non_gui/generate_coupler_bitmap 1.0  1.0 0.1 2.33  ../examples/coupler7.bmp  > test.txt
+../src/non_gui/generate_coupler_bitmap 0.25 1.0 1.0 4.8  ../examples/coupler8.bmp > test2.txt
+# Write text to test2.txt and check that. Lack of gsl will show up. 
 # Now check the length of the last file. It this is okay, it probably means
 # the user has not run out of disk space. 
 

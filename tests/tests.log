@@ -1,6 +1,5 @@
-Testing stated at Fri Dec 13 23:33:48 GMT 2002
+Testing stated at Sun Dec 15 12:55:19 GMT 2002
 PASSED: ./1a-sym_strip.bmp.test
-PASSED: ./10a-create-lots-of-examples-check-last-one.test
 PASSED: ./1b-sym_strip.txt.test
 PASSED: ./1c-sym_strip.E.bmp.test
 PASSED: ./1d-sym_strip.Er.bmp.test
@@ -26,6 +25,7 @@ PASSED: ./3a-rect_cen_in_rect.bmp.test
 PASSED: ./3b-rect_cen_in_rect.txt.test
 PASSED: ./7a-generate_coupler_bitmap.bmp.test
 PASSED: ./7b-generate_coupler_bitmap.bmp.test
+PASSED: ./7c-generate_coupler_bitmap.txt.test
 PASSED: ./8a-design_coupler.bmp.test
 PASSED: ./9a-create-25-Ohm-201b.bmp.test
 PASSED: ./9b-create-25-Ohm-401b.bmp.test
@@ -37,3 +37,4 @@ PASSED: ./9g-create-200-Ohm-201b.bmp.test
 PASSED: ./9h-create-200-Ohm-401b.bmp.test
 PASSED: ./9i-create-200-Ohm-801b.bmp.test
 PASSED: ./10a-create-lots-of-examples-check-last-one.test
+PASSED: ./10b-create-lots-of-examples-check-last-one.test

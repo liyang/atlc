@@ -36,9 +36,11 @@
 # unlikely. So if any problems occur, check the checksum with the GNU
 # 'sum' and see what that gives. If any failures do occur, please let me
 # know. email drkirkby@ntlworld.com and/or davek@medphys.ucl.ac.uk 
+
 ../src/non_gui/atlc  test.bmp > /dev/null
-# .bin files are unchecked, so let removed them.
-rm -f test.*.bin
+
+# Examine the text file created by atlc, not by generate_coupler_bitmap.
+
 cat test.txt | awk '{print $11}' > /tmp/atlc-test.$$
 CKSUM=`../tools/src/mycksum /tmp/atlc-test.$$`
 rm /tmp/atlc-test.$$
