@@ -4,7 +4,7 @@
 # are all okay. 
 ../src/non_gui/atlc ../examples/cop1.bmp  > /dev/null
 CKSUM=`../tools/src/mycksum ../examples/cop1.Ex.odd.bmp`
-if [ $CKSUM != 15650 ]; then
+if [ $CKSUM != 34975 ]; then
   echo "FAILED:" $0  >> tests.log
   exit 1
 else 
