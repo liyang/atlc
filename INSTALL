@@ -1,6 +1,8 @@
 Specific Installation Instructions for atlc. 
 ==================
 
+See also the file docs/html-docs/building.html
+
    These are *NOT* generic installation instructions, but have been
    edited CONSIDERABLY to be specific for atlc. There are a couple of 
    optional arguments that you can give to the configure script that 
@@ -54,27 +56,13 @@ The simplest way to compile this package is:
      So far, I've been unsuccesful in getting the SPARC versions of Linux
      (Debian or Redhat) to support multi-processing, 
 
-  3) If you have access to a network of computers and wish to take advantages
-     of the distributed processors, download the MPICH library
-     from http://www-unix.mcs.anl.gov/mpi/mpich/indexold.html
-     A system that will use Message Passing Interface will be added.
-     Some work was started, but it was not portable and since then 
-     a major change was made to an algorithm and all the MPI code 
-     removed.
-
-     A small test program, exists in the file tests/MPI_16a_PI.c
-     which is only enabled when using the --with-mpi option to
-     configure. This script runks okay, so I think the problem
-     is not how to build an executable using the MPICH library,#
-     but how the src/non_gui_finite_difference_mpi.c is written.
-
-  4) Unzip the compressed tar file
+  3) Unzip the compressed tar file
      gzip -d atlc-x.y.tar.gz
 
-  5) Extract the tar archieve
+  4) Extract the tar archieve
      tar xvf atlc-x..y.z.tar
 
-  6) Set the varialble CFLAGS to whatever flags are appropiate with
+  5) Set the varialble CFLAGS to whatever flags are appropiate with
      your compiler and system. This is particularly important
      on Alpha platforms, when increases in speed of 3.5x were noticed
      when running with appropiate flags. 
@@ -82,14 +70,14 @@ The simplest way to compile this package is:
      A benchmark is provide (see section 8) which can be used
      as a guide to optimising the compiler flags. 
 
-  7) If you have a multi-processor machine, with more than 8 CPUs
+  6) If you have a multi-processor machine, with more than 8 CPUs
      (lucky you), change the variable MAX_THREADS in the file
      src/non_gui/definitions.h to reflect the number of CPUs. You
      can achieve the same result on the command line with the -t
      options, but changing it here will prevent you needing to 
      do this each time to get best peformance. 
 
-  8) `cd' to atlc-X.Y.z (whatever X, Y and Z are for the specific
+  7) `cd' to atlc-X.Y.z (whatever X, Y and Z are for the specific
       vesion) and type
      `./configure' to configure the package for your system.  If you're
      using `csh' on an old version of System V, you might need to type
