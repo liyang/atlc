@@ -1,6 +1,6 @@
 bin_PROGRAMS = atlc create_bmp_for_rect_in_rect \
 create_bmp_for_circ_in_circ create_bmp_for_rect_cen_in_rect \
-create_bmp_for_circ_in_rect create_bmp_for_rect_in_circ readbin create_bmp_for_symmmetrical_stripline \
+create_bmp_for_circ_in_rect create_bmp_for_rect_in_circ readbin create_bmp_for_symmetrical_stripline \
 design_coupler create_bmp_for_stripline_coupler create_bmp_for_microstrip_coupler\
 find_optimal_dimensions_for_microstrip_coupler \
 create_bmp_for_rect_cen_in_rect_coupler
@@ -76,16 +76,16 @@ usage_create_bmp_for_rect_in_circ.c write_bitmap.c \
 get_Er1_and_Er2_colours.c \
 convert_create_bmp_for_rect_in_circ_dimensions_to_integers.c \
 string.c nrutil.c write_bitmap_out.c byteswap.c \
-align_bitmap_image.c fill_rect_in_circ.c check_parameters_of_create_bmp_for_rect_in_circ_.c \
+align_bitmap_image.c fill_rect_in_circ.c check_parameters_of_create_bmp_for_rect_in_circ.c \
 check_error.c get_options.c definitions.h error_and_exit.c \
 print_copyright.c Erdata.h
 
 readbin_SOURCES = readbin.c definitions.h byteswap.c usage_readbin.c \
 get_options.c error_and_exit.c print_copyright.c
 
-create_bmp_for_symmmetrical_stripline_SOURCES = create_bmp_for_symmmetrical_stripline.c \
-fill_image_vector_for_create_bmp_for_symmmetrical_stripline.c \
-usage_create_bmp_for_symmmetrical_stripline.c string.c nrutil.c write_bitmap_out.c \
+create_bmp_for_symmetrical_stripline_SOURCES = create_bmp_for_symmetrical_stripline.c \
+fill_image_vector_for_create_bmp_for_symmetrical_stripline.c \
+usage_create_bmp_for_symmetrical_stripline.c string.c nrutil.c write_bitmap_out.c \
 align_bitmap_image.c byteswap.c calculate_impedance_for_create_bmp_for_symmetrical_stripline.c \
 elliptic_integral.c get_options.c definitions.h error_and_exit.c \
 print_copyright.c
