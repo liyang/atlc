@@ -40,14 +40,14 @@ and will produce files such as coax.V.bmp, coax.E.bmp, coax.E.bin etc */
 #include "definitions.h"
 #include "exit_codes.h"
 
-FILE *get_file_pointer_with_right_filename(char *filename, char *extension)
+FILE *get_file_pointer_with_right_filename(char *filename, const char *extension)
 {
   char *basename, *temp;
   FILE *fp;
-  basename=string(0,1000);
-  temp=string(0,1000);
-  memset((void *)temp,0,1000);
-  memset((void *)basename,0,1000);
+  basename=string(0,1024);
+  temp=string(0,1024);
+  memset((void *)temp,0,1024);
+  memset((void *)basename,0,1024);
 
   basename=strncpy(basename,filename,strlen(filename)-4);
   strcpy(temp,basename);
@@ -57,5 +57,7 @@ FILE *get_file_pointer_with_right_filename(char *filename, char *extension)
     fprintf(stderr,"Sorry, cant open %s for writing\n", temp);
     exit_with_msg_and_exit_code("",CANT_OPEN_FOR_WRITING);
   }
+  free_string(basename,0,1024);
+  free_string(temp,0,1024);
   return(fp);
 }
