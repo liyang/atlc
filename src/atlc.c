@@ -33,7 +33,6 @@
 #pragma hrdstop
 #include <condefs.h>
 #endif
-
 struct pixels Er_on_command_line[MAX_DIFFERENT_PERMITTIVITIES];
 struct pixels Er_in_bitmap[MAX_DIFFERENT_PERMITTIVITIES];
 
@@ -214,8 +213,10 @@ without the threads\nlibrary.\n",1);
     needs to be done twice. We start by doing them once, for an vacuum
     dielectric. If necessary, they will be done again */
 
+    dielectrics_to_consider_just_now=1;
+    do_fd_calculation(&capacitance, &inductance, &Zo, stdout, cutoff, dielectrics_to_consider_just_now, argv[my_optind]);
+#ifdef GG
     capacitance=VERY_LARGE; /* Can be anything large */
-
     do /* Start a finite calculation */
     {
       c_old=capacitance; 
@@ -259,7 +260,7 @@ without the threads\nlibrary.\n",1);
 	}
       }
     } while (fabs((c_old-capacitance)/c_old) > cutoff); /* end of FD loop */
-    
+#endif 
     /* The calculation of inductance above is correct, and does not
     need to be altered. However, if there are multiple dielectrics,
     then the capacitance needs to be computed again, this time taking
