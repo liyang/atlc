@@ -21,11 +21,7 @@ USA.
 Dr. David Kirkby, e-mail drkirkby@ntlworld.com 
 
 Some of these memory allocation routies are hacked versions of those
-from the book 'Numerical Recipes in C' by Press et al. but if
-the function memalign() is defined, which under Solaris at least 
-void *memalign(size_t alignment, size_t size);
-allocates size_t bytes on an alignment that must be a power of two. I
-elected to align these since memory access should be faster */
+from the book 'Numerical Recipes in C' by Press et al. */
 
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
@@ -56,7 +52,7 @@ unsigned char *ustring(long nl,long nh)
 {
   unsigned char *v;
 
-  v=(unsigned char *)malloc((size_t) sizeof(unsigned char)* (nh-nl+1));
+  v=(unsigned char *)malloc((size_t) (sizeof(unsigned char)* (nh-nl+1)));
   if (!v) 
     exit_with_msg_and_exit_code("Memory allocation failure in ustring()",MEMORY_ALLOCATION_ERROR_IN_USTRING);
   return v-nl;
