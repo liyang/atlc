@@ -163,7 +163,7 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
       count++;
     } while (fabs((capacitance_old-capacitance)/capacitance_old) > data->cutoff); /* end of FD loop */
     if(data->verbose_level >=4)
-      printf("Total of %d itterations ( %d calls to finite_difference(%d) )\n",ITERATIONS*count,count,ITERATIONS);
+      printf("Total of %d iterations ( %d calls to finite_difference(%d) )\n",ITERATIONS*count,count,ITERATIONS);
 
 #ifdef ENABLE_MPI
 	mpi_receive_updated_vij_strips();
