@@ -11,24 +11,24 @@
 <BODY>
 
 <H1>Building <COde>atlc</code> from sources</H1>
-<CODE>atlc</CODE> and most of its assocoiated programs have been successfully build on the following platforms. 
+<p><EM>atlc</EM> is highly portable program and should run on any UNIX system and some non-UNIX systems. </P>
+An early version for <EM>atlc</EM> forms part of the <a href="http://www.netbsd.org/">NetBSD</a>  project and has been ported to <a href=" ftp://ftp.netbsd.org/pub/NetBSD/packages/pkgsrc/cad/atlc/README.html">23 different systems</a>, including the Acorn 32, Amiga, Arm32, Atari, Cobalt, Dec Alpha, HP 300, i386 PC, Mac 68000, Power PC, Sun SPARC, VAX etc. <STRONG><EM>atlc</EM> has even been run on a Sony Playstation 2!!</STRONG>.  In addition to the systems running NetBSD UNIX, <EM>atlc</EM> has been run on the following platforms. 
 <OL>
-	<LI>Dual processor Sun Ultra 60 running Solaris 8 with the 108528-12 kernel</LI>
+	<LI>Dual processor Sun Ultra 60 running Solaris 8l</LI>
 	<LI>Quad processor (4x450 MHz) Sun Ultra 80 running Solaris 9</LI>
 	<LI>64-bit Dec Alpha, running Linux 2.4.17</LI>
-	<LI>Sun Ultra 60 running Solaris 8 with the 108528-11  kernel</LI>
 	<LI>x86 PC running linux   2.4.13</LI>
 	<LI>Sun (unknown) running Linux 2.2.18pre21</LI>
 	<LI>Dual processor DEC Alpha running Linux 2.4.17</LI>
 	<LI>Sun R220 running Solaris 8</LI>
 	<LI>x86 PC's running Windows 98 and NT</LI>
 </OL>
-Download <COde>atlc</code> from <a href="http://sourceforge.net/projects/atlc/"><COde>atlc</code>'s download area on SourceForge.</A> It is preferable to also have following, although none, apart from a compatible version of <CODE>make</CODE>, are essential. 
+To install <EM>altc</EM> you should download the souce code from <a href="http://sourceforge.net/projects/atlc/"><COde>atlc</code>'s download area on SourceForge.</A> It is preferable to also have following software too, although none, apart from a compatible version of <CODE>make</CODE>, are essential. 
 <OL>
-
-	<LI>If you have a system with more than one CPU, <COde>atlc</code> can be configured to use any number of CPUs in parallel. You will need to install <a href="http://www.gnu.org/software/pth">pthreads</A>, or other  POSIX/ANSI-C multi-threaded library. Sun's commerical implementation works fine, but I'm unsure about other versions. </LI>
-	<LI>The GNU scientific library, gsl.</LI>
-	<LI>GNU make, sometimes installed as <CODE>gmake</CODE>. Sun's version of make in <CODE>/usr/ccs/bin/make</CODE> is not suitable, although I don't know about other versions of make </LI>
+	<LI>The <a href="http://sources.redhat.com/gsl/">GNU scientific library (gsl).</a> While not essentail, this is <STRONG>highly reccomended</STRONG>.</LI>
+	<LI><a href="http://www.gnu.org/software/make/make.html">GNU make</a>, sometimes installed as <CODE>gmake</CODE>. Sun's version of make in <CODE>/usr/ccs/bin/make</CODE> is <STRONG>not</STRONG> suitable, although I don't know about other versions of make. The GNU one works fine. </LI>
+	<LI>If you have a system with more than one CPU, <EM>atlc</EM> can be configured to use any number of CPUs in parallel, using a POSIX compatable thread library, or pthreads. Sun's Solaris implementation works fine, but any other POSIX library should work. If you don't have one you  should install <a href="http://www.gnu.org/software/pth">GNU Portable Threads</A>,. <STRONG>If your computer has only one CPU, there is no point in building atlc to use multiple threads, as it will slow the program down</STRONG>.</LI>
+<LI>If you have access to a network of computers and wish to use some <STRONG>highly experimental (i.e. probably unstable) </STRONG>distributed processing code, you will need to have installed the <a href="http://www-unix.mcs.anl.gov/mpi/mpich/indexold.html">MPICH library</A>, which is a portable implementation of the <a href="http://www.mcs.anl.gov/mpi/index.html">Message Passing Interface</a> standard. Using the <a href="http://www-unix.mcs.anl.gov/mpi/mpich/indexold.html">MPICH library</A> a network of computers can be used to solve problems more quickly. The author of <a href="http://atlc.sourceforge.net/"><CODE>atlc</CODE></a> , Dr. David Kirkby, has not seen this work, but has been told it works under GNU/Linux. In contrast, using multiple processors on one computer via the use of threads works well. </LI>
 </OL>
 <br>
 Extract the compressed file, using gunzip, or gzip -d.
@@ -37,29 +37,47 @@ Extract the compressed file, using gunzip, or gzip -d.
 % cd atlc-X.Y
 % ./configure
 % make 
-% make check  <STRONG> // This is very important, as it cheks and also builds the examples</STRONG>
+% make check  <STRONG> // This is very important, as it checks the binaries.</STRONG>
+</PRE>
+This should run around 90 self-tests. All should pass, but if you don't have the <a href="http://sources.redhat.com/gsl/">GNU scientific library.(gsl)</a>, approximately 4 tests will fail. Without <a href="http://sources.redhat.com/gsl/">gsl</a>, <EM>atlc</EM> suffers some loss of functionality, so these tests fail. <br>
+<PRE>
 % su
 # make install. </PRE>
-
-If you have a system with more than one CPU, <COde>atlc</code> can be configured to use any number of cpus in parallel. You will need to install <a href="http://www.gnu.org/software/pth">pthreads</A>, portable POSIX/ANSI-C based multi-threaded library for Unix platforms. Installation is identical to above, except that the option <CODE>--with-threads</CODE> should be passed to <CODE>configure</CODE> i.e.
+The<CODE> make install</CODE> stage will install:
+<OL>
+	<LI>The executable programs (by default to<CODE> /usr/local/bin</CODE>)</LI>
+	<LI>The man pages (by default to <CODE>/usr/local/man/man1</CODE>)</LI>
+	<LI>Some HTML formatted documentation (generally similar to that on the  <a href="http://atlc.sourceforge.net/">atlc website</a>. By default these are installed to<CODE> /usr/local/share/atlc/docs/html-docs</CODE>.
+	<LI>A copy of a paper published on atlc back in the December 1996 issue of QEX. That along with the C source for this very early version is installed to<CODE> /usr/local/share/atlc/docs/qex_december_199</CODE>6</LI>
+	<LI>Some example files (by default to<CODE> /usr/local/share/atlc/examples</CODE>)</LI>
+</OL>
+<br>
+If you have a system with more than one CPU and wish to exploit multiple-processing using  threads, you should then <STRONG>(after first building a single threaded version above)</STRONG>, re-run the configure script. 
 <PRE>
 % configure --with-threads
+% make 
+% su
+# make install.
  </PRE>
-For a list of configure's options, type
+To build atlc with support for distributed processing using the <a href="http://www-unix.mcs.anl.gov/mpi/mpich/indexold.html">MPICH library</A>, run:
 <pre>
-% configure --help
+% configure --with-mpi=/path_to_your_mpi_library
 </pre>
+There are several other options to the configure script, which can be obtained by running <CODE>configure --help</CODE>
 <p>
-Note, <CODE>altc</CODE> should first be configured without threads and make check run. The algorithm used for a threaded version of atlc is slightly different, but will result in a lot of tests failinig, as the files are <STRONG>slightly </STRONG>different and so have different checksums. a
+Note, <EM>atlc</EM> should first be configured without threads and <CODE>make check</CODE> run. The algorithm used for a threaded 
+version of <EM>atlc</EM> is slightly different, so will result in a lot of tests failinig, as the files are <STRONG>slightly </STRONG>different and so have different checksums.It is hoped to fixed this problem soon, so that the tests can be run properly on a threaded version of atlc. 
 <p>atlc is written and supported by <a href="mailto: drkirkby@ntlworld.com?subject=atlc%20-%20Arbitrary%20Transmission%20Line%20Calculator">Dr. David Kirkby (G8WRB)</A> It it issued under the <a href="http://www.gnu.org/copyleft/gpl.html">GNU General Public License</A><p>
 <a href="http://atlc.sourceforge.net">Return to the atlc homepage</a>
 <a href="http://homepage.ntlworld.com/drkirkby/list1.html"></a>
 <a href="http://homepage.ntlworld.com/drkirkby/list2.html"></a>
-<a href="http://homepage.ntlworld.com/drkirkby/list3.html"></a>
 <a href="http://homepage.ntlworld.com/drkirkby/list4.html"></a>
 <a href="http://homepage.ntlworld.com/drkirkby/list5.html"></a>
 <a href="http://homepage.ntlworld.com/drkirkby/list6.html"></a>
 <a href="http://homepage.ntlworld.com/drkirkby/list7.html"></a>
+<a href="http://www.medphys.ucl.ac.uk/~davek/email1.html"></a>
+<a href="http://www.medphys.ucl.ac.uk/~davek/email2.html"></a>
+<a href="http://www.medphys.ucl.ac.uk/~davek/email3.html"></a>
 <BR>
 <BR>
 <A href="http://sourceforge.net"> <IMG
