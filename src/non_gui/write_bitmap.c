@@ -41,10 +41,10 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 in a structure as they are all linked closely, but they are not and I
 can't be bothered to change it */
 
-extern double WW, HH, aa, bb, cc, dd, ww, hh, Er1, Er2;
-extern int W, H, a, b, c, d, w, h;
+//extern double WW, HH, aa, bb, cc, dd, ww, hh, Er1, Er2;
+extern int W, H;
 
-void write_bitmap(FILE *image_data_fp)
+void write_bitmap(FILE *image_data_fp, struct transmission_line_properties xyz)
 {
    int colour_Er1=-1, colour_Er2=-1, vector_aligned;
    unsigned char *image_data, *unaligned_image_vector;
@@ -52,6 +52,8 @@ void write_bitmap(FILE *image_data_fp)
    get_Er1_and_Er2_colours(&colour_Er1, &colour_Er2);
    W+=2*BORDER;
    H+=2*BORDER;
+   xyz.W+=2*BORDER;
+   xyz.H+=2*BORDER;
    /* We create an vector big enough for the image. Since rows are 
    aligned on 4-byte boundaries, we need to allow suffient space for
    (W+2)*(H-1) bytes. */
@@ -71,7 +73,7 @@ void write_bitmap(FILE *image_data_fp)
    fill_image_vector_with_data.c, but instead different versions of it are 
    located in files fill_rect_with_rect.c, fill_circ_with_circ.c, 
    fill_rect_with_circ.c and fill_circ_with_rect.c */
-   fill_image_vector_with_data(unaligned_image_vector, colour_Er1, colour_Er2);
+   fill_image_vector_with_data(unaligned_image_vector, colour_Er1, colour_Er2, xyz);
    
    /* put into the vector, in reverse order - i.e. from bottom to top and 
    align each row on 4-byte boundaries */
