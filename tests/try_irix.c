@@ -30,7 +30,7 @@ int try_irix(struct computer_data *data)
 #ifdef HAVE_INVENT_H
 
   long CPUs_online;
-  inventory_t *pinv;
+  inventory_t *invp;
 
   /* Obtain the maximum number of CPUs supported on the IRIX system */
 
@@ -38,24 +38,35 @@ int try_irix(struct computer_data *data)
   CPUs_online=0;
   CPUs_online=(long) sysconf(_SC_NPROC_ONLN);
   if( CPUs_online >= 1 )
-    sprintf(data->cpus,"%ld ",CPUs_online);
+    sprintf(data->cpu_type,"%ld ",CPUs_online);
 
 
   /* Obtain the of CPU and FPU on the IRIX box */
+  setinvent(); /* Always call before starting to call getinvt() */
 
-  /* Obtain the RAM on the IRIX system. */
+  while ( (invp = getinvent()) ) {
+    if ( (invp->inv_class == INV_PROCESSOR) && (invp->inv_type == INV_CPUBOARD))  
+      sprintf(data->mhz,"%d",(int) invp->inv_controller);
+    if ( (invp->inv_class == INV_PROCESSOR) && (invp->inv_type == INV_CPUCHIP))
+      sprintf(data->cpu_type,"%d",invp->inv_state);
+    if ( (invp->inv_class == INV_PROCESSOR) && (invp->inv_type == INV_FPUCHIP) && invp->inv_state)
+      sprintf(data->fpu_type,"%d",invp->inv_state);
+  }
+  /* Obtain the RAM, cache etc on the IRIX system. */
 
   setinvent(); /* Always call before starting to call getinvt() */
-  while ((pinv = getinvent()))
+  while ((invp = getinvent()))
   {
-    if (pinv->inv_class == INV_MEMORY && (pinv->inv_type == INV_MAIN_MB))
-      sprintf(data->memory,"%d", pinv->inv_state);
-    if (pinv->inv_class == INV_MEMORY && (pinv->inv_type == INV_DCACHE))
-      sprintf(data->L1data,"%d", pinv->inv_state/1024);
-    if (pinv->inv_class == INV_MEMORY && (pinv->inv_type == INV_ICACHE))
-      sprintf(data->L1instruction,"%d", pinv->inv_state/1024);
-    if (pinv->inv_class == INV_MEMORY && (pinv->inv_type == INV_SIDCACHE))
-      sprintf(data->L2,"%d", pinv->inv_state/1024);
+    if (invp->inv_class == INV_MEMORY && (invp->inv_type == INV_MAIN_MB))
+      sprintf(data->memory,"%d", invp->inv_state);
+    if (invp->inv_class == INV_MEMORY && (invp->inv_type == INV_DCACHE))
+      sprintf(data->L1data,"%d", invp->inv_state/1024);
+    if (invp->inv_class == INV_MEMORY && (invp->inv_type == INV_ICACHE))
+      sprintf(data->L1instruction,"%d", invp->inv_state/1024);
+    if (invp->inv_class == INV_MEMORY && (invp->inv_type == INV_SIDCACHE))
+      sprintf(data->L2,"%d", invp->inv_state/1024);
+    if (invp->inv_class == INV_MEMORY && (invp->inv_type == INV_SIDCACHE))
+      sprintf(data->L2,"%d", invp->inv_state/1024);
   }
 
 
