@@ -114,7 +114,7 @@ void setup_arrays(struct transmission_line_properties *data)
 	    else
 	       pixels_found.other_colour++; /* Some other dielectric */
 	    cell_type[w][height-1-h]=DIELECTRIC;
-	    Vij[w][height-1-h]=0.9;    /* XXXXXXXXXXx */
+	    Vij[w][height-1-h]=0.0;    /* XXXXXXXXXXx */
 	    for(z=0;z<NUMBER_OF_DIELECTRICS_DEFINED;++z)
 	    {
 	       /* Check to see if the colour is one of the 10 known
@@ -144,12 +144,12 @@ void setup_arrays(struct transmission_line_properties *data)
          }
          if((dielectric_found == FALSE) && (conductor_found==FALSE))
          {
-            fprintf(stderr,"Error#7: The colour r=0x%x g=0x%x b=0x%x (0x%2x%2x%2x) exists in the image at pixel %d,%d but\n",red,green,blue,red,green,blue,w,h);
+            fprintf(stderr,"Error#7: The colour r=0x%x g=0x%x b=0x%x (0x%02x%02x%02x) exists in the image at pixel %d,%d but\n",red,green,blue,red,green,blue,w,h);
 	    fprintf(stderr,"the program does not know how to interpret this colour. This is not a\n");
 	    fprintf(stderr,"conductor (pure red, green or blue), nor is it one of the %d dielectrics that\n",NUMBER_OF_DIELECTRICS_DEFINED);
 	    fprintf(stderr,"are predefined in Erdata.h, nor is a corresponding dielectric constant defined\n");
 	    fprintf(stderr,"on the command line line with the -d option\n");
-	    fprintf(stderr,"e.g. atlc -d %2x%2x%2x=1.9 file.bmp if this colour has a permittivity of 1.9\n",red,green,blue);
+	    fprintf(stderr,"e.g. atlc -d %02x%02x%02x=1.9 file.bmp if this colour has a permittivity of 1.9\n",red,green,blue);
 	    exit_with_msg_and_exit_code("",UNDEFINED_COLOUR_IN_BITMAP);
          }
          /* We need to keep a record of the number of dielectrics in the image, 

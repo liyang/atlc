@@ -36,9 +36,9 @@ void print_data_for_directional_couplers(struct transmission_line_properties dat
   if(data.display==Z_ODD_SINGLE_DIELECTRIC)
   {
     if(data.verbose_level ==1)
-      fprintf(where_to_print_fp,"%s 3 Er_odd= %6.2f Er_even= %s Zodd= %6.2f Zeven= %s Zo= %s Zdiff= %6.2f Zcomm= %s Ohms VERSION=%s\n",inputfile_name,data.Er_odd, "??????", data.Zodd, "??????","??????",data.Zdiff, "??????", PACKAGE_VERSION);
+      fprintf(where_to_print_fp,"%s 3 Er_odd= %6.2f Er_even= %s Zodd= %7.3f Zeven= %s Zo= %s Zdiff= %6.2f Zcomm= %s Ohms VERSION=%s\n",inputfile_name,data.Er_odd, "??????", data.Zodd, "??????","??????",data.Zdiff, "??????", PACKAGE_VERSION);
     else if (data.verbose_level ==2)
-      fprintf(where_to_print_fp,"%s 3 Er_odd= %6.2f Er_even= %s Zodd= %6.2f Zeven= %s Zo= %s Zdiff= %6.2f Zcomm= %s Ohms VERSION=%s\n",inputfile_name,data.Er_odd, "??????", data.Zodd, "??????","??????",data.Zdiff, "??????", PACKAGE_VERSION);
+      fprintf(where_to_print_fp,"%s 3 Er_odd= %6.2f Er_even= %s Zodd= %7.3f Zeven= %s Zo= %s Zdiff= %6.2f Zcomm= %s Ohms VERSION=%s\n",inputfile_name,data.Er_odd, "??????", data.Zodd, "??????","??????",data.Zdiff, "??????", PACKAGE_VERSION);
   }
   else if(data.display == Z_EVEN_SINGLE_DIELECTRIC)
   {

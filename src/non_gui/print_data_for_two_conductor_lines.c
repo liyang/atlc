@@ -42,7 +42,7 @@ dielectric is mixed, and says 'Er= MIXED' */
 void print_data_for_two_conductor_lines(struct transmission_line_properties data, FILE *where_to_print_fp, char *inputfile_name)
 {
   if(data.verbose_level <2)
-    fprintf(where_to_print_fp,"%s 2 Er= %5.2f Zo= %6.2f Ohms C= %6.1f pF/m L= %6.1f nH/m v= %.4g m/s v_f= %.3f VERSION= %s\n",inputfile_name,data.Er, data.Zo,data.C*1e12, data.L_vacuum*1e9, data.velocity,data.velocity_factor,PACKAGE_VERSION);
+    fprintf(where_to_print_fp,"%s 2 Er= %5.2f Zo= %7.3f Ohms C= %6.1f pF/m L= %6.1f nH/m v= %.4g m/s v_f= %.3f VERSION= %s\n",inputfile_name,data.Er, data.Zo,data.C*1e12, data.L_vacuum*1e9, data.velocity,data.velocity_factor,PACKAGE_VERSION);
   else
     fprintf(where_to_print_fp,"%s 2 Er= %16.13f Zo= %16.13f Ohms C= %16.13f pF/m L= %16.13f nH/m v= %16.13g m/s v_f= %16.13f VERSION= %s\n",inputfile_name,data.Er, data.Zo,data.C*1e12, data.L_vacuum*1e9, data.velocity,data.velocity_factor,PACKAGE_VERSION);
 }

@@ -297,6 +297,5 @@ hence built without the mpi\nlibrary.\n",1);
   free_ucmatrix(cell_type,0,width-1,0,height-1);
   free_dmatrix(Vij, 0,width-1,0,height-1);
   free_dmatrix(Er,0,width-1,0,height-1);
-  printf("exited from main\n");
   return(OKAY); 
 }

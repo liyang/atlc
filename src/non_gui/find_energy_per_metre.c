@@ -38,11 +38,6 @@ double find_energy_per_metre(int w, int h)
   Ex=find_Ex(w,h);
   Ey=find_Ey(w,h);
   energy_per_metre+=0.5*EPSILON_0*(Ex*Ex+Ey*Ey);
-  /*
-  if((w == 0 || h == 0 ) && energy_per_metre > 0.0)
-    fprintf(stderr,"error at %d,%d\n",w,h);
-    */
-
   if(dielectrics_to_consider_just_now>1)
     energy_per_metre*=Er[w][h]; /* second run, energy proportional to Er */
   return(energy_per_metre);

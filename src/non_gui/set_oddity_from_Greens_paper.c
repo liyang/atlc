@@ -42,7 +42,7 @@ extern double **Er;
 void set_oddity_from_Greens_paper(void) 
 {
   int i, j;
-  // double Ka, Kb, Kc, Kd, K;
+  double er, ERa, ERb, ERl, ERr;
   int cl, cr, ca, cb;
   unsigned char c; 
 
@@ -114,6 +114,12 @@ void set_oddity_from_Greens_paper(void)
       ca=cell_type[i][j-1];  /* Cell type above point (i,j) */
       cb=cell_type[i][j+1];  /* Cell type below point (i,j) */
 
+      ERa=Er[i][j-1];
+      ERb=Er[i][j+1];
+      ERl=Er[i-1][j];
+      ERr=Er[i+1][j];
+      er=Er[i][j];
+
 
       /* If the conductor is at a fixed voltage, it must stay there
       so there is nothing to do with it */
@@ -139,9 +145,6 @@ void set_oddity_from_Greens_paper(void)
       else if ( cl <= CONDUCTOR_PLUS_ONE_V && ca<= CONDUCTOR_PLUS_ONE_V)
         oddity[i][j]= METAL_ABOVE_AND_LEFT;
 
-      else if ( cl <= CONDUCTOR_PLUS_ONE_V && cb<= CONDUCTOR_PLUS_ONE_V)
-        oddity[i][j]= METAL_BELOW_AND_LEFT;
-
       else if ( ca <= CONDUCTOR_PLUS_ONE_V )
 	oddity[i][j]= METAL_ABOVE;
 
@@ -153,7 +156,37 @@ void set_oddity_from_Greens_paper(void)
 
       else if ( cr <= CONDUCTOR_PLUS_ONE_V )
 	oddity[i][j]= METAL_RIGHT;
-      else 
+
+      else if ( ERb != er || ERr != er || ERl != er || ERa != er )
+	oddity[i][j]= DIFFERENT_DIELECTRIC_LOCALLY; 
+
+#ifdef MORE2
+      else if ( ERb != er  && ERr != er)
+	oddity[i][j]= DIFFERENT_DIELECTRIC_BELOW_AND_RIGHT; 
+
+      else if ( ERa != er  && ERr != er)
+	oddity[i][j]= DIFFERENT_DIELECTRIC_ABOVE_AND_RIGHT; 
+
+      else if ( ERa != er  && ERl != er)
+	oddity[i][j]= DIFFERENT_DIELECTRIC_ABOVE_AND_LEFT; 
+
+      else if ( ERb != er  && ERl != er)
+	oddity[i][j]= DIFFERENT_DIELECTRIC_BELOW_AND_LEFT; 
+
+      else if ( ERa != er )
+	oddity[i][j]= DIFFERENT_DIELECTRIC_ABOVE; 
+
+      else if ( ERb != er )
+	oddity[i][j]= DIFFERENT_DIELECTRIC_BELOW; 
+
+      else if ( ERl != er )
+	oddity[i][j]= DIFFERENT_DIELECTRIC_LEFT; 
+
+      else if ( ERr != er )
+	oddity[i][j]= DIFFERENT_DIELECTRIC_RIGHT; 
+#endif
+	
+      else
 	oddity[i][j]= ORDINARY_INTERIOR_POINT;
     }/* end of for i=0 to width-1 */
   } /* end of for j= 0 to height-1 */
