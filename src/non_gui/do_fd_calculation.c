@@ -105,7 +105,7 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
       } while (fabs((capacitance_old-capacitance)/capacitance_old) > data->cutoff); /* end of FD loop */
 
       /* We must print the results now, but only bother if the verbose level was 
-      not not incremented on the commmand line, otherwide there will be two duplicate
+      not not incremented on the command line, otherwide there will be two duplicate
       lines */
 
       if (data->verbose_level == 0)
