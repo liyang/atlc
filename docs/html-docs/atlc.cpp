@@ -1,4 +1,4 @@
-
+/*
 #ifdef __GNUG__
 #pragma implementation "help.cpp"
 #pragma interface "help.cpp"
@@ -22,12 +22,12 @@
 #include <wx/filesys.h>
 #include <wx/fs_zip.h>
 #include <wx/tipdlg.h>
-//#include <wx/wx.h>
-//#include <iostream.h>
+#include <iostream.h>
+*/
+
+#include "atlc-gui.h"
 
 // Define a new frame type 'RoundCoaxFrame
-#include "id.h"
-
 class RoundCoaxFrame: public wxFrame
 {
   public:
@@ -48,14 +48,12 @@ RoundCoaxFrame::RoundCoaxFrame(const wxString& title, const wxPoint& pos, const 
   CreateStatusBar();
   SetStatusText( "Computer Zo either exactly or via finite difference methods." );
   menuFile->Append( ID_Save, "&Save as Bitmap","Save Results to a text file"); //HACK, needs changing.  
-  //menuFile->AppendSeparator();
   menuFile->Append( ID_FileMenuClose, "&Close" , "Close this windows only - but it DONT WORK");
   menuHelp->Append( ID_Help, "&Help" , "Help");
   SetMenuBar( menuBar );
   menuBar->Append( menuFile, "&File" );
   menuBar->Append( menuHelp, "&Help" );
 }
-
 
 class atlc: public wxApp
 {
