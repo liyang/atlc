@@ -27,6 +27,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #endif
 
 #include "definitions.h"
+#include "exit_codes.h"
 #include "Erdata.h"
 
 /* We need to set up the permittivity and cell_type arrays. A
@@ -202,13 +203,20 @@ void setup_arrays(struct transmission_line_properties *data)
      printf("Number of Conductors  = %d \n", conductors);
    }
    /* The following should not be necessary, but may be as a test */
+   /* I'd like to Miguel Berg for noticcing a servere bug, where the
+   indeces of w and h were transposed, leading to crashes on Windoze
+   XP */
    for(h=0;h<height;h++)
    {
      for (w=0; w<width;++w)
      {
-       if((Vij[h][w] > 1.0) || (Vij[h][w]<-1.0))
-         fprintf(stderr,"Sorry, something is wrong Vij[%d][%d]=%f\n",h,w,Vij[h][w]);
+       if((Vij[w][h] > 1.0) || (Vij[w][h]<-1.0))
+       {
+         fprintf(stderr,"Sorry, something is wrong Vij[%d][%d]=%f in %s %d\n",w,h,Vij[w][h], __FILE__,__LINE__);
+	 error_and_exit("Exiting ....",VOLTAGE_OUT_OF_RANGE);
+       }
      }
    } 
+  /* Check two conductors and not next to each other, creating a short */
   check_for_shorts();
 } /* end of function */
