@@ -1,4 +1,31 @@
-****** Version 4.3.4 Released July 19th 2003  ********
+****** Version 4.3.5 Released July 26th 2003  ********
+
+src/non_gui/atlc.c
+Changed number_of_workers from static to global, as 
+it did not compile properly. 
+
+tests/benchmark.test
+changed the benchmark so speedup is printed properly
+(T_sequential/T_parallel) and not the other way around. 
+
+changed at t1 to a t2 on the line that is printed so
+the code works okay when compiled multi-threaded. 
+
+changed the conditions under which the efficiency was
+computed so that it works okay when the number of cpus
+is unknown. It no longer prints 'Inf', but instead 'unknown'
+
+
+tests/benchmark.c
+Now calls an AIX specific routine, which does nothing!
+
+tests/try_tru64.c
+Much improved. Gets CPU time now, along with ram and cpu speed.
+
+tests/try_hpux.c
+Minor improvements, works pretty good now. 
+
+****** Version 4.3.4 Never released  ********
 
 README.aix 
 Removed. Works fine under AIX now. Two issues were 
@@ -10,7 +37,7 @@ src/non_gui
 Changed many files in src/non_gui that referenced
 char **cell_type; 
 I was not aware declared in this way, there is no
-standard for whether cell_type consists of digned or 
+standard for whether cell_type consists of signed or 
 unsigned characters. Hence it was not portable. This
 caused a very large number of failures on AIX. This 
 has now been corrected. One failure remains (see above).
