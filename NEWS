@@ -1,10 +1,16 @@
-NEWS for realease 4.3.4 on  19th July 2003.
+NEWS for realease 4.3.7 on  16th August 2003.
 
-This is a bug release. Code had been tidied a bit
-with lint, but the main change is to declare 
-singned char **cell_type, rather than leave the 
-signed out. Previously it would not compile on 
-AIX or IRIX, but now it does. 
+This is a bug release. Code had been tidied a bit so now gcc
+-Wconversion does not complain about much code. I think there is a bug
+in gcc-3.2.2 with this option, as it sometimes thinks code is wrong when it is
+not.
 
-Dr. David Kirkby  19th July 2003
+Added some support for gathering hardware data under Linux. 
+
+Removed MPI support, as its not working at all. 
+
+Changes made to the code to remove the need for a type long long, 
+which should make the code more portable. 
+
+Dr. David Kirkby, 16th August 2003
 
