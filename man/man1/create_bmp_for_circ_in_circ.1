@@ -201,7 +201,7 @@ Here are a few examples of the use of \fBcreate_bmp_for_circ_in_circ\fR. Again, 
 units (inches, mm, feet etc.), the inner has an outside diameter of 3.9 units.
 The inner is placed centrally (h=0) and the dielectric is vacuum (Er=1.0).
 .br
-\fB% create_bmp_for_circ_in_circ 12 3.9 0 1.0 > coaxial_1.bmp
+\fB% create_bmp_for_circ_in_circ 12 3.9 0 1.0 coaxial_1.bmp
 .br
 % atlc coaxial_1.bmp\fR
 .br
@@ -214,7 +214,7 @@ off-centre and the dielectric has a relative permittivity of 2.1
 (Er of PTFE) The output is sent to a file not_in_centre.bmp
 which is then processed by \fBatlc\fR 
 .br
-\fB% create_bmp_for_circ_in_circ 12 3.9 3.5 2.1 > not_in_centre.bmp\fR
+\fB% create_bmp_for_circ_in_circ 12 3.9 3.5 2.1 not_in_centre.bmp\fR
 .br
 \fB% atlc not_in_centre.bmp\fR
 .br
@@ -225,7 +225,7 @@ only -0.271 %.
 3) In the third example the bitmap is made larger, to increase accuracy, but
 otherwise this is identical to the previous one. 
 .br
-\fB% create_bmp_for_circ_in_circ -b8 12 3.9 3.5 2.1 > bigger_not_in_centre.bmp \fR
+\fB% create_bmp_for_circ_in_circ -b8 12 3.9 3.5 2.1 bigger_not_in_centre.bmp \fR
 .br
 \fB% atlc bigger_not_in_centre.bmp\fR
 .br
@@ -235,21 +235,14 @@ It is possible there may be something to be gained by decreasing the
 cutoff at larger grids, so this is being investigated. However, errors
 almost always below 0.25 %, no matter what is being analysed. 
 .P
-In the fourth example, instead of re-directing \fBcreate_bmp_for_circ_in_circ's\fR output
-to a file with the > sign, it is done using the -f option. 
+In the fourth example, a material with a relativity permittivity 7.89 of is 
+used. There is no change in how to use \fBcreate_bmp_for_circ_in_circ\fR, but since
+this permittivity is not one of the pre-defined values (see COLOURS), we must tell \fBatlc\fR what it is.
+The colour will be set an olive green one, with a hexacidcal representation of red=0xCA, blue=OxFF and
+green = 0x00. This just happens to be the default colour  used when the permittivity is unknown. So atlc
+must be given this information, like thisL
 .br
-\fB% create_bmp_for_circ_in_circ -f 13inner_22outer_coax.bmp 22 13 0 1.0 \fR
-.br
-\fB% atlc 13inner_22outer_coax.bmp\fR
-.br
-\fB%atlc\fR will calculate an impedance of 32.5063 Ohms, whereas the correct 
-value, calculated using the formula Zo=60 log(D/d) is 31.5656 Ohms, so
-altc has an error of -0.187 %. 
-.P
-In the fifth example, a material with a relativity permittivity 7.89 of is 
-used. While there is no change in how to use \fBcreate_bmp_for_circ_in_circ\fR, since
-this permittivity is not one of the pre-defined values (see COLOURS), we must tell \fBatlc\fR what it is
-\fB% create_bmp_for_circ_in_circ 23 9 0 7.89 > an_odd_er.bmp
+\fB% create_bmp_for_circ_in_circ 23 9 0 7.89 an_odd_er.bmp
 .br
 % atlc -d CAFF00=7.89 an_odd_er.bmp
 \fR
@@ -261,14 +254,23 @@ an_odd_er.bmp with a graphics package, you will see there are 3 colours in it
 .SH SEE ALSO
 
 atlc(1)
+.br
 create_bmp_for_circ_in_rect(1)
+.br
 create_bmp_for_microstrip_coupler(1)
+.br
 create_bmp_for_rect_cen_in_rect(1)
+.br
 create_bmp_for_rect_cen_in_rect_coupler(1)
+.br
 create_bmp_for_rect_in_circ(1)
+.br
 create_bmp_for_rect_in_rect(1)
+.br
 create_bmp_for_stripline_coupler(1)
+.br
 create_bmp_for_symmetrical_stripline(1)
+.br
 design_coupler(1)
 find_optimal_dimensions_for_microstrip_coupler(1)
 readbin(1)
@@ -284,7 +286,5 @@ atlc-X.Y.Z/docs/qex-december-1996/atlc.pdf - theory paper
 .br
 atlc-X.Y.Z/examples                        - examples
 .br
-http://www.david-kirkby.co.uk              - my home page
 .br
-http://www.david-kirkby.co.uk/ham          - ham radio pages
 .br
