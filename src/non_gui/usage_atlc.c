@@ -30,7 +30,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 
 void usage_atlc(void)
 {
-#ifdef ENABLE_MP
+#ifdef ENABLE_POSIX_THREADS
   fprintf(stderr,"Usage: atlc [options ...] bitmap\n\n");
 #endif
   fprintf(stderr,"atlc %s: options are:\n",PACKAGE_VERSION);
@@ -44,17 +44,23 @@ void usage_atlc(void)
   IMAGE_FIDDLE_FACTOR,IMAGE_FIDDLE_FACTOR);
   fprintf(stderr,"  -p prefix\n      where 'prefix' is a name (normally a directory) added in front of output files\n");
   fprintf(stderr,"  -r rate_multiplier\n      where 'rate_multiplier' sets the rate multipler (called r in source code)\n");  
-#ifdef ENABLE_MP
+#ifdef ENABLE_POSIX_THREADS
   fprintf(stderr,"  -t THREADs. \n      Where THREADs is the number of threads to use (normally best set to \n      the number of cpus). The default is %d.\n",MAX_THREADS);
 #endif
 #ifdef ENABLE_MPI
   fprintf(stderr,"  -w weights\n     where weights is a colon-separated list of weights to use when dividing up the work amongst the processors.\n"); 
 #endif
-#ifndef ENABLE_MP
+#ifndef ENABLE_POSIX_THREADS
+  fprintf(stderr,"****************NOTE******************************\n");
+  fprintf(stderr,"The -t option setting the number of threads is disabled since\n");
+  fprintf(stderr,"since this was not configured with multi-processor support.\n");
+  fprintf(stderr,"To add support for multiple CPUs, \"make clean\" then re-run\n");
+  fprintf(stderr,"the configure script with the option --with-threads\n");
+#endif
+#ifdef WINDOWS
   fprintf(stderr,"****************NOTE******************************\n");
   fprintf(stderr,"The -t option setting the number of threads is disabled since either\n");
-  fprintf(stderr,"1) This is a Windoze executable OR\n");
-  fprintf(stderr,"2) This is a Unix executable but not configured with multi-processor support.\n");
+  fprintf(stderr,"This is a Windoze executable OR\n");
   fprintf(stderr,"There are no plans to add multi-processor support to Windoze, but if this is a\n");
   fprintf(stderr,"Unix executable, then re-run 'configure' using the '--with-threads' option\n");
 #endif
