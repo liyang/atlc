@@ -3,20 +3,20 @@
 # lenght. Here I create lots and do a length test on the last one.
 
 # Now create some eccentric cables (off-center coax).
-../src/non_gui/circ_in_circ 500 400 0 1 > ../examples/eccentric-a.bmp >/dev/null 2>/dev/null
-../src/non_gui/circ_in_circ 500 400 40 1 > ../examples/eccentric-b.bmp >/dev/null 2>/dev/null
-../src/non_gui/circ_in_circ 500 200 0 1 > ../examples/eccentric-c.bmp >/dev/null 2>/dev/null
-../src/non_gui/circ_in_circ 500 200 50 1 > ../examples/eccentric-d.bmp >/dev/null 2>/dev/null
-../src/non_gui/circ_in_circ 500 200 100 1 > ../examples/eccentric-e.bmp >/dev/null 2>/dev/null
-../src/non_gui/circ_in_circ 500 100 0 1 > ../examples/eccentric-f.bmp >/dev/null 2>/dev/null
-../src/non_gui/circ_in_circ 500 100 50 1 > ../examples/eccentric-g.bmp >/dev/null 2>/dev/null
-../src/non_gui/circ_in_circ 500 100 100 1 > ../examples/eccentric-h.bmp >/dev/null 2>/dev/null
-../src/non_gui/circ_in_circ 500  50   0 1 > ../examples/eccentric-i.bmp >/dev/null 2>/dev/null
-../src/non_gui/circ_in_circ 500  50  50 1 > ../examples/eccentric-j.bmp >/dev/null 2>/dev/null
-../src/non_gui/circ_in_circ 500  50 100 1 > ../examples/eccentric-k.bmp >/dev/null 2>/dev/null
-../src/non_gui/circ_in_circ 500  50 150 1 > ../examples/eccentric-l.bmp >/dev/null 2>/dev/null
-../src/non_gui/circ_in_circ 500  50 200 1 > ../examples/eccentric-m.bmp >/dev/null 2>/dev/null
-../src/non_gui/circ_in_circ -b 10 500  50 200 1 > ../examples/eccentric-n.bmp >/dev/null 2>/dev/null
+../src/non_gui/circ_in_circ 500 400 0 1 > ../examples/eccentric-a.bmp  2>/dev/null
+../src/non_gui/circ_in_circ 500 400 40 1 > ../examples/eccentric-b.bmp  2>/dev/null
+../src/non_gui/circ_in_circ 500 200 0 1 > ../examples/eccentric-c.bmp  2>/dev/null
+../src/non_gui/circ_in_circ 500 200 50 1 > ../examples/eccentric-d.bmp  2>/dev/null
+../src/non_gui/circ_in_circ 500 200 100 1 > ../examples/eccentric-e.bmp  2>/dev/null
+../src/non_gui/circ_in_circ 500 100 0 1 > ../examples/eccentric-f.bmp  2>/dev/null
+../src/non_gui/circ_in_circ 500 100 50 1 > ../examples/eccentric-g.bmp  2>/dev/null
+../src/non_gui/circ_in_circ 500 100 100 1 > ../examples/eccentric-h.bmp  2>/dev/null
+../src/non_gui/circ_in_circ 500  50   0 1 > ../examples/eccentric-i.bmp  2>/dev/null
+../src/non_gui/circ_in_circ 500  50  50 1 > ../examples/eccentric-j.bmp  2>/dev/null
+../src/non_gui/circ_in_circ 500  50 100 1 > ../examples/eccentric-k.bmp  2>/dev/null
+../src/non_gui/circ_in_circ 500  50 150 1 > ../examples/eccentric-l.bmp  2>/dev/null
+../src/non_gui/circ_in_circ 500  50 200 1 > ../examples/eccentric-m.bmp  2>/dev/null
+../src/non_gui/circ_in_circ -b 10 500 50 200 1 > ../examples/eccentric-n.bmp  2>/dev/null
 ../src/non_gui/sym_strip 1 201 301 ../examples/wide.bmp >/dev/null 2>/dev/null
 ../src/non_gui/rect_in_rect 268 100 10 40 25 200 100 45 1.0 4.8 > ../examples/pcb2.bmp >/dev/null 2>/dev/null
 ../src/non_gui/rect_cen_in_rect 268 100 100 50 4.8 > ../examples/central.bmp  >/dev/null 2>/dev/null
