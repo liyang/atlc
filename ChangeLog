@@ -1,3 +1,146 @@
+****** Version 4.3.7 Released August 6th 2003  ********
+
+README.--enable-hardware-info
+New file added, to give information on what data is obtained on what
+hardware platform. 
+
+BUGS
+Added a problem with test failures on IBM's AIX with thread support and
+removed one about teston now working on the local host, as it now does.
+There is a html version of the file in docs/html-docs/BUGS, which should
+really be renamed, or some automated way of generating text from HTML,
+or perhaps just text and a link. No sure how best to do this really, but
+it is not entirely satisfactory. 
+
+configure.ac
+removal of code assocatiated with MPI
+
+teston
+change an example, so it shows how to configure with the
+--enable-hardware-info rather than the --with--mpi, as the former is a
+new option and the latter is now removed. 
+
+README.threads
+More updated information on what atlc has been tested on, and clearer
+infomration on using it. 
+
+README.help
+mention I'd like information on building on MP machines others than for
+AIX, IRIX, Redhat Linux and Solaris, rather than just Solaris, as the
+former have all been tested
+
+README.checks
+Major updates to this, as the data in the file was based on an old
+version of atlc, that failed numerous tests when multi-threaded, due to
+the differing algorithms. Some data on machines has been removed, as it
+some of the machines I no longer have in a running state. 
+
+NEWS
+
+Most other changes are just to keep the compiler a little happier in
+src/non_gui, but some more significant changes in tests subdirectory. 
+
+src/non_gui/readbin
+Forced length to be case to size_t, to make gcc -Wconversion happier.
+
+src/non_gui/design_coupler.c
+changed 10 to 10.0 to make a double and so keep the compiler happier
+when calling pow
+
+src/non_gui/create_bmp_for_stripline_coupler.c
+extra casts and general tidying up, to make compiler give less warnings.
+
+src/non_gui/write_bitmap_out.c
+cast to (size_t) to keep compiler happier. 
+
+src/non_gui/memory.c
+included sys/types.h  and remote the #define of size_t to an int, again
+to keep the compiler happier. 
+
+/src/non_gui/atlc.c
+cast numbers to long, to be consistant with the declaration of ustring()
+and free_ustring().
+
+src/non_gui/convert_create_bmp_for_coupled_microstrip_dimensions_to_integers.c
+changing numbers in the pow(x,y) to force them to be doubles, rather
+than ints to keep the compiler happier. 
+
+src/non_gui/convert_create_bmp_for_circ_in_circ_dimensions_to_integers.c
+changing numbers in the pow(x,y) to force them to be doubles, rather
+than ints to keep the compiler happier. 
+
+src/non_gui/calculate_colour_data.c
+changed type of image_type from char to int. Not sure why this was done,
+but probably to keep compiler happier. 
+
+src/non_gui/definitions.h
+changes to enable strong type-checking in C code. 
+
+
+tests/try_aix.c
+Added string.h to the list of include files.
+Removed need for type long long. 
+
+tests/try_hpux.c
+Removed need for type long long. 
+
+tests/try_solaris.c
+Removed need for type long long. 
+
+tests/try_linux.c
+Added file to get infomation on Linux system, but so far it 
+does not get that much info - only uname stuff and the ram
+in Mb. 
+
+tests/try_tru64.c
+Changed to avoid a compiler warning about not returning anything 
+from the file, despite the fact it is declared to return an 
+integer. 
+Removed need for type long long. 
+
+tests/benchmark.c
+no longer declares opperating_system, which was an integer that was
+
+tools/src/locatediff.c
+forcing variables to be of size (size_t), to reduce compiler warnings. 
+assigned a value, but never used" benchmark.c
+
+tests/benchmark.test
+now writes to text and html files more consistantly.
+
+tests/Makefile.am
+Addes teh file try_linux.c and removes @MPILIBS@, as MPI now removed
+from code. 
+
+docs/html-docs/accuracy.html
+iremoval of incorrect statement that *ohm-*.bmp were not packaged, but
+built. They are now packaged for my convenience. Also mention of make
+check
+
+docs/html-docs/building.html
+several small changes, but main one being removal of any data about MPI
+
+docs/html-docs/make-check.html
+added new file, describing the testing process. 
+
+
+****** Version 4.3.6 Released August 3rd 2003  ********
+The main change is to configure.ac, to remove an unwanted
+(and useless) --with-extra-benchmark-data option.
+
+Many sources have been tidied up, to make gcc -Wconversion
+happy. 
+
+docs/html-docs/accuracy.html
+Removed errors, which incorrectly stated that the lager bitmaps were
+not distributed - they are now. 
+
+
+docs/html-docs/make-check.html.html
+Added a new file, describing how the automatic testing of atlc
+is performed. 
+
+
 ****** Version 4.3.5 Released July 26th 2003  ********
 
 src/non_gui/atlc.c
