@@ -27,13 +27,13 @@
 </PRE>
 <H2>DESCRIPTION</H2><PRE>
      <B>create_bmp_for_circ_in_circ</B> is a pre-processor for <B>atlc</B>, the
-     finite  difference  programme  that is used to calculate the
-     properties of a two and three conductor electrical transmis-
-     sion   line   of  arbitrary  cross  section.  The  programme
+     finite difference program that is used to calculate the pro-
+     perties of a two and three conductor electrical transmission
+     line    of    arbitrary    cross    section.   The   program
      <B>create_bmp_for_circ_in_circ</B> is used as a fast  way  of  gen-
      erating  bitmaps  (there  is  no need to use a graphics pro-
-     gramme), for a circular conductor inside a circular  conduc-
-     tor (coaxial conductors), like this:
+     gram), for a circular conductor inside a circular  conductor
+     (coaxial conductors), like this:
 
 
                          *****************
@@ -85,7 +85,7 @@
      corresponding  to that permittivity will be set according to
      the colours defined in COLOURS below. If Er is  not  one  of
      those  permittivities, the region of permittivity Er will be
-     set to the colour 0xCAFF00. The programme <B>atlc</B> does not know
+     set to the colour 0xCAFF00. The program <B>atlc</B> does  not  know
      what  this  permittivity  is, so <B>atlc</B>, must be told with the
      command line option -d, as in example 4 below.
 
@@ -131,13 +131,13 @@
 
      Some colours, such as pink, turquoise,  sandy,  brown,  gray
      etc  may mean slightly different things to different people.
-     This is not so with  <B>atlc</B>,  as  the  programme  expects  the
-     colours  below  to  be EXACTLY defined as given. Whether you
-     feel the colour is sandy or yellow is up to you, but if  you
-     use  it  in your bitmap, then it either needs to be a colour
-     recognised by atlc, <B>or</B> you must define  it  with  a  command
-     line option (see OPTIONS and example 5 below).
-     The following conductors are recognised by atlc:
+     This is not so with <B>atlc</B>, as the program expects the colours
+     below  to  be EXACTLY defined as given. Whether you feel the
+     colour is sandy or yellow is up to you, but if you use it in
+     your  bitmap,  then it either needs to be a colour reconised
+     by atlc, <B>or</B> you must define it with a  command  line  option
+     (see OPTIONS and example 5 below).
+     The following conductors are reconised by atlc:
      red    = 255,000,000 or 0xff0000 is the live conductor.
      green  = 000,255,000 or 0x00ff00 is the grounded conductor.
      blue   = 000,000,000 or 0x000000 is the negative conductor
@@ -145,10 +145,10 @@
      All bitmaps <B>must</B> have the live (red)  and  grounded  (green)
      conductor.  The  blue  conductor is not currently supported,
      but it will be used to indicate a negative conductor,  which
-     will  be  needed  if/when  the  programme  gets  extended to
-     analyse directional couplers.
+     will  be needed if/when the program gets extended to analyse
+     directional couplers.
 
-     The following dielectrics are recognised by atlc <B>and</B> <B>so</B>  <B>are</B>
+     The following dielectrics are reconised by atlc <B>and</B>  <B>so</B>  <B>are</B>
      <B>produced</B> <B>by</B> create_bmp_for_circ_in_circ<B>.</B>
 
      white     255,255,255 or 0xFFFFFF as Er=1.0   (vacuum)
@@ -184,7 +184,7 @@
      diameter  of 12 units (inches, mm, feet etc.), the inner has
      an outside diameter of 3.9 units.  The inner is placed  cen-
      trally (h=0) and the dielectric is vacuum (Er=1.0).
-     <B>%</B> <B>create_bmp_for_circ_in_circ</B> <B>12</B> <B>3.9</B> <B>0</B> <B>1.0</B> <B>&gt;</B> <B>coaxial_1.bmp</B>
+     <B>%</B> <B>create_bmp_for_circ_in_circ</B> <B>12</B> <B>3.9</B> <B>0</B> <B>1.0</B> <B>coaxial_1.bmp</B>
      <B>%</B> <B>atlc</B> <B>coaxial_1.bmp</B>
      <B>atlc</B> will indicate the correct  value  of  impedance  to  be
      67.3667  Ohms,  whereas an exact analysis will show the true
@@ -195,45 +195,39 @@
      centre and the dielectric has a relative permittivity of 2.1
      (Er  of PTFE) The output is sent to a file not_in_centre.bmp
      which is then processed by <B>atlc</B>
-     <B>%</B>   <B>create_bmp_for_circ_in_circ</B>   <B>12</B>   <B>3.9</B>   <B>3.5</B>    <B>2.1</B>    <B>&gt;</B>
+     <B>%</B>    <B>create_bmp_for_circ_in_circ</B>    <B>12</B>    <B>3.9</B>    <B>3.5</B>     <B>2.1</B>
      <B>not_in_centre.bmp</B>
      <B>%</B> <B>atlc</B> <B>not_in_centre.bmp</B>
      The impedance of this is theoretically  24.315342  Ohms,  as
      create_bmp_for_circ_in_circ  will  calculate for you. atlc's
-     esitmate is 24.2493 Ohms, an error of only -0.271 %.
+     estimate is 24.2493 Ohms, an error of only -0.271 %.
 
      3) In the third  example  the  bitmap  is  made  larger,  to
      increase  accuracy,  but  otherwise this is identical to the
      previous one.
-     <B>%</B>  <B>create_bmp_for_circ_in_circ</B>  <B>-b8</B>  <B>12</B>  <B>3.9</B>   <B>3.5</B>   <B>2.1</B>   <B>&gt;</B>
+     <B>%</B>   <B>create_bmp_for_circ_in_circ</B>   <B>-b8</B>   <B>12</B>   <B>3.9</B>   <B>3.5</B>   <B>2.1</B>
      <B>bigger_not_in_centre.bmp</B>
      <B>%</B> <B>atlc</B> <B>bigger_not_in_centre.bmp</B>
      This time atlc will take much longer to calculate Zo,  since
      the  bitmap  is  larger  and so it needs to do more calcula-
      tions. However, the final result should be more accurate. In
      this  case,  the  result  reported is 24.2461 Ohms, an error
-     that't manginally smaller than before at  0.285  %.   It  is
-     possible  there may be something to be gained by decreassing
+     that's marginally smaller than before at  0.285  %.   It  is
+     possible  there  may be something to be gained by decreasing
      the cutoff at larger grids, so this is  being  investigated.
      However,  errors  almost always below 0.25 %, no matter what
      is being analysed.
 
-     In   the   fourth   example,   instead    of    re-directing
-     <B>create_bmp_for_circ_in_circ's</B>  output  to  a file with the &gt;
-     sign, it is done using the -f option.
-     <B>%</B> <B>create_bmp_for_circ_in_circ</B> <B>-f</B> <B>13inner_22outer_coax.bmp</B> <B>22</B>
-     <B>13</B> <B>0</B> <B>1.0</B>
-     <B>%</B> <B>atlc</B> <B>13inner_22outer_coax.bmp</B>
-     <B>%atlc</B> will calculate an impedance of 32.5063  Ohms,  whereas
-     the  correct  value,  calculated  using  the  formula  Zo=60
-     log(D/d) is 31.5656 Ohms, so altc has an error of -0.187 %.
-
-     In the fifth example, a material with a  relativity  permit-
-     tivity  7.89  of is used. While there is no change in how to
-     use <B>create_bmp_for_circ_in_circ</B>, since this permittivity  is
+     In the fourth example, a material with a relativity  permit-
+     tivity  7.89  of  is  used. There is no change in how to use
+     <B>create_bmp_for_circ_in_circ</B>, but since this permittivity  is
      not  one  of  the  pre-defined values (see COLOURS), we must
-     tell <B>atlc</B> what it is <B>%</B> <B>create_bmp_for_circ_in_circ</B>  <B>23</B>  <B>9</B>  <B>0</B>
-     <B>7.89</B> <B>&gt;</B> <B>an_odd_er.bmp</B>
+     tell <B>atlc</B> what it is.  The colour will be set an olive green
+     one, with a hexacidcal representation of red=0xCA, blue=OxFF
+     and green = 0x00. This just happens to be the default colour
+     used when the permittivity is unknown. So atlc must be given
+     this information, like thisL
+     <B>%</B> <B>create_bmp_for_circ_in_circ</B> <B>23</B> <B>9</B> <B>0</B> <B>7.89</B> <B>an_odd_er.bmp</B>
      <B>%</B> <B>atlc</B> <B>-d</B> <B>CAFF00=7.89</B> <B>an_odd_er.bmp</B>
 
      This has a theoretical impedance of 20.041970 Ohms, but atlc
@@ -247,14 +241,16 @@
 
 </PRE>
 <H2>SEE ALSO</H2><PRE>
-     <B>atlc(1)</B>                       <B>create_bmp_for_circ_in_rect(1)</B>
+     <B>atlc(1)</B>
+     <B>create_bmp_for_circ_in_rect(1)</B>
      <B>create_bmp_for_microstrip_coupler(1)</B>
      <B>create_bmp_for_rect_cen_in_rect(1)</B>
      <B>create_bmp_for_rect_cen_in_rect_coupler(1)</B>
      <B>create_bmp_for_rect_in_circ(1)</B>
      <B>create_bmp_for_rect_in_rect(1)</B>
      <B>create_bmp_for_stripline_coupler(1)</B>
-     <B>create_bmp_for_symmetrical_stripline(1)</B>    <B>design_coupler(1)</B>
+     <B>create_bmp_for_symmetrical_stripline(1)</B>
+     <B>design_coupler(1)</B>
      <B>find_optimal_dimensions_for_microstrip_coupler(1)</B> <B>readbin(1)</B>
 
      http://atlc.sourceforge.net                - Home page
@@ -262,8 +258,12 @@
      atlc-X.Y.Z/docs/html-docs/index.html       - HTML docs
      atlc-X.Y.Z/docs/qex-december-1996/atlc.pdf - theory paper
      atlc-X.Y.Z/examples                        - examples
-     http://www.david-kirkby.co.uk              - my home page
-     http://www.david-kirkby.co.uk/ham          - ham radio pages
+
+
+
+
+
+
 
 
 

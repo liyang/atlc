@@ -28,12 +28,12 @@
 </PRE>
 <H2>DESCRIPTION</H2><PRE>
      <B>create_bmp_for_rect_cen_in_rect</B> is a pre-processor for <B>atlc</B>,
-     the  finite  difference  programme that is used to calculate
-     the properties of a  two-conductor  electrical  transmission
-     line    of    arbitrary   cross   section.   The   programme
+     the  finite difference program that is used to calculate the
+     properties of a two-conductor electrical  transmission  line
+     of      arbitrary     cross     section.     The     program
      <B>create_bmp_for_rect_cen_in_rect</B> is used as  a  fast  way  of
      generating  bitmaps (there is no need to use a graphics pro-
-     gramme), for a rectangular conductor placed centrally inside
+     gram), for a rectangular conductor placed  centrally  inside
      another rectangular conductor, like this:
 
      -----------------------------------------------------  ^
@@ -75,7 +75,7 @@
      that  permittivity  will  be  set  according  to the colours
      defined in COLOURS below. If Er is not one of those  permit-
      tivities,  the  region of permittivity Er will be set to the
-     colour 0xCAFF00. The programme <B>atlc</B> does not know what these
+     colour 0xCAFF00. The program <B>atlc</B> does not know  what  these
      permittivites  are,  so  they  <B>atlc</B>,  must  be told with the
      comand line option -d, as in example 4 below.
 
@@ -120,12 +120,12 @@
 
      Some colours, such as pink, turquoise,  sandy,  brown,  gray
      etc  may mean slightly different things to different people.
-     This is not so with  <B>atlc</B>,  as  the  programme  expects  the
-     colours  below  to  be EXACTLY defined as given. Whether you
-     feel the colour is sandy or yellow is up to you, but if  you
-     use  it  in your bitmap, then it either needs to be a colour
-     recognised by atlc, <B>or</B> you must define  it  with  a  command
-     line option (see OPTIONS and example 5 below).
+     This is not so with <B>atlc</B>, as the program expects the colours
+     below  to  be EXACTLY defined as given. Whether you feel the
+     colour is sandy or yellow is up to you, but if you use it in
+     your  bitmap, then it either needs to be a colour recognised
+     by atlc, <B>or</B> you must define it with a  command  line  option
+     (see OPTIONS and example 5 below).
      The following conductors are recognised by atlc:
      red    = 255,000,000 or 0xff0000 is the live conductor.
      green  = 000,255,000 or 0x00ff00 is the grounded conductor.
@@ -134,8 +134,8 @@
      All bitmaps <B>must</B> have the live (red)  and  grounded  (green)
      conductor.  The  blue  conductor is not currently supported,
      but it will be used to indicate a negative conductor,  which
-     will  be  needed  if/when  the  programme  gets  extended to
-     analyse directional couplers.
+     will  be needed if/when the program gets extended to analyse
+     directional couplers.
 
      The following dielectrics are recognised by atlc <B>and</B> <B>so</B>  <B>are</B>
      <B>produced</B> <B>by</B> create_bmp_for_rect_cen_in_rect<B>.</B>
@@ -149,7 +149,7 @@
      (polystyrene)
      sandy      239,203,027 or 0xEFCC1A as Er=3.3   (PVC)
      brown      188,127,096 or 0xBC7F60 as Er=3.335 (epoxy resin)
-     Terquoise  026,239,179 or 0x1AEFB3 as Er=4.8   (glass PCB)
+     Turquoise  026,239,179 or 0x1AEFB3 as Er=4.8   (glass PCB)
      Dark gray  142,142,142 or ox696969 as Er=6.15  (duroid 6006)
      L. gray    240,240,240 or 0xDCDCDC as Er=10.2  (duroid 6010)
      D. orange  213,130,067 or 0xD5A04D as Er=100.0  (mainly  for
