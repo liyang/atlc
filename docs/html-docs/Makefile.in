@@ -88,6 +88,44 @@ install_sh = @install_sh@
 
 SUBDIRS = jpgs
 
+htmldir = $(datadir)/atlc/docs/html-docs
+
+html_DATA = IMPORTANT.html \
+FAQ.html \
+accuracy.html \
+an_example_of_using_design_coupler.html \
+atlc.1.html \
+banner.html \
+bmp.html \
+building.html \
+calculate_zodd_and_zeven.html \
+colours.html \
+couplers.html \
+create_bmp_for_circ_in_circ.1.html \
+create_bmp_for_circ_in_rect.1.html \
+create_bmp_for_rect_cen_in_rect.1.html \
+create_bmp_for_rect_in_circ.1.html \
+create_bmp_for_rect_in_rect.1.html \
+create_bmp_for_stripline_coupler.1.html \
+create_bmp_for_symmetrical_stripline.1.html \
+determine_dimensions_of_couplers.html \
+errors.html \
+examples.html \
+fileformat.html \
+generate_for_coupler.html \
+generators.html \
+index.html \
+index2.html \
+man-pages.html \
+options.html \
+readbin.1.html \
+rect_in_rect.html \
+theory.html \
+todo.html \
+tutorial.html \
+usage_design_coupler.html 
+
+
 EXTRA_DIST = BUGS \
 FAQ.html \
 IMPORTANT.html \
@@ -132,6 +170,8 @@ subdir = docs/html-docs
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_CLEAN_FILES =
 DIST_SOURCES =
+DATA = $(html_DATA)
+
 
 RECURSIVE_TARGETS = info-recursive dvi-recursive install-info-recursive \
 	uninstall-info-recursive all-recursive install-data-recursive \
@@ -148,6 +188,24 @@ $(srcdir)/Makefile.in:  Makefile.am  $(top_srcdir)/configure.in $(ACLOCAL_M4)
 Makefile:  $(srcdir)/Makefile.in  $(top_builddir)/config.status
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)
 uninstall-info-am:
+htmlDATA_INSTALL = $(INSTALL_DATA)
+install-htmlDATA: $(html_DATA)
+	@$(NORMAL_INSTALL)
+	$(mkinstalldirs) $(DESTDIR)$(htmldir)
+	@list='$(html_DATA)'; for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  f="`echo $$p | sed -e 's|^.*/||'`"; \
+	  echo " $(htmlDATA_INSTALL) $$d$$p $(DESTDIR)$(htmldir)/$$f"; \
+	  $(htmlDATA_INSTALL) $$d$$p $(DESTDIR)$(htmldir)/$$f; \
+	done
+
+uninstall-htmlDATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(html_DATA)'; for p in $$list; do \
+	  f="`echo $$p | sed -e 's|^.*/||'`"; \
+	  echo " rm -f $(DESTDIR)$(htmldir)/$$f"; \
+	  rm -f $(DESTDIR)$(htmldir)/$$f; \
+	done
 
 # This directory's subdirectories are mostly independent; you can cd
 # into them and run `make' without going through this Makefile.
@@ -285,9 +343,10 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-recursive
-all-am: Makefile
+all-am: Makefile $(DATA)
 installdirs: installdirs-recursive
 installdirs-am:
+	$(mkinstalldirs) $(DESTDIR)$(htmldir)
 
 install: install-recursive
 install-exec: install-exec-recursive
@@ -331,7 +390,7 @@ info: info-recursive
 
 info-am:
 
-install-data-am:
+install-data-am: install-htmlDATA
 
 install-exec-am:
 
@@ -349,7 +408,7 @@ mostlyclean: mostlyclean-recursive
 
 mostlyclean-am: mostlyclean-generic
 
-uninstall-am: uninstall-info-am
+uninstall-am: uninstall-htmlDATA uninstall-info-am
 
 uninstall-info: uninstall-info-recursive
 
@@ -359,14 +418,14 @@ uninstall-info: uninstall-info-recursive
 	dvi-recursive info info-am info-recursive install install-am \
 	install-data install-data-am install-data-recursive \
 	install-exec install-exec-am install-exec-recursive \
-	install-info install-info-am install-info-recursive install-man \
-	install-recursive install-strip installcheck installcheck-am \
-	installdirs installdirs-am installdirs-recursive \
-	maintainer-clean maintainer-clean-generic \
-	maintainer-clean-recursive mostlyclean mostlyclean-generic \
-	mostlyclean-recursive tags tags-recursive uninstall \
-	uninstall-am uninstall-info-am uninstall-info-recursive \
-	uninstall-recursive
+	install-htmlDATA install-info install-info-am \
+	install-info-recursive install-man install-recursive \
+	install-strip installcheck installcheck-am installdirs \
+	installdirs-am installdirs-recursive maintainer-clean \
+	maintainer-clean-generic maintainer-clean-recursive mostlyclean \
+	mostlyclean-generic mostlyclean-recursive tags tags-recursive \
+	uninstall uninstall-am uninstall-htmlDATA uninstall-info-am \
+	uninstall-info-recursive uninstall-recursive
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

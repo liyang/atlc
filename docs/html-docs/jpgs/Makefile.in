@@ -13,6 +13,8 @@
 # PARTICULAR PURPOSE.
 
 @SET_MAKE@
+
+# This is Makefile.am, which is proceed by automake
 SHELL = @SHELL@
 
 srcdir = @srcdir@
@@ -84,7 +86,109 @@ am__include = @am__include@
 am__quote = @am__quote@
 install_sh = @install_sh@
 
-# This is Makefile.am, which is proceed by automake
+jpgdir = $(datadir)/atlc/docs/html-docs/jpgs
+
+jpg_DATA = 000000.jpg \
+0000ff.jpg \
+00ff00.jpg \
+00ffff.jpg \
+1aefb3.jpg \
+3dcoup.jpg \
+50.jpg \
+696969.jpg \
+8235ef.jpg \
+8e8e8e.jpg \
+aliased.jpg \
+bc7f60.jpg \
+central.jpg \
+centred.jpg \
+cir.jpg \
+coax2.E.jpg \
+coax2.Er.jpg \
+coax2.Ex.jpg \
+coax2.Ey.jpg \
+coax2.U.jpg \
+coax2.V.jpg \
+coax2.jpg \
+coaxial1.jpg \
+cop1.jpg \
+coupler.jpg \
+coupler3.jpg \
+coupler4.jpg \
+coupler9.jpg \
+d5a04d.jpg \
+dcdcdc.jpg \
+dff788.jpg \
+eccentric_coax.jpg \
+eccentric_coax2.jpg \
+efcc1a.jpg \
+elliptical.jpg \
+enclosed-microstrip.jpg \
+ff0000.jpg \
+ff0001.jpg \
+ff00ff.jpg \
+ffcaca.jpg \
+ffff00.jpg \
+ffffff.jpg \
+full-size.jpg \
+ms_coupler.jpg \
+multi-dielectric.E.jpg \
+multi-dielectric.Er.jpg \
+multi-dielectric.Ex.jpg \
+multi-dielectric.Ey.jpg \
+multi-dielectric.U.jpg \
+multi-dielectric.V.jpg \
+multi-dielectric.jpg \
+not-aliased.jpg \
+off-centre.jpg \
+off-centre2.jpg \
+pcb.E.jpg \
+pcb.Er.jpg \
+pcb.Ex.jpg \
+pcb.Ey.jpg \
+pcb.U.jpg \
+pcb.V.jpg \
+pcb.jpg \
+pcb2.jpg \
+rect.jpg \
+rect2.jpg \
+rect9.jpg \
+ric.jpg \
+symmetrical_strip.jpg \
+test.jpg \
+too-small.jpg \
+twin-wire.E.jpg \
+twin-wire.Er.jpg \
+twin-wire.Ex.jpg \
+twin-wire.Ey.jpg \
+twin-wire.U.jpg \
+twin-wire.V.jpg \
+twin-wire.jpg \
+twin-wire2.E.jpg \
+twin-wire2.jpg \
+ushape.E.jpg \
+ushape.Er.jpg \
+ushape.Ex.jpg \
+ushape.Ey.jpg \
+ushape.U.jpg \
+ushape.V.jpg \
+ushape.jpg \
+very-odd-dark.E.jpg \
+very-odd-dark.Ex.jpg \
+very-odd-dark.Ey.jpg \
+very-odd-light.E.jpg \
+very-odd-light.Ex.jpg \
+very-odd-light.Ey.jpg \
+very-odd.E.jpg \
+very-odd.Er.jpg \
+very-odd.Ex.jpg \
+very-odd.Ey.jpg \
+very-odd.U.jpg \
+very-odd.V.jpg \
+very-odd.jpg \
+wide.jpg  
+
+
 EXTRA_DIST = 000000.jpg \
 0000ff.jpg \
 00ff00.jpg \
@@ -189,6 +293,8 @@ subdir = docs/html-docs/jpgs
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_CLEAN_FILES =
 DIST_SOURCES =
+DATA = $(jpg_DATA)
+
 DIST_COMMON = Makefile.am Makefile.in
 all: all-am
 
@@ -199,6 +305,24 @@ $(srcdir)/Makefile.in:  Makefile.am  $(top_srcdir)/configure.in $(ACLOCAL_M4)
 Makefile:  $(srcdir)/Makefile.in  $(top_builddir)/config.status
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)
 uninstall-info-am:
+jpgDATA_INSTALL = $(INSTALL_DATA)
+install-jpgDATA: $(jpg_DATA)
+	@$(NORMAL_INSTALL)
+	$(mkinstalldirs) $(DESTDIR)$(jpgdir)
+	@list='$(jpg_DATA)'; for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  f="`echo $$p | sed -e 's|^.*/||'`"; \
+	  echo " $(jpgDATA_INSTALL) $$d$$p $(DESTDIR)$(jpgdir)/$$f"; \
+	  $(jpgDATA_INSTALL) $$d$$p $(DESTDIR)$(jpgdir)/$$f; \
+	done
+
+uninstall-jpgDATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(jpg_DATA)'; for p in $$list; do \
+	  f="`echo $$p | sed -e 's|^.*/||'`"; \
+	  echo " rm -f $(DESTDIR)$(jpgdir)/$$f"; \
+	  rm -f $(DESTDIR)$(jpgdir)/$$f; \
+	done
 tags: TAGS
 TAGS:
 
@@ -230,9 +354,10 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-all-am: Makefile
+all-am: Makefile $(DATA)
 
 installdirs:
+	$(mkinstalldirs) $(DESTDIR)$(jpgdir)
 
 install: install-am
 install-exec: install-exec-am
@@ -274,7 +399,7 @@ info: info-am
 
 info-am:
 
-install-data-am:
+install-data-am: install-jpgDATA
 
 install-exec-am:
 
@@ -292,15 +417,16 @@ mostlyclean: mostlyclean-am
 
 mostlyclean-am: mostlyclean-generic
 
-uninstall-am: uninstall-info-am
+uninstall-am: uninstall-info-am uninstall-jpgDATA
 
 .PHONY: all all-am check check-am clean clean-generic distclean \
 	distclean-generic distdir dvi dvi-am info info-am install \
 	install-am install-data install-data-am install-exec \
-	install-exec-am install-info install-info-am install-man \
-	install-strip installcheck installcheck-am installdirs \
-	maintainer-clean maintainer-clean-generic mostlyclean \
-	mostlyclean-generic uninstall uninstall-am uninstall-info-am
+	install-exec-am install-info install-info-am install-jpgDATA \
+	install-man install-strip installcheck installcheck-am \
+	installdirs maintainer-clean maintainer-clean-generic \
+	mostlyclean mostlyclean-generic uninstall uninstall-am \
+	uninstall-info-am uninstall-jpgDATA
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
