@@ -1,26 +1,28 @@
-NEWS for realease 4.2.11 on  29/3/03.
+NEWS for realease 4.3.0 on 23 May 2003.
 
-A rather annoying bug has finally been found. The checksums of some of
-the bitmaps generated changed a bit from tiem to time, for no apparent
-reasson. It was found that some of the vaiables were being used
-unitialised! Thanks to Sun's compiler, this was easy to find. 
+A bug, preventing atlc from runningt properly on multiple
+processors has been fixed. This is the main change. 
 
-Support for MPI (message passing interface), has been added, so a
-network of computers can be used to solve a problem. This was added by
-Patrick Kelsey <kelsey@ieee.org>. Apparently it works under Linux on a
-PC but it won't work on my Sun Ultra 80 running Solaris 9.  As such,
-this feature is not really working well, but anyone can feel free to
-play with it. See the INSTALL file for a bit more iformation and also
-run 'configure --help'. 
+atlc should no longer fail any test on a multi-processor
+system configured with --with-threads. The algorithm used
+for both single processor and multiple processor (i.e. 
+threaded code is the same). 
+
+The -t option to atlc, which sets the number of threads 
+when configured for multiple processors can be set to 0
+to use entirely the single-threaded algorithm. If set to
+one, it will use the multi-threaded algoritm, but use
+only one thread. If set to some other number, it will use
+that number of threads and be optimal for the same number
+of cpus. 
+
+Support for distributed programming has been temporarily removed.
+Someone else added the code, but since he is no longer involved in
+the development, it is difficult for me to follow. So I'll remove
+the MPI specific code and will re-implement this. 
+
+A test has been added to make sure atlc can handle the -d option 
 
 
-Putting bitmaps where there are electical shorts will now develope an error, 
-rather than produce an incorrect result.         
-
-The output from atlc run on all the bitmaps in the examples directory are 
-included - they are small files and might be useful to people. 
-
-Running the binary programs incorrectly will print a version number. 
-
-Dr. David Kirkby 29/3/2003
+Dr. David Kirkby 23/5/2003
 
