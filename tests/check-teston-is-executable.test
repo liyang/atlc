@@ -1,0 +1,14 @@
+#! /bin/sh
+# Dr. David Kirkby. 
+
+# This test checks that 'teston' is executable. 
+
+if [ -x $top_srcdir/teston  ]; then 
+  echo "PASSED:" $0 >> tests.log
+  exit 0
+else
+  echo "FAILED:" $0 > tests.log
+  exit 1
+fi
+
+
