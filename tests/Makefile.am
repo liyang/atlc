@@ -17,10 +17,12 @@ benchmark_SOURCES = \
 benchmark.c \
 try_aix.c \
 try_hpux.c \
+try_irix.c \
 try_linux.c \
 try_portable.c \
 try_solaris.c \
 try_tru64.c \
+try_unicos.c \
 defs.h
 
 
@@ -71,6 +73,7 @@ Test_threads_b \
 4a-create_bmp_for_microstrip_coupler.test \
 5a-check-s_and_-S_options_of_atlc-2conductor.test \
 5b-check-s_and_-S_options_of_atlc-3conductor.test \
+5c-check_numeric_data_from_atlc-2conductor.test \
 6a-create_and_check_25ohm_201Pixel_high_symmetrical_stripline.test \
 6b-create_25ohm_401Pixel_high_symmetrical_stripline.test \
 6c-create_25ohm_801Pixel_high_symmetrical_stripline.test \
@@ -189,6 +192,7 @@ WARNING--The-next-test+benchmark-takes-a-long-while.test \
 4a-create_bmp_for_microstrip_coupler.test \
 5a-check-s_and_-S_options_of_atlc-2conductor.test \
 5b-check-s_and_-S_options_of_atlc-3conductor.test \
+5c-check_numeric_data_from_atlc-2conductor.test \
 6a-create_and_check_25ohm_201Pixel_high_symmetrical_stripline.test \
 6b-create_25ohm_401Pixel_high_symmetrical_stripline.test \
 6c-create_25ohm_801Pixel_high_symmetrical_stripline.test \
