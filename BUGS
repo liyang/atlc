@@ -15,24 +15,15 @@
     chances of a failure. 
 
   4.Data on machines is only gathered properly on a few machines (Solaris,
-     Tru64, AIX and HP-UX). On IRIX, Linux, *BSD, it is next to useless. 
+     Tru64, AIX IRIX and HP-UX). On Linux and  *BSD, it is next to useless. 
 
-  5.If there is a version of the gsl library installed, but it is too old 
-    (< version 0.8), then the linker will link in -lgsl. However, there will 
-    be no gsl functions called, so *some* linkers (well the only one known is 
-    on SGI's IRIX platform, will generate the warning message
-
-    ld32: WARNING 84 : /usr/freeware/lib32/libgsl.so is not used for resolving any symbol. 
-
-    This is harmless and may be ignored. The top-level configure.ac or the 
-    m4/gsl.m4
-    files need sorting out to correct this 
-
-  6.There seems to be problems on SPARC running old versions of Linux 
+  5.There seems to be problems on SPARC running old versions of Linux 
     (Redhat 6.2, kernel 2.2.14-5.0smp) and Debian, when configured for
     multi-processor support. I'm tempted to believe this is a bug in the 
     thread support on old versions of Linux. It's fine on newer versions on a 
     PC. 
+
+  6 Sometimes the CVS is not as current as it should be. 
 
   7.The lack of any way of changing brightness of images without a 
     cpu-intensive re-run. 
@@ -45,13 +36,11 @@
 
  10.HTML versions of the man pages have diagrams that are completely stupid. #
     This is a problem with the program 'man2html' I'm using - I think so anyway. 
-
  11 Sometimes documention in one file is out of date with documention in
     another. The web pages might not agree with those in docs/html-docs.
     or README's contradict each other. Where possible I've tried to   
     remember to update the ChangeLog and add a date to a file, but this
     does not always happen I'm afraid. 
 
- 12 Sometimes the CVS is not as current as it should be. 
 
-Dr. David Kirkby,  4th September 2003 Re: atlc-4.4.1 
+Dr. David Kirkby,  10th October 2003 Re: atlc-4.5.0 
