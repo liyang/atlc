@@ -54,7 +54,7 @@ simulation. */
 #define NEG_TO_POS                         -1
 #define METAL_ER  1e9
 
-#define ZERO_ELEMENTS_FIRST 0       
+#define ZERO_ELEMENTS_FIRST 1       
 
 #ifndef TRUE 
 #define TRUE 1
@@ -338,7 +338,8 @@ double find_energy_per_metre(int i, int j);
 void update_voltage_array(int i, int calculate_edges);
 FILE *get_file_pointer_with_right_filename(char *filename, char *ext);
 void find_maximum_values(struct max_values *maximum_values, int zero_elementsQ);
-void calculate_colour_data(double x, double xmax, int w, int h, int offset, unsigned char *image_dat, char image_type);
+void calculate_colour_data(double x, double xmax, int w, int h, int offset, unsigned char *image_dat, char image_type,
+unsigned char *red, unsigned char *green, unsigned char *blue);
 double find_Ex(int w, int h) ;
 double find_Ey(int w, int h);
 double find_E(int w, int h);
