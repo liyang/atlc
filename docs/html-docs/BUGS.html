@@ -10,17 +10,20 @@
 </head>
 <body>
 <ol>
+<LI>
+If there is a verion of the gsl library installed, but it is too old
+(< version 0.8), then the linker will link in -lgsl. However, there
+will be no gsl functions called, so *some* linkers (well the only
+one known is on SGI's IRIX platform, will generate the warning message<br>
+<br>
+ld32: WARNING 84 : /usr/freeware/lib32/libgsl.so is not used for resolving any symbol.
+<br><br>
+This is harmless and may be ignored. The top-level configure.ac or the m4/gsl.m4<br>
+files need sorting out to correct this </LI>
 <li>
-atlc does NOT run properly on AIX. So far its only been checked on AIX
-5.2 using  IBM's C compiler version 6.0 on an IBM RS/6000 7025 F50
-server. But it behaved <b>very badly</b> on that. Clearly the program <em>atlc</em> is not working right, although at least some of the support programs are
-working.  What is up I don't know. 
-</li>
-<li>
-
 There seems to be problems on SPARC running old versions of Linux
 (Redhat 6.2, kernel  2.2.14-5.0smp) and Debian, when configured
-for multi-processor support.. I'm tempted to belive
+for multi-processor support. I'm tempted to believe
 this is a bug in the thread support on old versions of Linux. It's fine
 on newer versions on a PC. 
 </li>
