@@ -47,6 +47,9 @@ extern int W, H;
 void write_bitmap(FILE *image_data_fp, struct transmission_line_properties xyz)
 {
    int colour_Er1=-1, colour_Er2=-1, vector_aligned;
+#ifndef HAVE_MEMSET
+   int memory_location;
+#endif
    unsigned char *image_data, *unaligned_image_vector;
 
    get_Er1_and_Er2_colours(&colour_Er1, &colour_Er2);
@@ -65,8 +68,13 @@ void write_bitmap(FILE *image_data_fp, struct transmission_line_properties xyz)
    image_data=ustring(0,(W+3)*3*H);
    unaligned_image_vector=ustring(0,(W+3)*3*H);
 
-   //memset((void *) (image_data),0xff,W*H*3);
+#ifdef HAVE_MEMSET
    memset((void *) (image_data),0x0,(W+3)*3*H);
+#else
+   for(memory_location=0; memory_location < (W+3)*3*H; ++ memory_location)
+     image_data[memory_location]=0;
+#endif /* end of #ifdef HAVE_MEMSET */
+
 
    /* Fill a vector with the initial (original) data on the 
    tline. This is not aligned in any way */
