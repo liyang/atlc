@@ -8,7 +8,7 @@ check_for_shorts.c print_data.c bmp.h definitions.h Erdata.h \
 check_for_boundaries.c find_energy_per_metre.c \
 update_voltage_array.c get_file_pointer_with_right_filename.c\
 find_maximum_values.c calculate_colour_data.c find_electric_fields.c\
-get_options.c error_and_exit.c
+get_options.c error_and_exit.c do_fd_calculation.c
 
 rect_in_rect_SOURCES = rect_in_rect.c usage_rect_in_rect.c write_bitmap.c \
 get_Er1_and_Er2_colours.c convert_rect_in_rect_dimensions_to_integers.c \
