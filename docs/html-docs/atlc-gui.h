@@ -1,3 +1,28 @@
+#ifdef __GNUG__
+#pragma implementation "help.cpp"
+#pragma interface "help.cpp"
+#endif
+
+// For compilers that support precompilation, includes "wx/wx.h".
+#include <wx/wxprec.h>
+
+#ifdef __BORLANDC__
+#pragma hdrstop
+#endif
+
+// for all others, include the necessary headers (this file is usually all you
+// need because it includes almost all "standard" wxWindows headers
+#ifndef WX_PRECOMP
+#include <wx/wx.h>
+#endif
+
+#include <wx/image.h>
+#include <wx/wxhtml.h>
+#include <wx/filesys.h>
+#include <wx/fs_zip.h>
+#include <wx/tipdlg.h>
+#include <iostream.h>
+
 enum
 {
   ID_Open = 1,
@@ -24,3 +49,4 @@ enum
   ID_FileMenuClose = 22,
   ID_About
 };
+
