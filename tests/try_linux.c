@@ -51,6 +51,11 @@ int try_linux(struct computer_data *data)
 
   /* Obtain the number of CPUs online on the Linux system */
 
+#ifdef _SC_NPROCESSORS_CONF
+  if( sysconf(_SC_NPROCESSORS_CONF) >= 1)
+    sprintf(data->cpus,"%d", sysconf( _SC_NPROCESSORS_CONF));
+#endif
+
   /* Obtain the of CPU and FPU on the Linux box */
 
   /* Obtain the RAM on the Linux system if possible. Currently this is 
