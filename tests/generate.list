@@ -1,4 +1,0 @@
-#!/bin/sh
-# Generate a list of test files in a format for reading
-# into Makefile.am
-ls *.test | awk '{print $1 " \\" }' > foo
