@@ -13,7 +13,7 @@
 # checks for system services
 # AC_OUTPUT([file...])
 
-AC_INIT([atlc], [4.3.4], [drkirkby@ntlworld.com])
+AC_INIT([atlc], [4.3.5], [drkirkby@ntlworld.com])
 AM_INIT_AUTOMAKE
 AC_PREREQ([2.57])
 AC_CONFIG_SRCDIR([tools/src/myfilelength.c])
@@ -41,7 +41,7 @@ AC_CHECK_LIB(m,log)
 AC_CHECK_HEADERS([stdio.h math.h malloc.h stdlib.h string.h time.h ])
 AC_CHECK_HEADERS([strings.h sys/types.h machine/hal_sysinfo.h sys/sysinfo.h ])
 AC_CHECK_HEADERS([sys/processor.h sched.h sys/param.h sys/pstat.h sys/unistd.h ])
-AC_CHECK_HEADERS([ sys/utsname.h sys/systeminfo.h unistd.h ])
+AC_CHECK_HEADERS([ sys/utsname.h sys/systeminfo.h unistd.h aixfont.h ])
 
 # Checks for typedefs
 AC_HEADER_STDBOOL
@@ -61,7 +61,8 @@ AC_CHECK_SIZEOF([size_t])
 # checks for library functions
 AC_FUNC_STRTOD
 AC_CHECK_FUNCS([memset strchr strtol processor_info getsysinfo pthread_num_processors_np ])
-AC_CHECK_FUNCS([ cpu_get_max pstat pstat_getdynamic uname sysconf sysinfo ])
+AC_CHECK_FUNCS([ cpu_get_max pstat pstat_getdynamic pstat_getprocessor uname sysconf sysinfo ])
+AC_CHECK_FUNCS([ cpusetcreate cpucountset cpu_get_num ])
 AC_CHECK_SIZEOF([long long])
 
 # checks for system services
@@ -114,6 +115,8 @@ if test "$ac_cv_use_gsl" = "yes"; then
 fi
 
 AC_ARG_ENABLE(debug, AC_HELP_STRING([--enable-debug],[ with debugging code]), AC_DEFINE([DEBUG],[1]))
+AC_ARG_ENABLE(hardware-info, AC_HELP_STRING([--enable-hardware-info],[ Find out information about hardware (might prevent compilation on some
+systems)]), AC_DEFINE([TRY_TO_GET_HARDWARE_INFO],[1]))
 
 # Put a usage message so the user can use threads if wanted. 
 AC_ARG_WITH(benchmark,
