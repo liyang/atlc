@@ -1,0 +1,54 @@
+#!/bin/sh
+# The following script allows a distribution of any program which ends
+# .tar.gz to be configured/built on a remote platform. By doing this,
+# possible to spot bugs that are not apparent on a local machine. The
+# script uses ssh/scp to copy the commands and should not require the
+# entry of passwords. A script is created on the local machine, which
+# is copied by scp/scp2 to a remote machine and executed there. Trying
+# to execute the individual staments in the script via ssh takes too
+# long, as the authentification needs to be repeated each time. 
+
+if [ $# != 2 ] ; then
+  echo "Usage: teston hostname buildname"
+  echo "  e.g. teston dove     atlc-5.0.0"
+  echo "  will copy atlc-5.0.0.tar.gz to dove and build/test it there"
+exit 1
+
+
+fi
+
+# When I sort out all my keys, the following won't be necessary, but for
+# now when connecting to a machine at work, I'll use the www.ssh.com
+# version of ssh, which is just called ssh2 on my machine (it is not
+# linked to ssh. On my local machines, all of which run OpenSSH in one
+# format or another, this is called by ssh. 
+if [ $1 = duke ] || [ $1 = satchmo ] || [ $1 = lennon ] ;  then
+  SSH=ssh2 
+  SCP=scp2
+else
+  SSH=ssh
+  SCP=scp
+fi
+
+# Create a file 'remote host' on the local machine, which we want
+# executed elsewhere. 
+echo rm -rf $2 > remote-test
+echo tar xfz $2.tar.gz >> remote-test
+echo cd $2  >> remote-test
+echo pwd   >> remote-test
+echo ./configure   >> remote-test
+echo ' make  > /dev/null ' >> remote-test
+echo make check >> remote-test
+chmod 755 remote-test
+
+# Copy via scp/scp2 the script file in addition to the package
+# (somename.tar.gz) to the remote machine.
+
+$SCP $2.tar.gz davek@$1:remote-test
+$SCP -p remote-test davek@$1:remote-test
+
+# Execute the script on the distant machine.
+$SSH davek@$1 ./remote-test
+
+# Clean up after ourselves. 
+rm remote-test
