@@ -13,7 +13,7 @@
 # checks for system services
 # AC_OUTPUT([file...])
 
-AC_INIT([atlc], [4.3.8], [drkirkby@ntlworld.com])
+AC_INIT([atlc], [4.3.9], [drkirkby@ntlworld.com])
 AM_INIT_AUTOMAKE
 AC_PREREQ([2.57])
 AC_CONFIG_SRCDIR([tools/src/myfilelength.c])
@@ -134,6 +134,12 @@ if test "x$with_threads" = "xyes"; then
 fi
 AC_CHECK_DECL(_SC_PHYS_PAGES,,)
 AC_CHECK_DECL(_SC_PAGESIZE,,)
+AC_CHECK_DECL(__FreeBSD__,,)
+AC_CHECK_DECL(__NetBSD__,,)
+AC_CHECK_DECL(__Solaris__,,)
+AC_CHECK_DECL(__Tru64__,,)
+AC_CHECK_DECL(__HPUX__,,)
+AC_CHECK_DECL(__AIX__,,)
 
 # MPI and MPE Support
 #AC_ARG_WITH(mpi, AC_HELP_STRING([--with-mpi=[mpi_install_prefix]],[support MPI-based parallel computation (needs MPICH installed)]))
