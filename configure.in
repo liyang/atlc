@@ -133,7 +133,7 @@ AC_HAVE_HEADERS(gsl/gsl_sf_ellint.h,,AC_MSG_WARN([
 	To get full functionality you should install the GNU scientific 
 	library (gsl) available at http://sources.redhat.com/gsl. Without gsl
 	it will be impossible to evalute the theoretical impedance of 
-	a coupler  using \"make_coupler\"]))
+	a coupler  using \"design_coupler\"]))
 
 AC_OUTPUT([\
 Makefile                                        \
