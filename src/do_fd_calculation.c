@@ -8,7 +8,7 @@ extern int verbose;
 extern int append_flag;
 extern double found_this_dielectric; 
 
-void do_fd_calculation(double *capacitance, double *inductance, double *Zo, double *velocity,double *vf,FILE *where_to_print, double cutoff, int dielectrics_to_consider_just_now, char * filename ,
+void do_fd_calculation(double *capacitance, double *inductance, double *Zo, double *Zodd, double *Zeven, int which_Z, double *velocity,double *vf,FILE *where_to_print, double cutoff, int dielectrics_to_consider_just_now, char * filename ,
 int a_requirement_for_fd_calculations_Q)
 {
   double c_old, c;

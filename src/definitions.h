@@ -248,5 +248,5 @@ int get_options(int argc, char **argv, char *opts);
 void usage_readbin(void);
 void ERR(char *s, char c, char **argv);
 char *index2(char *str, char c);
-void do_fd_calculation(double *capacitance, double *inductance,double *Zo, double *velocity, double *vf, FILE *where_to_print, double cutoff, int dielectrics_to_consider_just_now, char * filename, int requirement_for_fd_calculations_Q);
+void do_fd_calculation(double *capacitance, double *inductance,double *Zo, double *Zodd, double *Zeven, int whichZ, double *velocity, double *vf, FILE *where_to_print, double cutoff, int dielectrics_to_consider_just_now, char * filename, int requirement_for_fd_calculations_Q);
 

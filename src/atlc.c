@@ -220,7 +220,8 @@ without the threads\nlibrary.\n",1);
     dielectric. If necessary, they will be done again */
 
     dielectrics_to_consider_just_now=1;
-    do_fd_calculation(&capacitance, &inductance, &Zo, &velocity, &vf, stdout, cutoff, dielectrics_to_consider_just_now, argv[my_optind],REQUIRE_FD_CALCULATIONS);
+    do_fd_calculation(&capacitance, &inductance, &Zo, &Zodd, &Zeven, int which_Z, &velocity, &vf, stdout, cutoff, dielectrics_to_consider_just_now, argv[my_optind],REQUIRE_FD_CALCULATIONS);
+
     /* The calculation of inductance above is correct, and does not
     need to be altered. However, if there are multiple dielectrics,
     then the capacitance needs to be computed again, this time taking
