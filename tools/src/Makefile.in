@@ -100,6 +100,8 @@ build_cpu = @build_cpu@
 build_os = @build_os@
 build_vendor = @build_vendor@
 built_with_posix_threads = @built_with_posix_threads@
+compiled_with_cflags = @compiled_with_cflags@
+compiled_with_compiler = @compiled_with_compiler@
 datadir = @datadir@
 exec_prefix = @exec_prefix@
 host = @host@
@@ -122,17 +124,25 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
+with_extra_benchmark_data = @with_extra_benchmark_data@
 
-bin_PROGRAMS = mymd5sum myfilelength 
+bin_PROGRAMS = mymd5sum myfilelength locatediff
 myfilelength_SOURCES = myfilelength.c 
+locatediff_SOURCES = locatediff.c
 mymd5sum_SOURCES = mymd5sum.c 
 EXTRA_DIST = md5.h
 subdir = tools/src
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_CLEAN_FILES =
-bin_PROGRAMS = mymd5sum$(EXEEXT) myfilelength$(EXEEXT)
+bin_PROGRAMS = mymd5sum$(EXEEXT) myfilelength$(EXEEXT) \
+	locatediff$(EXEEXT)
 PROGRAMS = $(bin_PROGRAMS)
 
+am_locatediff_OBJECTS = locatediff.$(OBJEXT)
+locatediff_OBJECTS = $(am_locatediff_OBJECTS)
+locatediff_LDADD = $(LDADD)
+locatediff_DEPENDENCIES =
+locatediff_LDFLAGS =
 am_myfilelength_OBJECTS = myfilelength.$(OBJEXT)
 myfilelength_OBJECTS = $(am_myfilelength_OBJECTS)
 myfilelength_LDADD = $(LDADD)
@@ -147,15 +157,16 @@ mymd5sum_LDFLAGS =
 DEFAULT_INCLUDES =  -I. -I$(srcdir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
-@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/myfilelength.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/mymd5sum.Po
+@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/locatediff.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/myfilelength.Po ./$(DEPDIR)/mymd5sum.Po
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-DIST_SOURCES = $(myfilelength_SOURCES) $(mymd5sum_SOURCES)
-DIST_COMMON = Makefile.am Makefile.in
-SOURCES = $(myfilelength_SOURCES) $(mymd5sum_SOURCES)
+DIST_SOURCES = $(locatediff_SOURCES) $(myfilelength_SOURCES) \
+	$(mymd5sum_SOURCES)
+DIST_COMMON = README Makefile.am Makefile.in
+SOURCES = $(locatediff_SOURCES) $(myfilelength_SOURCES) $(mymd5sum_SOURCES)
 
 all: all-am
 
@@ -190,6 +201,9 @@ uninstall-binPROGRAMS:
 
 clean-binPROGRAMS:
 	-test -z "$(bin_PROGRAMS)" || rm -f $(bin_PROGRAMS)
+locatediff$(EXEEXT): $(locatediff_OBJECTS) $(locatediff_DEPENDENCIES) 
+	@rm -f locatediff$(EXEEXT)
+	$(LINK) $(locatediff_LDFLAGS) $(locatediff_OBJECTS) $(locatediff_LDADD) $(LIBS)
 myfilelength$(EXEEXT): $(myfilelength_OBJECTS) $(myfilelength_DEPENDENCIES) 
 	@rm -f myfilelength$(EXEEXT)
 	$(LINK) $(myfilelength_LDFLAGS) $(myfilelength_OBJECTS) $(myfilelength_LDADD) $(LIBS)
@@ -203,6 +217,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/locatediff.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/myfilelength.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mymd5sum.Po@am__quote@
 

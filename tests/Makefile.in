@@ -100,6 +100,8 @@ build_cpu = @build_cpu@
 build_os = @build_os@
 build_vendor = @build_vendor@
 built_with_posix_threads = @built_with_posix_threads@
+compiled_with_cflags = @compiled_with_cflags@
+compiled_with_compiler = @compiled_with_compiler@
 datadir = @datadir@
 exec_prefix = @exec_prefix@
 host = @host@
@@ -122,6 +124,7 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
+with_extra_benchmark_data = @with_extra_benchmark_data@
 
 # This is tests/Makefile.am.
 # MPI_16a_PI computes the value of PI and uses distributed processing
@@ -138,7 +141,13 @@ MPI_16a_PI_SOURCES = MPI_16a_PI.c
 MPI_16a_PI_LDADD = @MPILIBS@ @LIBS@
 
 benchmark_SOURCES = \
-benchmark.c 
+benchmark.c \
+get_portable_data.c \
+try_hpux.c \
+try_tru64.c \
+try_solaris.c \
+try_portable.c \
+defs.h
 
 
 Test_threads_a_SOURCES = Test_threads_a.c
@@ -418,7 +427,7 @@ microstrip_coupler.bmp \
 undefined_permittivities.bmp 
 
 
-DISTCLEANFILES = tests.log test.txt
+DISTCLEANFILES = tests.log test.txt benchmark.foo.html tests.html benchmark.foo.dat
 subdir = tests
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_CLEAN_FILES =
@@ -436,7 +445,9 @@ am_Test_threads_b_OBJECTS = Test_threads_b-Test_threads_b.$(OBJEXT)
 Test_threads_b_OBJECTS = $(am_Test_threads_b_OBJECTS)
 Test_threads_b_DEPENDENCIES =
 Test_threads_b_LDFLAGS =
-am_benchmark_OBJECTS = benchmark.$(OBJEXT)
+am_benchmark_OBJECTS = benchmark.$(OBJEXT) get_portable_data.$(OBJEXT) \
+	try_hpux.$(OBJEXT) try_tru64.$(OBJEXT) try_solaris.$(OBJEXT) \
+	try_portable.$(OBJEXT)
 benchmark_OBJECTS = $(am_benchmark_OBJECTS)
 benchmark_LDADD = $(LDADD)
 benchmark_DEPENDENCIES =
@@ -448,7 +459,10 @@ am__depfiles_maybe = depfiles
 @AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/MPI_16a_PI.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/Test_threads_a-Test_threads_a.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/Test_threads_b-Test_threads_b.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/benchmark.Po
+@AMDEP_TRUE@	./$(DEPDIR)/benchmark.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/get_portable_data.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/try_hpux.Po ./$(DEPDIR)/try_portable.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/try_solaris.Po ./$(DEPDIR)/try_tru64.Po
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
@@ -495,6 +509,11 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Test_threads_a-Test_threads_a.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Test_threads_b-Test_threads_b.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/benchmark.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/get_portable_data.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/try_hpux.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/try_portable.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/try_solaris.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/try_tru64.Po@am__quote@
 
 distclean-depend:
 	-rm -rf ./$(DEPDIR)
