@@ -83,7 +83,13 @@ double calculate_integer_values(struct data *optimise,int nmax,int accuracy_leve
        //printf("error=%f i=%d n=%d int_values[%d]=%d float_values[%d]=%f\n",error,i,n,n,optimise->int_values[n],n,optimise->float_values[n]);
       }
     }
-    if(error<error_max)
+    /* Since the numbers generated for the integers seeme to differ on different
+    computers, I've suspected the problem might be that an error is very
+    similar at two different sets of integer values. Hence I will only
+    consider the error lower its lower by 1e-9. That should avoid silly
+    rounding problems. */
+
+    if(error<(error_max+1e-9))
     {
      error_max=error;
      best_i=i;
