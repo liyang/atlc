@@ -80,15 +80,15 @@ void ERR(char *s, char c, char **argv)
 	}
 }
 
-char *index2(char *str, char c)
+char *index2(const char *str, char c)
 {
 	char *ret;
-	ret=strchr(str,c);
+	ret=strchr((char *) str,c);
 	return(ret);
 }
 
 
-int get_options(int argc, char **argv, char *opts)
+int get_options(int argc, char **argv, const char *opts)
 {
 	static int sp = 1;
 	register int c;
@@ -105,7 +105,7 @@ int get_options(int argc, char **argv, char *opts)
 		}
         }
 	my_optopt = c = argv[my_optind][sp];
-	if(c == ':' || (cp=index2(opts, c)) == NULL) {
+	if(c == ':' || (cp=index2((char *) opts, c)) == NULL) {
 		ERR(": illegal option -- ", c,argv);
 		if(argv[my_optind][++sp] == '\0') {
 			my_optind++;
