@@ -21,32 +21,7 @@ USA.
 Dr. David Kirkby, e-mail drkirkby@ntlworld.com 
 
 */
-
-/* The programme create_bmp_for_rect_in_rect is a pre-processor for atlc. It produces bitmaps of rectangular
-inner and rectangular outer */
-
-#ifdef HAVE_STDLIB_H
-#include <stdlib.h>
-#endif  
-
-#include "definitions.h"
-
-#ifdef WINDOWS
-#pragma hrdstop
-#include <condefs.h>
-#endif
-
-double WW, HH, aa, bb, cc, dd, ww, hh, Er1, Er2, oo;
-int W, H, a, b, c, d, w, h, D, o;
-/* The following are only needed, so I can link in two  
-convert_circ_in_circ_dimensions_to_integers.c
-and
-convert_create_bmp_for_rect_in_rect_dimensions_to_integers.c
-*/
-
-int verbose=FALSE;
-int lowest=2500, highest=10000;
-int fileflag=FALSE;
+#include "exit_codes.h"
 
 extern int main(int argc, char **argv) /* Read parameters from command line here   */
 {
@@ -102,4 +77,6 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
       usage_create_bmp_for_rect_cen_in_rect();
    exit(0);
 #endif 
+  error_and_exit("This programme is not implemented", PROGRAMME_NOT_IMPLEMENTED);
+return(0);
 }
