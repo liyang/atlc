@@ -30,10 +30,10 @@ extern int errno;
 int try_portable(struct computer_data *data)
 {
 #ifdef HAVE_UNAME
-  struct utsname name;
-  int ret;
+  struct utsname operating_system;
+  int ret, i, string_length;
 
-  ret=uname(&name);
+  ret=uname(&operating_system);
   if (ret == -1)
   {
 #ifdef HAVE_ERRNO_H
@@ -45,11 +45,53 @@ int try_portable(struct computer_data *data)
   }
   else
   {
-    strcpy(data->sysname,name.sysname);
-    strcpy(data->nodename,name.nodename);
-    strcpy(data->release,name.release);
-    strcpy(data->version,name.version);
-    strcpy(data->machine,name.machine);
+    /* There is a distint posibility that some data in the operating
+    system structure will have spaces in it. This will screw things
+    up, since benchmark.test is expect a fixed number of arguments.
+    Hence to avoid this, any spaces are replaced by underscores */
+
+    strcpy(data->sysname,operating_system.sysname);
+    string_length=strlen(data->sysname);
+    for(i=0;i<string_length; ++i)
+    {
+      if (data->sysname[i] == ' ')
+        data->sysname[i]='_';
+    }
+
+    /* nodename should be safe, but I'll take no chances */
+    strcpy(data->nodename,operating_system.nodename);
+    string_length=strlen(data->nodename);
+    for(i=0;i<string_length; ++i)
+    {
+      if (data->nodename[i] == ' ')
+        data->nodename[i]='_';
+    }
+
+    /* not so with release */
+    strcpy(data->release,operating_system.release);
+    string_length=strlen(data->release);
+    for(i=0;i<string_length; ++i)
+    {
+      if (data->release[i] == ' ')
+        data->release[i]='_';
+    }
+
+    /* or version */
+    strcpy(data->version,operating_system.version);
+    string_length=strlen(data->version);
+    for(i=0;i<string_length; ++i)
+    {
+      if (data->version[i] == ' ')
+        data->version[i]='_';
+    }
+
+    strcpy(data->machine,operating_system.machine);
+    string_length=strlen(data->machine);
+    for(i=0;i<string_length; ++i)
+    {
+      if (data->machine[i] == ' ')
+        data->machine[i]='_';
+    }
     return(0);
   }
 #endif
