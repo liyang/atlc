@@ -1,1 +1,1 @@
-Makefile *.gz atlc-* *.bz2 *.tar config.log config.cache 
+Makefile *.gz atlc-* *.bz2 *.tar config.log config.cache Makefile.in

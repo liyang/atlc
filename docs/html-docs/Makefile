@@ -13,7 +13,7 @@
 # PARTICULAR PURPOSE.
 
 
-SHELL = /bin/bash
+SHELL = /bin/sh
 
 srcdir = .
 top_srcdir = ../..
@@ -38,10 +38,10 @@ pkglibdir = $(libdir)/atlc
 pkgincludedir = $(includedir)/atlc
 top_builddir = ../..
 
-ACLOCAL = ${SHELL} /export/home/davek/atlc/missing --run aclocal-1.6
-AUTOCONF = ${SHELL} /export/home/davek/atlc/missing --run autoconf
-AUTOMAKE = ${SHELL} /export/home/davek/atlc/missing --run automake-1.6
-AUTOHEADER = ${SHELL} /export/home/davek/atlc/missing --run autoheader
+ACLOCAL = ${SHELL} /export/home/davek/ATLC/atlc-4.2.8-branch/missing --run aclocal-1.6
+AUTOCONF = ${SHELL} /export/home/davek/ATLC/atlc-4.2.8-branch/missing --run autoconf
+AUTOMAKE = ${SHELL} /export/home/davek/ATLC/atlc-4.2.8-branch/missing --run automake-1.6
+AUTOHEADER = ${SHELL} /export/home/davek/ATLC/atlc-4.2.8-branch/missing --run autoheader
 
 am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
 INSTALL = /usr/local/bin/install -c
@@ -62,7 +62,7 @@ POST_UNINSTALL = :
 EXEEXT = 
 OBJEXT = o
 PATH_SEPARATOR = :
-AMTAR = ${SHELL} /export/home/davek/atlc/missing --run tar
+AMTAR = ${SHELL} /export/home/davek/ATLC/atlc-4.2.8-branch/missing --run tar
 AWK = gawk
 CC = gcc
 CXX = g++
@@ -70,16 +70,19 @@ CXXCPP = /lib/cpp
 DEPDIR = .deps
 EXTRA_WXWINDOWS_CFLAGS = 
 EXTRA_WXWINDOWS_LIBS = 
+GTK_CFLAGS = 
+GTK_CONFIG = 
+GTK_LIBS = 
 GUI_DIRECTORY = 
 INSTALL_STRIP_PROGRAM = ${SHELL} $(install_sh) -c -s
 PACKAGE = atlc
 RANLIB = ranlib
 STRIP = 
-VERSION = 4.2.8
+VERSION = 4.2.9
 WXWINDOWS = 
 am__include = include
 am__quote = 
-install_sh = /export/home/davek/atlc/install-sh
+install_sh = /export/home/davek/ATLC/atlc-4.2.8-branch/install-sh
 
 # This is Makefile.am, which is proceed by automake
 SUBDIRS = jpgs
