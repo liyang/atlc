@@ -64,7 +64,7 @@ int main(int argc, char **argv)
       bmp_size=atol(my_optarg); 
     break;
     case 'v':
-      verbose=TRUE;
+      verbose++;
     break;
   }
   if( bmp_size < 6 || (argc-my_optind != 5) || bmp_size>28)
@@ -114,18 +114,21 @@ int main(int argc, char **argv)
   right. */
 
   return_error=calculate_integer_values(&optimise, 4, bmp_size);
-  if(verbose)
+  if(verbose >=2)
     printf("error returned from calculate_integer_values=%g\n", return_error);
   W=optimise.best[0];
   H=optimise.best[1];
   w=optimise.best[2];
   s=optimise.best[3];
   write_bitmap(image_data_fp, foo);
-  calculate_Zodd_and_Zeven(&Zodd, &Zeven, &Zo, ww, HH, ss, er);
-  printf("The actual dimensions you gave have theoretical imedances of:\n");
-  printf("        Zodd= %f Zeven= %f Zo= %f (Ohms) ww=%f HH=%f ss=%f er=%f\n\n", Zodd, Zeven, Zo,ww,HH,ss,er);
-  calculate_Zodd_and_Zeven(&Zodd, &Zeven, &Zo, w, H-10, s, er);
-  printf("The bitmap produced (which approximates what you want) should have:\n");
-  printf("   Zodd= %f Zeven= %f Zo= %f (Ohms)\n", Zodd, Zeven, Zo);
+  if(verbose >= 1)
+  {
+    calculate_Zodd_and_Zeven(&Zodd, &Zeven, &Zo, ww, HH, ss, er);
+    printf("The actual dimensions you gave have theoretical imedances of:\n");
+    printf("        Zodd= %f Zeven= %f Zo= %f (Ohms) ww=%f HH=%f ss=%f er=%f\n\n", Zodd, Zeven, Zo,ww,HH,ss,er);
+    calculate_Zodd_and_Zeven(&Zodd, &Zeven, &Zo, w, H-10, s, er);
+    printf("The bitmap produced (which approximates what you want) should have:\n");
+    printf("   Zodd= %f Zeven= %f Zo= %f (Ohms)\n", Zodd, Zeven, Zo);
+  }
   exit(0);
 }
