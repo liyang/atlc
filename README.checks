@@ -1,3 +1,103 @@
+Portabiltity and testing of atlc. 
+--------------------------------
+
+
+******************************************************************
+IMPORTANT
 After buiding, make sure to run 'make check' to test your binaries
-and to create some of the examples which due to their size are better
-built than put into the distribution. 
+******************************************************************
+
+atlc should be quite portable. Running under NetBSD it has been compiled
+to run on about 30 systems. It has been run under various flavours of
+UNIX.  
+
+atlc can be configured serveral ways - without support for threads, with
+support for threads or with support for the MPICH library for
+distributed processing. It can also can be configured with or without
+the GNU scientific library (gsl). This leaves 6 combinations of
+configuration. Some are more portable than others and are therefore more
+likely to work on your computer. 
+
+Before atlc is distributed on the Sourceforge site, it has to pass a
+number of tests. Those tests are not necessarily the same for each
+release. This file describes the tests and the results obtained for each
+release.  Note, many of these machines were configured to run with old
+operating sytems and old software, with a lack of suitable libraries. 
+
+Development is always done on a Sun Ultra 80 which has recent version of
+gcc, the gsl libraries, a Sun compiler 'cc', the MPICH libraries etc. After
+confirming the software works on this platform, it is configured on
+other platforms, as availabilty of machines and availability of time
+permit. 
+
+The following table shows the hardware tested on, the software on each
+of these systems and the results of testing for various configurations.
+Note, not every test will pass on every platform for every combination
+of configuration options, since these machines has purposly got old
+software on them. 
+
+
+****************
+****************
+Release 4.1.12
+****************
+****************
+This is the hardware, software and test results used when testing
+release 4.1.12. 
+
+HARDWARE OF THE TEST MACHINES:
+-----------------------------
+
+hostname   Machine                CPU(s)    Memory 
+---------------------------------------------------
+blackbird  Sun SPARCstation 20     75 MHz       Mb 
+bluetit    Sun SPARCstation 20  2x125 MHz   320 Mb 
+crow       Sun SPARCstation 20     75 MHz       Mb
+dove       Sun SPARCstation 20     60 MHz       Mb
+sparrow[1] Sun Ultra 80         4x450 MHz  4096 Mb
+sparrow[2] Sun Ultra 80         4x450 MHz  4096 M5
+tiger      Pentium II PC          350 MHz   128 MI
+woodpecker Sun SPARCstation 20  2x125 MHz   224 MI
+
+SOFTWARE ON THE TEST MACHINES:
+-----------------------------
+
+hostname     OS-version    kernel    gsl  compiler      MPCIH
+-------------------------------------------------------------
+blackbird    NetBSD  1.6             NI  gcc-2.93.3      NI
+bluetit      Solaris 2.5            0.5  gcc-2.93.3      NI
+crow         OpenBSD 3.2             TF  gcc-2.93.3      NI
+dove         Debian  ???  2.2.20    1.2  gcc-2.96        NI
+sparrow[1]   Solaris 9   112233-03  1.3  gcc-3.2.2    1.2.5
+sparrow[2]   Solaris 9   112233-03  1.3  cc-5.3       1.2.5
+tiger        Redhat  7.2  2.4.10-5  0.8  gcc-2.96        NI
+
+
+RESULTS OF TESTS OF 'atlc' ON THE TEST MACHINES:
+
+1) $ ./configure
+When configurd as just 'configure', the atlc software take no advantage of
+multi-threading or of the distributed processing MPICH library. However,
+since the default is to use the GNU scientific library (gsl), this is
+used. Since some systems don't have gsl 1.0, or have older releases,
+then some tests will of course fail in this case. These are reported as
+failures. 
+
+hostname      Tests  Passed  Failed  Skipped     Notes 
+---------------------------------------------------------------------------
+blackbird  
+bluetit   
+crow     
+dove    I
+sparrow[1] 
+sparrow[2] 
+tiger      
+
+2) configure --without-gsl
+When configured as 'configure --without-gsl' the software will take no
+advantage of multi-threading or of the distributed processing MPICH
+library. Also, since we have disabled the use of the gsl library
+(enabled by default), we can expect 4 tests to fail, as these need the
+gsl library. So even on a machine configured with an up to date version
+of the gsl library, one can expect 4 failures, as 4 tests need the gsl
+library. 
