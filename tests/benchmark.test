@@ -37,12 +37,12 @@ else
   L2=`echo $ret | awk '{print $21}'`
   echo " "
   echo "                  BENCHMARK DATA"
-  echo "                  BENCHMARK DATA" > tests.log
+  echo "                  BENCHMARK DATA" >> tests.log
   echo "                  <STRONG><div align="center">BENCHMARK DATA</div></STRONG> <BR>" > tests.html
 
   echo "Hardware data working reasonably well on AIX, HP-UX, Solaris, Tru64"
   echo "Hardware data working reasonably well on AIX, HP-UX, Solaris, Tru64" >> tests.log
-  echo "Hardware data working reasonably well on AIX, HP-UX, Solaris, Tru64 <BR>" >> tests.log
+  echo "Hardware data working reasonably well on AIX, HP-UX, Solaris, Tru64 <BR>" >> tests.html
 
   echo "and UNICOS, but not too well on Linux and poorly on *BSD and IRIX" 
   echo "and UNICOS, but not too well on Linux and poorly on *BSD and IRIX" >> tests.log
@@ -53,6 +53,9 @@ else
   echo "Any help to write code to gather data on other OS's would be appreciated<BR><BR>" >> tests.html
 
   echo " "
+  echo " " >> tests.log
+  echo "<BR>" >> tests.html
+
   echo "Hardware provider is $hw_provider. Hardware platform is $hw_platform."
   echo "Hardware provider is $hw_provider. Hardware platform is $hw_platform." >> tests.log
   echo "Hardware provider is $hw_provider. Hardware platform is $hw_platform.<BR>" >> tests.html
