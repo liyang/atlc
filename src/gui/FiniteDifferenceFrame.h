@@ -18,7 +18,15 @@ class FiniteDifferenceFrame: public wxFrame
     void OnCut(wxCommandEvent& event);
     void OnPaste(wxCommandEvent& event);
     void OnClose(wxCloseEvent& event);
-       DECLARE_EVENT_TABLE()
+
+    void OnClick(wxCommandEvent& event);
+
+  private:
+    // Added Panel and button members.
+    wxPanel *myPanel;
+    wxTextCtrl *myTextCtrl;
+    wxButton *myButton;
+    DECLARE_EVENT_TABLE()
 };
 
 #endif  // FINITE_DIFFERENCE_FRAME_H
