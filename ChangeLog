@@ -1,3 +1,27 @@
+****** Version 4.3.7 Released August 21sth 2003 ****
+
+configure.ac
+Added the lines
+AC_CHECK_DECL(_SC_PHYS_PAGES,,)
+AC_CHECK_DECL(_SC_PAGESIZE,,)
+to enable me to check if _SC_PHYS_PAGES and _SC_PAGESIZE
+are defined for debugging purposes only. No use of them is 
+made, but it help to determine why code might not work later
+on, if its known whether these are defined or not. Problems
+reported by someone indicate problems, which would be easier
+to track with this option enabled. 
+
+tests/try_portable.c
+check the return value or uname, to see if it fails or 
+not. If it does fail, print message and error if errno
+is defined. Replaces any spaces with underscores in the 
+ouputs from any part of the utsname structure.
+
+tests/try_linux.c
+Removed any code to check for systems parameters using 
+uname- it should all be found in try_portable.c, which
+is called before any other try_* functions. 
+
 ****** Version 4.3.7 Released August 6th 2003  ********
 
 README.--enable-hardware-info
