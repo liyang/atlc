@@ -41,6 +41,9 @@ groundplanes of spacing h. */
 #endif
 
 #include "exit_codes.h"
+/* formuals taken from Matthaei, Young and Jones, Microwave Filters, Impedance Matching
+Networks and Coupling Structures, Artech House, Dedham, MA., 1980. , but I've substituted
+29.97924580105028, as its clear 30 is just a close approximation */
 
 void calculate_Zodd_and_Zeven(double *Zodd, double *Zeven, double *Zo, double w, double H, double s, double er)
 {
@@ -51,7 +54,7 @@ void calculate_Zodd_and_Zeven(double *Zodd, double *Zeven, double *Zo, double w,
   ke_dash=sqrt(1-ke*ke);
   ko_dash=sqrt(1-ko*ko);
 
-  *Zeven=30.0*M_PI*gsl_sf_ellint_Kcomp(ke_dash, GSL_PREC_DOUBLE)/(gsl_sf_ellint_Kcomp(ke,GSL_PREC_DOUBLE)*sqrt(er));
-  *Zodd= 30.0*M_PI*gsl_sf_ellint_Kcomp(ko_dash, GSL_PREC_DOUBLE)/(gsl_sf_ellint_Kcomp(ko,GSL_PREC_DOUBLE)*sqrt(er));
+  *Zeven=29.9792458010502837*M_PI*gsl_sf_ellint_Kcomp(ke_dash, GSL_PREC_DOUBLE)/(gsl_sf_ellint_Kcomp(ke,GSL_PREC_DOUBLE)*sqrt(er));
+  *Zodd= 29.9792458010502837*M_PI*gsl_sf_ellint_Kcomp(ko_dash, GSL_PREC_DOUBLE)/(gsl_sf_ellint_Kcomp(ko,GSL_PREC_DOUBLE)*sqrt(er));
   *Zo=sqrt( (*Zodd)*(*Zeven));
 }
