@@ -1,5 +1,5 @@
 bin_PROGRAMS = atlc rect_in_rect circ_in_circ rect_cen_in_rect \
-circ_in_rect rect_in_circ readbin sym_strip calc_coupler
+circ_in_rect rect_in_circ readbin sym_strip make_coupler 
 
 atlc_SOURCES = nrutil.c atlc.c read_bitmap_file_headers.c \
 byteswap.c string.c setup_arrays.c finite_difference_single_threaded.c \
@@ -49,6 +49,7 @@ usage_sym_strip.c string.c nrutil.c write_bitmap_out.c\
 align_bitmap_image.c byteswap.c calculate_sym_strip_impedance.c\
 elliptic_integral.c get_options.c definitions.h error_and_exit.c
 
-calc_coupler_SOURCES = calc_coupler.c usage_calc_coupler.c elliptic_integral.c 
+make_coupler_SOURCES = make_coupler.c usage_make_coupler.c \
+calculate_Zodd_and_Zeven.c get_options.c definitions.h 
 
 EXTRA_DIST = create winatlc tests DO_NOT_EDIT_THIS_FILE
