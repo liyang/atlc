@@ -1,13 +1,17 @@
-  0.The program will not compile on the Cray Y-MP supercomputer. This is
-    because the Cray has no integer data types that are not 8-bytes. I
-    hope to work around this some time soon. 
-  1.There are two test failures on IBM's AIX operating system, using IBM's 
+  1 Not every version of make will build atlc. GNU make will do, which
+    is of course free. Sun's make will NOT. I think it is true to say 
+    Sun's is the only version of make that is unsuitable, but if you find
+    another one, use GNU make, but please advise me of the version. 
+
+  2.There are two test failures on IBM's AIX operating system, using IBM's 
     compiler version 6.0 when compiled multi-threaded I've no idea of the
     source of these problems. Many pixels differ, but by a small amount. I 
     find it hard to believe this is rounding errors. 
-  2.Data on machines is only gathered properly on a few machines (Solaris,
+
+  3.Data on machines is only gathered properly on a few machines (Solaris,
      Tru64, AIX and HP-UX). On IRIX, Linux, *BSD, it is next to useless. 
-  3.If there is a version of the gsl library installed, but it is too old 
+
+  4.If there is a version of the gsl library installed, but it is too old 
     (< version 0.8), then the linker will link in -lgsl. However, there will 
     be no gsl functions called, so *some* linkers (well the only one known is 
     on SGI's IRIX platform, will generate the warning message
@@ -17,17 +21,23 @@
     This is harmless and may be ignored. The top-level configure.ac or the 
     m4/gsl.m4
     files need sorting out to correct this 
-  4.There seems to be problems on SPARC running old versions of Linux 
+
+  5.There seems to be problems on SPARC running old versions of Linux 
     (Redhat 6.2, kernel 2.2.14-5.0smp) and Debian, when configured for
     multi-processor support. I'm tempted to believe this is a bug in the 
     thread support on old versions of Linux. It's fine on newer versions on a 
     PC. 
-  5.The lack of any way of changing brightness of images without a 
+
+  6.The lack of any way of changing brightness of images without a 
     cpu-intensive re-run. 
-  6.There are no manual pages for several programs 
-  7.The error messages shown in the files docs/htlm-docs/errors.html are 
+
+  7.There are no manual pages for several programs 
+
+  8.The error messages shown in the files docs/htlm-docs/errors.html are 
     wrong and were generated on an earlier release. However, it makes little
     difference - the meaning should be clear. 
-  8.HTML versions of the man pages have diagrams that are completely stupid. #
+
+  9.HTML versions of the man pages have diagrams that are completely stupid. #
     This is a problem with the program 'man2html' I'm using - I think so anyway. 
-Dr. David Kirkby, 15th Aug 2003 Re: atlc-4.3.7 
+
+Dr. David Kirkby, 29th Aug 2003 Re: atlc-4.4.0 
