@@ -35,6 +35,7 @@ man-pages.html \
 options.html \
 readbin.1.html \
 rect_in_rect.html \
+sysdata.1 \
 theory.html \
 todo.html \
 tutorial.html \
