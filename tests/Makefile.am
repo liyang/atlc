@@ -12,7 +12,14 @@ MPI_16a_PI_SOURCES = MPI_16a_PI.c
 MPI_16a_PI_LDADD = @MPILIBS@ @LIBS@
 
 benchmark_SOURCES = \
-benchmark.c 
+benchmark.c \
+get_portable_data.c \
+try_hpux.c \
+try_tru64.c \
+try_solaris.c \
+try_portable.c \
+defs.h
+
 
 Test_threads_a_SOURCES = Test_threads_a.c
 Test_threads_a_CPPFLAGS = @PTHREAD_CFLAGS@
@@ -288,5 +295,4 @@ test-coupler2.bmp.txt \
 microstrip_coupler.bmp \
 undefined_permittivities.bmp 
 
-DISTCLEANFILES = tests.log test.txt
-
+DISTCLEANFILES = tests.log test.txt benchmark.foo.html tests.html benchmark.foo.dat
