@@ -16,6 +16,7 @@
         <LI><a href="#What_is">What is <CODE>atlc</CODE>?</A></LI>
         <LI><a href="#Formulas_for">Formulas for transmission line properties can be found in any decent book, so why would I want to use <CODE>atlc</CODE>?</A></LI>
         <LI><a href="#When_would">When would using <CODE>atlc</CODE> not be a good idea?</A></LI>
+        <LI><a href="#Loss">Can <CODE>atlc</CODE> calculate the loss of a transmission line?</A></LI>
         <LI><a href="#What_are">What are the hardware and software requirements for using <CODE>atlc</CODE>?</A></LI>
         <LI><a href="#Who_wrote">Who wrote <CODE>atlc</CODE>?</a></LI>
        	<LI><a href="#Under_what">Under what license conditions is <CODE>atlc</CODE> released? </a></LI>
@@ -55,21 +56,29 @@ Note, in the above images, it should <STRONG>not</STRONG> be assumed that somewh
 
 	
 	<LI><UL><LI><STRONG>Question: </STRONG><a name="When_would">When</a> would using <CODE>atlc</CODE> not be a good idea?</LI><LI><STRONG>Answer:</STRONG> If the geometry is simple and there are known analytical formula, it would be a waste of time to use <CODE>atlc</CODE>. The programme is designed for the cases where there are no analytical results.</LI></UL></LI>
-	
+
+	<LI><UL><LI><STRONG>Question: </STRONG><a name="Loss">Can </a> <CODE>atlc</CODE> calculate the loss of a transmission line?</LI><LI><STRONG>Answer:</STRONG> No it can not. Someone hinted at a way it could perhaps be done, but this is highly speculative and I have no plans to attempt it.</LI></UL></LI>	
 	<LI><UL><LI><STRONG>Question: </STRONG><a name="What_are">What</a> are the hardware and software requirements for using <CODE>atlc</CODE>?</LI><LI><STRONG>Answer:</STRONG>A Unix computer, with a <A HREF="http://gcc.gnu.org">gcc</A> or other C compiler is needed to run <CODE>atlc</CODE>. Floating point support in hardware is strongly recommended. Hence a 486 or better PC is really needed, or perhaps a 386 with 387 floating point processor. Given the programme is fairly time consuming, I would suggest at least a 100 MHz machine, preferably a lot more. The programme should compile easily, as only the standard maths library is needed. If you have multiple processors, you can add multi-threaded support. If you wish to do this, you will need to have <a href="http://www.gnu.org/software/pth">pthreads</A>  installed. <CODE>atlc</CODE> has been tested on a 350 MHz Pentium II PC with Red Hat Linux (release 6.1, kernel 2.2.12-98), a Sun SPARCstation 20 with Solaris 8 and 4 x 125 MHz HyperSPARC CPUs and a Sun Ultra 60 with dual 300 MHz processors.  All  CPUs were used on the Sun workstations. I've not tested multi-processor support on any other machine.<BR><BR>RAM requirements should not be excessive by today's standards, with 48 Mb sufficient for most problems. Using a very fine grid can push this into a few hundred Mb, but cpu speed will generally limit you before RAM <br>You will also need some graphics package such as <A HREF="http://www.gimp.org">Gimp</A>, <A HREF="http://www.adobe.com/products/photoshop/main.html">Photoshop</A>, Windows Paint, CorelDraw etc, that can save images at bitmap (.BMP or .bmp) files. I would suggest using <A HREF="http://www.gimp.org">Gimp</A> on the unix machine, but the Gimp graphics programme can run under Windows, unix, OS2, DOS, VMS  or whatever operating system you like. </LI></UL></LI>
 	
-	<LI><UL><LI><STRONG>Question:</STRONG><a name="Who_wrote">Who wrote</a> <CODE>atlc</CODE> ?</LI><LI><STRONG>Answer: </STRONG><CODE>atlc</CODE> was written and maintained by Dr. David Kirkby, <A HREF= "mailto:drkirkby@ntlworld.com">drkirkby@ntlworld.com</a></LI></UL></LI>
+	<LI><UL><LI><STRONG>Question:</STRONG><a name="Who_wrote">Who wrote</a> <CODE>atlc</CODE> ?</LI><LI><STRONG>Answer: </STRONG><CODE>atlc</CODE> was written and is maintained by Dr. David Kirkby, <A HREF= "mailto:drkirkby@ntlworld.com">drkirkby@ntlworld.com</a></LI></UL></LI>
 	<LI><UL><LI><STRONG>Question: </STRONG> <a name="Under_what">Under</a> what license conditions is <CODE>atlc</CODE> released ?</LI><LI><STRONG>Answer: </STRONG>It it issued under the <a href="http://www.gnu.org/copyleft/gpl.html">GNU General Public Licence</A><p></LI></UL></LI>
 		
 	<LI><UL><LI><STRONG>Question: </STRONG><a name="Where_can">Where can I download the latest version of <CODE>atlc</CODE>? </a></LI><LI><STRONG>Answer:</STRONG> Please download from <a href="http://atlc.sourceforge.net">SourceForge</A></LI></UL></LI>
 	<LI><UL><LI><STRONG>Question:</STRONG> <a name="How_do">How</a> do I build <CODE>atlc</CODE> ? </LI><LI><STRONG>Answer: </STRONG> Building is simple, basically requiring you to type<br>
-<PRE>% configure
+<PRE>
+% gzip -d atlc-X.Y.Z.tar.gz </PRE> Where X.Y.Z is the version<br>
+<PRE>% tar xv atlc-X.Y.Z.tar
+% cd atlc-X.Y.Z
+% ./configure
 % make
+% cd src
+% ./tests 
 % su
 # make install</PRE>
 By default, the binaries are installed in /usr/local/bin and the man pages in /usr/local/man. I've not determined how to use autoconf or automake to put the html documents somewhere sensible, so you will have to do that by hand.   You will need root access to install the files in /usr/local, but if you wish to install them elsewhere, you can do
-<PRE>% configure --prefix=~
+<PRE>% ./configure --prefix=~
 % make
+% cd atlc-X.Y.Z.
 % make install</PRE>
 to install off your home directory.<br>
 If you have access to a computer with multiple CPUs and you have software configured for threaded support, you can do enable support for the multiple processors, by running:
@@ -77,17 +86,17 @@ If you have access to a computer with multiple CPUs and you have software config
 % make
 % su
 # make install</PRE>
-I would suggest you test a few examples without threaded support, as I've only tested this on a Sun SPARCstation 20. On my Sun, using a large bitmap (for best accuracy) results in about 80% utilisation of my 4 cpus, resulting in results that are around 2.4x faster than on one cpu. On small bitmaps, there is no advantage in running on multiple CPUs. 
+<STRONG>The programme must be configured first without threaded support, as the tests will not complete proplerly otherwise. </STRONG>I would suggest you test a few examples without threaded support too, as this has not been tested on many machines. On my old quad CPU Sun SPARCstation 20, using a large bitmap (for best accuracy) results in about 80% utilisation of my 4 cpus, resulting in results that are around 2.4x faster than on one cpu. On my current machine, a dual processor Sun Ultra 60, it runs about 1.7x faster on 2 cpus. On small bitmaps, there is little or no advantage in running on multiple CPUs. 
 </LI></UL></LI>	
 	<LI><UL><LI><STRONG>Question: </STRONG><a name="Can_atlc">Can </a><CODE>atlc</CODE> calculate the impedance of <STRONG>any</STRONG> transmission line?</LI><LI><STRONG>Answer:</STRONG> No. It can calculate the impedance of any transmission line with 2 conductors, but it can not calculate the impedance of fibre optic cables, metallic waveguides.</LI></UL></LI>
 
 	<LI><UL><LI><STRONG>Question: </STRONG> <a name="I_wish">I wish to find the impedance of a microstrip line, on a printed circuit board, which is enclosed in a box. Can <CODE>atlc</CODE> calculate the impedance of the transmission line with the two dielectrics - vacuum and the fibreglass PCB.</a>  </LI><LI><STRONG>Answer:</STRONG> Yes, this is no problem, although I must admit the results of this have not been checked very much. <CODE>atlc</CODE> is conveniently configured for the following dielectric constants - 1.0, 2.1 (PTFE), 2.3 (RT duriod 5880), 2.33 (Polyethylene), 2.5 (polystyrene), 3.3 (PVC), 3.335 (epoxy resin), 4.8 (fibreglass), 6.15 (duriod 6006) and 10.2 (duroid 6010). Any other permittivity can be defined, but needs slightly more effort in doing so.</LI></UL></LI>	
 
-	<LI><UL><LI><STRONG>Question: </STRONG> <a name="Is_it">Is it possible to calculate the properties of two coupled transmission lines, which form a directional coupler, with a view to calculate the properties of a directional coupler?</a></LI><LI><STRONG>Answer:</STRONG>When there are two coupled transmission lines, there is not a single characteristic impedance Zo, but instead an even-mode impedance Z<sub>even</sub> and an odd-mode impedance Z<sub>odd</sub>. An odd-mode impedance is calculated when the two lines are driven out of phase and an even-mode impedance when they are driven in phase. Although <CODE>atlc</CODE> can not calculate Z<sub>odd</sub> or Z<sub>even</sub>, support for this will be added soon. It may then be possible to use these results to calculate the properties of a directional coupler, given knowledge of Z<sub>odd</sub>, Z<sub>even</sub> and the length over which the lines are coupled.</LI></UL></LI>
+	<LI><UL><LI><STRONG>Question: </STRONG> <a name="Is_it">Is it possible to calculate the properties of two coupled transmission lines, which form a directional coupler, with a view to calculate the properties of a directional coupler?</a></LI><LI><STRONG>Answer:</STRONG>When there are two coupled transmission lines, there is not a single characteristic impedance Zo, but instead an even-mode impedance Z<sub>even</sub> and an odd-mode impedance Z<sub>odd</sub>. An odd-mode impedance is calculated when the two lines are driven out of phase and an even-mode impedance when they are driven in phase. Versions of <CODE>atlc</CODE>from 3.1 onwards are able to calculate an even-mode impedance Z<sub>even</sub> and an odd-mode impedance Z<sub>odd</sub> Zodd. However, t<STRONG>he results with directional couplers have not been chached at all, </STRONG>so should not be relied upon. They are only included in the hope others may have models that allow <CODE>atlc</CODE> to be checked.</LI></UL></LI>
 	
-	<LI><UL><LI><STRONG>Question: </STRONG><a name="How_accurate">How </a>accurate is <CODE>atlc</CODE>? </LI><LI><STRONG>Answer:</STRONG>The basic method by which <CODE>atlc</CODE> works is very accurate. Errors of less than 0.1% are easy to achieve, and less than 0.001% are possible. The problem is that achieving such accuracy is very time consuming. Few people need results more accurate than 1%, in which case the run-times should be only a few minutes at most. </LI></UL></LI>
+	<LI><UL><LI><STRONG>Question: </STRONG><a name="How_accurate">How </a>accurate is <CODE>atlc</CODE>? </LI><LI><STRONG>Answer:</STRONG>The basic method by which <CODE>atlc</CODE> works is very accurate. Errors of less than 0.3% are typical, and largest error every recorded is under 1%. The problem is that achieving such accuracy is very time consuming. Few people need results more accurate than 1%, in which case the run-times should be only a few minutes at most. </LI></UL></LI>
 
-	<LI><UL><LI><STRONG>Question: </STRONG><a name="How_does">How </a>does <CODE>atlc</CODE> work? </LI><LI><STRONG>Answer: </STRONG> <CODE>atlc</CODE> uses a method known as finite differences. A paper describing the theory of this was published in the amateur radio journal QEX See: <EM>Finding the characteristics of Arbitrary transmission lines</EM>, D. Kirkby, QEX, December 1996, page 3-10. You can  <a href="/http://atlc.sourceforge.net/docs/qex-december-1996/atlc.pdf">download</a>  if you wish, or there should be a <a href="docs/qex-december-1996/atlc.pdf">a local copy</a> </LI></UL></LI>
+	<LI><UL><LI><STRONG>Question: </STRONG><a name="How_does">How </a>does <CODE>atlc</CODE> work? </LI><LI><STRONG>Answer: </STRONG> <CODE>atlc</CODE> uses a method known as finite differences. A paper describing the theory of this was published in the amateur radio journal QEX See: <EM>Finding the characteristics of Arbitrary transmission lines</EM>, D. Kirkby, QEX, December 1996, page 3-10. You can  <a href="/http://atlc.sourceforge.net/docs/qex-december-1996/atlc.pdf">download</a> a copy  if you wish, or there should be a <a href="../qex-december-1996/atlc.pdf">a local copy</a> </LI></UL></LI>
 
 	<LI><UL><LI><STRONG>Question: </STRONG><a name="Does_atlc"> Does </A><CODE>atlc</CODE> need to know the dimensions of transmission lines?</LI><LI><STRONG>Answer: </STRONG> <CODE>atlc</CODE> does not need to know the absolute dimensions (in mm or inches), but it does need to know the relative sizes of all the conductors. </LI></UL></LI>
 
