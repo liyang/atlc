@@ -166,6 +166,7 @@ extern int my_optind, my_opterr, my_optopt;
 struct transmission_line_properties{
 double WW, HH, ww, ss, gg, hh, tt, Er1, Er2;
 int  W, H, w, s, g, h, t, bmp_size;
+
 int verbose_level; /* 0, 1 or 2 */
 double Codd, Ceven, C;
 double velocity_odd, velocity_factor_odd, relative_permittivity_odd;
@@ -317,7 +318,6 @@ struct Bitmap_Head_Struct
 int main(int argc, char **argv);
 void byteswap_doubles(double *a);
 void read_bitmap_file_headers(char *filename, int *offset, size_t *size, int *width, int *height);
-void get_data_interactively(void);
 void help(char *filename);
 double **dmatrix(long nrl, long nrh, long ncl, long nch);
 void free_dmatrix(double **m, long nrl, long nrh, long ncl, long nch);
@@ -381,7 +381,6 @@ int print_data(FILE *fp, char *filename, double Er, double C, double L, double Z
 Zodd, double Zeven, int whichZ, double v, double vf);
 void check_for_boundaries(void);
 double find_energy_per_metre(int i, int j);
-void update_voltage_array(int i);
 FILE *get_file_pointer_with_right_filename(char *filename, const char *ext);
 void find_maximum_values(struct max_values *maximum_values, int zero_elementsQ);
 void calculate_colour_data(double x, double xmax, int w, int h, int offset, unsigned char *image_dat, int image_type,
@@ -421,3 +420,4 @@ void *worker(void *thread_arg);
 void free_ivector(int *v, long nl, long nh);
 double check_convergence(double **grid1, double **grid2, int w, int h);
 void error_check(char *s);
+void free_dvector(double *v, long nl, long nh);
