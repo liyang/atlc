@@ -72,9 +72,9 @@ else
   echo "CPU_type is $cpu_type. FPU_type is $fpu_type. Speed of CPU(s) is $mhz MHz." >> tests.log
   echo "CPU_type is $cpu_type. FPU_type is $fpu_type. Speed of CPU(s) is $mhz MHz.<BR>" >> tests.html
 
-  echo "RAM is $ram Mb."
-  echo "RAM is $ram Mb." >> tests.log
-  echo "RAM is $ram Mb.<BR>" >> tests.html
+  echo "RAM is $ram Mb (On Linux+BSD systems, the memory is a little larger than this."
+  echo "RAM is $ram Mb. (On Linux+BSD systems, the memory is a little larger than this" >> tests.log
+  echo "RAM is $ram Mb. (On Linux+BSD systems, the memory is a little larger than this<BR>" >> tests.html
 
   echo "L1 data cache is $L1data kb; L1 instruction cache is $L1instruction kb; L2 cache is $L2 kb"
   echo "L1 data cache is $L1data kb; L1 instruction cache is $L1instruction kb; L2 cache is $L2 kb" >> tests.log
