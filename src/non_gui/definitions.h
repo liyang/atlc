@@ -128,6 +128,11 @@ Laboratory's list of physical constants found on the web. */
 #define MSG_TAG_VIJ_RBORDER  9
 #define MSG_TAG_ENERGY      10
 #define MSG_TAG_DIELECTRICS 11
+
+#define CONTROL_VALUE_RECEIVE_DATA     0
+#define CONTROL_VALUE_SEND_DATA        1
+#define CONTROL_VALUE_DO_ITERATIONS    2
+#define CONTROL_VALUE_EXIT             3
 #endif /* ENABLE_MPI */
 
 
