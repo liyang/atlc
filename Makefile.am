@@ -14,6 +14,7 @@ README.solaris \
 README.support \
 README.threads \
 README.windows \
+README.--enable-hardware-info \
 BUGS \
 compile \
 missing \
