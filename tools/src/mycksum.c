@@ -56,7 +56,7 @@ int main(int argc, char **argv)
 
   if( (fp=fopen(argv[1],"r")) == NULL)
   {
-    fprintf(stderr,"Error: can't open file\n");
+    fprintf(stderr,"Error: can't open file %s\n",argv[1]);
     exit(1);
   }
   while ((ch = getc (fp)) != EOF)
@@ -67,4 +67,5 @@ int main(int argc, char **argv)
   }
   printf ("%05lu\n", checksum);
   exit_with_msg_and_exit_code("",OKAY);
+  return(0); // keeps compiler happy. 
 }
