@@ -160,7 +160,7 @@ int main(int argc, char **argv);
 void byteswap_doubles(double *a);
 void byteswap_ints(int *a);
 void byteswap_shortss(short *a);
-void read_bitmap_file_headers(char *filename, int *offset, int *size, int *width, int *height);
+void read_bitmap_file_headers(char *filename, int *offset, size_t *size, int *width, int *height);
 void get_data_interactively(void);
 void help(char *filename);
 double **dmatrix(long nrl, long nrh, long ncl, long nch);
