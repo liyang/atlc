@@ -9,8 +9,8 @@
 #ifdef ENABLE_POSIX_THREADS
 #include <pthread.h>
 
-void increment_a(int *);
-void increment_b(int *);
+void *increment_a(void *arg);
+void *increment_b(void *arg);
 int  finalise(int, int);
 
 int r1 = 0, r2 = 0, r3 = 0;
@@ -19,7 +19,7 @@ pthread_mutex_t r3_mutex;
 
 #endif /* ifdef ENABLE_POSIX_THREADS */
 
-int main(int argc, char **argv)
+int main()
 {
 #ifdef ENABLE_POSIX_THREADS
   pthread_t       thread1, thread2;
@@ -31,13 +31,13 @@ int main(int argc, char **argv)
 
   for(i=1; i<10000; ++i)
   {
-     if( pthread_create(&thread1, NULL, (void *) increment_a, (void *) &r1) != 0)
+     if( pthread_create(&thread1, NULL, increment_a, (void *) &r1) != 0)
      {
         perror("Thread 1 not created properly");
         exit(1);
       }
 
-     if( pthread_create(&thread2, NULL, (void *) increment_b, (void *) &r2) != 0)
+     if( pthread_create(&thread2, NULL, increment_b, (void *) &r2) != 0)
      {
         perror("Thread 2 not created properly");
         exit(1);
@@ -66,9 +66,10 @@ int main(int argc, char **argv)
 }
 
 #ifdef ENABLE_POSIX_THREADS
-void increment_a(int *pnum_times)
+void *increment_a(void *arg)
 {
   int  i,x;
+  int *pnum_times=(int *) arg;
  
   if( pthread_mutex_lock(&r3_mutex) != 0)
   {
@@ -89,12 +90,13 @@ void increment_a(int *pnum_times)
   for (i = 0;  i < 4; i++) {
     (*pnum_times)++;
   }
-
+  return (NULL);
 }
 
-void increment_b(int *pnum_times)
+void *increment_b(void *arg)
 {
   int i,x;
+  int *pnum_times=(int *) arg;
 
   if( pthread_mutex_lock(&r3_mutex) != 0)
   {
@@ -115,7 +117,7 @@ void increment_b(int *pnum_times)
   for (i = 0;  i < 4; i++) {
     (*pnum_times)++;
   }
-
+  return (NULL);
 }
 
 int  finalise(int one_times, int another_times)
