@@ -13,7 +13,7 @@
 # checks for system services
 # AC_OUTPUT([file...])
 
-AC_INIT([atlc], [4.3.1], [drkirkby@ntlworld.com])
+AC_INIT([atlc], [4.3.2], [drkirkby@ntlworld.com])
 AM_INIT_AUTOMAKE
 AC_PREREQ([2.57])
 AC_CONFIG_SRCDIR([tools/src/myfilelength.c])
@@ -41,7 +41,7 @@ AC_ISC_POSIX
 
 AC_CHECK_HEADERS([stdio.h math.h malloc.h stdlib.h string.h time.h ])
 AC_CHECK_HEADERS([strings.h sys/types.h machine/hal_sysinfo.h sys/sysinfo.h ])
-AC_CHECK_HEADERS([sys/processor.h sched.h ])
+AC_CHECK_HEADERS([sys/processor.h sched.h sys/param.h sys/pstat.h sys/unistd.h ])
 
 # Checks for typedefs
 AC_HEADER_STDBOOL
@@ -52,6 +52,8 @@ AC_TYPE_SIZE_T
 
 # checks for compiler characteristics
 AC_C_BIGENDIAN
+#AC_CHECK_TYPE([long long],AC_DEFINE([ HAVE_LONG_LONG ] ))
+AC_CHECK_TYPES([long long])
 AC_CHECK_SIZEOF([int])
 AC_CHECK_SIZEOF([long])
 AC_CHECK_SIZEOF([size_t])
@@ -59,7 +61,8 @@ AC_CHECK_SIZEOF([size_t])
 # checks for library functions
 AC_FUNC_STRTOD
 AC_CHECK_FUNCS([memset strchr strtol processor_info getsysinfo pthread_num_processors_np ])
-#AC_CHECK_FUNCS([memset pow sqrt strchr strtol])
+AC_CHECK_FUNCS([ cpu_get_max pstat ])
+AC_CHECK_SIZEOF([long long])
 
 # checks for system services
 
