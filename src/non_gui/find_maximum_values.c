@@ -53,52 +53,15 @@ void find_maximum_values(struct max_values *maximum_values, int zero_elementsQ)
     {
       V=Vij[i][j];
       U=find_energy_per_metre(i,j);
-      if(oddity[i][j]>=ORDINARY_INTERIOR_POINT)
-      {
-	if(i==0)       
-	  Ex=2*Er[i+1][j]*(Vij[i][j]-Vij[i+1][j])/(Er[i+1][j]+Er[i][j]);
-        else if (i==width-1) 
-    	  Ex=2*Er[i-1][j]*(Vij[i-1][j]-Vij[i][j])/(Er[i-1][j]+Er[i][j]);
-        else /* This is the best estimate, but can't be done on boundary */
-	{
-    	  Ex=Er[i-1][j]*(Vij[i-1][j]-Vij[i][j])/(Er[i-1][j]+Er[i][j]);
-	  Ex+=Er[i+1][j]*(Vij[i][j]-Vij[i+1][j])/(Er[i+1][j]+Er[i][j]);
-        }
-	if(j==0)
-	  Ey=2*Er[i][j+1]*(Vij[i][j]-Vij[i][j+1])/(Er[i][j+1]+Er[i][j]);
-	else if (j==height-1)
-	  Ey=2*Er[i][j-1]*(Vij[i][j-1]-Vij[i][j])/(Er[i][j-1]+Er[i][j]);
-	else
-	{
-	  Ey=Er[i][j-1]*(Vij[i][j-1]-Vij[i][j])/(Er[i][j-1]+Er[i][j]);
-	  Ey+=Er[i][j+1]*(Vij[i][j]-Vij[i][j+1])/(Er[i][j+1]+Er[i][j]);
-        }
-        E=sqrt(Ex*Ex+Ey*Ey);
-        permittivity=Er[i][j];
-      }
-      else
-      {
-        Ex=0.0;
-	Ey=0.0;
-	E=0.0;
-	permittivity=0.0;
-      }
-      if(U> 1.0)             
-        printf("U=%f v=%f Er=%f at %d %d\n",U,V,Er[i][j],i, j);
+      Ex=find_Ex(i,j);
+      Ey=find_Ey(i,j);
+      E=sqrt(Ex*Ex+Ey*Ey);
+      permittivity=Er[i][j];
 
       if(E>maximum_values->E_max) 
         maximum_values->E_max=E;
-/*
-Read from uninitialized (rui):
-Attempting to read 4 bytes at address 0xffbfe6a8
-    which is 336 bytes above the current stack pointer
-    stopped in find_maximum_values at line 88 in file
-    "find_maximum_values.c"
-       88         if(E>maximum_values->E_max)
-       */
       if(fabs(Ex) > maximum_values->Ex_or_Ey_max)
         maximum_values->Ex_or_Ey_max=fabs(Ex);
-
       if(fabs(Ex)>maximum_values->Ex_or_Ey_max)
         maximum_values->Ex_or_Ey_max=fabs(Ex);
       if(fabs(Ey)>maximum_values->Ex_or_Ey_max)
@@ -113,5 +76,5 @@ Attempting to read 4 bytes at address 0xffbfe6a8
         maximum_values->permittivity_max=permittivity; 
     }
   }
-  /* printf("Ex_or_Ey_max=%f E_max=%f V_max=%f U_max=%g Er_max=%f\n",maximum_values->Ex_or_Ey_max, maximum_values->E_max, maximum_values->V_max, maximum_values->U_max, maximum_values->permittivity_max); */
+  /* printf("Ex_or_Ey_max=%f E_max=%f V_max=%f U_max=%g Er_max=%f\n",maximum_values->Ex_or_Ey_max, maximum_values->E_max, maximum_values->V_max, maximum_values->U_max, maximum_values->permittivity_max);  */
 }

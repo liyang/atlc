@@ -69,7 +69,7 @@ struct pixels Er_in_bitmap[MAX_DIFFERENT_PERMITTIVITIES];
 double **Vij;
 double **Er;
 signed char **oddity; 
-signed char **cell_type; 
+int **cell_type; 
 unsigned char *image_data;
 int width=-1, height=-1;
 extern int errno;
@@ -203,7 +203,7 @@ hence built without the mpi\nlibrary.\n",1);
     rest of what is needed. */
     image_data=ustring(0L,(long)size);
     oddity=scmatrix(0,width-1,0,height-1);
-    cell_type=scmatrix(0,width-1,0,height-1);
+    cell_type=imatrix(0,width-1,0,height-1);
     Vij=dmatrix(0,width-1,0,height-1);
     Er=dmatrix(0,width-1,0,height-1);
     /* On Solaris systems, if the following is not executed, only one 
@@ -267,7 +267,8 @@ hence built without the mpi\nlibrary.\n",1);
     contents of the bitmap image */
 
     setup_arrays(&data);
-    set_oddity_from_Greens_paper();
+    //set_oddity_from_Greens_paper();
+    check_for_boundaries();
 
     /* If there are multiple dielectrics, the impedance calculations
     needs to be done twice. We start by doing them once, for an vacuum
@@ -284,6 +285,7 @@ hence built without the mpi\nlibrary.\n",1);
   free_string(appendfile_name,0,1024);
   free_ustring(image_data,0L,(long) size);
   free_scmatrix(oddity,0,width-1,0,height-1);
+  free_imatrix(cell_type,0,width-1,0,height-1);
   free_dmatrix(Vij, 0,width-1,0,height-1);
   free_dmatrix(Er,0,width-1,0,height-1);
   return(OKAY); 

@@ -43,7 +43,7 @@ extern int width, height;
 
 extern double **Vij, **Er;
 extern unsigned char *image_data;
-extern signed char **cell_type;
+extern int **cell_type;
 extern int non_vacuum_found;
 extern int coupler;
 extern char *inputfile_name;

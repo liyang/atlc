@@ -31,8 +31,8 @@ is around it. See Green paper to understand what they mean */
 #include "definitions.h"
 
 extern int width, height;
-extern signed char **oddity;
-extern signed char **cell_type;
+extern int **oddity;
+extern int **cell_type;
 extern double **Er;
 
 #ifdef HAVE_STDLIB_H

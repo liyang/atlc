@@ -1,241 +1,45 @@
-/* atlc - arbitrary transmission line calculator, for the analysis of
-transmission lines are directional couplers. 
+#ifndef ENABLE_MP
 
-Copyright (C) 2002. Dr. David Kirkby, PhD (G8WRB).
-
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either package_version 2
-of the License, or (at your option) any later package_version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307,
-USA.
-
-Dr. David Kirkby, e-mail drkirkby at ntlworld.com 
-
-*/
 #include "config.h"
+
+#ifdef HAVE_STDLIB_H
 #include <stdlib.h>
+#endif 
+
+#ifdef HAVE_STDIO_H
+#include <stdio.h>
+#endif 
+
 #include "definitions.h"
 
 extern int width, height;
-extern double **Vij, **Er;
-extern signed char **oddity;
+extern double **v, **Er;
+extern int  **cell_type;
 extern int dielectrics_to_consider_just_now;
 extern double r; 
-
-extern int coupler;
 
 double finite_difference_single_threaded()
 {
   int i, j, iteration;
+  int number_of_iterations=100;
   double capacitance_per_metre, energy_per_metre;
-  double Vnew, Ka, Kb, Kc, Kd, K;
 
-  /* The following symbols, Va, Vb, Vc, Vd and Ke have the same meaning as
-  the do in the following paper:
-  "The Numerical Solution ot Some Important Transmission-Line Problems"
-  Harry E. Green, IEEE Transactions on Microwave Theory and Techniques, 
-  VOL MITT-13, Number 5, pp 676-692, September 1965 */
-  
-  double Va, Vb, Vc, Vd;
-  Va=0.5; Vb=0.5; Vc=0.5; Vd=0.5;
+  /* The following might not look very neat, with a whole load of code being 
+  written twice, when it would be posible to make it easier to read if the 
+  'if(dielectrics_in_bitmap > 1)' was in an inner loop. However, the 
+  following is almost certainly more efficient. It is not a good idea to 
+  have any more than necessary in the inner loop. 
 
-  for (iteration = 1; iteration <= ITERATIONS; iteration++){
-    for(i=0; i < width; ++i){
-      for(j=0; j < height; ++j){
-        
-        /* The voltage at the point (i,j) is computed in the manner described
-        in the paper:
+  The option to avoid the faster convergence algorithm has been didtched
+  too, as this was in an inner loop. The faster covergence method seems
+  to work fine, so there is no need to avoid using it */
 
-        "The Numerical Solution ot Some Important Transmission-Line Problems"
-        Harry E. Green, IEEE Transactions on Microwave Theory and Techniques, 
-        VOL MITT-13, Number 5, pp 676-692, September 1965.
-
-        At an ordinary point, not near any corners, edges, changes of 
-        dielectric etc, the new voltage at a point i,j is just given by
-        Vnew=(Va+Vb+Vc+Vd)/4.0, but near edges, corners, changes of 
-        dielectric this is not so and other equations must be used. There
-        are 29 cases (28 + the ordinary one) which are numbered 1 to 29
-        in Green's paper. The numbering used here is the same as in Green's
-        paper. Obviously if the voltage is fixed, no changes must be made, so
-        those cases are first tested. */
-
-
-	if( i > 0) {
-          Va=Vij[i-1][j]; 
-	  Ka=Er[i-1][j];
-        }
-
-        if( i < width-1) {
-          Vb=Vij[i+1][j];
-	  Kb=Er[i+1][j];
-        }
-
-        if( j >  0 ){
-          Vc=Vij[i][j-1];
-          Kc=Er[i][j-1];
-        }
-        if ( j < height-1 ){
-          Vd=Vij[i][j+1];
-          Kd=Er[i][j+1];
-        }
-
-	K=Er[i][j];
-
-        if( oddity[i][j] == CONDUCTOR_ZERO_V)
-          Vnew=0.0;
-        else if (oddity[i][j] == CONDUCTOR_PLUS_ONE_V)
-          Vnew=1.0;
-        else if (oddity[i][j] == CONDUCTOR_MINUS_ONE_V )
-          Vnew=-1.0;
-#ifdef ONE
-        /* This is the normal equation valid in an interior node */
-
-        else if(oddity[i][j] == METAL_DIELECTRIC_INTERFACE )  /* 1 */ 
-          Vnew=(Va+Vb+Vc+Vd)/4.0;
-        else  if (oddity[i][j] == ORDINARY_INTERIOR_POINT )
-          //Vnew=(Va+Vb+Vc+Vd)/4.0;
-          Vnew=(Va+Vb+Vc+Vd)/4.0;
-        else  if (oddity[i][j] == X_DIELECTRIC_DIELECTRIC_INTERFACE)
-	  //Vnew=(Va+Vb)/4.0 + (Vb-Va)*(Kb-Ka)/(16.0*K)+(Vd+Vc)/4.0+(Vc-Vd)*(Kc-Kd)/(16.0*K);
-          Vnew=(Va+Vb+Vc+Vd)/4.0;
-        else  if (oddity[i][j] == Y_DIELECTRIC_DIELECTRIC_INTERFACE)
-	  //Vnew=(Va+Vb)/4.0 + (Vb-Va)*(Kb-Ka)/(16.0*K)+(Vd+Vc)/4.0+(Vc-Vd)*(Kc-Kd)/(16.0*K);
-          Vnew=(Va+Vb+Vc+Vd)/4.0;
-#endif
-
-#ifdef TWO
-        else if (oddity[i][j] == ORDINARY_POINT_BOTTOM_EDGE)  /* 2 */
-          Vnew=(Va+Vb+2*Vd)/4.0;
-#endif
-
-#ifdef THREE
-        else if (oddity[i][j] == ORDINARY_POINT_TOP_EDGE) /* 3 */
-          Vnew=(Vb+Va+2*Vc)/4.0;
-#endif
-
-#ifdef FOUR
-        else if (oddity[i][j] == ORDINARY_POINT_LEFT_HAND_EDGE) /* 4 */
-          Vnew=(Vd+Vc+2*Vb)/4.0;
-#endif
-
-#ifdef FIVE
-        else if (oddity[i][j] == ORDINARY_POINT_RIGHT_HAND_EDGE) /* 5 */
-          Vnew=(Vc+Vd+2*Va)/4.0;
-#endif
-
-#ifdef SIX
-        else if (oddity[i][j] == CORNER_POINT_BOTTOM_LEFT_HAND_EDGE) /* 6 */
-          Vnew=(Vb+Vd)/2.0;
-#endif
-
-#ifdef SEVEN
-        else if (oddity[i][j] == CORNER_POINT_BOTTOM_RIGHT_HAND_EDGE) /* 7 */
-          Vnew=(Va+Vd)/2.0;
-#endif
-
-#ifdef EIGHT 
-        else if (oddity[i][j] == CORNER_POINT_TOP_LEFT_HAND_EDGE) /* 8 */
-          Vnew=(Vb+Vc)/2.0;
-#endif
-
-#ifdef NINE
-        else if (oddity[i][j] == CORNER_POINT_TOP_RIGHT_HAND_EDGE) /* 9 */
-          Vnew=(Va+Vc)/2.0;
-#endif
-
-
-#ifdef TEN
-        else if (oddity[i][j] == DIELECTRIC_ROW_INTERFACE_DIELECTRIC_TO_TOP ) /* 10 */
-          Vnew=( (1+Ke)*Va+(1+Ke)*Vb+2*Vc+2*Ke*Vd )/(4*(1+Ke));
-#endif
-
-#ifdef ELEVEN
-        else if (oddity[i][j] == DIELECTRIC_ROW_INTERFACE_DIELECTRIC_TO_BOTTOM ) /* 11 */
-          Vnew=( (1+Ke)*Va+(1+Ke)*Vb+2*Vd+2*Ke*Vc )/(4*(1+Ke));
-#endif
-
-#ifdef TWELVE 
-        else if (oddity[i][j] == DIELECTRIC_COLUMN_INTERFACE_DIELECTRIC_TO_LEFT_HAND_EDGE ) /* 12 */
-          Vnew=( (1+Ke)*Vc+(1+Ke)*Vd+2*Vb+2*Ke*Va )/(4*(1+Ke));
-#endif
-
-#ifdef THIRTEEN
-        else if (oddity[i][j] == DIELECTRIC_COLUMN_INTERFACE_DIELECTRIC_TO_RIGHT_HAND_EDGE ) /* 13 */
-          Vnew=( (1+Ke)*Vd+(1+Ke)*Vc+2*Va+2*Ke*Vb )/(4*(1+Ke));
-#endif
-
-#ifdef FOURTEEN
-        else if (oddity[i][j] == ANGLE_DIELECTRIC_ACUTE_FIRST_QUADRANT)
-          Vnew=( 2*Va+(Ke+1)*Vb+2*Vc+(Ke+1)*Vd) / (2*(Ke+3));
-#endif
-
-#ifdef FIFTEEN
-        else if (oddity[i][j] == ANGLE_DIELECTRIC_ACUTE_SECOND_QUADRANT)
-          Vnew=( 2*Vc+(Ke+1)*Vd+2*Vb+(Ke+1)*Va) / (2*(Ke+3));
-#endif
-
-#ifdef SIXTEEN
-        else if (oddity[i][j] == ANGLE_DIELECTRIC_ACUTE_THIRD_QUADRANT)
-          Vnew=( 2*Vb+(Ke+1)*Va+2*Vd+(Ke+1)*Vc) / (2*(Ke+3));
-#endif
-
-#ifdef ggg
-        else if (oddity[i][j] == ANGLE_DIELECTRIC_ACUTE_FOURTH_QUADRANT)
-          Vnew=( 2*Vd+(Ke+1)*Vc+2*Va+(Ke+1)*Vd) / (2*(Ke+3));
-
-        else if (oddity[i][j] == ANGLE_DIELECTRIC_OBTUSE_FIRST_QUADRANT)
-          Vnew=( 2*Ke*Va + (Ke+1)*Vb + 2*Ke*Vc+(Ke+1)*Vd)/(2*(3*Ke+1));
-        else if (oddity[i][j] == ANGLE_DIELECTRIC_OBTUSE_SECOND_QUADRANT)
-          Vnew=( 2*Ke*Vc + (Ke+1)*Vd + 2*Ke*Vb+(Ke+1)*Va)/(2*(3*Ke+1));
-        else if (oddity[i][j] == ANGLE_DIELECTRIC_OBTUSE_THIRD_QUADRANT)
-          Vnew=( 2*Ke*Vb + (Ke+1)*Va + 2*Ke*Vd+(Ke+1)*Vc)/(2*(3*Ke+1));
-        else if (oddity[i][j] == ANGLE_DIELECTRIC_OBTUSE_FOURTH_QUADRANT)
-          Vnew=( 2*Ke*Vd + (Ke+1)*Vc + 2*Ke*Va+(Ke+1)*Vb)/(2*(3*Ke+1));
-
-        else if (oddity[i][j] == DIELECTRIC_INTERFACE_TO_BOTTOM_EDGE_DIELECTRIC_TO_LEFT_HAND_EDGE)
-          Vnew=(-Ke*Va-Vb-(Ke+1)*Vd) /(2*(Ke+1));
-        else if (oddity[i][j] == DIELECTRIC_INTERFACE_TO_BOTTOM_EDGE_DIELECTRIC_TO_RIGHT_HAND_EDGE)
-          Vnew=(-Ke*Vb-Va-(Ke+1)*Vd) /(2*(Ke+1));
-        else if (oddity[i][j] == DIELECTRIC_INTERFACE_TO_TOP_EDGE_DIELECTRIC_TO_LEFT_HAND_EDGE)    
-          Vnew=(-Ke*Va-Vb-(Ke+1)*Vc) /(2*(Ke+1));
-        else if (oddity[i][j] == DIELECTRIC_INTERFACE_TO_TOP_EDGE_DIELECTRIC_TO_RIGHT_HAND_EDGE)
-          Vnew=(-Ke*Vb-Va-(Ke+1)*Vc) /(2*(Ke+1));
-
-        else if (oddity[i][j] == DIELECTRIC_INTERFACE_TO_LEFT_HAND_EDGE_DIELECTRIC_TO_TOP)        
-          Vnew=(-Ke*Vd-Vc-(Ke+1)*Vb) /(2*(Ke+1));
-        else if (oddity[i][j] == DIELECTRIC_INTERFACE_TO_LEFT_HAND_EDGE_DIELECTRIC_TO_BOTTOM)     
-          Vnew=(-Ke*Vd-Vc-(Ke+1)*Vb) /(2*(Ke+1));
-        else if (oddity[i][j] == DIELECTRIC_INTERFACE_TO_RIGHT_HAND_EDGE_DIELECTRIC_TO_TOP)       
-          Vnew=(-Ke*Vc-Vd-(Ke+1)*Va) /(2*(Ke+1));
-        else if (oddity[i][j] == DIELECTRIC_INTERFACE_TO_RIGHT_HAND_EDGE_DIELECTRIC_TO_BOTTOM)    
-          Vnew=(-Ke*Vc-Vd-(Ke+1)*Va) /(2*(Ke+1));
-
-#endif
-        else{
-	  fprintf(stderr,"oddity[%d][%d]=%d Vnew=%f\n",i,j,oddity[i][j],Vnew);
-	  exit_with_msg_and_exit_code("internal error in finite_difference_single_threaded.c",1);
-        }
-        Vij[i][j]=r*Vnew+(1-r)*Vij[i][j]; 
-        //Vij[i][j]=Vnew; 
-#define DEBUG
-#ifdef yDEBUG
-	if( fabs(Vnew) > 1 ) {
-	  fprintf(stderr,"Internal error in finite_difference_single_threaded.c\n");
-	  fprintf(stderr,"Vnew=%f i=%d j=%d oddity[i][j]=%d\n",Vnew,i,j,oddity[i][j]);
-	  exit(1);
-        }
-#endif
-      }
-    }
+  for(iteration=1; iteration<=number_of_iterations; ++iteration)
+  {
+    for(i=1; i<width-1; ++i)
+    {
+      update_voltage_array(i); /* finds new v[i][j] for all j's */
+    }  
   }
   /* Once the voltage distribution is found, the energy in the field may be 
   found. This can be shown to be Energy = 0.5 * integral(E.D) dV, when 
@@ -244,40 +48,14 @@ double finite_difference_single_threaded()
   
   Energy per metre is 0.5 * D.E or (0.5*Epsilon)* E.E. Now E.E is given
   by Ex^2 + Ey^2 (by definition of a dot product. */
-  for(i=0;i<width;++i)
-    for(j=0;j<height-1;++j){
-#define DEBUG
-#ifdef xDEBUG
-      if(fabs(Vij[i][j]) > 1.0) {
-	fprintf(stderr, "voltage is %f at %d,%d\n",Vij[i][j],i,j);
-	fprintf(stderr,"Error in finite_difference_single_threaded()\n");  
-	fprintf(stderr,"Reduce the value of r by using the option -r\n");  
-	fprintf(stderr,"Try -r 1.7 and reduce if still  unstable.\n");  
-	exit(1);
-      }
-#endif
-    }
-
 
   energy_per_metre=0.0;
   for(i=0;i<width;++i)
-    for(j=0;j<height-1;++j){
-      if(fabs(Vij[i][j]) > 1.0) {
-	fprintf(stderr, "voltage is %f at %d,%d\n",Vij[i][j],i,j);
-	fprintf(stderr,"Error in finite_difference_single_threaded()\n");  
-	fprintf(stderr,"Reduce the value of r by using the option -r\n");  
-	fprintf(stderr,"Try -r 1.7 and reduce if still  unstable.\n");  
-	exit(1);
-      }
+    for(j=0;j<height;++j)
+    { 
       energy_per_metre+=find_energy_per_metre(i,j);
     }
-
-  /* The capacitance C is relatated to the energy (U) by Energy=0.5*C*V^2 
-  so C=2*U/(V^2). When there is a coupler, V is 2 V, not one, so the
-  capciance C=0.5*U; */
-  if(coupler==FALSE)
-    capacitance_per_metre=2*energy_per_metre;
-  else
-    capacitance_per_metre=energy_per_metre;
+  capacitance_per_metre=2*energy_per_metre;
   return(capacitance_per_metre);
 }
+#endif

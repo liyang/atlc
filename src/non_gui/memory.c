@@ -49,6 +49,31 @@ char *string(long nl,long nh)
   return v-nl;
 }
 
+int **imatrix(long nrl, long nrh, long ncl, long nch)
+/* allocate a int matrix with subscript range m[nrl..nrh][ncl..nch] */
+{
+	long i, nrow=nrh-nrl+1,ncol=nch-ncl+1;
+	int **m;
+
+	/* allocate pointers to rows */
+	m=(int **) malloc((size_t)((nrow+NR_END)*sizeof(int*)));
+	if (!m) nrerror("allocation failure 1 in matrix()");
+	m += NR_END;
+	m -= nrl;
+
+
+	/* allocate rows and set pointers to them */
+	m[nrl]=(int *) malloc((size_t)((nrow*ncol+NR_END)*sizeof(int)));
+	if (!m[nrl]) nrerror("allocation failure 2 in matrix()");
+	m[nrl] += NR_END;
+	m[nrl] -= ncl;
+
+	for(i=nrl+1;i<=nrh;i++) m[i]=m[i-1]+ncol;
+
+	/* return pointer to array of pointers to rows */
+	return m;
+}
+
 unsigned char *ustring(long nl,long nh)
 {
   unsigned char *v;
@@ -171,6 +196,14 @@ void free_cx(char **m, long nrl, long nrh, long ncl, long nch)
   free((FREE_ARG) (m+nrl-NR_END));
 }
 
+void free_imatrix(int **m, long nrl, long nrh, long ncl, long nch)
+/* free an int matrix allocated by imatrix() */
+{
+  free((FREE_ARG) (m[nrl]+ncl-NR_END));
+  free((FREE_ARG) (m+nrl-NR_END));
+}
+
+
 double *dvector(long nl, long nh)
 /* allocate a double vector with subscript range v[nl..nh] */
 {
@@ -179,4 +212,13 @@ double *dvector(long nl, long nh)
 	if (!v)
 	  exit_with_msg_and_exit_code("Memory allocation error in dvector()",MEMORY_ALLOCATION_ERROR_IN_DVECTOR);
 	return v-nl+NR_END;
+}
+
+
+void nrerror(char error_text[])
+/* Numerical Recipes standard error handler */
+{
+  fprintf(stderr,"Numerical Recipes run-time error...\n");
+  fprintf(stderr,"%s\n",error_text);
+  fprintf(stderr,"...now exiting to system...\n");
 }

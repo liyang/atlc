@@ -78,7 +78,6 @@ eexample.U.bin  binary file, with just the energy (U=CV^2).
 
 extern double image_fiddle_factor;
 
-#define DEBUG
 
 void write_fields_for_two_conductor_lines(char * filename, struct transmission_line_properties data, size_t size)
 {
@@ -92,7 +91,6 @@ void write_fields_for_two_conductor_lines(char * filename, struct transmission_l
   struct max_values maximum_values;
   int offset=-3, w, h;
   double V, E, Ex, Ey, U;
-  int zeros=0, ones=0; 
   double odd;
 
   unsigned char *image_data_Ex=NULL; 
@@ -151,6 +149,7 @@ void write_fields_for_two_conductor_lines(char * filename, struct transmission_l
   if(data.write_bitmap_field_imagesQ==TRUE)
   {
     find_maximum_values(&(maximum_values), ZERO_ELEMENTS_FIRST); /* sets stucture maximum_values */
+    /* printf("Ex_or_Ey_max %f E_max %f, V_max %f, U_max %g, permittivity_max  %f\n", maximum_values.Ex_or_Ey_max,maximum_values.E_max, maximum_values.V_max, maximum_values.U_max, maximum_values.permittivity_max); */
 
     /* Allocate ram to store the bitmaps before they are written to disk */
     image_data_Ex=ustring(0L,(long) size);
@@ -257,7 +256,4 @@ void write_fields_for_two_conductor_lines(char * filename, struct transmission_l
     free_ustring(image_data_Er,0L,(long)size);
     free_ustring(image_data_Er,0L,(long)size);
   }
-#ifdef DEBUG
-  printf("zeros=%d ones=%d\n",zeros,ones);
-#endif 
 }

@@ -36,7 +36,7 @@ know. */
 #include "definitions.h"
 
 extern int width, height;
-extern signed char **cell_type;
+extern int **cell_type;
 extern double **Er;
 
 void check_for_boundaries(void) 
