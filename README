@@ -22,7 +22,7 @@ After building (see INSTALL, which I've modified to be specific to
 atlc) you should run 'make check' after running 'make'. 
 One built, if you want to install the examples and binaries, run
 'make install'. As the examples are large (~120 Mb) you might    
-choose not to install them. In which case run 'make install-bin'
+choose not to install them. In which case run 'make install-exec'
 rather than 'make install'. If you later want to install the 
 examples, run 'make install-data'
 
