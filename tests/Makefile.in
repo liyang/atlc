@@ -49,9 +49,6 @@ CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
 CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
-CXX = @CXX@
-CXXDEPMODE = @CXXDEPMODE@
-CXXFLAGS = @CXXFLAGS@
 CYGPATH_W = @CYGPATH_W@
 DEFS = @DEFS@
 DEPDIR = @DEPDIR@
@@ -91,12 +88,9 @@ SHELL = @SHELL@
 STRIP = @STRIP@
 VERSION = @VERSION@
 ac_ct_CC = @ac_ct_CC@
-ac_ct_CXX = @ac_ct_CXX@
 ac_ct_STRIP = @ac_ct_STRIP@
 am__fastdepCC_FALSE = @am__fastdepCC_FALSE@
 am__fastdepCC_TRUE = @am__fastdepCC_TRUE@
-am__fastdepCXX_FALSE = @am__fastdepCXX_FALSE@
-am__fastdepCXX_TRUE = @am__fastdepCXX_TRUE@
 am__include = @am__include@
 am__quote = @am__quote@
 bindir = @bindir@
@@ -108,7 +102,6 @@ build_vendor = @build_vendor@
 built_with_posix_threads = @built_with_posix_threads@
 datadir = @datadir@
 exec_prefix = @exec_prefix@
-foo = @foo@
 host = @host@
 host_alias = @host_alias@
 host_cpu = @host_cpu@
@@ -121,6 +114,7 @@ libdir = @libdir@
 libexecdir = @libexecdir@
 localstatedir = @localstatedir@
 mandir = @mandir@
+no_gsl = @no_gsl@
 oldincludedir = @oldincludedir@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
@@ -128,24 +122,43 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
+
+# This is tests/Makefile.am.
+# MPI_16a_PI computes the value of PI and uses distributed processing
+# to do it. This test it is not always executed. 
 AUTOMAKE_OPTIONS = gnits
 
+check_PROGRAMS = MPI_16a_PI \
+benchmark \
+Test_threads_a \
+Test_threads_b
 
-# cpi computes the value of PI and uses distributed processing
-# it is not always built. 
-bin_PROGRAMS = MPI_16a_PI             
+
 MPI_16a_PI_SOURCES = MPI_16a_PI.c 
 MPI_16a_PI_LDADD = @MPILIBS@ @LIBS@
 
-check_PROGRAMS = MPI_16a_PI           
-
-TESTS_ENVIRONMENT = top_builddir=$(top_builddir) \
-top_srcdir=$(top_srcdir)  built_with_posix_threads=$(built_with_posix_threads)
+benchmark_SOURCES = \
+benchmark.c 
 
 
+Test_threads_a_SOURCES = Test_threads_a.c
+Test_threads_a_CPPFLAGS = @PTHREAD_CFLAGS@
+Test_threads_a_LDADD = @PTHREAD_LIBS@ @LIBS@ @GSL_LIBS@ @MPILIBS@ 
 
-#top_srcdir=$(top_srcdir)  @built_with_posix_threads@
+Test_threads_b_SOURCES = Test_threads_b.c
+Test_threads_b_CPPFLAGS = @PTHREAD_CFLAGS@
+Test_threads_b_LDADD = @PTHREAD_LIBS@ @LIBS@ @GSL_LIBS@ @MPILIBS@ 
+
+TESTS_ENVIRONMENT = \
+top_builddir=$(top_builddir) \
+top_srcdir=$(top_srcdir) \
+built_with_posix_threads=$(built_with_posix_threads) \
+no_gsl=$(no_gsl) 
+
+
 TESTS = \
+Test_threads_a \
+Test_threads_b \
 1a-create_bmp_for_symmetrical_stripline.bmp.test \
 1b-create_bmp_for_symmetrical_stripline.txt.test \
 1c-create_bmp_for_symmetrical_stripline.E.bmp.test \
@@ -231,11 +244,16 @@ TESTS = \
 14b-check-circ-in-rect.test \
 14c-check-circ-in-rect.test \
 14d-check-circ-in-rect.test  \
-15a-undefined_permittivities.test \
-MPI_16a_PI         
+MPI_16a_PI \
+WARNING--The-next-test+benchmark-takes-a-long-while.test \
+benchmark.test 
 
 
 EXTRA_DIST = \
+benchmark.test \
+Test_threads_a.c \
+Test_threads_b.c \
+MPI_16a_PI.c      \
 10a-create-lots-of-examples-check-last-one.test \
 10b-create-lots-of-examples-check-last-one.test \
 11a-verify-checksum-of-supplied-test-coupler1.bmp.test \
@@ -258,8 +276,7 @@ EXTRA_DIST = \
 14b-check-circ-in-rect.test \
 14c-check-circ-in-rect.test \
 14d-check-circ-in-rect.test \
-15a-undefined_permittivities.test \
-MPI_16a_PI.c      \
+WARNING--The-next-test+benchmark-takes-a-long-while.test \
 1a-create_bmp_for_symmetrical_stripline.bmp.test \
 1b-create_bmp_for_symmetrical_stripline.txt.test \
 1c-create_bmp_for_symmetrical_stripline.E.bmp.test \
@@ -405,26 +422,41 @@ DISTCLEANFILES = tests.log test.txt
 subdir = tests
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_CLEAN_FILES =
-bin_PROGRAMS = MPI_16a_PI$(EXEEXT)
-check_PROGRAMS = MPI_16a_PI$(EXEEXT)
-PROGRAMS = $(bin_PROGRAMS)
-
+check_PROGRAMS = MPI_16a_PI$(EXEEXT) benchmark$(EXEEXT) \
+	Test_threads_a$(EXEEXT) Test_threads_b$(EXEEXT)
 am_MPI_16a_PI_OBJECTS = MPI_16a_PI.$(OBJEXT)
 MPI_16a_PI_OBJECTS = $(am_MPI_16a_PI_OBJECTS)
 MPI_16a_PI_DEPENDENCIES =
 MPI_16a_PI_LDFLAGS =
+am_Test_threads_a_OBJECTS = Test_threads_a-Test_threads_a.$(OBJEXT)
+Test_threads_a_OBJECTS = $(am_Test_threads_a_OBJECTS)
+Test_threads_a_DEPENDENCIES =
+Test_threads_a_LDFLAGS =
+am_Test_threads_b_OBJECTS = Test_threads_b-Test_threads_b.$(OBJEXT)
+Test_threads_b_OBJECTS = $(am_Test_threads_b_OBJECTS)
+Test_threads_b_DEPENDENCIES =
+Test_threads_b_LDFLAGS =
+am_benchmark_OBJECTS = benchmark.$(OBJEXT)
+benchmark_OBJECTS = $(am_benchmark_OBJECTS)
+benchmark_LDADD = $(LDADD)
+benchmark_DEPENDENCIES =
+benchmark_LDFLAGS =
 
 DEFAULT_INCLUDES =  -I. -I$(srcdir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
-@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/MPI_16a_PI.Po
+@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/MPI_16a_PI.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/Test_threads_a-Test_threads_a.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/Test_threads_b-Test_threads_b.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/benchmark.Po
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-DIST_SOURCES = $(MPI_16a_PI_SOURCES)
+DIST_SOURCES = $(MPI_16a_PI_SOURCES) $(Test_threads_a_SOURCES) \
+	$(Test_threads_b_SOURCES) $(benchmark_SOURCES)
 DIST_COMMON = README Makefile.am Makefile.in
-SOURCES = $(MPI_16a_PI_SOURCES)
+SOURCES = $(MPI_16a_PI_SOURCES) $(Test_threads_a_SOURCES) $(Test_threads_b_SOURCES) $(benchmark_SOURCES)
 
 all: all-am
 
@@ -435,51 +467,23 @@ $(srcdir)/Makefile.in:  Makefile.am  $(top_srcdir)/configure.ac $(ACLOCAL_M4)
 	  $(AUTOMAKE) --gnits  tests/Makefile
 Makefile:  $(srcdir)/Makefile.in  $(top_builddir)/config.status
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)
-binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
-install-binPROGRAMS: $(bin_PROGRAMS)
-	@$(NORMAL_INSTALL)
-	$(mkinstalldirs) $(DESTDIR)$(bindir)
-	@list='$(bin_PROGRAMS)'; for p in $$list; do \
-	  p1=`echo $$p|sed 's/$(EXEEXT)$$//'`; \
-	  if test -f $$p \
-	  ; then \
-	    f=`echo "$$p1" | sed 's,^.*/,,;$(transform);s/$$/$(EXEEXT)/'`; \
-	   echo " $(INSTALL_PROGRAM_ENV) $(binPROGRAMS_INSTALL) $$p $(DESTDIR)$(bindir)/$$f"; \
-	   $(INSTALL_PROGRAM_ENV) $(binPROGRAMS_INSTALL) $$p $(DESTDIR)$(bindir)/$$f || exit 1; \
-	  else :; fi; \
-	done
-
-uninstall-binPROGRAMS:
-	@$(NORMAL_UNINSTALL)
-	@list='$(bin_PROGRAMS)'; for p in $$list; do \
-	  f=`echo "$$p" | sed 's,^.*/,,;s/$(EXEEXT)$$//;$(transform);s/$$/$(EXEEXT)/'`; \
-	  echo " rm -f $(DESTDIR)$(bindir)/$$f"; \
-	  rm -f $(DESTDIR)$(bindir)/$$f; \
-	done
-
-clean-binPROGRAMS:
-	-test -z "$(bin_PROGRAMS)" || rm -f $(bin_PROGRAMS)
-
-installcheck-binPROGRAMS: $(bin_PROGRAMS)
-	bad=0; pid=$$$$; list="$(bin_PROGRAMS)"; for p in $$list; do \
-	  case ' $(AM_INSTALLCHECK_STD_OPTIONS_EXEMPT) ' in \
-	   *" $$p "* | *" $(srcdir)/$$p "*) continue;; \
-	  esac; \
-	  f=`echo "$$p" | \
-	     sed 's,^.*/,,;s/$(EXEEXT)$$//;$(transform);s/$$/$(EXEEXT)/'`; \
-	  for opt in --help --version; do \
-	    if $(DESTDIR)$(bindir)/$$f $$opt > c$${pid}_.out 2> c$${pid}_.err \
-	         && test -n "`cat c$${pid}_.out`" \
-	         && test -z "`cat c$${pid}_.err`"; then :; \
-	    else echo "$$f does not support $$opt" 1>&2; bad=1; fi; \
-	  done; \
-	done; rm -f c$${pid}_.???; exit $$bad
 
 clean-checkPROGRAMS:
 	-test -z "$(check_PROGRAMS)" || rm -f $(check_PROGRAMS)
 MPI_16a_PI$(EXEEXT): $(MPI_16a_PI_OBJECTS) $(MPI_16a_PI_DEPENDENCIES) 
 	@rm -f MPI_16a_PI$(EXEEXT)
 	$(LINK) $(MPI_16a_PI_LDFLAGS) $(MPI_16a_PI_OBJECTS) $(MPI_16a_PI_LDADD) $(LIBS)
+Test_threads_a-Test_threads_a.$(OBJEXT): Test_threads_a.c
+Test_threads_a$(EXEEXT): $(Test_threads_a_OBJECTS) $(Test_threads_a_DEPENDENCIES) 
+	@rm -f Test_threads_a$(EXEEXT)
+	$(LINK) $(Test_threads_a_LDFLAGS) $(Test_threads_a_OBJECTS) $(Test_threads_a_LDADD) $(LIBS)
+Test_threads_b-Test_threads_b.$(OBJEXT): Test_threads_b.c
+Test_threads_b$(EXEEXT): $(Test_threads_b_OBJECTS) $(Test_threads_b_DEPENDENCIES) 
+	@rm -f Test_threads_b$(EXEEXT)
+	$(LINK) $(Test_threads_b_LDFLAGS) $(Test_threads_b_OBJECTS) $(Test_threads_b_LDADD) $(LIBS)
+benchmark$(EXEEXT): $(benchmark_OBJECTS) $(benchmark_DEPENDENCIES) 
+	@rm -f benchmark$(EXEEXT)
+	$(LINK) $(benchmark_LDFLAGS) $(benchmark_OBJECTS) $(benchmark_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT) core *.core
@@ -488,6 +492,9 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/MPI_16a_PI.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Test_threads_a-Test_threads_a.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Test_threads_b-Test_threads_b.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/benchmark.Po@am__quote@
 
 distclean-depend:
 	-rm -rf ./$(DEPDIR)
@@ -513,6 +520,50 @@ distclean-depend:
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/$*.Po' tmpdepfile='$(DEPDIR)/$*.TPo' @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(COMPILE) -c `if test -f '$<'; then $(CYGPATH_W) '$<'; else $(CYGPATH_W) '$(srcdir)/$<'`
+
+Test_threads_a-Test_threads_a.o: Test_threads_a.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Test_threads_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT Test_threads_a-Test_threads_a.o -MD -MP -MF "$(DEPDIR)/Test_threads_a-Test_threads_a.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o Test_threads_a-Test_threads_a.o `test -f 'Test_threads_a.c' || echo '$(srcdir)/'`Test_threads_a.c; \
+@am__fastdepCC_TRUE@	then mv "$(DEPDIR)/Test_threads_a-Test_threads_a.Tpo" "$(DEPDIR)/Test_threads_a-Test_threads_a.Po"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/Test_threads_a-Test_threads_a.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='Test_threads_a.c' object='Test_threads_a-Test_threads_a.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/Test_threads_a-Test_threads_a.Po' tmpdepfile='$(DEPDIR)/Test_threads_a-Test_threads_a.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Test_threads_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o Test_threads_a-Test_threads_a.o `test -f 'Test_threads_a.c' || echo '$(srcdir)/'`Test_threads_a.c
+
+Test_threads_a-Test_threads_a.obj: Test_threads_a.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Test_threads_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT Test_threads_a-Test_threads_a.obj -MD -MP -MF "$(DEPDIR)/Test_threads_a-Test_threads_a.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o Test_threads_a-Test_threads_a.obj `if test -f 'Test_threads_a.c'; then $(CYGPATH_W) 'Test_threads_a.c'; else $(CYGPATH_W) '$(srcdir)/Test_threads_a.c'`; \
+@am__fastdepCC_TRUE@	then mv "$(DEPDIR)/Test_threads_a-Test_threads_a.Tpo" "$(DEPDIR)/Test_threads_a-Test_threads_a.Po"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/Test_threads_a-Test_threads_a.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='Test_threads_a.c' object='Test_threads_a-Test_threads_a.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/Test_threads_a-Test_threads_a.Po' tmpdepfile='$(DEPDIR)/Test_threads_a-Test_threads_a.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Test_threads_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o Test_threads_a-Test_threads_a.obj `if test -f 'Test_threads_a.c'; then $(CYGPATH_W) 'Test_threads_a.c'; else $(CYGPATH_W) '$(srcdir)/Test_threads_a.c'`
+
+Test_threads_b-Test_threads_b.o: Test_threads_b.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Test_threads_b_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT Test_threads_b-Test_threads_b.o -MD -MP -MF "$(DEPDIR)/Test_threads_b-Test_threads_b.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o Test_threads_b-Test_threads_b.o `test -f 'Test_threads_b.c' || echo '$(srcdir)/'`Test_threads_b.c; \
+@am__fastdepCC_TRUE@	then mv "$(DEPDIR)/Test_threads_b-Test_threads_b.Tpo" "$(DEPDIR)/Test_threads_b-Test_threads_b.Po"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/Test_threads_b-Test_threads_b.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='Test_threads_b.c' object='Test_threads_b-Test_threads_b.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/Test_threads_b-Test_threads_b.Po' tmpdepfile='$(DEPDIR)/Test_threads_b-Test_threads_b.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Test_threads_b_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o Test_threads_b-Test_threads_b.o `test -f 'Test_threads_b.c' || echo '$(srcdir)/'`Test_threads_b.c
+
+Test_threads_b-Test_threads_b.obj: Test_threads_b.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Test_threads_b_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT Test_threads_b-Test_threads_b.obj -MD -MP -MF "$(DEPDIR)/Test_threads_b-Test_threads_b.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o Test_threads_b-Test_threads_b.obj `if test -f 'Test_threads_b.c'; then $(CYGPATH_W) 'Test_threads_b.c'; else $(CYGPATH_W) '$(srcdir)/Test_threads_b.c'`; \
+@am__fastdepCC_TRUE@	then mv "$(DEPDIR)/Test_threads_b-Test_threads_b.Tpo" "$(DEPDIR)/Test_threads_b-Test_threads_b.Po"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/Test_threads_b-Test_threads_b.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='Test_threads_b.c' object='Test_threads_b-Test_threads_b.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/Test_threads_b-Test_threads_b.Po' tmpdepfile='$(DEPDIR)/Test_threads_b-Test_threads_b.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(Test_threads_b_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o Test_threads_b-Test_threads_b.obj `if test -f 'Test_threads_b.c'; then $(CYGPATH_W) 'Test_threads_b.c'; else $(CYGPATH_W) '$(srcdir)/Test_threads_b.c'`
 uninstall-info-am:
 
 ETAGS = etags
@@ -675,10 +726,9 @@ check-am: all-am
 	$(MAKE) $(AM_MAKEFLAGS) $(check_PROGRAMS)
 	$(MAKE) $(AM_MAKEFLAGS) check-TESTS
 check: check-am
-all-am: Makefile $(PROGRAMS)
+all-am: Makefile
 
 installdirs:
-	$(mkinstalldirs) $(DESTDIR)$(bindir)
 
 install: install-am
 install-exec: install-exec-am
@@ -708,8 +758,7 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-am
 
-clean-am: clean-binPROGRAMS clean-checkPROGRAMS clean-generic \
-	mostlyclean-am
+clean-am: clean-checkPROGRAMS clean-generic mostlyclean-am
 
 distclean: distclean-am
 
@@ -726,13 +775,13 @@ info-am:
 
 install-data-am:
 
-install-exec-am: install-binPROGRAMS
+install-exec-am:
 
 install-info: install-info-am
 
 install-man:
 
-installcheck-am: installcheck-binPROGRAMS
+installcheck-am:
 
 maintainer-clean: maintainer-clean-am
 
@@ -750,19 +799,18 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-binPROGRAMS uninstall-info-am
+uninstall-am: uninstall-info-am
 
 .PHONY: CTAGS GTAGS all all-am check check-TESTS check-am clean \
-	clean-binPROGRAMS clean-checkPROGRAMS clean-generic ctags \
-	distclean distclean-compile distclean-depend distclean-generic \
+	clean-checkPROGRAMS clean-generic ctags distclean \
+	distclean-compile distclean-depend distclean-generic \
 	distclean-tags distdir dvi dvi-am info info-am install \
-	install-am install-binPROGRAMS install-data install-data-am \
-	install-exec install-exec-am install-info install-info-am \
-	install-man install-strip installcheck installcheck-am \
-	installcheck-binPROGRAMS installdirs maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-compile \
-	mostlyclean-generic pdf pdf-am ps ps-am tags uninstall \
-	uninstall-am uninstall-binPROGRAMS uninstall-info-am
+	install-am install-data install-data-am install-exec \
+	install-exec-am install-info install-info-am install-man \
+	install-strip installcheck installcheck-am installdirs \
+	maintainer-clean maintainer-clean-generic mostlyclean \
+	mostlyclean-compile mostlyclean-generic pdf pdf-am ps ps-am \
+	tags uninstall uninstall-am uninstall-info-am
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

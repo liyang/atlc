@@ -1,0 +1,36 @@
+#! /bin/sh
+# This test checks that a multi-threaded vesion of 
+# atlc runs faster than a single threaded one. 
+# and reports by how much so. 
+
+if [ "x$mpirun_found" = "xyes" ] ; then
+  return 77
+else
+  cp $top_srcdir/examples/25ohm-401h.bmp $top_builddir/tmp
+  ret=`$top_builddir/tests/benchmark $top_builddir/src/non_gui/atlc $top_builddir/tmp/25ohm-401h.bmp `
+  rm -f $top_builddir/tmp/25ohm-401h.bmp
+  exitcode=`echo $ret | awk '{print $1}'`
+  t1=`echo $ret | awk '{print $2}'`
+  t2=`echo $ret | awk '{print $3}'`
+  speedup=`echo $ret | awk '{print $4}'`
+  N_cpus=`echo $ret | awk '{print $5}'`
+  mhz=`echo $ret | awk '{print $6}'`
+  efficiency=`echo $ret | awk '{print $7}'`
+  cpu_type=`echo $ret | awk '{print $8}'`
+  fpu_type=`echo $ret | awk '{print $9}'`
+  echo "Number of CPUs active = $N_cpus CPU_type = $cpu_type FPU_type = $fpu_type Speed = $mhz MHz"
+  if [ "x$built_with_posix_threads" = "xyes" ] ; then
+    echo "Run times: T_sequential = $t1 s; T_parallel = $t2 s"
+    echo "Speedup=T_parallel/T_sequential = $speedup; Efficiency = Speedup/N_cpus = $efficiency"
+  else
+    echo "Run times: T_sequential = $t1 s; Not configured for parallel operation."
+  fi 
+
+  if [ "x$exitcode" = "x0" ] ; then 
+    echo "PASSED:" $0  >> tests.log
+    exit 0
+  else
+    echo "FAILED:" $0  >> tests.log
+    exit 1
+  fi
+fi
