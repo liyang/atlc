@@ -463,7 +463,7 @@ void mpi_send_initial_data() {
 	   for details */
 	  
 	MPI_Isend(cell_type[start_col-2],
-			  (num_cols+3)*height,
+			  (num_cols+4)*height,
 			  MPI_INT,
 			  i,
 			  MSG_TAG_CELL_TYPE,
@@ -471,7 +471,7 @@ void mpi_send_initial_data() {
 			  &cell_type_send_requests[i-1]);
 	  
 	MPI_Isend(Er[start_col-2],
-			  (num_cols+3)*height,
+			  (num_cols+4)*height,
 			  MPI_DOUBLE,
 			  i,
 			  MSG_TAG_ER,
