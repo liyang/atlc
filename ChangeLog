@@ -1,3 +1,47 @@
+******Version 4.2.9 Released 14 Jan 2003 ********
+There are only bug fixes - no new features. 
+
+calculate_impedance_for_create_bmp_for_symmetrical_stripline.c
+There is a slight change to the above, which means that the ratio 
+of height W to width w of a symmetical stripline can now be upto 
+221, not 12 as before. The algorithe worked to 221, but the 
+check for 12 was a leftover from an older albgorithm
+
+Some files were missing from the CVS sources on Sourceforge,
+which prevented a complete compilation using the files on the
+CVS tree. This has been corrected. These files were:
+gtk.mk
+depcomp
+src/non_gui/output_from_design_coupler-Sun-Ultra-80.txt
+src/gui/SquareCoax.xpm
+tools/Makefile.am
+src/gui/SquareCoaxFrm.h   (zero bytes long)
+src/gui/SquareCoaxFrm.cpp (zero bytes long)
+
+configure
+Due to the absense of gtk.mk and depcomp, it was not possible
+to build a new configure script. That has now changed. 
+
+docs/html-docs/man-pages.html
+This has old file names and old links in it, so this 
+has been corrected. 
+
+tests/Makefile.am
+tests/cop1.bmp removed from tools/Makfile.am
+as the current tests don't use it. 
+
+src/non_gui/update_voltage_array.c
+The line 
+if(j==height-2 && cell_type[i][width-1]>=DIELECTRIC)
+is changed to:
+if(j==height-2 && cell_type[i][height-1]>=DIELECTRIC)
+as that was clearly a coding error. 
+
+src/non_gui/exit_codes.h
+Added the parameter THE_WIDTH_w_DIVIDED_BY_THE_HEIGHT_H_IS_TOO_LARGE
+since this is used to exit from calculate_impedance_for_create_bmp_for_symmetrical_stripline.c
+if needed.
+
 ******Version 4.2.8 Released 12 Jan 2003 ********
 Copied onto Sourceforge CVS *all* the 4.2.8 files. Some 
 were missing before. 
