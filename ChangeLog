@@ -1,3 +1,37 @@
+****** Version 4.3.2 Released June 12th 2003  ********
+
+Top level
+
+testson. 
+Added a new file 'teston' which allows for rapid testing 
+on a number of remote machines. Developers might find this
+of general use - it is not specific to atlc. 
+
+README
+Correected a couple of typos. Added 'tests' to the list of
+directories, as that was missing. Also tools and tools/src.
+
+definitions.h
+Remoted a few lines which were commented out
+Put void as a function argument - ie foo(void) instead of foo();
+
+
+
+tests subdirectrory.
+
+tests/benchmark.c 
+This should not be able to obtain the number of cpus on a wider range of
+machines, and get the cpu speed on at least some Alpha systems. 
+
+Should be able to determine the RAM on Solaris and Tru64 UNIX.
+
+tests/benchmark.tests
+Supplied with the new information from tests/benchmark.c
+this should now display more sensible information. 
+
+****** Version 4.3.1 Released June 7th 2003  ********
+Unfortunately, the ChangeLog for 4.3.1 was never updated. 
+
 
 ****** Version 4.3.0 Released April 5th 2003  ********
 
