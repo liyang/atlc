@@ -110,9 +110,4 @@ unsigned char *red, unsigned char *green, unsigned char *blue)
   image_dat[offset]=*blue; 
   image_dat[offset+1]=*green; 
   image_dat[offset+2]=*red; 
-  /* Write some 0's beyond the data, as if the offset is not 0 next time,
-  the content of the numbers in fron of the data are underfinedd */
-  image_dat[offset+3]=0; 
-  image_dat[offset+4]=0; 
-  image_dat[offset+5]=0; 
 }
