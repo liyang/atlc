@@ -71,7 +71,6 @@ int avoid_use_of_fast_convergence_method=FALSE;
 size_t size;
 int max_threads=MAX_THREADS, non_vacuum_found=FALSE;
 int append_flag=FALSE;
-int verbose=0;
 int dielectrics_to_consider_just_now;
 int coupler=FALSE;
 double r=1.95;
@@ -114,7 +113,7 @@ extern int main(int argc, char **argv) /* Read parameters from command line */
       Er_on_command_line[data.dielectrics_on_command_line].other_colour/(256*256);
       *end++; /* Gets rid of '=' sign which we put on the command line */
       Er_on_command_line[data.dielectrics_on_command_line].epsilon=atof(end);
-      if (verbose > 1)
+      if (data.verbose_level > 1)
         printf("r=%x g=%x b=%x col=%x Er=%f\n",\
       Er_on_command_line[data.dielectrics_on_command_line].red,\
       Er_on_command_line[data.dielectrics_on_command_line].green, \
@@ -156,7 +155,6 @@ without the threads\nlibrary.\n",1);
     }
     break;
     case 'v':
-      verbose++;
       data.verbose_level++;
     break;
     case '?':
@@ -241,5 +239,5 @@ without the threads\nlibrary.\n",1);
   }
   else
     usage_atlc();
-  exit(5);
+  return(0);
 }
