@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<html>
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org">
+<meta name="GENERATOR" content="Bluefish 0.6 and vi on a Sun SPARCstation 20">
+<meta name="Reply-to" content="drkirkby@ntlworld.com">
+<meta name="KEYWORDS" content="transmission lines, tranmission line, CAD, electrical, atlc, impedance, Z0, transmission lines, transmission line, arbitrary cross,section, shape, Zo, impedance">
+<meta name="DESCRIPTION" content="A finite difference program for computing the  properties of any transmission line ">
+<title>atlc - Arbitrary Transmission Line Calculator</title>
+</head>
+<body>
+<h1>Helping with the <em>atlc</em> project.</h1>
+If you would like to help the <em>atlc</em> project, there are 5 ways you can do so. Note some of the ways involve just testing <em>atlc</em>, or just sending old software, that many large organisations probably throw away. Anyway, here are the 5 ways you can help.
+
+<ol>
+  <LI><b>Test atlc, then test it some more</b><br> I am keen to make <em>atlc</em> as portable as possible. For this reason I would like <em>atlc</em> tested on as many hardware and software configureations as possible. These are the systems which atlc has been tested on. Testing on these systems would be useful, but testing on other systems would be particulary helpful. Note, just because it's been tested on Linux PC, it's only been done using Redhat 7.2 with one version of the GNU gcc compiler. So if you can with another Linux variant, on any platform, that would be useful. <br><br>
+  Successful tests have been performed on these systems. 
+  <ul>
+  <li>Cray Y-MP supercomputer </li>
+  <LI>PC running UnixWare</LI>
+  <li>Single processor PC running Redhat Linux 7.2 - gcc-2.96 only</a>
+  <LI>PC running Debian Linux</LI>
+  <LI>PC's running Gentoo Linux</LI>
+  <LI>Dual processor PC running Solaris 8 - only with gcc.</li>
+  <LI>Quad processor Sun Ultra 80 running Solaris 9 - with both gcc-3.2.3 and Sun's compiler</li>
+  <li>Sun SPARCstation 20 running Solaris 2.5 - only with gcc-2.95.3</li>
+  <li>Sun SPARCstation 20 running NetBSD 1.6 - tested only on one CPU.</li>
+  <li>Sun SPARCstation 20 running OpenBSDB 3.2 - tested only on one CPU.</li>
+  <li>IBM RS/6000 7025 F50 running AIX 5.2 - IBM's compiler only.</li>
+  <li>SGI Octane running IRIX 6.5.16 with gcc and SGI's compiler.</li>
+  <li>Dec Alpha Personal Workstation running Tru64 5.1B. Only tested with HP's compiler, not gcc.</li>
+</ul><br><br>
+  If a test failure occurs, let me know what one(s) it is. Test failures have occured on the following two systems if compiled with the <code>--with-threads</code> option to <code>configure</code>. Can anyone else reproduced this, or can you say it works on your PC Linux system?<br><br>
+  <ul>
+<font color="#FF0000">  <LI>Sun SPARCstation 20 running Redhat Linux 6.2. Works okay without the --with-threads option to the configure script, but fails lots of tests with that option.</li>
+  <LI>Sun SPARCstation 20 running Debian Linux. Works okay without the --with-threads option to the configure script, but fails lots of tests with that option.</LI></font>
+  </ul>
+   <br><br>If you can test on any other systems, such as FreeBSD, IBM AS/400, IBM AS/390, a Cray, SCO Unix, Interative UNIX, UltraLinux, OSX, Xenix etc, it would be very helpful. But just to test it on some version of Linux on a PC would be helpful. <br><br>
+   If you can perform any testing, please state the following:
+   <ol>
+	<li>The hardware - CPU type, number of CPUs</li>
+	<li>Operating system and version</li>
+	<li>Compiler and its version number.</li>
+	<li>Whether or not you have the GNU Scientific Library (gsl) installed or not, and if so what version.</li>
+	<li>The number of test passes, tests skipped, tests failed and the name of any failured tests.</li>
+</ol>
+    </li><br><br>
+ <li><b>Spend some time working on the code.</b></li><br> email me to discuss what is needed and what your particular skills are.<br><br></li>
+	<li><b>Provide much needed software for portability testing.</b><br>Great effort has been put into testing the portability of atlc. The benchmark that that tests the speed of execution of <em>atlc</em> tries to gather information about the hardware. That part is hard to make portable, without a suite of hardware and software to test <em>atlc</em> on. This at present only works on SPARC, but later it will be expanded. Only by
+	having the hardware+software is it possible to find portability problems. The following items of UNIX <strong>software</strong> would be useful.<br><br>
+	In all cases, email me before sending material, in case I already have it. <br>
+	<br>
+	<ul>
+	<li>HP's C and C++ compilers for HP-UX. Any versions. I'd particulary like both a very recent and a very old version of the compilers, but as I have no HP compilers for HP-UX, I'm not too fussy! This is my number one problem at present.</li>
+	<li>HP-UX 11i (for the PA-RISC processor, not for Itanium).</li>
+	<li>Version 10.2 of HP-UX (for the PA-RISC processor).</li>
+	<li>An old copy of a compiler C for Tru64 UNIX for a Dec Alpha. I have a reasonably modern one, so don't need a modern compiler, but an old one.</li>	
+	<li>Any C++ compiler for Tru64 UNIX on the Alpha platform.</li>
+	<li>Old Sun C and C++ compilers. I don't need modern ones.</li>
+</ul>
+	<br>
+	</li>
+	<li><strong>Provide hardware for portability testing.</strong></li>
+	Hardware costs money and can be sold usually for money, so I'm not really expecting much help here, but if you can donate any of the following hardware, I'd appreciate it very much. Note, since this is for portability testing, speed is not really an issue. <br><br>
+	Before sending hardware, email me to confirm whether it is still needed, stating where you are located.
+	<ul>
+	<LI>Any UNIX system not listed above</LI>
+	<li>Any machine with 2 or more CPUs, <strong>except</strong> Sun's or IBM RS/6000's.</li>
+	<li>Any UNIX hardware with more than 4 CPUs, including Suns and IBMs. These are worth money, so I don't really expect donations of this hardware, but if you want too, I would be very greatful.</li>
+	<li>64 MB DIMMs to fit the Sun SPARCstation 20. The have the Sun part number of 501-2480, but 3rd part ram will be just as good. I need quite a few of these, but even one would help.</li>
+</ul>
+	<br>
+	<li><b>Provide money to allow purchase of the above 3 and 4.</b></li>
+	I have a Paypal account, username drkirkby@ntlworld.com.
+</ol>
+</body>
+
+
+<A href="http://sourceforge.net"> <IMG src="http://sourceforge.net/sflogo.php?group_id=25836&amp;type=5" width="210" height="62" border="0" alt="SourceForge.net Logo"></A>
