@@ -1,4 +1,4 @@
-******Version 4.2.8 Released ??????********
+******Version 4.2.8 Released 12 Jan 2003 ********
 Copied onto Sourceforge CVS *all* the 4.2.8 files. Some 
 were missing before. 
 
@@ -8,10 +8,13 @@ running 'make clean' will not delete the example files
 created, but running 'make distclean' will. 
 Added a lot of txt files (see note below). 
 
+examples/twin-wire4.bmp
+Added to the CVS repositry. Had prevously ignored this
+large file. 
+
 in examples diretory
 Added ....bmp.txt files, as the output of running atlc
 on each of the .bmp files. 
-
 
 src/non_gui/usage_atlc.c
 src/non_gui/usage_circ_in_rect.c
@@ -30,6 +33,25 @@ All above files have been modified to print a version number if
 run incorrectly. Perhaps adding a -V option that just prints 
 the version and exits would not be a bad idea, at a later date
 
+docs/atlc9.doc docs theory2.doc and design-ideas.sxw moveed to
+docs/theory/atlc9.do docs/theory/theory2.doc and docs/theory/design-ideas.sxw
+
+html-docs/README
+added more informaton about the Word and StarOffice
+files giving information about the theory of the newer versions
+of atlc. 
+
+docs/theory/README 
+Changed to indicate there are now 3 theory files, one PDF and 
+suggesting the use of books.
+
+docs/html-docs/theory.html
+Changed to indicate there are now 3 theory files, one PDF and 
+suggesting the use of books.
+
+docs/html-docs/banner-page.html
+Changed to point to docs/html-docs/theory.html, rather than the
+one pdf file I wrote for QEX back in 1996.
 examples/cvsignore
 Removed *.bmp and added *.bin. Put cvsignore on CVS
 
@@ -113,6 +135,11 @@ editing index2.html
 
 Updateed 'tutorial.html' as it was a bit out 
 of date, showing old versions of files. 
+
+Added more tests. Some more could be usefully added,
+but for now this will have to do. All the 11* tests
+have been dropped as for some reason they don't run
+properly. 
 
 ******Version 4.2.5 Released 1/1/03********
 Arragned for the Makefile.am's to have a line
