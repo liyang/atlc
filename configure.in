@@ -92,6 +92,8 @@ if test "x$with_mpi" != "x" \
 
 
   AC_DEFINE(ENABLE_MPI)
+  AC_CHECK_LIB(socket, getsockopt)
+  AC_CHECK_LIB(nsl, xdr_void)
 	
   if test "x$with_mpe" != "x"; then 
     if test "x$with_mpe" = "xyes"; then
