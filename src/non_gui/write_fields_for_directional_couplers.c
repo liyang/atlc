@@ -117,7 +117,10 @@ void write_fields_for_directional_couplers(char * filename, struct transmission_
   unsigned char r, g, b;
 
   static struct max_values maximum_values;
-  int offset=-3, w, h;
+  int offset=-3, w, h; 
+#ifndef HAVE_MEMSET
+  int memory_location;
+#endif
   double E, Ex, Ey, U;
 
   if(data.write_binary_field_imagesQ==TRUE && odd_or_even == ODD)
@@ -174,12 +177,24 @@ void write_fields_for_directional_couplers(char * filename, struct transmission_
     image_data_V=ustring(0,size);
     image_data_Er=ustring(0,size);
     image_data_U=ustring(0,size);
+#ifdef HAVE_MEMSET /* There might be portability issues using memset */
     memset((void *) image_data_Ex,0,size);
     memset((void *) image_data_Ey,0,size);
     memset((void *) image_data_E,0,size);
     memset((void *) image_data_U,0,size);
     memset((void *) image_data_V,0,size);
-    memset((void *) image_data_Er,0,size);
+    memset((void *) image_data_Er,0,size); 
+#else 
+    for(memory_location=0; memory_location < size; ++memory_location)
+    {
+      image_data_Ex[memory_location]=0;
+      image_data_Ey[memory_location]=0;
+      image_data_E[memory_location]=0;
+      image_data_U[memory_location]=0;
+      image_data_V[memory_location]=0;
+      image_data_Er[memory_location]=0;
+    }
+#endif /* End of #ifdef HAVE_MEMSET */
 
     /* Find maximum of the parameters */
     find_maximum_values(&(maximum_values),ZERO_ELEMENTS_FIRST); /* sets stucture maximum_values */
@@ -322,12 +337,24 @@ void write_fields_for_directional_couplers(char * filename, struct transmission_
     image_data_V=ustring(0,size);
     image_data_Er=ustring(0,size);
     image_data_U=ustring(0,size);
+#ifdef HAVE_MEMSET
     memset((void *) image_data_Ex,0,size);
     memset((void *) image_data_Ey,0,size);
     memset((void *) image_data_E,0,size);
     memset((void *) image_data_U,0,size);
     memset((void *) image_data_V,0,size);
     memset((void *) image_data_Er,0,size);
+#else
+    for(memory_location=0; memory_location < size; ++memory_location)
+    {
+      image_data_Ex[memory_location]=0;
+      image_data_Ey[memory_location]=0;
+      image_data_E[memory_location]=0;
+      image_data_U[memory_location]=0;
+      image_data_V[memory_location]=0;
+      image_data_Er[memory_location]=0;
+    }
+#endif /* End of #ifdef HAVE_MEMSET */
     /* Find maximum of the parameters */
     find_maximum_values(&(maximum_values),FALSE); /* sets stucture maximum_values */
 
