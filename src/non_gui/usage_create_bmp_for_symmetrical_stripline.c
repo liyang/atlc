@@ -44,7 +44,7 @@ void usage_create_bmp_for_symmetrical_stripline(void)
   fprintf(stderr,"Option:\n");
   fprintf(stderr,"     -C      Print copyright, licensing and distribution information.\n");
   fprintf(stderr,"     -i      Force the width W to be effectively infinite.\n");
-  fprintf(stderr,"     -v      Compute the theoretical impedance and pring to stdout.\n\n");
+  fprintf(stderr,"     -v      Compute the theoretical impedance and print to stdout.\n\n");
   fprintf(stderr,"WARNING create_bmp_for_symmetrical_stripline  does *NOT* take floating points for W, H and w. You must\n");
   fprintf(stderr,"enter only integers. The program was put together quickly, so does NOT\n");
   fprintf(stderr,"automatically convert floating point values to integers like create_bmp_for_rect_in_rect,\n");
