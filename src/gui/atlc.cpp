@@ -1,4 +1,5 @@
-/*
+/*  
+
 #ifdef __GNUG__
 #pragma implementation "help.cpp"
 #pragma interface "help.cpp"
@@ -228,12 +229,7 @@ atlcFrame::atlcFrame(const wxString& title, const wxPoint& pos, const wxSize& si
   // Calculate menue. 
   menuCalculate->Append( ID_FiniteDifference,    "&Finite difference (numerical)",\
   "Calculate properties using an accurate, very general but slow numerical technique.");   
-<<<<<<< atlc.cpp
   menuCalculate->AppendSeparator();
-=======
-  menuCalculate->AppendSeparator();
-
->>>>>>> 1.6
   menuCalculate->Append( ID_RoundCoax, "&Round Coaxial cable (exact)","Calculate properties standard round coaxial cable");   
   menuCalculate->Append( ID_SquareCoax, "&Square Coaxial cable (exact)","Calculate properties coaxial cable with a square outer (exact??)");   
   menuCalculate->Append( ID_Stripline, "&Edge on stripline (exact)","Calculate properties of thin edge-on conductors between groundplanes");   
@@ -264,13 +260,8 @@ atlcFrame::atlcFrame(const wxString& title, const wxPoint& pos, const wxSize& si
   // QUESTION - What the hell does the rest of this do ???
   help.UseConfig(wxConfig::Get());
   bool ret;
-<<<<<<< atlc.cpp
   help.SetTempDir("");
   ret=help.AddBook("htmdocs/testing.hhp");
-=======
-  help.SetTempDir(".");
-  help.AddBook("htmdocs/testing.hhp");
->>>>>>> 1.6
   if (! ret)
     wxMessageBox("Failed adding book htmdocs/testing.hhp");
   ret = help.AddBook("htmdocs/another.hhp");
