@@ -2,7 +2,8 @@
 
 src/non_gui/Makefile.am
 removed a double entry for the header file definitions.h
-in create_bmp_for_stripline_coupler_SOURCES
+in create_bmp_for_stripline_coupler_SOURCES.
+Added a new binary create_bmp_for_rect_cen_in_rect_coupler
 
 Added the followign files that were ommited when put into CVS
 
