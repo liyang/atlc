@@ -38,12 +38,16 @@ int verbose=FALSE;
 
 extern int main(int argc, char **argv) /* Read parameters from command line */
 {
-  long q;
+  int q;
   double Zo=-1, length=-1, fmin, fmax, fstep=-1, cf, c, Zodd, Zeven; 
   double quarter_wave;
-  while((q=get_options(argc,argv,"l:s:Z:")) != -1)
+  while((q=get_options(argc,argv,"Cl:s:Z:")) != -1)
   switch (q) 
   {
+    case 'C':
+    print_copyright((char *) "2002");
+    exit(1);
+    break;
     case 'l':
     length=atof(my_optarg);
     break;
