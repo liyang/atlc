@@ -1,6 +1,11 @@
 Specific Installation Instructions for atlc. 
 ==================
 
+*********************************************************************
+IMPORTANT - if altc won't compile on your system, configure with the 
+option --without-hardware-info. It should then compile. 
+*********************************************************************
+
 See also the file docs/html-docs/building.html
 
    These are *NOT* generic installation instructions, but have been

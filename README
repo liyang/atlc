@@ -3,6 +3,11 @@ atlc - Arbitrary Transmission Line Calculator.
 Program for analysing arbitrary transmission lines and directional
 couplers. See HTML documentation in docs/html-docs
 
+*********************************************************************
+IMPORTANT - if altc won't compile on your system, configure with the 
+option --without-hardware-info. It should then compile. 
+*********************************************************************
+
 The sources are kept in src/non_gui, as a version with a GUI is planned
 (not started yet). 
 
