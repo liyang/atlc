@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 int main (int argc, char **argv)
 {
@@ -31,7 +32,7 @@ int main (int argc, char **argv)
   for(i=0; i<length1; ++i)
   {
     if(mem1[i] != mem2[i])
-      printf("At offset= %d file1 = %d file2 = %d difference=%d\n",i,mem1[i],mem2[i],mem1[i]-mem2[i]);
+      printf("At offset= %ld file1 = %d file2 = %d difference=%d\n",i,(int) mem1[i],(int) mem2[i],(int) (mem1[i]-mem2[i]));
   }
   exit(0);
 }
