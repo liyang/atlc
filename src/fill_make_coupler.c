@@ -12,7 +12,7 @@
 
 #include "definitions.h"
 
-extern int W, H, a, b, c, d, w, h, s, verbose;
+extern int W, H, w,  s, verbose;
 
 void fill_image_vector_with_data(unsigned char *image_vector, int colour_Er1, int colour_Er2) 
 {
@@ -36,13 +36,6 @@ void fill_image_vector_with_data(unsigned char *image_vector, int colour_Er1, in
 	    red=0x00;
 	    green=0xff;
 	    blue=0x00;
-         }
-	 /* Fill in the dielectric */
-	 if( (i>=a+BORDER) && (i<a+d+BORDER) && (j<h+BORDER) && (j>=BORDER)) 
-	 {
-	    red=colour_Er2/(256*256); /* fill in areas with Er2 */
-	    green=colour_Er2/256;
-	    blue=colour_Er2%256;
          }
 	 if( (i>=left_edge_blue) && (i<left_edge_blue+w) && j==(H/2)) /* conductor */
 	 {
