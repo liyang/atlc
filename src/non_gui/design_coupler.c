@@ -275,8 +275,7 @@ int main(int argc, char **argv) /* Read parameters from command line */
 #else
         Zodd_x=1.0; Zeven_x=1.0; Zo_x=1.0;
 	fprintf(stderr,"This was not linked against the GNU scientific library (gsl)\n");
-	fprintf(stderr,"So the mode impedances have been set to 1 Ohm.\n");
-
+	exit_with_msg_and_exit_code("So the mode impedances have been set to 1 Ohm",NOT_LINKED_WITH_GSL_LIBRARY);
 #endif
 	error=pow(Zodd-Zodd_x,2.0) + pow(Zeven-Zeven_x,2.0);
 	if( error < error_max )
@@ -339,5 +338,5 @@ int main(int argc, char **argv) /* Read parameters from command line */
     printf("See: http://atlc.sourceforge.net\n");
     printf("See: http://atlc.sourceforge.net/couplers.html\n");
   }
-  exit_with_msg_and_exit_code("",OKAY);
+  return(OKAY);
 }

@@ -88,5 +88,5 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
    }
    else
       usage_create_bmp_for_circ_in_rect();
-   exit(0);
+   return(0);
 }

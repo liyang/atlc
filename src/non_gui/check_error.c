@@ -55,8 +55,7 @@ void check_error(double user, int create_bmp_for_rect_in_rect, double gridsize, 
       if(fractional_error > UNACCEPTABLE_ERROR)
       {
          fprintf(stderr,"Error #14. Unacceptable %f%% error in representing %s on the grid\n", fractional_error*100.0, name);
-	 fprintf(stderr,"Exiting ....\n");
-	 exit(UNACCEPTABLE_ERROR_WHEN_CONVERTING_TO_INTEGERS);
+	 exit_with_msg_and_exit_code("exiting ...",UNACCEPTABLE_ERROR_WHEN_CONVERTING_TO_INTEGERS);
       }
       else if(fractional_error > ACCEPTABLE_ERROR)
          fprintf(stderr,"*WARNING*  %f%% error in representing %s on the grid\n", fractional_error*100.0, name);

@@ -39,6 +39,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #endif
 
 #include "definitions.h"
+#include "exit_codes.h"
 
 /* names, colours and Ers are all arrays of 10. It would be better they were 
 in a structure as they are all linked closely, but they are not and I
@@ -151,17 +152,17 @@ int convert_create_bmp_for_rect_in_rect_dimensions_to_integers(int accuracy_leve
    if(b == 0)
    {
       fprintf(stderr,"Error #12. The gap between the two conductors (b) is too small. Either increase the bitmap size (-b option), or make b at least %f\n",gridsize);
-      exit(12);
+      exit_with_msg_and_exit_code("",GAP_BETWEEN_CONDUCTORS_TOO_SMALL);
    }
    if(c == 0)
    {
       fprintf(stderr,"Error #13. The thickness of the inner conductor (c) is too small. Either increase the bitmap size (-b option), or make c at least %f\n",gridsize);
-      exit(13);
+      exit_with_msg_and_exit_code("",GAP_BETWEEN_CONDUCTORS_TOO_SMALL);
    }
    if(h == 0)
    {
       fprintf(stderr,"Error #14. The thickness of the dielectric of Er2 (h) is too small. Either increase the bitmap size (-b option), or make h at least %f\n",gridsize);
-      exit(14);
+      exit_with_msg_and_exit_code("",GAP_BETWEEN_CONDUCTORS_TOO_SMALL);
    }
    check_error(WW,W,best_grid_size,"W");
    check_error(HH,H,best_grid_size,"H");

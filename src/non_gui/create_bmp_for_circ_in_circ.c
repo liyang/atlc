@@ -73,7 +73,7 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
    {
       case 'C': 
 	print_copyright((char *) "2002");
-	exit(1);
+	exit_with_msg_and_exit_code("",OKAY);
       break;
       case 'b':
       bmp_size=atol(my_optarg); 
@@ -82,7 +82,7 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
       verbose=TRUE; 
       break;
       case '?':
-      printf("read a ? exiting\n");
+      break;
    }
    if(argc-my_optind == 5)
    {
@@ -111,5 +111,5 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
    else
       usage_create_bmp_for_circ_in_circ();
    free_string(filename,0,1010);
-   exit(0);
+   return(OKAY);
 }

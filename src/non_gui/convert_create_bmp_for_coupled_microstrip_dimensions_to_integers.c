@@ -35,7 +35,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #endif  
 
 #include "definitions.h"
-
+#include "exit_codes.h"
 
 extern double Er1, Er2;
 extern double Ers[];
@@ -137,19 +137,18 @@ void convert_create_create_bmp_for_coupled_microstrip_dimensions_to_integers(str
    if(pcb->s == 0)
    {
       fprintf(stderr,"Error #12. The gap between the two conductors coupled lines (s) is too small. Either increase the bitmap size (-b option), or make s at least %f\n",gridsize);
-      exit(12);
+      exit_with_msg_and_exit_code("",GAP_BETWEEN_CONDUCTORS_TOO_SMALL);
    }
    if(pcb->g == 0)
    {
       fprintf(stderr,"Error #13. The gap between the groundplane (g) and coupled lines is too small. Either increase the bitmap size (-b option), or make g at least %f\n",gridsize);
-      exit(13);
+      exit_with_msg_and_exit_code("",GAP_BETWEEN_CONDUCTORS_TOO_SMALL);
    }
    if(pcb->h == 0)
    {
       fprintf(stderr,"Error #14. The thickness of the dielectric of Er2 (h) is too small. Either increase the bitmap size (-b option), or make h at least %f\n",gridsize);
-      exit(14);
+      exit_with_msg_and_exit_code("",GAP_BETWEEN_CONDUCTORS_TOO_SMALL);
    }
-
    check_error(pcb->WW,pcb->W,best_grid_size,"W");
    check_error(pcb->HH,pcb->H,best_grid_size,"H");
    check_error(pcb->ww,pcb->w,best_grid_size,"w");
