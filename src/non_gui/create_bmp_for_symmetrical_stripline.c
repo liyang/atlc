@@ -50,6 +50,9 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
   double Zo;
   unsigned char *unaligned_image_vector, *aligned_image_vector;
   FILE *fp;
+#ifndef HAVE_MEMSET
+  int memory_location;
+#endif
 
   while((q=get_options(argc,argv,"Cvi")) != -1)
   switch (q) 
@@ -101,8 +104,13 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
   }
   aligned_image_vector=ustring(0,(W+3)*3*H);
   unaligned_image_vector=ustring(0,(W+3)*3*H);
-  //memset((void *) (aligned_image_vector),0xff,W*H*3);
-  memset((void *) (aligned_image_vector),0x0,(W+3)*H*3);
+
+#ifdef HAVE_MEMSET
+  memset((void *) (aligned_image_vector),0x00,W*H*3);
+#else
+  for(memory_location=0; memory_location < W*H*3; memory_location++)
+    aligned_image_vector[memory_location]=0;
+#endif
 
   /* Fill a vector with */
   fill_image_vector_for_thin_strip(W,H,w,unaligned_image_vector);
