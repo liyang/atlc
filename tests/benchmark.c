@@ -21,13 +21,16 @@ sure the second takes less time than the first. */
 #include <string.h>
 #endif  
 
-#ifdef HAVE_PROCESSOR_INFO
-#include <sys/processor.h>
+#ifdef HAVE_PROCESSOR_INFO /* function processor_info() is in Solaris */
+#include <sys/processor.h> /* But not on Tru64 */
+#endif
+
+#ifdef HAVE_UNISTD_H 
+#include <unistd.h>
 #endif
 
 
-
-#ifdef HAVE_GETSYSINFO
+#ifdef HAVE_GETSYSINFO /* Only in Tru64 UNIX */
 
 #ifdef HAVE_SYS_SYSINFO_H
 #include <sys/sysinfo.h>
@@ -43,7 +46,7 @@ int main(int argc, char **argv)
 {
   time_t start1, finished1;
   int t1; 
-  unsigned long num_cpus=0;
+  long num_cpus=0;
   char *mhz, *eff, *cpus, *str;
   char *cpu_type, *fpu_type;
   FILE *fp;
@@ -56,7 +59,7 @@ once as multi-threaded */
   time_t start2, finished2;
   double speedup;
   int t2;
-#endif
+#endif /* ENABLE_POSIX_THREADS */
 
 /* If we have the function processor_info, we will obtain the number of cpus, 
 and if possible their type and speed */
@@ -65,13 +68,13 @@ and if possible their type and speed */
   int  speed=0;
   processorid_t id;  /* defined as a integer in solaris */
   processor_info_t infop;
-#endif
+#endif /* HAVE_PROCESSOR_INFO */
 
-#ifdef HAVE_GETSYSINFO
+#ifdef HAVE_GETSYSINFO /* Only in Tru64 UNIX */
   int  cpuid;
   struct cpu_state cpu_state_buffer;
   struct cpu_info  cpu_info_buffer;
-#endif
+#endif /* HAVE_GETSYSINFO */
 
   cpu_type = (char *) malloc(10000);
   cpus = (char *) malloc(10000);
@@ -83,20 +86,26 @@ and if possible their type and speed */
   strcpy(cpu_type,"unknown");
   strcpy(fpu_type,"unknown");
 
-#ifdef HAVE_GETSYSINFO
+#ifdef HAVE_GETSYSINFO /* Only in Tru64 UNIX */
 
   getsysinfo(GSI_CPU,(caddr_t)&cpuid,sizeof(cpuid),0,0);
   sprintf(cpu_type,"%d",cpuid);
 
-  getsysinfo(GSI_CPU_STATE,(caddr_t)&cpu_state_buffer,sizeof(cpu_state_buffer),0,0);
-  num_cpus=(long) cpu_state_buffer.cs_running;
+  //getsysinfo(GSI_CPU_STATE,(caddr_t)&cpu_state_buffer,sizeof(cpu_state_buffer),0,0);
+  //num_cpus=() cpu_state_buffer.cs_running;
 
   getsysinfo(GSI_CPU_INFO,(caddr_t)&cpu_info_buffer,sizeof(cpu_info_buffer),0,0);
   sprintf(mhz,"%d",(int) cpu_info_buffer.mhz);
+#endif /* HAVE_GETSYSINFO */
+  
+#ifdef _SC_NPROCESSORS_ONLN /* Should be portable */
+  num_cpus= (long) sysconf(_SC_NPROCESSORS_ONLN);
+  sprintf(cpus,"%ld",num_cpus);
 #endif
   
-
+  
 #ifdef HAVE_PROCESSOR_INFO
+  num_cpus=0;
   for(id=0; id<1024; ++id)
   {
     if( (processor_info(id, &infop)) == 0)
@@ -163,7 +172,7 @@ always calculate a speedup in these circumstances */
 /* Whether or not we can calculate the efficieny depends on whether we have managed
 to obtain the number of processors present in the system. If the number of procesors
 found is zero (i.e. we have been unable to determine them, due to a lack of
-processor_infor, or that not working properly, then we can't compute the efficiency,
+processor_information, or that not working properly, then we can't compute the efficiency,
 so will leave it at the default value of "unknown". */
 
   if(num_cpus != 0)
@@ -185,11 +194,6 @@ so will leave it at the default value of "unknown". */
   return(0);
 #endif
 
-
-  /* If the software was configured without threads, it is 
-  assumed the test passes, but only returns a sequenctial time. */
-  printf("0 %d %d %.2f %ld %s %.3f\n",t1, t1, 1.0, num_cpus, mhz,1.0);
-  return(0);
 }
 
 
