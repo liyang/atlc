@@ -107,10 +107,16 @@ void write_fields_for_directional_couplers(char * filename, struct transmission_
   FILE *Ex_odd_bmp_fp, *Ey_odd_bmp_fp, *E_odd_bmp_fp, *V_odd_bmp_fp, *U_odd_bmp_fp;
   FILE *permittivity_bin_fp, *permittivity_bmp_fp;
 
-  unsigned char *image_data_Ex, *image_data_Ey, *image_data_E, *image_data_U, *image_data_V, *image_data_Er;
+  unsigned char *image_data_Ex=NULL; 
+  unsigned char *image_data_Ey=NULL;
+  unsigned char *image_data_E=NULL;
+  unsigned char *image_data_U=NULL; 
+  unsigned char *image_data_V=NULL;
+  unsigned char *image_data_Er=NULL;
+
   struct max_values maximum_values;
   int offset=-3, w, h;
-  double E, Ex, Ey, U, ER;
+  double E, Ex, Ey, U;
 
   if(data.write_binary_field_imagesQ==TRUE && odd_or_even == ODD)
   {
@@ -158,51 +164,6 @@ void write_fields_for_directional_couplers(char * filename, struct transmission_
       error_and_exit("Error#12: can't close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
   } /* End of writing odd binary files */
 
-  if(data.write_binary_field_imagesQ==TRUE && odd_or_even == EVEN)
-  {
-    Ex_even_bin_fp=get_file_pointer_with_right_filename(filename,".Ex.even.bin");
-    Ey_even_bin_fp=get_file_pointer_with_right_filename(filename,".Ey.even.bin");
-    E_even_bin_fp=get_file_pointer_with_right_filename(filename,".E.even.bin");
-    V_even_bin_fp=get_file_pointer_with_right_filename(filename,".V.even.bin");
-    U_even_bin_fp=get_file_pointer_with_right_filename(filename,".U.even.bin");
-
-    for(h=height-1;h>=0;h--)
-    {
-      for(w=0;w<width;++w)
-      {
-        Ex=find_Ex(w,h);
-        Ey=find_Ey(w,h);
-        E=find_E(w,h);
-        U=find_energy_per_metre(w,h);
-
-        if( fwrite((void *) &Ex,sizeof(double), 1, Ex_even_bin_fp) != 1)
-	  error_and_exit("Error#13: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
-        if( fwrite((void *) &Ey,sizeof(double), 1, Ey_even_bin_fp) != 1)
-	  error_and_exit("Error#14: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
-        if( fwrite((void *) &E,sizeof(double), 1, E_even_bin_fp) != 1)
-	  error_and_exit("Error#15: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
-        if( fwrite((void *) &U,sizeof(double), 1, U_even_bin_fp) != 1)
-	  error_and_exit("Error#16: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
-        if( fwrite((void *) &Vij[w][h],sizeof(double), 1, V_even_bin_fp) != 1)
-	  error_and_exit("Error#17: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
-        if( fwrite((void *) &Er[w][h],sizeof(double), 1, permittivity_bin_fp) != 1)
-	  error_and_exit("Error#18: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
-      }
-    }
-    if( fclose(Ex_even_bin_fp) != 0)
-      error_and_exit("Error#19: crror#19 lose file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
-    if( fclose(Ey_even_bin_fp) != 0)
-      error_and_exit("Error#20: can't close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
-    if( fclose(E_even_bin_fp) != 0)
-      error_and_exit("Error#21: can't close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
-    if( fclose(U_even_bin_fp) != 0)
-      error_and_exit("Error#22: can't close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
-    if( fclose(V_even_bin_fp) != 0)
-      error_and_exit("Error#23: can't close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
-    if( fclose(permittivity_bin_fp) != 0)
-      error_and_exit("Error#24: can't close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
-  } /* End of writing even binary files */
-
   if(data.write_bitmap_field_imagesQ==TRUE && odd_or_even == ODD)
   {
     /* Allocate ram to store the bitmaps before they are written to disk */
@@ -243,7 +204,7 @@ void write_fields_for_directional_couplers(char * filename, struct transmission_
         if((w==0) && (offset%4!=0) && (h!=0)) 
           offset+=(4-offset%4);
         Ex=find_Ex(w,h);
-        Ey=find_Ex(w,h);
+        Ey=find_Ey(w,h);
         E=find_Ex(w,h);
         U=find_energy_per_metre(w,h);
 
@@ -280,23 +241,22 @@ void write_fields_for_directional_couplers(char * filename, struct transmission_
       error_and_exit("Error#34: Unable to close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
     if( fclose(permittivity_bmp_fp) != 0)
       error_and_exit("Error#35: Unable to close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
-  } /* End of writing odd bitmap files */
-  if(data.write_bitmap_field_imagesQ==TRUE && odd_or_even == EVEN)
-  {
-    find_maximum_values(&(maximum_values),FALSE); // Don't zero to start with, so odd and even mode on same scale 
-  }
-#ifdef GG
+    free_ustring(image_data_Ex,0,size);
+    free_ustring(image_data_Ey,0,size);
+    free_ustring(image_data_E,0,size);
+    free_ustring(image_data_V,0,size);
+    free_ustring(image_data_U,0,size);
+    free_ustring(image_data_Er,0,size);
+  } /* End of writing odd bitmap files  and therefore *all* odd files */
+
   if(data.write_binary_field_imagesQ==TRUE && odd_or_even == EVEN)
   {
-    Ex_odd_bin_fp=get_file_pointer_with_right_filename(filename,".Ex.odd.bin");
-    Ey_odd_bin_fp=get_file_pointer_with_right_filename(filename,".Ey.odd.bin");
-    E_odd_bin_fp=get_file_pointer_with_right_filename(filename,".E.odd.bin");
-    V_odd_bin_fp=get_file_pointer_with_right_filename(filename,".V.odd.bin");
-    U_odd_bin_fp=get_file_pointer_with_right_filename(filename,".U.odd.bin");
-
-    /* Permittivity images are written along with the odd images. It
-    makes no difference whey they are written, since they don't change */
-    permittivity_bmp_fp=get_file_pointer_with_right_filename(filename,".Er.odd.bmp");
+    Ex_even_bin_fp=get_file_pointer_with_right_filename(filename,".Ex.even.bin");
+    Ey_even_bin_fp=get_file_pointer_with_right_filename(filename,".Ey.even.bin");
+    E_even_bin_fp=get_file_pointer_with_right_filename(filename,".E.even.bin");
+    V_even_bin_fp=get_file_pointer_with_right_filename(filename,".V.even.bin");
+    U_even_bin_fp=get_file_pointer_with_right_filename(filename,".U.even.bin");
+    permittivity_bin_fp=get_file_pointer_with_right_filename(filename,".Er.bin");
 
     for(h=height-1;h>=0;h--)
     {
@@ -305,168 +265,121 @@ void write_fields_for_directional_couplers(char * filename, struct transmission_
         Ex=find_Ex(w,h);
         Ey=find_Ey(w,h);
         E=find_E(w,h);
-        ER=Er[w][h];
         U=find_energy_per_metre(w,h);
 
-        if( fwrite((void *) &Ex,sizeof(double), 1, Ex_odd_bin_fp) != 1)
-        fwrite((void *) &Ey,sizeof(double), 1, Ey_odd_bin_fp);
-        fwrite((void *) &E,sizeof(double), 1,  E_odd_bin_fp);
-        fwrite((void *) &U, sizeof(double), 1,U_bin_fp);
-        fwrite((void *) &Vij[w][h], sizeof(double), 1,V_odd_bin_fp);
-        fwrite((void *) &ER, sizeof(double), 1,permittivity_bin_fp);
+        if( fwrite((void *) &Ex,sizeof(double), 1, Ex_even_bin_fp) != 1)
+	  error_and_exit("Error#1: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+        if( fwrite((void *) &Ey,sizeof(double), 1, Ey_even_bin_fp) != 1)
+	  error_and_exit("Error#2: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+        if( fwrite((void *) &E,sizeof(double), 1, E_even_bin_fp) != 1)
+	  error_and_exit("Error#3: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+        if( fwrite((void *) &U,sizeof(double), 1, U_even_bin_fp) != 1)
+	  error_and_exit("Error#4: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+        if( fwrite((void *) &Vij[w][h],sizeof(double), 1, V_even_bin_fp) != 1)
+	  error_and_exit("Error#5: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+        if( fwrite((void *) &Er[w][h],sizeof(double), 1, permittivity_bin_fp) != 1)
+	  error_and_exit("Error#6: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
       }
     }
-  }
+    if( fclose(Ex_even_bin_fp) != 0)
+      error_and_exit("Error#7: can't close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
+    if( fclose(Ey_even_bin_fp) != 0)
+      error_and_exit("Error#8: can't close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
+    if( fclose(E_even_bin_fp) != 0)
+      error_and_exit("Error#9: can't close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
+    if( fclose(U_even_bin_fp) != 0)
+      error_and_exit("Error#10: can't close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
+    if( fclose(V_even_bin_fp) != 0)
+      error_and_exit("Error#11: can't close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
+    if( fclose(permittivity_bin_fp) != 0)
+      error_and_exit("Error#12: can't close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
+  } /* End of writing even binary files */
 
-  }
-  if(data.write_binary_field_imagesQ==TRUE && odd_or_even == EVEN)
+  if(data.write_bitmap_field_imagesQ==TRUE &&  odd_or_even == EVEN)
   {
-    find_maximum_values(&(maximum_values),DONT_ZERO_ELEMENTS_FIRST); 
-  }
+    /* Allocate ram to store the bitmaps before they are written to disk */
+    image_data_Ex=ustring(0,size);
+    image_data_Ey=ustring(0,size);
+    image_data_E=ustring(0,size);
+    image_data_V=ustring(0,size);
+    image_data_Er=ustring(0,size);
+    image_data_U=ustring(0,size);
 
-  /* Allocate space in image_dat for an images, to show E, Ex, Ey etc  */
-  image_dat=ustring(0,size);
+    /* Find maximum of the parameters */
+    find_maximum_values(&(maximum_values),FALSE); /* sets stucture maximum_values */
 
-  /* Find maximum of the parameters */
-  find_maximum_values(&(maximum_values)); /* sets stucture maximum_values */
+    Ex_even_bmp_fp=get_file_pointer_with_right_filename(filename,".Ex.even.bmp");
+    Ey_even_bmp_fp=get_file_pointer_with_right_filename(filename,".Ey.even.bmp");
+    E_even_bmp_fp=get_file_pointer_with_right_filename(filename,".E.even.bmp");
+    V_even_bmp_fp=get_file_pointer_with_right_filename(filename,".V.even.bmp");
+    U_even_bmp_fp=get_file_pointer_with_right_filename(filename,".U.even.bmp");
+    permittivity_bmp_fp=get_file_pointer_with_right_filename(filename,".Er.bmp");
 
+    /* Permittivity images are written along with the even images. It
+    makes no difference whey they are written, since they don't change */
 
-  /* Calculate the colours for Ex.odd */
-  if(data.write_binary_field_imagesQ==TRUE && odd_or_even == ODD)
-    Ex_odd_bmp_fp=get_file_pointer_with_right_filename(filename,".Ex.odd.bmp");
-  if(data.write_bitmap_field_imagesQ==TRUE && odd_or_even == ODD)
-    Ex_odd_bin_fp=get_file_pointer_with_right_filename(filename,".Ex.odd.bin");
-  fwrite(bitmap_file_buffer,0x36,1,Ex_bmp_fp);
-  for(h=height-1;h>=0;h--)
-  {
-    for(w=0;w<width;++w)
+    permittivity_bmp_fp=get_file_pointer_with_right_filename(filename,".Er.bmp");
+
+    fwrite(bitmap_file_buffer,0x36,1,Ex_even_bmp_fp);
+    fwrite(bitmap_file_buffer,0x36,1,Ey_even_bmp_fp);
+    fwrite(bitmap_file_buffer,0x36,1,E_even_bmp_fp);
+    fwrite(bitmap_file_buffer,0x36,1,U_even_bmp_fp);
+    fwrite(bitmap_file_buffer,0x36,1,V_even_bmp_fp);
+    fwrite(bitmap_file_buffer,0x36,1,permittivity_bmp_fp);
+    offset=-3;
+    for(h=height-1;h>=0;h--)
     {
-      offset+=3;
-      if((w==0) && (offset%4!=0) && (h!=0)) 
-        offset+=(4-offset%4);
-      Ex=find_Ex(w,h);
-      Ey=find_Ey(w,h);
-      E=find_E(w,h);
-      ER=Er[w][h];
-      U=find_energy_per_metre(w,h);
-      calculate_colour_data(Ex, maximum_values.Ex_or_Ey_max, w, h, offset,image_dat, COLOUR);
-    }
-  } 
-  fwrite(&(image_dat[0]),size,1,Ex_bmp_fp);
-  fclose(Ex_bin_fp);
-  fclose(Ex_bmp_fp);
+      for(w=0;w<width;++w)
+      {
+        offset+=3;
+        if((w==0) && (offset%4!=0) && (h!=0)) 
+          offset+=(4-offset%4);
+        Ex=find_Ex(w,h);
+        Ey=find_Ey(w,h);
+        E=find_Ex(w,h);
+        U=find_energy_per_metre(w,h);
 
-  /* Calculate the colours for Ey */
-  offset=-3;
-  Ey_bmp_fp=get_file_pointer_with_right_filename(filename,".Ey.bmp");
-  Ey_bin_fp=get_file_pointer_with_right_filename(filename,".Ey.bin");
-  fwrite(bitmap_file_buffer,0x36,1,Ey_bmp_fp);
-  for(h=height-1;h>=0;h--)
-  {
-    for(w=0;w<width;++w)
-    {
-      offset+=3;
-      if((w==0) && (offset%4!=0) && (h!=0)) 
-        offset+=(4-offset%4);
-      Ey=find_Ey(w,h);
-      fwrite((void *) &Ey, sizeof(double), 1, Ey_bin_fp);
-      calculate_colour_data(Ey, maximum_values.Ex_or_Ey_max, w, h, offset,image_dat, COLOUR);
-    }
-  } 
-  fwrite(&(image_dat[0]),size,1,Ey_bmp_fp);
-  fclose(Ey_bin_fp);
-  fclose(Ey_bmp_fp);
+        calculate_colour_data(Ex, maximum_values.Ex_or_Ey_max, w, h, offset,image_data_Ex, COLOUR);
+        calculate_colour_data(Ey, maximum_values.Ex_or_Ey_max, w, h, offset,image_data_Ey, COLOUR);
+        calculate_colour_data(E, maximum_values.E_max, w, h, offset,image_data_E, MONOCHROME);
+        calculate_colour_data(U, maximum_values.U_max, w, h, offset,image_data_U, MONOCHROME);
+        calculate_colour_data(Vij[w][h], maximum_values.V_max, w, h, offset,image_data_V, COLOUR);
+        calculate_colour_data(Er[w][h], MAX_ER, w, h, offset,image_data_Er, MIXED);
+      }
+    } 
+    if( fwrite((void *) &(image_data_Ex[0]),size, 1, Ex_even_bmp_fp) != 1)
+      error_and_exit("Error#25: Failed to write bitmap file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+    if( fwrite((void *) &(image_data_Ey[0]),size, 1, Ey_even_bmp_fp) != 1)
+      error_and_exit("Error#26: Failed to write bitmap file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+    if( fwrite((void *) &(image_data_E[0]),size, 1, E_even_bmp_fp) != 1)
+      error_and_exit("Error#27: Failed to write bitmap file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+    if( fwrite((void *) &(image_data_V[0]),size, 1, V_even_bmp_fp) != 1)
+      error_and_exit("Error#28: Failed to write bitmap file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+    if( fwrite((void *) &(image_data_U[0]),size, 1, U_even_bmp_fp) != 1)
+      error_and_exit("Error#29: Failed to write bitmap file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+    if( fwrite((void *) &(image_data_Er[0]),size, 1, permittivity_bmp_fp) != 1)
+      error_and_exit("Error#29: Failed to write bitmap file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
 
+    if( fclose(Ex_even_bmp_fp) != 0)
+      error_and_exit("Error#30: Unable to close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
+    if( fclose(Ey_even_bmp_fp) != 0)
+      error_and_exit("Error#31: Unable to close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
+    if( fclose(E_even_bmp_fp) != 0)
+      error_and_exit("Error#32: Unable to close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
+    if( fclose(V_even_bmp_fp) != 0)
+      error_and_exit("Error#33: Unable to close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
+    if( fclose(U_even_bmp_fp) != 0)
+      error_and_exit("Error#34: Unable to close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
+    if( fclose(permittivity_bmp_fp) != 0)
+      error_and_exit("Error#35: Unable to close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
 
-  /* Calculate the grayscale for E */
-  offset=-3;
-  E_bmp_fp=get_file_pointer_with_right_filename(filename,".E.bmp");
-  E_bin_fp=get_file_pointer_with_right_filename(filename,".E.bin");
-  fwrite(bitmap_file_buffer,0x36,1,E_bmp_fp);
-  offset=-3;
-  for(h=height-1;h>=0;h--)
-  {
-    for(w=0;w<width;++w)
-    {
-      offset+=3;
-      if((w==0) && (offset%4!=0) && (h!=0)) 
-        offset+=(4-offset%4);
-      E=find_E(w,h);
-      fwrite((void *) &E, sizeof(double), 1,E_bin_fp);
-      calculate_colour_data(E, maximum_values.E_max, w, h, offset,image_dat, MONOCHROME);
-    }
-  } 
-  fwrite(&(image_dat[0]),size,1,E_bmp_fp);
-  fclose(E_bin_fp);
-  fclose(E_bmp_fp);
-   
-
-  /* Calculate the grayscale for V */
-  offset=-3;
-  V_bmp_fp=get_file_pointer_with_right_filename(filename,".V.bmp");
-  V_bin_fp=get_file_pointer_with_right_filename(filename,".V.bin");
-  fwrite(bitmap_file_buffer,0x36,1,V_bmp_fp);
-  offset=-3;
-  for(h=height-1;h>=0;h--)
-  {
-    for(w=0;w<width;++w)
-    {
-      offset+=3;
-      if((w==0) && (offset%4!=0) && (h!=0)) 
-        offset+=(4-offset%4);
-      fwrite((void *) &Vij[w][h], sizeof(double), 1,V_bin_fp);
-      calculate_colour_data(Vij[w][h], maximum_values.V_max, w, h, offset,image_dat, COLOUR);
-    }
-  }
-  fwrite(&(image_dat[0]),size,1,V_bmp_fp);
-  fclose(V_bin_fp);
-  fclose(V_bmp_fp);
-
-  /* Calculate the grayscale for energy U */
-  offset=-3;
-  U_bmp_fp=get_file_pointer_with_right_filename(filename,".U.bmp");
-  U_bin_fp=get_file_pointer_with_right_filename(filename,".U.bin");
-  fwrite(bitmap_file_buffer,0x36,1,U_bmp_fp);
-  offset=-3;
-  for(h=height-1;h>=0;h--)
-  {
-    for(w=0;w<width;++w)
-    {
-      offset+=3;
-      if((w==0) && (offset%4!=0) && (h!=0)) 
-       offset+=(4-offset%4);
-      U=find_energy_per_metre(w,h);
-      fwrite((void *) &U, sizeof(double), 1,U_bin_fp);
-      calculate_colour_data(U, maximum_values.U_max, w, h, offset,image_dat, MONOCHROME);
-    }
-  } 
-  fwrite(&(image_dat[0]),size,1,U_bmp_fp);
-  fclose(U_bin_fp);
-  fclose(U_bmp_fp);
-
-
-  /* Calculate the mixed colour/grayscale for permittivity. The red
-  conductor (+1 V) is shown red, the green one (0V) green and the 
-  blue conductor (-1V) as blue. The dielectrics are shown as a grayscale */
-  
-  offset=-3;
-  permittivity_bmp_fp=get_file_pointer_with_right_filename(filename,".Er.bmp");
-  permittivity_bin_fp=get_file_pointer_with_right_filename(filename,".Er.bin");
-  fwrite(bitmap_file_buffer,0x36,1,permittivity_bmp_fp);
-  for(h=height-1;h>=0;h--)
-  {
-    for(w=0;w<width;++w)
-    {
-      offset+=3;
-      if((w==0) && (offset%4!=0) && (h!=0)) 
-        offset+=(4-offset%4);
-      ER=Er[w][h];
-      fwrite((void *) &ER, sizeof(double), 1,permittivity_bin_fp);
-      calculate_colour_data(Er[w][h], MAX_ER, w, h, offset,image_dat,MIXED);
-    }
-  } 
-  fwrite(&(image_dat[0]),size,1,permittivity_bmp_fp);
-  fclose(permittivity_bin_fp);
-  fclose(permittivity_bmp_fp);
-#endif
+    /* Free ram used to store the bitmaps before they were written to disk */
+    printf("g");
+    free_ustring(image_data_Ex,0,size);
+    free_ustring(image_data_Ey,0,size);
+    free_ustring(image_data_E,0,size);
+    free_ustring(image_data_V,0,size);
+    free_ustring(image_data_U,0,size);
+    free_ustring(image_data_Er,0,size);
+  } /* End of writing even bitmap files */
 }
