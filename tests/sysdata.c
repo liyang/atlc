@@ -72,5 +72,6 @@ int main(int argc, char **argv)
   printf("L1 data cache         %s kb\n",data.L1data);
   printf("L1 instruction cache: %s kb\n",data.L1instruction);
   printf("L2 cache:             %s kb\n",data.L2);
+  return(0);
 }
 
