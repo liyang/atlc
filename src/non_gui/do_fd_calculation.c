@@ -28,7 +28,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 
 #include "definitions.h"
 
-#define ITERATIONS 100
+#define ITERATIONS 10
 
 extern int append_flag;
 extern int dielectrics_to_consider_just_now, coupler;
@@ -121,6 +121,7 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
 {
   double capacitance_old, capacitance;
   double velocity_of_light_in_vacuum;
+  int count=0;
 
   /* The following 10 lines are for a single dielectric 2 conductor line */
   if (data->couplerQ==FALSE)
@@ -159,7 +160,10 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
       data->relative_permittivity=sqrt(data->velocity_factor); /* ??? XXXXXX */
       if(data->verbose_level > 0 ) // Only needed if intermediate results wanted. 
         print_data_for_two_conductor_lines(*data, where_to_print_fp, inputfile_filename);
+      count++;
     } while (fabs((capacitance_old-capacitance)/capacitance_old) > data->cutoff); /* end of FD loop */
+    if(data->verbose_level >=4)
+      printf("Total of %d itterations ( %d calls to finite_difference(%d) )\n",ITERATIONS*count,count,ITERATIONS);
 
 #ifdef ENABLE_MPI
 	mpi_receive_updated_vij_strips();
