@@ -49,10 +49,11 @@ gathered there. */
 
 int try_portable(struct computer_data *data); /* Gather data using 'uname' */
 
-int try_aix(struct computer_data *data);  /* Gather data IBM's AIX machines */
-int try_irix(struct computer_data *data);
-int try_hpux(struct computer_data *data);
+int try_aix(struct computer_data *data); /* Gather data on IBM's AIX machines */
+int try_bsd(struct computer_data *data); /* Gather data on BSD AIX machines */
+int try_irix(struct computer_data *data); /*Gather data on SGI's IRIX machines*/
+int try_hpux(struct computer_data *data); /* Gather data on HP HP-UX machines */
 int try_linux(struct computer_data *data);  /* THIS NEEDS IMPROVING !!!! */
-int try_solaris(struct computer_data *data);
-int try_tru64(struct computer_data *data);
-int try_unicos(struct computer_data *data);
+int try_solaris(struct computer_data *data); /* Get data under Sun's Solaris */
+int try_tru64(struct computer_data *data); /*Get data on systems with Tru64 */
+int try_unicos(struct computer_data *data); /* Get data on Cray systems */
