@@ -1,8 +1,8 @@
-bin_PROGRAMS = atlc rect_in_rect circ_in_circ rect_cen_in_rect \
+bin_PROGRAMS = atlc_old rect_in_rect circ_in_circ rect_cen_in_rect \
 circ_in_rect rect_in_circ readbin sym_strip make_coupler \
 design_coupler
 
-atlc_SOURCES = nrutil.c atlc.c read_bitmap_file_headers.c \
+atlc_old_SOURCES = nrutil.c atlc.c read_bitmap_file_headers.c \
 byteswap.c string.c setup_arrays.c finite_difference_single_threaded.c \
 finite_difference_multi_threaded.c usage_atlc.c write_fields.c\
 check_for_shorts.c print_data.c bmp.h definitions.h Erdata.h \
