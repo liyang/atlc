@@ -1,0 +1,3 @@
+One 18/4/02 I moved all the sources from atlc-x.y.z/src to
+atlc-x.y.z/src/non_gui and will start work on some graphical code in the
+src/gui directory. 
