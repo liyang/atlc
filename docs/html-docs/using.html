@@ -41,39 +41,7 @@ You then need to draw an image of the cross section of the transmission line to 
 <TD><img src="jpgs/too-small.jpg" ALT="Wasted space = wasted computing time." width="128"></td>
 </tr>
 </table>
-<H2>4) RUN <COde>atlc</code></a></H2><br>
-Running <COde>atlc</code> is very simple. Assuming for example, we wish to find the properties of this transmission lines.<br>
-<img src="jpgs/very-odd.jpg"  width="128" height="128"><br>
-We will save the image to a file called <EM>very-odd.bmp</EM>. Then <COde>atlc</code> is run like this. 
-<pre>
-% atlc very-odd.bmp
-very-odd.bmp Er= 1.0000 C= 59.1756 pF/m L= 188.0251 nH/m Zo= 56.3685 Ohms v= 2.99792e+08 m/s v_f= 1.0000 VERSI N= 3.0.1
-</pre>
-There are seveal options that can be given to <COde>atlc</code>, which you might wish to investigate. Running <COde>atlc</code>, like this, with no arguments, will produce a list of the options.
-<pre>
-% atlc
 
-Usage: atlc [options ...] bitmap
-
-options are:
-  -c cutoff
-      where 'cutoff' sets the cutoff criteria - see html docs or man page.
-  -d rrggbb=Er
-      where the colour rrggbb (in hex) is a (d)ielectric of permittivity Er.
-  -F appendfile
-      appends all data to 'appendfile'.
-  -i factor
-      which lightens (factor &gt 2.0) or darkens (1.0 &lt factor &lt 2.0) output bitmaps.
-  -t THREADs. 
-      Where THREADs is the number of threads to use (normally best set to 
-      the number of cpus).
-  -r rate_multiplier
-      where 'rate_multiplier' sets the rate multipler (called r in source code)
-  -v       
-      Verbose option. Print extra data to stdout.
-</pre>
-<H2>5) INTERPRET <COde>atlc</code>'s OUTPUT</H2>
-Apart from giving you the impedance, capacitance per unit length, inductance per unit length, <COde>atlc</code> saves some files that you might find useful. This are described on the page on <a href="fileformat.html"><COde>atlc</code>'s file formats</a>
 <p>atlc is written and supported by <a href="mailto: drkirkby@ntlworld.com?subject=atlc%20-%20Arbitrary%20Transmission%20Line%20Calculator">Dr. David Kirkby (G8WRB)</A> It it issued under the <a href="http://www.gnu.org/copyleft/gpl.html">GNU General Public Licence</A><p>
 <a href="http://atlc.sourceforge.net">Return to the atlc homepage</a>
 </BODY>
