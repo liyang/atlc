@@ -4,13 +4,26 @@ atlc is written as a multi-threaded application, to exploit multiple
 CPUs if you have them AND your operating systems supports multiple 
 CPUs. 
 
-'atlc' was built on a Sun and tested under Solaris. 
+'atlc' has been tested on a quad processeor Sun Ultra 80 running 
+Solaris 9, a PC running Solaris 8 (x86) using a dual processor system, a
+dual processor SGI Octane 10000 running IRIX 6.5.16, a quad processor 
+IBM/RS6000 F50 running AIX 5.2 and a dual processor Sun SPARCstation 20
+running Redhat 6.2. Some problems have been noticed on the 
+IBM RS/6000, as the results differ slighlty from one run to the next on
+the IBM. (see BUGS or docs/html-docs/BUGS.html). On the Sun SPARCstation
+20 running Redhat 6.2, the results are useless. 
+
 atlc has been built with thread support on other systems, but since
-in many cases these have only one CPU, it has been difficult to test 
-them fully.  If an operating system does not support multiple CPU
+in these have only one CPU, it has been difficult to test 
+them fully. This includes a PC running Redhhat 7.2, a Dec Alpha running
+Tru64 5.1B, an HP C3000 running HP-UX 11. On all these single processor
+systems, thread support seems to work okay, although there is not a lot
+of point in using it. 
+
+If an operating system does not support multiple CPU
 (as currently OpenBSD does not), then trying to compile with thread
 support will be a pointless exercise and probably result in 
-compilation problems. 
+compilation problems. As it will be if there is only one CPU present. 
 
 To use atlc with multiple CPUs, a POSIX compatable thread library is 
 necessary. Solaris threads in Sun's Solaris are fine, and most other
@@ -23,8 +36,8 @@ should be okay. To configure with support for threads, run:
 configure --with-threads. 
 
 By default, the programme will run four threads simultaneously. 
-This is generally optimal 
-for a quad processor machine. With a dual processor machine, it would be
+This is generally optimal for a quad processor machine. With a dual 
+processor machine, it would be
 advantageous to run 2 threads. The number of threads that the system
 creates by default is in the file definitions.h, as a parameter
 MAX_THREADS.  
@@ -42,7 +55,7 @@ processor machine (Sun Ultra 80), it is for now at least defaulting to 4
 threads.  There is probably not a lot to be gained by dropping it to two
 on a dual processor machine, but perhaps a bit. On a machine with more than 4 
 CPUs, the parameter should be increased either on the command 
-line or permanently in the souce code. 
+line or permanently in the source code. 
 
 Note, even if configured with --with-threads, passing the option -t0 to
 atlc during runtime will force the use of a single threaded algorithm,
@@ -54,6 +67,6 @@ very slightly, making testing difficult. As from version 4.3.0, this
 has been eliminated, buy using an algorithm suitable for single or 
 multiple threads.
 
-Dr. David Kirkby, 31 May 2003
+Dr. David Kirkby, 15th August 2003 Re: 4.3.7
 
 
