@@ -17,19 +17,19 @@
 ../src/non_gui/create_bmp_for_circ_in_circ 500  50 150 1  ../examples/eccentric-l.bmp  2>/dev/null
 ../src/non_gui/create_bmp_for_circ_in_circ 500  50 200 1  ../examples/eccentric-m.bmp  2>/dev/null
 ../src/non_gui/create_bmp_for_circ_in_circ -b 10 500 50 200 1  ../examples/eccentric-n.bmp  2>/dev/null
-../src/non_gui/create_bmp_for_symmmetrical_stripline 1 201 301 ../examples/wide.bmp >/dev/null 2>/dev/null
+../src/non_gui/create_bmp_for_symmetrical_stripline 1 201 301 ../examples/wide.bmp >/dev/null 2>/dev/null
 ../src/non_gui/create_bmp_for_create_bmp_for_rect_in_rect 268 100 10 40 25 200 100 45 1.0 4.8  ../examples/pcb2.bmp >/dev/null 2>/dev/null
 ../src/non_gui/create_bmp_for_rect_cen_in_rect 268 100 100 50 4.8  ../examples/central.bmp  >/dev/null 2>/dev/null
 ../src/non_gui/create_bmp_for_circ_in_circ 100 30 25 1.006  ../examples/off-centre2.bmp >/dev/null 2>/dev/null
 ../src/non_gui/create_bmp_for_circ_in_rect 20 200 100 50 -5 10.2  ../examples/cir.bmp >/dev/null 2>/dev/null
 
-../src/non_gui/create_bmp_for_stripline_coupler 1.0  1.0 1.0 1.0  ../examples/coupler1.bmp  > test.txt
-../src/non_gui/create_bmp_for_stripline_coupler 2.0  1.0 1.0 1.0  ../examples/coupler2.bmp  > test.txt
-../src/non_gui/create_bmp_for_stripline_coupler 3.0  1.0 1.0 1.0  ../examples/coupler3.bmp  > test.txt
-../src/non_gui/create_bmp_for_stripline_coupler 4.0  1.0 1.0 1.0  ../examples/coupler4.bmp  > test.txt
-../src/non_gui/create_bmp_for_stripline_coupler 5.0  1.0 1.0 1.0006  ../examples/coupler5.bmp  > test.txt
-../src/non_gui/create_bmp_for_stripline_coupler 1.0  1.0 0.5 3.335  ../examples/coupler6.bmp  > test.txt
-../src/non_gui/create_bmp_for_stripline_coupler 1.0  1.0 0.1 2.33  ../examples/coupler7.bmp  > test.txt
+../src/non_gui/create_bmp_for_stripline_coupler 1.0  1.0 1.0 1.0  ../examples/coupler1.bmp  
+../src/non_gui/create_bmp_for_stripline_coupler 2.0  1.0 1.0 1.0  ../examples/coupler2.bmp  
+../src/non_gui/create_bmp_for_stripline_coupler 3.0  1.0 1.0 1.0  ../examples/coupler3.bmp  
+../src/non_gui/create_bmp_for_stripline_coupler 4.0  1.0 1.0 1.0  ../examples/coupler4.bmp  
+../src/non_gui/create_bmp_for_stripline_coupler 5.0  1.0 1.0 1.0006  ../examples/coupler5.bmp  
+../src/non_gui/create_bmp_for_stripline_coupler 1.0  1.0 0.5 3.335  ../examples/coupler6.bmp  
+../src/non_gui/create_bmp_for_stripline_coupler 1.0  1.0 0.1 2.33  ../examples/coupler7.bmp  
 ../src/non_gui/create_bmp_for_stripline_coupler 0.25 1.0 1.0 4.8  ../examples/coupler8.bmp > test2.txt
 # Write text to test2.txt and check that. Lack of gsl will show up. 
 # Now check the length of the last file. It this is okay, it probably means

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # This is the one of a set of test that generate checksums after files are
-# created. Generally a bitmap if first produced by a program such as create_bmp_for_symmmetrical_stripline, 
+# created. Generally a bitmap if first produced by a program such as create_bmp_for_symmetrical_stripline, 
 # create_bmp_for_create_bmp_for_rect_in_rect, create_bmp_for_rect_cen_in_rect, create_bmp_for_circ_in_circ, create_bmp_for_circ_in_rect, 
 # create_bmp_for_stripline_coupler etc.
 
@@ -37,14 +37,13 @@
 # 'sum' and see what that gives. If any failures do occur, please let me
 # know. email drkirkby@ntlworld.com and/or davek@medphys.ucl.ac.uk 
 
-../src/non_gui/create_bmp_for_stripline_coupler -b 16 1 1 1 1.0 test.bmp > test2.txt
+../src/non_gui/create_bmp_for_stripline_coupler -vv -b 16 1 1 1 1.0 test_stripline_coupler.bmp > test_stripline_coupler.bmp.pre-atlc.txt
 
-CKSUM=`../tools/src/mycksum test.bmp`
+CKSUM=`../tools/src/mycksum test_stripline_coupler.bmp`
 if [ $CKSUM = 48613 ]; then
   echo "PASSED:" $0 >> tests.log 
   exit 0
 else
-  echo "FAILED:" $0  "but do not worry as its not been thoroughly tested on many machines"
-  echo "FAILED:" $0  "but do not worry as its not been thoroughly tested on many machines">> tests.log
+  echo "FAILED:" $0  >> tests.log
   exit 1
 fi

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # This is one of a set of test that generate checksums after files are
-# created. Generally a bitmap if first produced by a program such as create_bmp_for_symmmetrical_stripline, 
+# created. Generally a bitmap if first produced by a program such as create_bmp_for_symmetrical_stripline, 
 # create_bmp_for_create_bmp_for_rect_in_rect, create_bmp_for_rect_cen_in_rect, create_bmp_for_circ_in_circ, create_bmp_for_circ_in_rect, 
 # create_bmp_for_stripline_coupler etc.
 
