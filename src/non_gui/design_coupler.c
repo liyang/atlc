@@ -22,7 +22,6 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 
 */
 
-
 #include "definitions.h"
 
 #ifdef HAVE_STDIO_H
@@ -89,7 +88,6 @@ int main(int argc, char **argv) /* Read parameters from command line */
   double Zo_x=-1, Zeven_x=-1, Zodd_x=-1, best_s=-1, best_w=-1, height_of_box=1.0;
   double best_Zodd=-1, best_Zeven=-1, best_Zo=-1;
   while((q=get_options(argc,argv,"dCL:s:Z:H:")) != -1)
-  while((q=get_options(argc,argv,"dCs:Z:H:")) != -1)
   switch (q) 
   {
     case 'd':
@@ -179,7 +177,8 @@ int main(int argc, char **argv) /* Read parameters from command line */
   fq is the frequency at which the line is a quarter-wave long, we must
   divide the vcf_for_quarter_wave_line by sin(0.5 *PI*f/fq)^2 to get
   the required vcf. */
-  vcf=vcf_for_quarter_wave_line/pow(sin(0.5*M_PI*fmean/fq),2.0);
+  //vcf=vcf_for_quarter_wave_line/pow(sin(0.5*M_PI*fmean/fq),2.0);
+  vcf=vcf_for_quarter_wave_line/sin(0.5*M_PI*fmean/fq);
   vcf=vcf_for_quarter_wave_line;
   /* Check that the voltage coupling factor does not exceed one */
   if ( vcf > 1.0 )
@@ -197,7 +196,6 @@ int main(int argc, char **argv) /* Read parameters from command line */
   
   Zodd = sqrt(1-vcf)*Zo/sqrt(1+vcf);
   Zeven=Zo*Zo/Zodd;
-    printf("Please be patient - this will take a few minutes or so\n");
 
   printf("\nFor a %.3f dB %.3f Ohm coupler with a length of %.4f m,\n",wanted_coupling_factor_in_dB, Zo, length);
   printf("you need to have an odd-mode impedance Zodd to be %.3f Ohms and \n",Zodd);
