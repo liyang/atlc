@@ -52,3 +52,8 @@ echo eccentric-m.bmp
 ../src/circ_in_circ 500  50 200 1 > eccentric-m.bmp
 echo eccentric-n.bmp
 ../src/circ_in_circ -b 10 500  50 200 1 > eccentric-n.bmp
+../src/sym_strip 1 201 301 wide.bmp
+../src/rect_in_rect 268 100 10 40 25 200 100 45 1.0 4.8 > pcb2.bmp
+../src/rect_cen_in_rect 268 100 100 50 4.8 > central.bmp 
+../src/circ_in_circ 100 30 25 1.006 > off-centre2.bmp
+../src/circ_in_rect 20 200 100 50 -5 10.2 > cir.bmp
