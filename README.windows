@@ -12,7 +12,7 @@ graphical front end - they are simple command-line driven
 binaries. If you want to add your own front end feel free. 
 
 The latest Windows binaries produced are for version 3.0.7
-of the code.
+of the code.  Version 4.0.1 will be available soon.
 
 Most of the example files (.bmp's) referred to in the docs are 
 in the file atlc-3.0.7.tar.gz, which is a compressed tar file. 
