@@ -42,13 +42,13 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 
 extern double **Vij;
 extern double **Er;
-extern double image_fiddle_factor;
 extern double width, height;
 extern int **cell_type;
 
 void calculate_colour_data(double x, double xmax, int w, int h, int offset, unsigned char *image_dat, char image_type)
 {
   int red=0, green=0, blue=0; /*just to avoid a compiler warning */
+  double image_fiddle_factor=IMAGE_FIDDLE_FACTOR; /* ZZZZZZZZZZZXXXXXXXXXXXXXX */
   if(image_type==COLOUR) /*Ex, Ey, V */
   {
     if(x >= 0.0)

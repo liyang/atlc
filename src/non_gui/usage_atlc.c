@@ -46,7 +46,7 @@ void usage_atlc(void)
 #endif
   fprintf(stderr,"  -r rate_multiplier\n      where 'rate_multiplier' sets the rate multipler (called r in source code)\n");
   fprintf(stderr,"  -s       \n      Skip writing the Ex, Ey, E, V, U and Er files\n");
-  fprintf(stderr,"  -v       \n      Verbose option. Print extra data to stdout.\n\n");
+  fprintf(stderr,"  -v       \n      Verbose option. Print extra data (-vv or -vvv gives even more)\n\n");
 #ifndef ENABLE_MP
   fprintf(stderr,"****************NOTE******************************\n");
   fprintf(stderr,"The -t option setting the number of threads is disabled since either\n");

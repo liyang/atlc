@@ -68,19 +68,21 @@ simulation. */
 #define COLOUR 0
 #define MONOCHROME 1
 #define MIXED      2
-#define REQUIRE_FD_CALCULATIONS    1
-#define NO_NEED_FOR_FD_CALCULATIONS 0
-#define Z0                     1
-#define Z_ODD                   2
-#define Z_ALL                       3
-#define Z_EVEN       4
+#define Z0                              1
+
+#define Z_ODD_SINGLE_DIELECTRIC         1
+#define Z_EVEN_SINGLE_DIELECTRIC        2
+#define Z_ODD_MULTIPLE_DIELECTRIC       3
+#define Z_EVEN_MULTIPLE_DIELECTRIC      4
+
+#define Z_ALL                       5
 
 /* The value of EPSILON_0 is taken from the UK National Physical
 Laboratory's list of physical constants found on the web. */
 
 #define EPSILON_0 8.854187817e-12
 #define MU_0 M_PI*4e-7
-#define MAX_THREADS  4
+#define MAX_THREADS  10
 #define BORDER   5 /* The border to put around images. 1 is minimum, but 5 looks better */
 
 #define TINY 1e-12
@@ -115,13 +117,31 @@ int odd_or_even[10];
 int best[10];
 };
 
-struct tline_parameters{
-/* The ..2 paramters are when Er is not assumed to be 1.0 */
-double Codd, Codd_non_vac, Lodd, Zodd, Zodd_non_vac, L, C;
-double Ceven, Ceven_non_vac, Leven, Zeven, Zeven_non_vac;
-double Zo, Zo_non_vac;
-double Er, v, v_f;
-int conductors;
+struct transmission_line_data{
+double Codd, Ceven, C;
+double velocity_odd, velocity_factor_odd, relative_permittivity_odd;
+double velocity_even, velocity_factor_even, relative_permittivity_even;
+double Lodd_vacuum, Leven_vacuum, L_vacuum;
+double Codd_vacuum, Ceven_vacuum, C_vacuum, C_non_vacuum;
+double Zo, Zo_vacuum, Zo_non_vacuum, Zodd, Zodd_vacuum, Zeven;
+double Zeven_vacuum, Zdiff, Zdiff_vacuum, Zcomm, Zcomm_vacuum;
+double Er, the_single_Er, Er_odd, Er_even;
+double velocity, velocity_factor, relative_permittivity;
+double r; /* rate multiplier */
+double image_fiddle_factor;
+double cutoff; /* How small the error in subsequent itterations must be */
+int compute, display; /* none, ZO, ZODD, ZEVEN. ZEVEN_VAC, ZODD_VAC; */
+
+int verbose_level; /* 0, 1 or 2 */
+int dielectrics_to_consider_just_now;
+int non_vacuum_dielectric_found;
+int dielectric_found;
+double found_this_dielectric;
+int dielectrics_on_command_line;
+int dielectrics_in_bitmap;
+int avoid_use_of_fast_convergence_methodQ;
+int couplerQ;
+int write_field_imagesQ;
 };
 
 #define NOT_IMPORTANT 0   /* The importance to attach to getting the */
@@ -207,7 +227,7 @@ void swap_bytes2(unsigned char *buffer, int offset, short *answer);
 void swap_bytes4(unsigned char *buffer, int offset, int *answer);
 void free_ustring(unsigned char *v, long nl, long nh);
 int **imatrix(long nrl, long nrh, long ncl, long nch);
-void setup_arrays(int *dielectrics_in_bitmap, int dielectrics_on_command_line);
+void setup_arrays(struct transmission_line_data *data);
 void get_data_interactively(void);
 double finite_difference(int iterations);
 void do_columns(int *thread);
@@ -271,12 +291,14 @@ int get_options(int argc, char **argv, char *opts);
 void usage_readbin(void);
 void ERR(char *s, char c, char **argv);
 char *index2(char *str, char c);
-void do_fd_calculation(double *capacitance, double *inductance,double *Zo, double *Zodd, double *Zeven, int whichZ, double *velocity, double *vf, FILE *where_to_print, double cutoff, int dielectrics_to_consider_just_now, char * filename, int requirement_for_fd_calculations_Q);
 void swap_conductor_voltages(int way_to_swap);
 void usage_generate_coupler_bitmap(void);
 double calculate_integer_values(struct data *optimise, int n, int accuarcy_level);
 void calculate_Zodd_and_Zeven(double *Zodd, double *Zeven, double *Zo, double w, double H, double s, double er);
 void usage_design_coupler(void);
 void print_copyright(char *s);
-int print_data2(FILE *fp, char *filename, struct tline_parameters *data, int whihc_Z);
 void give_examples_of_using_design_coupler(void);
+void do_fd_calculation(struct transmission_line_data *data, FILE *where_to_print_fp, char *inputfile_filename);
+int print_data_for_directional_couplers(struct transmission_line_data data, FILE *where_to_print_fp, char *inputfile_name);
+int print_data_for_two_conductor_lines(struct transmission_line_data data, FILE *where_to_print_fp, char *inputfile_name);
+void set_data_to_sensible_starting_values(struct transmission_line_data *data);
