@@ -109,9 +109,11 @@ do
   N)
   MAKE_OUTPUT=\>/dev/null;;
   T)
-  #TMP_DIR=$$/
-  TMP_DIR=`date | awk '{print $3 $4}'`:$$/
-  TMP_NAME=`date | awk '{print $3 $4}'`:$$;;
+#  TIME=`date | awk '{print $4}'`
+#  TMP_DIR=$TIME.$$/
+#  TMP_NAME=$TIME.$$.;;
+ TMP_DIR=$$/
+ TMP_NAME=$$.;;
   r)
   DELETE_FILES_AFTER_USE="yes" ;;
   \?)
@@ -186,6 +188,7 @@ if test ! -f $VER$EXTENSION ; then
 fi
 
 DATE=`date`
+echo $TIME
 LOCAL_HOST=`hostname` > /dev/null
 
 # Find the home directory of the user on the remote host.
@@ -196,14 +199,8 @@ REMOTE_HOME=`$SSH $USERNAME@$REMOTE_HOST pwd`
 echo "#! /bin/sh" | tee > remote-test.$TMP_NAME$REMOTE_HOST.out > remote-test.$TMP_NAME$REMOTE_HOST
 echo "# Script created on $LOCAL_HOST at $DATE using 'teston' " >> remote-test.$TMP_NAME$REMOTE_HOST
 echo "# to run on the remote host $REMOTE_HOST " >> remote-test.$TMP_NAME$REMOTE_HOST
-echo "# Output from the script created on $LOCAL_HOST at $DATE using 'teston' " >> remote-test.$TMP_NAME$REMOTE_HOST.out
+echo "Output from the script created on $LOCAL_HOST at $DATE using 'teston' " >> remote-test.$TMP_NAME$REMOTE_HOST.out
 echo cd $REMOTE_HOME/$REMOTE_HOST/$TMP_DIR >> remote-test.$TMP_NAME$REMOTE_HOST
-echo "echo \$HOME" >> remote-test.$TMP_NAME$REMOTE_HOST
-echo "echo \$PATH" >> remote-test.$TMP_NAME$REMOTE_HOST
-echo "echo \$LD_LIBRARY_PATH" >> remote-test.$TMP_NAME$REMOTE_HOST
-echo "echo \$PWD" >> remote-test.$TMP_NAME$REMOTE_HOST
-echo "echo \$MACHTYPE" >> remote-test.$TMP_NAME$REMOTE_HOST
-echo "echo \$OSTYPE" >> remote-test.$TMP_NAME$REMOTE_HOST
 
 # the exact method of decompressing the file depends on the file extension. 
 if [ "x$EXTENSION" = "x.tar.gz" ] ; then
@@ -230,7 +227,6 @@ elif [ "x$EXTENSION" = "x.ZIP" ]  ; then
   echo tar xf $REMOTE_HOME/$REMOTE_HOST/$TMP_DIR$VER.tar >> remote-test.$TMP_NAME$REMOTE_HOST
 elif [ "x$EXTENSION" = "x.tar" ] ; then
   echo tar xf $REMOTE_HOME/$REMOTE_HOST/$TMP_DIR$VER.tar >> remote-test.$TMP_NAME$REMOTE_HOST
-  echo rm $REMOTE_HOME/$REMOTE_HOST/$TMP_DIR$VER.tar >> remote-test.$TMP_NAME$REMOTE_HOST
 else
   echo "unknown extension $EXTENSION"
   exit 1
@@ -247,8 +243,9 @@ DATE=`date`
 # The rest of the script to go to the remote machine. 
 echo mkdir $REMOTE_HOME/$REMOTE_HOST/$TMP_DIR$VER-build >> remote-test.$TMP_NAME$REMOTE_HOST
 echo cd $REMOTE_HOME/$REMOTE_HOST/$TMP_DIR$VER-build >> remote-test.$TMP_NAME$REMOTE_HOST
+#echo time $REMOTE_HOME/$REMOTE_HOST/$TMP_DIR$VER/configure $CONFIG_OPTIONS $CONFIGURE_OUTPUT >> remote-test.$TMP_NAME$REMOTE_HOST 2> remote-test.$TMP_NAME$REMOTE_HOST
 echo $REMOTE_HOME/$REMOTE_HOST/$TMP_DIR$VER/configure $CONFIG_OPTIONS $CONFIGURE_OUTPUT >> remote-test.$TMP_NAME$REMOTE_HOST
-echo $MAKE $MAKE_OPTIONS $MAKE_OUTPUT >> remote-test.$TMP_NAME$REMOTE_HOST
+echo time $MAKE $MAKE_OPTIONS $MAKE_OUTPUT >> remote-test.$TMP_NAME$REMOTE_HOST
 if [ "x$DELETE_FILES_AFTER_USE" = "xyes" ] ; then 
   rm -r $REMOTE_HOME/$REMOTE_HOST/$TMP_DIR$VER >> remote-test.$TMP_NAME$REMOTE_HOST
 fi 
@@ -262,7 +259,6 @@ chmod 755 remote-test.$TMP_NAME$REMOTE_HOST
 # directory on the remote machine that is unique. The method used 
 # here does not guarantee uniqness, but it should be okay. 
 
-$SSH $USERNAME@$REMOTE_HOST chmod -R 777  $REMOTE_HOST/$TMP_DIR 2> /dev/null
 $SSH $USERNAME@$REMOTE_HOST rm -fR $REMOTE_HOST/$TMP_DIR 2> /dev/null
 
 # Make direcotries on the remote machine. #
@@ -273,15 +269,13 @@ $SSH $USERNAME@$REMOTE_HOST mkdir $REMOTE_HOST/$TMP_DIR 2> /dev/null
 # Copy via scp/scp2 the script file in addition to the package
 # (somename.tar.gz or somename.tgz etc) to the remote machine.
 
-#$SCP -p remote-test.$TMP_NAME$REMOTE_HOST $USERNAME@$REMOTE_HOST:$REMOTE_HOST/$TMP_DIR
-#$SCP -p $VER$EXTENSION $USERNAME@$REMOTE_HOST:$REMOTE_HOST/$TMP_DIR
 $SCP -p $VER$EXTENSION remote-test.$TMP_NAME$REMOTE_HOST $USERNAME@$REMOTE_HOST:$REMOTE_HOST/$TMP_DIR
  
 # Put a copy of the remote script locally for debugging. 
 cat remote-test.$TMP_NAME$REMOTE_HOST >> remote-test.$TMP_NAME$REMOTE_HOST.out
 
 # Execute the script on the distant machine.
-$SSH $USERNAME@$REMOTE_HOST $REMOTE_HOST/$TMP_DIR/remote-test.$TMP_NAME$REMOTE_HOST | tee -a remote-test.$TMP_NAME$REMOTE_HOST.out
+$SSH -f $USERNAME@$REMOTE_HOST $REMOTE_HOST/$TMP_DIR/remote-test.$TMP_NAME$REMOTE_HOST | tee -a remote-test.$TMP_NAME$REMOTE_HOST.out &
 END_DATE=`date`
 echo "Script finished at $END_DATE using 'teston' " | tee -a remote-test.$TMP_NAME$REMOTE_HOST.out
 
