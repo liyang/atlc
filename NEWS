@@ -1,9 +1,8 @@
 NEWS for realease 4.4.1 on  4th September 2003.
 
-This is a minor release, since the basic functionality
-is unchanged since the last release 4.4.0, when there
-were significant changes. This release will mainly benifit
-those running IRIX or BSD UNIX (including Mac OS X)
+I new program 'tests/sysdata' has been added, which
+gets information about the hardware and presents it
+quickly.
 
 atlc is now better at gathering hardware information on
 SGI systems running IRIX. 
@@ -18,7 +17,9 @@ create_bmp_for_rect_in_circ.c or
 read_bitmap_file_headers.c
 sysdata.c
 try_solaris.c
-so should no longer generate *any* compiler warnings. 
+so should no longer generate *any* compiler warnings, on
+any files on any operating systems. If you get any
+compiler warnings, let me know. 
 
 Dr. David Kirkby, 4th Auguest 2003 Re: atlc-4.4.1
 
