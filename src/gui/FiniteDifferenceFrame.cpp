@@ -89,7 +89,7 @@ FiniteDifferenceFrame::FiniteDifferenceFrame(const wxString& title, const wxPoin
   ViewMenu->Append( ID_ViewEyField, "E-field in &y-direction","E-field in y-direction shown on a gray scale"); 
   ViewMenu->Append( ID_ViewEField, "&Magnitude of E","Magnitude of E-field shown on a gray scale."); 
   ViewMenu->Append( ID_ViewVoltage, "&Voltage","Voltage shown on a gray scale."); 
-  ViewMenu->Append( ID_ViewPermittivity, "&Permittivity","Permittivity shown on gray scale - coundutors coloured"); 
+  ViewMenu->Append( ID_ViewPermittivity, "&Permittivity","Permittivity shown on gray scale - conductors coloured"); 
   ViewMenu->Append( ID_ViewEnergy, "&Energy","Energy shown on gray scale"); 
 
   // Run menu
@@ -118,9 +118,6 @@ FiniteDifferenceFrame::FiniteDifferenceFrame(const wxString& title, const wxPoin
   SetMenuBar(menuBar);
   CreateStatusBar(1);
   SetStatusText("You must now get a bitmap");
-  //wxImage image("twin-wire3.bmp");
-
-  // Initalize the panel and button members.
 
   myPanel = new wxPanel(this, -1, wxDefaultPosition, wxDefaultSize,wxTAB_TRAVERSAL, "MyPanel"); 
 								
