@@ -23,10 +23,10 @@
 if [ "x$no_gsl" = "xyes" ] ; then
   exit 77
 fi
-$top_builddir/src/non_gui/design_coupler -d 20 144 146 > /tmp/atlc.$$ 2> /dev/null
-MD5SUM=`$top_builddir/tools/src/mymd5sum /tmp/atlc.$$`
-rm /tmp/atlc.$$
+$top_builddir/src/non_gui/design_coupler -d 20 144 146 > $top_builddir/tmp/results  2> /dev/null
+MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/results`
 if [ $MD5SUM = f53d09bdc334c3f0508b4f44e789e216 ]; then
+  rm $top_builddir/tmp/results
   echo "PASSED:" $0 >> tests.log 
   exit 0
 else
