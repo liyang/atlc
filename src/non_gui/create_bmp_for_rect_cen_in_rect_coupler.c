@@ -21,6 +21,7 @@ USA.
 Dr. David Kirkby, e-mail drkirkby@ntlworld.com 
 
 */
+#include "definitions.h"
 #include "exit_codes.h"
 
 extern int main(int argc, char **argv) /* Read parameters from command line here   */
@@ -54,10 +55,7 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
       cc=atof(argv[my_optind+3]);
       Er1=atof(argv[my_optind+4]);
       if((image_data_fp=fopen(argv[my_optind+5],"w"))==NULL)
-      {
-	 fprintf(stderr,"Can't write to %s. Exiting ...\n",my_optarg);
-	 exit(1);
-      }
+	 exit_and_error("Can't open file for writing",CANT_OPEN_FOR_WRITING);
 
       /* To make the program easier to write, rect_cen_in_rect uses 
       the same variables as create_bmp_for_rect_in_rect. We just calculate the 
@@ -75,8 +73,8 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
    }
    else
       usage_create_bmp_for_rect_cen_in_rect();
-   exit(0);
+   return(0);
 #endif 
-  error_and_exit("This program is not implemented", PROGRAMME_NOT_IMPLEMENTED);
+  error_and_exit("This program is not implemented", PROGRAM_NOT_IMPLEMENTED);
 return(0);
 }
