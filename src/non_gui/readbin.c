@@ -89,5 +89,5 @@ int main(int argc, char **argv)
   }
   else
     usage_readbin();
-  exit_with_msg_and_exit_code("",OKAY);
+  return(OKAY);
 }

@@ -36,7 +36,7 @@ to take this into account have been included, but commentted out.*/
 #include "definitions.h"
 
 extern int width, height;
-extern int **cell_type;
+extern char **cell_type;
 
 void check_for_shorts(void)
 {

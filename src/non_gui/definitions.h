@@ -35,10 +35,10 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #define       FREE_ARG char*
 #define       NR_END 1
 
-#define    CONDUCTOR_FLOATING          -3000
-#define    CONDUCTOR_ZERO_V            -1000 
-#define    CONDUCTOR_PLUS_ONE_V         -999 
-#define    CONDUCTOR_MINUS_ONE_V       -1001 
+#define    CONDUCTOR_FLOATING          -200
+#define    CONDUCTOR_ZERO_V            -100 
+#define    CONDUCTOR_PLUS_ONE_V         -99 
+#define    CONDUCTOR_MINUS_ONE_V       -101 
 #define    DIELECTRIC                      0 
 #define    DIFFERENT_DIELECTRIC_NEARBY     1
 #define    METAL_LEFT                      2

@@ -24,7 +24,8 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 
 #include "definitions.h"
 
-extern int width, height, **cell_type;
+extern int width, height;
+extern char **cell_type;
 extern double **Er, **Vij;
 
 void find_maximum_values(struct max_values *maximum_values, int zero_elementsQ)

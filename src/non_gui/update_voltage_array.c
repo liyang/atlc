@@ -65,7 +65,8 @@ Out[10]= {{vij ->
 */
 #include "definitions.h"
 
-extern int width, height, **cell_type;
+extern int width, height;
+extern char **cell_type;
 extern double r, **Er, **Vij;
 void update_voltage_array(int i, int calculate_edges)
 {

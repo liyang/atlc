@@ -42,7 +42,7 @@ extern double **Vij;
 extern double **Er;
 extern unsigned char *bitmap_file_buffer;
 extern int width, height, size, errno;
-extern int **cell_type;
+extern char **cell_type;
 
 /* Write the following files, assuming an input of example.bmp 
 where example.bmp is a 2 conductor transmission lines. For

@@ -25,7 +25,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #include "definitions.h"
 
 extern double **Vij;
-extern int **cell_type;
+extern char **cell_type;
 extern double **Er;
 extern int width, height;
 

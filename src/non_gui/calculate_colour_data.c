@@ -43,7 +43,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 extern double **Vij;
 extern double **Er;
 extern double width, height;
-extern int **cell_type;
+extern char **cell_type;
 
 void calculate_colour_data(double x, double xmax, int w, int h, int offset, unsigned char *image_dat, char image_type)
 {

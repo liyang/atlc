@@ -49,7 +49,7 @@ in books. Hence I suspect it is not efficient */
 extern int coupler;
 extern int width, height;
 extern double **Vij, **Er;
-extern int **cell_type;
+extern char **cell_type;
 extern int avoid_use_of_fast_convergence_method;
 extern int dielectrics_to_consider_just_now;
 extern int max_threads; 

@@ -87,7 +87,7 @@ extern double **Vij;
 extern double **Er;
 extern unsigned char *bitmap_file_buffer;
 extern int width, height, size, errno;
-extern int **cell_type;
+extern char **cell_type;
 
 extern double image_fiddle_factor;
 

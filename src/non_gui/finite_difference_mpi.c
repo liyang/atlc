@@ -36,7 +36,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 extern int coupler;
 extern int width, height;
 extern double **Vij, **Er;
-extern int **cell_type;
+extern char **cell_type;
 extern int num_pes;
 extern int dielectrics_to_consider_just_now;
 extern struct strip strip_map[MAX_PES+1];
