@@ -28,6 +28,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #endif  
 
 #include "definitions.h"
+#include "exit_codes.h"
 
 void usage_create_bmp_for_microstrip_coupler(void)
 {
@@ -37,7 +38,7 @@ void usage_create_bmp_for_microstrip_coupler(void)
       fprintf(stderr,"(they *must* use the same units. Non-integers allowed for all parameters)\n");
       fprintf(stderr,"Options are:\n");
       fprintf(stderr,"  -C              Print copyright, licencing and distribution information.\n");
-      fprintf(stderr,"  -b bmp_size     Sets the size of the bitmap, in the range 1 to 15 (default %d).\n",DEFAULT_BMPSIZE);
+      fprintf(stderr,"  -b bmp_size     Sets the size of the bitmap, in the range 1 to 15 (default %d).\n",DEFAULT_BMP_SIZE);
       fprintf(stderr,"  -H height       Sets the height 'H' of the box. Normally 15x(h+t)\n");
       fprintf(stderr,"  -W width        Sets the height 'H' of the box. Normally 6h+2g+s+2w)\n");
       fprintf(stderr,"GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  ^\n");
@@ -64,5 +65,5 @@ void usage_create_bmp_for_microstrip_coupler(void)
       fprintf(stderr,"GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG. v\n");
       fprintf(stderr,"<-----------------------------------W----------------------------------->\n\n");
       fprintf(stderr,"E.g. \ncreate_bmp_for_microstrip_coupler 1.5 2.0 1 1.593 0.035 1 3.7 foo.bmp\n\n");
-      exit(8); /* Exit - program called with wrong number of arguments */
+      error_and_exit("",PROGRAM_CALLED_WITH_WRONG_NUMBER_OF_ARGUMENTS);
 }

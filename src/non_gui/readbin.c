@@ -27,6 +27,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #endif
 
 #include "definitions.h"
+#include "exit_codes.h"
 
 #ifdef WINDOWS
 #pragma hrdstop
@@ -45,7 +46,7 @@ int main(int argc, char **argv)
   {
     case 'C':
       print_copyright("2002");
-      exit(1);
+      error_and_exit("",OKAY);
     break;
     case 'r':
       reverse=1;
@@ -59,24 +60,18 @@ int main(int argc, char **argv)
     if (fp==NULL)
     {
       fprintf(stderr,"Can't open %s for reading\n",argv[my_optind]);
-      exit(1);
+      error_and_exit("Can't open file for reading",CANT_OPEN_FILE_FOR_READING);
     }
     fseek(fp,0,SEEK_END);
     length=ftell(fp);
     printf("file length=%d bytes. There are %ld pixels\n", length, (long)
     length/sizeof(double));
-    data=(double *)malloc(length);
-    if(data==NULL)
-    {
-      fprintf(stderr,"Can't allocate ram in readbin.c\n");
-      exit(2);
-    }
+    data=dvector(0,length);
     fseek(fp,0,SEEK_SET);
     fread(&(data[0]), sizeof(double), length/sizeof(double),fp);
     for(i=0;i<length/sizeof(double);++i)
     {
        x=data[i];
-       //printf("i=%d x=%g\n",i,x);
        if(reverse==1)
 	 byteswap_doubles(&x);
        if (fabs(x) <= 1e-15)
@@ -94,5 +89,5 @@ int main(int argc, char **argv)
   }
   else
     usage_readbin();
-  exit(0);
+  error_and_exit("",OKAY);
 }

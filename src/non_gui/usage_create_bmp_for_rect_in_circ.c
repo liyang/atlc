@@ -27,6 +27,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #endif
 
 #include "definitions.h"
+#include "exit_codes.h"
 
 void usage_create_bmp_for_rect_in_circ(void)
 {
@@ -41,7 +42,7 @@ void usage_create_bmp_for_rect_in_circ(void)
       fprintf(stderr,"  Er is the relative permettivity of the dielectric.\n");
       fprintf(stderr,"  D, w, h, x, and y are either all in mm or all in inches (but not a mixture!!)\n\n");   
       fprintf(stderr,"options are:\n");
-      fprintf(stderr,"  -b bmp_size\n     Sets the size of the bitmap, in the range 1 to 15 (default %d).\n",DEFAULT_BMPSIZE);
+      fprintf(stderr,"  -b bmp_size\n     Sets the size of the bitmap, in the range 1 to 15 (default %d).\n",DEFAULT_BMP_SIZE);
       fprintf(stderr,"  -f outfile \n     Write output to 'outfile' instead of stdout\n");
       fprintf(stderr,"  -v         \n     Write diagnostic information to stderr\n\n");
       fprintf(stderr,"                                     ***\n");
@@ -79,7 +80,5 @@ void usage_create_bmp_for_rect_in_circ(void)
       fprintf(stderr,"will screw up your terminal unless you redirect the ouptut to a file.\n");
       fprintf(stderr,"The '-f' option can be used to send the output to 'outfile' \n");
       fprintf(stderr,"or you can use rect_in_circ D d h Er > filename.bmp \n");
-
-
-      exit(8); /* Exit - program called with wrong number of arguments */
+      error_and_exit("",PROGRAM_CALLED_WITH_WRONG_NUMBER_OF_ARGUMENTS); 
 }

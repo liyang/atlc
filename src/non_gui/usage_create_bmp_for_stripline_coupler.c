@@ -49,6 +49,6 @@ void usage_create_bmp_for_stripline_coupler(void)
   fprintf(stderr,"e.g. create_bmp_for_stripline_coupler  1.23 0.7 1.2 1.0 coupler.bmp\n");
   fprintf(stderr,"e.g. create_bmp_for_stripline_coupler -b 8 1.23 0.7 1.0 1.0 smaller.bmp\n");
   fprintf(stderr,"e.g. create_bmp_for_stripline_coupler -v 12 1.23 0.7 1.006  air.bmp\n");
-  fprintf(stderr,"\nThe default bitmap_bitmap size b is %d. Files will be between 2^(b-1)\n", DEFAULT_COUPLER_BITMAP_SIZE);
+  fprintf(stderr,"\nThe default bitmap_bitmap size b is %d. Files will be between 2^(b-1)\n", DEFAULT_COUPLER_BMP_SIZE);
   fprintf(stderr,"and 2^(b+1) bytes in length\n");
 }

@@ -27,6 +27,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #endif
 
 #include "definitions.h"
+#include "exit_codes.h"
 
 void usage_create_bmp_for_circ_in_rect(void)
 {
@@ -41,7 +42,7 @@ void usage_create_bmp_for_circ_in_rect(void)
       fprintf(stderr,"  Er is the relative permittivity of the dielectric.\n");
       fprintf(stderr,"  d, W, H, x and y are either all in mm or all in inches (but not a mixture!!)\n\n");   
       fprintf(stderr,"options are:\n");
-      fprintf(stderr,"  -b bmp_size\n     Sets the size of the bitmap, in the range 1 to 15 (default %d).\n",DEFAULT_BMPSIZE);
+      fprintf(stderr,"  -b bmp_size\n     Sets the size of the bitmap, in the range 1 to 15 (default %d).\n",DEFAULT_BMP_SIZE);
       fprintf(stderr,"  -v         \n     Write extra diagnostic information to stdout\n\n");
       fprintf(stderr," --------------------------------------------------------  ^\n");
       fprintf(stderr,"|                                                      |  |\n");
@@ -69,5 +70,5 @@ void usage_create_bmp_for_circ_in_rect(void)
       fprintf(stderr,"<---------------------------W-------------------------->\n");
       fprintf(stderr,"                                     ***\n\n");
       fprintf(stderr,"Example: create_bmp_for_circ_in_rect 20 100 150 25 10 3.7 foo.bmp\n");
-      exit(8); /* Exit - program called with wrong number of arguments */
+      error_and_exit("",PROGRAM_CALLED_WITH_WRONG_NUMBER_OF_ARGUMENTS);
 }

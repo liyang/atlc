@@ -27,6 +27,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #endif
 
 #include "definitions.h"
+#include "exit_codes.h"
 
 void usage_create_bmp_for_rect_in_rect(void)
 {
@@ -37,7 +38,7 @@ void usage_create_bmp_for_rect_in_rect(void)
       fprintf(stderr,"outfile.bmp is the name of a file to writ the bitmap to\n");
       fprintf(stderr,"Options are:\n");
       fprintf(stderr,"  -C         \n     Print copyright, licencing and distribution information.\n");
-      fprintf(stderr,"  -b bmp_size\n     Sets the size of the bitmap, in the range 1 to 15 (default %d).\n",DEFAULT_BMPSIZE);
+      fprintf(stderr,"  -b bmp_size\n     Sets the size of the bitmap, in the range 1 to 15 (default %d).\n",DEFAULT_BMP_SIZE);
       fprintf(stderr,"  -v         \n     Write diagnostic information to stderr\n");
       fprintf(stderr,"-----------------------------------------------------------------------  ^\n");
       fprintf(stderr,"|                                                                     |  |\n");
@@ -61,6 +62,5 @@ void usage_create_bmp_for_rect_in_rect(void)
       fprintf(stderr,"-----------------------------------------------------------------------  |\n");
       fprintf(stderr,"<----------------------------------W--------------------------------->\n\n");
       fprintf(stderr,"Eg: create_bmp_for_rect_in_rect 250 100 20 100 4.25 205 45 15 1.0006 3.7 ms.bmp \n");
-
-      exit(8); /* Exit - program called with wrong number of arguments */
+      error_and_exit("",PROGRAM_CALLED_WITH_WRONG_NUMBER_OF_ARGUMENTS);
 }
