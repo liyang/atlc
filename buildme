@@ -1,7 +1,8 @@
 #!/bin/sh
-rm config.cache
+rm -f config.cache
 automake
 autoconf
 configure --with-mp
+make -j4 clean
 make -j4
 #make dist
