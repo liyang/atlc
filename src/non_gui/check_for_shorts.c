@@ -40,7 +40,7 @@ to take this into account have been included, but commentted out.*/
 #include "definitions.h"
 
 extern int width, height;
-extern signed char **cell_type;
+extern signed char **oddity;
 
 /* This checks for shorts. We only check to the right (increasing w) and below (increasing h)
 since its pointless checking all directions when one moves to an adjacent pixel later */
@@ -48,14 +48,14 @@ void check_for_shorts(void)
 {
   int w, h;
 
-  for(h=0;h<height-1;h++)
+  for(h=1;h<height-1;h++)
   {
-    for(w=0; w<width-1;w++)
+    for(w=1; w<width-1;w++)
     {
-      if( cell_type[w][h]==CONDUCTOR_ZERO_V )
+      if( oddity[w][h]==CONDUCTOR_ZERO_V )
       {
 	/* Check to see if the pixel below is shorted */       
-	if((cell_type[w][h+1]==CONDUCTOR_PLUS_ONE_V) || (cell_type[w][h+1]==CONDUCTOR_MINUS_ONE_V) || (cell_type[w][h+1]==CONDUCTOR_FLOATING))
+	if((oddity[w][h+1]==CONDUCTOR_PLUS_ONE_V) || (oddity[w][h+1]==CONDUCTOR_MINUS_ONE_V) || (oddity[w][h+1]==CONDUCTOR_FLOATING))
 	{
 	  fprintf(stderr,"\n**************ERROR******************\n");
 	  fprintf(stderr,"Pixel (%d,%d) is set to 0V, but pixel\n",w,h);
@@ -64,7 +64,7 @@ void check_for_shorts(void)
           exit_with_msg_and_exit_code("",CONDUCTOR_ZERO_V);
         }
 	/* Check to see if the pixel to the right is shorted */       
-	else if((cell_type[w+1][h]==CONDUCTOR_PLUS_ONE_V) || (cell_type[w+1][h]==CONDUCTOR_MINUS_ONE_V) || (cell_type[w+1][h]==CONDUCTOR_FLOATING))
+	else if((oddity[w+1][h]==CONDUCTOR_PLUS_ONE_V) || (oddity[w+1][h]==CONDUCTOR_MINUS_ONE_V) || (oddity[w+1][h]==CONDUCTOR_FLOATING))
 	{
 	  fprintf(stderr,"\n**************ERROR******************\n");
 	  fprintf(stderr,"Pixel (%d,%d) is set to 0V, but pixel\n",w,h);
@@ -73,14 +73,14 @@ void check_for_shorts(void)
           exit_with_msg_and_exit_code("",CONDUCTOR_ZERO_V);
         }
 
-      } /* end of if(cell_type==CONDUCTOR_ZERO_V) */
+      } /* end of if(oddity==CONDUCTOR_ZERO_V) */
 
-      else if( cell_type[w][h]==CONDUCTOR_PLUS_ONE_V )
+      else if( oddity[w][h]==CONDUCTOR_PLUS_ONE_V )
       {
 	/* Check for a short of the pixel below */        
-	if((cell_type[w][h+1]==CONDUCTOR_ZERO_V) || \
-	(cell_type[w][h+1]==CONDUCTOR_MINUS_ONE_V) \
-	|| (cell_type[w][h+1]==CONDUCTOR_FLOATING))
+	if((oddity[w][h+1]==CONDUCTOR_ZERO_V) || \
+	(oddity[w][h+1]==CONDUCTOR_MINUS_ONE_V) \
+	|| (oddity[w][h+1]==CONDUCTOR_FLOATING))
 	{
 	  fprintf(stderr,"\n**************ERROR******************\n");
 	  fprintf(stderr,"Pixel (%d,%d) is set to 1 V, but pixel\n",w,h);
@@ -89,9 +89,9 @@ void check_for_shorts(void)
           exit_with_msg_and_exit_code("",CONDUCTOR_PLUS_ONE_V);
         }
 	/* Check to see if the pixel to the right is shorted */       
-	else if((cell_type[w+1][h]==CONDUCTOR_ZERO_V) || \
-	(cell_type[w+1][h]==CONDUCTOR_MINUS_ONE_V) \
-	|| (cell_type[w+1][h]==CONDUCTOR_FLOATING))
+	else if((oddity[w+1][h]==CONDUCTOR_ZERO_V) || \
+	(oddity[w+1][h]==CONDUCTOR_MINUS_ONE_V) \
+	|| (oddity[w+1][h]==CONDUCTOR_FLOATING))
 	{
 	  fprintf(stderr,"\n**************ERROR******************\n");
 	  fprintf(stderr,"Pixel (%d,%d) is set to 1 V, but pixel\n",w,h);
@@ -99,14 +99,14 @@ void check_for_shorts(void)
 	  fprintf(stderr,"creating a short. Please correct this.\n");
           exit_with_msg_and_exit_code("",CONDUCTOR_PLUS_ONE_V);
         }
-      } /* end of if(cell_type==CONDUCTOR_PLUS_ONE_V) */
+      } /* end of if(oddity==CONDUCTOR_PLUS_ONE_V) */
       
-      else if( cell_type[w][h]==CONDUCTOR_MINUS_ONE_V )
+      else if( oddity[w][h]==CONDUCTOR_MINUS_ONE_V )
       {
 	/* Check for a short of the pixel below */        
-	if((cell_type[w][h+1]==CONDUCTOR_ZERO_V) || \
-	(cell_type[w][h+1]==CONDUCTOR_PLUS_ONE_V) \
-	|| (cell_type[w][h+1]==CONDUCTOR_FLOATING))
+	if((oddity[w][h+1]==CONDUCTOR_ZERO_V) || \
+	(oddity[w][h+1]==CONDUCTOR_PLUS_ONE_V) \
+	|| (oddity[w][h+1]==CONDUCTOR_FLOATING))
 	{
 	  fprintf(stderr,"\n**************ERROR******************\n");
 	  fprintf(stderr,"Pixel (%d,%d) is set to -1 V, but pixel\n",w,h);
@@ -115,9 +115,9 @@ void check_for_shorts(void)
           exit_with_msg_and_exit_code("",CONDUCTOR_MINUS_ONE_V);
         }
 	/* Check to see if the pixel to the right is shorted */       
-	if((cell_type[w][h+1]==CONDUCTOR_ZERO_V) || \
-	(cell_type[w][h+1]==CONDUCTOR_PLUS_ONE_V) \
-	|| (cell_type[w][h+1]==CONDUCTOR_FLOATING))
+	if((oddity[w][h+1]==CONDUCTOR_ZERO_V) || \
+	(oddity[w][h+1]==CONDUCTOR_PLUS_ONE_V) \
+	|| (oddity[w][h+1]==CONDUCTOR_FLOATING))
 	{
 	  fprintf(stderr,"\n**************ERROR******************\n");
 	  fprintf(stderr,"Pixel (%d,%d) is set to -1 V, but pixel\n",w,h);
@@ -125,7 +125,7 @@ void check_for_shorts(void)
 	  fprintf(stderr,"creating a short. Please correct this.\n");
           exit_with_msg_and_exit_code("",CONDUCTOR_MINUS_ONE_V);
         }
-      } /* end of if(cell_type==CONDUCTOR_PLUS_ONE_V) */
+      } /* end of if(oddity==CONDUCTOR_PLUS_ONE_V) */
     } /* end of for w.. loop */
   } /* end of for h .. loop */
 } /* end of function check_for_shorts */
