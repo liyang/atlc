@@ -9,7 +9,6 @@
 #ifdef HAVE_SYS_UNISTD_H
 #ifdef HAVE_UNISTD_H 
 #ifdef HAVE_SYS_UTSNAME_H
-#ifdef HAVE_LONG_LONG 
 #ifdef HAVE_SYS_SYSTEMINFO_H
 
 #include <sys/param.h>    /* Include the header files */
@@ -32,7 +31,6 @@
 #endif
 #endif  
 #endif
-#endif
 #endif  /* End of including header files likely to be on Solaris system */
 
 #include "defs.h"
@@ -51,7 +49,6 @@ int try_solaris(struct computer_data *data)
 #ifdef HAVE_SYS_UNISTD_H
 #ifdef HAVE_UNISTD_H 
 #ifdef HAVE_SYS_UTSNAME_H
-#ifdef HAVE_LONG_LONG 
 #ifdef HAVE_PROCESSOR_INFO
 #ifdef HAVE_SYSCONF
 
@@ -62,7 +59,7 @@ int try_solaris(struct computer_data *data)
   int clock_speed_in_MHz;
   processor_info_t infop;
   struct utsname operating_system;
-  long long ram;
+  double ram;
 
   /* Obtain the maximum number of CPUs supported on the Solaris system */
   max_CPUs=0;
@@ -88,17 +85,21 @@ int try_solaris(struct computer_data *data)
   }
 
 
-  /* Obtain the RAM on the Solaris system */
+  /* Obtain the RAM on the Solaris system. This is a bit of a hack
+  using doubles for this, but longs overflow and long long is not
+  strictly in the ANSI standard. */
 
   if ((long) sysconf(_SC_PHYS_PAGES) > 0L)
   {
     if ((long) sysconf(_SC_PAGESIZE) > 0L)
     {
-      ram=(long long) sysconf(_SC_PAGESIZE);
-      ram*= (long long) sysconf(_SC_PHYS_PAGES);
+      ram=(double) sysconf(_SC_PAGESIZE);
+      ram*= (double) sysconf(_SC_PHYS_PAGES);
       {
-        ram=ram/(long long) BYTES_PER_MB;
-        sprintf(data->memory,"%lld",ram);
+        ram=ram/BYTES_PER_MB;
+	/* print as a long, despite making sure rounding errors have not
+	screw use up */
+        sprintf(data->memory,"%ld",(long) (ram+0.05));
       }
     }
   }
@@ -119,7 +120,6 @@ int try_solaris(struct computer_data *data)
 
   return(PROBABLY_SOLARIS);
 
-#endif
 #endif
 #endif
 #endif

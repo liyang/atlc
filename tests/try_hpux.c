@@ -8,7 +8,6 @@
 #ifdef HAVE_STRING_H
 #ifdef HAVE_UNISTD_H 
 #ifdef HAVE_SYS_UTSNAME_H
-#ifdef HAVE_LONG_LONG 
 
 #include <sys/param.h>    /* Include the header files */
 #include <sys/pstat.h>
@@ -30,7 +29,6 @@ extern long _FPU_MODEL;
 #endif  
 #endif
 #endif
-#endif  
 #endif  /* End of including header files likely to be on HP-UX system */
 
 #define BYTES_PER_MB  1048576
@@ -48,14 +46,13 @@ int try_hpux(struct computer_data *data)
 #ifdef HAVE_UNISTD_H 
 #ifdef HAVE_SYS_UTSNAME_H
 
-#ifdef HAVE_LONG_LONG      /* I'll insist on long long being present */
 
 #ifdef HAVE_PSTAT_GETDYNAMIC /* Check for some HP-UX specific bits now */
 #ifdef HAVE_PSTAT_GETPROCESSOR
 #ifdef HAVE_PSTAT
 
   long max_CPUs=0, CPUs_online=0;
-  long long clock_speed_in_Hz, ram, scclktick;
+  double clock_speed_in_Hz, ram, scclktick;
 
   struct pst_dynamic dynamic_hpux;
   struct pst_static  static_hpux;
@@ -81,20 +78,19 @@ int try_hpux(struct computer_data *data)
   /* Obtain the RAM on the HP-UX system */
 
   pstat_getstatic(&static_hpux,(size_t) sizeof(static_hpux),1,0);
-  ram=(long long) static_hpux.physical_memory;
-  ram*=(long long) static_hpux.page_size;
-  ram=ram/(long long) BYTES_PER_MB;
-  sprintf(data->memory,"%lld",ram);
+  ram=(double) static_hpux.physical_memory;
+  ram*=(double) static_hpux.page_size;
+  ram=ram/(double) BYTES_PER_MB;
+  sprintf(data->memory,"%ld",(long) (0.5+ram));
 
 
   /* Obtain the processor speed */
   pstat_getprocessor(&psp, sizeof(psp), 1, 0);
-  scclktick=sysconf(_SC_CLK_TCK);
-  clock_speed_in_Hz = psp.psp_iticksperclktick * scclktick;
+  scclktick=(double) sysconf(_SC_CLK_TCK);
+  clock_speed_in_Hz = ((double) psp.psp_iticksperclktick) * scclktick;
   if(clock_speed_in_Hz > 1)
-    sprintf(data->mhz,"%lld",clock_speed_in_Hz/1000000);
+    sprintf(data->mhz,"%.1f",clock_speed_in_Hz/1000000);
   return(0);
-#endif
 #endif
 #endif
 #endif

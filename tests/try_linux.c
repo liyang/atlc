@@ -5,15 +5,20 @@
 #ifdef HAVE_SYS_TYPES_H     /* later check for, to confirm it's Linux       */
 #ifdef HAVE_SYS_UTSNAME_H   /* later check for, to confirm it's Linux       */
 #ifdef HAVE_UNISTD_H 
-#ifdef HAVE_LONG_LONG 
+#ifdef HAVE_STRING_H
+#ifdef HAVE_SYS_SYSINFO_H
+#ifdef HAVE_LINUX_IP_H
 
-#include <sys/param.h>    /* Include the header files */
+#include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
-#include <string.h>
-#include <unistd.h>
 #include <sys/utsname.h>
+#include <unistd.h>
+#include <string.h>
+#include <sys/sysinfo.h>
 
+#endif
+#endif
 #endif
 #endif
 #endif
@@ -25,18 +30,20 @@
 #define BYTES_PER_MB  1048576
 
 int try_linux(struct computer_data *data)
-
 {
-
 #ifdef HAVE_STDIO_H         /* it does ***not** necessarily mean it's Linux */
 #ifdef HAVE_STDLIB_H        /* but it will define some variables that we      */
 #ifdef HAVE_SYS_TYPES_H     /* later check for, to confirm it's Linux       */
 #ifdef HAVE_SYS_UTSNAME_H   /* later check for, to confirm it's Linux       */
 #ifdef HAVE_UNISTD_H 
-#ifdef HAVE_LONG_LONG 
+#ifdef HAVE_STRING_H
+#ifdef HAVE_SYS_SYSINFO_H
+#ifdef HAVE_LINUX_IP_H
 
   struct utsname operating_system;
-  long long ram;
+  double ram;
+  size_t string_length;
+  int i;
 
   /* Obtain the maximum number of CPUs supported on the Linux system */
 
@@ -54,11 +61,11 @@ int try_linux(struct computer_data *data)
   {
     if ((long) sysconf(_SC_PAGESIZE) > 0L)
     {
-      ram=(long long) sysconf(_SC_PAGESIZE);
-      ram*= (long long) sysconf(_SC_PHYS_PAGES);
+      ram=(double) sysconf(_SC_PAGESIZE);
+      ram*= (double) sysconf(_SC_PHYS_PAGES);
       {
-        ram=ram/(long long) BYTES_PER_MB;
-        sprintf(data->memory,"%lld",ram);
+        ram=ram/(double) BYTES_PER_MB;
+        sprintf(data->memory,"%ld",(long) (ram+0.5));
       }
     }
   }
@@ -71,24 +78,21 @@ int try_linux(struct computer_data *data)
   strcpy(data->sysname,operating_system.sysname);
   strcpy(data->nodename,operating_system.nodename);
   strcpy(data->release,operating_system.release);
+  string_length=strlen(data->version);
   strcpy(data->version,operating_system.version);
+  for(i=0;i<string_length; ++i)
+  {
+    if (data->version[i] == ' ')
+       data->version[i]='_';
+  }
   strcpy(data->machine,operating_system.machine);
 
   /* Obtain the manufacturer */
-  sysinfo(SI_HW_PROVIDER,data->hw_provider,MAX_SIZE);
 
   /* Obtain the Platform */
-  sysinfo(SI_PLATFORM,data->hw_platform,MAX_SIZE);
 
   return(PROBABLY_LINUX);
 
-#endif
-#endif
-#endif
-#endif
-#endif
-#endif
-#endif
 #endif
 #endif
 #endif

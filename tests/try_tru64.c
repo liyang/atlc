@@ -44,9 +44,7 @@ int try_tru64(struct computer_data *data)
   size_t string_length, i;
   struct cpu_state cpu_state_buffer;
   struct cpu_info cpu_info_buffer;
-  long long clock_speed_in_Hz;
-  int clock_speed_in_MHz;
-  long long_buf;
+  long  long_buf;
 
   /* Obtain the maximum number of CPUs supported on the system 
   as well as the number currently on-line.*/
