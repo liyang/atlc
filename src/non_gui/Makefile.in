@@ -49,9 +49,6 @@ CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
 CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
-CXX = @CXX@
-CXXDEPMODE = @CXXDEPMODE@
-CXXFLAGS = @CXXFLAGS@
 CYGPATH_W = @CYGPATH_W@
 DEFS = @DEFS@
 DEPDIR = @DEPDIR@
@@ -91,12 +88,9 @@ SHELL = @SHELL@
 STRIP = @STRIP@
 VERSION = @VERSION@
 ac_ct_CC = @ac_ct_CC@
-ac_ct_CXX = @ac_ct_CXX@
 ac_ct_STRIP = @ac_ct_STRIP@
 am__fastdepCC_FALSE = @am__fastdepCC_FALSE@
 am__fastdepCC_TRUE = @am__fastdepCC_TRUE@
-am__fastdepCXX_FALSE = @am__fastdepCXX_FALSE@
-am__fastdepCXX_TRUE = @am__fastdepCXX_TRUE@
 am__include = @am__include@
 am__quote = @am__quote@
 bindir = @bindir@
@@ -139,6 +133,7 @@ create_bmp_for_rect_cen_in_rect_coupler
 
 
 atlc_SOURCES = atlc.c read_bitmap_file_headers.c \
+check_convergence.c \
 byteswap.c memory.c setup_arrays.c \
 finite_difference_single_threaded.c \
 finite_difference_multi_threaded.c \
@@ -259,7 +254,6 @@ calculate_impedance_for_create_bmp_for_symmetrical_stripline.c \
 elliptic_integral.c get_options.c definitions.h exit_with_msg_and_exit_code.c \
 print_copyright.c
 
-#create_bmp_for_symmetrical_stripline_LIBS = @LIBS@ @GSL_LIBS@
 create_bmp_for_symmetrical_stripline_LDADD = @LIBS@ @GSL_LIBS@
 
 create_bmp_for_stripline_coupler_SOURCES = \
@@ -308,7 +302,8 @@ bin_PROGRAMS = atlc$(EXEEXT) create_bmp_for_rect_in_rect$(EXEEXT) \
 PROGRAMS = $(bin_PROGRAMS)
 
 am_atlc_OBJECTS = atlc-atlc.$(OBJEXT) \
-	atlc-read_bitmap_file_headers.$(OBJEXT) atlc-byteswap.$(OBJEXT) \
+	atlc-read_bitmap_file_headers.$(OBJEXT) \
+	atlc-check_convergence.$(OBJEXT) atlc-byteswap.$(OBJEXT) \
 	atlc-memory.$(OBJEXT) atlc-setup_arrays.$(OBJEXT) \
 	atlc-finite_difference_single_threaded.$(OBJEXT) \
 	atlc-finite_difference_multi_threaded.$(OBJEXT) \
@@ -499,6 +494,7 @@ am__depfiles_maybe = depfiles
 @AMDEP_TRUE@	./$(DEPDIR)/atlc-atlc.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/atlc-byteswap.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/atlc-calculate_colour_data.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/atlc-check_convergence.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/atlc-check_for_boundaries.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/atlc-check_for_shorts.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/atlc-do_fd_calculation.Po \
@@ -647,6 +643,7 @@ clean-binPROGRAMS:
 	-test -z "$(bin_PROGRAMS)" || rm -f $(bin_PROGRAMS)
 atlc-atlc.$(OBJEXT): atlc.c
 atlc-read_bitmap_file_headers.$(OBJEXT): read_bitmap_file_headers.c
+atlc-check_convergence.$(OBJEXT): check_convergence.c
 atlc-byteswap.$(OBJEXT): byteswap.c
 atlc-memory.$(OBJEXT): memory.c
 atlc-setup_arrays.$(OBJEXT): setup_arrays.c
@@ -766,6 +763,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atlc-atlc.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atlc-byteswap.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atlc-calculate_colour_data.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atlc-check_convergence.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atlc-check_for_boundaries.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atlc-check_for_shorts.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atlc-do_fd_calculation.Po@am__quote@
@@ -930,6 +928,28 @@ atlc-read_bitmap_file_headers.obj: read_bitmap_file_headers.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/atlc-read_bitmap_file_headers.Po' tmpdepfile='$(DEPDIR)/atlc-read_bitmap_file_headers.TPo' @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(atlc_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o atlc-read_bitmap_file_headers.obj `if test -f 'read_bitmap_file_headers.c'; then $(CYGPATH_W) 'read_bitmap_file_headers.c'; else $(CYGPATH_W) '$(srcdir)/read_bitmap_file_headers.c'`
+
+atlc-check_convergence.o: check_convergence.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(atlc_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT atlc-check_convergence.o -MD -MP -MF "$(DEPDIR)/atlc-check_convergence.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o atlc-check_convergence.o `test -f 'check_convergence.c' || echo '$(srcdir)/'`check_convergence.c; \
+@am__fastdepCC_TRUE@	then mv "$(DEPDIR)/atlc-check_convergence.Tpo" "$(DEPDIR)/atlc-check_convergence.Po"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/atlc-check_convergence.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='check_convergence.c' object='atlc-check_convergence.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/atlc-check_convergence.Po' tmpdepfile='$(DEPDIR)/atlc-check_convergence.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(atlc_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o atlc-check_convergence.o `test -f 'check_convergence.c' || echo '$(srcdir)/'`check_convergence.c
+
+atlc-check_convergence.obj: check_convergence.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(atlc_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT atlc-check_convergence.obj -MD -MP -MF "$(DEPDIR)/atlc-check_convergence.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o atlc-check_convergence.obj `if test -f 'check_convergence.c'; then $(CYGPATH_W) 'check_convergence.c'; else $(CYGPATH_W) '$(srcdir)/check_convergence.c'`; \
+@am__fastdepCC_TRUE@	then mv "$(DEPDIR)/atlc-check_convergence.Tpo" "$(DEPDIR)/atlc-check_convergence.Po"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/atlc-check_convergence.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='check_convergence.c' object='atlc-check_convergence.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/atlc-check_convergence.Po' tmpdepfile='$(DEPDIR)/atlc-check_convergence.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(atlc_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o atlc-check_convergence.obj `if test -f 'check_convergence.c'; then $(CYGPATH_W) 'check_convergence.c'; else $(CYGPATH_W) '$(srcdir)/check_convergence.c'`
 
 atlc-byteswap.o: byteswap.c
 @am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(atlc_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT atlc-byteswap.o -MD -MP -MF "$(DEPDIR)/atlc-byteswap.Tpo" \
