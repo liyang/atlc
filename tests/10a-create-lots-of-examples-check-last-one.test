@@ -1,24 +1,19 @@
-#!/bin/sh
-# It is too time consuming to test each file for the right 
-# lenght. Here I create lots and do a length test on the last one.
+#! /bin/sh
 
-# Now create some eccentric cables (off-center coax).
+if [ "x$no_gsl" = "xyes" ] ; then
+  echo "SKIPPED:" $0 >> tests.log
+  exit 77
+fi
+
 Zodd=`$top_builddir/src/non_gui/create_bmp_for_stripline_coupler -v 1.0 1.0 0.02 1 $top_builddir/tests/coupler8.bmp | tail -4 | head -1 | awk '{print $2}'`
 Zeven=`$top_builddir/src/non_gui/create_bmp_for_stripline_coupler -v 1.0 1.0 0.02 1 $top_builddir/tests/coupler8.bmp | tail -4 | head -1 | awk '{print $4}'`
 Zo=`$top_builddir/src/non_gui/create_bmp_for_stripline_coupler -v 1.0 1.0 0.02 1 $top_builddir/tests/coupler8.bmp | tail -4 | head -1 | awk '{print $6}'`
-#echo $Zodd
-#echo $Zeven
-#echo $Zo
-# Write text to test2.txt and check that. Lack of gsl will show up. 
-# Now check the length of the last file. It this is okay, it probably means
-# the user has not run out of disk space. 
 rm $top_builddir/tests/coupler8.bmp
 
 if [ $Zodd = 40.423384 ] && [ $Zeven = 76.594453 ]  && [ $Zo = 55.643571 ] ; then
   echo "PASSED:" $0 >> tests.log
   exit 0
 else
-  echo "The following test will always fail if  not linked against the gsl library"
   echo "FAILED:" $0  >> tests.log
   exit 1
 fi

@@ -1,13 +1,8 @@
-#!/bin/sh
+#! /bin/sh
 # There should be a supplied bitmap file test-coupler1.bmp
 # We will generate all the bitmaps and check they 
 # are all okay. 
-if [ "$built_with_posix_threads" = "yes" ] ; then
-  # Run atlc, so we can at leasat check test-coupler1.Er.bmp
-  $top_builddir/src/non_gui/atlc -S $top_builddir/tmp/test-coupler1.bmp  > /dev/null
-  rm $top_builddir/tmp/test-coupler1.Ex.odd.bmp
-  exit 77   # Currently, the results will be wrong, so skip test.
-elif [ "$mpirun" = "yes" ] ; then 
+if [ "$mpirun" = "yes" ] ; then 
   mpirun -np 2 $top_builddir/src/non_gui/atlc -S $top_builddir/tmp/test-coupler1.bmp  > /dev/null
   rm $top_builddir/tmp/test-coupler1.Ex.odd.bmp
 else
@@ -16,7 +11,7 @@ fi
 touch $top_builddir/tmp/test-coupler1.Ex.odd.bmp
 MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test-coupler1.Ex.odd.bmp`
 rm $top_builddir/tmp/test-coupler1.Ex.odd.bmp
-if [ $MD5SUM != 94310b8f3f9502a788429cba4f48cc27 ]; then
+if [ $MD5SUM != 35ecb2db1c38a1321e697030cccc1629 ]; then
   echo "FAILED:" $0  >> tests.log
   exit 1
 else 

@@ -1,4 +1,4 @@
-# !/bin/sh
+#! /bin/sh
  
 # If the user is building in a different directory to the 
 # source, we want to be able to install the examples, 

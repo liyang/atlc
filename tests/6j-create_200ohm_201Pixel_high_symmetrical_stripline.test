@@ -1,4 +1,4 @@
-#!/bin/sh
+#! /bin/sh
 Zo=`$top_builddir/src/non_gui/create_bmp_for_symmetrical_stripline -v 862 201 18 $top_builddir/tmp/200ohm-201h.bmp | awk '{print $4}'`
 rm $top_builddir/tmp/200ohm-201h.bmp
 if [ $Zo = 200.818306 ]; then

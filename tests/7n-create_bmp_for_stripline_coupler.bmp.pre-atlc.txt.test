@@ -1,17 +1,20 @@
-#!/bin/sh
+#! /bin/sh
+if [ "x$no_gsl" = "xyes" ] ; then
+  exit 77
+fi   
+
 touch $top_builddir/tmp/test_stripline_coupler2.bmp
 
 Zodd=`$top_builddir/src/non_gui/create_bmp_for_stripline_coupler -vv -b 16 1 1 0.05 1.0 $top_builddir/tmp/test_stripline_coupler2.bmp | tail -4 | head -1 | awk '{print $2}'` 
 Zeven=`$top_builddir/src/non_gui/create_bmp_for_stripline_coupler -vv -b 16 1 1 0.05 1.0 $top_builddir/tmp/test_stripline_coupler2.bmp | tail -4 | head -1 | awk '{print $4}'` 
 Zo=`$top_builddir/src/non_gui/create_bmp_for_stripline_coupler -vv -b 16 1 1 0.05 1.0 $top_builddir/tmp/test_stripline_coupler2.bmp | tail -4 | head -1 | awk '{print $6}'` 
-#echo $Zodd $Zeven $Zo
 rm -f $top_builddir/tmp/test_stripline_coupler2.bmp
 
 if [ $Zodd = 45.871041 ] && [ $Zeven = 75.722217 ] && [ $Zo = 58.936041 ] ; then
   echo "PASSED:" $0 >> tests.log
   exit 0
 else
-  echo "The following test will always fail if  not linked against the gsl library"
+  echo "FAILED:" $0 >> tests.log
   exit 1
 fi
 

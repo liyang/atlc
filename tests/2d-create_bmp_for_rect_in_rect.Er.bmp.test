@@ -1,4 +1,4 @@
-#!/bin/sh
+#! /bin/sh
 
 # This is one of a set of test that generate checksums after files are
 # created. Generally a bitmap if first produced by a program such as sym_strip, 
@@ -24,18 +24,12 @@
 
 touch $top_builddir/tmp/test_rect_in_rect.Er.bmp
 
-if [ "$built_with_posix_threads" = "yes" ] ; then
-  rm $top_builddir/tmp/test_rect_in_rect.Er.bmp
-  exit 77
+MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test_rect_in_rect.Er.bmp`
+rm $top_builddir/tmp/test_rect_in_rect.Er.bmp
+if [ $MD5SUM = 83c85493d8cfc248b65b72fc6bb1935d ]; then
+  echo "PASSED:" $0 >> tests.log
+  exit 0
 else
-
-  MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test_rect_in_rect.Er.bmp`
-  rm $top_builddir/tmp/test_rect_in_rect.Er.bmp
-  if [ $MD5SUM = 83c85493d8cfc248b65b72fc6bb1935d ]; then
-    echo "PASSED:" $0 >> tests.log
-    exit 0
-  else
-    echo "FAILED:" $0  >> tests.log
-    exit 1
-  fi
+  echo "FAILED:" $0  >> tests.log
+  exit 1
 fi

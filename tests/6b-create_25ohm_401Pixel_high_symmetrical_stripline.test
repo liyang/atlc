@@ -1,4 +1,4 @@
-#!/bin/sh
+#! /bin/sh
 # A bitmap is created of a symmetrical_stripline. By adding the -v option
 # to create_bmp_for_symmetrical_stripline the theoretical impedance
 # is computed. 

@@ -1,4 +1,4 @@
-#!/bin/sh
+#! /bin/sh
 # There should be a bitmap included in the distribution
 # The checksum of this will be checked.
 mkdir $top_builddir/tmp 2>/dev/null

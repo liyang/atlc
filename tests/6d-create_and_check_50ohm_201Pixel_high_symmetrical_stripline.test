@@ -1,4 +1,4 @@
-#!/bin/sh
+#! /bin/sh
 # A bitmap is created of a symmetrical_stripline. By adding the -v option
 # to create_bmp_for_symmetrical_stripline the theoretical impedance
 # is computed. 
@@ -8,9 +8,7 @@
 #: ${ZoTheory='ksdkj'}
 #: ${Zoatlc='iofdklkljf'}
 
-if [ "x$built_with_posix_threads" = "xyes" ] ; then
-  exit 77
-elif [ "x$mpirun_found" = "xyes" ]  ; then
+if [ "x$mpirun_found" = "xyes" ]  ; then
   ZoTheory=`$top_builddir/src/non_gui/create_bmp_for_symmetrical_stripline -v 1134 201 290 $top_builddir/tmp/50ohm-201h.bmp | awk '{print $4}'`
   Zoatlc=`mpirun -np 2 $top_builddir/src/non_gui/atlc -S $top_builddir/tmp/50ohm-201h.bmp | awk '{print $6}'`
 else
@@ -30,7 +28,6 @@ rm -f $top_builddir/tmp/50ohm-201h.Er.bmp
 #echo "Zoth=$ZoTheory Zoatlc=$Zoatlc md5=$MD5SUM exmd5=$EXMD5SUM"
 
 if test -z "$ZoTheory"  ;  then
-echo 1
   exit 1
 fi
 
@@ -46,12 +43,10 @@ if test -z "$EXMD5SUM"  ; then
   exit 1
 fi
 
-echo $ZoTheory $Zoatlc $MD5SUM $EXMD5SUM
-if [ $ZoTheory = 49.989477  ] && [ $Zoatlc = 49.85 ] && [ $MD5SUM = dae5292fe04dfd64abe1ae4e926d7365 ] && [ $EXMD5SUM = 4154e0e98b2c875dd4b88ef4ec19357c ]; then
+if [ $ZoTheory = 49.989477  ] && [ $Zoatlc = 49.85 ] && [ $MD5SUM = dae5292fe04dfd64abe1ae4e926d7365 ] && [ $EXMD5SUM = 6904599f3d6ec6d7bd78bb03744d9d2e ]; then
     echo "PASSED:" $0 >> tests.log
     exit 0
 else
-  echo "The following test will always fail if the gsl library is not linked in"
   echo "FAILED:" $0 >> tests.log
   exit 1
 fi

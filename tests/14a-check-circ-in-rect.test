@@ -1,4 +1,4 @@
-#!/bin/sh
+#! /bin/sh
 # This is one of a set of test that generate checksums after files are
 # created. Generally a bitmap if first produced by a program such as sym_strip, 
 # rect_in_rect, rect_cen_in_rect, circ_in_circ, circ_in_rect, 

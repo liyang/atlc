@@ -1,4 +1,4 @@
-#!/bin/sh
+#! /bin/sh
 touch $top_builddir/tmp/test_rect_in_rect.U.bmp
 MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test_rect_in_rect.U.bmp`
 rm $top_builddir/tmp/test_rect_in_rect.U.bmp

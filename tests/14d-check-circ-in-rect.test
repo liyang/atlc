@@ -1,4 +1,4 @@
-#!/bin/sh
+#! /bin/sh
 # This is one of a set of test that generate checksums after files are
 # created. Generally a bitmap if first produced by a program such as sym_strip, 
 # rect_in_rect, rect_cen_in_rect, circ_in_circ, circ_in_rect, 
@@ -25,12 +25,6 @@ $top_builddir/src/non_gui/create_bmp_for_circ_in_rect 40 100 100 5 -5 1  $top_bu
 
 MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/cir.bmp`
 rm $top_builddir/tmp/cir.bmp
-#echo "*************************************************************************"
-#echo "4 test failures can be expected if you don't link with the gsl library."
-#echo ""
-#echo "Running 'make check' when configured with threads or MPI support will"
-#echo "generate some tests failures. This is a bug in atlc, which I hope to fix"
-#echo "*************************************************************************"
 if [ $MD5SUM != b04a136919079fa8e238b09a8631fe5c ] ; then
   echo "FAILED:" $0 >> tests.log
   exit 1

@@ -5,34 +5,42 @@
 # atlc is then called, and its estimate calculated, which will differ 
 # slightly from the theoretical data 
 
-if [ "x$built_with_posix_threads" = "xyes" ] ; then
-  exit 77
-fi
+# Create a bitmap and compute its theeoretical impedance. 
+ZoTheory=`$top_builddir/src/non_gui/create_bmp_for_symmetrical_stripline -v 1512 201 668 $top_builddir/tmp/25ohm-201h.bmp | awk '{print $4}'`
 
+# Generate a checksum for the file created
+MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/25ohm-201h.bmp`
+
+# Now run atlc on this bitmap and check it close to that computed. 
 if [ "x$mpirun" = "xyes" ] ; then
   Zoatlc=`mpirun -np 2 $top_builddir/src/non_gui/atlc -S $top_builddir/tmp/25ohm-201h.bmp | awk '{print $6}'`
 else
   Zoatlc=`$top_builddir/src/non_gui/atlc -S $top_builddir/tmp/25ohm-201h.bmp | awk '{print $6}'`
 fi  
 
-touch $top_builddir/tmp/25ohm-201h.bmp $top_builddir/tmp/25ohm-201h.Ex.bmp
-ZoTheory=`$top_builddir/src/non_gui/create_bmp_for_symmetrical_stripline -v 1512 201 668 $top_builddir/tmp/25ohm-201h.bmp | awk '{print $4}'`
-
-MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/25ohm-201h.bmp`
+# Generate a checksum for a file created by atlc. 
 EXMD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/25ohm-201h.Ex.bmp`
 
-if [ -z "$Zoatlc" ]  || [ -z "$Zoatlc" ] || [ -z "$MD5SUM" ] || [ -z "$EXMD5SUM" ] ; then  
+# Remvove the unwanted files. 
+rm $top_builddir/tmp/25ohm-201h.Ex.bmp
+rm $top_builddir/tmp/25ohm-201h.bmp
+rm $top_builddir/tmp/25ohm-201h.Ey.bmp
+rm $top_builddir/tmp/25ohm-201h.E.bmp
+rm $top_builddir/tmp/25ohm-201h.V.bmp
+rm $top_builddir/tmp/25ohm-201h.U.bmp
+rm $top_builddir/tmp/25ohm-201h.Er.bmp
+
+if [ -z "$Zoatlc" ]  || [ -z "$ZoTheory" ] || [ -z "$MD5SUM" ] || [ -z "$EXMD5SUM" ] ; then  
   exit 1
 fi
 
 # "Zo theory = " $ZoTheory "Zo altc= " $Zoatlc " cksum of bitmap" $MD5SUM "cksum of .Ex.bmp= " $EXMD5SUM
 
-rm $top_builddir/tmp/25ohm-201h.E.bmp
-if [ $ZoTheory = 25.017590  ] && [ $Zoatlc = 24.92 ] && [ $MD5SUM = 44e86f6bcec1a61db9564040ec93557c ] && [ $EXMD5SUM = cfc9b5d2ca0afa1bcb5cb9e38d0579db ] ; then
+
+if [ $ZoTheory = 25.017590  ] && [ $Zoatlc = 24.92 ] && [ $MD5SUM = 44e86f6bcec1a61db9564040ec93557c ] && [ $EXMD5SUM = 7bdb88a52e18a58c979299224fce6197 ] ; then
    echo "PASSED:" $0 >> tests.log
    exit 0
 else
-   echo "The following test will always fail if  not linked against the gsl library"
    echo "FAILED:" $0 >> tests.log
    exit 1
 fi

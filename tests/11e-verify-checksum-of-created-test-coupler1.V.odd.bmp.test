@@ -1,22 +1,16 @@
-#!/bin/sh
+#! /bin/sh
 # There should be a supplied bitmap file test-coupler1.bmp
 # We will generate all the bitmaps and check they 
 # are all okay. 
 
-if [ "$built_with_posix_threads" = "yes" ] ; then
-  rm -f $top_builddir/tmp/test-coupler1.V.odd.bmp
-  exit 77 # don't bother executing, since it will fail as configured. 
-else
-  touch $top_builddir/tmp/test-coupler1.V.odd.bmp
-  MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test-coupler1.V.odd.bmp`
-  rm $top_builddir/tmp/test-coupler1.V.odd.bmp
-  #if [ $MD5SUM != 3b572c94ab863fe210567aeba4b3c986 ]; then
-  if [ $MD5SUM != 47c2976b85d74e63481c38ad251c51bf ]; then
-    echo "FAILED:" $0  >> tests.log
-    exit 1
-  else 
-    echo "PASSED:" $0 >> tests.log
-    exit 0
-  fi
+touch $top_builddir/tmp/test-coupler1.V.odd.bmp
+MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test-coupler1.V.odd.bmp`
+rm $top_builddir/tmp/test-coupler1.V.odd.bmp
+if [ $MD5SUM != 54a5b6068f0806ae29c50223e8129404 ]; then
+  echo "FAILED:" $0  >> tests.log
+  exit 1
+else 
+  echo "PASSED:" $0 >> tests.log
+  exit 0
 fi
 

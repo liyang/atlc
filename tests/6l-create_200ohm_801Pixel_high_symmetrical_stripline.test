@@ -1,4 +1,4 @@
-#!/bin/sh
+#! /bin/sh
 # This test has been disabled, since it uses more than 256 Mb of RAM
 # which is a bit excessive. 
 

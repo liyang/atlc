@@ -1,4 +1,4 @@
-#!/bin/sh
+#! /bin/sh
 # This is one of a set of test that generate checksums after files are
 # created. Generally a bitmap if first produced by a program such as sym_strip, 
 # rect_in_rect, rect_cen_in_rect, circ_in_circ, circ_in_rect, 
@@ -21,18 +21,13 @@
 # program bug, so PLEASE PLEASE let me know about it!!
 # Dr. David Kirkby, drkirkby@ntlworld.com
 
-if [ "$built_with_posix_threads" = "yes" ] ; then
-  rm $top_builddir/tmp/test_stripline_coupler.V.odd.bmp
-  exit 77   # Currently, the results will be wrong, so skip test.
+touch $top_builddir/tmp/test_stripline_coupler.V.odd.bmp
+MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test_stripline_coupler.V.odd.bmp`
+rm -f $top_builddir/tmp/test_stripline_coupler.V.odd.bmp
+if [ $MD5SUM != 54079de65f2a4910447a334358181e22 ] ; then
+  echo "FAILED:" $0 >> tests.log
+  exit 1
 else
-  touch $top_builddir/tmp/test_stripline_coupler.V.odd.bmp
-  MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test_stripline_coupler.V.odd.bmp`
-  rm $top_builddir/tmp/test_stripline_coupler.V.odd.bmp
-  if [ $MD5SUM != 50a960b3d718c3d3ceeac55819555cf2 ] ; then
-    echo "FAILED:" $0 >> tests.log
-    exit 1
-  else
-    echo "PASSED:" $0 >> tests.log
-    exit 0
-  fi
+  echo "PASSED:" $0 >> tests.log
+  exit 0
 fi

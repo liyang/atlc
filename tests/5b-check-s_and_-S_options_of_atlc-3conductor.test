@@ -1,4 +1,4 @@
-#!/bin/sh
+#! /bin/sh
 
 # Delete any files that may be left
 rm -f $top_builddir/tmp/test-coupler2.E.even.bin $top_builddir/tmp/test-coupler2.E.even.bmp
@@ -26,8 +26,9 @@ if [ "$mpirun_found" = "yes" ] ; then
 else
   $top_builddir/src/non_gui/atlc -s -S $top_builddir/tmp/test-coupler2.bmp > $top_builddir/tmp/test-coupler2.bmp.txt
 fi
+
 if [ -f $top_builddir/tmp/test-coupler2.Ex.even.bmp ]  || [ -f $top_builddir/tmp/test-coupler2.Ey.odd.bin ] || [ -f $top_builddir/tmp/test-coupler2.Er.bin ] ; then
-  echo "FAILED:" $0 >> tests.log 
+  echo "FAILED-1:" $0 >> tests.log 
   exit 1
 fi  
 
@@ -56,9 +57,14 @@ rm -f $top_builddir/tmp/test-coupler2.V.odd.bin
 rm -f $top_builddir/tmp/test-coupler2.V.odd.bmp
 
 # Check that -S suppresses the creation of .bin, but not .bmp's
-$top_builddir/src/non_gui/atlc -S $top_builddir/tmp/test-coupler2.bmp > $top_builddir/tmp/test-coupler2.bmp.txt
+if [ "$mpirun_found" = "yes" ] ; then
+ mpirun -np 2 $top_builddir/src/non_gui/atlc -S $top_builddir/tmp/test-coupler2.bmp > $top_builddir/tmp/test-coupler2.bmp.txt
+else
+  $top_builddir/src/non_gui/atlc -S $top_builddir/tmp/test-coupler2.bmp > $top_builddir/tmp/test-coupler2.bmp.txt
+fi
+
 if [ -f $top_builddir/tmp/test-coupler2.Ex.odd.bin ]  || [ -f $top_builddir/tmp/test-coupler2.Ey.odd.bin ] || [ ! -f $top_builddir/tmp/test-coupler2.Er.bmp ] ; then
-  echo "FAILED:" $0 >> tests.log 
+  echo "FAILED-2:" $0 >> tests.log 
   exit 1
 fi  
 
@@ -86,16 +92,26 @@ rm -f $top_builddir/tmp/test-coupler2.V.odd.bin
 rm -f $top_builddir/tmp/test-coupler2.V.odd.bmp
 
 # Check that -s suppresses the creation of .bmp's, but not .bin's
-$top_builddir/src/non_gui/atlc -s $top_builddir/tmp/test-coupler2.bmp > $top_builddir/tmp/test-coupler2.bmp.txt
+if [ "$mpirun_found" = "yes" ] ; then
+   mpirun -np 2 $top_builddir/src/non_gui/atlc -s $top_builddir/tmp/test-coupler2.bmp > $top_builddir/tmp/test-coupler2.bmp.txt
+else
+   $top_builddir/src/non_gui/atlc -s $top_builddir/tmp/test-coupler2.bmp > $top_builddir/tmp/test-coupler2.bmp.txt
+fi
+
 if [ -f $top_builddir/tmp/test-coupler2.Ex.even.bmp ]  || [ -f $top_builddir/tmp/test-coupler2.Ey.odd.bmp ] || [ ! -f $top_builddir/tmp/test-coupler2.Er.bin ]  ; then
-  echo "FAILED:" $0 >> tests.log 
+  echo "FAILED-3:" $0 >> tests.log 
   exit 1
 fi
 
 # Check that no options creates both the .bmp's and .bin's
-$top_builddir/src/non_gui/atlc  $top_builddir/tmp/test-coupler2.bmp > /dev/null
+if [ "$mpirun_found" = "yes" ] ; then
+  mpirun -np 2 $top_builddir/src/non_gui/atlc  $top_builddir/tmp/test-coupler2.bmp > /dev/null
+else
+  $top_builddir/src/non_gui/atlc  $top_builddir/tmp/test-coupler2.bmp > /dev/null
+fi
+
 if [ ! -f $top_builddir/tmp/test-coupler2.Ex.odd.bmp ]  || [ ! -f $top_builddir/tmp/test-coupler2.Ey.odd.bmp ] || [ ! -f $top_builddir/tmp/test-coupler2.Er.bin ]  ; then
-  echo "FAILED:" $0 >> tests.log 
+  echo "FAILED-2:" $0 >> tests.log 
   exit 1
 fi
 echo "PASSED:" $0 >> tests.log 

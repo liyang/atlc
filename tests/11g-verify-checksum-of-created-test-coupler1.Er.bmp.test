@@ -1,4 +1,4 @@
-#!/bin/sh
+#! /bin/sh
 # There should be a supplied bitmap file test-coupler1.bmp
 # We will generate all the bitmaps and check they 
 # are all okay. 

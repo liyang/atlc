@@ -1,4 +1,4 @@
-#!/bin/sh
+#! /bin/sh
 
 # This is one of a set of test that generate checksums after files are
 # created. Generally a bitmap if first produced by a program such as create_bmp_for_symmetrical_stripline, 
@@ -29,14 +29,13 @@
 
 touch $top_builddir/tmp/test_stripline_coupler.bmp
 if [ "x$mpirun_found" = "xyes" ] ; then
-  mpirun -np 2 Zo=`$top_builddir/src/non_gui/atlc -S $top_builddir/tmp/test_stripline_coupler.bmp | awk '{print $8}'` 2> /dev/null
+  mpirun -np 2 Zodd=`$top_builddir/src/non_gui/atlc -S $top_builddir/tmp/test_stripline_coupler.bmp | awk '{print $8}'` 2> /dev/null
 else
-  Zo=`$top_builddir/src/non_gui/atlc -S $top_builddir/tmp/test_stripline_coupler.bmp | awk '{print $8}'`
+  Zodd=`$top_builddir/src/non_gui/atlc -S $top_builddir/tmp/test_stripline_coupler.bmp | awk '{print $8}'`
 fi
-exit 77
 
 rm -f $top_builddir/tmp/test_stripline_coupler.bmp
-if [ "x$Zo" = "x63.70" ] ; then
+if [ "x$Zodd" = "x63.70" ] ; then
   echo "PASSED:" $0 >> tests.log
   exit 0
 else

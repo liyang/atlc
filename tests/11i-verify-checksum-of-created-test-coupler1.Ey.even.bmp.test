@@ -1,20 +1,15 @@
-#!/bin/sh
+#! /bin/sh
 # There should be a supplied bitmap file test-coupler1.bmp
 # We will generate all the bitmaps and check they 
 # are all okay
 touch $top_builddir/tmp/test-coupler1.Ey.even.bmp
-if [ "$built_with_posix_threads" = "yes" ] ; then
-  rm $top_builddir/tmp/test-coupler1.Ey.even.bmp
-  exit 77 # don't bother executing, since it will fail as configured. 
+MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test-coupler1.Ey.even.bmp`
+rm $top_builddir/tmp/test-coupler1.Ey.even.bmp
+if [ $MD5SUM != c8d359581590670b342bc21c75d0a4c5 ]; then
+  echo "FAILED:" $0 >> tests.log
+  exit 1
 else
-  MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test-coupler1.Ey.even.bmp`
-  rm $top_builddir/tmp/test-coupler1.Ey.even.bmp
-  if [ $MD5SUM != e362d666b764238974d018bb3613810d ]; then
-    echo "FAILED:" $0 >> tests.log
-    exit 1
-  else
-    echo "PASSED:" $0 >> tests.log
-    exit 0
-  fi
+  echo "PASSED:" $0 >> tests.log
+  exit 0
 fi
 

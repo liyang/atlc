@@ -1,4 +1,4 @@
-#!/bin/sh
+#! /bin/sh
 # Check that the -s and -S options are indeed doing
 # what they are supposed to be doing. 
 # going to execute a pwd as soon as entering the test. 
@@ -17,7 +17,6 @@ else
 fi
 
 if [ -f $top_builddir/tmp/coax2.Ex.bmp ]  || [ -f $top_builddir/tmp/coax2.Ey.bin ] || [ -f top_builddir/tmp/coax2.Er.bin ] ; then
-  echo failed at first state
   echo "FAILED:" $0 >> tests.log 
   exit 1
 fi  
@@ -25,7 +24,6 @@ fi
 # Delete any files created. There should be none.
 
 
-#echo checking -S now
 # Check that -S suppresses the creation of .bin, but not .bmp's
 if [ "$mpirun_found" = "yes" ] ; then
   npirun -np 2$top_builddir/src/non_gui/atlc -S $top_builddir/tmp/coax2.bmp > /dev/null
@@ -34,7 +32,6 @@ else
 fi
 
 if [ -f $top_builddir/tmp/coax2.Ex.bin ]  || [ -f $top_builddir/tmp/coax2.Ey.bin ] || [ -f $top_builddir/tmp/coax2.Er.bin ] || [ ! -f  $top_builddir/tmp/coax2.Er.bmp ] ; then
-  echo failed at second state
   echo "FAILED:" $0 >> tests.log 
   exit 1
 fi
@@ -63,7 +60,6 @@ else
 fi
 
 if [ -f $top_builddir/tmp/coax2.Ex.bmp ]  || [ -f $top_builddir/tmp/coax2.Ey.bmp ] || [ ! -f $top_builddir/tmp/coax2.Er.bin ]  ; then
-  echo failed at third stage
   echo "FAILED:" $0 >> tests.log 
   exit 1
 fi
@@ -90,7 +86,6 @@ else
 fi
 
 if [ ! -f $top_builddir/tmp/coax2.Ex.bmp ]  || [ ! -f $top_builddir/tmp/coax2.Ey.bmp ] || [ ! -f $top_builddir/tmp/coax2.Er.bin ]  ; then
-  echo failed at 4th stage
   echo "FAILED:" $0 >> tests.log 
   exit 1
 fi

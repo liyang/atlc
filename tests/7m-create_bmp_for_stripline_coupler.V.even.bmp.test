@@ -1,19 +1,13 @@
-#!/bin/sh
+#! /bin/sh
 #echo mpirun=$mpirun
 touch $top_builddir/tmp/test_stripline_coupler.V.even.bmp
 
-if [ "$built_with_posix_threads" = "yes" ] ; then
-  rm $top_builddir/tmp/test_stripline_coupler.V.even.bmp
-  exit 77   # Currently, the results will be wrong, so skip test.
-else
-  MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test_stripline_coupler.V.even.bmp`
-  rm $top_builddir/tmp/test_stripline_coupler.V.even.bmp
-#if [ $MD5SUM != 4ad9743416e230a554645301ca0c809b ] ; then
-  if [ $MD5SUM != 8574e3dcfcdbcb7cadcbcc8c2f465d24 ] ; then
+MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test_stripline_coupler.V.even.bmp`
+rm -f $top_builddir/tmp/test_stripline_coupler.V.even.bmp
+if [ $MD5SUM != 683b7385af4da467559b2fd1df8787ae ] ; then
     echo "FAILED:" $0 >> tests.log
     exit 1
-  else
+else
     echo "PASSED:" $0 >> tests.log
     exit 0
-  fi
 fi

@@ -1,4 +1,4 @@
-#!/bin/sh
+#! /bin/sh
 # Check that the inductance per metre calculated from
 # tests.bmp is the correct value.
 # .bin files are unchecked, so let removed them.
@@ -14,13 +14,15 @@ fi
 # should be 340.8 nH/m
 
 Lo=`cat $top_builddir/tmp/test.txt | awk '{print $12}'`
+Zo=`cat $top_builddir/tmp/test.txt | awk '{print $6}'`
 rm $top_builddir/tmp/test.txt
+rm $top_builddir/tmp/test.bmp
 
-if [ -z "$Lo" ]; then
+if [ -z "$Lo" ] || [ -z "$Zo" ] ; then
   exit 1
 fi
 
-if [ $Lo = 340.8 ]; then
+if [ $Lo = 340.8 ] && [ $Zo = 102.17 ] ; then
   echo "PASSED:" $0 >> tests.log
   exit 0
 else

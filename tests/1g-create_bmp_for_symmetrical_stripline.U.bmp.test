@@ -22,17 +22,12 @@
 
 touch $top_builddir/tmp/test_sym_strip.U.bmp
 
-if [ "$built_with_posix_threads" = "yes" ] ; then
-  rm -f $top_builddir/tmp/test_sym_strip.U.bmp $top_builddir/tmp/test_sym_strip.U.bin
-  exit 77
+MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test_sym_strip.U.bmp`
+rm -f $top_builddir/tmp/test_sym_strip.U.bmp $top_builddir/tmp/test_sym_strip.U.bin
+if [ $MD5SUM = 353a368663a112d7e8f0af6a63df75f3 ]; then
+  echo "PASSED:" $0 >> tests.log
+  exit 0
 else
-  MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test_sym_strip.U.bmp`
-  rm -f $top_builddir/tmp/test_sym_strip.U.bmp $top_builddir/tmp/test_sym_strip.U.bin
-  if [ $MD5SUM = 6cd3f8c0aed368a2f2a23902496f2b9e ]; then
-    echo "PASSED:" $0 >> tests.log
-    exit 0
-  else
-    echo "FAILED:" $0 >> tests.log
-    exit 1
-  fi
+  echo "FAILED:" $0 >> tests.log
+  exit 1
 fi

@@ -1,4 +1,4 @@
-#!/bin/sh
+#! /bin/sh
 
 # This is one of a set of test that generate checksums after files are
 # created. Generally a bitmap if first produced by a program such as create_bmp_for_symmetrical_stripline, 
@@ -23,18 +23,13 @@
 
 
 # Check the Ex.odd file created by running 7a
-if [ "$built_with_posix_threads" = "yes" ] ; then
-  rm $top_builddir/tmp/test_stripline_coupler.Ex.odd.bmp
-  exit 77
+touch $top_builddir/tmp/test_stripline_coupler.Ex.odd.bmp
+MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test_stripline_coupler.Ex.odd.bmp`
+rm $top_builddir/tmp/test_stripline_coupler.Ex.odd.bmp
+if [ $MD5SUM != bbe776a384f770719f1ef36b9c341a9c ] ; then
+  echo "FAILED:" $0 >> tests.log
+  exit 1
 else
-  touch $top_builddir/tmp/test_stripline_coupler.Ex.odd.bmp
-  MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test_stripline_coupler.Ex.odd.bmp`
-  rm $top_builddir/tmp/test_stripline_coupler.Ex.odd.bmp
-  if [ $MD5SUM != cfa8b523e9811a3549f9bad1972720b8 ] ; then
-    echo "FAILED:" $0 >> tests.log
-    exit 1
-  else
-    echo "PASSED:" $0 >> tests.log
-    exit 0
-  fi
+  echo "PASSED:" $0 >> tests.log
+  exit 0
 fi
