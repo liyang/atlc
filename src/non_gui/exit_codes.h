@@ -90,3 +90,15 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #define VOLTAGE_NOT_MINUS_ONE_V_AS_EXPECTED                       65
 #define VOLTAGE_NOT_PLUS_ONE_V_AS_EXPECTED                        66
 #define VOLTAGE_NOT_ZERO_V_AS_EXPECTED                            67
+#define THREAD_CREATION_FAILED                                  68
+#define MUTEX_INITIALISATION_FAILED                               69
+#define MUTEX_ALLOCATION_FAILED                                   70
+#define USER_REQUESTED_TOO_MANY_THREADS                           71
+#define THREAD_FAILED_TO_JOIN                                     71
+#define CANT_OBTAIN_SEMAPHORE                                     73
+#define SEM_INIT_FAILED                                           74
+#define SEM_POST_FAILED                                           75
+#define SEM_WAIT_FAILED                                           76
+#define PTHREAD_ATTR_SETINHERITSCHED_FAILED                       77
+#define PTHREAD_ATTR_INIT_FAILED                                  78 
+#define PTHREAD_ATTR_SETSCOPE_FAILED                              79
