@@ -17,12 +17,12 @@ groundplanes of spacing h. */
 #include <gsl/gsl_sf_ellint.h>
 #endif
 
-double WW, HH, ss, ww, Er1, Er2, DD;
-int W, H, s, a, b, c, d, w, h, o, verbose=FALSE;
+double WW, HH, ss, ww, Er1, Er2;
+int W, H, s,  w,  verbose=FALSE;
 
 int main(int argc, char **argv)
 {
-  double er;
+  double er, return_error;
   double Zodd, Zeven, Zo;
   int bmp_size=DEFAULT_COUPLER_BITMAP_SIZE, q; 
   FILE *image_data_fp;
@@ -76,7 +76,9 @@ int main(int argc, char **argv)
   to be odd, and not bothering what the width is, as long as its about
   right. */
 
-  calculate_integer_values(&optimise, 4, bmp_size);
+  return_error=calculate_integer_values(&optimise, 4, bmp_size);
+  if(verbose)
+    printf("error returned from calculate_integer_values=%g\n", return_error);
   W=optimise.best[0];
   H=optimise.best[1];
   w=optimise.best[2];
