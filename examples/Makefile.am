@@ -46,9 +46,7 @@ examples_DATA= \
 50ohm-401h.bmp \
 50ohm-801h.bmp \
 aliased.bmp \
-aliased.bmp.txt \
 an_odd_er.bmp \
-an_odd_er.bmp.txt \
 bigger_not_in_centre.bmp \
 bigger_not_in_centre.bmp.txt \
 coax-500-100.bmp \
@@ -86,7 +84,6 @@ coupler.bmp.txt \
 create_for_Makefile.am \
 cvsignore \
 ex2.bmp \
-ex2.bmp.txt \
 ground-negative-short.bmp \
 microstrip_coupler.bmp \
 mix.bmp \
@@ -94,13 +91,10 @@ mix.bmp.txt \
 multi-dielectric.bmp \
 multi-dielectric.bmp.txt \
 not-aliased.bmp \
-not-aliased.bmp.txt \
 not_in_centre.bmp \
 not_in_centre.bmp.txt \
 odd-coupler.bmp \
-odd-coupler.bmp.txt \
 off-centre-coax.bmp \
-off-centre-coax.bmp.txt \
 offset.bmp \
 offset.bmp.txt \
 pcb-coupler.bmp \
@@ -235,9 +229,7 @@ very-small.bmp \
 50ohm-401h.bmp \
 50ohm-801h.bmp \
 aliased.bmp \
-aliased.bmp.txt \
 an_odd_er.bmp \
-an_odd_er.bmp.txt \
 bigger_not_in_centre.bmp \
 bigger_not_in_centre.bmp.txt \
 coax-500-100.bmp \
@@ -275,7 +267,6 @@ coupler.bmp.txt \
 create_for_Makefile.am \
 cvsignore \
 ex2.bmp \
-ex2.bmp.txt \
 ground-negative-short.bmp \
 microstrip_coupler.bmp \
 mix.bmp \
@@ -283,13 +274,10 @@ mix.bmp.txt \
 multi-dielectric.bmp \
 multi-dielectric.bmp.txt \
 not-aliased.bmp \
-not-aliased.bmp.txt \
 not_in_centre.bmp \
 not_in_centre.bmp.txt \
 odd-coupler.bmp \
-odd-coupler.bmp.txt \
 off-centre-coax.bmp \
-off-centre-coax.bmp.txt \
 offset.bmp \
 offset.bmp.txt \
 pcb-coupler.bmp \
