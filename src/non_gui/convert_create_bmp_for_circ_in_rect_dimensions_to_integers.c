@@ -34,6 +34,8 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #include <stdlib.h>
 #endif
 #include "definitions.h"
+#include "exit_codes.h"
+
 
 /* names, colours and Ers are all arrays of 10. It would be better they were 
 in a structure as they are all linked closely, but they are not and I
@@ -104,38 +106,23 @@ int convert_create_bmp_for_circ_in_rect_dimensions_to_integers(int accuracy_leve
       }
    }
    if(best_d==-1) /* it has not been initialised */
-   {
-      fprintf(stderr,"d has not been initialised \n");
-      exit(1);
-   }
+      exit_with_msg_and_exit_code("d has not been initialised",VARIABLE_NOT_INITIALISED);
    else
      d=best_d;
    if(best_W==-1) /* it has not been initialised */
-   {
-      fprintf(stderr,"W has not been initialised \n");
-      exit(1);
-   }
+      exit_with_msg_and_exit_code("W has not been initialised",VARIABLE_NOT_INITIALISED);
    else
      W=best_W;
    if(best_H==-1) /* it has not been initialised */
-   {
-      fprintf(stderr,"H has not been initialised \n");
-      exit(1);
-   }
+      exit_with_msg_and_exit_code("H has not been initialised",VARIABLE_NOT_INITIALISED);
    else
      H=best_H;
    if(best_x==-1) /* it has not been initialised */
-   {
-      fprintf(stderr,"x has not been initialised \n");
-      exit(1);
-   }
+      exit_with_msg_and_exit_code("x has not been initialised",VARIABLE_NOT_INITIALISED);
    else
      x=best_x;
    if(best_y==-1) /* it has not been initialised */
-   {
-      fprintf(stderr,"y has not been initialised \n");
-      exit(1);
-   }
+      exit_with_msg_and_exit_code("y has not been initialised",VARIABLE_NOT_INITIALISED);
    else
      y=best_y;
    if(verbose==TRUE)
@@ -155,8 +142,7 @@ int convert_create_bmp_for_circ_in_rect_dimensions_to_integers(int accuracy_leve
    }
    if( (d/2+x >= W) || (d/2+y >=H))
    {
-      fprintf(stderr,"The gap between the two conductors is too small. Either increase the bitmap size (-b option), or change the dimensions of one the conductors\n");
-      exit(1);
+      exit_with_msg_and_exit_code("The gap between the two conductors is too small. Either increase the bitmap size (-b option), or change the dimensions of one the conductors",GAP_BETWEEN_CONDUCTORS_TOO_SMALL);
    }
    check_error(dd,d,best_grid_size,"d");
    check_error(WW,W,best_grid_size,"W");
