@@ -116,7 +116,7 @@ void write_fields_for_directional_couplers(char * filename, struct transmission_
 
   unsigned char r, g, b;
 
-  struct max_values maximum_values;
+  static struct max_values maximum_values;
   int offset=-3, w, h;
   double E, Ex, Ey, U;
 
