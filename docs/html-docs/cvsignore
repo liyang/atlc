@@ -1,1 +1,1 @@
-*.gz *.cln Makefile
+*.gz *.cln Makefile Makefile.in
