@@ -5,12 +5,14 @@
 #include <stdio.h>
 #include <math.h>
 
+#ifdef ENABLE_MPI
 double f(double);
 
 double f(double a)
 {
     return (4.0 / (1.0 + a*a));
 }
+#endif
 
 int main(int argc,char *argv[])
 {
@@ -27,8 +29,6 @@ int main(int argc,char *argv[])
     MPI_Comm_rank(MPI_COMM_WORLD,&myid);
     MPI_Get_processor_name(processor_name,&namelen);
 
-    /* fprintf(stdout,"Process %d of %d on %s\n",
-	    myid, numprocs, processor_name); */
 
     n = 0;
     while (!done)
