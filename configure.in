@@ -14,8 +14,8 @@ dnl checks for library functions
 dnl checks for system services
 dnl AC_OUTPUT([file...])
 
-AC_INIT(atlc, 4.2.11-alpha, drkirkby@ntlworld.com)
-AM_INIT_AUTOMAKE(atlc, 4.2.11-alpha, drkirkby@ntlworld.com)
+AC_INIT(atlc, 4.2.11, drkirkby@ntlworld.com)
+AM_INIT_AUTOMAKE(atlc, 4.2.11, drkirkby@ntlworld.com)
 
 dnl Checks for programs.
 AC_PROG_CC
@@ -34,8 +34,6 @@ dnl check for optimised math library on SPARC
 dnl AC_CHECK_LIB(mopt,main)
 dnl check for the optimised
 dnl AC_CHECK_LIB(copt,main)
-
-AC_CHECK_LIB(m,main)
 
 dnl Checks for header files.
 
@@ -98,8 +96,10 @@ AC_ARG_WITH(threads,
 
 if test "x$with_threads" = "xyes"; then
 ACX_PTHREAD([AC_DEFINE(ENABLE_POSIX_THREADS)])
+LIBS="$PTHREAD_LIBS $LIBS"
+CFLAGS="$CFLAGS $PTHREAD_CFLAGS"
+CC="$PTHREAD_CC"
 fi
-
 
 dnl MPI and MPE Support
 AC_ARG_WITH(mpi, AC_HELP_STRING([--with-mpi=[mpi_install_prefix]],[support MPI-based parallel computation (needs MPICH installed)]))
