@@ -12,17 +12,19 @@ AC_PROG_RANLIB
 AC_ISC_POSIX
 
 AC_OUTPUT_COMMANDS([exit])
+
 dnl Checks for libraries.
+AC_CHECK_LIB(m,main)
+AC_CHECK_LIB(c,memalign)
+
 
 dnl check for optimised math library on SPARC
 dnl AC_CHECK_LIB(mopt,main)
-AC_CHECK_LIB(m,main)
 
 dnl check for the optimised
 dnl AC_CHECK_LIB(copt,main)
 AC_CHECK_LIB(gslcblas,main)
 AC_CHECK_LIB(gsl,main)
-AC_FUNC_ALLOCA
 		
 
 dnl Checks for header files.
@@ -38,7 +40,6 @@ AC_CHECK_SIZEOF(short)
 AC_CHECK_SIZEOF(int)
 AC_CHECK_SIZEOF(long)
 AC_CHECK_SIZEOF(size_t)
-
 						   
 dnl Check for st_blksize in struct stat
 AC_ST_BLKSIZE
@@ -95,7 +96,6 @@ if test "x$with_mpi" != "x" \
   AC_CHECK_LIB(socket, getsockopt)
   AC_CHECK_LIB(nsl, xdr_void)
   AC_CHECK_LIB(rt, sched_yield)
-	
   if test "x$with_mpe" != "x"; then 
     if test "x$with_mpe" = "xyes"; then
 	path_to_mpe=/usr/local
