@@ -74,7 +74,7 @@ dove         Sun SPARCstation 20     75 MHz   288 Mb
 owl          SGI Octane R10000    2x195 MHz  1024 Mb
 sparrow[gcc] Sun Ultra 80         4x450 MHz  4096 Mb
 sparrow[cc]  Sun Ultra 80         4x450 MHz  4096 M5
-starling     IBM RS/6000 F30      4x332 MHz  1024 Mb
+starling     IBM RS/6000 F30      4x332 MHz  1536 Mb
 tiger        Pentium II PC          350 MHz   128 Mb
 woodpecker   Sun SPARCstation 20  2x125 MHz   224 Mb
 
