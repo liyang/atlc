@@ -837,7 +837,7 @@ AC_ARG_ENABLE(gsltest, [  --disable-gsltest       Do not try to compile and run 
       ac_save_CFLAGS="$CFLAGS"
       ac_save_LIBS="$LIBS"
       CFLAGS="$CFLAGS $GSL_CFLAGS"
-#XXX      LIBS="$LIBS $GSL_LIBS"
+      LIBS="$LIBS $GSL_LIBS"
 
       rm -f conf.gsltest
       AC_TRY_RUN([
@@ -891,7 +891,7 @@ int main (void)
     {
       printf("\n*** 'gsl-config --version' returned %d.%d.%d, but the minimum version\n", $gsl_major_version, $gsl_minor_version, $gsl_micro_version);
       printf("*** of GSL required is %d.%d.%d. If gsl-config is correct, then it is\n", major, minor, micro);
-      printf("*** best to upgrade gsl - see http://sources.redhat.com/gsl \n");
+      printf("*** best to upgrade to the required version.\n");
       printf("*** If gsl-config was wrong, set the environment variable GSL_CONFIG\n");
       printf("*** to point to the correct copy of gsl-config, and remove the file\n");
       printf("*** config.cache before re-running configure\n");
@@ -920,7 +920,7 @@ int main (void)
        else
           echo "*** Could not run GSL test program, checking why..."
           CFLAGS="$CFLAGS $GSL_CFLAGS"
-#XXX          LIBS="$LIBS $GSL_LIBS"
+          LIBS="$LIBS $GSL_LIBS"
           AC_TRY_LINK([
 #include <stdio.h>
 ],      [ return 0; ],
@@ -945,6 +945,9 @@ int main (void)
 #     GSL_LIBS=""
      ifelse([$3], , :, [$3])
   fi
+#Added by DRK to stop the flags being added
+  CFLAGS="$ac_save_CFLAGS"
+  LIBS="$ac_save_LIBS"
   AC_SUBST(GSL_CFLAGS)
   AC_SUBST(GSL_LIBS)
   rm -f conf.gsltest
