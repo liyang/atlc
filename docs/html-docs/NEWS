@@ -1,0 +1,31 @@
+Added options -s and -S in 'atlc' to enable the bitmap (.bmp) and binary
+(.bmp) files to not be written. The default is to write these files. 
+
+Remove options to write data to a text file and append data to
+a text file from atlc. Changes meant it got more difficult
+to implement and there seems little point when > and
+>> do those functions.
+
+Added the program 'create_bmp_for_coupled_microstrip' which does
+exactly what the name says. Run it to see what options and 
+command line arguments it expects, as there is no man page at 
+the minute. 
+
+*ALL* the files that create bitmaps have been renamed to create_bmp_for_xyz,
+where xyz determines the geometry. There are now the following files
+for creating bitmaps:
+
+create_bmp_for_circ_in_circ
+create_bmp_for_circ_in_rect
+create_bmp_for_coupled_microstrip
+create_bmp_for_coupler
+create_bmp_for_rect_cen_in_rect
+create_bmp_for_rect_in_circ
+create_bmp_for_rect_in_circ.c
+create_bmp_for_sym_strip
+
+Added program 'find_optimal_dimensions_for_microstrip_coupler' which does 
+an exhaustive search of different geometires for microstrip couplers. 
+
+Dr. David Kirkby 28/12/02
+
