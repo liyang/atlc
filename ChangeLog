@@ -1,3 +1,75 @@
+****** Version 4.3.4 Released July 19th 2003  ********
+
+README.aix 
+Removed. Works fine under AIX now. Two issues were 
+resolved:
+use of char when I needed signed char. Rounding error
+caused one pixel to change in colour by one graylevel
+
+src/non_gui
+Changed many files in src/non_gui that referenced
+char **cell_type; 
+I was not aware declared in this way, there is no
+standard for whether cell_type consists of digned or 
+unsigned characters. Hence it was not portable. This
+caused a very large number of failures on AIX. This 
+has now been corrected. One failure remains (see above).
+
+Added a file src/non_gui/memory.c to include funtions
+scmatrix and free scharmatrix, which  allocate and 
+deallocate matrixes with signed characters. 
+
+src/non_Gui/Makefile.am
+Removed unnecessary entries of GSL_LIBS, which causes
+the SGI linker to generate a warning, that the gsl
+library was not used to resolve any functions. 
+
+
+
+
+****** Version 4.3.3 Released July 17th 2003  ********
+README.aix 
+Added a new file, highlighting problems on AIX.
+
+configure.ac 
+Added a --enable-debug option, although little use is made
+of this in the code. 
+
+Added --with-extra-benchmark-data which should be an optional
+featuure, not an optional package as the configure script says
+it is. This needs correcting at a later date. 
+
+tests/benchmark.c
+changed the file so that the header file sys/processor.h only
+got included if the file existed and processor_info() was 
+defined
+
+#ifdef HAVE_PROCESSOR_INFO /* function processor_info() is in Solaris */
+#ifdef HAVE_SYS_PROCESSOR_H /* and in OSX */
+#include <sys/processor.h> /* But not on Tru64 */
+#endif /* <sys/processor.h> does not exist on OSX */
+#endif
+
+and made sure that areas of the code that needed aspects of
+processor_info always had this header file. The reason is that OSX seems
+to have the fuction processor_info(), but does not have the header file
+and don't seem to have it defined anywhere. 
+
+Made tests/benchmark.c write benchmark results to tests.log
+
+tests/benchmark.c now gathers information about the processors
+on an HP-UX box. 
+
+src/non_gui/Makefile.am
+Added function error_check()
+
+src/non_gui/reaadbin.c
+Changed an fopen(,"r") to fopen(,"rb"); so it works on
+Windoze based systems. 
+
+docs/html-docs
+BUGS - removed and replaced by docs/html-docs/BUGS.html
+
 ****** Version 4.3.2 Released June 12th 2003  ********
 
 Top level
