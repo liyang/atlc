@@ -1,7 +1,15 @@
-Here is a very quick implementation of the 'sum' command as part of GNU
-textutils. It does not read from standard input, has no help, does not
+Here are a couple of tools that I use. Both are very quickly put
+together to solve a job in an easy and portable way. 
+
+First is a very quick implementation of the 'sum' (mycksum) command as part of 
+GNU textutils. It does not read from standard input, has no help, does not
 list the size of a file ... All it does is generates a quick checksum
 using the same algorithm as the GNU 'sum' command. By having it here, it
 means the user does not need to install 'sum' or if it is installed, it
-does not matter if aother version (such as Sun's is used).
+does not matter if another version (such as Sun's is used).
+
+Program 'filelength' reports the length of a file in bytes. I was not
+sure if ls -l was portable, so this one is.
+
+Dr. David Kirkby, 11/1/03
 
