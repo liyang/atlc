@@ -1,9 +1,9 @@
 #!/bin/sh
 
 # This is one of a set of test that generate checksums after files are
-# created. Generally a bitmap if first produced by a program such as sym_strip, 
-# rect_in_rect, rect_cen_in_rect, circ_in_circ, circ_in_rect, 
-# generate_coupler_bitmap etc.
+# created. Generally a bitmap if first produced by a program such as create_bmp_for_sym_strip, 
+# create_bmp_for_create_bmp_for_rect_in_rect, create_bmp_for_rect_cen_in_rect, create_bmp_for_circ_in_circ, create_bmp_for_circ_in_rect, 
+# create_bmp_for_coupler etc.
 
 # The checksum of the bitmap generated is compared to what is known to be 
 # the correct checksum using a program 'mycksum' which is a cut-down version of
@@ -40,11 +40,13 @@
 # .bin files are unchecked, so let removed them.
 rm -f test.*.bin
 
-../src/non_gui/atlc test.bmp > /dev/null
-cat test.txt | awk '{print $11}' > /tmp/atlc-test.$$
+../src/non_gui/atlc test.bmp > test.txt
+# Check the inductance per metre, which should be in column 12 and 
+# should be 340.8 nH/m
+cat test.txt | awk '{print $12}' > /tmp/atlc-test.$$
 CKSUM=`../tools/src/mycksum /tmp/atlc-test.$$`
-rm /tmp/atlc-test.$$
-if [ $CKSUM = 14655 ]; then
+#rm /tmp/atlc-test.$$
+if [ $CKSUM = 22588 ]; then
   echo "PASSED:" $0 >> tests.log
   exit 0
 else

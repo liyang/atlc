@@ -6,7 +6,7 @@
 # and it is tedious to do. 
 
 # The following are around 25 Ohm transmission lines. 
-../src/non_gui/sym_strip  1 801 73   ../examples/200-Ohm-801b.bmp >/dev/null 2>/dev/null
+../src/non_gui/create_bmp_for_sym_strip  1 801 73   ../examples/200-Ohm-801b.bmp >/dev/null 2>/dev/null
 LENGTH=`../tools/src/myfilelength ../examples/200-Ohm-801b.bmp`
 if [ $LENGTH =  8071126 ]; then
   echo "PASSED:" $0 >> tests.log

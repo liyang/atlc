@@ -1,9 +1,9 @@
 #!/bin/sh
 
 # This is one of a set of test that generate checksums after files are
-# created. Generally a bitmap if first produced by a program such as sym_strip, 
-# rect_in_rect, rect_cen_in_rect, circ_in_circ, circ_in_rect, 
-# generate_coupler_bitmap etc.
+# created. Generally a bitmap if first produced by a program such as create_bmp_for_sym_strip, 
+# create_bmp_for_create_bmp_for_rect_in_rect, create_bmp_for_rect_cen_in_rect, create_bmp_for_circ_in_circ, create_bmp_for_circ_in_rect, 
+# create_bmp_for_coupler etc.
 
 # The checksum of the bitmap generated is compared to what is known to be 
 # the correct checksum using a program 'mycksum' which is a cut-down version of
@@ -37,14 +37,14 @@
 # 'sum' and see what that gives. If any failures do occur, please let me
 # know. email drkirkby@ntlworld.com and/or davek@medphys.ucl.ac.uk 
 
-../src/non_gui/atlc  test.bmp > /dev/null
+../src/non_gui/atlc  test.bmp > test.txt
 
-# Examine the text file created by atlc, not by generate_coupler_bitmap.
-
-cat test.txt | awk '{print $11}' > /tmp/atlc-test.$$
+# Examine the text file created by atlc, not by create_bmp_for_coupler.
+# Check the Zodd, in colum 8 which is 63.70 Ohms
+cat test.txt | awk '{print $8}' > /tmp/atlc-test.$$
 CKSUM=`../tools/src/mycksum /tmp/atlc-test.$$`
-rm /tmp/atlc-test.$$
-if [ $CKSUM = 31806 ]; then
+#rm /tmp/atlc-test.$$
+if [ $CKSUM = 24634 ]; then
   echo "PASSED:" $0 >> tests.log
   exit 0
 else

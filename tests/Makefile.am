@@ -2,28 +2,28 @@ AUTOMAKE_OPTIONS = gnits
 
 XFAIL_TESTS = 
 
-TESTS = 1a-sym_strip.bmp.test \
-1b-sym_strip.txt.test \
-1c-sym_strip.E.bmp.test \
-1d-sym_strip.Er.bmp.test \
-1e-sym_strip.Ey.bmp.test \
-1f-sym_strip.Ex.bmp.test \
-1g-sym_strip.U.bmp.test \
-1h-sym_strip.V.bmp.test \
-1i-sym_strip.E.bin.test \
-1j-sym_strip.Er.bin.test \
-1k-sym_strip.Ey.bin.test \
-1l-sym_strip.Ex.bin.test \
-1m-sym_strip.U.bin.test \
-1n-sym_strip.V.bin.test \
-2a-rect_in_rect.bmp.test \
-2b-rect_in_rect.txt.test \
-2c-rect_in_rect.E.bmp.test \
-2d-rect_in_rect.Er.bmp.test \
-2e-rect_in_rect.Ey.bmp.test \
-2f-rect_in_rect.Ex.bmp.test \
-2g-rect_in_rect.U.bmp.test \
-2h-rect_in_rect.V.bmp.test \
+TESTS = 1a-create_bmp_for_sym_strip.bmp.test \
+1b-create_bmp_for_sym_strip.txt.test \
+1c-create_bmp_for_sym_strip.E.bmp.test \
+1d-create_bmp_for_sym_strip.Er.bmp.test \
+1e-create_bmp_for_sym_strip.Ey.bmp.test \
+1f-create_bmp_for_sym_strip.Ex.bmp.test \
+1g-create_bmp_for_sym_strip.U.bmp.test \
+1h-create_bmp_for_sym_strip.V.bmp.test \
+1i-create_bmp_for_sym_strip.E.bin.test \
+1j-create_bmp_for_sym_strip.Er.bin.test \
+1k-create_bmp_for_sym_strip.Ey.bin.test \
+1l-create_bmp_for_sym_strip.Ex.bin.test \
+1m-create_bmp_for_sym_strip.U.bin.test \
+1n-create_bmp_for_sym_strip.V.bin.test \
+2a-create_bmp_for_rect_in_rect.bmp.test \
+2b-create_bmp_for_rect_in_rect.txt.test \
+2c-create_bmp_for_rect_in_rect.E.bmp.test \
+2d-create_bmp_for_rect_in_rect.Er.bmp.test \
+2e-create_bmp_for_rect_in_rect.Ey.bmp.test \
+2f-create_bmp_for_rect_in_rect.Ex.bmp.test \
+2g-create_bmp_for_rect_in_rect.U.bmp.test \
+2h-create_bmp_for_rect_in_rect.V.bmp.test \
 3a-rect_cen_in_rect.bmp.test \
 3b-rect_cen_in_rect.txt.test \
 7a-generate_coupler_bitmap.bmp.test \
