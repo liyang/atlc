@@ -3,6 +3,7 @@
 examplesdir = $(datadir)/atlc/examples
 
 examples_DATA= \
+dual-dielectric-coax.bmp \
 100-Ohm-201b.bmp \
 100-Ohm-401b.bmp \
 100ohm-201h.bmp \
@@ -185,6 +186,7 @@ wide-9pixel.bmp \
 wide-9pixel.bmp.txt 
 
 EXTRA_DIST = \
+dual-dielectric-coax.bmp \
 very-small.bmp \
 100-Ohm-201b.bmp \
 100-Ohm-401b.bmp \
