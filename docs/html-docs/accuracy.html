@@ -13,7 +13,8 @@
 <H1>Accuracy and run-times of <CODE>atlc</code></H1>
 atlc is very accurate, as the data below will confirm. In a total of 31 tests performed on standard two-conductor transmission lines the maximum error was only 0.945 % and the rms error was 0.259  %. On a <a href="accuracy.html#Accuracy_coupler">directional coupler</a>, the maximum error was 0.927%, but the typical error was around 0.6%.  Read on if you wish to know how these figures were arrived at. </p>
 
-<p>However, on the 16th of October 2003 I was advised atlc is not accurate when there are more than one dielectric, so as of version 4.5.1 (released on the 15th of October 2003), this facility has been disabled. atlc still work very accurate when there is a single dielectric. </p>
+<p>However, on the 15th of October 2003 I was advised atlc is not accurate when there are more than one dielectric, so as of version 4.5.1 (released on the 16th of October 2003), this facility has been disabled. atlc is still very accurate when there is a single dielectric. Any chance of inaccurate results
+have been illiminated by disabling that section of code this is belive to be suspect.</p>
 
 <p>In order to test the accuracy of  <CODE>atlc</code>, some simple geometries were devised, for which there are known exact analytical solutions. Three cases were considered for two-wire transmission lines - the <a href="accuracy.html#Accuracy_coax">standard coaxial cable</a>, an off-centre or <a href="accuracy.html#Accuracy_eccentric_coax">eccentric coaxial cable</a> and a <a href="accuracy.html#Accuracy_symmetrical_strip">symmetrical strip transmission line</a>. For three-wires, which can be used to make a 4-port directional coupler, the  accuracy was compared using <a href="accuracy.html#Accuracy_coupler">two edge-on strip lines.</a>, as that is the only case I am aware of that has an exact analytical solution. No significant tested has been peformed with mulitple dielectrics, due mainly to the lack of any exact analytical equations. I've made limited comparisions to other numerical techniques, but it is difficult to know what causes any differences in this case. 
 
@@ -22,7 +23,7 @@ atlc is very accurate, as the data below will confirm. In a total of 31 tests pe
 
 <img src="jpgs/coax2.jpg" ALT="coaxial line" align="left">One obvious case is the round coaxial cable, which has a well known and exact formula for its impedance. In the case of an vacuum dielectric, it is simply 
 <br>
-<STRONG>Zo=60.0*log<sub>e</sub>(D/d)</STRONG>
+<STRONG>Zo=59.9585*log<sub>e</sub>(D/d)</STRONG>
 <br>
  where D is the inner diameter of the outer conductor and d is the outer diameter of the inner conductor. <br>
 Circular conductors can never be defined exactly using a square grid, so differences between the exact answer and <CODE>atlc</code>'s answer are due to:
@@ -48,7 +49,7 @@ Six coaxial cables were defined, which all had the same diameter outer conductor
 <TD>500</TD>
 <TD>400</TD>
 <TD>1.0</TD>
-<TD>13.388</TD>
+<TD>13.379</TD>
 <TD>13.3710</TD>
 <TD>-0.127 %</TD>
 
@@ -58,7 +59,7 @@ Six coaxial cables were defined, which all had the same diameter outer conductor
 <TD>500</TD>
 <TD>200</TD>
 <TD>1.0</TD>
-<TD>54.977</TD>
+<TD>54.939</TD>
 <TD>54.9031</TD>
 <TD>-0.134%</TD>
 
@@ -68,7 +69,7 @@ Six coaxial cables were defined, which all had the same diameter outer conductor
 <TD>500</TD>
 <TD>200</TD>
 <TD>100.0</TD>
-<TD>5.4977</TD>
+<TD>5.494</TD>
 <TD>5.49031</TD>
 <TD>-0.134%</TD>
 
@@ -78,17 +79,17 @@ Six coaxial cables were defined, which all had the same diameter outer conductor
 <TD>500</TD>
 <TD>100</TD>
 <TD>1.0</TD>
-<TD>96.566</TD>
+<TD>96.499</TD>
 <TD>96.4277</TD>
 <TD>-0.143%</TD>
 </TR>
 
 <TR>
-<TD>coax-500-100.bmp</TD>
+<TD>coax-500-50.bmp</TD>
 <TD>500</TD>
 <TD>50</TD>
 <TD>1.0</TD>
-<TD>138.155</TD>
+<TD>138.060</TD>
 <TD>137.8984</TD>
 <TD>-0.186%</TD>
 </TR>
@@ -98,7 +99,7 @@ Six coaxial cables were defined, which all had the same diameter outer conductor
 <TD>500</TD>
 <TD>25</TD>
 <TD>1.0</TD>
-<TD>179.744</TD>
+<TD>179.620</TD>
 <TD>179.8969</TD>
 <TD>+0.085 %</TD>
 </TR>
