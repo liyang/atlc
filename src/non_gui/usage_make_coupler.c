@@ -30,7 +30,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 
 void usage_make_coupler(void)
 {
-  fprintf(stderr,"Usage: make_coupler [-C] [-b bitmapsize] [-v] H w s\n\n");
+  fprintf(stderr,"Usage: make_coupler [-C] [-b bitmapsize] [-v] H w s Er filename\n\n");
   fprintf(stderr,"Options:\n");
   fprintf(stderr,"         -C\n");
   fprintf(stderr,"            Print copyright, licencing and distribution information\n");
@@ -38,18 +38,17 @@ void usage_make_coupler(void)
   fprintf(stderr,"            Set the size of the bitmap to about 2^bitmapsize bytes\n");
   fprintf(stderr,"         -v\n");
   fprintf(stderr,"            Print extra information on theoetical impedance to stderr\n");
-  fprintf(stderr,"make_coupler produces a bitmap ***on stdout*** for the following coupled lines\n");
+  fprintf(stderr,"make_coupler write a bitmap to stdout for the following coupled lines\n");
   fprintf(stderr,"------------^------------------------------------------------------------------\n");
   fprintf(stderr,"            |                                               \n");
   fprintf(stderr,"            |              <---w---><-----s----><---w-->\n");
   fprintf(stderr,"            H              ---------            --------\n");
   fprintf(stderr,"            |                                      \n");
-  fprintf(stderr,"            |   Er=1.0                      \n");
+  fprintf(stderr,"            |   Er                          \n");
   fprintf(stderr,"------------v------------------------------------------------------------------\n");
   fprintf(stderr,"and calculates the theoretical impedances if the -v option is given\n");
-  fprintf(stderr,"e.g. make_coupler  1.23 0.7 1.2 1. >   coupler.bmp (standard bitmap produced)\n");
-  fprintf(stderr,"e.g. make_coupler -b 8 1.23 0.7 1.2 >  small.bmp   (small bitmap produced)\n");
-  fprintf(stderr,"e.g. make_coupler -v 12 1.23 0.7 1.2 >  theory.bmp  (prints info to stderr)\n");
+  fprintf(stderr,"e.g. make_coupler  1.23 0.7 1.2 1   coupler.bmp (standard bitmap produced)\n");
+  fprintf(stderr,"e.g. make_coupler -b 8 1.23 0.7 1   small.bmp   (small bitmap produced)\n");
+  fprintf(stderr,"e.g. make_coupler -v 12 1.23 0.7 1   theory.bmp  (prints info to stderr)\n");
   fprintf(stderr,"\nThe default bitmap size b is %d. File sizes will be between 2^(b-1) and 2^(b+1)\n",DEFAULT_COUPLER_BITMAP_SIZE);
-  fprintf(stderr,"WARNING - bitmap is written to standard output and *MUST* be redirected to \na file - see above examples.\n");
 }
