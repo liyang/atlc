@@ -28,10 +28,6 @@ groundplanes of spacing h. */
 
 #include "definitions.h"
 
-#ifdef HAVE_STDLIB_H
-#include <stdlib.h>
-#endif
-
 #ifdef HAVE_GSL_GSL_SF_ELLINT_H
 #include <gsl/gsl_sf_ellint.h>
 #endif
