@@ -11,10 +11,10 @@ for more complete information. So far, I've not managed to install the
 html files into /usr/local, so you will have to look into the
 atlc-X.Y.Z/docs/html-docs directory for them. 
 .SH DESCRIPTION
-\fBcreate_bmp_for_rect_in_rect\fR is a pre-processor for \fBatlc\fR, the finite difference programme that is used to calculate the 
+\fBcreate_bmp_for_rect_in_rect\fR is a pre-processor for \fBatlc\fR, the finite difference program that is used to calculate the 
 properties of a two and three conductor electrical transmission line of arbitrary 
-cross section. The programme \fBcreate_bmp_for_rect_in_rect\fR is used as a fast way of
-generating bitmaps (there is no need to use a graphics programme), for a rectangular conductor inside a rectangular conductor, with two dieletrics, like this:
+cross section. The program \fBcreate_bmp_for_rect_in_rect\fR is used as a fast way of
+generating bitmaps (there is no need to use a graphics program), for a rectangular conductor inside a rectangular conductor, with two dieletrics, like this:
 .P
 -----------------------------------------------------  ^
 .br
@@ -80,7 +80,7 @@ will be set according to the colours defined in COLOURS below. If Er1
 is not one of those permittivities, the region of permittivity Er1
 will be set to the colour 0xCAFF00. If Er2 is not one of those values,
 then the region of the image will be set to the colour 0xAC82AC. The
-programme \fBatlc\fR does not know what these permittivites are, so they
+program \fBatlc\fR does not know what these permittivites are, so they
 \fBatlc\fR, must be told with the comand line option -d, as in example 4
 below.
 .P
@@ -126,9 +126,9 @@ Brown       = 255,000,255 or 0xff00ff
 .br
 gray        = 142,142,142 or 0x8e8e8e
 .PP
-Some colours, such as pink, turquiose, sandy, brown, gray etc may mean slightly
+Some colours, such as pink, turquoise, sandy, brown, gray etc may mean slightly
 different things to different people. This is not so with \fBatlc\fR, as the 
-programme expects the colours below to be EXACTLY defined as given. Whether 
+program expects the colours below to be EXACTLY defined as given. Whether 
 you feel the colour is sandy or yellow is up to you, but if you use it in 
 your bitmap, then it either needs to be a colour recognised by atlc, \fBor\fR
 you must define it with a command line option (see OPTIONS and example 5
@@ -142,7 +142,7 @@ blue   = 000,000,000 or 0x0000FF is the negative conductor
 .PP
 All bitmaps \fBmust\fR have the live (red) and grounded (green) conductor. The blue
 conductor is not currently supported, but it will be used to indicate a 
-negative conductor, which will be needed if/when the programme gets extended 
+negative conductor, which will be needed if/when the program gets extended 
 to analyse directional couplers. 
 .PP
 The following dielectrics are recognised by \fRatlc\fB and so are
@@ -165,7 +165,7 @@ sandy     239,203,027 or 0xEFCC1A as Er=3.3    (PVC)
 .br
 brown     188,127,096 or 0xBC7F60 as Er=3.335  (epoxy resin)
 .br
-Terquoise 026,239,179 or 0x1AEFB3 as Er=4.8    (glass PCB)
+Turquoise 026,239,179 or 0x1AEFB3 as Er=4.8    (glass PCB)
 .br
 Dark gray 142,142,142 or 0x696969 as Er=6.15   (duroid 6006)
 .br

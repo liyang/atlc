@@ -1,16 +1,16 @@
 .TH create_bmp_for_stripline_coupler 1 "atlc-4.1.0 11/12/02" "Dr. David Kirkby"
 .ds n 5
 .SH NAME
-\fBcreate_bmp_for_stripline_coupler\fR - bitmap generator for coupler with thin striplines between two infinitly wide groundplanes (part of \fBatlc\fR)
+\fBcreate_bmp_for_stripline_coupler\fR - bitmap generator for coupler with thin striplines between two infinitely wide groundplanes (part of \fBatlc\fR)
 .SH SYNOPSIS
 \fBcreate_bmp_for_stripline_coupler [-C] [-b bitmapsize] [-v] H w s Er outputfile\fR
 .br
 .SH DESCRIPTION
 \fBcreate_bmp_for_stripline_coupler\fR is a pre-processor for \fBatlc\fR, the finite difference 
-programme that is used to calculate the 
+program that is used to calculate the 
 properties of a two and three conductor electrical transmission lines of arbitrary 
-cross section. The programme \fBcreate_bmp_for_stripline_coupler\fR is used as a fast way of
-generating bitmaps (there is no need to use a graphics programme), for a
+cross section. The program \fBcreate_bmp_for_stripline_coupler\fR is used as a fast way of
+generating bitmaps (there is no need to use a graphics program), for a
 pair of 1 pixel thick conductors of width w, spaced a distance s apart, 
 inside a pair of
 groundplanes of  separation H. This has an exact analytical
@@ -45,7 +45,7 @@ b) create_bmp_for_stripline_coupler was linked against the gsl library at http:/
 .br
 
 The overall width W is calculated internally to be large enough that
-making it any larger will have negligable effect on the results.
+making it any larger will have negligible effect on the results.
 The dielectric is assumed that of vacuum.
 .PP 
 .br
@@ -70,7 +70,7 @@ compute.
 .PP
 \fB-v \fR
 .br
-Print some extra data to stdout on the theoetical impedance of the
+Print some extra data to stdout on the theoretical impedance of the
 structure. This is useful to compare with the numerical result from
 \fBatlc\fR
 .SH EXAMPLES
@@ -146,6 +146,6 @@ GNU General Public License for more details.
 .p
 You should have received a copy of the GNU General Public License (in
 the file COPYING) along with this program. You may get a full copy of it
-by running the programme with the -C option. Otherwise you can write to the 
+by running the program with the -C option. Otherwise you can write to the 
 Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, 
 MA  02111-1307, USA.

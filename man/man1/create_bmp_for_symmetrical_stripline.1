@@ -1,10 +1,10 @@
-.TH create_bmp_for_symmetical_stripline 1 "atlc-3.0.1 29/3/02" "Dr. David Kirkby"
+.TH create_bmp_for_symmetrical_stripline 1 "atlc-3.0.1 29/3/02" "Dr. David Kirkby"
 .ds n 5
 .SH NAME
-\fBcreate_bmp_for_symmetical_stripline\fR - bitmap generator for thin conductor betwen two
+\fBcreate_bmp_for_symmetrical_stripline\fR - bitmap generator for thin conductor between two
 infinite groundplanes (part of \fBatlc\fR)
 .SH SYNOPSIS
-\fBcreate_bmp_for_symmetical_stripline  W H w bitmapfile\fR
+\fBcreate_bmp_for_symmetrical_stripline  W H w bitmapfile\fR
 .br
 .SH WARNING
 This man page is not a complete set of documentation. See the html files
@@ -12,15 +12,15 @@ for more complete information. So far, I've not managed to install the
 html files into /usr/local, so you will have to look into the
 atlc-X.Y.Z/docs/html-docs directory for them. 
 .SH DESCRIPTION
-\fBcreate_bmp_for_symmetical_stripline\fR is a pre-processor for \fBatlc\fR, the finite difference 
-programme that is used to calculate the 
+\fBcreate_bmp_for_symmetrical_stripline\fR is a pre-processor for \fBatlc\fR, the finite difference 
+program that is used to calculate the 
 properties of a two-conductor electrical transmission line of arbitrary 
-cross section. The programme \fBcreate_bmp_for_symmetical_stripline\fR is used as a fast way of
-generating bitmaps (there is no need to use a graphics programme), for a
+cross section. The program \fBcreate_bmp_for_symmetrical_stripline\fR is used as a fast way of
+generating bitmaps (there is no need to use a graphics program), for a
 1 pixel thick conductor of width w, centrally located inside a pair of
 groundplanes of width W and separation H. This has an exact analytical
 answer, when the inner is infinitely thin and the width W is infinitely
-wide. This theoretical impedance is also calculated by the create_bmp_for_symmetical_stripline. It is therefore used
+wide. This theoretical impedance is also calculated by the create_bmp_for_symmetrical_stripline. It is therefore used
 as a test of atlc. 
 .P
 -----------------------------------------------------  ^
@@ -53,11 +53,11 @@ dielectric of relative permittivity 'Er1'. The dielectrics 'Er1' and
 then 'Er1' and 'Er2' will both be 1.0 
 .PP 
 .br
-The bitmaps produced by \fBcreate_bmp_for_symmetical_stripline\fR are 24-bit bit colour bitmaps, as are required by \fBatlc\fR. Currenly create_bmp_for_symmetical_stripline only produces bitmaps with
+The bitmaps produced by \fBcreate_bmp_for_symmetrical_stripline\fR are 24-bit bit colour bitmaps, as are required by \fBatlc\fR. Currently create_bmp_for_symmetrical_stripline only produces bitmaps with
 white (vacuum) dielectrics. 
 
 .SH OPTIONS
-There are no options for create_bmp_for_symmetical_stripline.
+There are no options for create_bmp_for_symmetrical_stripline.
 .P
 .SH SEE ALSO
 atlc(1)
