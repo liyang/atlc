@@ -43,46 +43,51 @@ Out[10]= {{vij ->
 #include <math.h>
 #include "definitions.h"
 
+/* This updates the rows (i) of the array Vij for all i between
+starti and end i inclusive. It should be possible to modify it to
+do the same but to read from one array and write to another */
+
 extern int width, height, dielectrics_to_consider_just_now;
 extern double r, **Er, **Vij;
 extern int **cell_type;
-void update_voltage_array(int i)
-{
-  int j, type;
-  double a, b, c, d, e, f, g, h;
-  for(j=1; j<height-1; ++j)
-  {
-    type = cell_type[i][j];
-    if(type >=DIELECTRIC) /*only update dielectrics, not conductors*/
-    {
-      if(type == DIELECTRIC)
-        Vij[i][j]=r*(Vij[i][j+1]+Vij[i+1][j]+Vij[i][j-1]+Vij[i-1][j])/4.0+(1-r)*Vij[i][j];
-      //else  if (type == DIFFERENT_DIELECTRIC_NEARBY || type==METAL_NEARBY)
-      else  
-      {
-        a=(Er[i][j] * Er[i][j-1] * Vij[i][j-1])/(Er[i][j] + Er[i][j-1]);
-        b=(Er[i][j] * Er[i][j+1] * Vij[i][j+1])/(Er[i][j] + Er[i][j+1]);
-        c=(Er[i][j] * Er[i-1][j] * Vij[i-1][j])/(Er[i][j] + Er[i-1][j]);
-        d=(Er[i][j] * Er[i+1][j] * Vij[i+1][j])/(Er[i][j] + Er[i+1][j]);
-     
-        e=(Er[i][j] * Er[i][j-1])/(Er[i][j]+Er[i][j-1]);
-        f=(Er[i][j] * Er[i][j+1])/(Er[i][j]+Er[i][j+1]);
-        g=(Er[i][j] * Er[i-1][j])/(Er[i][j]+Er[i-1][j]);
-        h=(Er[i][j] * Er[i+1][j])/(Er[i][j]+Er[i+1][j]);
-                        
-        Vij[i][j]=r*(a+b+c+d)/(e+f+g+h) + (1-r)*Vij[i][j];
-      }
-      /* the following few lines calculate the voltages at the edges.
-      They are not accurate, but better than no calculation at all */
 
-      if(i==1 && cell_type[0][j]>=0)
-	Vij[0][j]=(Vij[0][j+1]+Vij[0][j-1])/2.0; //ok
-      if(i==width-2 && cell_type[width-1][j] >= DIELECTRIC)
-	Vij[width-1][j]=(Vij[width-1][j+1]+Vij[width-1][j-1])/2.0;
-      if(j==1 && cell_type[i][0]>=0)
-	Vij[i][0]=(Vij[i][j-1]+Vij[i][j+1])/2.0;
-      if(j==height-2 && cell_type[i][width-1]>=DIELECTRIC)
-	Vij[i][height-1]=(Vij[i][j-1]+Vij[i][j+1])/2.0;
+void update_voltage_array(int start_row, int end_row)
+{
+  int i, j, type;
+  double a, b, c, d, e, f, g, h;
+  start_row=0; end_row=width-2;
+  for(i= start_row; i <end_row; ++i){
+    for(j=1; j<height-1; ++j) {
+      type = cell_type[i][j];
+      if(type >=DIELECTRIC) { /*only update dielectrics, not conductors*/
+        if(type == DIELECTRIC && i > 0 && j > 0 && i < width-1 && j < width-1)
+          Vij[i][j]=r*(Vij[i][j+1]+Vij[i+1][j]+Vij[i][j-1]+Vij[i-1][j])/4.0+(1-r)*Vij[i][j];
+        else if( i > 0 && j > 0 && i < width-1 && j < width-1 ) {
+          a=(Er[i][j] * Er[i][j-1] * Vij[i][j-1])/(Er[i][j] + Er[i][j-1]);
+          b=(Er[i][j] * Er[i][j+1] * Vij[i][j+1])/(Er[i][j] + Er[i][j+1]);
+          c=(Er[i][j] * Er[i-1][j] * Vij[i-1][j])/(Er[i][j] + Er[i-1][j]);
+          d=(Er[i][j] * Er[i+1][j] * Vij[i+1][j])/(Er[i][j] + Er[i+1][j]);
+     
+          e=(Er[i][j] * Er[i][j-1])/(Er[i][j]+Er[i][j-1]);
+          f=(Er[i][j] * Er[i][j+1])/(Er[i][j]+Er[i][j+1]);
+          g=(Er[i][j] * Er[i-1][j])/(Er[i][j]+Er[i-1][j]);
+          h=(Er[i][j] * Er[i+1][j])/(Er[i][j]+Er[i+1][j]);
+                        
+          Vij[i][j]=r*(a+b+c+d)/(e+f+g+h) + (1-r)*Vij[i][j];
+        }
+        /* the following few lines calculate the voltages at the edges.
+        They are not accurate, but better than no calculation at all 
+
+        if(i==1 && cell_type[0][j]>=0)
+          Vij[0][j]=(Vij[0][j+1]+Vij[0][j-1])/2.0; 
+        if(i==width-2 && cell_type[width-1][j] >= DIELECTRIC)
+          Vij[width-1][j]=(Vij[width-1][j+1]+Vij[width-1][j-1])/2.0;
+        if(j==1 && cell_type[i][0]>=0)
+          Vij[i][0]=(Vij[i][j-1]+Vij[i][j+1])/2.0;
+        if(j==height-2 && cell_type[i][width-1]>=DIELECTRIC)
+          Vij[i][height-1]=(Vij[i][j-1]+Vij[i][j+1])/2.0; */
+
+      }
     }
   }
 }
