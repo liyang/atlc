@@ -1,4 +1,27 @@
-******Chnages to unrelesed 5.0.0 ********
+****** Version 4.2.11 Released 30/3/2003  ********
+Many many changes!! Not all are documented!
+Started to the use autoconf macro acx_pthread.m4 to configure POSIx
+threads properly. 
+
+Implemented an md5 checksum program for testing checksums, as this is
+very accurate. The one I was using (a hacked 'sum' command) is not that
+good and so could miss a change in a file quite easily. 
+
+Spent a lot of time on the test routines. These now always pass and
+will work with a VPATH build too. 'make discheck' works fine now.  
+
+Removed several bugs from the function 'do_fd_calculation' so it now
+does not cause any floating point exceptions cc is configured to not
+implement the IEEE standard. 
+
+Put new algorithms for finding the electric field into find_electric_fields.c,
+but they seem less accurate than the old versions, so these are not used for 
+now at least. 
+
+Change from 'char *foo' to 'const char *foo' in many files, as this
+keeps Sun's compiler a bit happier. Note the Sun compiler (Sun WorkShop
+6 update 2 C 5.3 2001/05/15) still moans about a lot of things that gcc
+thinks is fine. 
 
 Added the following files that were ommited when put into CVS
 
@@ -11,6 +34,7 @@ src/non_gui/Makefile.am
 removed a double entry for the header file definitions.h
 in create_bmp_for_stripline_coupler_SOURCES.
 Added a new binary create_bmp_for_rect_cen_in_rect_coupler
+
 
 Makefile.am 
 Remmoved entry for README.alpha. It's contents were out of date but we might 
@@ -46,6 +70,9 @@ find_optimal_dimensions_for_microstrip_coupler.1
 readbin.1
 
 src/non_gui
+usage_create_bmp_for_symmetrical_stripline.c
+corrected a simple spelling error
+
 renamed error_and_exit() to exit_with_msg_and_error_code()
 and are in the process of changing every command to exit
 with that, rather than with exit().     
