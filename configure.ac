@@ -13,7 +13,7 @@
 # checks for system services
 # AC_OUTPUT([file...])
 
-AC_INIT([atlc], [4.3.0], [drkirkby@ntlworld.com])
+AC_INIT([atlc], [4.3.1], [drkirkby@ntlworld.com])
 AM_INIT_AUTOMAKE
 AC_PREREQ([2.57])
 AC_CONFIG_SRCDIR([tools/src/myfilelength.c])
@@ -25,7 +25,7 @@ AC_CONFIG_SRCDIR([tools/src/myfilelength.c])
 
 
 # Checks for programs.
-AC_PROG_CXX # Test for C++ compiler characteristics
+#AC_PROG_CXX # Test for C++ compiler characteristics
 AC_ISC_POSIX
 
 # AC_OUTPUT_COMMANDS([exit])
@@ -35,11 +35,13 @@ AC_ISC_POSIX
 # AC_CHECK_LIB([mopt],[main])
 # check for the optimised
 # AC_CHECK_LIB([copt],[main])
-AC_CHECK_LIB(m,log)
+#AC_CHECK_LIB(m,log)
 
 # Checks for header files.
 
-AC_CHECK_HEADERS([stdio.h math.h malloc.h stdlib.h string.h strings.h])
+AC_CHECK_HEADERS([stdio.h math.h malloc.h stdlib.h string.h time.h ])
+AC_CHECK_HEADERS([strings.h sys/types.h machine/hal_sysinfo.h sys/sysinfo.h ])
+AC_CHECK_HEADERS([sys/processor.h sched.h ])
 
 # Checks for typedefs
 AC_HEADER_STDBOOL
@@ -55,10 +57,8 @@ AC_CHECK_SIZEOF([long])
 AC_CHECK_SIZEOF([size_t])
 
 # checks for library functions
-AC_FUNC_MALLOC
-AC_FUNC_MEMCMP
 AC_FUNC_STRTOD
-AC_CHECK_FUNCS([memset strchr strtol])
+AC_CHECK_FUNCS([memset strchr strtol processor_info getsysinfo pthread_num_processors_np ])
 #AC_CHECK_FUNCS([memset pow sqrt strchr strtol])
 
 # checks for system services
@@ -95,17 +95,18 @@ AC_ARG_WITH([gsl],
      AC_HELP_STRING([--with-gsl], [use gsl library (default is YES)]),
      [ac_cv_use_gsl=$withval], [ac_cv_use_gsl=yes])
 
+AC_SUBST(no_gsl,"yes")
 # If the user has not chosen to disable gsl support, then check for 
 # gsl support and see that it exists. 
 # Check for the gsl library, using gsl.m4, supplied with gsl-1.3
 if test "$ac_cv_use_gsl" = "yes"; then
   AM_PATH_GSL([0.8])
   # no_gsl gets defined in gsl.m4 if version is too old. 
-  if test "$no_gsl" != "yes" ; then
+  if test "x$no_gsl" != "xyes" ; then
     AC_DEFINE( [HAVE_LIBGSL],[1],[gsl library found])
-    LIBS="$GSL_LIBS $LIBS"
-    CFLAGS="$GSL_CFLAGS $CFLAGS"
-  fi  
+    #LIBS="$GSL_LIBS $LIBS"
+    #CFLAGS="$GSL_CFLAGS $CFLAGS"
+  fi
 fi
 
 # Put a usage message so the user can use threads if wanted. 
@@ -119,9 +120,8 @@ if test "x$with_threads" = "xyes"; then
   LIBS="$PTHREAD_LIBS $LIBS"
   CFLAGS="$CFLAGS $PTHREAD_CFLAGS"
   CC="$PTHREAD_CC"
-  AC_SUBST(foo,"yes")
   # if possible for a number of threads to run at once. 
-  AC_CHECK_FUNC([pthread_setconcurrency])
+  AC_CHECK_FUNC([pthread_setconcurrency],AC_DEFINE([HAVE_PTHREAD_SETCONCURRENCY]))
   AC_SUBST(built_with_posix_threads,yes)
 fi
 
@@ -150,6 +150,14 @@ AC_ARG_WITH(mpe, AC_HELP_STRING([--with-mpe=[mpi_install_prefix]],[implies --wit
   #fi
 fi
 
+#if test "x$with_mpi" != "x"  || test "x$with_mpe" != "x"; then
+# If there is no gsl, no mpe and no mpi, then we must have -lm
+#if test  "x$with_mpi"  = "x"  && test "x$with_mpe"  = "x" && test "x$no_gsl" = "xyes" ; then
+
+if test "x$no_gsl" = "xyes" ; then
+  LIBS="$LIBS -lm"
+fi
+
 dnl Only use -Wall if we have gcc
 if test "x$GCC" = "xyes"; then
   if test -z "`echo "$CFLAGS" | grep "\-Wall" 2> /dev/null`" ; then
@@ -160,9 +168,8 @@ fi
 AC_OUTPUT([\
 Makefile                                        \
 src/Makefile                                    \
-m4/Makefile                                     \
 src/non_gui/Makefile                            \
-src/gui/Makefile                                \
+m4/Makefile                                     \
 man/Makefile                                    \
 man/man1/Makefile                               \
 examples/Makefile                               \
