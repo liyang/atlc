@@ -33,3 +33,6 @@ readbin.1.html \
 todo.html \
 tutorial.html \
 usage_design_coupler.html 
+
+CLEANFILES =
+DISTCLEANFILES =
