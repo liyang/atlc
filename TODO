@@ -4,15 +4,11 @@ Here is a list of the ways I would like to expand atlc, in a rough order of time
 
   1.Determine the processor type a bit more senisbly in the 
     benchmark called by 'make check'. At present this is likely
-    to return unknown' or a meaningless number. It only works on
-    SPARC. 
+    to return unknown' or a meaningless number on most platforms.
+    It works pretty well on Solaris, Tru64 and HP-UX, but does
+    not work on Linux, AIX, IRIX etc. 
 
-  2.Gather data on CPU type, CPU type, RAM, number of CPUs,#
-    Number of CPUs supported ... etc on a wider range of 
-    platforms. Currently this works on SPARC, most of it
-    on Tru64, but not much else. 
-
-  3.Implement a better way of enabling a user to change the 
+  2.Implement a better way of enabling a user to change the 
     contrast/brightness in an image. Current, this can
     only be done with the '-f option to atlc, but this 
     requires a re-run of atlc to do this, which is hardly
@@ -22,13 +18,13 @@ Here is a list of the ways I would like to expand atlc, in a rough order of time
     example.V.bin and example.Er.bin)..
 
 
-   4.Get the program 'generate_bmp_for_rect_in_circ' working.
+   3.Get the program 'generate_bmp_for_rect_in_circ' working.
 
-   5 Get a decent GUI. 
+   4 Get a decent GUI. 
 
 If anyone has any suggestions for how to improve atlc, please email me. 
 
 atlc is written and supported by Dr. David Kirkby (G8WRB). It it issued under 
 the GNU General Public License
 
-Dr. David Kirkby,  19th July 2003. 
+Dr. David Kirkby,  26th July 2003. 
