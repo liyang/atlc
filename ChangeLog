@@ -48,6 +48,25 @@ L1 data cache         unknown kb
 L1 instruction cache: unknown kb
 L2 cache:             unknown kb
 
+src/non_gui/finite_difference_multi_threaded.c 
+removed the argument 'number_of_iterations' as not used
+
+src/non_gui/write_bitmap_out.c
+added checks for the return value of fwrite
+
+src/non_gui/write_fields_for_two_conductor_lines.c
+added checks for the return value of fwrite
+
+src/non_gui/memory.c
+removed all unneeded functions from this file
+
+src/non_gui/convert_create_bmp_for_rect_in_rect_dimensions_to_integers.c
+removed extern variables Ers, colours and names, as these are defined
+in the header files definitions.h, Ers.h and Erdata.h
+
+src/non_gui/man_functions...
+Tidied up, to keep Sun's lint happier
+
 ****** Version 4.4.0 Released August 30th 2003 ****
 BUGS 
 Added  0 - those I don't know about, 
@@ -132,7 +151,6 @@ anyway).
 tests/7g-create_bmp_for_stripline_coupler.U.odd.bmp.test
 Added a new checksum 09f68e1466d68bf8a03e1f90eff411bb which
 is produced on a Cray. 
-
 
 src/non_gui/write_bitmap_out.c
 MAJOR change, so this now writes data out in ONE consistant manner
