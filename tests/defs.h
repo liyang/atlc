@@ -29,3 +29,4 @@ int try_solaris(struct computer_data *data);
 int try_hpux(struct computer_data *data);
 int try_tru64(struct computer_data *data);
 int try_aix(struct computer_data *data);
+int try_linux(struct computer_data *data);
