@@ -185,32 +185,32 @@ void write_fields_for_two_conductor_lines(char * filename, struct transmission_l
     if( fwrite((void *) &(image_data_Ex[0]),size, 1, Ex_bmp_fp) != 1)
       exit_with_msg_and_exit_code("Error#7: Failed to write bitmap file in write_fields_for_two_conductor_lines.c",WRITE_FAILURE);
     if( fclose(Ex_bmp_fp) != 0)
-      exit_with_msg_and_exit_code("Error#8: Unable to close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
+      exit_with_msg_and_exit_code("Error#8: Unable to close file in write_fields_for_two_conductor_lines.c",CANT_CLOSE_FILE);
 
     if( fwrite((void *) &(image_data_Ey[0]),size, 1, Ey_bmp_fp) != 1)
       exit_with_msg_and_exit_code("Error#9: Failed to write bitmap file in write_fields_for_two_conductor_lines.c",WRITE_FAILURE);
     if( fclose(Ey_bmp_fp) != 0)
-      exit_with_msg_and_exit_code("Error#10: Unable to close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
+      exit_with_msg_and_exit_code("Error#10: Unable to close file in write_fields_for_two_conductor_lines.c",CANT_CLOSE_FILE);
 
     if( fwrite((void *) &(image_data_E[0]),size, 1, E_bmp_fp) != 1)
       exit_with_msg_and_exit_code("Error#11: Failed to write bitmap file in write_fields_for_two_conductor_lines.c",WRITE_FAILURE);
     if( fclose(E_bmp_fp) != 0)
-      exit_with_msg_and_exit_code("Error#12: Unable to close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
+      exit_with_msg_and_exit_code("Error#12: Unable to close file in write_fields_for_two_conductor_lines.c",CANT_CLOSE_FILE);
 
     if( fwrite((void *) &(image_data_U[0]),size, 1, U_bmp_fp) != 1)
       exit_with_msg_and_exit_code("Error#13: Failed to write bitmap file in write_fields_for_two_conductor_lines.c",WRITE_FAILURE);
     if( fclose(U_bmp_fp) != 0)
-      exit_with_msg_and_exit_code("Error#14: Unable to close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
+      exit_with_msg_and_exit_code("Error#14: Unable to close file in write_fields_for_two_conductor_lines.c",CANT_CLOSE_FILE);
 
     if( fwrite((void *) &(image_data_V[0]),size, 1, V_bmp_fp) != 1)
       exit_with_msg_and_exit_code("Error#15: Failed to write bitmap file in write_fields_for_two_conductor_lines.c",WRITE_FAILURE);
     if( fclose(V_bmp_fp) != 0)
-      exit_with_msg_and_exit_code("Error#16: Unable to close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
+      exit_with_msg_and_exit_code("Error#16: Unable to close file in write_fields_for_two_conductor_lines.c",CANT_CLOSE_FILE);
 
     if( fwrite((void *) &(image_data_Er[0]),size, 1, permittivity_bmp_fp) != 1)
       exit_with_msg_and_exit_code("Error#17: Failed to write bitmap file in write_fields_for_two_conductor_lines.c",WRITE_FAILURE);
     if( fclose(permittivity_bmp_fp) != 0)
-      exit_with_msg_and_exit_code("Error#18: Unable to close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
+      exit_with_msg_and_exit_code("Error#18: Unable to close file in write_fields_for_two_conductor_lines.c",CANT_CLOSE_FILE);
 
     free_ustring(image_data_Ex,0L,(long)size);
     free_ustring(image_data_Ey,0L,(long)size);

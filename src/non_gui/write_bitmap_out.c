@@ -87,82 +87,92 @@ void write_bitmap_out(unsigned char *byte_aligned_image_data, FILE *image_data_f
    Bitmap_Head.biClrUsed=0;
    Bitmap_Head.biClrImp=0;
 
-   buff[0x00] = Bitmap_File_Head.zzMagic[0];
-   buff[0x01] = Bitmap_File_Head.zzMagic[1];
+   buff[0x00] = (unsigned char) (Bitmap_File_Head.zzMagic[0]);
+   buff[0x01] = (unsigned char) (Bitmap_File_Head.zzMagic[1]);
+/*
+   buff[0x02] = Bitmap_File_Head.bfSize);
+   buff[0x03] = Bitmap_File_Head.bfSize >> 8);
+   buff[0x04] = Bitmap_File_Head.bfSize >> 16);
+   buff[0x05] = Bitmap_File_Head.bfSize >> 24);
+   */
 
-   buff[0x02] = Bitmap_File_Head.bfSize;
-   buff[0x03] = Bitmap_File_Head.bfSize >> 8;
-   buff[0x04] = Bitmap_File_Head.bfSize >> 16;
-   buff[0x05] = Bitmap_File_Head.bfSize >> 24;
+   buff[0x02] =  (unsigned char) (Bitmap_File_Head.bfSize);
+   buff[0x03] =  (unsigned char) (Bitmap_File_Head.bfSize >> 8);
+   buff[0x04] =  (unsigned char) (Bitmap_File_Head.bfSize >> 16);
+   buff[0x05] =  (unsigned char) (Bitmap_File_Head.bfSize >> 24);
 
-   buff[0x06] = Bitmap_File_Head.zzHotX;
-   buff[0x07] = Bitmap_File_Head.zzHotX >> 8;
 
-   buff[0x08] = Bitmap_File_Head.zzHotY;
-   buff[0x09] = Bitmap_File_Head.zzHotY >> 8;
+   buff[0x06] = (unsigned char) (Bitmap_File_Head.zzHotX);
+   buff[0x07] = (unsigned char) (Bitmap_File_Head.zzHotX >> 8);
 
-   buff[0x0a] = Bitmap_File_Head.bfOffs;
-   buff[0x0b] = Bitmap_File_Head.bfOffs>> 8;
-   buff[0x0c] = Bitmap_File_Head.bfOffs>> 16;
-   buff[0x0d] = Bitmap_File_Head.bfOffs>> 24;
+   buff[0x08] = (unsigned char) (Bitmap_File_Head.zzHotY);
+   buff[0x09] = (unsigned char) (Bitmap_File_Head.zzHotY >> 8);
 
-   buff[0x0e] = Bitmap_File_Head.biSize;
-   buff[0x0f] = Bitmap_File_Head.biSize>> 8;
-   buff[0x10] = Bitmap_File_Head.biSize>> 16;
-   buff[0x11] = Bitmap_File_Head.biSize>> 24;
+   buff[0x0a] = (unsigned char) (Bitmap_File_Head.bfOffs);
+   buff[0x0b] = (unsigned char) (Bitmap_File_Head.bfOffs>> 8);
+   buff[0x0c] = (unsigned char) (Bitmap_File_Head.bfOffs>> 16);
+   buff[0x0d] = (unsigned char) (Bitmap_File_Head.bfOffs>> 24);
+
+   buff[0x0e] = (unsigned char) (Bitmap_File_Head.biSize);
+   buff[0x0f] = (unsigned char) (Bitmap_File_Head.biSize>> 8);
+   buff[0x10] = (unsigned char) (Bitmap_File_Head.biSize>> 16);
+   buff[0x11] = (unsigned char) (Bitmap_File_Head.biSize>> 24);
 
    /* Write contents of Bitmap_Head_Struct */
 
-   buff[0x12] = Bitmap_Head.biWidth;
-   buff[0x13] = Bitmap_Head.biWidth>> 8;
-   buff[0x14] = Bitmap_Head.biWidth>> 16;
-   buff[0x15] = Bitmap_Head.biWidth>> 24;
+   buff[0x12] = (unsigned char) (Bitmap_Head.biWidth);
+   buff[0x13] = (unsigned char) (Bitmap_Head.biWidth>> 8);
+   buff[0x14] = (unsigned char) (Bitmap_Head.biWidth>> 16);
+   buff[0x15] = (unsigned char) (Bitmap_Head.biWidth>> 24);
 
-   buff[0x16] = Bitmap_Head.biHeight;
-   buff[0x17] = Bitmap_Head.biHeight>> 8;
-   buff[0x18] = Bitmap_Head.biHeight>> 16;
-   buff[0x19] = Bitmap_Head.biHeight>> 24;
+   buff[0x16] = (unsigned char) (Bitmap_Head.biHeight);
+   buff[0x17] = (unsigned char) (Bitmap_Head.biHeight>> 8);
+   buff[0x18] = (unsigned char) (Bitmap_Head.biHeight>> 16);
+   buff[0x19] = (unsigned char) (Bitmap_Head.biHeight>> 24);
 
-   buff[0x1a] = Bitmap_Head.biPlanes;
-   buff[0x1b] = Bitmap_Head.biPlanes>> 8;
+   buff[0x1a] = (unsigned char) (Bitmap_Head.biPlanes);
+   buff[0x1b] = (unsigned char) (Bitmap_Head.biPlanes>> 8);
 
-   buff[0x1c] = Bitmap_Head.biBitCnt;
-   buff[0x1d] = Bitmap_Head.biBitCnt>> 8;
+   buff[0x1c] = (unsigned char) (Bitmap_Head.biBitCnt);
+   buff[0x1d] = (unsigned char) (Bitmap_Head.biBitCnt>> 8);
 
-   buff[0x1e] = Bitmap_Head.biCompr;
-   buff[0x1f] = Bitmap_Head.biCompr>> 8;
-   buff[0x20] = Bitmap_Head.biCompr>> 16;
-   buff[0x21] = Bitmap_Head.biCompr>> 24;
+   buff[0x1e] = (unsigned char) (Bitmap_Head.biCompr);
+   buff[0x1f] = (unsigned char) (Bitmap_Head.biCompr>> 8);
+   buff[0x20] = (unsigned char) (Bitmap_Head.biCompr>> 16);
+   buff[0x21] = (unsigned char) (Bitmap_Head.biCompr>> 24);
 
-   buff[0x22] = Bitmap_Head.biSizeIm;
-   buff[0x23] = Bitmap_Head.biSizeIm>> 8;
-   buff[0x24] = Bitmap_Head.biSizeIm>> 16;
-   buff[0x25] = Bitmap_Head.biSizeIm>> 24;
+   buff[0x22] = (unsigned char) (Bitmap_Head.biSizeIm);
+   buff[0x23] = (unsigned char) (Bitmap_Head.biSizeIm>> 8);
+   buff[0x24] = (unsigned char) (Bitmap_Head.biSizeIm>> 16);
+   buff[0x25] = (unsigned char) (Bitmap_Head.biSizeIm>> 24);
 
-   buff[0x26] = Bitmap_Head.biXPels;
-   buff[0x27] = Bitmap_Head.biXPels>> 8;
-   buff[0x28] = Bitmap_Head.biXPels>> 16;
-   buff[0x29] = Bitmap_Head.biXPels>> 24;
+   buff[0x26] = (unsigned char) (Bitmap_Head.biXPels);
+   buff[0x27] = (unsigned char) (Bitmap_Head.biXPels>> 8);
+   buff[0x28] = (unsigned char) (Bitmap_Head.biXPels>> 16);
+   buff[0x29] = (unsigned char) (Bitmap_Head.biXPels>> 24);
 
-   buff[0x2a] = Bitmap_Head.biYPels;
-   buff[0x2b] = Bitmap_Head.biYPels>> 8;
-   buff[0x2c] = Bitmap_Head.biYPels>> 16;
-   buff[0x2d] = Bitmap_Head.biYPels>> 24;
+   buff[0x2a] = (unsigned char) (Bitmap_Head.biYPels);
+   buff[0x2b] = (unsigned char) (Bitmap_Head.biYPels>> 8);
+   buff[0x2c] = (unsigned char) (Bitmap_Head.biYPels>> 16);
+   buff[0x2d] = (unsigned char) (Bitmap_Head.biYPels>> 24);
 
-   buff[0x2e] = Bitmap_Head.biClrUsed;
-   buff[0x2f] = Bitmap_Head.biClrUsed>> 8;
-   buff[0x30] = Bitmap_Head.biClrUsed>> 16;
-   buff[0x31] = Bitmap_Head.biClrUsed>> 24;
+   buff[0x2e] = (unsigned char) (Bitmap_Head.biClrUsed);
+   buff[0x2f] = (unsigned char) (Bitmap_Head.biClrUsed>> 8);
+   buff[0x30] = (unsigned char) (Bitmap_Head.biClrUsed>> 16);
+   buff[0x31] = (unsigned char) (Bitmap_Head.biClrUsed>> 24);
 
-   buff[0x32] = Bitmap_Head.biClrImp;
-   buff[0x33] = Bitmap_Head.biClrImp>> 8;
-   buff[0x34] = Bitmap_Head.biClrImp>> 16;
-   buff[0x35] = Bitmap_Head.biClrImp>> 24;
+   buff[0x32] = (unsigned char) (Bitmap_Head.biClrImp);
+   buff[0x33] = (unsigned char) (Bitmap_Head.biClrImp>> 8);
+   buff[0x34] = (unsigned char) (Bitmap_Head.biClrImp>> 16);
+   buff[0x35] = (unsigned char) (Bitmap_Head.biClrImp>> 24);
 
-   fwrite((void *) buff, 0x36, 1, image_data_fp);
+   if( fwrite((void *) buff, 0x36, 1, image_data_fp) != 1)
+    exit_with_msg_and_exit_code("Error#1: Failed to write bitmap file in write_bitmap_out.c",WRITE_FAILURE);
+
 
    /* Now the reader is written, finally write the image */
-   fwrite(byte_aligned_image_data,(size_t) sizeof_image,1,image_data_fp);
+   if( fwrite(byte_aligned_image_data,(size_t) sizeof_image,1,image_data_fp) != 1)
+    exit_with_msg_and_exit_code("Error#1: Failed to write bitmap file in write_bitmap_out.c",WRITE_FAILURE);
    if( fclose(image_data_fp) != 0)
      exit_with_msg_and_exit_code("failed to close file in write_bitmap_out.c",CANT_CLOSE_FILE);
 }
