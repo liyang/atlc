@@ -28,3 +28,5 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #define CANT_OPEN_FILE_FOR_APPENDING                               3
 #define CANT_CLOSE_FILE                                            4
 #define WRITE_FAILURE                                              5
+#define THE_WIDTH_w_DIVIDED_BY_THE_HEIGHT_H_IS_TOO_LARGE           6
+#define PROGRAMME_NOT_IMPLEMENTED                                  7
