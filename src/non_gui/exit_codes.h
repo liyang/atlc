@@ -18,7 +18,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307,
 USA.
 
-Dr. David Kirkby, e-mail drkirkby@ntlworld.com 
+Dr. David Kirkby, e-mail drkirkby at ntlworld.com 
 
 */
 
@@ -111,3 +111,4 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #define CANT_READ_ALL_OF_FILE                                     86
 #define FSEEK_FAILURE                                             87
 #define FTELL_FAILURE                                             88
+#define DOMAIN_ERROR                                              89
