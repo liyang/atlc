@@ -29,7 +29,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #include "definitions.h"
 
 
-/* These items are supplied on the commmand line */
+/* These items are supplied on the command line */
 
 extern double DD, dd, hh, Er1;
 extern int D, d, h;
