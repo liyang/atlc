@@ -9,6 +9,7 @@
     compiler version 6.0 when compiled multi-threaded I've no idea of the
     source of these problems. Many pixels differ, but by a small amount. I 
     find it hard to believe this is rounding errors. 
+    1f-create_bmp_for_symmetrical_stripline.Ex.bmp.test
     6d-create_and_check_50ohm_201Pixel_high_symmetrical_stripline.test
     sometimes fails. Building multi-threaded tends to increase the 
     chances of a failure. 
