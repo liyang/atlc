@@ -24,8 +24,8 @@
 
 touch $top_builddir/tmp/test_rect_in_rect.Ex.bmp
 MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test_rect_in_rect.Ex.bmp`
-rm -f $top_builddir/tmp/test_rect_in_rect.Ex.bmp
 if [ $MD5SUM = 14d313cf645786f39b7d477772ddb0f9 ]; then
+  rm -f $top_builddir/tmp/test_rect_in_rect.Ex.bmp
   echo "PASSED:" $0 >> tests.log
   exit 0
 else

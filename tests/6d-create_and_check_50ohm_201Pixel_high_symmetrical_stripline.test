@@ -20,11 +20,6 @@ touch $top_builddir/tmp/50ohm-201h.bmp $top_builddir/tmp/50ohm-201h.Ex.bmp
 MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/50ohm-201h.bmp`
 EXMD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/50ohm-201h.Ex.bmp`
 
-rm -f $top_builddir/tmp/50ohm-201h.bmp $top_builddir/tmp/50ohm-201h.Ex.bmp
-rm -f $top_builddir/tmp/50ohm-201h.Ey.bmp $top_builddir/tmp/50ohm-201h.E.bmp
-rm -f $top_builddir/tmp/50ohm-201h.U.bmp $top_builddir/tmp/50ohm-201h.V.bmp
-rm -f $top_builddir/tmp/50ohm-201h.Er.bmp
-
 #echo "Zoth=$ZoTheory Zoatlc=$Zoatlc md5=$MD5SUM exmd5=$EXMD5SUM"
 
 if test -z "$ZoTheory"  ;  then
@@ -44,8 +39,13 @@ if test -z "$EXMD5SUM"  ; then
 fi
 
 if [ $ZoTheory = 49.989477  ] && [ $Zoatlc = 49.85 ] && [ $MD5SUM = dae5292fe04dfd64abe1ae4e926d7365 ] && [ $EXMD5SUM = 6904599f3d6ec6d7bd78bb03744d9d2e ]; then
-    echo "PASSED:" $0 >> tests.log
-    exit 0
+  rm -f $top_builddir/tmp/50ohm-201h.bmp $top_builddir/tmp/50ohm-201h.Ex.bmp
+  rm -f $top_builddir/tmp/50ohm-201h.Ey.bmp $top_builddir/tmp/50ohm-201h.E.bmp
+  rm -f $top_builddir/tmp/50ohm-201h.U.bmp $top_builddir/tmp/50ohm-201h.V.bmp
+  rm -f $top_builddir/tmp/50ohm-201h.Er.bmp
+
+  echo "PASSED:" $0 >> tests.log
+  exit 0
 else
   echo "FAILED:" $0 >> tests.log
   exit 1

@@ -6,8 +6,8 @@
 touch $top_builddir/tmp/test_sym_strip.V.bin
 
 LENGTH=`$top_builddir/tools/src/myfilelength $top_builddir/tmp/test_sym_strip.V.bin`
-rm $top_builddir/tmp/test_sym_strip.V.bin  $top_builddir/tmp/test_sym_strip.bmp
 if [ $LENGTH = 1603600 ]; then
+  rm $top_builddir/tmp/test_sym_strip.V.bin  $top_builddir/tmp/test_sym_strip.bmp
   echo "PASSED:" $0 >> tests.log
   exit 0
 else

@@ -22,12 +22,12 @@
 # program bug, so PLEASE PLEASE let me know about it!!
 
 touch $top_builddir/tmp/test_sym_strip.Er.bmp
-  MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test_sym_strip.Er.bmp`
+MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test_sym_strip.Er.bmp`
+if [ $MD5SUM = 2071f27d998092ddf771debbdb70cee0 ]; then
   rm $top_builddir/tmp/test_sym_strip.Er.bmp 
-  if [ $MD5SUM = 2071f27d998092ddf771debbdb70cee0 ]; then
-    echo "PASSED:" $0 >> tests.log
-    exit 0
-  else
-    echo "FAILED:" $0  >> tests.log
-    exit 1
-  fi
+  echo "PASSED:" $0 >> tests.log
+  exit 0
+else
+  echo "FAILED:" $0  >> tests.log
+  exit 1
+fi

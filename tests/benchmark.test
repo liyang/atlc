@@ -20,21 +20,42 @@ else
   fpu_type=`echo $ret | awk '{print $9}'`
   supported_cpus=`echo $ret | awk '{print $10}'`
   ram=`echo $ret | awk '{print $11}'`
-  echo "number of CPUs supported by system = $supported_cpus ; Number of CPUs online =  $N_cpus"
-  echo "CPU_type = $cpu_type FPU_type = $fpu_type; Speed = $mhz MHz"
-  echo "RAM = $ram Mb."
+  sysname=`echo $ret | awk '{print $12}'`
+  nodename=`echo $ret | awk '{print $13}'`
+  release=`echo $ret | awk '{print $14}'`
+  version=`echo $ret | awk '{print $15}'`
+  machine=`echo $ret | awk '{print $16}'`
+  hw_provider=`echo $ret | awk '{print $17}'`
+  hw_platform=`echo $ret | awk '{print $18}'`
+  filename=foo
+  echo " "
+  echo "   BENCHMARK DATA (hardware data currently only under Solaris)"
+  echo "Hardware provider is $hw_provider. Hardware platform is $hw_platform."
+  echo "Hardware provider is $hw_provider. Hardware platform is $hw_platform." >> tests.log
+  echo "Hardware provider is $hw_provider. Hardware platform is $hw_platform." >> benchmark.$filename.html
+  echo "<STRONG>Hardware provider is $hw_provider. Hardware platform is $hw_platform.</STRONG>" > benchmark.$filename.html
+  echo "Machine: $machine. Sysname: $sysname. Release: $release. Nodename: $nodename."
+  echo "Machine: $machine. Sysname: $sysname. Release: $release. Nodename: $nodename." >> tests.log
+  echo "<BR>Machine: $machine. Sysname: $sysname. Release: $release. Nodename: $nodename." >> benchmark.$filename.html
+  echo "Number of CPUs supported by system is $supported_cpus. Number of CPUs online is  $N_cpus."
+  echo "Number of CPUs supported by system is $supported_cpus. Number of CPUs online is  $N_cpus." >> tests.html
+  echo "<BR>Number of CPUs supported by system is $supported_cpus. Number of CPUs online is  $N_cpus." >> benchmark.$filename.dat
+  echo "CPU_type is $cpu_type. FPU_type is $fpu_type. Speed of CPU(s) is $mhz MHz."
+  echo "CPU_type is $cpu_type. FPU_type is $fpu_type. Speed of CPU(s) is $mhz MHz." >> tests.log
+  echo "<BR>CPU_type is $cpu_type. FPU_type is $fpu_type. Speed of CPU(s) is $mhz MHz." >> benchmark.$filename.html
+  echo "RAM is $ram Mb."
+  echo "RAM is $ram Mb." >> tests.log
+  echo "<BR>RAM is $ram Mb." >> benchmark.$filename.html
   if [ "x$built_with_posix_threads" = "xyes" ] ; then
-    echo "Run times: T_sequential = $t1 s; T_parallel = $t2 s"
-    echo "Speedup=T_parallel/T_sequential = $speedup; Efficiency = Speedup/N_cpus = $efficiency"
+    echo "Run times: T_sequential is $t1 s. T_parallel is $t2 s."
+    echo "Run times: T_sequential is $t1 s. T_parallel is $t2 s." >> tests.log
+    echo "<BR>Run times: T_sequential is $t1 s. T_parallel is $t2 s." >> benchmark.$filename.html
+    echo "SpeedupisT_parallel/T_sequential is $speedup. Efficiency is Speedup/N_cpus is $efficiency"
+    echo "SpeedupisT_parallel/T_sequential is $speedup. Efficiency is Speedup/N_cpus is $efficiency" >> tests.log
+    echo "<BR>SpeedupisT_parallel/T_sequential is $speedup. Efficiency is Speedup/N_cpus is $efficiency" >> benchmark.$filename.html
   else
-    echo "Run times: T_sequential = $t1 s; Not configured for parallel operation."
+    echo "Run times: T_sequential is $t1 s. Not configured for parallel operation."
+    echo "Run times: T_sequential is $t1 s. Not configured for parallel operation." >> tests.log
+    echo "<BR>Run times: T_sequential is $t1 s. Not configured for parallel operation." >> benchmark.$filename.html
   fi 
-
-  if [ "x$exitcode" = "x0" ] ; then 
-    echo "PASSED:" $0  >> tests.log
-    exit 0
-  else
-    echo "FAILED:" $0  >> tests.log
-    exit 1
-  fi
 fi

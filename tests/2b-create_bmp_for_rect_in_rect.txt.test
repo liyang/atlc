@@ -20,12 +20,12 @@ if [ -z "$CAP"  ] || [ -z "$Zo" ] ; then
   exit 1 
 fi
 
-rm -f $top_builddir/tmp/test_rect_in_rect.txt $top_builddir/tmp/test_rect_in_rect.bmp
 
 if [ $CAP = 121.0 ] && [ $Zo = 44.61 ] ; then
+  rm -f $top_builddir/tmp/test_rect_in_rect.txt $top_builddir/tmp/test_rect_in_rect.bmp
   echo "PASSED:" $0 >> tests.log
   exit 0
 else
-  echo "FAILED:" $0 >> tests.log
+  echo "FAILED:" $0 $CAP $Zo >> tests.log
   exit 1
 fi

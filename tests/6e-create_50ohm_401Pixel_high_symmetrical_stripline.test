@@ -9,11 +9,11 @@ if [ "x$no_gsl" = "xyes" ] ; then
 fi
 
 ZoTheory=`$top_builddir/src/non_gui/create_bmp_for_symmetrical_stripline -v 2222 401 578 $top_builddir/tmp/50ohm-401h.bmp | awk '{print $4}'`
-rm $top_builddir/tmp/50ohm-401h.bmp
 #echo "Zo theory = " $ZoTheory "Zo altc= " $Zoatlc " cksum of bitmap" $MD5SUM "cksum of .Ex.bmp= " $EXMD5SUM
 if [ $ZoTheory = 50.026376  ]  ; then
-    echo "PASSED:" $0 >> tests.log
-    exit 0
+  rm $top_builddir/tmp/50ohm-401h.bmp
+  echo "PASSED:" $0 >> tests.log
+  exit 0
 else
   echo "FAILED:" $0 >> tests.log
   exit 1

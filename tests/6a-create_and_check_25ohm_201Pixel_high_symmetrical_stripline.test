@@ -21,15 +21,6 @@ fi
 # Generate a checksum for a file created by atlc. 
 EXMD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/25ohm-201h.Ex.bmp`
 
-# Remvove the unwanted files. 
-rm $top_builddir/tmp/25ohm-201h.Ex.bmp
-rm $top_builddir/tmp/25ohm-201h.bmp
-rm $top_builddir/tmp/25ohm-201h.Ey.bmp
-rm $top_builddir/tmp/25ohm-201h.E.bmp
-rm $top_builddir/tmp/25ohm-201h.V.bmp
-rm $top_builddir/tmp/25ohm-201h.U.bmp
-rm $top_builddir/tmp/25ohm-201h.Er.bmp
-
 if [ -z "$Zoatlc" ]  || [ -z "$ZoTheory" ] || [ -z "$MD5SUM" ] || [ -z "$EXMD5SUM" ] ; then  
   exit 1
 fi
@@ -38,11 +29,20 @@ fi
 
 
 if [ $ZoTheory = 25.017590  ] && [ $Zoatlc = 24.92 ] && [ $MD5SUM = 44e86f6bcec1a61db9564040ec93557c ] && [ $EXMD5SUM = 7bdb88a52e18a58c979299224fce6197 ] ; then
-   echo "PASSED:" $0 >> tests.log
-   exit 0
+# Remvove the unwanted files. 
+  rm $top_builddir/tmp/25ohm-201h.Ex.bmp
+  rm $top_builddir/tmp/25ohm-201h.bmp
+  rm $top_builddir/tmp/25ohm-201h.Ey.bmp
+  rm $top_builddir/tmp/25ohm-201h.E.bmp
+  rm $top_builddir/tmp/25ohm-201h.V.bmp
+  rm $top_builddir/tmp/25ohm-201h.U.bmp
+  rm $top_builddir/tmp/25ohm-201h.Er.bmp
+
+  echo "PASSED:" $0 >> tests.log
+  exit 0
 else
-   echo "FAILED:" $0 >> tests.log
-   exit 1
+  echo "FAILED:" $0 >> tests.log
+  exit 1
 fi
 
 

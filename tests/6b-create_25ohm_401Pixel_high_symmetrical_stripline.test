@@ -7,8 +7,8 @@
 
 
 Zo=`$top_builddir/src/non_gui/create_bmp_for_symmetrical_stripline -v 2978 401 1334 $top_builddir/tmp/25ohm-401h.bmp  | awk '{print $4}'`
-rm  $top_builddir/tmp/25ohm-401h.bmp
 if [ $Zo = 24.995678 ]; then
+  rm  $top_builddir/tmp/25ohm-401h.bmp
   echo "PASSED:" $0 >> tests.log
   exit 0
 else

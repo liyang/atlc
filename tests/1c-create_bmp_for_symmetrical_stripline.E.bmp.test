@@ -24,8 +24,8 @@
 touch $top_builddir/tmp/test_sym_strip.E.bmp
 
 MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test_sym_strip.E.bmp`
-rm $top_builddir/tmp/test_sym_strip.E.bmp 
 if [ $MD5SUM = f658e3dfca5651690a78ee8e8d49051d ]; then
+  rm $top_builddir/tmp/test_sym_strip.E.bmp 
   echo "PASSED:" $0 >> tests.log
   exit 0
 else

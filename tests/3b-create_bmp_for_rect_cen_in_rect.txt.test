@@ -15,14 +15,14 @@ fi
 
 Lo=`cat $top_builddir/tmp/test.txt | awk '{print $12}'`
 Zo=`cat $top_builddir/tmp/test.txt | awk '{print $6}'`
-rm $top_builddir/tmp/test.txt
-rm $top_builddir/tmp/test.bmp
 
 if [ -z "$Lo" ] || [ -z "$Zo" ] ; then
   exit 1
 fi
 
 if [ $Lo = 340.8 ] && [ $Zo = 102.17 ] ; then
+  rm $top_builddir/tmp/test.txt
+  rm $top_builddir/tmp/test.bmp
   echo "PASSED:" $0 >> tests.log
   exit 0
 else
