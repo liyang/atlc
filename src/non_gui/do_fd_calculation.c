@@ -129,7 +129,9 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
   0.00011 * the number of non-metallic elements  +28 as the number 
   of times finite_difference is called each time */
 
-  data->tenth_of_estimated_iterations_needed = (int) (0.00011*(double) data->non_metallic_pixels + 28);
+  //data->tenth_of_estimated_iterations_needed = (int) (0.00011*(double) data->non_metallic_pixels + 28);
+
+  data->tenth_of_estimated_iterations_needed = 100;
 
   if(data->verbose_level >=4 )
     printf("finite_difference(%d) is the best guess\n", data->tenth_of_estimated_iterations_needed);
