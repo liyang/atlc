@@ -9,6 +9,7 @@ building Windoze versions.
 "Treibergs, Valts" <treibev@ectinfo.com> for spotting the bug with -s and -S on 2 conductor lines. 
 Patrick Kelsey <kelsey@ieee.org> for help with MPI support. 
 Eric Sosman for help with porting to the Cray-Y-MP
+Miguel Berg for noticing a bug which caused crashes under Windoze XP  
 
 
 ****HELP from testers****
