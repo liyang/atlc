@@ -13,7 +13,7 @@
 # checks for system services
 # AC_OUTPUT([file...])
 
-AC_INIT([atlc], [4.3.9], [drkirkby@ntlworld.com])
+AC_INIT([atlc], [4.4.0], [drkirkby@ntlworld.com])
 AM_INIT_AUTOMAKE
 AC_PREREQ([2.57])
 AC_CONFIG_SRCDIR([tools/src/myfilelength.c])
@@ -42,7 +42,7 @@ AC_CHECK_HEADERS([stdio.h math.h malloc.h stdlib.h string.h time.h limits.h ])
 AC_CHECK_HEADERS([strings.h sys/types.h machine/hal_sysinfo.h sys/sysinfo.h ])
 AC_CHECK_HEADERS([sys/processor.h sched.h sys/param.h sys/pstat.h sys/unistd.h ])
 AC_CHECK_HEADERS([ sys/utsname.h sys/systeminfo.h unistd.h aixfont.h ])
-AC_CHECK_HEADERS([ linux/ip.h errno.h ])
+AC_CHECK_HEADERS([ linux/ip.h errno.h sys/vid.h ])
 
 # Checks for typedefs
 AC_HEADER_STDBOOL
@@ -53,7 +53,7 @@ AC_TYPE_SIZE_T
 
 # checks for compiler characteristics
 AC_C_BIGENDIAN
-#AC_CHECK_TYPES([long long])
+AC_CHECK_SIZEOF([short])
 AC_CHECK_SIZEOF([int])
 AC_CHECK_SIZEOF([long])
 AC_CHECK_SIZEOF([size_t])
@@ -114,8 +114,7 @@ if test "$ac_cv_use_gsl" = "yes"; then
 fi
 
 AC_ARG_ENABLE(debug, AC_HELP_STRING([--enable-debug],[ with debugging code]), AC_DEFINE([DEBUG],[1]))
-AC_ARG_ENABLE(hardware-info, AC_HELP_STRING([--enable-hardware-info],[ Find out information about hardware (might prevent compilation on some
-systems)]), AC_DEFINE([TRY_TO_GET_HARDWARE_INFO],[1]))
+AC_ARG_ENABLE(hardware-info, AC_HELP_STRING([--disable-hardware-info],[ Find out information about hardware (Disable if compilation fails during 'make check')]), [1],AC_DEFINE([TRY_TO_GET_HARDWARE_INFO]))
 
 # Put a usage message so the user can use threads if wanted. 
 AC_ARG_WITH(threads,
@@ -134,12 +133,10 @@ if test "x$with_threads" = "xyes"; then
 fi
 AC_CHECK_DECL(_SC_PHYS_PAGES,,)
 AC_CHECK_DECL(_SC_PAGESIZE,,)
-AC_CHECK_DECL(__FreeBSD__,,)
-AC_CHECK_DECL(__NetBSD__,,)
-AC_CHECK_DECL(__Solaris__,,)
-AC_CHECK_DECL(__Tru64__,,)
-AC_CHECK_DECL(__HPUX__,,)
-AC_CHECK_DECL(__AIX__,,)
+AC_CHECK_DECL(_SC_CRAY_NCPU,,)
+AC_CHECK_DECL(_SC_CRAY_NCPU,,)
+AC_CHECK_DECL(_SC_NPROC_CONF,,)
+AC_CHECK_DECL(_SC_NPROC_ONLN,,)
 
 # MPI and MPE Support
 #AC_ARG_WITH(mpi, AC_HELP_STRING([--with-mpi=[mpi_install_prefix]],[support MPI-based parallel computation (needs MPICH installed)]))
