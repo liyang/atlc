@@ -1,0 +1,80 @@
+.TH create_bmp_for_symmetical_stripline 1 "atlc-3.0.1 29/3/02" "Dr. David Kirkby"
+.ds n 5
+.SH NAME
+\fBcreate_bmp_for_symmetical_stripline\fR - bitmap generator for thin conductor betwen two
+infinite groundplanes (part of \fBatlc\fR)
+.SH SYNOPSIS
+\fBcreate_bmp_for_symmetical_stripline  W H w bitmapfile\fR
+.br
+.SH WARNING
+This man page is not a complete set of documentation. See the html files
+for more complete information. So far, I've not managed to install the
+html files into /usr/local, so you will have to look into the
+atlc-X.Y.Z/docs/html-docs directory for them. 
+.SH DESCRIPTION
+\fBcreate_bmp_for_symmetical_stripline\fR is a pre-processor for \fBatlc\fR, the finite difference 
+programme that is used to calculate the 
+properties of a two-conductor electrical transmission line of arbitrary 
+cross section. The programme \fBcreate_bmp_for_symmetical_stripline\fR is used as a fast way of
+generating bitmaps (there is no need to use a graphics programme), for a
+1 pixel thick conductor of width w, centrally located inside a pair of
+groundplanes of width W and separation H. This has an exact analytical
+answer, when the inner is infinitely thin and the width W is infinitely
+wide. This theoretical impedance is also calculated by the create_bmp_for_symmetical_stripline. It is therefore used
+as a test of atlc. 
+.P
+-----------------------------------------------------  ^
+.br
+|                                                   |  |
+.br                                                     
+|                                                   |  |
+.br
+|              <----------w----------->             |  |
+.br
+|                                                   |  H
+.br
+|                                                   |  |
+.br
+|                                                   |  |
+.br
+-----------------------------------------------------  v
+.br
+<-------------------------W------------------------->
+.br
+
+The parameters 'W' and 'H' and the inner dimensions of the outer conductor.
+The outer dimensions of the inner conductor are 'w' and 'c'. The inner
+conductor is assumed to rest on a dielectric (Er2) which is 'd' wide and
+'h' tall. The dielectric is offset 'a' from the left hand side wall of the
+outer conductor an the inner conductor is offset 'b' from the left hand
+sidewall of the outer conductor. The whole region is surrounded by a
+dielectric of relative permittivity 'Er1'. The dielectrics 'Er1' and
+'Er2' can be different, or the same. If there is just an air dilectric,
+then 'Er1' and 'Er2' will both be 1.0 
+.PP 
+.br
+The bitmaps produced by \fBcreate_bmp_for_symmetical_stripline\fR are 24-bit bit colour bitmaps, as are required by \fBatlc\fR. Currenly create_bmp_for_symmetical_stripline only produces bitmaps with
+white (vacuum) dielectrics. 
+
+.SH OPTIONS
+There are no options for create_bmp_for_symmetical_stripline.
+.P
+.SH SEE ALSO
+atlc(1), create_bmp_for_rect_cen_in_rect(1), create_bmp_for_circ_in_circ(1). create_bmp_for_rect_in_rect(1), create_bmp_for_circ_in_rect(1).
+create_bmp_for_rect_in_circ(1), readbin(1) and create_bmp_for_symmetical_stripline(1).
+.P 
+.br
+http://atlc.sourceforge.net                - Home page 
+.br
+http://sourceforge.net/projects/atlc       - Download area
+.br
+atlc-X.Y.Z/docs/html-docs/index.html       - HTML docs
+.br
+atlc-X.Y.Z/docs/qex-december-1996/atlc.pdf - theory paper
+.br
+atlc-X.Y.Z/examples                        - examples
+.br
+http://www.david-kirkby.co.uk              - my home page
+.br
+http://www.david-kirkby.co.uk/ham          - ham radio pages
+.br
