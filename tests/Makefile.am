@@ -13,11 +13,11 @@ MPI_16a_PI_LDADD = @MPILIBS@ @LIBS@
 
 benchmark_SOURCES = \
 benchmark.c \
-get_portable_data.c \
+try_portable.c \
 try_hpux.c \
+try_aix.c \
 try_tru64.c \
 try_solaris.c \
-try_portable.c \
 defs.h
 
 
