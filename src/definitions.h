@@ -242,3 +242,4 @@ void swap_conductor_voltages(int way_to_swap);
 void usage_make_coupler(void);
 double calculate_integer_values(struct data *optimise, int n, int accuarcy_level);
 void calculate_Zodd_and_Zeven(double *Zodd, double *Zeven, double *Zo, double w, double H, double s, double er);
+void usage_design_coupler(void);
