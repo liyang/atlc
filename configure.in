@@ -36,7 +36,6 @@ dnl check to see if the machine is big endian
 AC_C_BIGENDIAN
 
 dnl check size of short. int and long
-AC_CHECK_SIZEOF(short)
 AC_CHECK_SIZEOF(int)
 AC_CHECK_SIZEOF(long)
 AC_CHECK_SIZEOF(size_t)
