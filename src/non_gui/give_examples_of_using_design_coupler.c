@@ -27,7 +27,7 @@ void give_examples_of_using_design_coupler(void)
   printf("%c design_coupler -L 0.25 30 130 170\n\n",'%');
   printf("What you may notice is that while the coupling to the coupled port is exactly\n");
   printf("30 dB below the input power at the centre frequency (150 MHz) it is \n");
-  printf("no longer symmetrical about the centre frequency. Also, deviations from the\n");l
+  printf("no longer symmetrical about the centre frequency. Also, deviations from the\n");
   printf("ideal 30 dB are now much larger, with a maximum error of 1.012 dB\n");
   printf("Unlike the case when the length is the default quarter wave, there is not much\n");
   printf("you can do about this, since the deviations occur in both directions.\n\n");

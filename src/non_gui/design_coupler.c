@@ -80,7 +80,7 @@ the parameters w and s by the same multiple.
 
 int main(int argc, char **argv) /* Read parameters from command line */
 {
-  int q, Hflag=FALSE, quite=FALSE, very_quite=FALSE;;
+  int q, Hflag=FALSE, quite=FALSE, very_quite=FALSE;
   int calculate_physical_dimensions=FALSE;
   double er, Zo=-1, length=-1, fmin, fmax, fmean, fstep=-1, cf,  Zodd, Zeven; 
   double f, vcf, vcf_for_quarter_wave_line, w, s, error, error_max=1e30;

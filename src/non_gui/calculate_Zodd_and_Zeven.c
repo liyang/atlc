@@ -44,6 +44,10 @@ groundplanes of spacing h. */
 #include <gsl/gsl_complex_math.h>
 #endif
 
+#ifdef HAVE_GSL_GSL_COMPLEX_MATH_H
+#include <gsl/gsl_bessel_math.h>
+#endif
+
 void calculate_Zodd_and_Zeven(double *Zodd, double *Zeven, double *Zo, double w, double H, double s, double er)
 {
 #ifdef HAVE_LIBGSL
