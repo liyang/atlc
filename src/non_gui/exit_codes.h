@@ -85,3 +85,5 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #define INVALID_SWITCH                                            60
 #define DIMENSION_LESS_THAN_ZERO                                  61
 #define PERMITTIVITY_LESS_THAN_1                                  62
+#define VARIABLE_NOT_INITIALISED                                  63
+#define GAP_BETWEEN_CONDUCTORS_TOO_SMALL                          64
