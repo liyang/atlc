@@ -19,27 +19,9 @@
 # Little Endian like PCs. It will also be too dependent on rounding
 # difference caused by the different FPUs in the different machines. 
 
-# Any failure to generate the correct checksums are noted. 
+../src/non_gui/create_bmp_for_stripline_coupler -vv -b 16 1 1 1 1.0 ../examples/test_stripline_coupler.bmp > ../examples/test_stripline_coupler.bmp.pre-atlc.txt
 
-# Any failure in an Xa-... where X is an integer will cause
-# Xb, Xc, Xd ...etc to fail. Any pass of Xa, but faiure of Xb will cause
-# all the Xc, Xd ... to fail. If both Xa and Xb pass, then hopefully Xc,
-# Xd etc will. However, Xd, Xe etc does not rely on the correct functioning of 
-# Xc. The Xc, Xd, ... only need Xa and Xb to pass, so Xc, Xd etc are
-# independent of each other. 
-
-# I would add that these checksums have been checked using the GNU
-# textutils on about 15 different computers, from PCs, to Suns to Dec etc.
-# So they are okay and I would suggest any failures is a problem. 
-# The only reason I can think of a failure is that there is a difference
-# in the outout of 'mycksum' to the GNU utilites one, but that is
-# unlikely. So if any problems occur, check the checksum with the GNU
-# 'sum' and see what that gives. If any failures do occur, please let me
-# know. email drkirkby@ntlworld.com and/or davek@medphys.ucl.ac.uk 
-
-../src/non_gui/create_bmp_for_stripline_coupler -vv -b 16 1 1 1 1.0 test_stripline_coupler.bmp > test_stripline_coupler.bmp.pre-atlc.txt
-
-CKSUM=`../tools/src/mycksum test_stripline_coupler.bmp`
+CKSUM=`../tools/src/mycksum ../examples/test_stripline_coupler.bmp`
 if [ $CKSUM = 48613 ]; then
   echo "PASSED:" $0 >> tests.log 
   exit 0

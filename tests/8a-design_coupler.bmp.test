@@ -40,9 +40,9 @@
 # First remove any old files, which might cause problems
 #rm -rf test*.bmp test.txt test*.bin 
 
-../src/non_gui/design_coupler -d 20 144 146 > test.txt
-CKSUM=`../tools/src/mycksum test.txt`
-rm test.txt
+../src/non_gui/design_coupler -d 20 144 146 > /tmp/$$ 
+CKSUM=`../tools/src/mycksum /tmp/$$`
+rm /tmp/$$
 if [ $CKSUM = 54211 ]; then
   echo "PASSED:" $0 >> tests.log 
   exit 0
@@ -51,6 +51,5 @@ else
   echo                "scientific library gsl. You need to do this to use"
   echo                "to get full functionality. 'design_coupler' will"
   echo                "not work without this library"
-  echo "FAILED:" $0  "but do not worry as its not been thoroughly tested on many machines">> tests.log
   exit 1
 fi

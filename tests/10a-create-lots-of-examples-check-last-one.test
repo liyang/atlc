@@ -30,13 +30,17 @@
 ../src/non_gui/create_bmp_for_stripline_coupler 5.0  1.0 1.0 1.0006  ../examples/coupler5.bmp  
 ../src/non_gui/create_bmp_for_stripline_coupler 1.0  1.0 0.5 3.335  ../examples/coupler6.bmp  
 ../src/non_gui/create_bmp_for_stripline_coupler 1.0  1.0 0.1 2.33  ../examples/coupler7.bmp  
-../src/non_gui/create_bmp_for_stripline_coupler 0.25 1.0 1.0 4.8  ../examples/coupler8.bmp > test2.txt
+Zodd=`../src/non_gui/create_bmp_for_stripline_coupler -v 1.0 1.0 0.02 1 ../examples/coupler8.bmp | tail -4 | head -1 | awk '{print $2}'`
+Zeven=`../src/non_gui/create_bmp_for_stripline_coupler -v 1.0 1.0 0.02 1 ../examples/coupler8.bmp | tail -4 | head -1 | awk '{print $4}'`
+Zo=`../src/non_gui/create_bmp_for_stripline_coupler -v 1.0 1.0 0.02 1 ../examples/coupler8.bmp | tail -4 | head -1 | awk '{print $6}'`
+#echo $Zodd
+#echo $Zeven
+#echo $Zo
 # Write text to test2.txt and check that. Lack of gsl will show up. 
 # Now check the length of the last file. It this is okay, it probably means
 # the user has not run out of disk space. 
 
-LENGTH=`../tools/src/myfilelength ../examples/coupler8.bmp`
-if [ $LENGTH = 424762 ]; then
+if [ $Zodd = 40.423384 ] && [ $Zeven = 76.594453 ]  && [ $Zo = 55.643571 ] ; then
   echo "PASSED:" $0 >> tests.log
   exit 0
 else

@@ -2,7 +2,7 @@
 # There should be a supplied bitmap file test-coupler1.bmp
 # We will generate all the bitmaps and check they 
 # are all okay. 
-CKSUM=`../tools/src/mycksum test-coupler1.U.even.bmp`
+CKSUM=`../tools/src/mycksum ../examples/test-coupler1.U.even.bmp`
 if [ $CKSUM != 13164 ]; then
   echo "FAILED:" $0  >> tests.log
   exit 1

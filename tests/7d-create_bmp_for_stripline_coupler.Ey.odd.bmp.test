@@ -38,7 +38,7 @@
 # know. email drkirkby@ntlworld.com and/or davek@medphys.ucl.ac.uk 
 
 
-CKSUM=`../tools/src/mycksum test_stripline_coupler.Ey.odd.bmp`
+CKSUM=`../tools/src/mycksum ../examples/test_stripline_coupler.Ey.odd.bmp`
 if [ $CKSUM = 37407 ]; then
   echo "PASSED:" $0 >> tests.log
   exit 0

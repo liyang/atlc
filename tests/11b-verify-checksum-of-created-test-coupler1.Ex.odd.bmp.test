@@ -2,8 +2,8 @@
 # There should be a supplied bitmap file test-coupler1.bmp
 # We will generate all the bitmaps and check they 
 # are all okay. 
-../src/non_gui/atlc test-coupler1.bmp  > /dev/null
-CKSUM=`../tools/src/mycksum test-coupler1.Ex.odd.bmp`
+../src/non_gui/atlc ../examples/test-coupler1.bmp  > /dev/null
+CKSUM=`../tools/src/mycksum ../examples/test-coupler1.Ex.odd.bmp`
 if [ $CKSUM != 34975 ]; then
   echo "FAILED:" $0  >> tests.log
   exit 1

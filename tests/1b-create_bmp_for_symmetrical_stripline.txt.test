@@ -36,12 +36,9 @@
 # unlikely. So if any problems occur, check the checksum with the GNU
 # 'sum' and see what that gives. If any failures do occur, please let me
 # know. email drkirkby@ntlworld.com and/or davek@medphys.ucl.ac.uk 
-../src/non_gui/atlc  test_sym_strip.bmp > test_sym_strip.txt
+Zo=`../src/non_gui/atlc test_sym_strip.bmp | awk '{print $6}'`
 #Check the impedance Zo which should be 122.44 Ohms
-cat test_sym_strip.txt | awk '{print $6}' > /tmp/atlc-test.$$
-CKSUM=`../tools/src/mycksum /tmp/atlc-test.$$`
-rm /tmp/atlc-test.$$
-if [ $CKSUM = 13372 ]; then
+if [ $Zo = 122.44 ]; then
   echo "PASSED:" $0 >> tests.log
   exit 0
 else

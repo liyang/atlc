@@ -37,9 +37,9 @@
 # 'sum' and see what that gives. If any failures do occur, please let me
 # know. email drkirkby@ntlworld.com and/or davek@medphys.ucl.ac.uk 
 
-../src/non_gui/create_bmp_for_microstrip_coupler 1.5 2.0 1 1.593 0.035 1 3.7 microstrip_coupler.bmp
+../src/non_gui/create_bmp_for_microstrip_coupler -b 12 1.5 2.0 1 1.593 0.035 1 3.7 microstrip_coupler.bmp
 CKSUM=`../tools/src/mycksum microstrip_coupler.bmp`
-if [ $CKSUM = 49162 ]; then
+if [ $CKSUM = 07795 ]; then
   echo "PASSED:" $0 >> tests.log 
   exit 0
 else
