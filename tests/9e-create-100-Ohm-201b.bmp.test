@@ -1,4 +1,4 @@
-#!/bin/sh
+#! /bin/sh
 
 # The following creates some of the example bitmaps and checks the 
 # file lengths are okay. Checking the checksums would be better, 
