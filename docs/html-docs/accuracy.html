@@ -297,8 +297,8 @@ create_bmp_for_circ_in_circ 500 200 0 1 eccentric-c.bmp</CODE>
 <STRONG><H2><a name="Accuracy_symmetrical_strip" >Comparisions between atlc and a symmetrical strip transmission line</A></H2></STRONG>
 Another obvious test is a symmetrical strip transmission line - see diagramme below. <p>
 <img src="jpgs/symmetrical_strip.jpg" ALT="Symmetrical Strip Transmission Line"><p>
-This has an exact analytical solution, dependent on the ratio of the width of the inner conductor w, to the distance between the two outer conductors H.  This assumes that the outer conductors extend to plus and minus infinity and the inner conductor is infinitely thin. This structure has the advantage of requiring no curves, so can be represented more accurately with the square grid used in <CODE>atlc.</CODE> However, its impossible to have an inner conductor that is less than 1 pixel high and it is impossible to make the dimension W  infinity wide as it was take an infinite amount of disk space, RAM and CPU time).  However, if the width W is made at least 4xH+w, then making it any larger does not seem to have much affect on the result. Hence the results below were obtained by setting the internal W equal to 4 times the internal height plus the inner width W. The actual bitmaps used by atlc are 10 pixels higher and 10 pixels wider, to enforce a boundary. The programme <CODE>create_bmp_for_sym_strip</CODE> can be used to quickly produce suitable bitmaps for such circumstances. It enforces having the width W of the  equal to at least w+4*h, as well as H being at least 201 pixels. It must be odd, since the one pixel inner conductor must fit centrally between the two outer conductors.<br>
-<CODE>create_bmp_for_sym_strip 1200 201 290 50-201.bmp<br>
+This has an exact analytical solution, dependent on the ratio of the width of the inner conductor w, to the distance between the two outer conductors H.  This assumes that the outer conductors extend to plus and minus infinity and the inner conductor is infinitely thin. This structure has the advantage of requiring no curves, so can be represented more accurately with the square grid used in <CODE>atlc.</CODE> However, its impossible to have an inner conductor that is less than 1 pixel high and it is impossible to make the dimension W  infinity wide as it was take an infinite amount of disk space, RAM and CPU time).  However, if the width W is made at least 4xH+w, then making it any larger does not seem to have much affect on the result. Hence the results below were obtained by setting the internal W equal to 4 times the internal height plus the inner width W. The actual bitmaps used by atlc are 10 pixels higher and 10 pixels wider, to enforce a boundary. The programme <CODE>create_bmp_for_symmetrical_stripline</CODE> can be used to quickly produce suitable bitmaps for such circumstances. It enforces having the width W of the  equal to at least w+4*h, as well as H being at least 201 pixels. It must be odd, since the one pixel inner conductor must fit centrally between the two outer conductors.<br>
+<CODE>create_bmp_for_symmetrical_stripline 1200 201 290 50-201.bmp<br>
 w=290 H=201 w/H=1.442786 xo=23.753772<br>
 Zo is theoretically 49.989477 Ohms (assuming W is infinite)<br></CODE>
 <br>
@@ -452,7 +452,7 @@ Notes:
 <p>
 <OL>
 <LI>
-Due to their large size, most of the  files *Ohm*.bmp are not distributed with <CODE>atlc</CODE>. but may be produced easily with the aid of a script called <CODE>create</CODE> in the examples directory. The script create calls a programme <CODE>create_bmp_for_sym_strip</CODE>, which was developed for the purpose of producing symmetrical stripline bitmaps. 
+Due to their large size, most of the  files *Ohm*.bmp are not distributed with <CODE>atlc</CODE>. but may be produced easily with the aid of a script called <CODE>create</CODE> in the examples directory. The script create calls a programme <CODE>create_bmp_for_symmetrical_stripline</CODE>, which was developed for the purpose of producing symmetrical stripline bitmaps. 
 </LI>
 <LI>Run times were up to 1977 s when atlc was compiled with support for multiple processors and up to 3447 s when it was not.</LI></OL>
  <H2><a name="Accuracy_coupler">Accuracy of <CODE>atlc</CODE> with coupled lines</a></H2>
@@ -605,5 +605,18 @@ A programme <CODE>create_bmp_for_coupler</CODE> was written to automatically gen
 Note, because of the need to simulate a large width W, these calculations are much slower than those above. The fact the simulation has to be done twice also adds to the time taken. A typical run, using the default bitmap size (18, which gives bitmap of 128 to 512kb), the time taken is approximately 2 minutes on a dual 300 MHz Sun Ultra 60. 
 <p>atlc is written and supported by <a href="mailto: drkirkby@ntlworld.com?subject=atlc%20-%20Arbitrary%20Transmission%20Line%20Calculator">Dr. David Kirkby (G8WRB)</A> It it issued under the <a href="http://www.gnu.org/copyleft/gpl.html">GNU General Public License</A><p>
 <a href="http://atlc.sourceforge.net">Return to the atlc homepage</a>
+<a href="http://homepage.ntlworld.com/drkirkby/list1.html"></a>
+<a href="http://homepage.ntlworld.com/drkirkby/list2.html"></a>
+<a href="http://homepage.ntlworld.com/drkirkby/list3.html"></a>
+<a href="http://homepage.ntlworld.com/drkirkby/list4.html"></a>
+<a href="http://homepage.ntlworld.com/drkirkby/list5.html"></a>
+<a href="http://homepage.ntlworld.com/drkirkby/list6.html"></a>
+<a href="http://homepage.ntlworld.com/drkirkby/list7.html"></a>
+<BR>
+<BR>
+<A href="http://sourceforge.net"> <IMG
+src="http://sourceforge.net/sflogo.php?group_id=25836&amp;type=5"
+width="210" height="62" border="0" alt="SourceForge.net
+Logo"></A>
 </body>
 </html>
