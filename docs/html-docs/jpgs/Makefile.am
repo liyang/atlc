@@ -3,6 +3,7 @@
 jpgdir=$(datadir)/atlc/docs/html-docs/jpgs
 
 jpg_DATA= 000000.jpg \
+home-email.jpg \
 0000ff.jpg \
 00ff00.jpg \
 00ffff.jpg \
@@ -104,6 +105,7 @@ very-odd.jpg \
 wide.jpg  
 
 EXTRA_DIST = 000000.jpg \
+home-email.jpg \
 0000ff.jpg \
 00ff00.jpg \
 00ffff.jpg \
