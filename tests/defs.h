@@ -49,6 +49,7 @@ gathered there. */
 int try_portable(struct computer_data *data); /* Gather data using 'uname' */
 
 int try_aix(struct computer_data *data);  /* Gather data IBM's AIX machines */
+int try_irix(struct computer_data *data);
 int try_hpux(struct computer_data *data);
 int try_linux(struct computer_data *data);  /* THIS NEEDS IMPROVING !!!! */
 int try_solaris(struct computer_data *data);
