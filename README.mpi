@@ -1,34 +1,27 @@
-'atlc' has C code to allow it to use the Message Passing Interface (MPI),
-which shouls allow 'atltc' to run on distributed processors on a network
-of computers. In order to do this, you will need to install the MPICH
+'atlc' *did* have C code to allow it to use the Message Passing Interface (MPI),
+which whould allow 'atltc' to run on distributed processors on a network
+of computers. In order to do this, you needed to install the MPICH
 library from 
 http://www-unix.mcs.anl.gov/mpi/mpich/indexold.html
 
-However, at the time of writing, I can't get to work properly. However, 
-another person, Patrick Kelsey <kelsey@ieee.org> has got this working
-ona Linux machine, although I've tried an have never been able to.  
-
-If you want to try this distributed processing code, be prepared for a
-lot of experimentation - it is certainly not easy to configure, if it
-works at all. Here are a couple of notes on using the MPICH library with
-'atlc'
+However, at the time of writing, This has been disabled and so there
+is not a lot of point in configuring atlc for MPI support. MPI support
+is a number one pririty now, so soon a better implementation will be
+added to atlc. 
 
 
-configure --with-mpi
+Note, if you want to play with atlc and MPI, 
 
-2) An MPICH configured machine need to be able to access at least one
+1) An MPICH configured machine needs to be able to access at least one
 machine on the network without a password, using .rhosts securtiy
 procedures. THIS INCLUDES THE LOCAL HOST if you want to run on the local
 
-3) ssh should work if MPICH is configured for this.
+3) ssh should work if MPICH is configured for this. which is must more 
+secture than using .rhosts and rsh.
 
-4) On GNU/Linux at least, the system has to be set up to enable MPI
-programs to 'start a LAM multicomputer'. A program called 'lamboot'
-will need to be run, but first run 'recon' which indicates if there
-are any major problems. If recon runs okay, then 'lamboot' has a
-reasonable chance of working. 
-
-4) A small test program, in tests/MPI_16a_PI.c does build okay
+3) A small test program, in tests/MPI_16a_PI.c does build okay
 and runs. If you uncommment the printf lines, it will 
 give an estimage of PI. Hence the automake/autoconf and the 
 macro m4/acx_mpi.m4 seems to be okay. 
+
+Full MPI support is expected soon. 
