@@ -73,6 +73,7 @@ simulation. */
 #define Z0                     1
 #define Z_ODD                   2
 #define Z_ALL                       3
+#define Z_EVEN       4
 
 /* The value of EPSILON_0 is taken from the UK National Physical
 Laboratory's list of physical constants found on the web. */
@@ -112,6 +113,15 @@ int int_values[10];
 int importance[10];
 int odd_or_even[10];
 int best[10];
+};
+
+struct tline_parameters{
+/* The ..2 paramters are when Er is not assumed to be 1.0 */
+double Codd, Codd_non_vac, Lodd, Zodd, Zodd_non_vac, L, C;
+double Ceven, Ceven_non_vac, Leven, Zeven, Zeven_non_vac;
+double Zo, Zo_non_vac;
+double Er, v, v_f;
+int conductors;
 };
 
 #define NOT_IMPORTANT 0   /* The importance to attach to getting the */
@@ -268,3 +278,4 @@ double calculate_integer_values(struct data *optimise, int n, int accuarcy_level
 void calculate_Zodd_and_Zeven(double *Zodd, double *Zeven, double *Zo, double w, double H, double s, double er);
 void usage_design_coupler(void);
 void print_copyright(char *s);
+int print_data2(FILE *fp, char *filename, struct tline_parameters *data, int whihc_Z);
