@@ -75,6 +75,6 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
       usage_create_bmp_for_rect_cen_in_rect();
    return(0);
 #endif 
-  error_and_exit("This program is not implemented", PROGRAM_NOT_IMPLEMENTED);
+  exit_with_msg_and_error_code("This program is not implemented", PROGRAM_NOT_IMPLEMENTED);
 return(0);
 }

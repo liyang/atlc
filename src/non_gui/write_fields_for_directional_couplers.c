@@ -129,31 +129,31 @@ void write_fields_for_directional_couplers(char * filename, struct transmission_
         U=find_energy_per_metre(w,h);
 
         if( fwrite((void *) &Ex,sizeof(double), 1, Ex_odd_bin_fp) != 1)
-	  error_and_exit("Error#1: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+	  exit_with_msg_and_error_code("Error#1: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
         if( fwrite((void *) &Ey,sizeof(double), 1, Ey_odd_bin_fp) != 1)
-	  error_and_exit("Error#2: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+	  exit_with_msg_and_error_code("Error#2: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
         if( fwrite((void *) &E,sizeof(double), 1, E_odd_bin_fp) != 1)
-	  error_and_exit("Error#3: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+	  exit_with_msg_and_error_code("Error#3: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
         if( fwrite((void *) &U,sizeof(double), 1, U_odd_bin_fp) != 1)
-	  error_and_exit("Error#4: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+	  exit_with_msg_and_error_code("Error#4: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
         if( fwrite((void *) &Vij[w][h],sizeof(double), 1, V_odd_bin_fp) != 1)
-	  error_and_exit("Error#5: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+	  exit_with_msg_and_error_code("Error#5: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
         if( fwrite((void *) &Er[w][h],sizeof(double), 1, permittivity_bin_fp) != 1)
-	  error_and_exit("Error#6: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+	  exit_with_msg_and_error_code("Error#6: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
       }
     }
     if( fclose(Ex_odd_bin_fp) != 0)
-      error_and_exit("Error#7: can't close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
+      exit_with_msg_and_error_code("Error#7: can't close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
     if( fclose(Ey_odd_bin_fp) != 0)
-      error_and_exit("Error#8: can't close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
+      exit_with_msg_and_error_code("Error#8: can't close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
     if( fclose(E_odd_bin_fp) != 0)
-      error_and_exit("Error#9: can't close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
+      exit_with_msg_and_error_code("Error#9: can't close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
     if( fclose(U_odd_bin_fp) != 0)
-      error_and_exit("Error#10: can't close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
+      exit_with_msg_and_error_code("Error#10: can't close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
     if( fclose(V_odd_bin_fp) != 0)
-      error_and_exit("Error#11: can't close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
+      exit_with_msg_and_error_code("Error#11: can't close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
     if( fclose(permittivity_bin_fp) != 0)
-      error_and_exit("Error#12: can't close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
+      exit_with_msg_and_error_code("Error#12: can't close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
   } /* End of writing odd binary files */
 
   if(data.write_bitmap_field_imagesQ==TRUE && odd_or_even == ODD)
@@ -209,30 +209,30 @@ void write_fields_for_directional_couplers(char * filename, struct transmission_
       }
     } 
     if( fwrite((void *) &(image_data_Ex[0]),size, 1, Ex_odd_bmp_fp) != 1)
-      error_and_exit("Error#25: Failed to write bitmap file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+      exit_with_msg_and_error_code("Error#25: Failed to write bitmap file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
     if( fwrite((void *) &(image_data_Ey[0]),size, 1, Ey_odd_bmp_fp) != 1)
-      error_and_exit("Error#26: Failed to write bitmap file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+      exit_with_msg_and_error_code("Error#26: Failed to write bitmap file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
     if( fwrite((void *) &(image_data_E[0]),size, 1, E_odd_bmp_fp) != 1)
-      error_and_exit("Error#27: Failed to write bitmap file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+      exit_with_msg_and_error_code("Error#27: Failed to write bitmap file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
     if( fwrite((void *) &(image_data_V[0]),size, 1, V_odd_bmp_fp) != 1)
-      error_and_exit("Error#28: Failed to write bitmap file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+      exit_with_msg_and_error_code("Error#28: Failed to write bitmap file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
     if( fwrite((void *) &(image_data_U[0]),size, 1, U_odd_bmp_fp) != 1)
-      error_and_exit("Error#29: Failed to write bitmap file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+      exit_with_msg_and_error_code("Error#29: Failed to write bitmap file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
     if( fwrite((void *) &(image_data_Er[0]),size, 1, permittivity_bmp_fp) != 1)
-      error_and_exit("Error#29: Failed to write bitmap file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+      exit_with_msg_and_error_code("Error#29: Failed to write bitmap file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
 
     if( fclose(Ex_odd_bmp_fp) != 0)
-      error_and_exit("Error#30: Unable to close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
+      exit_with_msg_and_error_code("Error#30: Unable to close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
     if( fclose(Ey_odd_bmp_fp) != 0)
-      error_and_exit("Error#31: Unable to close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
+      exit_with_msg_and_error_code("Error#31: Unable to close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
     if( fclose(E_odd_bmp_fp) != 0)
-      error_and_exit("Error#32: Unable to close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
+      exit_with_msg_and_error_code("Error#32: Unable to close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
     if( fclose(V_odd_bmp_fp) != 0)
-      error_and_exit("Error#33: Unable to close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
+      exit_with_msg_and_error_code("Error#33: Unable to close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
     if( fclose(U_odd_bmp_fp) != 0)
-      error_and_exit("Error#34: Unable to close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
+      exit_with_msg_and_error_code("Error#34: Unable to close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
     if( fclose(permittivity_bmp_fp) != 0)
-      error_and_exit("Error#35: Unable to close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
+      exit_with_msg_and_error_code("Error#35: Unable to close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
     free_ustring(image_data_Ex,0,size);
     free_ustring(image_data_Ey,0,size);
     free_ustring(image_data_E,0,size);
@@ -260,31 +260,31 @@ void write_fields_for_directional_couplers(char * filename, struct transmission_
         U=find_energy_per_metre(w,h);
 
         if( fwrite((void *) &Ex,sizeof(double), 1, Ex_even_bin_fp) != 1)
-	  error_and_exit("Error#1: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+	  exit_with_msg_and_error_code("Error#1: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
         if( fwrite((void *) &Ey,sizeof(double), 1, Ey_even_bin_fp) != 1)
-	  error_and_exit("Error#2: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+	  exit_with_msg_and_error_code("Error#2: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
         if( fwrite((void *) &E,sizeof(double), 1, E_even_bin_fp) != 1)
-	  error_and_exit("Error#3: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+	  exit_with_msg_and_error_code("Error#3: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
         if( fwrite((void *) &U,sizeof(double), 1, U_even_bin_fp) != 1)
-	  error_and_exit("Error#4: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+	  exit_with_msg_and_error_code("Error#4: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
         if( fwrite((void *) &Vij[w][h],sizeof(double), 1, V_even_bin_fp) != 1)
-	  error_and_exit("Error#5: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+	  exit_with_msg_and_error_code("Error#5: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
         if( fwrite((void *) &Er[w][h],sizeof(double), 1, permittivity_bin_fp) != 1)
-	  error_and_exit("Error#6: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+	  exit_with_msg_and_error_code("Error#6: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
       }
     }
     if( fclose(Ex_even_bin_fp) != 0)
-      error_and_exit("Error#7: can't close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
+      exit_with_msg_and_error_code("Error#7: can't close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
     if( fclose(Ey_even_bin_fp) != 0)
-      error_and_exit("Error#8: can't close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
+      exit_with_msg_and_error_code("Error#8: can't close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
     if( fclose(E_even_bin_fp) != 0)
-      error_and_exit("Error#9: can't close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
+      exit_with_msg_and_error_code("Error#9: can't close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
     if( fclose(U_even_bin_fp) != 0)
-      error_and_exit("Error#10: can't close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
+      exit_with_msg_and_error_code("Error#10: can't close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
     if( fclose(V_even_bin_fp) != 0)
-      error_and_exit("Error#11: can't close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
+      exit_with_msg_and_error_code("Error#11: can't close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
     if( fclose(permittivity_bin_fp) != 0)
-      error_and_exit("Error#12: can't close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
+      exit_with_msg_and_error_code("Error#12: can't close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
   } /* End of writing even binary files */
 
   if(data.write_bitmap_field_imagesQ==TRUE &&  odd_or_even == EVEN)
@@ -340,30 +340,30 @@ void write_fields_for_directional_couplers(char * filename, struct transmission_
       }
     } 
     if( fwrite((void *) &(image_data_Ex[0]),size, 1, Ex_even_bmp_fp) != 1)
-      error_and_exit("Error#25: Failed to write bitmap file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+      exit_with_msg_and_error_code("Error#25: Failed to write bitmap file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
     if( fwrite((void *) &(image_data_Ey[0]),size, 1, Ey_even_bmp_fp) != 1)
-      error_and_exit("Error#26: Failed to write bitmap file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+      exit_with_msg_and_error_code("Error#26: Failed to write bitmap file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
     if( fwrite((void *) &(image_data_E[0]),size, 1, E_even_bmp_fp) != 1)
-      error_and_exit("Error#27: Failed to write bitmap file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+      exit_with_msg_and_error_code("Error#27: Failed to write bitmap file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
     if( fwrite((void *) &(image_data_V[0]),size, 1, V_even_bmp_fp) != 1)
-      error_and_exit("Error#28: Failed to write bitmap file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+      exit_with_msg_and_error_code("Error#28: Failed to write bitmap file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
     if( fwrite((void *) &(image_data_U[0]),size, 1, U_even_bmp_fp) != 1)
-      error_and_exit("Error#29: Failed to write bitmap file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+      exit_with_msg_and_error_code("Error#29: Failed to write bitmap file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
     if( fwrite((void *) &(image_data_Er[0]),size, 1, permittivity_bmp_fp) != 1)
-      error_and_exit("Error#29: Failed to write bitmap file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+      exit_with_msg_and_error_code("Error#29: Failed to write bitmap file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
 
     if( fclose(Ex_even_bmp_fp) != 0)
-      error_and_exit("Error#30: Unable to close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
+      exit_with_msg_and_error_code("Error#30: Unable to close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
     if( fclose(Ey_even_bmp_fp) != 0)
-      error_and_exit("Error#31: Unable to close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
+      exit_with_msg_and_error_code("Error#31: Unable to close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
     if( fclose(E_even_bmp_fp) != 0)
-      error_and_exit("Error#32: Unable to close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
+      exit_with_msg_and_error_code("Error#32: Unable to close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
     if( fclose(V_even_bmp_fp) != 0)
-      error_and_exit("Error#33: Unable to close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
+      exit_with_msg_and_error_code("Error#33: Unable to close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
     if( fclose(U_even_bmp_fp) != 0)
-      error_and_exit("Error#34: Unable to close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
+      exit_with_msg_and_error_code("Error#34: Unable to close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
     if( fclose(permittivity_bmp_fp) != 0)
-      error_and_exit("Error#35: Unable to close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
+      exit_with_msg_and_error_code("Error#35: Unable to close file in write_fields_for_directional_couplers.c",CANT_CLOSE_FILE);
 
     /* Free ram used to store the bitmaps before they were written to disk */
     printf("g");

@@ -62,5 +62,5 @@ void usage_create_bmp_for_rect_in_rect(void)
       fprintf(stderr,"-----------------------------------------------------------------------  |\n");
       fprintf(stderr,"<----------------------------------W--------------------------------->\n\n");
       fprintf(stderr,"Eg: create_bmp_for_rect_in_rect 250 100 20 100 4.25 205 45 15 1.0006 3.7 ms.bmp \n");
-      error_and_exit("",PROGRAM_CALLED_WITH_WRONG_NUMBER_OF_ARGUMENTS);
+      exit_with_msg_and_error_code("",PROGRAM_CALLED_WITH_WRONG_NUMBER_OF_ARGUMENTS);
 }

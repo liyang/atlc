@@ -52,7 +52,7 @@ char *string(long nl,long nh)
   v=(char *)malloc((unsigned) (nh-nl+1));
 #endif
   if (!v)
-    error_and_exit("Memory allocation failure in string()",MEMORY_ALLOCATION_ERROR_IN_STRING);
+    exit_with_msg_and_error_code("Memory allocation failure in string()",MEMORY_ALLOCATION_ERROR_IN_STRING);
   
   return v-nl;
 }
@@ -68,7 +68,7 @@ unsigned char *ustring(long nl,long nh)
 #endif
 
   if (!v) 
-    error_and_exit("Memory allocation failure in ustring()",MEMORY_ALLOCATION_ERROR_IN_USTRING);
+    exit_with_msg_and_error_code("Memory allocation failure in ustring()",MEMORY_ALLOCATION_ERROR_IN_USTRING);
   return v-nl;
 }
 
@@ -76,7 +76,7 @@ void free_string(char *v, long nl, long nh)
 /* free a string allocated with string() */
 {
   if(nh <= nl)
-    error_and_exit("nh <= nl in free_string()",SILLY_ARGUMENTS_IN_FREE_STRING);
+    exit_with_msg_and_error_code("nh <= nl in free_string()",SILLY_ARGUMENTS_IN_FREE_STRING);
   free((FREE_ARG) (v+nl));
 }
 
@@ -84,7 +84,7 @@ void free_ustring(unsigned char *v, long nl, long nh)
 /* free a string allocated with ustring() */
 {
   if(nh <= nl)
-    error_and_exit("nh <= nl in free_ustring()",SILLY_ARGUMENTS_IN_FREE_USTRING);
+    exit_with_msg_and_error_code("nh <= nl in free_ustring()",SILLY_ARGUMENTS_IN_FREE_USTRING);
   free((FREE_ARG) (v+nl));
 }
 
@@ -97,14 +97,14 @@ char **cmatrix(long nrl, long nrh, long ncl, long nch)
 	/* allocate pointers to rows */
 	m=(char **) malloc((size_t)((nrow+NR_END)*sizeof(char*)));
 	if (!m) 
-          error_and_exit("Memory allocation failure #1 in cmatrix()",MEMORY_ALLOCATION_ERROR_IN_CMATRIX);
+          exit_with_msg_and_error_code("Memory allocation failure #1 in cmatrix()",MEMORY_ALLOCATION_ERROR_IN_CMATRIX);
 	m += NR_END;
 	m -= nrl;
 
 	/* allocate rows and set pointers to them */
 	m[nrl]=(char *) malloc((size_t)((nrow*ncol+NR_END)*sizeof(char)));
 	if (!m[nrl])
-	  error_and_exit("Memory allocation failure #2 in cmatrix()",MEMORY_ALLOCATION_ERROR_IN_CMATRIX);
+	  exit_with_msg_and_error_code("Memory allocation failure #2 in cmatrix()",MEMORY_ALLOCATION_ERROR_IN_CMATRIX);
 	m[nrl] += NR_END;
 	m[nrl] -= ncl;
 
@@ -123,14 +123,14 @@ unsigned char **ucmatrix(long nrl, long nrh, long ncl, long nch)
 	/* allocate pointers to rows */
 	m=(unsigned char **) malloc((size_t)((nrow+NR_END)*sizeof(unsigned char*)));
 	if (!m) 
-	  error_and_exit("Memory allocation failure #1 in ucmatrix()",MEMORY_ALLOCATION_ERROR_IN_UCMATRIX);
+	  exit_with_msg_and_error_code("Memory allocation failure #1 in ucmatrix()",MEMORY_ALLOCATION_ERROR_IN_UCMATRIX);
 	m += NR_END;
 	m -= nrl;
 
 	/* allocate rows and set pointers to them */
 	m[nrl]=(unsigned char *) malloc((size_t)((nrow*ncol+NR_END)*sizeof(unsigned char)));
 	if (!m[nrl]) 
-	  error_and_exit("Memory allocation failure #2 in ucmatrix()",MEMORY_ALLOCATION_ERROR_IN_UCMATRIX);
+	  exit_with_msg_and_error_code("Memory allocation failure #2 in ucmatrix()",MEMORY_ALLOCATION_ERROR_IN_UCMATRIX);
 
 	m[nrl] += NR_END;
 	m[nrl] -= ncl;
@@ -145,9 +145,9 @@ void free_cmatrix(char **m, long nrl, long nrh, long ncl, long nch)
 /* free a char matrix allocated by cmatrix() */
 {
   if(nrh <= nrl)
-      error_and_exit("nrh <= nrl in free_cmatrix()",SILLY_ARGUMENTS_IN_FREE_CMATRIX);
+      exit_with_msg_and_error_code("nrh <= nrl in free_cmatrix()",SILLY_ARGUMENTS_IN_FREE_CMATRIX);
   if(nch <= ncl)
-      error_and_exit("nch <= ncl in free_cmatrix()",SILLY_ARGUMENTS_IN_FREE_CMATRIX);
+      exit_with_msg_and_error_code("nch <= ncl in free_cmatrix()",SILLY_ARGUMENTS_IN_FREE_CMATRIX);
   free((FREE_ARG) (m[nrl]+ncl-NR_END));
   free((FREE_ARG) (m+nrl-NR_END));
 }
@@ -159,7 +159,7 @@ float *vector(long nl, long nh)
 
 	v=(float *)malloc((size_t) ((nh-nl+1+NR_END)*sizeof(float)));
 	if (!v)
-	  error_and_exit("Memory allocation in vector()",MEMORY_ALLOCATION_ERROR_IN_VECTOR);
+	  exit_with_msg_and_error_code("Memory allocation in vector()",MEMORY_ALLOCATION_ERROR_IN_VECTOR);
 	return v-nl+NR_END;
 }
 
@@ -170,7 +170,7 @@ int *ivector(long nl, long nh)
 
 	v=(int *)malloc((size_t) ((nh-nl+1+NR_END)*sizeof(int)));
 	if (!v) 
-	  error_and_exit("Memory allocation error in vector()",MEMORY_ALLOCATION_ERROR_IN_IVECTOR);
+	  exit_with_msg_and_error_code("Memory allocation error in vector()",MEMORY_ALLOCATION_ERROR_IN_IVECTOR);
 	return v-nl+NR_END;
 }
 
@@ -181,7 +181,7 @@ unsigned char *cvector(long nl, long nh)
 
 	v=(unsigned char *)malloc((size_t) ((nh-nl+1+NR_END)*sizeof(unsigned char)));
 	if (!v)
-	  error_and_exit("Memory allocation error in cvector()",MEMORY_ALLOCATION_ERROR_IN_CVECTOR);
+	  exit_with_msg_and_error_code("Memory allocation error in cvector()",MEMORY_ALLOCATION_ERROR_IN_CVECTOR);
 	return v-nl+NR_END;
 }
 
@@ -191,7 +191,7 @@ double *dvector(long nl, long nh)
 	double *v;
 	v=(double *)malloc((size_t) ((nh-nl+1+NR_END)*sizeof(double)));
 	if (!v)
-	  error_and_exit("Memory allocation error in dvector()",MEMORY_ALLOCATION_ERROR_IN_DVECTOR);
+	  exit_with_msg_and_error_code("Memory allocation error in dvector()",MEMORY_ALLOCATION_ERROR_IN_DVECTOR);
 	return v-nl+NR_END;
 }
 
@@ -208,7 +208,7 @@ float **matrix(long nrl, long nrh, long ncl, long nch)
 	m=(float **) malloc((size_t)((nrow+NR_END)*sizeof(float*)));
 #endif
 	if (!m) 
-	  error_and_exit("Memory allocation error #1 in matrix()",MEMORY_ALLOCATION_ERROR_IN_MATRIX);
+	  exit_with_msg_and_error_code("Memory allocation error #1 in matrix()",MEMORY_ALLOCATION_ERROR_IN_MATRIX);
 	m += NR_END;
 	m -= nrl;
 
@@ -219,7 +219,7 @@ float **matrix(long nrl, long nrh, long ncl, long nch)
 	m[nrl]=(float *) malloc((size_t) ((nrow*ncol+NR_END)*sizeof(float)));
 #endif
 	if (!m[nrl]) 
-	  error_and_exit("Memory allocation error #2 in matrix()",MEMORY_ALLOCATION_ERROR_IN_MATRIX);
+	  exit_with_msg_and_error_code("Memory allocation error #2 in matrix()",MEMORY_ALLOCATION_ERROR_IN_MATRIX);
 	m[nrl] += NR_END;
 	m[nrl] -= ncl;
 
@@ -242,7 +242,7 @@ double **dmatrix(long nrl, long nrh, long ncl, long nch)
 	m=(double **) malloc((size_t)((nrow+NR_END)*sizeof(double*)));
 #endif
 	if (!m) 
-	  error_and_exit("Memory allocation error #1 in dmatrix()",MEMORY_ALLOCATION_ERROR_IN_DMATRIX);
+	  exit_with_msg_and_error_code("Memory allocation error #1 in dmatrix()",MEMORY_ALLOCATION_ERROR_IN_DMATRIX);
 	m += NR_END;
 	m -= nrl;
 
@@ -253,7 +253,7 @@ double **dmatrix(long nrl, long nrh, long ncl, long nch)
 	m[nrl]=(double *) malloc((size_t)((nrow*ncol+NR_END)*sizeof(double)));
 #endif
 	if (!m[nrl]) 
-	  error_and_exit("Memory allocation error #2 in dmatrix()",MEMORY_ALLOCATION_ERROR_IN_DMATRIX);
+	  exit_with_msg_and_error_code("Memory allocation error #2 in dmatrix()",MEMORY_ALLOCATION_ERROR_IN_DMATRIX);
 	m[nrl] += NR_END;
 	m[nrl] -= ncl;
 
@@ -272,7 +272,7 @@ int **imatrix(long nrl, long nrh, long ncl, long nch)
 	/* allocate pointers to rows */
 	m=(int **) malloc((size_t)((nrow+NR_END)*sizeof(int*)));
 	if (!m) 
-	  error_and_exit("Memory allocation error #1 in imatrix()",MEMORY_ALLOCATION_ERROR_IN_IMATRIX);
+	  exit_with_msg_and_error_code("Memory allocation error #1 in imatrix()",MEMORY_ALLOCATION_ERROR_IN_IMATRIX);
 	m += NR_END;
 	m -= nrl;
 
@@ -280,7 +280,7 @@ int **imatrix(long nrl, long nrh, long ncl, long nch)
 	/* allocate rows and set pointers to them */
 	m[nrl]=(int *) malloc((size_t)((nrow*ncol+NR_END)*sizeof(int)));
 	if (!m[nrl]) 
-	  error_and_exit("Memory allocation error #2 in imatrix()",MEMORY_ALLOCATION_ERROR_IN_IMATRIX);
+	  exit_with_msg_and_error_code("Memory allocation error #2 in imatrix()",MEMORY_ALLOCATION_ERROR_IN_IMATRIX);
 	m[nrl] += NR_END;
 	m[nrl] -= ncl;
 
@@ -294,7 +294,7 @@ void free_vector(float *v, long nl, long nh)
 /* free a float vector allocated with vector() */
 {
   if(nh <= nl)
-    error_and_exit("nh is <= nl in call to free_vector",SILLY_ARGUMENTS_IN_FREE_VECTOR);
+    exit_with_msg_and_error_code("nh is <= nl in call to free_vector",SILLY_ARGUMENTS_IN_FREE_VECTOR);
   free((FREE_ARG) (v+nl-NR_END));
 }
 
@@ -302,7 +302,7 @@ void free_ivector(int *v, long nl, long nh)
 /* free an int vector allocated with ivector() */
 {
   if(nh <= nl)
-    error_and_exit("nh is <= nl in call to free_ivector",SILLY_ARGUMENTS_IN_FREE_IVECTOR);
+    exit_with_msg_and_error_code("nh is <= nl in call to free_ivector",SILLY_ARGUMENTS_IN_FREE_IVECTOR);
   free((FREE_ARG) (v+nl-NR_END));
 }
 
@@ -310,7 +310,7 @@ void free_cvector(unsigned char *v, long nl, long nh)
 /* free an unsigned char vector allocated with cvector() */
 {
   if(nh <= nl)
-    error_and_exit("nh is <= nl in call to free_cvector",SILLY_ARGUMENTS_IN_FREE_CVECTOR);
+    exit_with_msg_and_error_code("nh is <= nl in call to free_cvector",SILLY_ARGUMENTS_IN_FREE_CVECTOR);
   free((FREE_ARG) (v+nl-NR_END));
 }
 
@@ -319,7 +319,7 @@ void free_dvector(double *v, long nl, long nh)
 /* free a double vector allocated with dvector() */
 {
   if(nh <= nl)
-    error_and_exit("nh is <= nl in call to free_dvector",SILLY_ARGUMENTS_IN_FREE_DVECTOR);
+    exit_with_msg_and_error_code("nh is <= nl in call to free_dvector",SILLY_ARGUMENTS_IN_FREE_DVECTOR);
   free((FREE_ARG) (v+nl-NR_END));
 }
 
@@ -327,9 +327,9 @@ void free_dmatrix(double **m, long nrl, long nrh, long ncl, long nch)
 /* free a double matrix allocated by dmatrix() */
 {
   if(nrh <= nrl)
-    error_and_exit("nhh is <= nl in call to free_dmatrix",SILLY_ARGUMENTS_IN_FREE_DMATRIX);
+    exit_with_msg_and_error_code("nhh is <= nl in call to free_dmatrix",SILLY_ARGUMENTS_IN_FREE_DMATRIX);
   if(nch <= ncl)
-    error_and_exit("nch is <= nl in call to free_dmatrix",SILLY_ARGUMENTS_IN_FREE_DMATRIX);
+    exit_with_msg_and_error_code("nch is <= nl in call to free_dmatrix",SILLY_ARGUMENTS_IN_FREE_DMATRIX);
   free((FREE_ARG) (m[nrl]+ncl-NR_END));
   free((FREE_ARG) (m+nrl-NR_END));
 }
@@ -338,9 +338,9 @@ void free_cx(char **m, long nrl, long nrh, long ncl, long nch)
 /* free a char matrix allocated by cmatrix() */
 {
   if(nrh <= nrl)
-    error_and_exit("nrh is <= nrl in call to free_charmatrix",SILLY_ARGUMENTS_IN_FREE_CMATRIX);
+    exit_with_msg_and_error_code("nrh is <= nrl in call to free_charmatrix",SILLY_ARGUMENTS_IN_FREE_CMATRIX);
   if(nch <= ncl)
-    error_and_exit("nch is <= ncl in call to free_charmatrix",SILLY_ARGUMENTS_IN_FREE_CMATRIX);
+    exit_with_msg_and_error_code("nch is <= ncl in call to free_charmatrix",SILLY_ARGUMENTS_IN_FREE_CMATRIX);
   free((FREE_ARG) (m[nrl]+ncl-NR_END));
   free((FREE_ARG) (m+nrl-NR_END));
 }
@@ -349,9 +349,9 @@ void free_imatrix(int **m, long nrl, long nrh, long ncl, long nch)
 /* free an int matrix allocated by imatrix() */
 {
   if(nrh <= nrl)
-    error_and_exit("nrh is <= nrl in call to free_imatrix",SILLY_ARGUMENTS_IN_FREE_IMATRIX);
+    exit_with_msg_and_error_code("nrh is <= nrl in call to free_imatrix",SILLY_ARGUMENTS_IN_FREE_IMATRIX);
   if(nch <= ncl)
-    error_and_exit("nch is <= ncl in call to free_imatrix",SILLY_ARGUMENTS_IN_FREE_IMATRIX);
+    exit_with_msg_and_error_code("nch is <= ncl in call to free_imatrix",SILLY_ARGUMENTS_IN_FREE_IMATRIX);
   free((FREE_ARG) (m[nrl]+ncl-NR_END));
   free((FREE_ARG) (m+nrl-NR_END));
 }

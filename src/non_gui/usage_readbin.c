@@ -38,5 +38,5 @@ void usage_readbin(void)
   fprintf(stderr,"  -r        Used when analysing binary files created on\
   the other byte-ordering\n            (ie a big-endian example.V.bin file\
   on a small endian machine - or\n            the reverse)\n");
-  error_and_exit("",PROGRAM_CALLED_WITH_WRONG_NUMBER_OF_ARGUMENTS);
+  exit_with_msg_and_error_code("",PROGRAM_CALLED_WITH_WRONG_NUMBER_OF_ARGUMENTS);
 }

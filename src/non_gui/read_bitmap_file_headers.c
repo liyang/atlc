@@ -60,13 +60,13 @@ void read_bitmap_file_headers(char *filename, int *offset, size_t *size, int *wi
    if(fp==NULL)
    {
       fprintf(stderr,"cannot open %s\n", filename);
-      error_and_exit("",CANT_OPEN_FILE_FOR_READING);
+      exit_with_msg_and_error_code("",CANT_OPEN_FILE_FOR_READING);
    }
    /* Read the .bmp file header into a bitmap_file_buffer */
    if (!(fread(bitmap_file_buffer, 1,0x36,fp))||(strncmp((char *) bitmap_file_buffer,"BM",2)))
    {
       fprintf(stderr,"%s is not a valid BMP file\n", filename);
-      error_and_exit("",NOT_A_VALID_BITMAP_FILE);
+      exit_with_msg_and_error_code("",NOT_A_VALID_BITMAP_FILE);
    }
 #ifdef WORDS_BIGENDIAN
    swap_bytes4(bitmap_file_buffer,0x02,(int *) &Bitmap_File_Head.bfSize);
@@ -93,12 +93,12 @@ void read_bitmap_file_headers(char *filename, int *offset, size_t *size, int *wi
    if (Bitmap_File_Head.biSize == 12) /* OS/2 1.x ? */
    {
       fprintf(stderr,"Sorry, this appears to be a OS2 format bitmap, which atlc can't read\n");
-      error_and_exit("",OS2_FORMAT_BMP_FILE);
+      exit_with_msg_and_error_code("",OS2_FORMAT_BMP_FILE);
    }
    if (Bitmap_File_Head.biSize != 40) /* Windows 3.x */
    {
       fprintf(stderr,"This appears not to be a Windows format bitmap - perhaps OS2 ? Exiting ...\n");
-      error_and_exit("This appears not to be a Windows format bitmap - perhaps OS2 ? Exiting ..",NOT_A_WINDOZE_FORMAT_BITMAP);
+      exit_with_msg_and_error_code("This appears not to be a Windows format bitmap - perhaps OS2 ? Exiting ..",NOT_A_WINDOZE_FORMAT_BITMAP);
    }
 #ifdef WORDS_BIGENDIAN
    swap_bytes4(bitmap_file_buffer,0x12,(int *) &Bitmap_Head.biWidth);
@@ -129,7 +129,7 @@ void read_bitmap_file_headers(char *filename, int *offset, size_t *size, int *wi
       fprintf(stderr,"Sorry, the .bmp bitmap must have 24 bits per colour,\n");
       fprintf(stderr,"but it has %d bits. Resave the \n",Bitmap_Head.biBitCnt);
       fprintf(stderr,"image using 24-bit colour\n");
-      error_and_exit("mage using 24-bit colour",BITMAP_NOT_24_BIT);
+      exit_with_msg_and_error_code("mage using 24-bit colour",BITMAP_NOT_24_BIT);
    }
    /*
    printf("Bitmap_Head.biWidth   =%ld =0x%x\n",Bitmap_Head.biWidth,Bitmap_Head.biWidth);
@@ -153,17 +153,17 @@ void read_bitmap_file_headers(char *filename, int *offset, size_t *size, int *wi
    if (Bitmap_Head.biHeight == 0 || Bitmap_Head.biWidth == 0) 
    {
       fprintf(stderr,"error reading BMP file header of %s - width or height is zero\n",filename);
-      error_and_exit("",WIDTH_OR_HEIGHT_ZERO_IN_BITMAP);
+      exit_with_msg_and_error_code("",WIDTH_OR_HEIGHT_ZERO_IN_BITMAP);
    } 
    if (Bitmap_Head.biPlanes != 1) 
    {
       fprintf(stderr,"error reading BMP file header of %s - bitplanes not equal to 1\n",filename);
-      error_and_exit("",BITPLANES_NOT_1_IN_BITMAP);
+      exit_with_msg_and_error_code("",BITPLANES_NOT_1_IN_BITMAP);
    }
    if (ColormapSize > 256 || Bitmap_Head.biClrUsed > 256)
    {
       fprintf(stderr,"error reading BMP file header of %s - colourmap size error\n",filename);
-      error_and_exit("",COLOURMAP_GREATER_THAN_256);
+      exit_with_msg_and_error_code("",COLOURMAP_GREATER_THAN_256);
    }
    /* Windows and OS/2 declare filler so that rows are a multiple of
       word length (32 bits == 4 bytes)

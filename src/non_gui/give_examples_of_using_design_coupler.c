@@ -75,5 +75,5 @@ void give_examples_of_using_design_coupler(void)
   printf("This can be reduced by the -q option or reduced to only one line with -Q\n");
   printf("Other options include -Z to change the impedance from the default 50 Ohms\n");
   printf("and -C to see the fully copyright, Licensing and distribution information\n");
-  error_and_exit("",OKAY);
+  exit_with_msg_and_error_code("",OKAY);
 }

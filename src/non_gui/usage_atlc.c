@@ -55,6 +55,6 @@ void usage_atlc(void)
   fprintf(stderr,"1) This is a Windoze executable OR\n");
   fprintf(stderr,"2) This is a Unix executable but not configured with multi-processor support.\n");
   fprintf(stderr,"There are no plans to add multi-processor support to Windoze, but if this is a\n");
-  fprintf(stderr,"Unix executable, then re-run 'configure' using the '--with-mp' option\n");
+  fprintf(stderr,"Unix executable, then re-run 'configure' using the '--with-threads' option\n");
 #endif
 }

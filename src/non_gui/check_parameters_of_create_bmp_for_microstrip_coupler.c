@@ -55,17 +55,17 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 void check_parameters_of_create_bmp_for_microstrip_coupler(struct transmission_line_properties pcb) 
 {
       if ( pcb.ww <= 0)
-	error_and_exit("w <= 0",ARGUMENT_w_OUT_OF_RANGE);
+	exit_with_msg_and_error_code("w <= 0",ARGUMENT_w_OUT_OF_RANGE);
       if ( pcb.ss <= 0)
-	error_and_exit("s <= 0",ARGUMENT_s_OUT_OF_RANGE);
+	exit_with_msg_and_error_code("s <= 0",ARGUMENT_s_OUT_OF_RANGE);
       if ( pcb.gg <= 0)
-	error_and_exit("g <= 0",ARGUMENT_g_OUT_OF_RANGE);
+	exit_with_msg_and_error_code("g <= 0",ARGUMENT_g_OUT_OF_RANGE);
       if ( pcb.hh <= 0)
-	error_and_exit("h <= 0",ARGUMENT_h_OUT_OF_RANGE);
+	exit_with_msg_and_error_code("h <= 0",ARGUMENT_h_OUT_OF_RANGE);
       if ( pcb.tt <= 0)
-	error_and_exit("0 <= 0",ARGUMENT_t_OUT_OF_RANGE);
+	exit_with_msg_and_error_code("0 <= 0",ARGUMENT_t_OUT_OF_RANGE);
       if ( pcb.Er1 < 1)
-	error_and_exit("0 <= 0",ARGUMENT_Er1_OUT_OF_RANGE);
+	exit_with_msg_and_error_code("0 <= 0",ARGUMENT_Er1_OUT_OF_RANGE);
       if ( pcb.Er2 < 1)
-	error_and_exit("0 <= 0",ARGUMENT_Er2_OUT_OF_RANGE);
+	exit_with_msg_and_error_code("0 <= 0",ARGUMENT_Er2_OUT_OF_RANGE);
 }

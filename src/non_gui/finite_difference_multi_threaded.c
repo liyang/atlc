@@ -103,7 +103,7 @@ double finite_difference(int accuracy)
   if(threads == NULL)
   {
     fprintf(stderr,"malloc failed for threads in finite .. .c\n");
-    error_and_exit("alloc failed for threads in finite_difference_multi_threaded.c",MALLOC_FAILED);
+    exit_with_msg_and_error_code("alloc failed for threads in finite_difference_multi_threaded.c",MALLOC_FAILED);
   }
   y=1;
   inc=(width-max_threads)/max_threads;

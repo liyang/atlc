@@ -65,5 +65,5 @@ void usage_create_bmp_for_microstrip_coupler(void)
       fprintf(stderr,"GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG. v\n");
       fprintf(stderr,"<-----------------------------------W----------------------------------->\n\n");
       fprintf(stderr,"E.g. \ncreate_bmp_for_microstrip_coupler 1.5 2.0 1 1.593 0.035 1 3.7 foo.bmp\n\n");
-      error_and_exit("",PROGRAM_CALLED_WITH_WRONG_NUMBER_OF_ARGUMENTS);
+      exit_with_msg_and_error_code("",PROGRAM_CALLED_WITH_WRONG_NUMBER_OF_ARGUMENTS);
 }

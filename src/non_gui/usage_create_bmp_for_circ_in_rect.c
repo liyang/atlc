@@ -70,5 +70,5 @@ void usage_create_bmp_for_circ_in_rect(void)
       fprintf(stderr,"<---------------------------W-------------------------->\n");
       fprintf(stderr,"                                     ***\n\n");
       fprintf(stderr,"Example: create_bmp_for_circ_in_rect 20 100 150 25 10 3.7 foo.bmp\n");
-      error_and_exit("",PROGRAM_CALLED_WITH_WRONG_NUMBER_OF_ARGUMENTS);
+      exit_with_msg_and_error_code("",PROGRAM_CALLED_WITH_WRONG_NUMBER_OF_ARGUMENTS);
 }

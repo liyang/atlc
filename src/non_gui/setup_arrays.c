@@ -147,7 +147,7 @@ void setup_arrays(struct transmission_line_properties *data)
 	    fprintf(stderr,"are predefined in Erdata.h, nor is a corresponding dielectric constant defined\n");
 	    fprintf(stderr,"on the command line line with the -d option\n");
 	    fprintf(stderr,"e.g. atlc -d %2x%2x%2x=1.9 file.bmp if this colour has a permittivity of 1.9\n",red,green,blue);
-	    error_and_exit("",UNDEFINED_COLOUR_IN_BITMAP);
+	    exit_with_msg_and_error_code("",UNDEFINED_COLOUR_IN_BITMAP);
          }
          /* We need to keep a record of the number of dielectrics in the image, 
          and determine if they are defined on the command line, or if they are
@@ -213,7 +213,7 @@ void setup_arrays(struct transmission_line_properties *data)
        if((Vij[w][h] > 1.0) || (Vij[w][h]<-1.0))
        {
          fprintf(stderr,"Sorry, something is wrong Vij[%d][%d]=%f in %s %d\n",w,h,Vij[w][h], __FILE__,__LINE__);
-	 error_and_exit("Exiting ....",VOLTAGE_OUT_OF_RANGE);
+	 exit_with_msg_and_error_code("Exiting ....",VOLTAGE_OUT_OF_RANGE);
        }
      }
    } 

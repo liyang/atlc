@@ -60,7 +60,7 @@ int main(int argc, char **argv)
   {
     case 'C':
       print_copyright( (char *) "1996-2002");
-      error_and_exit("",OKAY);
+      exit_with_msg_and_error_code("",OKAY);
     break;
     case 'g':
       gmin=atof(my_optarg);
@@ -133,10 +133,10 @@ int main(int argc, char **argv)
 	return_value_from_create_bmp_for_microstrip_coupler);
 	//system(cmd);
 	if ((fp=fopen(temporary_txt_file,"r")) ==NULL)
-	  error_and_exit("Error #1 cant't open file in find_optimal_dimensions_for_microstrip_coupler.c", CANT_OPEN_FILE_FOR_READING);
+	  exit_with_msg_and_error_code("Error #1 cant't open file in find_optimal_dimensions_for_microstrip_coupler.c", CANT_OPEN_FILE_FOR_READING);
 	fscanf(fp,"%s %d %s %lf %s %lf %s %lf %s %lf %s %lf %s %lf %s %lf",null,&x,null,&Er_odd,null,&Er_even, null, &Zodd,null,&Zeven,null,&Zo, null, &Zdiff,null,&Zcomm);
 	if (fclose(fp) !=0)
-	  error_and_exit("Error #2 Unable to close file in ind_optimal_dimensions_for_microstrip_coupler.c",CANT_CLOSE_FILE);
+	  exit_with_msg_and_error_code("Error #2 Unable to close file in ind_optimal_dimensions_for_microstrip_coupler.c",CANT_CLOSE_FILE);
 	printf("x=%d Er_odd=%f Er_even=%f Zodd=%f Zeven=%f Zo=%f Zdiff=%f Zcomm=%f\n",x, Er_odd,Er_even,Zodd, Zeven,Zo, Zdiff, Zcomm);
 	error=fabs(Zodd-ideal_Zodd)/ideal_Zodd+fabs(Zeven-ideal_Zeven)/ideal_Zeven;
 	/* By forcing the error to be a be not just bettter, but better by at 
@@ -150,10 +150,10 @@ int main(int argc, char **argv)
 	  error_min=error;
 	  printf("best so far = s=%f w=%f g=%f Zodd=%f Zeven=%f Zdiff=%f Zcomm=%f error=%f\n",s,w,g, Zodd, Zeven,Zdiff, Zcomm,error);
 	  if ((fp_best=fopen(outfile_name,"a")) == NULL)
-	    error_and_exit("Error #3 Can't open file output file update",CANT_OPEN_FILE_FOR_APPENDING);
+	    exit_with_msg_and_error_code("Error #3 Can't open file output file update",CANT_OPEN_FILE_FOR_APPENDING);
 	  fprintf(fp_best,"best so far = s=%f w=%f g=%f Zodd=%f Zeven=%f Zdiff=%f Zcomm=%f\n",s,w,g, Zdiff, Zcomm,Zodd, Zeven);
 	  if (fclose(fp_best)  != 0)
-	    error_and_exit("Error #4 Unable to close file in optimal_dimensions_for_microstrip_coupler.c",CANT_CLOSE_FILE);
+	    exit_with_msg_and_error_code("Error #4 Unable to close file in optimal_dimensions_for_microstrip_coupler.c",CANT_CLOSE_FILE);
         } // end of if
       } // end of for s
     } // end of for w
