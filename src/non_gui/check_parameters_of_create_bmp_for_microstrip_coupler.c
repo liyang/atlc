@@ -38,16 +38,8 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 
 #include "definitions.h"
 
-#ifdef ENABLE_MP
-
-#ifdef HAVE_THREAD_H
-#include <thread.h>
-#endif
-
-#ifdef HAVE_PTHREAD_H
+#ifdef ENABLE_POSIX_THREADS
 #include <pthread.h>
-#endif
-
 #endif
 
 #include "exit_codes.h"
