@@ -1,4 +1,10 @@
-****** Version 4.4.1 Released August 31th 2003 ****
+****** Version 4.4.1 Released September 4th 2003 ****
+
+configure.ac
+Changed version to 4.4.1 
+Added sys/sysctl.h and sysctl as these are used on BSD try_bsd.c
+to gather information on a BSD UNIX system. 
+
 docs/html-docs/index2.html
 Changed a typo or two. Added an entry for Unixware, as someone emailed
 me to say iversion 4.0.0 works on UnixWare. 
@@ -9,10 +15,37 @@ break. It now reads both files.
 
 tests/try_irix.c
 Much improved, finds information about cache and main ram on IRIX now
+Also speed of CPU, and type of CPU and FPU, although the latter are not
+decoded into a sensible number like R10000. 
 
 tests/benchmark.test  
 information now prints the fact the IRIX information is good, not 
 poor as in prior versions. 
+
+THANKS 
+Added new testers and thanks the cray site's administrators. 
+
+Now informs the amount of RAM on Linux and BSD systems is a little
+larger than the value reported.
+
+tests/Makefile.am
+Added a new binary sysdata, which prints data in this format. 
+
+Hardware provider:    Sun_Microsystems
+Hardware platform:    SUNW,Ultra-80
+Machine:              sun4u
+Sysname:              SunOS
+Release:              5.9
+Nodename:             Generic_112233-06
+#CPUs supported:      4
+#CPUs online:         4
+CPU type:             sparcv9
+FPU type:             sparcv9
+Speed:                450 MHz
+RAM:                  4096 Mb
+L1 data cache         unknown kb
+L1 instruction cache: unknown kb
+L2 cache:             unknown kb
 
 ****** Version 4.4.0 Released August 30th 2003 ****
 BUGS 
