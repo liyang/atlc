@@ -46,7 +46,6 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #include <pthread.h>
 #endif
 
-
 #ifdef ENABLE_MPI
 #include <mpi.h>
 #endif
@@ -58,39 +57,18 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #endif
 
 
-#ifdef ENABLE_MPI
-
-void mpi_setup_strip_map(int verbose_level);
-void mpi_send_initial_data();
-void mpi_kill_workers();
-
-#endif /* ENABLE_MPI */
-
-//#define DEBUG
-
 
 struct pixels Er_on_command_line[MAX_DIFFERENT_PERMITTIVITIES];
 struct pixels Er_in_bitmap[MAX_DIFFERENT_PERMITTIVITIES];
 
-double **Vij;
+double **Vij, **Vij2;
 double **Er;
 char **cell_type; 
-#ifdef ENABLE_MPI
-int num_pes=0;
-int width_height[2];
-struct strip strip_map[MAX_PES+1];  /* PE 0 will use two map entries */
-double strip_weights[MAX_PES];
-MPI_Request strip_params_send_requests[MAX_PES];
-MPI_Request cell_type_send_requests[MAX_PES];
-MPI_Request er_send_requests[MAX_PES];
-MPI_Request control_send_requests[MAX_PES];
-MPI_Status ignored_statuses[MAX_PES];
-#endif /* ENABLE_MPI */
 unsigned char *image_data;
-int width, height;
+int width=-1, height=-1;
 extern int errno;
 size_t size;
-int max_threads=MAX_THREADS, non_vacuum_found=FALSE;
+int number_of_workers=MAX_THREADS, non_vacuum_found=FALSE;
 int dielectrics_to_consider_just_now;
 int coupler=FALSE;
 double r=1.95;
@@ -105,35 +83,7 @@ extern int main(int argc, char **argv) /* Read parameters from command line */
   int q;
   char *end;
   struct transmission_line_properties data;
-#ifdef ENABLE_MPI
-  int my_rank;
-  int width_height[2];
-  char *end_ptr;
-#endif
-
   errno=0; 
-#ifdef ENABLE_MPI
-  MPI_Init(&argc,&argv);
-
-  MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
-  MPI_Comm_size(MPI_COMM_WORLD, &num_pes);
-
-  if (num_pes < 2) {
-	exit_with_msg_and_exit_code("You must use more than 1 PE. run via mpirun (man mpirun)",5);
-  }
-
-  if (0 != my_rank) {
-	mpi_worker(my_rank);
-	exit_with_msg_and_exit_code("",5);
-  } else {
-	for(i=0; i<num_pes; i++) {
-	  strip_weights[i]=1.0;
-	}
-  }
-#endif /* ENABLE_MPI */
-#ifdef DEBUG
-  printf("errno=%d in atlc.c #1\n",errno);
-#endif
   set_data_to_sensible_starting_values(&data);
   inputfile_name=string(0,1024);
   outputfile_name=string(0,1024);
@@ -182,6 +132,7 @@ extern int main(int argc, char **argv) /* Read parameters from command line */
     break;
     case 'r':
       data.r=atof(my_optarg);
+      r=data.r;
     break;
     case 's':
       data.write_bitmap_field_imagesQ=FALSE;
@@ -190,48 +141,31 @@ extern int main(int argc, char **argv) /* Read parameters from command line */
       data.write_binary_field_imagesQ=FALSE;
     break;
     case 't':
-      max_threads=atol(my_optarg);
+      number_of_workers=atol(my_optarg);
+      if(number_of_workers > MAXIMUM_PROCESSING_DEVICES)
+      {
+         fprintf(stderr,"You are exceeded the %d limit set in the file definitions.h\n",MAXIMUM_PROCESSING_DEVICES);
+	 fprintf(stderr,"If you really do want this many, you will need to recompile\n");    
+         exit_with_msg_and_exit_code("",USER_REQUESTED_TOO_MANY_THREADS);
+      }
 #ifndef ENABLE_POSIX_THREADS
-      exit_with_msg_and_exit_code("Error #1. The -t option can not be used on a package_version of \
-atlc that was not\nconfigured with the --with-threads option, and hence built \
-without the threads\nlibrary.\n",1);
+      if(number_of_workers != 0)
+         exit_with_msg_and_exit_code("Error #1. The -t option can not be \
+used, (except to  set t=0, which is an \nexception made to allow a \
+benchmark to run), on a version of atlc that was \nnot configured with the \
+--with-threads option, and hence built without the \nthreads library.\n",1);
 #endif
     break;
     case 'w':
-#ifdef ENABLE_MPI
-	  i = 0;
-	  end_ptr = my_optarg;
-	  do {
-		strip_weights[i] = strtod(my_optarg, &end_ptr);
-		if (*end_ptr != ':' && *end_ptr != '\0') {
-		  exit_with_msg_and_exit_code("bad weight string", 6);
-		}
-		if (end_ptr == my_optarg) {
-		  exit_with_msg_and_exit_code("bad weight string", 6);
-		}
-		my_optarg = end_ptr + 1;
-		i++;
-	  }	while(*end_ptr != '\0');
-
-	  if (i != num_pes) {
-		exit_with_msg_and_exit_code("number of weight string entries much match number of PEs",6);
-	  }
-
-	  for(i=0; i<num_pes; i++) {
-		printf("PE %ld weight: %f\n", i, strip_weights[i]);
-	  }
-#else
-	  exit_with_msg_and_exit_code("bad argument -- w", 5);
+#ifndef ENABLE_MPI
+      exit_with_msg_and_exit_code("Error #1a. The -w option can not be used on \
+a version of atlc that was not\nconfigured with the --with-mpi option, \
+hence built without the mpi\nlibrary.\n",1);
 #endif
-	break;
+          break;
     case 'i': /* Lighten or darken images of E-field */
-    data.image_fiddle_factor=atof(my_optarg);
-    if(data.image_fiddle_factor < 1.0)
-    {
-      fprintf(stderr,"Error #2.image_fiddle_factor set to %f. It must not be less than 1.\n",data.image_fiddle_factor);
-      exit_with_msg_and_exit_code("",2);
-    }
-    break;
+	  data.image_fiddle_factor=atof(my_optarg);
+	  break;
     case 'v':
       data.verbose_level++;
     break;
@@ -249,55 +183,34 @@ without the threads\nlibrary.\n",1);
   printf("errno=%d in atlc.c #2\n",errno);
 #endif
     strcpy(inputfile_name, argv[my_optind]);
-    //strcpy(outputfile_name, inputfile_name);
     strcpy(outputfile_name, output_prefix);
     strcat(output_prefix,inputfile_name);
     strcpy(outputfile_name,output_prefix);
     free_string(output_prefix,0,1024);
     read_bitmap_file_headers(inputfile_name, &offset, &size, &width, &height);
+
     /* Allocate all ram now, so atlc is sure to have it. There is no point
     in getting some now, starting work then finding atlc can't get the 
     rest of what is needed. */
     image_data=ustring(0L,size);
     cell_type=cmatrix(0,width-1,0,height-1);
     Vij=dmatrix(0,width-1,0,height-1);
+    Vij2=dmatrix(0,width-1,0,height-1);
     Er=dmatrix(0,width-1,0,height-1);
     /* On Solaris systems, if the following is not executed, only one 
     thread will run at any one time, which rather defeats the object of 
     running multi-threaded. */
+
 #ifdef ENABLE_POSIX_THREADS
-#ifdef HAVE_PTHREAD_SETCONCURRENCY
-    pthread_setconcurrency(max_threads);
-#endif
+#ifdef HAVE_PTHREAD_SETCONCURRENCY     
+    pthread_setconcurrency(number_of_workers);
+#endif 
 #endif 
     
     /* Each thread solves the equations for a part of the voltage
     matrix. If there were more threads than columms we would have a
     problem. I'm not sure exactly how many can be got away with, but
     one is unlikly to have more cpus that matrix columns */
-
-    if(max_threads > width/4)
-      max_threads=width/4;
-
-#ifdef ENABLE_MPI
-	if(num_pes > width/4) {
-	  num_pes = width/4;
-	}
-
-	mpi_setup_strip_map(data.verbose_level);
-
-	width_height[0]= width;
-	width_height[1]= height;
-
-	for(i=1; i<num_pes; i++) {
-	  MPI_Send(&width_height,
-			   2,
-			   MPI_INT,
-			   i,
-			   MSG_TAG_WIDTH_HEIGHT,
-			   MPI_COMM_WORLD);
-	}
-#endif /* ENABLE_MPI */
 
     /* In theory, it would be sensible to get atlc to be able to read
     from stdin. This is a test, that checks if the filename is '-', and
@@ -309,7 +222,6 @@ without the threads\nlibrary.\n",1);
 #endif
     if( strcmp(argv[my_optind],"-") != 0)
     {
-      //if( (image_data_fp=fopen(outputfile_name, "rb")) == NULL)
       if( (image_data_fp=fopen(inputfile_name, "rb")) == NULL)
       {
         fprintf(stderr,"Error #3. Can't open %s!!!!!\n", argv[my_optind]);
@@ -350,27 +262,11 @@ without the threads\nlibrary.\n",1);
     the permittivites and 'cell_type' is either FIXED or variable, 
     indicating a dielectric (VARIABLE) or a metal */
 
-#ifdef ENABLE_MPI
-	mpi_send_initial_data();
-#endif /* ENABLE_MPI */
 
     /* If there are multiple dielectrics, the impedance calculations
     needs to be done twice. We start by doing them once, for an vacuum
     dielectric. If necessary, they will be done again */
-#ifdef DEBUG
-  printf("errno=%d in atlc.c #4\n",errno);
-#endif
     do_fd_calculation(&data, where_to_print_fp,outputfile_name);
-#ifdef DEBUG
-  printf("errno=%d in atlc.c #5\n",errno);
-#endif
-
-#ifdef ENABLE_MPI
-	mpi_kill_workers();
-
-	MPI_Finalize();
-#endif /* ENABLE_MPI */
-
   }
   else
   {
@@ -383,149 +279,7 @@ without the threads\nlibrary.\n",1);
   free_ustring(image_data,0L,size);
   free_cmatrix(cell_type,0,width-1,0,height-1);
   free_dmatrix(Vij, 0,width-1,0,height-1);
+  free_dmatrix(Vij2, 0,width-1,0,height-1);
   free_dmatrix(Er,0,width-1,0,height-1);
-
   return(OKAY); 
 }
-
-
-
-#ifdef ENABLE_MPI
-
-
-void mpi_setup_strip_map (int verbose_level) {
-  int i, strip_width, leftover;
-  int start_col;
-  double sum_of_weights;
-
-  sum_of_weights = 0.0;
-  for(i=0; i<num_pes; i++) {
-	sum_of_weights += strip_weights[i];
-  }
-
-  /* distribute the bulk of the columns evenly across the PEs */
-  leftover = width;
-  for (i=0, start_col=0; i<num_pes; i++, start_col+=strip_width) {
-	strip_width = width*strip_weights[i]/sum_of_weights;
-
-	strip_map[i].start_col = start_col;
-	strip_map[i].num_cols = strip_width;
-
-	leftover -= strip_width;
-  }
-
-  /* give a leftover column to each PE until they are all gone */
-  if (leftover) {
-	strip_map[0].num_cols++;
-  }
-  for(i=1; i<leftover; i++) {
-	strip_map[i].start_col = strip_map[i-1].start_col + strip_map[i-1].num_cols;
-	strip_map[i].num_cols++;
-  }
-  for(i=leftover; i<num_pes; i++) {
-	strip_map[i].start_col = strip_map[i-1].start_col + strip_map[i-1].num_cols;
-  }
-
-
-  /* now rotate the map left half of the PE 0 strip_width, assigning PE 0 the
-	 resulting left and right half-strips, so that it handles
-	 both the left and right edge conditions.  this allows us to conserve
-	 memory on the worker PEs, simplify the indexing on the workers a bit, 
-	 and leave the existing computational routines unchanged in the face of all 
-	 of that. */
-  strip_width = strip_map[0].num_cols;
-  for(i=1; i<num_pes; i++) {
-	strip_map[i].start_col -= strip_width/2;
-  }
-  strip_map[0].num_cols -= strip_width/2;
-
-  /* add an additional entry to the map to cover the rightmost strip_width/2 
-	 columns that wereuncovered by the shift to the left */
-  strip_map[num_pes].start_col = 
-	strip_map[num_pes-1].start_col + 
-	strip_map[num_pes-1].num_cols;
-  strip_map[num_pes].num_cols = width - strip_map[num_pes].start_col;
-
-  if (verbose_level > 1) {
-	printf("map: ");
-	for(i=0; i<=num_pes; i++) {
-	  printf("(%d:%d), ", strip_map[i].start_col, 
-			 strip_map[i].start_col + strip_map[i].num_cols - 1);
-	}
-	printf(" (end)\n");
-  }
-
-}
-
-
-void mpi_send_initial_data() {
-  int i;
-  int start_col, num_cols;
-  int strip_params[2];
-
-  /* each worker PE needs to know what part of the matrix it has
-	 been given, and needs a copy of the cell_type and Er arrays
-	 corresponding to its strip.
-  */
-
-  for(i=1; i<num_pes; i++) {
-	start_col = strip_map[i].start_col;
-	num_cols = strip_map[i].num_cols;
-	  
-	strip_params[0] = start_col;
-	strip_params[1] = num_cols;
-	
-	MPI_Isend(strip_params,
-			  2,
-			  MPI_INT,
-			  i,
-			  MSG_TAG_STRIP_PARAMS,
-			  MPI_COMM_WORLD,
-			  &strip_params_send_requests[i-1]);
-	
-	/* each worker is given two extra columns to 
-	   the left of its strip and one to the right.
-	   see the comments in finite_difference_mpi.c
-	   for details */
-	  
-	MPI_Isend(cell_type[start_col-2],
-			  (num_cols+4)*height,
-			  MPI_INT,
-			  i,
-			  MSG_TAG_CELL_TYPE,
-			  MPI_COMM_WORLD,
-			  &cell_type_send_requests[i-1]);
-	  
-	MPI_Isend(Er[start_col-2],
-			  (num_cols+4)*height,
-			  MPI_DOUBLE,
-			  i,
-			  MSG_TAG_ER,
-			  MPI_COMM_WORLD,
-			  &er_send_requests[i-1]);
-			 
-  }
-
-  MPI_Waitall(num_pes-1, strip_params_send_requests, ignored_statuses);
-  MPI_Waitall(num_pes-1, cell_type_send_requests, ignored_statuses);
-  MPI_Waitall(num_pes-1, er_send_requests, ignored_statuses);
-}
-
-
-void mpi_kill_workers() {
-  int control, i;
-	/* kill off all of the worker PEs*/
-	control = CONTROL_VALUE_EXIT;
-	for(i=1; i<num_pes; i++) {
-	  MPI_Isend(&control,
-				1,
-				MPI_INT,
-				i,
-				MSG_TAG_CONTROL,
-				MPI_COMM_WORLD,
-				&control_send_requests[i-1]);
-	}
-	MPI_Waitall(num_pes-1, control_send_requests, ignored_statuses);
-}
-
-#endif /* ENABLE_MPI */
