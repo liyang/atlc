@@ -129,7 +129,11 @@ double finite_difference(int accuracy)
     { 
 	energy_per_metre+=find_energy_per_metre(i,j);
     }
-  capacitance_per_metre=2*energy_per_metre;
+  if(coupler==FALSE)
+    capacitance_per_metre=2*energy_per_metre;
+  else if (coupler==TRUE)
+    capacitance_per_metre=energy_per_metre;
+
   return(capacitance_per_metre);
 }
 #endif
