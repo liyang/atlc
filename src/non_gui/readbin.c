@@ -93,5 +93,6 @@ int main(int argc, char **argv)
   }
   else
     usage_readbin();
+  free_dvector(data,0L,(long) length);
   return(OKAY);
 }

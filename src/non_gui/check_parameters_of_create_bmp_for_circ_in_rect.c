@@ -33,7 +33,6 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 
 extern double dd, WW, HH, xx, yy, Er1;
 extern int d, W, H, x, y;
-extern int verbose;
 
 void check_parameters_of_create_bmp_for_circ_in_rect(void)
 {

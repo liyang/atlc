@@ -40,7 +40,6 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 extern double Er1, Er2;
 extern double Ers[];
 extern int colours[];
-extern char names[];
 
 void convert_create_create_bmp_for_coupled_microstrip_dimensions_to_integers(struct transmission_line_properties *pcb)
 {

@@ -38,6 +38,10 @@ groundplanes of spacing h. */
 #include <stdlib.h>
 #endif
 
+#ifdef HAVE_MATH_H
+#include <math.h>
+#endif
+
 #include "exit_codes.h"
 
 void calculate_Zodd_and_Zeven(double *Zodd, double *Zeven, double *Zo, double w, double H, double s, double er)

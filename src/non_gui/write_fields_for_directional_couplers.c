@@ -200,12 +200,18 @@ void write_fields_for_directional_couplers(char * filename, struct transmission_
 
     permittivity_bmp_fp=get_file_pointer_with_right_filename(filename,".Er.bmp");
 
-    fwrite(bmp_buff,0x36,1,Ex_odd_bmp_fp);
-    fwrite(bmp_buff,0x36,1,Ey_odd_bmp_fp);
-    fwrite(bmp_buff,0x36,1,E_odd_bmp_fp);
-    fwrite(bmp_buff,0x36,1,U_odd_bmp_fp);
-    fwrite(bmp_buff,0x36,1,V_odd_bmp_fp);
-    fwrite(bmp_buff,0x36,1,permittivity_bmp_fp);
+    if( fwrite(bmp_buff,0x36,1,Ex_odd_bmp_fp) != 1)
+      exit_with_msg_and_exit_code("Error#6: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+    if( fwrite(bmp_buff,0x36,1,Ey_odd_bmp_fp) != 1)
+      exit_with_msg_and_exit_code("Error#6: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+    if( fwrite(bmp_buff,0x36,1,E_odd_bmp_fp) != 1)
+      exit_with_msg_and_exit_code("Error#6: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+    if( fwrite(bmp_buff,0x36,1,U_odd_bmp_fp) != 1)
+      exit_with_msg_and_exit_code("Error#6: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+    if( fwrite(bmp_buff,0x36,1,V_odd_bmp_fp) != 1)
+      exit_with_msg_and_exit_code("Error#6: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+    if( fwrite(bmp_buff,0x36,1,permittivity_bmp_fp) != 1)
+      exit_with_msg_and_exit_code("Error#6: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
     offset=-3;
     for(h=height-1;h>=0;h--)
     {
@@ -348,12 +354,18 @@ void write_fields_for_directional_couplers(char * filename, struct transmission_
 
     permittivity_bmp_fp=get_file_pointer_with_right_filename(filename,".Er.bmp");
 
-    fwrite(bmp_buff,0x36,1,Ex_even_bmp_fp);
-    fwrite(bmp_buff,0x36,1,Ey_even_bmp_fp);
-    fwrite(bmp_buff,0x36,1,E_even_bmp_fp);
-    fwrite(bmp_buff,0x36,1,U_even_bmp_fp);
-    fwrite(bmp_buff,0x36,1,V_even_bmp_fp);
-    fwrite(bmp_buff,0x36,1,permittivity_bmp_fp);
+    if( fwrite(bmp_buff,0x36,1,Ex_even_bmp_fp) != 1)
+      exit_with_msg_and_exit_code("Error#1: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+    if( fwrite(bmp_buff,0x36,1,Ey_even_bmp_fp) != 1)
+      exit_with_msg_and_exit_code("Error#1: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+    if( fwrite(bmp_buff,0x36,1,E_even_bmp_fp) != 1)
+      exit_with_msg_and_exit_code("Error#1: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+    if( fwrite(bmp_buff,0x36,1,U_even_bmp_fp) != 1)
+      exit_with_msg_and_exit_code("Error#1: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+    if( fwrite(bmp_buff,0x36,1,V_even_bmp_fp) != 1)
+      exit_with_msg_and_exit_code("Error#1: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
+    if( fwrite(bmp_buff,0x36,1,permittivity_bmp_fp) != 1)
+      exit_with_msg_and_exit_code("Error#1: Failed to write binary file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
     offset=-3;
 #ifdef DEBUG
     fpEvenEx=fopen("Ex.even.txt","w");

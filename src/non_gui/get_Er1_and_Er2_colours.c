@@ -38,7 +38,6 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 
 extern double Er1, Er2, Ers[];
 extern int colours[];
-extern char names[];
 
 void get_Er1_and_Er2_colours(int *colour_Er1, int *colour_Er2)
 {

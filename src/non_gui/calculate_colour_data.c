@@ -34,6 +34,10 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #include <stdlib.h>
 #endif
 
+#ifdef HAVE_MATH_H
+#include <math.h>
+#endif
+
 #include "definitions.h"
 
 extern double **Vij;

@@ -38,23 +38,25 @@ inner and rectangular outer */
 #endif
 
 double WW, HH, aa, bb, cc, dd, ww, hh, Er1, Er2, DD;
-int W, H, a, b, c, d, w, h, o;
+int W, H, a, b, c, d, w, h;
+int verbose;
+
 /* The following are only needed, so I can link in two  
 convert_circ_in_circ_dimensions_to_integers.c
 and
 convert_create_bmp_for_rect_in_rect_dimensions_to_integers.c
 */
 
-int verbose=FALSE;
 int lowest=2500, highest=10000;
 int fileflag=FALSE;
 
-extern int main(int argc, char **argv) /* Read parameters from command line here   */
+int main(int argc, char **argv) /* Read parameters from command line here   */
 {
    int  bmp_size=DEFAULT_BMP_SIZE;
    int q;
    FILE *image_data_fp=stdout;
    struct transmission_line_properties not_used_currently;
+   int verbose_level;
 
    /* The following jut keeps compilers happy. SGI's is very fussy!! */
 
@@ -67,7 +69,7 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
       bmp_size=atol(my_optarg); 
       break;
       case 'v':
-      verbose=TRUE; 
+      verbose_level=1; 
       break;
       case '?':
       printf("read a ? exiting\n");
@@ -86,11 +88,11 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
       Er2=atof(argv[my_optind+9]);
       if((image_data_fp=fopen(argv[my_optind+10],"w"))==NULL)
 	exit_with_msg_and_exit_code("Cant't open file for writing in create_bmp_for_rect_in_rect.c",CANT_OPEN_FOR_WRITING);
-      if(verbose==TRUE)
+      if(verbose_level==1)
         printf("WW=%f HH=%f aa=%f bb=%f cc=%f dd=%f ww=%f hh=%f Er1=%f Er2=%f\n",WW,HH,aa,bb,cc,dd,ww,hh,Er1,Er2);
       check_parameters_of_create_bmp_for_rect_in_rect();
       convert_create_bmp_for_rect_in_rect_dimensions_to_integers(bmp_size);
-      if(verbose==TRUE)
+      if(verbose_level==1)
         printf("W=%d H=%d a=%d b=%d c=%d d=%d w=%d h=%d\n",W,H,a,b,c,d,w,h);
       write_bitmap(image_data_fp, not_used_currently);
    }

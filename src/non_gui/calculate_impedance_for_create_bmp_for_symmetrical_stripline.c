@@ -38,10 +38,15 @@ i.e.
 It uses the method given in "Filed Theory of Guided Waves, Colen R.E.,
 2nd edition, pp 259-273, IEEE Press, (1990). */
 
+#ifdef HAVE_MATH_H
+#include <math.h>
+#endif
+
 #include "definitions.h"
 #include "exit_codes.h"
 
 extern int verbose;
+
 double calculate_symmetrical_stripline_impedance(int H, int w)
 {
   double Zo;

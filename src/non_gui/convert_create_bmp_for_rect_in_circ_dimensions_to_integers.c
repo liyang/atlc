@@ -41,12 +41,8 @@ can't be bothered to change it */
 
 extern double DD, ww, hh, xx, yy, Er1;
 extern int D, w, h, x, y;
-extern int verbose;
-extern double Ers[];
-extern int colours[];
-extern char names[];
 extern int lowest;
-extern int highest;
+extern int highest, verbose;
 
 void convert_create_bmp_for_rect_in_circ_dimensions_to_integers(int accuracy_level) 
 {
