@@ -113,8 +113,8 @@ double calculate_integer_values(struct data *optimise,int nmax,int accuracy_leve
     consider the error lower its lower by 1e-9. That should avoid silly
     rounding problems. */
 
-    if(error<(error_max+1e-9))
-    {
+    if(error<(error_max-1e-9)) /* The 1e-9 avoids different results on different*/
+    {                          /* machines due to rounding errors */
      error_max=error;
      best_i=i;
      best_grid_size=grid_size;
