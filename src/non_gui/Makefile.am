@@ -9,7 +9,7 @@ create_bmp_for_rect_cen_in_rect_coupler
 
 atlc_SOURCES = atlc.c read_bitmap_file_headers.c \
 check_convergence.c  \
-byteswap.c memory.c setup_arrays.c \
+memory.c setup_arrays.c \
 finite_difference_single_threaded.c \
 finite_difference_multi_threaded.c \
 usage_atlc.c \
@@ -35,7 +35,7 @@ create_bmp_for_rect_in_rect_SOURCES = create_bmp_for_rect_in_rect.c \
 usage_create_bmp_for_rect_in_rect.c write_bitmap.c \
 get_Er1_and_Er2_colours.c  \
 convert_create_bmp_for_rect_in_rect_dimensions_to_integers.c \
-memory.c write_bitmap_out.c byteswap.c \
+memory.c write_bitmap_out.c  \
 align_bitmap_image.c fill_rect_in_rect.c \
 check_parameters_of_create_bmp_for_rect_in_rect.c \
 check_error.c get_options.c definitions.h \
@@ -49,7 +49,7 @@ create_bmp_for_rect_cen_in_rect_coupler_SOURCES = \
 create_bmp_for_rect_cen_in_rect_coupler.c \
 usage_create_bmp_for_rect_cen_in_rect_coupler.c \
 get_options.c definitions.h memory.c \
-write_bitmap_out.c byteswap.c  \
+write_bitmap_out.c  \
 align_bitmap_image.c check_error.c exit_with_msg_and_exit_code.c \
 print_copyright.c
 #create_bmp_for_rect_cen_in_rect_coupler_LDADD = @LIBS@ 
@@ -60,7 +60,7 @@ usage_create_bmp_for_rect_cen_in_rect.c \
 write_bitmap.c \
 get_Er1_and_Er2_colours.c \
 convert_create_bmp_for_rect_in_rect_dimensions_to_integers.c \
-memory.c write_bitmap_out.c byteswap.c  \
+memory.c write_bitmap_out.c  \
 align_bitmap_image.c \
 fill_rect_in_rect.c check_parameters_of_create_bmp_for_rect_in_rect.c \
 check_error.c get_options.c definitions.h exit_with_msg_and_exit_code.c \
@@ -71,7 +71,7 @@ create_bmp_for_microstrip_coupler_SOURCES = \
 usage_create_bmp_for_microstrip_coupler.c \
 create_bmp_for_microstrip_coupler.c get_Er1_and_Er2_colours.c \
 convert_create_bmp_for_coupled_microstrip_dimensions_to_integers.c \
-print_copyright.c byteswap.c  \
+print_copyright.c  \
 write_bitmap_out.c memory.c \
 get_options.c check_parameters_of_create_bmp_for_microstrip_coupler.c \
 write_bitmap.c align_bitmap_image.c \
@@ -84,7 +84,7 @@ create_bmp_for_circ_in_circ_SOURCES = create_bmp_for_circ_in_circ.c \
 usage_create_bmp_for_circ_in_circ.c write_bitmap.c \
 get_Er1_and_Er2_colours.c \
 convert_create_bmp_for_circ_in_circ_dimensions_to_integers.c \
-memory.c write_bitmap_out.c byteswap.c  \
+memory.c write_bitmap_out.c  \
 align_bitmap_image.c fill_circ_in_circ.c \
 check_parameters_of_create_bmp_for_circ_in_circ.c \
 check_error.c get_options.c definitions.h exit_with_msg_and_exit_code.c \
@@ -96,7 +96,7 @@ convert_create_bmp_for_circ_in_rect_dimensions_to_integers.c \
 usage_create_bmp_for_circ_in_rect.c write_bitmap.c \
 get_Er1_and_Er2_colours.c \
 check_parameters_of_create_bmp_for_circ_in_rect.c \
-memory.c write_bitmap_out.c byteswap.c  \
+memory.c write_bitmap_out.c  \
 align_bitmap_image.c fill_circ_in_rect.c  \
 check_error.c get_options.c definitions.h exit_with_msg_and_exit_code.c \
 print_copyright.c Erdata.h
@@ -106,7 +106,7 @@ create_bmp_for_rect_in_circ_SOURCES = create_bmp_for_rect_in_circ.c \
 usage_create_bmp_for_rect_in_circ.c write_bitmap.c \
 get_Er1_and_Er2_colours.c \
 convert_create_bmp_for_rect_in_circ_dimensions_to_integers.c \
-memory.c write_bitmap_out.c byteswap.c  \
+memory.c write_bitmap_out.c  \
 align_bitmap_image.c fill_rect_in_circ.c check_parameters_of_create_bmp_for_rect_in_circ.c \
 check_error.c get_options.c definitions.h exit_with_msg_and_exit_code.c \
 print_copyright.c Erdata.h
@@ -121,7 +121,7 @@ create_bmp_for_symmetrical_stripline_SOURCES = \
 create_bmp_for_symmetrical_stripline.c \
 fill_image_vector_for_create_bmp_for_symmetrical_stripline.c \
 usage_create_bmp_for_symmetrical_stripline.c memory.c  write_bitmap_out.c \
-align_bitmap_image.c byteswap.c  \
+align_bitmap_image.c  \
 calculate_impedance_for_create_bmp_for_symmetrical_stripline.c \
 elliptic_integral.c get_options.c definitions.h exit_with_msg_and_exit_code.c \
 print_copyright.c
@@ -131,7 +131,7 @@ create_bmp_for_stripline_coupler_SOURCES = \
 create_bmp_for_stripline_coupler.c usage_create_bmp_for_stripline_coupler.c \
 calculate_Zodd_and_Zeven.c get_options.c definitions.h \
 calculate_integer_values.c write_bitmap.c \
-memory.c write_bitmap_out.c byteswap.c  \
+memory.c write_bitmap_out.c  \
 align_bitmap_image.c fill_make_coupler.c \
 check_error.c exit_with_msg_and_exit_code.c \
 get_Er1_and_Er2_colours.c print_copyright.c 
