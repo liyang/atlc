@@ -29,7 +29,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #include "definitions.h"
 
 
-/* These items are supplied on the commmand line */
+/* These items are supplied on the command line */
 
 extern double WW, HH, aa, bb, cc, dd, ww, hh, Er1, Er2;
 extern int W, H, a, b, c, d, w, h;
@@ -55,7 +55,7 @@ void check_parameters_of_create_bmp_for_rect_in_rect(void)
       
 }
 
-void check_create_bmp_for_rect_in_rect_int(void)
+void check_create_bmp_for_rect_in_circ_int(void)
 {
    if(verbose==TRUE)
       fprintf(stderr,"W=%d H=%d a=%d b=%d c=%d d=%d w=%d h=%d\n",W,H,a,b,c,d,w,h);
