@@ -48,8 +48,6 @@ are identical. */
 int main(int argc, char **argv)
 {
   FILE *fp;
-  //unsigned long checksum = 0;
-  //unsigned long checksum = 0;
   register unsigned long checksum = 0;
   register int ch;
 
@@ -65,5 +63,5 @@ int main(int argc, char **argv)
     checksum &= 0xffff;       /* Keep it within bounds. */
   }
   printf ("%05lu\n", checksum);
-  //printf("%05u\n",checksum);
+  exit(0);
 }
