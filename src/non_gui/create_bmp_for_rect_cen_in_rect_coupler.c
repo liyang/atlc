@@ -59,7 +59,7 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
 	 exit(1);
       }
 
-      /* To make the programme easier to write, rect_cen_in_rect uses 
+      /* To make the program easier to write, rect_cen_in_rect uses 
       the same variables as create_bmp_for_rect_in_rect. We just calculate the 
       values not given (a, b, d, h and Er1 from those given
       (W, H, c and w) */
@@ -77,6 +77,6 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
       usage_create_bmp_for_rect_cen_in_rect();
    exit(0);
 #endif 
-  error_and_exit("This programme is not implemented", PROGRAMME_NOT_IMPLEMENTED);
+  error_and_exit("This program is not implemented", PROGRAMME_NOT_IMPLEMENTED);
 return(0);
 }

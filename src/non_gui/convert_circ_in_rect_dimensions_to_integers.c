@@ -142,7 +142,7 @@ int convert_circ_in_rect_dimensions_to_integers(int accuracy_level)
    {
       fprintf(stderr,"error_min=%.16f\n",error_min);
       fprintf(stderr,"User requested: dd=%f WW=%f HH=%f xx=%f yy=%f Er=%f\n\n",dd,WW,HH,xx,yy,Er1);
-      fprintf(stderr,"Internally the programme is using the following grid:\n");
+      fprintf(stderr,"Internally the program is using the following grid:\n");
       fprintf(stderr,"d=%d W=%d H=%d x=%d y=%d \n", d, W, H, x, y);
       fprintf(stderr,"The  grid size is %f mm, inches or whatever\n\n", best_grid_size);
       if(error_min > TINY)

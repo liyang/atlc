@@ -138,7 +138,7 @@ int convert_create_bmp_for_rect_in_rect_dimensions_to_integers(int accuracy_leve
    {
       fprintf(stderr,"error_min=%.16f\n",error_min);
       fprintf(stderr,"User requested: WW=%f HH=%f a=%f b=%f c=%f\nd=%f w=%f h=%fEr1=%f Er2=%f\n\n",WW,HH,aa,bb,cc,dd,ww,hh,Er1,Er2);
-      fprintf(stderr,"Internally the programme is using the following grid:\n");
+      fprintf(stderr,"Internally the program is using the following grid:\n");
       fprintf(stderr,"W=%d H=%d a=%d b=%d c=%d d=%d w=%d h=%d. \nThe  grid size is %f mm, inches or whatever\n\n", W, H, a, b, c, d, w, h,best_grid_size);
       if(error_min > TINY)
       {

@@ -322,7 +322,7 @@ void check_for_shorts(void);
 void usage_symmetrical_strip(void);
 void fill_image_vector_for_thin_strip(int W,int H, int w, unsigned char *unaligned_image_vector);
 double K_over_Kdash(double k);
-double calculate_thin_strip_impedance(int H, int w);
+double calculate_symmetrical_stripline_impedance(int H, int w);
 char **charmatrix(long nrl, long nrh, long ncl, long nch);
 void free_charmatrix(char **m, long nrl, long nrh, long ncl, long nch);
 int print_data(FILE *fp, char *filename, double Er, double C, double L, double Zo, double

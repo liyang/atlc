@@ -22,7 +22,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 
 */
 
-/* The programme create_bmp_for_rect_in_rect is a pre-processor for atlc. It produces bitmaps of rectangular
+/* The program create_bmp_for_rect_in_rect is a pre-processor for atlc. It produces bitmaps of rectangular
 inner and rectangular outer */
 
 #ifdef HAVE_STDLIB_H
@@ -83,7 +83,7 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
 	 exit(1);
       }
 
-      /* To make the programme easier to write, rect_cen_in_rect uses 
+      /* To make the program easier to write, rect_cen_in_rect uses 
       the same variables as create_bmp_for_rect_in_rect. We just calculate the 
       values not given (a, b, d, h and Er1 from those given
       (W, H, c and w) */

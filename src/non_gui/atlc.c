@@ -339,7 +339,7 @@ without the threads\nlibrary.\n",1);
 
     /* In theory, it would be sensible to get atlc to be able to read
     from stdin. This is a test, that checks if the filename is '-', and
-    if so assumes its reading from stdin. So far, the programme is
+    if so assumes its reading from stdin. So far, the program is
     unable to read from stdin, so this code is not really doing
     anything useful, but might be expanded at a later date. */
     if( strcmp(argv[my_optind],"-") != 0)

@@ -141,7 +141,7 @@ void setup_arrays(struct transmission_line_properties *data)
          if((dielectric_found == FALSE) && (conductor_found==FALSE))
          {
             fprintf(stderr,"Error#7: The colour r=0x%x g=0x%x b=0x%x (0x%2x%2x%2x) exists in the image at pixel %d,%d but\n",red,green,blue,red,green,blue,w,h);
-	    fprintf(stderr,"the programme does not know how to interpret this colour. This is not a\n");
+	    fprintf(stderr,"the program does not know how to interpret this colour. This is not a\n");
 	    fprintf(stderr,"conductor (pure red, green or blue), nor is it one of the %d dielectrics that\n",NUMBER_OF_DIELECTRICS_DEFINED);
 	    fprintf(stderr,"are predefined in Erdata.h, nor is a corresponding dielectric constant defined\n");
 	    fprintf(stderr,"on the command line line with the -d option\n");

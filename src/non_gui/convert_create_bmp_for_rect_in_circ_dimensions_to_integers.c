@@ -100,7 +100,7 @@ int convert_create_bmp_for_rect_in_circ_dimensions_to_integers(int accuracy_leve
    {
       fprintf(stderr,"error_min=%.16f\n",error_min);
       fprintf(stderr,"User requested: D=%f w=%f h=%f x=%f y=%f Er1=%f\n\n",DD,ww,hh,xx,yy,Er1);
-      fprintf(stderr,"Internally the programme is using the following grid:\n");
+      fprintf(stderr,"Internally the program is using the following grid:\n");
       fprintf(stderr,"D=%d w=%d h=%d x=%d y=%d \n", D, w, h, x, y);
       fprintf(stderr,"which equates to dimensions of D=%f w=%f h=%f x=%f y=%f\n", D*gridsize, w*gridsize, h*gridsize, x*gridsize,
       y*gridsize);

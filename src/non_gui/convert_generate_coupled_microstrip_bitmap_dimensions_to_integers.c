@@ -124,7 +124,7 @@ void convert_generate_coupled_microstrip_bitmap_dimensions_to_integers(struct tr
    {
       fprintf(stderr,"error_min=%.16f\n",error_min);
       fprintf(stderr,"User requested: W=%f H=%f w=%f s=%f g=%f h=%f t=%f Er1=%f Er2=%f\n\n",pcb->WW,pcb->HH,pcb->ww,pcb->ss,pcb->gg,pcb->hh,pcb->tt,Er1,Er2);
-      fprintf(stderr,"Internally the programme is using the following grid:\n");
+      fprintf(stderr,"Internally the program is using the following grid:\n");
       fprintf(stderr,"W=%d H=%d w=%d s=%d g=%d h=%d t=%d\nThe  grid size is %f mm, inches or whatever\n\n", pcb->W, pcb->H, pcb->w, pcb->s, pcb->g,pcb->h, pcb->t,best_grid_size);
       if(error_min > TINY)
       {

@@ -92,7 +92,7 @@ int convert_circ_in_circ_dimensions_to_integers(int accuracy_level)
    {
       fprintf(stderr,"error_min=%.16f\n",error_min);
       fprintf(stderr,"User requested: DD=%f dd=%f hh=%f Er1=%f\n\n",DD,dd,hh,Er1);
-      fprintf(stderr,"Internally the programme is using the following grid:\n");
+      fprintf(stderr,"Internally the program is using the following grid:\n");
       fprintf(stderr,"D=%d d=%d h=%d \nThe  grid size is %f mm, inches or whatever\n\n", D,d,h,best_grid_size);
       if(error_min > TINY)
       {

@@ -44,7 +44,7 @@ void usage_symmetrical_strip(void)
   fprintf(stderr,"Option:\n");
   fprintf(stderr,"     -C      Print copyright, licensing and distribution information\n\n");
   fprintf(stderr,"WARNING create_bmp_for_sym_strip does *NOT* take floating points for W, H and w. You must\n");
-  fprintf(stderr,"enter only integers. The programme was put together quickly, so does NOT\n");
+  fprintf(stderr,"enter only integers. The program was put together quickly, so does NOT\n");
   fprintf(stderr,"automatically convert floating point values to integers like create_bmp_for_rect_in_rect,\n");
   fprintf(stderr,"circ_in_circ, circ_in_rect, rect_cen_in_rect and create_coupler\n");
 }
