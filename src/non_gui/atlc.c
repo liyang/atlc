@@ -312,8 +312,12 @@ without the threads\nlibrary.\n",1);
     } /* end of if( strcmp(argv[my_optind],"-") != 0) */
     else
       image_data_fp=stdin;
-
-#if 0
+    /* For some unknown reason Microsoft's Visual C++ was unhappy to read
+    the bitmap image using an fread() call. Instead, the following two 
+    stupid lines fixed that issue. This will only get compiled under 
+    Windoze, the more sensible fread call being used on other operating 
+    systems. */
+#ifdef WINDOWS
     for(i=0; (i < (long)size ) && (feof(image_data_fp)==0); i++)
       image_data[i]=(unsigned char)fgetc(image_data_fp);
 #else
