@@ -1,28 +1,25 @@
-There seems to be problems on SPARC running Redhat Linux
-6.2, kernel  2.2.14-5.0smp, if compiled for multi-threaded use. 
+1.   There seems to be problems on SPARC running old versions of Linux 
+     (Redhat 6.2, kernel 2.2.14-5.0smp) and Debian, when configured for
+     multi-processor support.. I'm tempted to belive this is a bug in the 
+     thread support on old versions of Linux. It's fine on newer versions on a 
+     PC. 
 
-Have received a 'pthread_create: Interrupted system call' 
-error, but I think that is fixable and due to permissions problems. 
-But more seriously, even when I fixed this problem in atlc.c, it still 
-gives stupid results. 
+2.   The script 'teston' does not seem to work to the local host, with instead 
+     it giving a lot of failures. Wny ??? 
 
-The script 'teston' does not seem to work to the local host,
-with instead it giving a lot of failures. Wny ???
+3.   Lack of any way of changing brightness of images without a cpu-intenesive 
+     re-run. The two example files ' Thread support on machines other than 
+     Solaris is not known. I need to do more testing - preferably with 
+     multi-processor machines. 
 
-Lack of any way of changing brightness of images without a
-cpu-intenesive re-run. The two example files '
-Thread support on machines other than Solaris is 
-not known. I need to do more testing - preferably
-with multi-processor machines. 
+4.   There are no manual pages for several programs 
 
-There are no manual pages for several programs 
+5.   The error message shown in the files docs/htlm-docs/errors.html is wrong 
+     and was generated on an earlier release. However, it makes little 
+     difference - the meaning should be clear. 
 
-The error message shown in the files docs/htlm-docs/errors.html
-is wrong and was generated on an earlier release. However, it
-makes little difference - the meaning should be clear.
+6.   HTML versions of the man pages have diagrams that are completely stupid.
+     This is a problem with the program 'man2html' I'm using - I think so 
+     anyway. 
 
-HTML versions of the man pages have diagrams that 
-are completely stupid. This is a problem with the 
-program 'man2html' I'm using - I think so anyway. 
-
-Dr. David Kirkby, June 6th 2003 Re: atlc-4.3.1
+Dr. David Kirkby, July 19th 2003 Re: atlc-4.3.4 
