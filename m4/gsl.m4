@@ -27,7 +27,6 @@ AC_ARG_ENABLE(gsltest, [  --disable-gsltest       Do not try to compile and run 
   if test "$GSL_CONFIG" = "no" ; then
     no_gsl=yes
   else
-    AC_DEFINE(HAVE_LIBGSL)
     GSL_CFLAGS=`$GSL_CONFIG --cflags`
     GSL_LIBS=`$GSL_CONFIG --libs`
 
@@ -161,6 +160,9 @@ int main (void)
 #     GSL_LIBS=""
      ifelse([$3], , :, [$3])
   fi
+#Added by DRK to stop the flags being added
+  CFLAGS="$ac_save_CFLAGS"
+  LIBS="$ac_save_LIBS"
   AC_SUBST(GSL_CFLAGS)
   AC_SUBST(GSL_LIBS)
   rm -f conf.gsltest
