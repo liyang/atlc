@@ -19,18 +19,29 @@ paper could not be downloaded from the FAQ.
 
 Answered that loss can't be measured in the FAQ.
 
-Started to write a programme calc_coupler which will determine the odd
-and even mode impedance (Zodd and Zeven) for a coupler consisting of two
-infinitely thin striplines between two groundplaces. I got the equations
-from an e-mail sent to me by AA1LL / KB1CZP <aa1ll@email.com>. This has
-resulted in added new files calc_coupler.c and usage_calc_coupler.c. Its
-also meant that the GNU scientific library GSL is now needed to build
-this programme. 
+Wrote a programme 'make_coupler' which writes a bitmap with two striplines 
+between two parallel groundplanes as below.
 
-Added information to accuacy.html on accuaracy with coupled lines. 
+------------^------------------------------------------------------------------
+            |                                               
+            |              <---w---><-----s----><---w-->
+            H              ---------            --------
+            |                                      
+            |                               
+------------v------------------------------------------------------------------
+This has an exact analystical solution, so the file calculate_Zodd_and_Zeven.c
+was created to find the exact theoretical values. This makes it possible
+to compare the theory with atlc.
+
+I got the equations from an e-mail sent to me by AA1LL / KB1CZP 
+<aa1ll@email.com>. This required elliptic integrals, so its necessary to
+link into the GNU scientific library, gsl to use it fully, although the
+bitmap will be generated without the library.
+
+Added information to accuracy.html on accuaracy with coupled lines. 
 
 Changed finite_difference_multi_threaded.c & finite_difference_multi_threaded.c
-to handle correctly the case of coupled lines - at least for vacuume
+to handle correctly the case of coupled lines - at least for vacuum
 dielectric. 
 
 ********************Version 3.0.7 Dated 6/4/2002**************************
