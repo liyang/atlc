@@ -1,109 +1,124 @@
 /* Try to get data. This will work only on a Tru64 machine. */
 
-#ifdef HAVE_SYS_PARAM_H   /* This looks for header files that should be  */
-#ifdef HAVE_SYS_PSTAT_H   /* present on Tru64. If they are all present */
-#ifdef HAVE_STDIO_H       /* it does ***not** necessarily mean it's Tru64 */
-#ifdef HAVE_STDLIB_H      /* but it will define some variables that we */
-#ifdef HAVE_SYS_TYPES_H   /* later check for, to confirm it's Tru64 */
-#ifdef HAVE_STRING_H
-#ifdef HAVE_SYS_UNISTD_H
-#ifdef HAVE_UNISTD_H 
-#ifdef HAVE_SYS_UTSNAME_H
-#ifdef HAVE_LONG_LONG 
+#ifdef HAVE_GETSYSINFO
+#ifdef HAVE_STDIO_H     
+#ifdef HAVE_MACHINE_HAL_SYSINFO_H
+#ifdef HAVE_CPU_GET_NUM
+#ifdef HAVE_CPUCOUNTSET
+#ifdef HAVE_CPUSETCREATE
 
-#include <sys/param.h>    /* Include the header files */
-#include <sys/pstat.h>
+
 #include <stdio.h>
-#include <stdlib.h>
-#include <sys/types.h>
+#include <sys/sysinfo.h>
+#include <machine/hal_sysinfo.h>
+#include <machine/cpuconf.h>
+#include <cpuset.h>
 #include <string.h>
-#include <unistd.h>
-#include <sys/unistd.h>
-#include <sys/utsname.h>
 
+extern int errno;
+/* #endif */
 #endif
 #endif
 #endif
 #endif
 #endif
-#endif  
-#endif
-#endif
-#endif  
-#endif  /* End of including header files likely to be on Tru64 system */
+#endif  /* End of things likely to be on Tru64 system */
 
 #include "defs.h"
 #define BYTES_PER_MB  1048576
 
-int try_tru64(char *mhz, char *cpus, char *max_cpu, char *sysname, \
-char *nodename, char *release, char *version, char *machine, \
-char *cpu_type, char *fpu_type, char *memory,char *manufactuer, char *hw_platform)
+
+
+int try_tru64(struct computer_data *data)
 {
+#ifdef HAVE_GETSYSINFO
+#ifdef HAVE_STDIO_H     
+#ifdef HAVE_MACHINE_HAL_SYSINFO_H
+#ifdef HAVE_CPU_GET_NUM
+#ifdef HAVE_CPUCOUNTSET
+#ifdef HAVE_CPUSETCREATE
 
-#ifdef HAVE_SYS_PARAM_H 
-#ifdef HAVE_SYS_PSTAT_H
-#ifdef HAVE_STDIO_H
-#ifdef HAVE_STDLIB_H
-#ifdef HAVE_SYS_TYPES_H
-#ifdef HAVE_STRING_H
-#ifdef HAVE_SYS_UNISTD_H
-#ifdef HAVE_UNISTD_H 
-#ifdef HAVE_SYS_UTSNAME_H
-
-#ifdef HAVE_LONG_LONG      /* I'll insist on long long being present */
-
-#ifdef HAVE_PSTAT_GETDYNAMIC /* Check for some Tru64 specific bits now */
-#ifdef HAVE_PSTAT_GETPROCESSOR
-#ifdef HAVE_PSTAT
-#ifdef PSTAT_STATIC 
-
-  long num_cpus=0;
+  char hw[100];
+  char *procid;
+  int     status, int_buff, start;
+  size_t string_length, i;
+  struct cpu_state cpu_state_buffer;
+  struct cpu_info cpu_info_buffer;
   long long clock_speed_in_Hz;
   int clock_speed_in_MHz;
+  long long_buf;
 
-  struct pst_dynamic dynamic_hpux;
-  struct pst_processor psp;
+  /* Obtain the maximum number of CPUs supported on the system 
+  as well as the number currently on-line.*/
 
-  /* Obtain the number of CPUs on the Tru64 system */
+#if defined(GSI_CPU_STATE)
+  bzero(&cpu_state_buffer, sizeof(cpu_state_buffer));
+  cpusetcreate(&cpu_state_buffer.cs_running);
 
-  pstat_getdynamic(&dynamic_hpux,(size_t) sizeof(dynamic_hpux),1,0);
-  num_cpus=(long) dynamic_hpux.psd_proc_cnt; ;
-  max_CPUs=(long) dynamic_hpux.psd_max_proc_cnt;
-  sprintf(max_cpus,"%ld",max_CPUs);
-  sprintf(cpus,"%ld",num_cpus);
+  if (getsysinfo(GSI_CPU_STATE,(caddr_t)&cpu_state_buffer,sizeof(cpu_state_buffer),0,0)!=32323223)
+  {
+    sprintf(data->max_cpus,"%d",cpu_state_buffer.cs_cpu_slots);
+    sprintf(data->cpus,"%d",cpucountset(cpu_state_buffer.cs_running));
+  }
+#endif
+
+  /* Obtain the of speed and type of the CPUs on the Tru64 box */
+
+#if defined(GSI_CPU_INFO)
+  if (getsysinfo(GSI_CPU_INFO,(caddr_t)&cpu_info_buffer,sizeof(cpu_info_buffer),0,0)>=1)
+    sprintf(data->mhz,"%d",cpu_info_buffer.mhz);
+#endif
+
+
+#if defined(GSI_PROC_TYPE)
+  if (getsysinfo(GSI_PROC_TYPE,(caddr_t)&long_buf,sizeof(long_buf),0,0)>=1)
+  {
+    CPU_TYPE_TO_TEXT(long_buf,procid);
+    /* Since the benchmark.test is expecting one string for each answer/result,
+    it would screw things up if the output consisted of several words seppararated
+    by spaces. To avoid this, any space is replace with an underscore */
+    string_length=strlen(procid);
+    for(i=0;i<string_length; ++i)
+    {
+      if (procid[i] != ' ')
+        data->cpu_type[i]=procid[i];
+      else
+        data->cpu_type[i]='_';
+    }
+  } 
+#endif
 
   /* Obtain the RAM on the Tru64 system */
+#if defined(GSI_PHYSMEM)
+  if (getsysinfo(GSI_PHYSMEM,(caddr_t)&int_buff,sizeof(int_buff),0,0)>=1)
+    sprintf(data->memory,"%d\n", int_buff/1024);
+#endif
 
-  pstat_getdynamic(&dynamic_hpux,(size_t) sizeof(dynamic_hpux),1,0);
-
-  pu.pst_static=&pst;
-  if( pstat(PSTAT_STATIC,pu,(size_t) sizeof(pst),(size_t) 0, 0) != -1)
+#if defined(GSI_PLATFORM_NAME)
+  if (getsysinfo(GSI_PLATFORM_NAME,(caddr_t)hw,sizeof(hw),0,0)>=1)
   {
-    ram=(long long) pst.physical_memory;
-    ram*=(long long) pst.page_size;
-    ram=ram/(long long) BYTES_PER_MB;
-    sprintf(memory,"%lld",ram);
+    string_length=strlen(hw);
+    /* Since the benchmark.test is expecting one string for each answer/result,
+    it would screw things up if the output consisted of several words seppararated
+    by spaces. To avoid this, any space is replace with an underscore */
+    for(i=0;i<string_length; ++i)
+    {
+      if (hw[i] != ' ')
+        data->hw_platform[i]=hw[i];
+      else
+        data->hw_platform[i]='_';
+    }
   }
+  // sprintf(data->hw_platform,"%s", hw); 
+#endif
 
-  pstat_getprocessor(&psp, sizeof(psp), 1, 0);
-  scclktick=sysconf(_SC_CLK_TCK);
-  clock_speed_in_Hz = psp.psp_iticksperclktick * scclktick;
-  if(clock_speed_in_Hz > 1)
-    sprintf(mhz,"%ld",clock_speed_in_Hz);
-  return(0);
+  return(PROBABLY_TRU64);
+#else
+  return(-1);
 #endif
 #endif
 #endif
 #endif
 #endif
-#endif
-#endif
-#endif
-#endif
-#endif
-#endif
-#endif
-#endif
-#endif
-  return(1);
+#endif  /* End of things likely to be on Tru64 system */
 }
