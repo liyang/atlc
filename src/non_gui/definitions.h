@@ -279,3 +279,4 @@ void calculate_Zodd_and_Zeven(double *Zodd, double *Zeven, double *Zo, double w,
 void usage_design_coupler(void);
 void print_copyright(char *s);
 int print_data2(FILE *fp, char *filename, struct tline_parameters *data, int whihc_Z);
+void give_examples_of_using_design_coupler(void);

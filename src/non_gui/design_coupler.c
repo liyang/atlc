@@ -73,43 +73,53 @@ impedances and those that will result with the coupler design as
 presented. 
 
 It is assumed by default that the height of the box is of one unit (1
-mm, 1" etc, but this may be changed on the command line. It only scales
-the paramters w and s. 
+mm, 1" etc, but this may be changed on the command line. This will scale
+the parameters w and s by the same multiple.
 
 */
 
 int main(int argc, char **argv) /* Read parameters from command line */
 {
-  int q, Hflag=FALSE;
+  int q, Hflag=FALSE, quite=FALSE, very_quite=FALSE;;
   int calculate_physical_dimensions=FALSE;
   double er, Zo=-1, length=-1, fmin, fmax, fmean, fstep=-1, cf,  Zodd, Zeven; 
   double f, vcf, vcf_for_quarter_wave_line, w, s, error, error_max=1e30;
   double wanted_coupling_factor_in_dB, step=0.02, fq;
-  double Zo_x=-1, Zeven_x=-1, Zodd_x=-1, best_s=-1, best_w=-1, height_of_box=1.0;
+  double Zo_x=-1, Zeven_x=-1, Zodd_x=-1, best_s=-1, best_w=-1;
+  double height_of_box=1.0;
   double best_Zodd=-1, best_Zeven=-1, best_Zo=-1;
-  while((q=get_options(argc,argv,"dCL:s:Z:H:")) != -1)
+  while((q=get_options(argc,argv,"eQqdCL:s:Z:H:")) != -1)
   switch (q) 
   {
     case 'd':
     calculate_physical_dimensions=TRUE;
+    break;
+    case 'e':
+    give_examples_of_using_design_coupler();
     break;
     case 'C':
     print_copyright((char *) "2002");
     Hflag=TRUE;
     exit(1);
     break;
-    case 'L':
-    length=atof(my_optarg);
+    case 'L':    
+    length=atof(my_optarg); /* Sets the length of coupler */
     break;
     case 'H':
-    height_of_box=atof(my_optarg);
+    height_of_box=atof(my_optarg); /* Set height of coupler's enclosure */
     Hflag=TRUE;
     break;
-    case 's':
+    case 's': /* Set frequncy steps in which coupling is computed */
     fstep=atof(my_optarg);
     break;
-    case 'Z':
+    case 'Z': /* Set the characteristic impedance - default is 50 Ohms */
     Zo=atof(my_optarg);
+    break;
+    case 'q': /* Run in quite mode, giving less output */
+    quite=TRUE;
+    break;
+    case 'Q': /* Give just one line of output */          
+    very_quite=TRUE;
     break;
     case '?':
       usage_design_coupler();
@@ -127,14 +137,50 @@ int main(int argc, char **argv) /* Read parameters from command line */
   fmean=(fmin+fmax)/2.0;
   if(fstep <0 )
     fstep=(fmax-fmin)/4.0;
-  if (wanted_coupling_factor_in_dB < 0.0 )
+  
+  if (wanted_coupling_factor_in_dB <= 0.0 ) /* Only 0 can happen */
   {
-    fprintf(stderr,"Enter the coupling factor as a positive number\n");
+    /* I don't think this can happen unless the user enter 0 as the
+    first parameter, as a negative number entered will be taken as a
+    commmand line option */
+    fprintf(stderr,"\nThe coupled power must be less than the input power.");
+    fprintf(stderr," But please enter a\n*positive* number in dB for the");
+    fprintf(stderr," first command line parameter. If you want a \ncoupler");
+    fprintf(stderr," with a coupled port that is 12 dB down on the input");
+    fprintf(stderr," power, covering\n144-146 MHz, enter this as:\n\n");
+    fprintf(stderr,"design_coupler 12 144 146\n\n");
+    fprintf(stderr,"If you want the physical dimensions of the coupler");
+    fprintf(stderr," designed for you, add the\n-d option on the command");
+    fprintf(stderr," line, like this:\n\ndesign_coupler -q -12 144 146\n\n");
+    fprintf(stderr,"If you run design_coupler with no command line");
+    fprintf(stderr," arguments, like this:\n\ndesign_coupler\n\n");
+    fprintf(stderr,"then design_coupler will print some information,");
+    fprintf(stderr,"  showing *all* the options. \nIf you run design_coupler");
+    fprintf(stderr," with the -e option like this:\n\n");
+    fprintf(stderr,"design_coupler -e\n\n");
+    fprintf(stderr,"lots of examples will be shown of the correct usage.\n");
     exit(1);
   } 
   if (fmax <= fmin)
   {
-    fprintf(stderr,"fmax <= fmin\n");
+    fprintf(stderr,"The second command line argumentent you gave, which");
+    fprintf(stderr," is for the *minimum*\noperating frequenncy in MHz,");
+    fprintf(stderr," is less than the third argument, which is the\n");
+    fprintf(stderr,"*maximum* operating frequency in MHz.\n\n");
+    fprintf(stderr,"If you want a coupler");
+    fprintf(stderr," with a coupled port that is 12 dB down on the input\n");
+    fprintf(stderr,"power, covering 144-146 MHz, enter this as:\n\n");
+    fprintf(stderr,"design_coupler 12 144 146\n\n");
+    fprintf(stderr,"If you want the physical dimensions of the coupler");
+    fprintf(stderr," designed for you, add the\n-d option on the command");
+    fprintf(stderr," line, like this:\n\ndesign_coupler -d 12 144 146\n\n");
+    fprintf(stderr,"If you run design_coupler with no command line arguments,");
+    fprintf(stderr," then design_coupler\nwill print some information,");
+    fprintf(stderr," showing *all* the options. If you run\ndesign_coupler");
+    fprintf(stderr," with the -e option like this:\n\n");
+    fprintf(stderr,"design_coupler -e\n\n");
+    fprintf(stderr,"lots of examples will be shown of the correct usage.\n");
+    fprintf(stderr,"Exiting ...\n");
     exit(2);
   }
   if (Zo < 0.0)

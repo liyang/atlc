@@ -160,7 +160,8 @@ get_Er1_and_Er2_colours.c print_copyright.c
 
 
 design_coupler_SOURCES = design_coupler.c usage_design_coupler.c \
-get_options.c print_copyright.c calculate_Zodd_and_Zeven.c 
+get_options.c print_copyright.c calculate_Zodd_and_Zeven.c \
+give_examples_of_using_design_coupler.c
 
 
 EXTRA_DIST = create tests DO_NOT_EDIT_THIS_FILE \
@@ -221,7 +222,8 @@ circ_in_rect_DEPENDENCIES =
 circ_in_rect_LDFLAGS =
 am_design_coupler_OBJECTS = design_coupler.$(OBJEXT) \
 	usage_design_coupler.$(OBJEXT) get_options.$(OBJEXT) \
-	print_copyright.$(OBJEXT) calculate_Zodd_and_Zeven.$(OBJEXT)
+	print_copyright.$(OBJEXT) calculate_Zodd_and_Zeven.$(OBJEXT) \
+	give_examples_of_using_design_coupler.$(OBJEXT)
 design_coupler_OBJECTS = $(am_design_coupler_OBJECTS)
 design_coupler_LDADD = $(LDADD)
 design_coupler_DEPENDENCIES =
@@ -341,7 +343,9 @@ am__depfiles_maybe = depfiles
 @AMDEP_TRUE@	./$(DEPDIR)/generate_coupler_bitmap.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/get_Er1_and_Er2_colours.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/get_file_pointer_with_right_filename.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/get_options.Po ./$(DEPDIR)/nrutil.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/get_options.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/give_examples_of_using_design_coupler.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/nrutil.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/print_copyright.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/print_data.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/print_data2.Po \
@@ -491,6 +495,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/get_Er1_and_Er2_colours.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/get_file_pointer_with_right_filename.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/get_options.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/give_examples_of_using_design_coupler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/nrutil.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/print_copyright.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/print_data.Po@am__quote@

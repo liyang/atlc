@@ -65,7 +65,8 @@ check_error.c  definitions.h  error_and_exit.c \
 get_Er1_and_Er2_colours.c print_copyright.c 
 
 design_coupler_SOURCES = design_coupler.c usage_design_coupler.c \
-get_options.c print_copyright.c calculate_Zodd_and_Zeven.c 
+get_options.c print_copyright.c calculate_Zodd_and_Zeven.c \
+give_examples_of_using_design_coupler.c
 
 EXTRA_DIST = create tests DO_NOT_EDIT_THIS_FILE \
 output_from_design_coupler-Sun-Ultra-80.txt
