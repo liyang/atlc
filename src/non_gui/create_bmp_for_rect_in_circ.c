@@ -35,6 +35,7 @@ inner and rectangular outer */
 #endif
 
 #include "definitions.h"
+#include "exit_codes.h"
 
 
 double DD, ww, hh, xx, yy, Er1, Er2;
@@ -63,7 +64,7 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
       if((image_data_fp=fopen(my_optarg,"w"))==NULL)
       {
 	 fprintf(stderr,"Can't write to %s. Exiting ...\n",my_optarg);
-	 exit(1);
+	 exit_with_msg_and_exit_code("",CANT_OPEN_FOR_WRITING);
       }
       fileflag=TRUE;
       break;
@@ -75,8 +76,7 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
    }
       /*usage_create_bmp_for_rect_in_circ();*/
       fprintf(stderr,"SORRY create_bmp_for_rect_in_circ IS NOT YET WORKING, SO HAS BEEN DISABLED. IT\n");
-      fprintf(stderr,"BE ENABLED ON A FORTHCOMING VERSION\n");
-      exit(1);
+      exit_with_msg_and_exit_code("BE ENABLED ON A FORTHCOMING VERSION",PROGRAM_NOT_IMPLEMENTED);
    if(argc-my_optind == 6)
    {
       DD=atof(argv[my_optind]);

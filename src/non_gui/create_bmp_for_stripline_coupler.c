@@ -128,5 +128,5 @@ int main(int argc, char **argv)
     printf("The bitmap produced (which approximates what you want) should have:\n");
     printf("   Zodd= %f Zeven= %f Zo= %f (Ohms)\n", Zodd, Zeven, Zo);
   }
-  exit_with_msg_and_exit_code("",OKAY);
+  return(OKAY);
 }
