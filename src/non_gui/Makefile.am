@@ -93,7 +93,7 @@ print_copyright.c
 
 create_bmp_for_stripline_coupler_SOURCES = create_bmp_for_stripline_coupler.c usage_create_bmp_for_stripline_coupler.c \
 calculate_Zodd_and_Zeven.c get_options.c definitions.h \
-calculate_integer_values_for_stripline_coupler.c write_bitmap.c \
+calculate_integer_values.c write_bitmap.c \
 memory.c write_bitmap_out.c byteswap.c \
 align_bitmap_image.c fill_make_coupler.c \
 check_error.c exit_with_msg_and_exit_code.c \
