@@ -6,7 +6,7 @@
 # entry of passwords. A script is created on the local machine, which
 # is copied by scp/scp2 to a remote machine and executed there. Trying
 # to execute the individual staments in the script via ssh takes too
-# long, as the authentification needs to be repeated each time. 
+# long, as the authentication needs to be repeated each time. 
 
 if [ $# != 2 ] ; then
   echo "Usage: teston hostname buildname"
@@ -30,25 +30,28 @@ else
   SCP=scp
 fi
 
-# Create a file 'remote host' on the local machine, which we want
+# Create a file 'remote_host' on the local machine, which we want
 # executed elsewhere. 
 echo rm -rf $2 > remote-test
-echo tar xfz $2.tar.gz >> remote-test
-echo cd $2  >> remote-test
-echo pwd   >> remote-test
-echo ./configure   >> remote-test
+echo rm  -f $2.tar  >> remote-test
+echo gzip -d $2.tar.gz >> remote-test
+echo tar xf $2.tar >> remote-test
+echo mkdir build-directory >> remote-test
+echo cd build-directory >> remote-test
+echo ../$2/configure   >> remote-test
 echo ' make  > /dev/null ' >> remote-test
+#echo ' make   ' >> remote-test
 echo make check >> remote-test
 chmod 755 remote-test
 
 # Copy via scp/scp2 the script file in addition to the package
 # (somename.tar.gz) to the remote machine.
 
-$SCP $2.tar.gz davek@$1:remote-test
+$SCP $2.tar.gz davek@$1:$2.tar.gz
 $SCP -p remote-test davek@$1:remote-test
 
 # Execute the script on the distant machine.
 $SSH davek@$1 ./remote-test
 
 # Clean up after ourselves. 
-rm remote-test
+# rm remote-test
