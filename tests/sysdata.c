@@ -25,7 +25,7 @@
 #include "defs.h"
 
 
-int main(int argc, char **argv)
+int main()
 {
   struct computer_data data;
 

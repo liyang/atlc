@@ -33,7 +33,7 @@ int array[1000][1000];
 
 #endif /* ifdef ENABLE_POSIX_THREADS */
 
-int main(int argc, char **argv)
+int main()
 {
 #ifdef ENABLE_POSIX_THREADS
   pthread_t       thread1, thread2;
