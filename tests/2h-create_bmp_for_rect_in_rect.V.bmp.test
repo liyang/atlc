@@ -36,7 +36,7 @@
 # unlikely. So if any problems occur, check the checksum with the GNU
 # 'sum' and see what that gives. If any failures do occur, please let me
 # know. email drkirkby@ntlworld.com and/or davek@medphys.ucl.ac.uk 
-CKSUM=`../tools/src/mycksum test.V.bmp`
+CKSUM=`../tools/src/mycksum test_rect_in_rect.V.bmp`
 if [ $CKSUM = 04079 ]; then
   echo "PASSED:" $0 >> tests.log
   exit 0

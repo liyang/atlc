@@ -36,11 +36,10 @@
 # unlikely. So if any problems occur, check the checksum with the GNU
 # 'sum' and see what that gives. If any failures do occur, please let me
 # know. email drkirkby@ntlworld.com and/or davek@medphys.ucl.ac.uk 
-../src/non_gui/atlc  test.bmp > test.txt
+../src/non_gui/atlc  test_rect_in_rect.bmp > test_rect_in_rect.txt
 # .bin files are unchecked, so let removed them.
-rm test.*.bin
 # The capacitance should be 121.0 pF/m and is in column 9
-cat test.txt | awk '{print $9}' > /tmp/atlc-test.$$
+cat test_rect_in_rect.txt | awk '{print $9}' > /tmp/atlc-test.$$
 CKSUM=`../tools/src/mycksum /tmp/atlc-test.$$`
 rm /tmp/atlc-test.$$
 if [ $CKSUM = 18488 ]; then
