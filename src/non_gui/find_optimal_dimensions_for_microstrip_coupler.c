@@ -146,7 +146,7 @@ int main(int argc, char **argv)
       } // end of for s
     } // end of for w
   } // end of for g
-  exit(0);
+  return(0);
 }
 	
     
