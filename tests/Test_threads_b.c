@@ -8,7 +8,6 @@ operlapping by a mutex variable. */
 on the array and so any thread can overwrite at any time
 so we would expect jibberish output */
 
-//#define DISABLE_MUTEX
 
 #ifdef HAVE_STDIO_H
 #include <stdio.h>
