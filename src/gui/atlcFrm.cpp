@@ -6,6 +6,8 @@
         #include "wx/wx.h"
 #endif
 #include "wx/wxprec.h"
+#include "wx/panel.h"
+#include "wx/gdicmn.h"
 #include "atlcFrm.h"
 #include "RoundCoaxFrm.h"
 #include "FiniteDifferenceFrame.h"
@@ -73,9 +75,9 @@ atlcFrame::atlcFrame(const wxString& title, const wxPoint& pos, const wxSize& si
   CalculateMenu->Append( ID_FiniteDifference,    "&Finite difference (numerical)",\
   "Calculate properties using an accurate, very general but slow numerical technique.");   
   CalculateMenu->AppendSeparator();
-  CalculateMenu->Append( ID_RoundCoax, "&Round Coaxial cable (exact)","Calculate properties standard round coaxial cable");   
+  CalculateMenu->Append( ID_RoundCoax, "&Coaxial cable","Calculate properties standard round coaxial cable");   
   CalculateMenu->Append( ID_EccentricCoax, "&Eccentric Coaxial cable (exact)","Calculate properties eccentric coaxial cable");   
-  CalculateMenu->Append( ID_SquareCoax, "&Square Coaxial cable (exact)","Calculate properties coaxial cable with a square outer (exact??)");   
+  CalculateMenu->Append( ID_SquareCoax, "&Coaxial (square outer, round inner)","Calculate properties coaxial cable with a square outer (exact??)");   
   CalculateMenu->Append( ID_Stripline, "&Edge on stripline (exact)","Calculate properties of thin edge-on conductors between groundplanes");   
   CalculateMenu->Append( ID_Stripline, "&Edge on stripline coupler (exact)","Calculate properties of two thin edge-on conductors.");   
 
@@ -170,13 +172,29 @@ void atlcFrame::OnFiniteDifference(wxCommandEvent& WXUNUSED(event))
 {
 
   FiniteDifferenceFrame *frame = new FiniteDifferenceFrame("Use a Finite Difference numerical method",wxPoint(50,50),wxSize(500,300) );
+  // Make a panel with a message
+  //wxPanel *panel = new wxPanel(frame, -1, wxPoint(0,0),wxSize(100,100),wxTAB_TRAVERSAL,"foo");
+  //wxPanel *panel = new wxPanel(atlcFrame, -1, wxPoint(0,0),wxSize(100,100),wxTAB_TRAVERSAL,"foo");
+  //frame->Show(TRUE);
+
+  //panel->SetLabelPosition(wxHORIZONTAL) ;
+  //wxMessageBox *msg = new wxMessageBox(panel, "Hello, this is a minimal wxWindows program!", 5, 5);
+  //wxMessageBox(panel, "Hello, this is a minimal wxWindows program!", 5, 5);
+
+  // Show the frame
+  //frame->Show(TRUE);
+  //wxTextEntryDialog(panel, "hello", "Please enter text", "foo", wxOK, wxDefaultPosition);
+  //panel->Show(TRUE);
   frame->Show(TRUE);
+  //exit(1);
+  
+  // Return the main frame window
 }
 
 void atlcFrame::OnRoundCoax(wxCommandEvent& WXUNUSED(event))
 {
   // Create the window for the standard round coax. 
-  RoundCoaxFrame *frame = new RoundCoaxFrame("Standard Round Coaxial Cable",wxPoint(50,50),wxSize(400,300) );
+  RoundCoaxFrame *frame = new RoundCoaxFrame("Standard Round Coaxial Cable",wxPoint(50,50),wxSize(500,500) );
 
   frame->Show(TRUE);
 }
@@ -191,7 +209,7 @@ void atlcFrame::OnSquareCoax(wxCommandEvent& WXUNUSED(event))
 
 void atlcFrame::OnEccentricCoax(wxCommandEvent& WXUNUSED(event))
 {
-  EccentricCoaxFrame *frame = new EccentricCoaxFrame("Eccentric Coax",wxPoint(50,50),wxSize(400,300) );
+  EccentricCoaxFrame *frame = new EccentricCoaxFrame("Eccentric Coax",wxPoint(50,50),wxSize(500,300) );
 
   frame->Show(TRUE);
 }
@@ -217,20 +235,20 @@ void atlcFrame::OnShowTip(wxCommandEvent& event)
 
         // this is completely bogus, we don't know how many lines are there
         // in the file, but who cares, it's a demo only...
-        s_index = rand() % 11;
+        s_index = 13; // rand() % 13;
     }
 
     wxTipProvider *tipProvider = wxCreateFileTipProvider("tips.txt", s_index);
 
     bool showAtStartup = wxShowTip(this, tipProvider);
-
+/*
     if ( showAtStartup )
     {
         wxMessageBox("Will show tips on startup", "Tips dialog",
                      wxOK | wxICON_INFORMATION, this);
     }
-
+*/
     s_index = tipProvider->GetCurrentTip();
     delete tipProvider;
-#endif
+#endif // wxUSE_STARTUP_TIPS
 }
