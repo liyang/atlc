@@ -19,11 +19,13 @@
 # 301042 and 301043 are 254 on a Cray Y-MP but 255 on a Sun. AS such, 
 # in this case, more than one checksum is acceptable. 
 
+# On Sun Ultra 80 353a368663a112d7e8f0af6a63df75f3
+# On Cray YMP-EL 2a9644a0206c2314006e298f07aae233
+
 touch $top_builddir/tmp/test_sym_strip.U.bmp
 
 MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test_sym_strip.U.bmp`
-if [ $MD5SUM = 353a368663a112d7e8f0af6a63df75f3 ] || [ $MD5SUM = a983da63a2f7b5d56d263d93988c1f8d ] || [ $MD5SUM =
-2a9644a0206c2314006e298f07aae233] ; then
+if [ $MD5SUM = 353a368663a112d7e8f0af6a63df75f3 ] || [ $MD5SUM = a983da63a2f7b5d56d263d93988c1f8d ] || [ $MD5SUM = 2a9644a0206c2314006e298f07aae233 ] ; then
   rm -f $top_builddir/tmp/test_sym_strip.U.bmp 
   echo "PASSED:" $0 >> tests.log
   exit 0

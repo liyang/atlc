@@ -24,19 +24,26 @@
 
 # **************** NOTE ****************
 # This test  (7g-create_bmp_for_stripline_coupler.U.odd.bmp.test)
-# and only this test seems sensitive to the machine it is run on
+# test seems sensitive to the machine it is run on
 # with a Sun UltraSPARC II chip in a Sun Ultra 80 giving different 
 # results from that in a Pentium II PC running Linux. Investigation
 # shows that on one system a pixel is white (255,255,255) and another
-# very nearly whilte (254,254,254). Hence this must mean that the 
+# very nearly whilte (254,254,254). 
+
+# Hence this must mean that the 
 # result of energy is rounded either white or almost white, depending
 # on the system. As such, either checksum is found to be acceptable 
 # in this case, and only this case. 
-
+# On a Cray, two pixels differ from those on the Sun, so a third
+# checksum is acceptable. 
+# 9eda42b1552b9bd2673e67d441a7d53a checksum on Sun.
+# d7ec3c37b95d995ae4fff362c542f46f checksum on Linux PC
+# 09f68e1466d68bf8a03e1f90eff411bb checksum on Cray Y-MP
 
 touch $top_builddir/tmp/test_stripline_coupler.U.odd.bmp
 MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test_stripline_coupler.U.odd.bmp`
-if [ $MD5SUM != 9eda42b1552b9bd2673e67d441a7d53a ] && [ $MD5SUM != d7ec3c37b95d995ae4fff362c542f46f ] ; then
+if [ $MD5SUM != 9eda42b1552b9bd2673e67d441a7d53a ] && [ $MD5SUM != d7ec3c37b95d995ae4fff362c542f46f ] && [ $MD5SUM !=
+09f68e1466d68bf8a03e1f90eff411bb ] ; then
   echo "FAILED:" $0 >> tests.log
   exit 1
 else
