@@ -5,8 +5,8 @@ design_coupler create_bmp_for_stripline_coupler create_bmp_for_microstrip_couple
 find_optimal_dimensions_for_microstrip_coupler \
 create_bmp_for_rect_cen_in_rect_coupler
 
-atlc_SOURCES = nrutil.c atlc.c read_bitmap_file_headers.c \
-byteswap.c string.c setup_arrays.c \
+atlc_SOURCES = atlc.c read_bitmap_file_headers.c \
+byteswap.c memory.c setup_arrays.c \
 finite_difference_single_threaded.c \
 finite_difference_multi_threaded.c \
 finite_difference_mpi.c usage_atlc.c \
@@ -22,14 +22,14 @@ exit_codes.h
 
 create_bmp_for_rect_cen_in_rect_coupler_SOURCES = create_bmp_for_rect_cen_in_rect_coupler.c \
 usage_create_bmp_for_rect_cen_in_rect_coupler.c \
-convert_doubles_to_integers.c  get_options.c definitions.h nrutil.c write_bitmap_out.c byteswap.c \
+convert_doubles_to_integers.c  get_options.c definitions.h memory.c write_bitmap_out.c byteswap.c \
 align_bitmap_image.c check_error.c error_and_exit.c \
 print_copyright.c
 
 create_bmp_for_rect_in_rect_SOURCES = create_bmp_for_rect_in_rect.c \
 usage_create_bmp_for_rect_in_rect.c write_bitmap.c \
 get_Er1_and_Er2_colours.c convert_create_bmp_for_rect_in_rect_dimensions_to_integers.c \
-string.c nrutil.c write_bitmap_out.c byteswap.c \
+memory.c write_bitmap_out.c byteswap.c \
 align_bitmap_image.c fill_rect_in_rect.c check_parameters_of_create_bmp_for_rect_in_rect.c \
 check_error.c get_options.c definitions.h  error_and_exit.c print_copyright.c \
 exit_codes.h
@@ -38,7 +38,7 @@ create_bmp_for_rect_cen_in_rect_SOURCES = create_bmp_for_rect_cen_in_rect.c \
 usage_create_bmp_for_rect_cen_in_rect.c \
 write_bitmap.c \
 get_Er1_and_Er2_colours.c convert_create_bmp_for_rect_in_rect_dimensions_to_integers.c \
-string.c nrutil.c write_bitmap_out.c byteswap.c \
+memory.c write_bitmap_out.c byteswap.c \
 align_bitmap_image.c fill_rect_in_rect.c check_parameters_of_create_bmp_for_rect_in_rect.c \
 check_error.c get_options.c definitions.h error_and_exit.c \
 print_copyright.c Erdata.h exit_codes.h
@@ -47,7 +47,7 @@ create_bmp_for_microstrip_coupler_SOURCES = \
 usage_create_bmp_for_microstrip_coupler.c \
 create_bmp_for_microstrip_coupler.c get_Er1_and_Er2_colours.c \
 convert_create_bmp_for_coupled_microstrip_dimensions_to_integers.c \
-print_copyright.c byteswap.c write_bitmap_out.c string.c nrutil.c \
+print_copyright.c byteswap.c write_bitmap_out.c memory.c \
 get_options.c check_parameters_of_create_bmp_for_microstrip_coupler.c \
 write_bitmap.c align_bitmap_image.c \
 fill_image_vector_for_create_bmp_for_microstrip_coupler.c \
@@ -56,7 +56,7 @@ check_error.c error_and_exit.c Erdata.h definitions.h exit_codes.h
 create_bmp_for_circ_in_circ_SOURCES = create_bmp_for_circ_in_circ.c \
 usage_create_bmp_for_circ_in_circ.c write_bitmap.c \
 get_Er1_and_Er2_colours.c convert_create_bmp_for_circ_in_circ_dimensions_to_integers.c \
-string.c nrutil.c write_bitmap_out.c byteswap.c \
+memory.c write_bitmap_out.c byteswap.c \
 align_bitmap_image.c fill_circ_in_circ.c check_parameters_of_create_bmp_for_circ_in_circ.c \
 check_error.c get_options.c definitions.h error_and_exit.c \
 print_copyright.c Erdata.h
@@ -66,7 +66,7 @@ convert_create_bmp_for_circ_in_rect_dimensions_to_integers.c \
 usage_create_bmp_for_circ_in_rect.c write_bitmap.c \
 get_Er1_and_Er2_colours.c \
 check_parameters_of_create_bmp_for_circ_in_rect.c \
-string.c nrutil.c write_bitmap_out.c byteswap.c \
+memory.c write_bitmap_out.c byteswap.c \
 align_bitmap_image.c fill_circ_in_rect.c  \
 check_error.c get_options.c definitions.h error_and_exit.c \
 print_copyright.c Erdata.h
@@ -75,17 +75,18 @@ create_bmp_for_rect_in_circ_SOURCES = create_bmp_for_rect_in_circ.c \
 usage_create_bmp_for_rect_in_circ.c write_bitmap.c \
 get_Er1_and_Er2_colours.c \
 convert_create_bmp_for_rect_in_circ_dimensions_to_integers.c \
-string.c nrutil.c write_bitmap_out.c byteswap.c \
+memory.c write_bitmap_out.c byteswap.c \
 align_bitmap_image.c fill_rect_in_circ.c check_parameters_of_create_bmp_for_rect_in_circ.c \
 check_error.c get_options.c definitions.h error_and_exit.c \
 print_copyright.c Erdata.h
 
 readbin_SOURCES = readbin.c definitions.h byteswap.c usage_readbin.c \
-get_options.c error_and_exit.c print_copyright.c
+get_options.c error_and_exit.c print_copyright.c \
+memory.c
 
 create_bmp_for_symmetrical_stripline_SOURCES = create_bmp_for_symmetrical_stripline.c \
 fill_image_vector_for_create_bmp_for_symmetrical_stripline.c \
-usage_create_bmp_for_symmetrical_stripline.c string.c nrutil.c write_bitmap_out.c \
+usage_create_bmp_for_symmetrical_stripline.c memory.c  write_bitmap_out.c \
 align_bitmap_image.c byteswap.c calculate_impedance_for_create_bmp_for_symmetrical_stripline.c \
 elliptic_integral.c get_options.c definitions.h error_and_exit.c \
 print_copyright.c
@@ -93,7 +94,7 @@ print_copyright.c
 create_bmp_for_stripline_coupler_SOURCES = create_bmp_for_stripline_coupler.c usage_create_bmp_for_stripline_coupler.c \
 calculate_Zodd_and_Zeven.c get_options.c definitions.h \
 calculate_integer_values.c write_bitmap.c \
-string.c nrutil.c write_bitmap_out.c byteswap.c \
+memory.c write_bitmap_out.c byteswap.c \
 align_bitmap_image.c fill_make_coupler.c \
 check_error.c error_and_exit.c \
 get_Er1_and_Er2_colours.c print_copyright.c 
@@ -105,7 +106,8 @@ give_examples_of_using_design_coupler.c error_and_exit.c
 find_optimal_dimensions_for_microstrip_coupler_SOURCES = \
 find_optimal_dimensions_for_microstrip_coupler.c \
 error_and_exit.c usage_find_optimal_dimensions_for_microstrip_coupler.c \
-print_copyright.c get_options.c string.c nrutil.c
+print_copyright.c get_options.c memory.c \
+check_parameters_for_find_optimal_dimensions_for_microstrip_coupler.c
 
-EXTRA_DIST = output_from_design_coupler-Sun-Ultra-80.txt
+EXTRA_DIST = 
 
