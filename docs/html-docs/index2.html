@@ -12,7 +12,7 @@
 
 <H1><CODE>atlc</CODE> - Arbitrary Transmission Line Calculator (for electrical transmission lines)</H1>
 <p>
-<EM>atlc</EM> is a computer aided design (CAD) package for the design and analysis of electrical transmission lines and directional couplers of totally arbitrary cross section. Prior to version 4.5.1, atlc could handle an arbitrary number of different dielectrics, but on the 15th of October 2003 I was advised the code for multiple dielectrics was inaccurate, so it has been temporaily disabled. However, this should be re-instated very soon.  By analysis, it is assumed one requires finding the electrical properties of transmission lines or couplers, where the physical dimensions are known. By design, it is assumed one requires a transmission line or coupler to have certain electrical properties and one wishes to find how to physically realise such a structure.</p>
+<EM>atlc</EM> is a computer aided design (CAD) package for the design and analysis of electrical transmission lines and directional couplers of totally arbitrary cross section and an arbitrary number of different dielectrics.  By analysis, it is assumed one requires finding the electrical properties of transmission lines or couplers, where the physical dimensions are known. By design, it is assumed one requires a transmission line or coupler to have certain electrical properties and one wishes to find how to physically realise such a structure.</p>
 <P><EM>atlc</EM>  likely to be of use to radio amateurs, professional RF engineers, students and academics.</P> 
 
 
@@ -23,21 +23,22 @@
 
 It has also been tested on <a href="http://www.debian.org/">Debian</a> Linux, <a href="http://www.slackware.com/">Slackware</a> Linux, <a href="http://www.gentoo.org/">Gentoo</a> Linux, <a href="http://www.redhat.com">Redhat </a> Linux, <a href="http://www.suse.com">Suse</a> Linux, IBM's <a href="http://www.ibm.com/servers/aix/">AIX</a>, Apples's <a href="http://www.apple.com/macosx/">OS X for Mac</a>, 
 
-HP's <a href="http://www.hp.com/products1/UNIX/operating/">HP-UX</A> (both PA-RISC and Itanium), SGI's <a href="http://www.sgi.com/">IRIX</a>, Sun's <a href="http://www.sun.com/solaris/">Solaris</a>, SCO's <a href="http://www.caldera.com/products/UNIXware/">UnixWare</a>, HP's <a href="http://h30097.www3.hp.com/">Tru64</a>, Cray's <a href="http://www.cray.com/products/software/unicos.html">UNICOS</a>, <a href="http://www.netbsd.org/">NetBSD</a>, <a href="http://www.openbsd.org/">OpenBSD</a> and <a href="http://www.freebsd.org/">FreeBSD</a>. If you run <em>atlc</em> on any other operating system, please let me know. On some systems, <em>atlc</em> can use multiple-processors if present, to reduce executation time. There are some minor problems on some systems (most notably earler versions of Linux on Sun workstations), but you should be able to use <em>atlc</em> on any UNIX system as well as under 32-bit versions of Microsoft Windows.</p>
-
+HP's <a href="http://www.hp.com/products1/UNIX/operating/">HP-UX</A> (both PA-RISC and Itanium), SGI's <a href="http://www.sgi.com/">IRIX</a>, Sun's <a href="http://www.sun.com/solaris/">Solaris</a>, SCO's <a href="http://www.caldera.com/products/UNIXware/">UNIXWare</a>, HP's <a href="http://h30097.www3.hp.com/">Tru64</a>, Cray's <a href="http://www.cray.com/products/software/unicos.html">UNICOS</a>, <a href="http://www.netbsd.org/">NetBSD</a>, <a href="http://www.openbsd.org/">OpenBSD</a> and <a href="http://www.freebsd.org/">FreeBSD</a>. If you run <em>atlc</em> on any other operating system, please let me know. </p>
+<p>Previous version of <em>atlc</em> could use multiple-processors if present, to reduce execution time. This has been temporarily disabled, as the algorithm had some intermittent problems on IBM's AIX operating
+system. Careful checking showed the problem that only seemed to affect AIX, was a real bug with the potential to occur on other operating systems, although it only ever showed up under AIX. Hence the current release has disabled the support for multiple processors - <em>atlc</em> will fun fine on multi-processor machines, but it will only use one of them. A revised method of computation has been determined, which will re-enable the use of multiple processors. It is hoped to release this by early February 2004 at the latest - probably some time in January 2004.</p>
 
 <TABLE>
 <TR>
 <TD><img src="jpgs/coax2.jpg" ALT="round coax" > </TD>
 <TD><img src="jpgs/very-odd.jpg" ALT="very odd line" ></TD>
 <TD><img src="jpgs/cop1.jpg" ALT="directional coupler" width="128" height="128"></TD>
-
+<TD><img src="jpgs/coupler9.jpg" ALT="directional coupler" height="128"></TD>
 </TR>
 <TR>
 <TD>Coaxial cable<br>Zo= 70.0215 Ohms<BR>C=47.637 pF/m<BR>L=233.557 nH/m<BR></TD>
 <TD>Really odd!!!<br>Zo= 56.020  Ohms<br> C= 59.544 pF/m <br>L= 186.862 nH/m</TD>
 <TD>Directional coupler<br>Zo= 64.7449  Ohms<br> Zeven=65.3682 Ohms<br>Zodd= 64.1275 Ohms<br></TD>
-
+<TD>Microstrip coupler on double-sided PCB<br>Zodd=  35.10 Ohms Zeven=  50.93 Ohms<br>Zdiff=  70.21 Ohms Zcomm=  25.46 Ohms</td>
 </TR>
 </TABLE>
 There are 12 programs that comprise the package <EM>atlc</EM>. One of the programs is called <CODE>atlc</CODE>; the other 11  have different names. Using the programs comprising the package <EM>atlc</EM> one is able to:.
@@ -68,7 +69,7 @@ In order to perform 1, 2, 3 or 4 above, the programme  <COde>atlc</code> needs t
 </OL>
 	to quickly generate bitmaps for transmission lines. The first five are for two-conductor transmission lines, whereas the last two are for directional couplers. See the section <a href="generators.html">Automatic Bitmap Generators</a> for information about what cross sections these programs generate. Using these programs to create bitmaps is very fast - much faster than creating them with a graphics programme. </LI>
 </OL>
-A Unix computer, with a <A HREF="http://www.gnu.org/software/gcc/gcc.html">gcc</A> or other C compiler, is needed  to build <EM>atlc</EM>. The programme should compile very easily and quickly. Being rather CPU intensive, <COde>atlc</code> has been written to support multiple processors if available. Here is an example of using atlc, with the file <CODE>ushape.bmp</CODE>, which was drawn by a graphics programme. <br>
+A UNIX computer, with a <A HREF="http://www.gnu.org/software/gcc/gcc.html">gcc</A> or other C compiler, is needed  to build <EM>atlc</EM>. The programme should compile very easily and quickly. Being rather CPU intensive, <COde>atlc</code> has been written to support multiple processors if available. Here is an example of using atlc, with the file <CODE>ushape.bmp</CODE>, which was drawn by a graphics programme. <br>
 
 <br>
 <pre>
@@ -96,7 +97,7 @@ sparrow % atlc  x.bmp
 x.bmp 2 Er=1.00 Zo= 85.44 Ohms C= 39.0 pF/m L= 285.0 nH/m v= 2.998e+08 m/s v_f= 1.000 VERSION= 4.2 2
 </pre>
 
-How to use  <CODE>create_bmp_for_circ_in_circ</CODE> (or any other program) is best determined by reading the Unix man page, seeing an <a href="generators.html">example</a> or by running the program with no arguments, where it will print a usage message. An html version of the  <a href="create_bmp_for_circ_in_circ.1.html">man page for <CODE>create_bmp_for_circ_in_circ</CODE> </a> is available, but the all-important diagram is not clear. <br>
+How to use  <CODE>create_bmp_for_circ_in_circ</CODE> (or any other program) is best determined by reading the UNIX man page, seeing an <a href="generators.html">example</a> or by running the program with no arguments, where it will print a usage message. An html version of the  <a href="create_bmp_for_circ_in_circ.1.html">man page for <CODE>create_bmp_for_circ_in_circ</CODE> </a> is available, but the all-important diagram is not clear. <br>
 <br>
 <a href="http://atlc.sourceforge.net">Return to the atlc homepage</a>
 

@@ -12,7 +12,7 @@
 
 </PRE>
 <H2>SYNOPSIS</H2><PRE>
-     <B>create_bmp_for_symmetrical_stripline</B>  <B>W</B> <B>H</B> <B>w</B> <B>bitmapfile</B>
+     <B>create_bmp_for_symmetrical_stripline</B> <B>[-v]</B> <B>W</B> <B>H</B> <B>w</B> <B>bitmapfile</B>
 
 
 </PRE>
@@ -77,8 +77,11 @@
 
 </PRE>
 <H2>OPTIONS</H2><PRE>
-     There          are          no          options          for
-     create_bmp_for_symmetrical_stripline.
+     <B>-v</B>
+     Print the theoeretical impedance Zo. This only works if  the
+     width  W  is sufficiently wide, otherwise atlc and the value
+     printed here would disagree wildly.
+
 
 
 </PRE>
@@ -98,9 +101,6 @@
      atlc-X.Y.Z/docs/html-docs/index.html       - HTML docs
      atlc-X.Y.Z/docs/qex-december-1996/atlc.pdf - theory paper
      atlc-X.Y.Z/examples                        - examples
-
-
-
 
 
 

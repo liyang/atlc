@@ -22,7 +22,16 @@
 <TD><STRONG>Energy</STRONG></TD>
 <TD><STRONG>Permittivity</STRONG></TD>
 </TR>
-
+<TR>
+<TD><img src="jpgs/multi-dielectric.jpg"  width="100" height="100" ALT="multiple dielectric"></TD>
+<TD><STRONG>multi-dielectric.bmp:</STRONG> <br>C= 94.3325 pF/m <br>L= 274.7756 nH/m <br>Zo= 53.9708 Ohms</TD>
+<TD><img src="jpgs/multi-dielectric.E.jpg"  width="100" height="100" ALT="multiple dielectric E-field"></TD>
+<TD><img src="jpgs/multi-dielectric.Ex.jpg"  width="100" height="100" ALT="multiple dielectric Ex-field"></TD>
+<TD><img src="jpgs/multi-dielectric.Ey.jpg"  width="100" height="100" ALT="multiple dielectric Ey-field"></TD>
+<TD><img src="jpgs/multi-dielectric.V.jpg"  width="100" height="100" ALT="multiple dielectric V-field"></TD>
+<TD><img src="jpgs/multi-dielectric.U.jpg"  width="100" height="100" ALT="multiple dielectric U-field"></TD>
+<TD><img src="jpgs/multi-dielectric.Er.jpg"  width="100" height="100" ALT="multiple dielectric Er-field"></TD>
+</TR>
 <TR>
 <TD><img src="jpgs/ushape.jpg"  width="100" height="100" ALT="ushaped-line"></TD>
 <TD><STRONG>ushape.bmp:</STRONG> <br>C= 76.4283<br>L= 145.5809 nH/m <br>Zo= 43.6441 Ohms</TD>
@@ -53,57 +62,12 @@
 <TD><img src="jpgs/very-odd.U.jpg"  width="100" height="100" ALT="Energy"></TD>
 <TD><img src="jpgs/very-odd.Er.jpg"  width="100" height="100" ALT="Energy"></TD>
 </TR>
-<TR>
-<TD><img src="jpgs/twin-wire.jpg"  width="100" height="100" ALT="Twin wire"></TD>
-<TD><STRONG>twin-wire.bmp:</STRONG><br>C= 67.0534 pF/m<br>L= 165.9349 nH/m<br> Zo= 49.72439 Ohms</TD>
-<TD><img src="jpgs/twin-wire.E.jpg"  width="100" height="100" ALT="E-field"></TD>
-<TD><img src="jpgs/twin-wire.Ex.jpg"  width="100" height="100" ALT="Ex field"></TD>
-<TD><img src="jpgs/twin-wire.Ey.jpg"  width="100" height="100" ALT="Ey field"></TD>
-<TD><img src="jpgs/twin-wire.V.jpg"  width="100" height="100" ALT="Voltage"></TD>
-<TD><img src="jpgs/twin-wire.U.jpg"  width="100" height="100" ALT="Enrrgy"></TD>
-<TD><img src="jpgs/twin-wire.Er.jpg"  width="100" height="100" ALT="Permittivity"></TD>
-</TR>
+
 </TABLE>
 <br>
 The full details of exactly what the files mean is given <a href="fileformat.html">here.</a> 
-In the case of the twin-wire, and the muti-dielectric, the electric field extends to infinity, as there is no surrounding conductor like in the case of the coax, u-shaped conductor of the very odd shape. By putting the twin-wire or multi-dielectric onto a finite grid, which does not extend to infintiy, we have introduced an error. Hopefully this error is very small, but in this case it is not, as we can see from the plots of electric field, that the E-field has not fallen to a negligible amount at the edges. In cases like this, the same bitmap should be drawn on a larger grid, as in the next example. 
-<table>
-<tr>
-<TD><img src="jpgs/twin-wire2.jpg"  width="256" height="256" ALT="twin wire"></TD>
-<TD><img src="jpgs/twin-wire2.E.jpg"  width="256" height="256" ALT="twin-wire"></TD>
-<td><STRONG>twin-wire2.bmp:</STRONG>With the bitmap drawn on a larger (256x256) image like this, the error introduced by truncating the fields to zero at the edges of the image are smaller. For this simulation, <COde>atlc</code> reports<br>C= 57.1575 pF/m<br> L= 194.6639 nH/m<br>Zo= 58.3588 Ohms<br> The results are clearly very different from what the first simulation showed. </td>
-</tr>
-</table>
-The results with the twin-wire show the problem with simulations in which the fields theoretically stretch to infinity. The calculations were then repeated on a 512x512 and 1024x1024 grid. The results for all the calculations are shown below as well as the times taken on a dual processor Sun Ultra 60 (2 x 300 MHz CPUs). 
-<TABLE>
-<TR>
-<TD>128x128 (twin-wire.bmp)</TD>
-<TD>Zo= 52.7068  Ohms</TD>
-<TD>run time = 1 s.</TD>
-</TR>
-<TR>
-<TD>256x256 (twin-wire2.bmp)</TD>
-<TD>Zo= 58.3588 Ohms</TD>
-<TD>run time = 8 s </TD>
-</TR>
-<TR>
-<TD>512x512 (twin-wire3.bmp)</TD>
-<TD>Zo= 60.7080 Ohms</TD>
-<TD>run time = 82 s.</TD>
-</TR>
-<TR>
-<TD>1024x1024 (twin-wire4.bmp)</TD>
-<TD>Zo= 61.9047 Ohms</TD>
-<TD>run time = 834 s.</TD>
-</TR>
-<TR>
-<TD>2048x2048 (twin-wire5.bmp)</TD>
-<TD>Zo= 62.3786  Ohms</TD>
-<TD>run time = 4300 s.</TD>
-</TR>
-</TABLE>
-Inspecting the results one can see that as the grid size is increased, so the results converge. and for all practical results, the last result should be sufficiently accurate. Unfortunately it was obtained at the expense of a lot of CPU time. <p>
-The problem with the fields being truncated does not exist with fully enclosed transmission lines. As is shown in the <a href="accuracy.html">accuracy section</a>, the results are very acurate on other such lines in a very short time. 
+<p>In the case of the open structures (such as microstrip or twin-wire cables) the electric field extends to infinity, as there is no surrounding conductor like in the case of the coax, u-shaped conductor of the very odd shape. By putting an open structure onto a finite grid, which does not extend to infintiy, we have introduced an error. You should check that the electric field in the file <code>
+ of such structures is zero close to the edges - if not, a significant error will be introduced. </p>
 
 <p>atlc is written and supported by <a href="jpgs/home-email.jpg">Dr. David Kirkby (G8WRB)</A> It it issued under the <a href="http://www.gnu.org/copyleft/gpl.html">GNU General Public Licence</A><p>
 
