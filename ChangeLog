@@ -1,20 +1,81 @@
 ******Chnages to unrelesed 5.0.0 ********
 
-src/non_gui/Makefile.am
-removed a double entry for the header file definitions.h
-in create_bmp_for_stripline_coupler_SOURCES.
-Added a new binary create_bmp_for_rect_cen_in_rect_coupler
-
-Added the followign files that were ommited when put into CVS
+Added the following files that were ommited when put into CVS
 
 gtk.m4
 depcomp
 src/non_gui/output_from_design_coupler-Sun-Ultra-80.txt
+src/non_gui/Makefile.am
 
+removed a double entry for the header file definitions.h
+in create_bmp_for_stripline_coupler_SOURCES.
+Added a new binary create_bmp_for_rect_cen_in_rect_coupler
+
+top level directory
 Makefile.am
 Remmoved entry for README.alpha. It's contents were out of date but we might 
 want to add a file with the same name later. Who knows?
 
+man/man1
+Renamed many files to take account of the new binary files names. Hence
+they all needed updating. A new man page for design_coupler has 
+been written. Currently there are the following man pages in
+man/man1
+atlc.1
+create_bmp_for_circ_in_circ.1
+create_bmp_for_circ_in_rect.1
+create_bmp_for_microstrip_coupler.1
+create_bmp_for_rect_cen_in_rect.1
+create_bmp_for_rect_cen_in_rect_coupler.1
+create_bmp_for_rect_in_circ.1
+create_bmp_for_rect_in_rect.1
+create_bmp_for_stripline_coupler.1
+create_bmp_for_symmetrical_stripline.1
+design_coupler.1
+find_optimal_dimensions_for_microstrip_coupler.1
+readbin.1
+
+src/non_gui
+Added file convert_doubles_to_integers.c although 
+at present this is not working as planned. It is not
+linked in with any code at present. 
+
+All files with symmmetrical remaned to 
+symmetrical (not the 3 m's beforehand) 
+
+All files with the name programme have had this changed
+to program. 
+
+create_bmp_for_stripline_coupler.c 
+now the verbose level is working properly
+
+exit_codes.h 
+Added two more entries. 
+
+design_coupler.c 
+Removed the -Q option for very quite and 
+implemented it so -q is quite and -qq is quiter
+still. 
+
+check_parameters_of_create_bmp_for_rect_in_rect.c 
+Renamed a function to check_create_bmp_for_rect_in_rect_int
+since it originally had the wrong name. 
+
+Editied create_bmp_for_stripline_coupler.c. so that it only
+prints information about theoretical values if called with the 
+-v option. -vv gives more information and -vvv gives even more.
+
+calculate_impedance_for_create_bmp_for_symmetrical_stripline.c
+now calls usage_calculate_impedance_for_create_bmp_for_symmetrical_stripline  
+
+usage_create_bmp_for_symmmetrical_stripline..c
+now has a new name for the function 'usage_create_bmp_for_symmmetrical_stripline()'
+and mentions the additional -v option 
+Also, the name of the binaries mentioned have changed, to reflect
+the new naming converntion. 
+
+tests
+These have been modified and are not correct or up to date on CVS
 
 ******Version 4.2.8 Released 12 Jan 2003 ********
 Copied onto Sourceforge CVS *all* the 4.2.8 files. Some 
