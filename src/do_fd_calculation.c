@@ -8,7 +8,7 @@ extern int verbose;
 extern int append_flag;
 extern double found_this_dielectric; 
 
-void do_fd_calculation(double *capacitance, double *inductance, double *Zo, double *Zodd, double *Zeven, int which_Z, double *velocity,double *vf,FILE *where_to_print, double cutoff, int dielectrics_to_consider_just_now, char * filename ,
+void do_fd_calculation(double *capacitance, double *inductance, double *Zo, double *Zodd, double *Zeven, int whichZ, double *velocity,double *vf,FILE *where_to_print, double cutoff, int dielectrics_to_consider_just_now, char * filename ,
 int a_requirement_for_fd_calculations_Q)
 {
   double c_old, c;
@@ -34,7 +34,6 @@ int a_requirement_for_fd_calculations_Q)
       velocity of propogation */
       *Zo=sqrt((*inductance)/(*capacitance));
       *velocity=1.0/pow((*inductance)*(*capacitance),0.5);
-      //printf("\ndie_now=%d nc=%g ind = %g vel=%f\n\n",dielectrics_to_consider_just_now,*capacitance, *inductance, *velocity);
       c=1.0/(sqrt(MU_0 * EPSILON_0)); /* approx 3x10^8 m/s */
       *vf=(*velocity)/c;  /* Velocity factor */
 
@@ -43,8 +42,8 @@ int a_requirement_for_fd_calculations_Q)
 
       if(verbose)
       {
-        print_data(stdout,filename,1.0,*capacitance,*inductance,*Zo,\
-	*velocity,*vf);
+        print_data(stdout,filename,1.0,*capacitance,*inductance,*Zo,*Zodd,*Zeven,whichZ,\
+	  *velocity,*vf);
         if(append_flag==TRUE)
         {
            appendfile_fp=fopen(appendfile,"a");
@@ -54,7 +53,7 @@ int a_requirement_for_fd_calculations_Q)
 	     exit(6);
            }
 	   print_data(appendfile_fp,filename,1.0,*capacitance,\
-	   *inductance,*Zo,*velocity,*vf);
+	   *inductance,*Zo,*Zodd,*Zeven,whichZ,*velocity,*vf);
            fclose(appendfile_fp);
 	}
       }

@@ -35,7 +35,9 @@
 #define MIXED      2
 #define REQUIRE_FD_CALCULATIONS    1
 #define NO_NEED_FOR_FD_CALCULATIONS 0
-
+#define Z0                     1
+#define Z_ODD                   2
+#define Z_ALL                       3
 
 /* The value of EPSILON_0 is taken from the UK National Physical
 Laboratory's list of physical constants found on the web. */
@@ -232,7 +234,8 @@ double K_over_Kdash(double k);
 double calculate_thin_strip_impedance(int H, int w);
 char **charmatrix(long nrl, long nrh, long ncl, long nch);
 void free_charmatrix(char **m, long nrl, long nrh, long ncl, long nch);
-int print_data(FILE *fp, char *filename, double Er, double C, double L, double Zo, double v, double vf);
+int print_data(FILE *fp, char *filename, double Er, double C, double L, double Zo, double
+Zodd, double Zeven, int whichZ, double v, double vf);
 void check_for_boundaries(void);
 double find_energy_per_metre(int i, int j);
 

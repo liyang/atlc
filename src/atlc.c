@@ -57,7 +57,7 @@ extern int main(int argc, char **argv) /* Read parameters from command line */
 {
   long i;
   int q, offset, dielectrics_on_command_line=0, dielectrics_in_bitmap=0;
-  int write_field_images=1, whichZ=0;
+  int write_field_images=1;
   double capacitance, inductance, Zo, velocity, vf;
   double cutoff=0.0001, c, Zodd, Zeven;
   char *end, *output_filename, *input_filename;
@@ -220,8 +220,20 @@ without the threads\nlibrary.\n",1);
     dielectric. If necessary, they will be done again */
 
     dielectrics_to_consider_just_now=1;
-    do_fd_calculation(&capacitance, &inductance, &Zo, &Zodd, &Zeven, whichZ, &velocity, &vf, stdout, cutoff, dielectrics_to_consider_just_now, argv[my_optind],REQUIRE_FD_CALCULATIONS);
-
+    if(coupler==FALSE)
+      do_fd_calculation(&capacitance, &inductance, &Zo, &Zodd, &Zeven, Z0, \
+      &velocity, &vf, stdout, cutoff, dielectrics_to_consider_just_now, \
+      argv[my_optind],REQUIRE_FD_CALCULATIONS);
+    else if(coupler==TRUE)
+    {
+      do_fd_calculation(&capacitance, &inductance, &Zo, &Zodd, &Zeven, Z_ODD, \
+      &velocity, &vf, stdout, cutoff, dielectrics_to_consider_just_now, \
+      argv[my_optind],REQUIRE_FD_CALCULATIONS);
+      //swap_conductor_voltages(NEGATIVE_TO_POSITIVE);
+      do_fd_calculation(&capacitance, &inductance, &Zo, &Zodd, &Zeven, Z_ALL, \
+      &velocity, &vf, stdout, cutoff, dielectrics_to_consider_just_now, \
+      argv[my_optind],REQUIRE_FD_CALCULATIONS);
+    }
     /* The calculation of inductance above is correct, and does not
     need to be altered. However, if there are multiple dielectrics,
     then the capacitance needs to be computed again, this time taking
@@ -233,7 +245,8 @@ without the threads\nlibrary.\n",1);
     if(dielectrics_in_bitmap > 1) /* Only do if there is a mixed dielectric */
     {
       dielectrics_to_consider_just_now=dielectrics_in_bitmap;
-      do_fd_calculation(&capacitance, &inductance, &Zo, &Zodd, &Zeven, whichZ, &velocity, &vf, stdout, cutoff, dielectrics_to_consider_just_now, argv[my_optind],REQUIRE_FD_CALCULATIONS);
+      do_fd_calculation(&capacitance, &inductance, &Zo, &Zodd, &Zeven,Z0 , &velocity, &vf, stdout, cutoff, dielectrics_to_consider_just_now, argv[my_optind],REQUIRE_FD_CALCULATIONS);
+
     }
     /* Now we have findished all the time-consuming Fintite difference 
     bits */
@@ -242,7 +255,6 @@ without the threads\nlibrary.\n",1);
     the original calculation of C assuming vacuum just needs scaling by
     the relative permittivity of the dielectric. Very easy to do 
     and there is *NO* need for any more finite difference calculations*/
-    printf("tt\n");
 #ifndef GG
     if((dielectrics_in_bitmap == 1) && (non_vacuum_found==TRUE))
     {
@@ -255,7 +267,7 @@ without the threads\nlibrary.\n",1);
       if(verbose)
       {
         print_data(stdout,argv[my_optind],found_this_dielectric,\
-	capacitance,inductance,Zo,velocity,vf);
+	capacitance,inductance,Zo,Zodd,Zeven,Z0,velocity,vf);
         if(append_flag==TRUE)
         {
           appendfile_fp=fopen(appendfile,"a");
@@ -265,7 +277,7 @@ without the threads\nlibrary.\n",1);
 	     exit(8);
           }
 	  print_data(appendfile_fp,argv[my_optind],found_this_dielectric,\
-	  capacitance,inductance,Zo,velocity,vf);
+	  capacitance,inductance,Zo,Zodd,Zeven,Z0,velocity,vf);
           fclose(appendfile_fp);
         }
       }
@@ -274,42 +286,42 @@ without the threads\nlibrary.\n",1);
     if(dielectrics_in_bitmap > 1)
     {
       print_data(stdout,argv[my_optind],-1.0,capacitance,\
-      inductance,Zo,velocity,vf);
+      inductance,Zo,Zodd,Zeven,Z0,velocity,vf);
       print_data(resultfile_fp,argv[my_optind],-1.0,capacitance,\
-      inductance,Zo,velocity,vf);
+      inductance,Zo,Zodd,Zeven,Z0,velocity,vf);
       if(append_flag==TRUE)
       {
         appendfile_fp=fopen(appendfile,"a");
         print_data(appendfile_fp,argv[my_optind],-1.0,capacitance,\
-	inductance,Zo,velocity,vf);
+	inductance,Zo,Zodd,Zeven,Z0,velocity,vf);
             fclose(appendfile_fp);
 	  }
       }
       else if((dielectrics_in_bitmap == 1) && (non_vacuum_found==TRUE))
       {
          print_data(stdout,argv[my_optind],found_this_dielectric,capacitance,\
-	 inductance,Zo,velocity,vf);
+	 inductance,Zo,Zodd,Zeven,Z0,velocity,vf);
          print_data(resultfile_fp,argv[my_optind],found_this_dielectric,\
-	 capacitance,inductance,Zo,velocity,vf);
+	 capacitance,inductance,Zo,Zodd,Zeven,Z0,velocity,vf);
 	 if(append_flag==TRUE)
 	 {
 	   appendfile_fp=fopen(appendfile,"a");
            print_data(appendfile_fp,argv[my_optind],found_this_dielectric,\
-	   capacitance,inductance,Zo,velocity,vf);
+	   capacitance,inductance,Zo,Zodd,Zeven,Z0,velocity,vf);
            fclose(appendfile_fp);
 	 }
       }
       else
       {
          print_data(stdout,argv[my_optind],1.0,capacitance,inductance,\
-	 Zo,velocity,vf);
+	 Zo,Zodd,Zeven,Z0,velocity,vf);
          print_data(resultfile_fp,argv[my_optind],1.0,capacitance,\
-	 inductance,Zo,velocity,vf);
+	 inductance,Zo,Zodd,Zeven,Z0,velocity,vf);
 	 if(append_flag==TRUE)
 	 {
 	   appendfile_fp=fopen(appendfile,"a");
            print_data(appendfile_fp,argv[my_optind],1.0,capacitance,\
-	   inductance,Zo,velocity,vf);
+	   inductance,Zo,Zodd,Zeven,Z0,velocity,vf);
            fclose(appendfile_fp);
 	 }
       }
