@@ -48,9 +48,6 @@ can't be bothered to change it */
 extern double WW, HH, aa, bb, cc, dd, ww, hh, Er1, Er2;
 extern int W, H, a, b, c, d, w, h;
 extern int verbose;
-extern double Ers[];
-extern int colours[];
-extern char names[];
 extern int lowest;
 extern int highest;
 
