@@ -48,10 +48,6 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #include <pthread.h>
 #endif
 
-#ifdef HAVE_PTHREADS_H
-#include <pthreads.h>
-#endif
-
 #endif
 
 void check_parameters_of_create_bmp_for_microstrip_coupler(struct transmission_line_properties pcb) 
