@@ -83,7 +83,7 @@ Laboratory's list of physical constants found on the web. */
 #define MAX_THREADS  2
 #define BORDER   5 /* The border to put around images. 1 is minimum, but 5 looks better */
 
-#define TINY 1e-15
+#define TINY 1e-12
 #define VERY_LARGE 1e15
 #define DEFAULT_BMPSIZE 6
 #define DEFAULT_COUPLER_BITMAP_SIZE 18
