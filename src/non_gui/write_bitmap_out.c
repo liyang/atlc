@@ -34,6 +34,10 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #include <stdlib.h>
 #endif
 
+#ifdef HAVE_STDIO_H
+#include <stdio.h>
+#endif
+
 #include "definitions.h"
 #include "exit_codes.h"
 
@@ -46,144 +50,118 @@ extern int W, H;
 
 /* This function can be used on any routines that writes .bmp files */
 
+/*#define DEBUG*/
+
 void write_bitmap_out(unsigned char *byte_aligned_image_data, FILE *image_data_fp,int sizeof_image, int W, int H)
 {
-   long temp_long;
-   short temp_short;
+   unsigned char *buff;
 
    struct Bitmap_File_Head_Struct Bitmap_File_Head;
    struct Bitmap_Head_Struct Bitmap_Head;
+
+#ifdef DEBUG
+   printf("sizeof_image = %d in write_bitmap_out\n", sizeof_image);
+#endif
+
+   buff=ustring(0,0x36);
+
+   /* fprintf(stderr,"file size=%ld\n",temp_long); */
+
    Bitmap_File_Head.zzMagic[0]='B';
    Bitmap_File_Head.zzMagic[1]='M';
-
-   /* But the rest of Bitmap_File_Head does */
-
-   temp_long=sizeof_image+0x36; /* 0x2 */
-   /* fprintf(stderr,"file size=%ld\n",temp_long); */
-#ifdef WORDS_BIGENDIAN
-   byteswap_longs(&temp_long);
-#endif
-   Bitmap_File_Head.bfSize=(long) (temp_long);
-
-   temp_short=0;  /* 0x6 */
-#ifdef WORDS_BIGENDIAN
-   byteswap_shorts(&temp_short);
-#endif
-   Bitmap_File_Head.zzHotX=temp_short; /* reserved */
-
-   temp_short=0;   /*0x8*/
-#ifdef WORDS_BIGENDIAN
-   byteswap_shorts(&temp_short);
-#endif
-   Bitmap_File_Head.zzHotY=temp_short; /* reserved */
-
-   temp_long=54;   /*0xA */
-#ifdef WORDS_BIGENDIAN
-   byteswap_longs(&temp_long);
-#endif
-   Bitmap_File_Head.bfOffs=temp_long;
+   Bitmap_File_Head.bfSize=sizeof_image+0x36;
+   Bitmap_File_Head.zzHotX=0; 
+   Bitmap_File_Head.zzHotY=0; 
+   Bitmap_File_Head.bfOffs=54; 
+   Bitmap_File_Head.biSize=0x28;
 
 
-   temp_long=0x28;   /*0xE */
-#ifdef WORDS_BIGENDIAN
-   byteswap_longs(&temp_long);
-#endif
-   Bitmap_File_Head.biSize=temp_long;
+   Bitmap_Head.biWidth=W;
+   Bitmap_Head.biHeight=H;
+   Bitmap_Head.biPlanes=1;
+   Bitmap_Head.biBitCnt=24;
+   Bitmap_Head.biCompr=0;
+   Bitmap_Head.biSizeIm=sizeof_image;
+   Bitmap_Head.biXPels=W*10;  /* Why ??? XXX */
+   Bitmap_Head.biYPels=H*10;  /* Why ??? XXX */
+   Bitmap_Head.biClrUsed=0;
+   Bitmap_Head.biClrImp=0;
 
-/* Done with the Bitmap_File_head */
+   buff[0x00] = Bitmap_File_Head.zzMagic[0];
+   buff[0x01] = Bitmap_File_Head.zzMagic[1];
 
-   temp_long=W; 
-#ifdef WORDS_BIGENDIAN
-   byteswap_longs(&temp_long);
-#endif
-   Bitmap_Head.biWidth=temp_long;
+   buff[0x02] = Bitmap_File_Head.bfSize;
+   buff[0x03] = Bitmap_File_Head.bfSize >> 8;
+   buff[0x04] = Bitmap_File_Head.bfSize >> 16;
+   buff[0x05] = Bitmap_File_Head.bfSize >> 24;
 
+   buff[0x06] = Bitmap_File_Head.zzHotX;
+   buff[0x07] = Bitmap_File_Head.zzHotX >> 8;
 
+   buff[0x08] = Bitmap_File_Head.zzHotY;
+   buff[0x09] = Bitmap_File_Head.zzHotY >> 8;
 
-   temp_long=H; 
-#ifdef WORDS_BIGENDIAN
-   byteswap_longs(&temp_long);
-#endif
-   Bitmap_Head.biHeight=temp_long;
+   buff[0x0a] = Bitmap_File_Head.bfOffs;
+   buff[0x0b] = Bitmap_File_Head.bfOffs>> 8;
+   buff[0x0c] = Bitmap_File_Head.bfOffs>> 16;
+   buff[0x0d] = Bitmap_File_Head.bfOffs>> 24;
 
+   buff[0x0e] = Bitmap_File_Head.biSize;
+   buff[0x0f] = Bitmap_File_Head.biSize>> 8;
+   buff[0x10] = Bitmap_File_Head.biSize>> 16;
+   buff[0x11] = Bitmap_File_Head.biSize>> 24;
 
-   temp_short=1; 
-#ifdef WORDS_BIGENDIAN
-   byteswap_shorts(&temp_short);
-#endif
-   Bitmap_Head.biPlanes=temp_short;
+   /* Write contents of Bitmap_Head_Struct */
 
+   buff[0x12] = Bitmap_Head.biWidth;
+   buff[0x13] = Bitmap_Head.biWidth>> 8;
+   buff[0x14] = Bitmap_Head.biWidth>> 16;
+   buff[0x15] = Bitmap_Head.biWidth>> 24;
 
-   temp_short=24; 
-#ifdef WORDS_BIGENDIAN
-   byteswap_shorts(&temp_short);
-#endif
-   Bitmap_Head.biBitCnt=temp_short;
+   buff[0x16] = Bitmap_Head.biHeight;
+   buff[0x17] = Bitmap_Head.biHeight>> 8;
+   buff[0x18] = Bitmap_Head.biHeight>> 16;
+   buff[0x19] = Bitmap_Head.biHeight>> 24;
 
+   buff[0x1a] = Bitmap_Head.biPlanes;
+   buff[0x1b] = Bitmap_Head.biPlanes>> 8;
 
-   temp_long=0; 
-#ifdef WORDS_BIGENDIAN
-   byteswap_longs(&temp_long);
-#endif
-   Bitmap_Head.biCompr=temp_long;
+   buff[0x1c] = Bitmap_Head.biBitCnt;
+   buff[0x1d] = Bitmap_Head.biBitCnt>> 8;
 
+   buff[0x1e] = Bitmap_Head.biCompr;
+   buff[0x1f] = Bitmap_Head.biCompr>> 8;
+   buff[0x20] = Bitmap_Head.biCompr>> 16;
+   buff[0x21] = Bitmap_Head.biCompr>> 24;
 
-   temp_long=sizeof_image; 
-#ifdef WORDS_BIGENDIAN
-   byteswap_longs(&temp_long);
-#endif
-   Bitmap_Head.biSizeIm=temp_long;
+   buff[0x22] = Bitmap_Head.biSizeIm;
+   buff[0x23] = Bitmap_Head.biSizeIm>> 8;
+   buff[0x24] = Bitmap_Head.biSizeIm>> 16;
+   buff[0x25] = Bitmap_Head.biSizeIm>> 24;
 
+   buff[0x26] = Bitmap_Head.biXPels;
+   buff[0x27] = Bitmap_Head.biXPels>> 8;
+   buff[0x28] = Bitmap_Head.biXPels>> 16;
+   buff[0x29] = Bitmap_Head.biXPels>> 24;
 
+   buff[0x2a] = Bitmap_Head.biYPels;
+   buff[0x2b] = Bitmap_Head.biYPels>> 8;
+   buff[0x2c] = Bitmap_Head.biYPels>> 16;
+   buff[0x2d] = Bitmap_Head.biYPels>> 24;
 
-   temp_long=W*10; 
-#ifdef WORDS_BIGENDIAN
-   byteswap_longs(&temp_long);
-#endif
-   Bitmap_Head.biXPels=temp_long;
+   buff[0x2e] = Bitmap_Head.biClrUsed;
+   buff[0x2f] = Bitmap_Head.biClrUsed>> 8;
+   buff[0x30] = Bitmap_Head.biClrUsed>> 16;
+   buff[0x31] = Bitmap_Head.biClrUsed>> 24;
 
-   temp_long=H*10; 
-#ifdef WORDS_BIGENDIAN
-   byteswap_longs(&temp_long);
-#endif
-   Bitmap_Head.biYPels=temp_long;
+   buff[0x32] = Bitmap_Head.biClrImp;
+   buff[0x33] = Bitmap_Head.biClrImp>> 8;
+   buff[0x34] = Bitmap_Head.biClrImp>> 16;
+   buff[0x35] = Bitmap_Head.biClrImp>> 24;
 
-   temp_long=0; 
-#ifdef WORDS_BIGENDIAN
-   byteswap_longs(&temp_long);
-#endif
-   Bitmap_Head.biClrUsed=temp_long;
+   fwrite((void *) buff, 0x36, 1, image_data_fp);
 
-   temp_long=0; 
-#ifdef WORDS_BIGENDIAN
-   byteswap_longs(&temp_long);
-#endif
-   Bitmap_Head.biClrImp=temp_long;
-
-   /* Write Bitmap_File_Head, which is 18 bytes */
-   fwrite(&(Bitmap_File_Head.zzMagic[0]),1,1,image_data_fp);  /*0x0*/
-   fwrite(&(Bitmap_File_Head.zzMagic[1]),1,1,image_data_fp);  /*0x*/
-   fwrite(&(Bitmap_File_Head.bfSize),4,1,image_data_fp);  /*0x02*/
-   fwrite(&(Bitmap_File_Head.zzHotX),2,1,image_data_fp);  /*0x06*/
-   fwrite(&(Bitmap_File_Head.zzHotY),2,1,image_data_fp);  /*0x08*/
-   fwrite(&(Bitmap_File_Head.bfOffs),4,1,image_data_fp);  /*0xA*/
-   fwrite(&(Bitmap_File_Head.biSize),4,1,image_data_fp);  /*0xE*/
-
-   /* Now write Bitmap_Head to disk, which is  bytes */
-   
-   fwrite(&(Bitmap_Head.biWidth),4,1,image_data_fp);  /*0x12*/
-   fwrite(&(Bitmap_Head.biHeight),4,1,image_data_fp); /*0x*/
-   fwrite(&(Bitmap_Head.biPlanes),2,1,image_data_fp);
-   fwrite(&(Bitmap_Head.biBitCnt),2,1,image_data_fp);
-   fwrite(&(Bitmap_Head.biCompr),4,1,image_data_fp);
-   fwrite(&(Bitmap_Head.biSizeIm),4,1,image_data_fp);
-   fwrite(&(Bitmap_Head.biXPels),4,1,image_data_fp); /*0x26*/
-   fwrite(&(Bitmap_Head.biYPels),4,1,image_data_fp); /*0x2a*/
-   fwrite(&(Bitmap_Head.biClrUsed),4,1,image_data_fp); /*0x2e*/
-   fwrite(&(Bitmap_Head.biClrImp),4,1,image_data_fp); /*0x32*/
-  
-
-   /* Finally write the image */
+   /* Now the reader is written, finally write the image */
    fwrite(byte_aligned_image_data,(size_t) sizeof_image,1,image_data_fp);
    if( fclose(image_data_fp) != 0)
      exit_with_msg_and_exit_code("failed to close file in write_bitmap_out.c",CANT_CLOSE_FILE);
