@@ -18,7 +18,7 @@ later, when saving bmp files. It saves a lot of hassle,
 just writing what we read back, rather than correctly 
 calculating all the data in the header correctly */
 
-void read_bitmap_file_headers(char *filename, int *offset, int *size, int *width, int *height)
+void read_bitmap_file_headers(char *filename, int *offset, size_t *size, int *width, int *height)
 {
    FILE *fp;
 
