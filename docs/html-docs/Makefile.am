@@ -39,7 +39,6 @@ theory.html \
 todo.html \
 tutorial.html \
 usage_design_coupler.html \
-bluefish.jpg \
 valid-html40.gif 
 
 EXTRA_DIST = BUGS.html \
@@ -78,7 +77,6 @@ rect_in_rect.html \
 theory.html \
 todo.html \
 tutorial.html \
-bluefish.jpg \
 valid-html40.gif \
 usage_design_coupler.html 
 
