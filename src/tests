@@ -63,6 +63,8 @@ rm -f test-2.txt
 rm -f test-3.bmp
 rm -f test-4.bmp
 rm -f test-5.bmp
+rm -f 66.74-66.02.bmp
+rm -f 66.74-66.02.txt
 
 ../src/sym_strip 950 201  68  test-1.bmp > /dev/null
 CKSUM=`sum test-1.bmp  | awk '{print $1}'`
