@@ -43,12 +43,14 @@ defs.h
 Test_threads_a_SOURCES = Test_threads_a.c
 Test_threads_a_CPPFLAGS = @PTHREAD_CFLAGS@
 #Test_threads_a_LDADD = @PTHREAD_LIBS@ @LIBS@ @GSL_LIBS@ @MPILIBS@ 
-Test_threads_a_LDADD = @PTHREAD_LIBS@ @LIBS@ @GSL_LIBS@ 
+#Test_threads_a_LDADD = @PTHREAD_LIBS@ @LIBS@ @GSL_LIBS@ 
+Test_threads_a_LDADD = @PTHREAD_LIBS@ @LIBS@ 
 
 Test_threads_b_SOURCES = Test_threads_b.c
 Test_threads_b_CPPFLAGS = @PTHREAD_CFLAGS@
 #Test_threads_b_LDADD = @PTHREAD_LIBS@ @LIBS@ @GSL_LIBS@ @MPILIBS@ 
-Test_threads_b_LDADD = @PTHREAD_LIBS@ @LIBS@ @GSL_LIBS@ 
+#Test_threads_b_LDADD = @PTHREAD_LIBS@ @LIBS@ @GSL_LIBS@ 
+Test_threads_b_LDADD = @PTHREAD_LIBS@ @LIBS@ 
 
 TESTS_ENVIRONMENT = \
 top_builddir=$(top_builddir) \
