@@ -45,15 +45,17 @@ int main(int argc, char **argv)
   double error_min=1e100, error; 
   double ideal_Zodd=0, ideal_Zeven=0; 
   char *outfile_name, *temporary_bmp_file, *temporary_txt_file;
-  int x, q;
-  char *text, *null;
+  int x, q, bmp_size=DEFAULT_BMP_SIZE;
+  int return_value_from_create_bmp_for_microstrip_coupler=0;
+  int return_value_from_atlc=0;
+  char *cmd, *null;
   FILE *fp, *fp_best;
   outfile_name = string(0,4000);
-  text = string(0,4000);
+  cmd = string(0,4000);
   null = string(0,4000);
   temporary_bmp_file = string(0,4000);
   temporary_txt_file = string(0,4000);
-  while((q=get_options(argc,argv,"g:G:w:W:s:S:")) != -1)
+  while((q=get_options(argc,argv,"g:b:G:w:W:s:S:")) != -1)
   switch (q) 
   {
     case 'C':
@@ -62,6 +64,9 @@ int main(int argc, char **argv)
     break;
     case 'g':
       gmin=atof(my_optarg);
+    break;
+    case 'b':
+      bmp_size=atoi(my_optarg);
     break;
     case 'G':
       gmax=atof(my_optarg);
@@ -99,6 +104,7 @@ int main(int argc, char **argv)
     Er2=atof(argv[my_optind+3]);
     ideal_Zodd=atof(argv[my_optind+4]);
     ideal_Zeven=atof(argv[my_optind+5]);
+    check_parameters_for_find_optimal_dimensions_for_microstrip_coupler(h,t,Er1,Er2,ideal_Zodd,ideal_Zeven);
     strcpy(outfile_name, argv[my_optind+6]);
   }
   else
@@ -108,24 +114,30 @@ int main(int argc, char **argv)
   strcpy(temporary_bmp_file,"1.bmp");
   strcpy(temporary_txt_file,"1.txt");
   printf("rrrrrrrrrr = %s %s \n", temporary_bmp_file,temporary_txt_file);
+
+  pclose(popen("rm 1.txt 1.bmp","w"));
   for(g=gmin; g <=gmax; g+=gstep)
   {
     for(w=wmin; w<=wmax; w+=wstep)
     {
       for(s=smin; s<=smax; s+=sstep)
       {
-	sprintf(text,"create_bmp_for_microstrip_coupler %f %f %f %f %f %f %f %s\n",w, s, g, h, t, Er1, Er2,temporary_bmp_file);
-	system(text);
-	//printf(text);
-	sprintf(text,"atlc -S -s %s > %s\n", temporary_bmp_file, temporary_txt_file);
-	printf(text);
-	system(text);
+	sprintf(cmd,"create_bmp_for_microstrip_coupler %f %f %f %f %f %f %f %s\n",w, s, g, h, t, Er1, Er2,temporary_bmp_file);
+	printf(cmd);
+	//system(cmd);
+	return_value_from_create_bmp_for_microstrip_coupler=pclose(popen(cmd,"w"));
+	sprintf(cmd,"atlc -S -s %s > %s\n", temporary_bmp_file, temporary_txt_file);
+	printf(cmd);
+	return_value_from_atlc=pclose(popen(cmd,"w"));
+	printf("atlc ret= %d create_bmp_for_microstrip_coupler ret = %d \n",return_value_from_atlc,
+	return_value_from_create_bmp_for_microstrip_coupler);
+	//system(cmd);
 	if ((fp=fopen(temporary_txt_file,"r")) ==NULL)
 	  error_and_exit("Error #1 cant't open file in find_optimal_dimensions_for_microstrip_coupler.c", CANT_OPEN_FILE_FOR_READING);
 	fscanf(fp,"%s %d %s %lf %s %lf %s %lf %s %lf %s %lf %s %lf %s %lf",null,&x,null,&Er_odd,null,&Er_even, null, &Zodd,null,&Zeven,null,&Zo, null, &Zdiff,null,&Zcomm);
 	if (fclose(fp) !=0)
 	  error_and_exit("Error #2 Unable to close file in ind_optimal_dimensions_for_microstrip_coupler.c",CANT_CLOSE_FILE);
-	printf("x=%d Er_odd=%f Er_even=%f Zodd=%lf Zeven=%lf Zo=%lf Zdiff=%lf Zcomm=%lf\n",x, Er_odd,Er_even,Zodd, Zeven,Zo, Zdiff, Zcomm);
+	printf("x=%d Er_odd=%f Er_even=%f Zodd=%f Zeven=%f Zo=%f Zdiff=%f Zcomm=%f\n",x, Er_odd,Er_even,Zodd, Zeven,Zo, Zdiff, Zcomm);
 	error=fabs(Zodd-ideal_Zodd)/ideal_Zodd+fabs(Zeven-ideal_Zeven)/ideal_Zeven;
 	/* By forcing the error to be a be not just bettter, but better by at 
 	least TINY, it means the results will be the same on differerent computers,
