@@ -190,6 +190,8 @@ void setup_arrays(struct transmission_line_properties *data)
      printf("Height =                                     %8d \n",height);
      printf("Pixels =                                     %8d \n",width*height);
      printf("Number of Dielectrics found =                %8d \n", data->dielectrics_in_bitmap);
+     data->non_metallic_pixels=width*height-pixels_found.red-pixels_found.green -pixels_found.blue;
+     printf("Number of non-metallic pixels =              %8d \n", data->non_metallic_pixels);
      printf("filename =             %30s \n",inputfile_name);
      if (pixels_found.red > 0 )
        conductors+=1;  
