@@ -27,6 +27,5 @@ EccentricCoaxFrame::EccentricCoaxFrame(const wxString& title, const wxPoint& pos
 
 EccentricCoaxFrame::~EccentricCoaxFrame()
 {
-
 }
 
