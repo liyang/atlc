@@ -56,7 +56,7 @@ int main(int argc, char **argv)
   }
   if(argc-my_optind == 1)
   {
-    fp=fopen(argv[my_optind],"r");
+    fp=fopen(argv[my_optind],"rb");
     if (fp==NULL)
     {
       fprintf(stderr,"Can't open %s for reading\n",argv[my_optind]);
