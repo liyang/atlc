@@ -214,53 +214,7 @@ without the threads\nlibrary.\n",1);
     dielectric. If necessary, they will be done again */
 
     dielectrics_to_consider_just_now=1;
-    do_fd_calculation(&capacitance, &inductance, &Zo, stdout, cutoff, dielectrics_to_consider_just_now, argv[my_optind]);
-#ifdef GG
-    capacitance=VERY_LARGE; /* Can be anything large */
-    do /* Start a finite calculation */
-    {
-      c_old=capacitance; 
-
-      /* Calcuate the capacitance, using 100 iterations in a finite
-      differnce loop. There are two routines called finite_difference,
-      one in the file finite_difference_multi_threaded.c and another 
-      in the file finite_difference_single_threaded.c. The function has
-      the same name in each, but is difference, depending on whether or
-      not the programme is using multiple processors */
-      dielectrics_to_consider_just_now=1;
-      capacitance=finite_difference(100);
-
-      /* Once the capacitance is know, we can calculate L, Zo  and the
-      velocity of propogation */
-
-      inductance=MU_0*EPSILON_0/capacitance;
-      Zo=sqrt(inductance/capacitance);
-      velocity=1.0/pow(inductance*capacitance,0.5);
-      c=1.0/(sqrt(MU_0 * EPSILON_0)); /* approx 3x10^8 m/s */
-      vf=velocity/c;  /* Velocity factor */
-
-      /* If the -v option is given on the command line, more data is
-      produced */
-
-      if(verbose)
-      {
-        print_data(stdout,argv[my_optind],1.0,capacitance,inductance,Zo,\
-	velocity,vf);
-        if(append_flag==TRUE)
-        {
-           appendfile_fp=fopen(appendfile,"a");
-	   if(appendfile_fp==NULL)
-	   {
-	     fprintf(stderr,"Error #6. Can't open file for appending data in atlc.c\n");
-	     exit(6);
-           }
-	   print_data(appendfile_fp,argv[my_optind],1.0,capacitance,\
-	   inductance,Zo,velocity,vf);
-           fclose(appendfile_fp);
-	}
-      }
-    } while (fabs((c_old-capacitance)/c_old) > cutoff); /* end of FD loop */
-#endif 
+    do_fd_calculation(&capacitance, &inductance, &Zo, &velocity, &vf, stdout, cutoff, dielectrics_to_consider_just_now, argv[my_optind]);
     /* The calculation of inductance above is correct, and does not
     need to be altered. However, if there are multiple dielectrics,
     then the capacitance needs to be computed again, this time taking
@@ -271,6 +225,9 @@ without the threads\nlibrary.\n",1);
 
     if(dielectrics_in_bitmap > 1) /* Only do if there is a mixed dielectric */
     {
+      dielectrics_to_consider_just_now=dielectrics_in_bitmap;
+      do_fd_calculation(&capacitance, &inductance, &Zo, &velocity, &vf, stdout, cutoff, dielectrics_to_consider_just_now, argv[my_optind]);
+#ifdef GG
       capacitance=VERY_LARGE; /* Can be anything large */
       do
       {
@@ -292,12 +249,12 @@ without the threads\nlibrary.\n",1);
 	      fprintf(stderr,"Error #7 Can't open %s for appending\n",appendfile);
 	      exit(7);
             }
-	    print_data(appendfile_fp,argv[my_optind],-1.0,capacitance,\
-	    inductance,Zo,velocity,vf);
+	    print_data(appendfile_fp,argv[my_optind],-1.0,capacitance,inductance,Zo,velocity,vf);
             fclose(appendfile_fp);
 	  }
         }/* end of if(verbose==TRUE) */
       }while (fabs((c_old-capacitance)/c_old) > cutoff);
+#endif
     }
     /* Now we have findished all the time-consuming Fintite difference 
     bits */
