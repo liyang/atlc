@@ -12,12 +12,21 @@ graphical front end - they are simple command-line driven
 binaries. If you want to add your own front end feel free. 
 
 The latest Windows binaries produced are for version 3.0.7
-of the code.  Version 4.0.1 will be available soon.
+of the code.
 
 Most of the example files (.bmp's) referred to in the docs are 
 in the file atlc-3.0.7.tar.gz, which is a compressed tar file. 
 Winzip can extract files from that with no problem. The 
-documentation (.html) is also in there - which should be 
-the same as on the web site. http://atlc.sourceforge.net
+documentation (.html) is also in there - which will *not*
+be the same as on the web site. http://atlc.sourceforge.net , 
+since the website will be much more up to date. YOU ARE 
+STRONLY ADVISED TO RUN GNI/Linux OR OTHER Unix VERSION IF 
+YOU WISH TO RUN UNDER WINDOZE. 
 
-Dr. David Kirkby, G8WRB, 4th April, 2002.
+People have managed to compile atlc with Miccrosoft's
+Visual C++ and using Cygen, so it will happen. If someone
+will send me a .zip file of Windoze binaries I will put them
+up, but I will not check them myself. They are completely 
+unsupported. 
+
+Dr. David Kirkby, G8WRB, 11th Jan, 2003.
