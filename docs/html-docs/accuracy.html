@@ -331,12 +331,12 @@ the file <CODE>create </CODE>.
 <STRONG><H2><a name="Accuracy_symmetrical_strip" >Comparisions between atlc and a symmetrical strip transmission line</H2></STRONG>
 Another obvious test is a symmetrical strip transmission line - see diagramme below. <p>
 <img src="jpgs/symmetrical_strip.jpg" ALT="Symmetrical Strip Transmission Line"><p>
-This has an exact analytical solution, dependant on the ratio of the width of the inner conductor w, to the distance between the two outer conductors H.  This assumes that the outer conductors extend to plus and minus infinity and the inner conductor is infinitely thin. This structure has the advantage of requiring no curves, so can be represented more accurately with the square grid used in <CODE>atlc.</CODE> However, its impossible to have an inner conductor that is less than 1 pixel high and it is impossible to make the dimension W  infinity wide as it was take an infinite amount of disk space, RAM and CPU time).  However, if the width W is made at least 4xH+w, then making it any larger does not seem to have much affect on the result. Hence the results below were obtained by setting the internal W equal to 4 times the internal height plus the inner width W. The actual bitmaps used by atlc are 10 pixels higher and 10 pixels wider, to enforce a boundary. The programme <CODE>sym_strip</CODE> can be used to quickly produce suitable bitmaps for such circumstances. It enforces having the width W of the  equal to at least w+4*h, as well as H being at least 201 pixels. It must be odd, since the one pixel inner conductor must fit centrally between the two outer conductors.<br>
+This has an exact analytical solution, dependent on the ratio of the width of the inner conductor w, to the distance between the two outer conductors H.  This assumes that the outer conductors extend to plus and minus infinity and the inner conductor is infinitely thin. This structure has the advantage of requiring no curves, so can be represented more accurately with the square grid used in <CODE>atlc.</CODE> However, its impossible to have an inner conductor that is less than 1 pixel high and it is impossible to make the dimension W  infinity wide as it was take an infinite amount of disk space, RAM and CPU time).  However, if the width W is made at least 4xH+w, then making it any larger does not seem to have much affect on the result. Hence the results below were obtained by setting the internal W equal to 4 times the internal height plus the inner width W. The actual bitmaps used by atlc are 10 pixels higher and 10 pixels wider, to enforce a boundary. The programme <CODE>sym_strip</CODE> can be used to quickly produce suitable bitmaps for such circumstances. It enforces having the width W of the  equal to at least w+4*h, as well as H being at least 201 pixels. It must be odd, since the one pixel inner conductor must fit centrally between the two outer conductors.<br>
 <CODE>sym_strip 1200 201 290 50-Ohm-201.bmp<br>
 w=290 H=201 w/H=1.442786 xo=23.753772<br>
 Zo is theoretically 49.989477 Ohms (assuming W is infinite)<br></CODE>
 <br>
-This structure, which has a w/H value of 1.442786, has a theoretical impedance close to 50 Ohms (49.989477 to be precise). atlc calculates this to be 49.8457 Ohms, an error of only 0.087%, when using a  grid 1134x201. Increasing the number of pixels to 2222x401,  the results are surprisingly somewhat worst with an eror of 0.191%. I have no explanation for this. but increasing the pixels further to 4399x801, results in a larger error still, as atlc reports this as 49.9127.<p>
+This structure, which has a w/H value of 1.442786, has a theoretical impedance close to 50 Ohms (49.989477 to be precise). atlc calculates this to be 49.8457 Ohms, an error of only 0.087%, when using a  grid 1134x201. Increasing the number of pixels to 2222x401,  the results are surprisingly somewhat worst with an error of 0.191%. I have no explanation for this. but increasing the pixels further to 4399x801, results in a larger error still, as atlc reports this as 49.9127.<p>
 <TABLE border>
 <TR>
 <TD><STRONG>Filename</STRONG></td>
@@ -423,8 +423,8 @@ This structure, which has a w/H value of 1.442786, has a theoretical impedance c
 <TD>1155</TD>
 <TD>1.441948</TD>
 <TD>50.011737</TD>
-<TD>zoatlc</TD>
-<TD>err</TD>
+<TD>Zo atlc</TD>
+<TD>error</TD>
 <TD>t1</TD>
 <TD>t2</TD>
 <TD>t1/t2</TD>
@@ -540,9 +540,9 @@ ko=(tanh((pi/2)*(w/H)))*coth((pi/2)*(w+s)/H)<p>
 ke'=sqrt(1-(ke^2))<br>
 ko'=sqrt(1-(ko^2))<p>
 
-Those equations are taken from Matthaei, Young and Jones, <EM>Microwave Filters, Impedance Matching Networks and Coupling Structures</EM>,  Artech House, Dedham, MA., 1980. I'm very grateful to Paul Gili AA1LL / KB1CZP  <aa1ll@email.com> for prviding me with these equations, references and nomographs. 
+Those equations are taken from Matthaei, Young and Jones, <EM>Microwave Filters, Impedance Matching Networks and Coupling Structures</EM>,  Artech House, Dedham, MA., 1980. I'm very grateful to Paul Gili AA1LL / KB1CZP  <aa1ll@email.com> for providing me with these equations, references and nomographs. 
 <p>
-A programme <CODE>make_coupler</CODE> was written to automatically generate bitmaps given the height H between the groundplanes, the conductor widths w and spacing s. Ideally this needs simulating from -infinity to +infinity, but that is not practical. It was assumed that if the complete stucture width W was equal to 2*w+s+8*H that would be adequate (this seemed <EM>about right</EM>, but I've no proof it is optimal). As well as producing a bitmap, <CODE>make_coupler</CODE>also calculate the theoetical values of impedance. In order to perform calculations of the theoetical impedance, <CODE>make_coupler </CODE> uses the GNU scientific library <a href="http://sources.redhat.com/gsl">gsl</a>  for the elliptic integral calculations. Hence to obtain the theoretical values, gsl, available at <a href="http://sources.redhat.com/gsl">http://sources.redhat.com/gsl</a>,  <STRONG>must</STRONG> be installed. The bitmaps will still be produces without the gsl library.<p>
+A programme <CODE>make_coupler</CODE> was written to automatically generate bitmaps given the height H between the groundplanes, the conductor widths w and spacing s. Ideally this needs simulating from -infinity to +infinity, but that is not practical. It was assumed that if the complete structure width W was equal to 2*w+s+8*H that would be adequate (this seemed <EM>about right</EM>, but I've no proof it is optimal). As well as producing a bitmap, <CODE>make_coupler</CODE>also calculate the theoretical values of impedance. In order to perform calculations of the theoetical impedance, <CODE>make_coupler </CODE> uses the GNU scientific library <a href="http://sources.redhat.com/gsl">gsl</a>  for the elliptic integral calculations. Hence to obtain the theoretical values, gsl, available at <a href="http://sources.redhat.com/gsl">http://sources.redhat.com/gsl</a>,  <STRONG>must</STRONG> be installed. The bitmaps will still be produces without the gsl library.<p>
 <TABLE border>
 <TR>
 <TD><STRONG>Filename</STRONG></TD>
@@ -658,8 +658,8 @@ A programme <CODE>make_coupler</CODE> was written to automatically generate bitm
 </TR>
 </TABLE>
 <p>
-Note, because of the need to simulate a large width W, these calculations are much slower than those above. The fact the simulation has to be done twice also adds to the time taken. A typical run, using the default bitmap size (18, whch gives bitmap of 128 to 512kb), the time taken is approximately 2 minutes on a dual 300 MHz Sun Ultra 60. 
-<p>atlc is written and supported by <a href="mailto: drkirkby@ntlworld.com?subject=atlc%20-%20Arbitrary%20Transmission%20Line%20Calculator">Dr. David Kirkby (G8WRB)</A> It it issued under the <a href="http://www.gnu.org/copyleft/gpl.html">GNU General Public Licence</A><p>
+Note, because of the need to simulate a large width W, these calculations are much slower than those above. The fact the simulation has to be done twice also adds to the time taken. A typical run, using the default bitmap size (18, which gives bitmap of 128 to 512kb), the time taken is approximately 2 minutes on a dual 300 MHz Sun Ultra 60. 
+<p>atlc is written and supported by <a href="mailto: drkirkby@ntlworld.com?subject=atlc%20-%20Arbitrary%20Transmission%20Line%20Calculator">Dr. David Kirkby (G8WRB)</A> It it issued under the <a href="http://www.gnu.org/copyleft/gpl.html">GNU General Public License</A><p>
 <a href="http://atlc.sourceforge.net">Return to the atlc homepage</a>
 </body>
 </html>
