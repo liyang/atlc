@@ -110,3 +110,4 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #define MEMORY_ALLOCATION_ERROR_IN_SCMATRIX                       85
 #define CANT_READ_ALL_OF_FILE                                     86
 #define FSEEK_FAILURE                                             87
+#define FTELL_FAILURE                                             88
