@@ -1,0 +1,8 @@
+'atlc' does not work on AIX!!!
+
+When compiled with IBM's C compiler (version 6.0) under AIX 5.2 on an
+IBM RS/6000 7025 F50, *SERIOUS* problems occur. Results from atlc are
+senseless.  So far, this has not been checked with gcc, or much effort
+made to find the solution. But there is certainly a problem under AIX
+
+Dr. David Kirkby, 8th July 2003. 
