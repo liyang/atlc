@@ -10,6 +10,8 @@ docs/html-docs/accuracy.html
 Added information on timing for stripline.
 Extended analysis to 400 Ohms, which is a bit of a disaster
 
+Added a few missing files to the CVS tree
+gtk.m4, man/man1/Makefile.am and a few more
 ******Version 4.2.9 Released 14 Jan 2003 ********
 There are only bug fixes - no new features. 
 
