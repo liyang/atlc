@@ -11,7 +11,7 @@ for more complete information. So far, I've not managed to install the
 html files into /usr/local, so you will have to look into the
 atlc-X.Y.Z/docs/html-docs directory for them. 
 .SH DESCRIPTION
-\fBatlc\fR is a finite difference programme that is used to calculate the 
+\fBatlc\fR is a finite difference program that is used to calculate the 
 properties of a two-conductor electrical transmission line of arbitrary 
 cross section. It is used whenever there are no analytical formula known, 
 yet you still require an answer. It can calculate:
@@ -31,7 +31,7 @@ package such as \fBGimp\fR available from http://www.gimp.org. The bitmap
 file \fBmust\fR be saved as a 24-bit (16 million colour) uncompressed file. The 
 colours used in the bitmap indicate whether the region is a conductor (pure 
 red, pure green or pure blue) or a dielectric (anything else). Pure white 
-is assumed to be a vacuum dielectric, but other colours have diferent meanings. 
+is assumed to be a vacuum dielectric, but other colours have different meanings. 
 See COLOURS below for precise definitions of the colours. 
 .SH OPTIONS
 \fB-C\fR
@@ -51,9 +51,9 @@ makes the output more verbose/talkative.
 .br
 \fB-c cutoff\fR
 .br
-Sets the convergence criteria of the finite difference programme. The
+Sets the convergence criteria of the finite difference program. The
 default is 0.0001, meaning two separate iterations must be within
-01% for the programme to stop iterating. Setting to a smaller positive
+01% for the program to stop iterating. Setting to a smaller positive
 number gives more accuracy, but takes longer. 
 .PP
 \fB-d rrggbb=Er\fR
@@ -70,7 +70,7 @@ darken.
 \fB-r ratemultiplier\fR
 .br
 Sets the parameter 'r' used internally when computing the voltage at a point w,h.
-The default, which is (as of version 3.0.0) 1.95, results in what is belived to be
+The default, which is (as of version 3.0.0) 1.95, results in what is believed to be
 optimal results. Setting to 1.0 will avoid the use of the fast convergence method,
 which is generally not a good idea. 
 .PP
@@ -89,7 +89,7 @@ changed permanently by editing the parameter MAX_THREADS in definitions.h.
 .PP
 .br
 Using the option -t0 forces atlc to use the same code as it would if 
-configured for single processor operation. This is usful when comparing
+configured for single processor operation. This is useful when comparing
 how well atlc behaves on MP machines compared to single processor machines. 
 .PP
 .br
@@ -125,8 +125,8 @@ Brown       = 255,000,255 or 0xff00ff
 gray        = 142,142,142 or 0x8e8e8e
 .PP
 Some colours, such as pink, terquiose, sandy, brown, gray etc may mean slightly
-different things to different prople. This is not so with atlc, as the 
-programme expects the colours below to be exactly defined as given. Whether 
+different things to different people. This is not so with atlc, as the 
+program expects the colours below to be exactly defined as given. Whether 
 you feel the colour is sandy or yellow is up to you, but if you use it in 
 your bitmap, then it either needs to be a colour reconised by atlc, \fBor\fR 
 you \fBmust\fR define it with a command line option (see OPTIONS).
@@ -138,10 +138,10 @@ green  = 000,255,000 or 0x00FF00 is the grounded conductor.
 blue   = 000,000,255 or 0x0000FF is the negative conductor 
 .PP
 All bitmaps \fBmust\fR have the live (red) and grounded (green) conductor. The blue
-conductor is used to indicate a negative conductor, is needed when the programme 
+conductor is used to indicate a negative conductor, is needed when the program 
 is used to analyse directional couplers. 
 .PP
-The following dielectrics are recognised by \fRatlc\fB:
+The following dielectrics are reconised by \fRatlc\fB:
 .PP
 .br
 white     255,255,255 or 0xFFFFFF as Er=1.0    (vacuum)
