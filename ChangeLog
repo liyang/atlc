@@ -1,3 +1,32 @@
+****** Version 4.4.2 Released September 6th 2003 ****
+
+src/non_gui/readbin.c
+swapped the second (size) and third (number) arguments around
+on an fread, as were the wrong wary around - not that I think
+it will make any difference. 
+
+src/non_gui/atlc.c
+swapped the second (size) and third (number) arguments around
+on an fread, as were the wrong wary around - not that I think
+it will make any difference. 
+
+src/non_gui/check_for_boundaries.c
+put a check in for j=0 which could cause a progrom on the 
+Digital UNIX (spe145.testdrive.compaq.com) system on 
+the HP testdrive site. A real bug found at least!!!!
+
+tests/try_bsd.c
+put some checks for NGROUPS, including a couple more 
+header files if NGROUPS is not defined. This causes a 
+problems on OpenBSD 3.2 for SPARC (my SS20), so was 
+fixed.
+
+
+tests/try_linux.c
+Added a call to get the number of CPUs. Appears not to be
+documented, so a bit risky and gives the number of processors
+configured, rather than online, but its is better than nothing. 
+
 ****** Version 4.4.1 Released September 4th 2003 ****
 
 configure.ac
