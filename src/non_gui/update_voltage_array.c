@@ -38,6 +38,8 @@ Out[10]= {{vij ->
                 ----------- + ----------- + ----------- + -----------
                  eij + eijm1    eij + eijp1   eij + eim1j   eij + eip1j
  
+
+The eij's can all be cancelled (FullSimplify[] does this)
 */
 
 
@@ -83,15 +85,18 @@ void update_voltage_array(int nmax, int imin, int imax, int jmin, int jmax, doub
         if(oddity_value == ORDINARY_INTERIOR_POINT)  
           V_to[i][j]=r*(V_from[i][j+1]+V_from[i+1][j]+V_from[i][j-1]+V_from[i-1][j])/4.0+(1-r)*V_from[i][j];
         else if (i > 1 && j > 0 && i < width-1 && j < height-1) {
-        a=(Er[i][j] * Er[i][j-1] * V_from[i][j-1])/(Er[i][j] + Er[i][j-1]);
-        b=(Er[i][j] * Er[i][j+1] * V_from[i][j+1])/(Er[i][j] + Er[i][j+1]);
-        c=(Er[i][j] * Er[i-1][j] * V_from[i-1][j])/(Er[i][j] + Er[i-1][j]);
-	d=(Er[i][j] * Er[i+1][j] * V_from[i+1][j])/(Er[i][j] + Er[i+1][j]);
 
-        e=(Er[i][j] * Er[i][j-1])/(Er[i][j]+Er[i][j-1]);
-        f=(Er[i][j] * Er[i][j+1])/(Er[i][j]+Er[i][j+1]);
-        g=(Er[i][j] * Er[i-1][j])/(Er[i][j]+Er[i-1][j]);
-        h=(Er[i][j] * Er[i+1][j])/(Er[i][j]+Er[i+1][j]);
+        a=(Er[i][j-1] * V_from[i][j-1])/(Er[i][j] + Er[i][j-1]);
+        b=(Er[i][j+1] * V_from[i][j+1])/(Er[i][j] + Er[i][j+1]);
+        c=(Er[i-1][j] * V_from[i-1][j])/(Er[i][j] + Er[i-1][j]);
+	d=(Er[i+1][j] * V_from[i+1][j])/(Er[i][j] + Er[i+1][j]);
+
+        e=(Er[i][j-1])/(Er[i][j]+Er[i][j-1]);
+        f=(Er[i][j+1])/(Er[i][j]+Er[i][j+1]);
+        g=(Er[i-1][j])/(Er[i][j]+Er[i-1][j]);
+        h=(Er[i+1][j])/(Er[i][j]+Er[i+1][j]);
+
+
           Va=V_from[i-1][j]; 
           Vb=V_from[i+1][j];
           Vc=V_from[i][j+1];
