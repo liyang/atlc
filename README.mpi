@@ -14,13 +14,19 @@ works at all. Here are a couple of notes on using the MPICH library with
 'atlc'
 
 
-configure --without-gsl --with-mpi
+configure --with-mpi
 
 2) An MPICH configured machine need to be able to access at least one
 machine on the network without a password, using .rhosts securtiy
 procedures. THIS INCLUDES THE LOCAL HOST if you want to run on the local
 
 3) ssh should work if MPICH is configured for this.
+
+4) On GNU/Linux at least, the system has to be set up to enable MPI
+programs to 'start a LAM multicomputer'. A program called 'lamboot'
+will need to be run, but first run 'recon' which indicates if there
+are any major problems. If recon runs okay, then 'lamboot' has a
+reasonable chance of working. 
 
 4) A small test program, in tests/MPI_16a_PI.c does build okay
 and runs. If you uncommment the printf lines, it will 
