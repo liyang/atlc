@@ -74,9 +74,7 @@ of CPUs can be found. */
   operating_system=try_portable(&data);
   operating_system=try_hpux(&data);
   operating_system=try_solaris(&data);
-  fprintf(stderr,"starting tru64\n");
   operating_system=try_tru64(&data); 
-  fprintf(stderr,"done     tru64\n");
   operating_system=try_aix(&data); 
 #endif
 
@@ -124,7 +122,7 @@ always calculate a speedup in these circumstances */
   sprintf(data.t2,"%d",(int) (finished2-start2));
   sprintf(data.speedup,"%.3f\n",atof(data.t1)/atof(data.t2)); /* other N/A */
 
-  /* Whether or not we can calculate the efficieny depends on whether we have managed
+  /* Whether or not we can calculate the efficency depends on whether we have managed
   to obtain the number of processors present in the system. If the number of procesors
   found is zero (i.e. we have been unable to determine them, due to a lack of
   processor_information, or that not working properly, then we can't compute the efficiency,
