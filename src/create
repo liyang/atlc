@@ -53,3 +53,9 @@ echo eccentric-m.bmp
 ../src/circ_in_circ 500  50 200 1 > eccentric-m.bmp
 echo eccentric-n.bmp
 ../src/circ_in_circ -b 10 500  50 200 1 > eccentric-n.bmp
+
+../src/make_coupler 1.0 1.0 1.0 1.0 1.0 coupler1.bmp
+../src/make_coupler 2.0 1.0 1.0 1.0 1.0 coupler2.bmp
+../src/make_coupler 3.0 1.0 1.0 1.0 1.0 coupler3.bmp
+../src/make_coupler 4.0 1.0 1.0 1.0 1.0 coupler4.bmp
+../src/make_coupler 5.0 1.0 1.0 1.0 1.0 coupler5.bmp

@@ -61,6 +61,7 @@ Laboratory's list of physical constants found on the web. */
 #define TINY 1e-15
 #define VERY_LARGE 1e15
 #define DEFAULT_BMPSIZE 6
+#define DEFAULT_COUPLER_BITMAP_SIZE 18
 
 #define IMAGE_FIDDLE_FACTOR 2.0
 #define ACCEPTABLE_ERROR 0.01
@@ -240,3 +241,4 @@ void do_fd_calculation(double *capacitance, double *inductance,double *Zo, doubl
 void swap_conductor_voltages(int way_to_swap);
 void usage_make_coupler(void);
 double calculate_integer_values(struct data *optimise, int n, int accuarcy_level);
+void calculate_Zodd_and_Zeven(double *Zodd, double *Zeven, double *Zo, double w, double H, double s, double er);

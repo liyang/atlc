@@ -2,7 +2,7 @@
 zero thickness strips of width w, spaced a distance s between two
 groundplanes of spacing h. */
 
-#define RATIO 4
+#define RATIO 8
 #include "definitions.h"
 
 #ifdef HAVE_STDLIB_H
@@ -17,21 +17,14 @@ groundplanes of spacing h. */
 #include <gsl/gsl_sf_ellint.h>
 #endif
 
-#ifdef HAVE_GSL_GSL_COMPLEX_H
-#include <gsl/gsl_complex.h>
-#endif
-
-#ifdef HAVE_GSL_GSL_COMPLEX_MATH_H
-#include <gsl/gsl_complex_math.h>
-#endif
-
 double WW, HH, ss, ww, Er1, Er2, DD;
-int W, H, s, a, b, c, d, w, h, o;
+int W, H, s, a, b, c, d, w, h, o, verbose=FALSE;
 
 int main(int argc, char **argv)
 {
   double er;
-  int bmp_size=18, q; 
+  double Zodd, Zeven, Zo;
+  int bmp_size=DEFAULT_COUPLER_BITMAP_SIZE, q; 
   FILE *image_data_fp;
   struct data optimise;
 
@@ -41,8 +34,11 @@ int main(int argc, char **argv)
     case 'b':
       bmp_size=atol(my_optarg); 
     break;
+    case 'v':
+      verbose=TRUE;
+    break;
   }
-  if( (bmp_size==0 && argc-my_optind != 4) || (bmp_size!=0 && argc-my_optind != 5))
+  if( bmp_size < 6 || (argc-my_optind != 4) || bmp_size>28)
   {
     usage_make_coupler();
     exit(1);
@@ -51,8 +47,9 @@ int main(int argc, char **argv)
   HH=atof(argv[my_optind]);
   ww=atof(argv[my_optind+1]);
   ss=atof(argv[my_optind+2]);
-  er=atof(argv[my_optind+3]);
-  image_data_fp=fopen(argv[my_optind+4],"wb");
+  //er=atof(argv[my_optind+3]);
+  er=1.0;
+  image_data_fp=fopen(argv[my_optind+3],"wb");
   if(er <1.0)
   {
     fprintf(stderr,"Er must be 1.0 or more \n");
@@ -66,9 +63,9 @@ int main(int argc, char **argv)
   optimise.float_values[3]=ss;               /* spacing between the strips */
 
   optimise.importance[0]=NOT_IMPORTANT;      /* W is non critical */
-  optimise.importance[1]=IMPORTANT;          /* H is critical */
+  optimise.importance[1]=MOST_IMPORTANT;          /* H is critical */
   optimise.importance[2]=IMPORTANT;          /* w is critical */
-  optimise.importance[3]=MOST_IMPORTANT;     /* s is most critical */
+  optimise.importance[3]=IMPORTANT;     /* s is most critical */
 
   optimise.odd_or_even[0]=DONT_CARE;        /* W can be odd or even */
   optimise.odd_or_even[1]=ODD;              /* H must be even */
@@ -82,8 +79,17 @@ int main(int argc, char **argv)
   calculate_integer_values(&optimise, 4, bmp_size);
   W=optimise.best[0];
   H=optimise.best[1];
+  w=optimise.best[2];
+  s=optimise.best[3];
 
   write_bitmap(image_data_fp);
+  if(verbose)
+  {
+    calculate_Zodd_and_Zeven(&Zodd, &Zeven, &Zo, w, H-10, s, 1.0);
+    printf("Wanted:            Zodd=%f Zeven=%f Zo=%f\n", Zodd, Zeven, Zo);
 
+    calculate_Zodd_and_Zeven(&Zodd, &Zeven, &Zo, ww, HH, ss, 1.0);
+    printf("Actually modelled: Zodd=%f Zeven=%f Zo=%f\n", Zodd, Zeven, Zo);
+  }
   exit(0);
 }

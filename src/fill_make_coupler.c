@@ -12,18 +12,21 @@
 
 #include "definitions.h"
 
-extern int W, H, a, b, c, d, w, h;
+extern int W, H, a, b, c, d, w, h, s, verbose;
 
 void fill_image_vector_with_data(unsigned char *image_vector, int colour_Er1, int colour_Er2) 
 {
    int i, j, red, green, blue, vector_original=0;
+   int left_edge_blue;
+   int left_edge_red;
+   left_edge_red=W/2 - w -s/2;
+   left_edge_blue=(W+s)/2;
+   if(verbose)
+     printf("\nw=%d s=%d W=%d H=%d\n", w, s, W, H);
    for(j=0;j<H;++j)
    {
       for(i=0;i<W; ++i)
       {
-	 //red=colour_Er1/(256*256); /* Fill in areas with Er1 */
-	 //green=colour_Er1/256;
-	 //blue=colour_Er1%256;
          red=0xff; green=0xff; blue=0xff;
 	 /* Put a small border in green. Only one pixel is needed, but
 	 I'll put a few more. */
@@ -41,7 +44,13 @@ void fill_image_vector_with_data(unsigned char *image_vector, int colour_Er1, in
 	    green=colour_Er2/256;
 	    blue=colour_Er2%256;
          }
-	 if( (i>=b+BORDER) && (i<b+w+BORDER) && j==(H/2+BORDER)) /* conductor */
+	 if( (i>=left_edge_blue) && (i<left_edge_blue+w) && j==(H/2)) /* conductor */
+	 {
+	    red=0x00;
+	    green=0x00;
+	    blue=0xff;
+         }
+	 if( (i>=left_edge_red) && (i<left_edge_red+w) && j==(H/2)) /* conductor */
 	 {
 	    red=0xff;
 	    green=0x00;

@@ -12,7 +12,7 @@ double calculate_integer_values(struct data *optimise,int nmax,int accuracy_leve
 {
   double grid_size=500, error=0, error_max=1e6; 
   int i, min_pixels, max_pixels, n, min_critical_pixels, max_critical_pixels;
-  int best_i, most_critical; 
+  int best_i, most_critical=0, step=1; 
   double min_pixel_size, max_pixel_size;
   double W, H, best_grid_size, w, s;
 
@@ -54,7 +54,16 @@ double calculate_integer_values(struct data *optimise,int nmax,int accuracy_leve
 
   //printf("mcd = %f min crit = %d max crit = %d\n", optimise->float_values[most_critical],min_critical_pixels,max_critical_pixels);
 
-  for(i=min_critical_pixels; i<max_critical_pixels;++i)
+  /* Normally we would try every combination of i, but it may be necessary to keep it even or odd */
+  //printf("od or even=%d\n", optimise->odd_or_even[most_critical]);
+  if(optimise->odd_or_even[most_critical] == ODD  &&  min_critical_pixels%2==0) 
+    min_critical_pixels--;
+  else if(optimise->odd_or_even[most_critical] == EVEN  &&  min_critical_pixels%2==1) 
+    min_critical_pixels--;
+  if(optimise->odd_or_even[most_critical] != DONT_CARE)
+    step=2;
+
+  for(i=min_critical_pixels; i<max_critical_pixels;i+=step)
   {
     /* set the most critical dimension to i pixels, trying every i 
     between two set limits */
@@ -85,7 +94,7 @@ double calculate_integer_values(struct data *optimise,int nmax,int accuracy_leve
     }
     //printf("grid_size=%f error=%g ermax=%f\n",grid_size,error,error_max);
   }
-  printf("optimal are: %d %d %d %d best_grid_size=%f %f %f %f %f\n",optimise->best[0], optimise->best[1], optimise->best[2], optimise->best[3], best_grid_size, best_grid_size*optimise->best[0], best_grid_size*optimise->best[1], best_grid_size*optimise->best[2], best_grid_size*optimise->best[3]);
+  //printf("optimal are: %d %d %d %d best_grid_size=%f %f %f %f %f\n",optimise->best[0], optimise->best[1], optimise->best[2], optimise->best[3], best_grid_size, best_grid_size*optimise->best[0], best_grid_size*optimise->best[1], best_grid_size*optimise->best[2], best_grid_size*optimise->best[3]);
   //printf("size=W*H=%d\n",optimise->best[0]*optimise->best[1]);
   return(error_max); /* return the error */
 }
