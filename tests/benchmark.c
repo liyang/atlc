@@ -34,13 +34,11 @@ int main(int argc, char **argv)
   struct computer_data data;
   int operating_system=0;
 
-  int t1; 
   char *str;
   FILE *fp;
 
 #ifdef ENABLE_POSIX_THREADS
   time_t start2, finished2;
-  int t2;
 #endif /* ENABLE_POSIX_THREADS */
 
   strcpy((char *) data.mhz,"unknown");
@@ -58,11 +56,21 @@ int main(int argc, char **argv)
   strcpy((char *) data.hw_provider,"unknown");
   strcpy((char *) data.hw_platform,"unknown");
   strcpy((char *) data.speedup,"N/A    ");
+  strcpy((char *) data.t2,"N/A    ");
 
-  /*get_portable_data(data);*/
-  /*try_hpux(&data);*/
+/* Trying to get information about the hardware is likely to break
+on some platforms, as it is very platform specific. If the option 
+--enable-hardware-info is given, the software will try to obtain
+such information. It is useful, for benchmarking purposes and to 
+obtain the efficiency of a multi-processor machine if the number
+of CPUs can be found. */
+
+#ifdef TRY_TO_GET_HARDWARE_INFO 
+  operating_system=get_portable_data(&data);
+  operating_system=try_hpux(&data);
   operating_system=try_solaris(&data);
-  /*try_tru64(&data); */
+  operating_system=try_tru64(&data); 
+#endif
 
 
 /* Whatever happens (single-threaded or multi-theraded, we will check that all the 
@@ -95,7 +103,7 @@ multi-threaded */
   time(&start1);
   pclose(popen(str, "w"));
   time(&finished1);
-  t1 = (int) (finished1 - start1);
+  sprintf(data.t1,"%d",(int) (finished1-start1));
 
 /* If the code is multi-threaded, run the benchmark for a second time. We can
 always calculate a speedup in these circumstances */
@@ -105,8 +113,8 @@ always calculate a speedup in these circumstances */
   time(&start2);
   pclose(popen(str, "w"));
   time(&finished2);
-  t2 = (int) (finished2 - start2);
-  sprintf(data.speedup,"%.3f\n",(double)t1/t2); /* other N/A */
+  sprintf(data.t2,"%d",(int) (finished2-start2));
+  sprintf(data.speedup,"%.3f\n",atof(data.t1)/atof(data.t2)); /* other N/A */
 
   /* Whether or not we can calculate the efficieny depends on whether we have managed
   to obtain the number of processors present in the system. If the number of procesors
@@ -114,11 +122,10 @@ always calculate a speedup in these circumstances */
   processor_information, or that not working properly, then we can't compute the efficiency,
   so will leave it at the default value of "unknown". */
 
-  if(data.cpus != 0)
-    sprintf(data.eff,"%.3f",(double)atof(data.speedup)/atoi(data.cpus)); /* otherwise unknown */
+  if(atoi(data.cpus) != 0)
+    sprintf(data.eff,"%.3f",atof(data.speedup)/atoi(data.cpus)); /* otherwise unknown */
 #endif
-
-  printf("0 %d %d %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s \n",t1, t1, data.speedup, data.cpus, data.mhz, data.eff, data.cpu_type,data.fpu_type,data.max_cpus,data.memory,data.sysname,data.nodename,data.release,data.version,data.machine,data.hw_provider, data.hw_platform);
+  printf("0 %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s \n",data.t1, data.t2, data.speedup, data.cpus, data.mhz, data.eff, data.cpu_type,data.fpu_type,data.max_cpus,data.memory,data.sysname,data.nodename,data.release,data.version,data.machine,data.hw_provider, data.hw_platform);
   return(0);
 }
 
