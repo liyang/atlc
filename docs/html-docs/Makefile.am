@@ -30,7 +30,6 @@ index2.html \
 man-pages.html \
 options.html \
 readbin.1.html \
-rect_in_rect.html \
 todo.html \
 tutorial.html \
 usage_design_coupler.html 
