@@ -73,6 +73,7 @@ EXTRA_WXWINDOWS_LIBS = @EXTRA_WXWINDOWS_LIBS@
 GTK_CFLAGS = @GTK_CFLAGS@
 GTK_CONFIG = @GTK_CONFIG@
 GTK_LIBS = @GTK_LIBS@
+GUI_DIRECTORY = @GUI_DIRECTORY@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 PACKAGE = @PACKAGE@
 STRIP = @STRIP@
@@ -81,12 +82,12 @@ WXWINDOWS = @WXWINDOWS@
 am__include = @am__include@
 am__quote = @am__quote@
 install_sh = @install_sh@
-bin_PROGRAMS = atlc rect_in_rect circ_in_circ rect_cen_in_rect \
+bin_PROGRAMS = atlc_old rect_in_rect circ_in_circ rect_cen_in_rect \
 circ_in_rect rect_in_circ readbin sym_strip make_coupler \
 design_coupler
 
 
-atlc_SOURCES = nrutil.c atlc.c read_bitmap_file_headers.c \
+atlc_old_SOURCES = nrutil.c atlc_old.c read_bitmap_file_headers.c \
 byteswap.c string.c setup_arrays.c finite_difference_single_threaded.c \
 finite_difference_multi_threaded.c usage_atlc.c write_fields.c\
 check_for_shorts.c print_data.c bmp.h definitions.h Erdata.h \
@@ -165,13 +166,14 @@ EXTRA_DIST = create tests DO_NOT_EDIT_THIS_FILE
 subdir = src/non_gui
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_CLEAN_FILES =
-bin_PROGRAMS = atlc$(EXEEXT) rect_in_rect$(EXEEXT) circ_in_circ$(EXEEXT) \
-	rect_cen_in_rect$(EXEEXT) circ_in_rect$(EXEEXT) \
-	rect_in_circ$(EXEEXT) readbin$(EXEEXT) sym_strip$(EXEEXT) \
-	make_coupler$(EXEEXT) design_coupler$(EXEEXT)
+bin_PROGRAMS = atlc_old$(EXEEXT) rect_in_rect$(EXEEXT) \
+	circ_in_circ$(EXEEXT) rect_cen_in_rect$(EXEEXT) \
+	circ_in_rect$(EXEEXT) rect_in_circ$(EXEEXT) readbin$(EXEEXT) \
+	sym_strip$(EXEEXT) make_coupler$(EXEEXT) \
+	design_coupler$(EXEEXT)
 PROGRAMS = $(bin_PROGRAMS)
 
-am_atlc_OBJECTS = nrutil.$(OBJEXT) atlc.$(OBJEXT) \
+am_atlc_old_OBJECTS = nrutil.$(OBJEXT) atlc_old.$(OBJEXT) \
 	read_bitmap_file_headers.$(OBJEXT) byteswap.$(OBJEXT) \
 	string.$(OBJEXT) setup_arrays.$(OBJEXT) \
 	finite_difference_single_threaded.$(OBJEXT) \
@@ -185,10 +187,10 @@ am_atlc_OBJECTS = nrutil.$(OBJEXT) atlc.$(OBJEXT) \
 	error_and_exit.$(OBJEXT) do_fd_calculation.$(OBJEXT) \
 	swap_conductor_voltages.$(OBJEXT) print_copyright.$(OBJEXT) \
 	print_data2.$(OBJEXT)
-atlc_OBJECTS = $(am_atlc_OBJECTS)
-atlc_LDADD = $(LDADD)
-atlc_DEPENDENCIES =
-atlc_LDFLAGS =
+atlc_old_OBJECTS = $(am_atlc_old_OBJECTS)
+atlc_old_LDADD = $(LDADD)
+atlc_old_DEPENDENCIES =
+atlc_old_LDFLAGS =
 am_circ_in_circ_OBJECTS = circ_in_circ.$(OBJEXT) \
 	usage_circ_in_circ.$(OBJEXT) write_bitmap.$(OBJEXT) \
 	get_Er1_and_Er2_colours.$(OBJEXT) \
@@ -300,7 +302,7 @@ LIBS = @LIBS@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
 @AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/align_bitmap_image.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/atlc.Po ./$(DEPDIR)/byteswap.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/atlc_old.Po ./$(DEPDIR)/byteswap.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/calculate_Zodd_and_Zeven.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/calculate_colour_data.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/calculate_integer_values.Po \
@@ -367,13 +369,13 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 CFLAGS = @CFLAGS@
-DIST_SOURCES = $(atlc_SOURCES) $(circ_in_circ_SOURCES) \
+DIST_SOURCES = $(atlc_old_SOURCES) $(circ_in_circ_SOURCES) \
 	$(circ_in_rect_SOURCES) $(design_coupler_SOURCES) \
 	$(make_coupler_SOURCES) $(readbin_SOURCES) \
 	$(rect_cen_in_rect_SOURCES) $(rect_in_circ_SOURCES) \
 	$(rect_in_rect_SOURCES) $(sym_strip_SOURCES)
 DIST_COMMON = Makefile.am Makefile.in
-SOURCES = $(atlc_SOURCES) $(circ_in_circ_SOURCES) $(circ_in_rect_SOURCES) $(design_coupler_SOURCES) $(make_coupler_SOURCES) $(readbin_SOURCES) $(rect_cen_in_rect_SOURCES) $(rect_in_circ_SOURCES) $(rect_in_rect_SOURCES) $(sym_strip_SOURCES)
+SOURCES = $(atlc_old_SOURCES) $(circ_in_circ_SOURCES) $(circ_in_rect_SOURCES) $(design_coupler_SOURCES) $(make_coupler_SOURCES) $(readbin_SOURCES) $(rect_cen_in_rect_SOURCES) $(rect_in_circ_SOURCES) $(rect_in_rect_SOURCES) $(sym_strip_SOURCES)
 
 all: all-am
 
@@ -410,9 +412,9 @@ uninstall-binPROGRAMS:
 
 clean-binPROGRAMS:
 	-test -z "$(bin_PROGRAMS)" || rm -f $(bin_PROGRAMS)
-atlc$(EXEEXT): $(atlc_OBJECTS) $(atlc_DEPENDENCIES) 
-	@rm -f atlc$(EXEEXT)
-	$(LINK) $(atlc_LDFLAGS) $(atlc_OBJECTS) $(atlc_LDADD) $(LIBS)
+atlc_old$(EXEEXT): $(atlc_old_OBJECTS) $(atlc_old_DEPENDENCIES) 
+	@rm -f atlc_old$(EXEEXT)
+	$(LINK) $(atlc_old_LDFLAGS) $(atlc_old_OBJECTS) $(atlc_old_LDADD) $(LIBS)
 circ_in_circ$(EXEEXT): $(circ_in_circ_OBJECTS) $(circ_in_circ_DEPENDENCIES) 
 	@rm -f circ_in_circ$(EXEEXT)
 	$(LINK) $(circ_in_circ_LDFLAGS) $(circ_in_circ_OBJECTS) $(circ_in_circ_LDADD) $(LIBS)
@@ -448,7 +450,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/align_bitmap_image.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atlc.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atlc_old.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/byteswap.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/calculate_Zodd_and_Zeven.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/calculate_colour_data.Po@am__quote@
