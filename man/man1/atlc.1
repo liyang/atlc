@@ -3,7 +3,7 @@
 .SH NAME
 \fBatlc\fR - an Arbitrary Transmission Line Calculator
 .SH SYNOPSIS
-\fBatlc  [-C] [-s] [-S] [-v] [-c cutoff] [-d rrggbb=Er] [-i factor] [-t threads] [-r rate_multiplier] bitmapfile\fR
+\fBatlc  [-C] [-s] [-S] [-v] [-c cutoff] [-d rrggbb=Er] [-i factor] [-i prefix] [-t threads] [-r rate_multiplier] bitmapfile\fR
 .br
 .SH WARNING
 This man page is not a complete set of documentation. See the html files
@@ -74,14 +74,28 @@ The default, which is (as of version 3.0.0) 1.95, results in what is belived to 
 optimal results. Setting to 1.0 will avoid the use of the fast convergence method,
 which is generally not a good idea. 
 .PP
+\fB-p prefix\fR
+.br
+Adds 'prefix', which is usually a directory name, in front of the output files.
+.PP
 \fB-t threads\fR
 .br
 tells atlc to run using that number of threads, to speed calculation. This
 option is only valid if atlc was compiled with the --with-threads option to
-configure. The pthreads library (or similar) \fBmust\fR be installed in order to compile
+configure. The POSIX library \fBmust\fR be installed in order to compile
 with support for more than one CPU. Generally, setting the number of threads to the
 number of cpus is a good idea, but it is worth experimenting. The number can be
 changed permanently by editing the parameter MAX_THREADS in definitions.h. 
+.PP
+.br
+Using the option -t0 forces atlc to use the same code as it would if 
+configured for single processor operation. This is usful when comparing
+how well atlc behaves on MP machines compared to single processor machines. 
+.PP
+.br
+Using -t1 will cause the 
+multi-threaded code to be used, but with only one thread.  There is 
+not a lot of point in using this but you can if you want to experiment. 
 .PP
 .br
 .PP
