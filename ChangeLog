@@ -36,7 +36,8 @@ Hardware platform:    SUNW,Ultra-80
 Machine:              sun4u
 Sysname:              SunOS
 Release:              5.9
-Nodename:             Generic_112233-06
+Version:              Generic_112233-06
+Nodename:             sparrow
 #CPUs supported:      4
 #CPUs online:         4
 CPU type:             sparcv9
