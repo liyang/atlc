@@ -45,19 +45,21 @@ void usage_atlc(void)
   fprintf(stderr,"  -i factor\n      which lightens (factor>%.1f) or darkens (1.0 <factor<%.1f) output bitmaps.\n",
   IMAGE_FIDDLE_FACTOR,IMAGE_FIDDLE_FACTOR);
   fprintf(stderr,"  -p prefix\n      where 'prefix' is a name (normally a directory) added in front of output files\n");
-  fprintf(stderr,"  -r rate_multiplier\n      where 'rate_multiplier' sets the rate multipler (called r in source code)\n");  
+  fprintf(stderr,"  -r rate_multiplier\n      where 'rate_multiplier' sets the rate multipler (1 <= r < 2)\n");  
 #ifdef ENABLE_POSIX_THREADS
   fprintf(stderr,"  -t THREADs. \n      Where THREADs is the number of threads to use (normally best set to \n      the number of cpus). The default is %d. Set to 0 for single threaded algorithm.\n",MAX_THREADS);
 #endif
 #ifdef ENABLE_MPI
   fprintf(stderr,"  -w weights\n     where weights is a colon-separated list of weights to use when dividing up the work amongst the processors.\n"); 
 #endif
+/*
 #ifndef ENABLE_POSIX_THREADS
   fprintf(stderr,"****************NOTE******************************\n");
   fprintf(stderr,"The -t option setting the number of threads to use is disabled since\n");
   fprintf(stderr,"since this was not configured with multi-processor support.\n");
   fprintf(stderr,"To add support for multiple threads (for an MP machine), \"make clean\" then \nre-run the configure script with the option --with-threads\n");
 #endif
+*/
 #ifndef ENABLE_MPI
   fprintf(stderr," ");
 /*
