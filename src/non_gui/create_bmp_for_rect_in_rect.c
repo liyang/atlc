@@ -81,7 +81,7 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
       Er1=atof(argv[my_optind+8]);
       Er2=atof(argv[my_optind+9]);
       if((image_data_fp=fopen(argv[my_optind+10],"w"))==NULL)
-	exit_with_msg_and_error_code("Cant't open file for writing in create_bmp_for_rect_in_rect.c",CANT_OPEN_FOR_WRITING);
+	exit_with_msg_and_exit_code("Cant't open file for writing in create_bmp_for_rect_in_rect.c",CANT_OPEN_FOR_WRITING);
       if(verbose==TRUE)
         printf("WW=%f HH=%f aa=%f bb=%f cc=%f dd=%f ww=%f hh=%f Er1=%f Er2=%f\n",WW,HH,aa,bb,cc,dd,ww,hh,Er1,Er2);
       check_parameters_of_create_bmp_for_rect_in_rect();

@@ -38,15 +38,15 @@ extern int verbose;
 void check_parameters_of_create_bmp_for_circ_in_rect(void)
 {
    if( Er1<1.0) 
-      exit_with_msg_and_error_code("The relative permittivity (Er) must be >= 1.0",100);
+      exit_with_msg_and_exit_code("The relative permittivity (Er) must be >= 1.0",100);
    if (dd/2.0-yy >= HH/2) 
-      exit_with_msg_and_error_code("The circular inner will be touching the bottom of the outer !!! ",100);
+      exit_with_msg_and_exit_code("The circular inner will be touching the bottom of the outer !!! ",100);
    if (dd/2.0+yy >= HH/2) 
-      exit_with_msg_and_error_code("The circular inner will be touching the top of the outer !!! ",100);
+      exit_with_msg_and_exit_code("The circular inner will be touching the top of the outer !!! ",100);
    if (dd/2.0+xx >= WW/2) 
-      exit_with_msg_and_error_code("The circular inner will be touching the right side of the outer !!! ",100);
+      exit_with_msg_and_exit_code("The circular inner will be touching the right side of the outer !!! ",100);
    if (dd/2.0-xx >= WW/2) 
-      exit_with_msg_and_error_code("The circular inner will be touching the left side of the outer !!! ",100);
+      exit_with_msg_and_exit_code("The circular inner will be touching the left side of the outer !!! ",100);
       
 }
 

@@ -46,7 +46,7 @@ int main(int argc, char **argv)
   {
     case 'C':
       print_copyright("2002");
-      exit_with_msg_and_error_code("",OKAY);
+      exit_with_msg_and_exit_code("",OKAY);
     break;
     case 'r':
       reverse=1;
@@ -60,7 +60,7 @@ int main(int argc, char **argv)
     if (fp==NULL)
     {
       fprintf(stderr,"Can't open %s for reading\n",argv[my_optind]);
-      exit_with_msg_and_error_code("Can't open file for reading",CANT_OPEN_FILE_FOR_READING);
+      exit_with_msg_and_exit_code("Can't open file for reading",CANT_OPEN_FILE_FOR_READING);
     }
     fseek(fp,0,SEEK_END);
     length=ftell(fp);
@@ -89,5 +89,5 @@ int main(int argc, char **argv)
   }
   else
     usage_readbin();
-  exit_with_msg_and_error_code("",OKAY);
+  exit_with_msg_and_exit_code("",OKAY);
 }

@@ -59,7 +59,7 @@ int main(int argc, char **argv)
   {
     case 'C':
       print_copyright((char *) "2002");
-      exit_with_msg_and_error_code("",OKAY);
+      exit_with_msg_and_exit_code("",OKAY);
     break;
     case 'b':
       bmp_size=atol(my_optarg); 
@@ -71,7 +71,7 @@ int main(int argc, char **argv)
   if( bmp_size < 6 || (argc-my_optind != 5) || bmp_size>28)
   {
     usage_create_bmp_for_stripline_coupler();
-    exit_with_msg_and_error_code("",PROGRAM_CALLED_WITH_WRONG_NUMBER_OF_ARGUMENTS);
+    exit_with_msg_and_exit_code("",PROGRAM_CALLED_WITH_WRONG_NUMBER_OF_ARGUMENTS);
   }
   HH=atof(argv[my_optind]);
   ww=atof(argv[my_optind+1]);
@@ -79,7 +79,7 @@ int main(int argc, char **argv)
   if(HH<0 || ww <0 || ss<0)
   {
     fprintf(stderr,"Sorry, W, H and s must all be greater than 0\n");
-    exit_with_msg_and_error_code("",DIMENSION_LESS_THAN_ZERO);
+    exit_with_msg_and_exit_code("",DIMENSION_LESS_THAN_ZERO);
   }
   er=atof(argv[my_optind+3]);
   Er1=er;
@@ -87,10 +87,10 @@ int main(int argc, char **argv)
   if(er < 1.0)
   {
     fprintf(stderr,"Sorry, you can't have a dielectric constand Er of less than 1.0\n");
-    exit_with_msg_and_error_code("Sorry, you can't have a dielectric constand Er of less than 1.0",PERMITTIVITY_LESS_THAN_1);
+    exit_with_msg_and_exit_code("Sorry, you can't have a dielectric constand Er of less than 1.0",PERMITTIVITY_LESS_THAN_1);
   }
   if( (image_data_fp=fopen(argv[my_optind+4],"wb")) ==NULL)
-    exit_with_msg_and_error_code("Can't open binary file for writing",CANT_OPEN_FOR_WRITING);
+    exit_with_msg_and_exit_code("Can't open binary file for writing",CANT_OPEN_FOR_WRITING);
   WW=2.0*ww+ss+RATIO*HH;
   optimise.float_values[0]=WW            ;   /* minimum width as a float*/
   optimise.float_values[1]=HH;               /* height in floats */
@@ -128,5 +128,5 @@ int main(int argc, char **argv)
     printf("The bitmap produced (which approximates what you want) should have:\n");
     printf("   Zodd= %f Zeven= %f Zo= %f (Ohms)\n", Zodd, Zeven, Zo);
   }
-  exit_with_msg_and_error_code("",OKAY);
+  exit_with_msg_and_exit_code("",OKAY);
 }

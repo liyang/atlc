@@ -70,6 +70,6 @@ void calculate_Zodd_and_Zeven(double *Zodd, double *Zeven, double *Zo, double w,
   printf("This was not linked against the GNU scientific library, gsl.\n");
   printf("Obtain gsl from http://sources.redhat.com/gsl then run 'configure' again.\n");
   printf("and rebuild from the sources again.\n");
-  exit_with_msg_and_error_code("",NOT_LINKED_WITH_GSL_LIBRARY);
+  exit_with_msg_and_exit_code("",NOT_LINKED_WITH_GSL_LIBRARY);
 #endif
 }

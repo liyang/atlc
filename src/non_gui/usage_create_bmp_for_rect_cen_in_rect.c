@@ -53,5 +53,5 @@ void usage_create_bmp_for_rect_cen_in_rect(void)
       fprintf(stderr,"-----------------------------------------------------  |\n");
       fprintf(stderr,"<-------------------------W------------------------->\n\n");
       fprintf(stderr,"Eg: create_bmp_for_rect_cen_in_rect 200 100 30 30 1.0 foo.bmp\n\n");
-      exit_with_msg_and_error_code("",PROGRAM_CALLED_WITH_WRONG_NUMBER_OF_ARGUMENTS); 
+      exit_with_msg_and_exit_code("",PROGRAM_CALLED_WITH_WRONG_NUMBER_OF_ARGUMENTS); 
 }

@@ -81,7 +81,7 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
       yy=atof(argv[my_optind+4]);
       Er1=atof(argv[my_optind+5]);
       if((image_data_fp=fopen(argv[my_optind+6],"w"))==NULL)
-	exit_with_msg_and_error_code("Can't open file in create_bmp_for_circ_in_rect.c",CANT_OPEN_FOR_WRITING);
+	exit_with_msg_and_exit_code("Can't open file in create_bmp_for_circ_in_rect.c",CANT_OPEN_FOR_WRITING);
       check_parameters_of_create_bmp_for_circ_in_rect();
       convert_create_bmp_for_circ_in_rect_dimensions_to_integers(bmp_size);
       write_bitmap(image_data_fp, not_used);

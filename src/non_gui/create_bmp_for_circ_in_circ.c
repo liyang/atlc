@@ -93,7 +93,7 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
       Er1=atof(argv[my_optind+3]);
       filename=strncpy(filename, argv[my_optind+4],1000);
       if( (image_data_fp=fopen(filename,"wb")) == NULL)
-	exit_with_msg_and_error_code("Can't open file in create_bmp_for_circ_in_circ.c", CANT_OPEN_FOR_WRITING);
+	exit_with_msg_and_exit_code("Can't open file in create_bmp_for_circ_in_circ.c", CANT_OPEN_FOR_WRITING);
       check_parameters_of_create_bmp_for_circ_in_circ();
       convert_create_bmp_for_circ_in_circ_dimensions_to_integers(bmp_size);
       write_bitmap(image_data_fp, not_used);

@@ -100,7 +100,7 @@ check_for_shorts.c bmp.h definitions.h Erdata.h \
 check_for_boundaries.c find_energy_per_metre.c \
 update_voltage_array.c get_file_pointer_with_right_filename.c \
 find_maximum_values.c calculate_colour_data.c find_electric_fields.c \
-get_options.c exit_with_msg_and_error_code.c do_fd_calculation.c \
+get_options.c exit_with_msg_and_exit_code.c do_fd_calculation.c \
 swap_conductor_voltages.c print_copyright.c print_data_for_directional_couplers.c \
 print_data_for_two_conductor_lines.c set_data_to_sensible_starting_values.c \
 write_fields_for_two_conductor_lines.c write_fields_for_directional_couplers.c \
@@ -110,7 +110,7 @@ exit_codes.h
 create_bmp_for_rect_cen_in_rect_coupler_SOURCES = create_bmp_for_rect_cen_in_rect_coupler.c \
 usage_create_bmp_for_rect_cen_in_rect_coupler.c \
 convert_doubles_to_integers.c  get_options.c definitions.h memory.c write_bitmap_out.c byteswap.c \
-align_bitmap_image.c check_error.c exit_with_msg_and_error_code.c \
+align_bitmap_image.c check_error.c exit_with_msg_and_exit_code.c \
 print_copyright.c
 
 
@@ -119,7 +119,7 @@ usage_create_bmp_for_rect_in_rect.c write_bitmap.c \
 get_Er1_and_Er2_colours.c convert_create_bmp_for_rect_in_rect_dimensions_to_integers.c \
 memory.c write_bitmap_out.c byteswap.c \
 align_bitmap_image.c fill_rect_in_rect.c check_parameters_of_create_bmp_for_rect_in_rect.c \
-check_error.c get_options.c definitions.h  exit_with_msg_and_error_code.c print_copyright.c \
+check_error.c get_options.c definitions.h  exit_with_msg_and_exit_code.c print_copyright.c \
 exit_codes.h
 
 
@@ -129,7 +129,7 @@ write_bitmap.c \
 get_Er1_and_Er2_colours.c convert_create_bmp_for_rect_in_rect_dimensions_to_integers.c \
 memory.c write_bitmap_out.c byteswap.c \
 align_bitmap_image.c fill_rect_in_rect.c check_parameters_of_create_bmp_for_rect_in_rect.c \
-check_error.c get_options.c definitions.h exit_with_msg_and_error_code.c \
+check_error.c get_options.c definitions.h exit_with_msg_and_exit_code.c \
 print_copyright.c Erdata.h exit_codes.h
 
 
@@ -141,7 +141,7 @@ print_copyright.c byteswap.c write_bitmap_out.c memory.c \
 get_options.c check_parameters_of_create_bmp_for_microstrip_coupler.c \
 write_bitmap.c align_bitmap_image.c \
 fill_image_vector_for_create_bmp_for_microstrip_coupler.c \
-check_error.c exit_with_msg_and_error_code.c Erdata.h definitions.h exit_codes.h
+check_error.c exit_with_msg_and_exit_code.c Erdata.h definitions.h exit_codes.h
 
 
 create_bmp_for_circ_in_circ_SOURCES = create_bmp_for_circ_in_circ.c \
@@ -149,7 +149,7 @@ usage_create_bmp_for_circ_in_circ.c write_bitmap.c \
 get_Er1_and_Er2_colours.c convert_create_bmp_for_circ_in_circ_dimensions_to_integers.c \
 memory.c write_bitmap_out.c byteswap.c \
 align_bitmap_image.c fill_circ_in_circ.c check_parameters_of_create_bmp_for_circ_in_circ.c \
-check_error.c get_options.c definitions.h exit_with_msg_and_error_code.c \
+check_error.c get_options.c definitions.h exit_with_msg_and_exit_code.c \
 print_copyright.c Erdata.h
 
 
@@ -160,7 +160,7 @@ get_Er1_and_Er2_colours.c \
 check_parameters_of_create_bmp_for_circ_in_rect.c \
 memory.c write_bitmap_out.c byteswap.c \
 align_bitmap_image.c fill_circ_in_rect.c  \
-check_error.c get_options.c definitions.h exit_with_msg_and_error_code.c \
+check_error.c get_options.c definitions.h exit_with_msg_and_exit_code.c \
 print_copyright.c Erdata.h
 
 
@@ -170,12 +170,12 @@ get_Er1_and_Er2_colours.c \
 convert_create_bmp_for_rect_in_circ_dimensions_to_integers.c \
 memory.c write_bitmap_out.c byteswap.c \
 align_bitmap_image.c fill_rect_in_circ.c check_parameters_of_create_bmp_for_rect_in_circ.c \
-check_error.c get_options.c definitions.h exit_with_msg_and_error_code.c \
+check_error.c get_options.c definitions.h exit_with_msg_and_exit_code.c \
 print_copyright.c Erdata.h
 
 
 readbin_SOURCES = readbin.c definitions.h byteswap.c usage_readbin.c \
-get_options.c exit_with_msg_and_error_code.c print_copyright.c \
+get_options.c exit_with_msg_and_exit_code.c print_copyright.c \
 memory.c
 
 
@@ -183,7 +183,7 @@ create_bmp_for_symmetrical_stripline_SOURCES = create_bmp_for_symmetrical_stripl
 fill_image_vector_for_create_bmp_for_symmetrical_stripline.c \
 usage_create_bmp_for_symmetrical_stripline.c memory.c  write_bitmap_out.c \
 align_bitmap_image.c byteswap.c calculate_impedance_for_create_bmp_for_symmetrical_stripline.c \
-elliptic_integral.c get_options.c definitions.h exit_with_msg_and_error_code.c \
+elliptic_integral.c get_options.c definitions.h exit_with_msg_and_exit_code.c \
 print_copyright.c
 
 
@@ -192,18 +192,18 @@ calculate_Zodd_and_Zeven.c get_options.c definitions.h \
 calculate_integer_values.c write_bitmap.c \
 memory.c write_bitmap_out.c byteswap.c \
 align_bitmap_image.c fill_make_coupler.c \
-check_error.c exit_with_msg_and_error_code.c \
+check_error.c exit_with_msg_and_exit_code.c \
 get_Er1_and_Er2_colours.c print_copyright.c 
 
 
 design_coupler_SOURCES = design_coupler.c usage_design_coupler.c \
 get_options.c print_copyright.c calculate_Zodd_and_Zeven.c \
-give_examples_of_using_design_coupler.c exit_with_msg_and_error_code.c
+give_examples_of_using_design_coupler.c exit_with_msg_and_exit_code.c
 
 
 find_optimal_dimensions_for_microstrip_coupler_SOURCES = \
 find_optimal_dimensions_for_microstrip_coupler.c \
-exit_with_msg_and_error_code.c usage_find_optimal_dimensions_for_microstrip_coupler.c \
+exit_with_msg_and_exit_code.c usage_find_optimal_dimensions_for_microstrip_coupler.c \
 print_copyright.c get_options.c memory.c \
 check_parameters_for_find_optimal_dimensions_for_microstrip_coupler.c
 
@@ -235,7 +235,7 @@ am_atlc_OBJECTS = atlc.$(OBJEXT) read_bitmap_file_headers.$(OBJEXT) \
 	get_file_pointer_with_right_filename.$(OBJEXT) \
 	find_maximum_values.$(OBJEXT) calculate_colour_data.$(OBJEXT) \
 	find_electric_fields.$(OBJEXT) get_options.$(OBJEXT) \
-	exit_with_msg_and_error_code.$(OBJEXT) \
+	exit_with_msg_and_exit_code.$(OBJEXT) \
 	do_fd_calculation.$(OBJEXT) swap_conductor_voltages.$(OBJEXT) \
 	print_copyright.$(OBJEXT) \
 	print_data_for_directional_couplers.$(OBJEXT) \
@@ -256,8 +256,7 @@ am_create_bmp_for_circ_in_circ_OBJECTS = \
 	align_bitmap_image.$(OBJEXT) fill_circ_in_circ.$(OBJEXT) \
 	check_parameters_of_create_bmp_for_circ_in_circ.$(OBJEXT) \
 	check_error.$(OBJEXT) get_options.$(OBJEXT) \
-	exit_with_msg_and_error_code.$(OBJEXT) \
-	print_copyright.$(OBJEXT)
+	exit_with_msg_and_exit_code.$(OBJEXT) print_copyright.$(OBJEXT)
 create_bmp_for_circ_in_circ_OBJECTS = \
 	$(am_create_bmp_for_circ_in_circ_OBJECTS)
 create_bmp_for_circ_in_circ_LDADD = $(LDADD)
@@ -272,8 +271,7 @@ am_create_bmp_for_circ_in_rect_OBJECTS = \
 	memory.$(OBJEXT) write_bitmap_out.$(OBJEXT) byteswap.$(OBJEXT) \
 	align_bitmap_image.$(OBJEXT) fill_circ_in_rect.$(OBJEXT) \
 	check_error.$(OBJEXT) get_options.$(OBJEXT) \
-	exit_with_msg_and_error_code.$(OBJEXT) \
-	print_copyright.$(OBJEXT)
+	exit_with_msg_and_exit_code.$(OBJEXT) print_copyright.$(OBJEXT)
 create_bmp_for_circ_in_rect_OBJECTS = \
 	$(am_create_bmp_for_circ_in_rect_OBJECTS)
 create_bmp_for_circ_in_rect_LDADD = $(LDADD)
@@ -290,7 +288,7 @@ am_create_bmp_for_microstrip_coupler_OBJECTS = \
 	check_parameters_of_create_bmp_for_microstrip_coupler.$(OBJEXT) \
 	write_bitmap.$(OBJEXT) align_bitmap_image.$(OBJEXT) \
 	fill_image_vector_for_create_bmp_for_microstrip_coupler.$(OBJEXT) \
-	check_error.$(OBJEXT) exit_with_msg_and_error_code.$(OBJEXT)
+	check_error.$(OBJEXT) exit_with_msg_and_exit_code.$(OBJEXT)
 create_bmp_for_microstrip_coupler_OBJECTS = \
 	$(am_create_bmp_for_microstrip_coupler_OBJECTS)
 create_bmp_for_microstrip_coupler_LDADD = $(LDADD)
@@ -305,8 +303,7 @@ am_create_bmp_for_rect_cen_in_rect_OBJECTS = \
 	align_bitmap_image.$(OBJEXT) fill_rect_in_rect.$(OBJEXT) \
 	check_parameters_of_create_bmp_for_rect_in_rect.$(OBJEXT) \
 	check_error.$(OBJEXT) get_options.$(OBJEXT) \
-	exit_with_msg_and_error_code.$(OBJEXT) \
-	print_copyright.$(OBJEXT)
+	exit_with_msg_and_exit_code.$(OBJEXT) print_copyright.$(OBJEXT)
 create_bmp_for_rect_cen_in_rect_OBJECTS = \
 	$(am_create_bmp_for_rect_cen_in_rect_OBJECTS)
 create_bmp_for_rect_cen_in_rect_LDADD = $(LDADD)
@@ -318,8 +315,7 @@ am_create_bmp_for_rect_cen_in_rect_coupler_OBJECTS = \
 	convert_doubles_to_integers.$(OBJEXT) get_options.$(OBJEXT) \
 	memory.$(OBJEXT) write_bitmap_out.$(OBJEXT) byteswap.$(OBJEXT) \
 	align_bitmap_image.$(OBJEXT) check_error.$(OBJEXT) \
-	exit_with_msg_and_error_code.$(OBJEXT) \
-	print_copyright.$(OBJEXT)
+	exit_with_msg_and_exit_code.$(OBJEXT) print_copyright.$(OBJEXT)
 create_bmp_for_rect_cen_in_rect_coupler_OBJECTS = \
 	$(am_create_bmp_for_rect_cen_in_rect_coupler_OBJECTS)
 create_bmp_for_rect_cen_in_rect_coupler_LDADD = $(LDADD)
@@ -334,8 +330,7 @@ am_create_bmp_for_rect_in_circ_OBJECTS = \
 	align_bitmap_image.$(OBJEXT) fill_rect_in_circ.$(OBJEXT) \
 	check_parameters_of_create_bmp_for_rect_in_circ.$(OBJEXT) \
 	check_error.$(OBJEXT) get_options.$(OBJEXT) \
-	exit_with_msg_and_error_code.$(OBJEXT) \
-	print_copyright.$(OBJEXT)
+	exit_with_msg_and_exit_code.$(OBJEXT) print_copyright.$(OBJEXT)
 create_bmp_for_rect_in_circ_OBJECTS = \
 	$(am_create_bmp_for_rect_in_circ_OBJECTS)
 create_bmp_for_rect_in_circ_LDADD = $(LDADD)
@@ -350,8 +345,7 @@ am_create_bmp_for_rect_in_rect_OBJECTS = \
 	align_bitmap_image.$(OBJEXT) fill_rect_in_rect.$(OBJEXT) \
 	check_parameters_of_create_bmp_for_rect_in_rect.$(OBJEXT) \
 	check_error.$(OBJEXT) get_options.$(OBJEXT) \
-	exit_with_msg_and_error_code.$(OBJEXT) \
-	print_copyright.$(OBJEXT)
+	exit_with_msg_and_exit_code.$(OBJEXT) print_copyright.$(OBJEXT)
 create_bmp_for_rect_in_rect_OBJECTS = \
 	$(am_create_bmp_for_rect_in_rect_OBJECTS)
 create_bmp_for_rect_in_rect_LDADD = $(LDADD)
@@ -364,7 +358,7 @@ am_create_bmp_for_stripline_coupler_OBJECTS = \
 	calculate_integer_values.$(OBJEXT) write_bitmap.$(OBJEXT) \
 	memory.$(OBJEXT) write_bitmap_out.$(OBJEXT) byteswap.$(OBJEXT) \
 	align_bitmap_image.$(OBJEXT) fill_make_coupler.$(OBJEXT) \
-	check_error.$(OBJEXT) exit_with_msg_and_error_code.$(OBJEXT) \
+	check_error.$(OBJEXT) exit_with_msg_and_exit_code.$(OBJEXT) \
 	get_Er1_and_Er2_colours.$(OBJEXT) print_copyright.$(OBJEXT)
 create_bmp_for_stripline_coupler_OBJECTS = \
 	$(am_create_bmp_for_stripline_coupler_OBJECTS)
@@ -379,8 +373,7 @@ am_create_bmp_for_symmetrical_stripline_OBJECTS = \
 	align_bitmap_image.$(OBJEXT) byteswap.$(OBJEXT) \
 	calculate_impedance_for_create_bmp_for_symmetrical_stripline.$(OBJEXT) \
 	elliptic_integral.$(OBJEXT) get_options.$(OBJEXT) \
-	exit_with_msg_and_error_code.$(OBJEXT) \
-	print_copyright.$(OBJEXT)
+	exit_with_msg_and_exit_code.$(OBJEXT) print_copyright.$(OBJEXT)
 create_bmp_for_symmetrical_stripline_OBJECTS = \
 	$(am_create_bmp_for_symmetrical_stripline_OBJECTS)
 create_bmp_for_symmetrical_stripline_LDADD = $(LDADD)
@@ -390,14 +383,14 @@ am_design_coupler_OBJECTS = design_coupler.$(OBJEXT) \
 	usage_design_coupler.$(OBJEXT) get_options.$(OBJEXT) \
 	print_copyright.$(OBJEXT) calculate_Zodd_and_Zeven.$(OBJEXT) \
 	give_examples_of_using_design_coupler.$(OBJEXT) \
-	exit_with_msg_and_error_code.$(OBJEXT)
+	exit_with_msg_and_exit_code.$(OBJEXT)
 design_coupler_OBJECTS = $(am_design_coupler_OBJECTS)
 design_coupler_LDADD = $(LDADD)
 design_coupler_DEPENDENCIES =
 design_coupler_LDFLAGS =
 am_find_optimal_dimensions_for_microstrip_coupler_OBJECTS = \
 	find_optimal_dimensions_for_microstrip_coupler.$(OBJEXT) \
-	exit_with_msg_and_error_code.$(OBJEXT) \
+	exit_with_msg_and_exit_code.$(OBJEXT) \
 	usage_find_optimal_dimensions_for_microstrip_coupler.$(OBJEXT) \
 	print_copyright.$(OBJEXT) get_options.$(OBJEXT) \
 	memory.$(OBJEXT) \
@@ -409,8 +402,8 @@ find_optimal_dimensions_for_microstrip_coupler_DEPENDENCIES =
 find_optimal_dimensions_for_microstrip_coupler_LDFLAGS =
 am_readbin_OBJECTS = readbin.$(OBJEXT) byteswap.$(OBJEXT) \
 	usage_readbin.$(OBJEXT) get_options.$(OBJEXT) \
-	exit_with_msg_and_error_code.$(OBJEXT) \
-	print_copyright.$(OBJEXT) memory.$(OBJEXT)
+	exit_with_msg_and_exit_code.$(OBJEXT) print_copyright.$(OBJEXT) \
+	memory.$(OBJEXT)
 readbin_OBJECTS = $(am_readbin_OBJECTS)
 readbin_LDADD = $(LDADD)
 readbin_DEPENDENCIES =
@@ -456,7 +449,7 @@ am__depfiles_maybe = depfiles
 @AMDEP_TRUE@	./$(DEPDIR)/design_coupler.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/do_fd_calculation.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/elliptic_integral.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/exit_with_msg_and_error_code.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/exit_with_msg_and_exit_code.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/fill_circ_in_circ.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/fill_circ_in_rect.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/fill_image_vector_for_create_bmp_for_microstrip_coupler.Po \
@@ -637,7 +630,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/design_coupler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/do_fd_calculation.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/elliptic_integral.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exit_with_msg_and_error_code.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exit_with_msg_and_exit_code.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fill_circ_in_circ.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fill_circ_in_rect.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fill_image_vector_for_create_bmp_for_microstrip_coupler.Po@am__quote@

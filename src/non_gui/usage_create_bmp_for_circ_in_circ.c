@@ -74,5 +74,5 @@ void usage_create_bmp_for_circ_in_circ(void)
       fprintf(stderr,"                         ******               ******\n");                       
       fprintf(stderr,"                             *******************\n");                           
       fprintf(stderr,"                                     ***\n\n");
-      exit_with_msg_and_error_code("",PROGRAM_CALLED_WITH_WRONG_NUMBER_OF_ARGUMENTS);
+      exit_with_msg_and_exit_code("",PROGRAM_CALLED_WITH_WRONG_NUMBER_OF_ARGUMENTS);
 }

@@ -38,9 +38,9 @@ extern int verbose;
 void check_parameters_of_create_bmp_for_circ_in_circ(void)
 {
    if( Er1<1.0) 
-     exit_with_msg_and_error_code("Error #9. The relative permittivity (Er) must be >= 1.0",9);
+     exit_with_msg_and_exit_code("Error #9. The relative permittivity (Er) must be >= 1.0",9);
    if (dd/2.0+hh >= DD) 
-     exit_with_msg_and_error_code("Error #10 The inner will be touching the outer !!!",10);
+     exit_with_msg_and_exit_code("Error #10 The inner will be touching the outer !!!",10);
 }
 
 void check_create_bmp_for_circ_in_circ_int(void)

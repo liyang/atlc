@@ -129,12 +129,12 @@ extern int main(int argc, char **argv) /* Read parameters from command line */
   MPI_Comm_size(MPI_COMM_WORLD, &num_pes);
 
   if (num_pes < 2) {
-	exit_with_msg_and_error_code("You must use more than 1 PE.",5);
+	exit_with_msg_and_exit_code("You must use more than 1 PE.",5);
   }
 
   if (0 != my_rank) {
 	mpi_worker(my_rank);
-	exit_with_msg_and_error_code("",5);
+	exit_with_msg_and_exit_code("",5);
   } else {
 	for(i=0; i<num_pes; i++) {
 	  strip_weights[i]=1.0;
@@ -153,7 +153,7 @@ extern int main(int argc, char **argv) /* Read parameters from command line */
   {
     case 'C':
       print_copyright( (char *) "1996-2002");
-      exit_with_msg_and_error_code("",1);
+      exit_with_msg_and_exit_code("",1);
     break;
     case 'b':
       data.should_binary_data_be_written_tooQ=TRUE;
@@ -198,7 +198,7 @@ extern int main(int argc, char **argv) /* Read parameters from command line */
     case 't':
       max_threads=atol(my_optarg);
 #ifndef ENABLE_MP
-      exit_with_msg_and_error_code("Error #1. The -t option can not be used on a package_version of \
+      exit_with_msg_and_exit_code("Error #1. The -t option can not be used on a package_version of \
 atlc that was not\nconfigured with the --with-threads option, and hence built \
 without the threads\nlibrary.\n",1);
 #endif
@@ -210,24 +210,24 @@ without the threads\nlibrary.\n",1);
 	  do {
 		strip_weights[i] = strtod(my_optarg, &end_ptr);
 		if (*end_ptr != ':' && *end_ptr != '\0') {
-		  exit_with_msg_and_error_code("bad weight string", 6);
+		  exit_with_msg_and_exit_code("bad weight string", 6);
 		}
 		if (end_ptr == my_optarg) {
-		  exit_with_msg_and_error_code("bad weight string", 6);
+		  exit_with_msg_and_exit_code("bad weight string", 6);
 		}
 		my_optarg = end_ptr + 1;
 		i++;
 	  }	while(*end_ptr != '\0');
 
 	  if (i != num_pes) {
-		exit_with_msg_and_error_code("number of weight string entries much match number of PEs",6);
+		exit_with_msg_and_exit_code("number of weight string entries much match number of PEs",6);
 	  }
 
 	  for(i=0; i<num_pes; i++) {
 		printf("PE %ld weight: %f\n", i, strip_weights[i]);
 	  }
 #else
-	  exit_with_msg_and_error_code("bad argument -- w", 5);
+	  exit_with_msg_and_exit_code("bad argument -- w", 5);
 #endif
 	break;
     case 'i': /* Lighten or darken images of E-field */
@@ -235,7 +235,7 @@ without the threads\nlibrary.\n",1);
     if(data.image_fiddle_factor < 1.0)
     {
       fprintf(stderr,"Error #2.image_fiddle_factor set to %f. It must not be less than 1.\n",data.image_fiddle_factor);
-      exit_with_msg_and_error_code("",2);
+      exit_with_msg_and_exit_code("",2);
     }
     break;
     case 'v':
@@ -308,13 +308,13 @@ without the threads\nlibrary.\n",1);
       if( (image_data_fp=fopen(outputfile_name, "rb")) == NULL)
       {
         fprintf(stderr,"Error #3. Can't open %s!!!!!\n", argv[my_optind]);
-        exit_with_msg_and_error_code("",3);
+        exit_with_msg_and_exit_code("",3);
       }
       if(fseek(image_data_fp, offset, SEEK_SET)!=0)
       {   
         fprintf(stderr,"Error #4. Sorry, unable to seek to the correct part \
 	(offset=%d) of the bmp image\n", offset);
-	exit_with_msg_and_error_code("",4);
+	exit_with_msg_and_exit_code("",4);
       }
     } /* end of if( strcmp(argv[my_optind],"-") != 0) */
     else
@@ -333,7 +333,7 @@ without the threads\nlibrary.\n",1);
     if((ferror(image_data_fp) || (i != size)))
     {
       fprintf(stderr,"Error #5. Unable to read all of the image data properly\n");
-      exit_with_msg_and_error_code("",5);
+      exit_with_msg_and_exit_code("",5);
     }
     /* declare matrix's to indicate what pixels are fixed and variable */
     /* We now fill the following 3 arrays with the correct data, based on the 

@@ -50,7 +50,7 @@ double calculate_symmetrical_stripline_impedance(int H, int w)
   if (verbose >=2)
     printf("w=%d H=%d w/H=%f xo=%g\n",w,H,(double)w/H,x0);
   if((double) w / (double) H > 226.369458)
-    exit_with_msg_and_error_code("Bitmap is written fine, but can't compute impedance", THE_WIDTH_w_DIVIDED_BY_THE_HEIGHT_H_IS_TOO_LARGE);
+    exit_with_msg_and_exit_code("Bitmap is written fine, but can't compute impedance", THE_WIDTH_w_DIVIDED_BY_THE_HEIGHT_H_IS_TOO_LARGE);
   k=1.0/sqrt(x0);
   v0=K_over_Kdash(k);
   c=4*EPSILON_0/v0;

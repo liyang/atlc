@@ -93,7 +93,7 @@ int main(int argc, char **argv) /* Read parameters from command line */
     case 'C':
     print_copyright((char *) "2002");
     Hflag=TRUE;
-    exit_with_msg_and_error_code("",OKAY);
+    exit_with_msg_and_exit_code("",OKAY);
     break;
     case 'L':    
     length=atof(my_optarg); /* Sets the length of coupler */
@@ -119,7 +119,7 @@ int main(int argc, char **argv) /* Read parameters from command line */
   if(argc-my_optind != 3)  /* This should be so hopefully !! */
   {
     usage_design_coupler();
-    exit_with_msg_and_error_code("",PROGRAM_CALLED_WITH_WRONG_NUMBER_OF_ARGUMENTS);
+    exit_with_msg_and_exit_code("",PROGRAM_CALLED_WITH_WRONG_NUMBER_OF_ARGUMENTS);
   }
   wanted_coupling_factor_in_dB=atof(argv[my_optind]);
   fmin=atof(argv[my_optind+1]);
@@ -149,7 +149,7 @@ int main(int argc, char **argv) /* Read parameters from command line */
     fprintf(stderr," with the -e option like this:\n\n");
     fprintf(stderr,"design_coupler -e\n\n");
     fprintf(stderr,"lots of examples will be shown of the correct usage.\n");
-    exit_with_msg_and_error_code("",IMPOSSIBLE_COUPLING_COEFFICIENT);
+    exit_with_msg_and_exit_code("",IMPOSSIBLE_COUPLING_COEFFICIENT);
   } 
   if (fmax <= fmin)
   {
@@ -171,7 +171,7 @@ int main(int argc, char **argv) /* Read parameters from command line */
     fprintf(stderr,"design_coupler -e\n\n");
     fprintf(stderr,"lots of examples will be shown of the correct usage.\n");
     fprintf(stderr,"Exiting ...\n");
-    exit_with_msg_and_error_code("",FMAX_NOT_ABOVE_FMIN);
+    exit_with_msg_and_exit_code("",FMAX_NOT_ABOVE_FMIN);
   }
   if (Zo < 0.0)
     Zo=50.0; 
@@ -225,7 +225,7 @@ int main(int argc, char **argv) /* Read parameters from command line */
     fprintf(stderr,"Either couple off a smaller fraction of the main power to the coupled port,\n");
     fprintf(stderr,"or make the line closer to an odd multiple of a quarter wave.\n");
     fprintf(stderr,"Odd mulitples of a quarter wave are: %.4f, %.4f, %.4f, %.4f .. m\n", 75/fmean, 3*75/fmean, 5*75/fmean, 7*75/fmean);
-    exit_with_msg_and_error_code("",IMPOSSIBLE_TO_MAKE_COUPLER_THAT_LENGTH);
+    exit_with_msg_and_exit_code("",IMPOSSIBLE_TO_MAKE_COUPLER_THAT_LENGTH);
   }
 
   /* After mucking around with Mathematica a bit, I found it was
@@ -339,5 +339,5 @@ int main(int argc, char **argv) /* Read parameters from command line */
     printf("See: http://atlc.sourceforge.net\n");
     printf("See: http://atlc.sourceforge.net/couplers.html\n");
   }
-  exit_with_msg_and_error_code("",OKAY);
+  exit_with_msg_and_exit_code("",OKAY);
 }

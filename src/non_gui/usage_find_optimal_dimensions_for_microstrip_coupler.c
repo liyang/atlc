@@ -72,5 +72,5 @@ void usage_find_optimal_dimensions_for_microstrip_coupler(void)
       fprintf(stderr,"GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG. v\n");
       fprintf(stderr,"<-----------------------------------W----------------------------------->\n\n");
       fprintf(stderr,"E.g. \nfind_optimal_dimensions_for_microstrip_coupler 1.593 0.035 1 3.7 15 180 best.txt\n\n");
-      exit_with_msg_and_error_code("",PROGRAM_CALLED_WITH_WRONG_NUMBER_OF_ARGUMENTS); 
+      exit_with_msg_and_exit_code("",PROGRAM_CALLED_WITH_WRONG_NUMBER_OF_ARGUMENTS); 
 }

@@ -311,11 +311,11 @@ int align_bitmap_image(int W, int H, unsigned char *unaligned_image, unsigned ch
 void fill_create_bmp_for_rect_in_rect(char *image_vector, int colour_Er1, int colour_Er2);
 void check_create_bmp_for_rect_in_rect_ints(void);
 //void check_create_bmp_for_rect_in_rect_doubles(void);
-void exit_with_msg_and_error_code(char error_text[], int exitnumber);
+void exit_with_msg_and_exit_code(char error_text[], int exitnumber);
 void check_error(double user, int create_bmp_for_rect_in_rect, double gridsize, char
 *name);
 //void check_create_bmp_for_rect_in_rect_doubles(void);
-void exit_with_msg_and_error_code(char error_text[], int exitnumber);
+void exit_with_msg_and_exit_code(char error_text[], int exitnumber);
 void check_error(double user, int create_bmp_for_rect_in_rect, double gridsize, char *name);
 void check_parameters_for_create_bmp_for_circ_in_circ(void);
 void fill_image_vector_with_data(unsigned char *image_vector, int colour_Er1, int colour_Er2, struct transmission_line_properties x);

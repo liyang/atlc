@@ -55,7 +55,7 @@ FILE *get_file_pointer_with_right_filename(char *filename, char *extension)
   if((fp=fopen(temp,"w+b"))==NULL)
   {
     fprintf(stderr,"Sorry, cant open %s for writing\n", temp);
-    exit_with_msg_and_error_code("",CANT_OPEN_FOR_WRITING);
+    exit_with_msg_and_exit_code("",CANT_OPEN_FOR_WRITING);
   }
   return(fp);
 }
