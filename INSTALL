@@ -36,7 +36,7 @@ The simplest way to compile this package is:
      and some of the self-checks will fail when you run 'make check' 
      which you are stronly advised to do.
 
-     I've tested this with gsl version 1.1, 1.2 and 1.3, which was the
+     I've tested this with gsl version 0.8, 1.1, 1.2 and 1.3, which was the
      latest version at the time of writing. It may or may not work
      with older versions.
 
@@ -56,6 +56,12 @@ The simplest way to compile this package is:
      this if you feel like a lot of experimentation. It apparently works
      on Linux, but I know it does not on Solaris. No idea about any
      other OS.
+
+     A small test program, exists in the file tests/MPI_16a_PI.c
+     which is only enabled when using the --with-mpi option to
+     configure. This script runks okay, so I think the problem
+     is not how to build an executable using the MPICH library,#
+     but how the src/non_gui_finite_difference_mpi.c is written.
 
   4) Unzip the compressed tar file
      gzip -d atlc-x.y.tar.gz
@@ -81,10 +87,13 @@ The simplest way to compile this package is:
 
   8) Type 'make check' to run quite a few checks 
 
-  9) If you want threaded library, run 'make clearn' then 
+  9) If you want threaded library, run 'make clean' then 
      re-run configure with the option:
      configure --with-threads
 
+     Rerun 'make check' There should be no test failures, but 
+     some tests are skipped. 
+ 11)
      If you want to build with the MPI library for distributed program
      support, use the --with-mpi option, after doing a 'make cleaan'
 
@@ -102,12 +111,12 @@ The simplest way to compile this package is:
      soon. However, as a short-term measure, certain tests have been
      disabled if atlc is configured with --with-threads. 
 
- 10) Type 'make install' if you wish to install the programs and 
+ 11) Type 'make install' if you wish to install the programs and 
      example files. If you don't want to install the examples
      (they take up about 120 Mb) run 'make install-exec' and 
      'make install-man'
 
- 11) You can remove the program binaries and object files from the
+ 12) You can remove the program binaries and object files from the
      source code directory by typing `make clean'. To also remove the
      files that `configure' created (so you can compile the package for
      a different kind of computer), type `make distclean'.  There is
