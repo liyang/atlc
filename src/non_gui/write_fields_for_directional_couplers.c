@@ -22,8 +22,9 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 
 */
 
-#include "definitions.h"
+#include "config.h"
 
+#include "definitions.h"
 
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>

@@ -21,6 +21,7 @@ USA.
 Dr. David Kirkby, e-mail drkirkby@ntlworld.com 
 
 */
+#include "config.h"
 
 #ifdef HAVE_STRING_H
 #include <string.h>

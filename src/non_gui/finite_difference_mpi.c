@@ -21,6 +21,7 @@ USA.
 Dr. David Kirkby, e-mail drkirkby@ntlworld.com 
 
 */
+#include "config.h"
 
 #ifdef ENABLE_MPI /* file only needed on MPI systems. */
 

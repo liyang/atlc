@@ -29,6 +29,10 @@ Although currently the software does not support the use of a floating
 conductor (an anea of fixed, but undefined) voltage, error messages
 to take this into account have been included, but commentted out.*/ 
 
+
+#include "config.h"
+
+
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
 #endif

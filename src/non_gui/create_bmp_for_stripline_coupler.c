@@ -25,6 +25,8 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 /* The following calculates the odd and even mode impedances between two
 zero thickness strips of width w, spaced a distance s between two
 groundplanes of spacing h. */
+#include "config.h"
+
 
 #define RATIO 8
 #include "definitions.h"

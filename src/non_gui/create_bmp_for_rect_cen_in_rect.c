@@ -24,6 +24,8 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 
 /* The program create_bmp_for_rect_in_rect is a pre-processor for atlc. It produces bitmaps of rectangular
 inner and rectangular outer */
+#include "config.h"
+
 
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>

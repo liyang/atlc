@@ -25,6 +25,8 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 /* This function take a filename with the extension .bmp (eg coax.bmp) 
 and will produce files such as coax.V.bmp, coax.E.bmp, coax.E.bin etc */
 
+#include "config.h"
+
 #ifdef HAVE_STRING_H
 #include <string.h>
 #endif

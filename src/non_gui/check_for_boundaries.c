@@ -30,6 +30,9 @@ two different dielectrics. Doing this once, is much faster than doing it
 inside a loop, checking for all possibilities each time one needs to
 know. */
 
+#include "config.h"
+
+
 #include "definitions.h"
 
 extern int width, height;

@@ -38,6 +38,9 @@ i.e.
 It uses the method given in "Filed Theory of Guided Waves, Colen R.E.,
 2nd edition, pp 259-273, IEEE Press, (1990). */
 
+#include "config.h"
+
+
 #ifdef HAVE_MATH_H
 #include <math.h>
 #endif

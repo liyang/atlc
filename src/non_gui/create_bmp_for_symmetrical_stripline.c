@@ -24,6 +24,8 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 
 /* The program widestrip is a pre-processor for atlc. It produces bitmaps 
 of a thin strip, between two wide plates */
+#include "config.h"
+
 #define RATIO 4           /* W = H*RATIO+w */
 
 #ifdef HAVE_STDLIB_H

@@ -21,6 +21,9 @@ USA.
 Dr. David Kirkby, e-mail drkirkby@ntlworld.com 
 
 */
+
+#include "config.h"
+
 #define SLOW
 
 #ifndef ENABLE_POSIX_THREADS 

@@ -23,6 +23,8 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 Some of these memory allocation routies are hacked versions of those
 from the book 'Numerical Recipes in C' by Press et al. */
 
+#include "config.h"
+
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
 #endif

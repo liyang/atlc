@@ -26,6 +26,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 zero thickness strips of width w, spaced a distance s between two
 groundplanes of spacing h. */
 
+#include "config.h"
 #include "definitions.h"
 
 #ifdef HAVE_STDLIB_H

@@ -42,6 +42,9 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
  * The current SVR2 man page reflects the actual behavor of this getopt.
  * However, I am not about to post a copy of anything licensed by AT&T.
  */
+
+#include "config.h"
+
 #include "definitions.h"
 
 #ifdef HAVE_STRINGS_H

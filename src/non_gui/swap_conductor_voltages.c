@@ -31,6 +31,8 @@ cell_type, which will be set to CONDUCTOR_PLUS_ONE_V or
 
 CONDUCTOR_MINUS_ONE_V in definitions.h */
 
+#include "config.h"
+
 #include "definitions.h"
 
 extern int width, height;

@@ -1,3 +1,5 @@
+
+#include "config.h"
 #include "definitions.h"
 
 void print_copyright(const char *s)
