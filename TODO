@@ -2,29 +2,28 @@ TODO List
 
 Here is a list of the ways I would like to expand atlc, in a rough order of time. 
 
-  1.Improve consistancy amonst the programmes rect_in_rect, rect_cen_in_rect, rect_in_circ, circ_in_rect,
-    make_coupler and sym_strip. Most write to standard output, some write to a file given on the comand line,
-    some take integer arguments, some take floats etc. It's all a bit confusing.
+  1.Implement a better way of enabling a user to change the 
+    contrast/brightness in an image. Current, this can
+    only be done with the '-f option to atlc, but this 
+    requires a re-run of atlc to do this, which is hardly
+    very useful, given atlc is so CPU intensive. There are 
+    faster ways of doing this, just from the binary files
+    (example.E.bin, example.Ex.bin, example.Ey.bin, example.U.bin, 
+    example.V.bin and example.Er.bin)..
 
-  2.Improve support for coupled transmission lines. It is very weak at the present time,being unable to handle
-    any dielectric other tthan a vacuum and not being able to give any images showing the fields, energy or
-    whatever. Additions may include some software to make use of the impedance values to calculate the
-    properties of a directional coupler, although you should be able to use these in the free versions of spice or
-    pspice. I have not tried that I must admit. There is also a cheapish programme called Puff available from
-    http://www.its.caltech.edu/~mmic/puffindex/puffE/puffE.htm . That would certinaly allow such
-    calculations. There's a Unix verison too at http://wwwhome.cs.utwente.nl/~ptdeboer/ham/puff.html 
-
-  3.Implement a better way of enabling a user to change the contrast/brightness in an image. Current, this can
-    only be done with the '-f option to atlc, but this requires a re-run of atlc to do this, which is hardly
-    very useful, given atlc is so CPU intensive. There are faster ways of doing this, just from the binary files
-    (example.E.bin, example.Ex.bin, example.Ey.bin, example.U.bin, example.V.bin and example.Er.bin)..
-
-  4.Try other methods of thread syncronisation in the version of atlc that supports multiple CPUs. Currently,
-    threads are created and destroyed to give syncronisation. I think there may be a faster method by the use of
+  2.Try other methods of thread syncronisation in the version of atlc 
+    that supports multiple CPUs. Currently,
+    threads are created and destroyed to give syncronisation. 
+    I think there may be a faster method by the use of
     'mutex variables', but this has not be tried.
 
-  5.Get the program 'rect_in_circ' working.
+  3.Get the program 'generate_bmp_for_rect_in_circ' working.
+
+  4 Get a decent GUI. 
 
 If anyone has any suggestions for how to improve atlc, please email me. 
 
-atlc is written and supported by Dr. David Kirkby (G8WRB) It it issued under the GNU General Public License
+atlc is written and supported by Dr. David Kirkby (G8WRB). It it issued under 
+the GNU General Public License
+
+Dr. David Kirkby, 31/12/02

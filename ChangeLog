@@ -1,3 +1,81 @@
+******Version 4.2.4 Release 31/12/02********
+
+Changed all the files create_bmp_for_....
+such that they now write to a file on the command
+line, rather than stdout. All programs for the generation 
+of bitmaps now have the same naming converntion 
+(create_bmp_for_.....) and all write to a file and 
+not stdout. 
+
+Changed man pages to reflect the changes in all the 
+create_bmp_for_...
+
+Some half-sensible bitmaps are now produced with atlc
+if the -s option is not present. The binary files
+(.bin) are now printed properly for couplers. It is 
+quite possible this does not work for 2 conductor lines
+(it has not be tested). This needs more testing. 
+
+The files atlc-x.y.z/tests/Makefile.am now has 
+lists of the files to be added to the distribution,
+rathe than just *.test, as the latter caused problems
+with 'make distcheck'.
+
+The file atlc-x.y.z/docs/html-docs/index.html now
+loads index2.html rather than frontpage.html.
+
+added file atlc/docs/html/create_for_Makefile.am to 
+make it easier to generate a list of files that needed
+to be included in atlc/docs/html/Makefile.am
+
+******Version 4.2.2  Released  28/12/02 *****
+Less data is now printed as it was confusing I feel to show too
+much informattion. An option will be added to show more, but at 
+present this is not implemented. 
+
+Added options -s and -S in 'atlc' to enable the bitmap (.bmp) and binary
+(.bmp) files to not be written. The default is to write these files. 
+
+Remove options to write data to a text file and append data to
+a text file from atlc. Changes meant it got more difficult
+to implement and there seems little point when > and
+>> do those functions.
+
+Changed man page on atlc, so reflect changes in the program   
+itself. 
+
+Added the program 'create_bmp_for_coupled_microstrip' which does
+exactly what the name says. Run it to see what options and 
+command line arguments it expects, as there is no man page at 
+the minute. 
+
+*ALL* the files that create bitmaps have been renamed to create_bmp_for_xyz,
+where xyz determines the geometry. There are now the following files
+for creating bitmaps:
+
+create_bmp_for_circ_in_circ
+create_bmp_for_circ_in_rect
+create_bmp_for_coupled_microstrip
+create_bmp_for_coupler
+create_bmp_for_rect_cen_in_rect
+create_bmp_for_rect_in_circ
+create_bmp_for_rect_in_circ.c
+create_bmp_for_sym_strip
+
+Currently some write to stdout, some to files. I will eventually change it 
+so they all write to files, as the data is binary and writing by default
+to stdout is not a great idea. 
+
+Added program 'find_optimal_dimensions_for_microstrip_coupler' which does 
+an exhaustive search of different geometires for microstrip couplers. 
+
+
+********************Version 4.2.0-alpha  Released  24/12/02 ********************
+Made major changes to the code to make it easier to read. Hopefully
+direcitonal couplers are working for multiple-dielectrics now, 
+but I've no idea. The documentation is out of date with the code
+which has undergone major revisions. I will update the docs and correct
+and bugs as soon as I have time. 
 
 ********************Version 4.1.6  Released  22/12/02 ********************
 Made it more obvious there is a bug that prevents the use of atlc
