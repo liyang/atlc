@@ -3,7 +3,13 @@ This file is README.threads
 atlc is written as a multi-threaded application. The routine
 'finite_difference' has two versions, one of which is multi-threaded and
 will therefore use more than one cpu, and another which is not
-multi-threaded. 
+multi-threaded. These are in the files
+finite_difference_single_threaded.c and
+finite_difference_multi_threaded.c
+
+In order to use the programme in multi-threaded mode, you will need to
+use a thread library. pthreads should be fine. Solaris threads work
+fine. I'm not sure about the others - feedback welcome. 
 
 If you have more than one cpu, it is beneficial to use the option
 --with-mp when configuring. This will enable the threads. By default,
@@ -15,6 +21,6 @@ MAX_THREADS
 
 
 You may specify the number of threads the programme uses on atlc's
-command line (-p option), but for a permanent change, compile it into
+command line (-t option), but for a permanent change, compile it into
 atlc by changing the number in definitions.h
 
