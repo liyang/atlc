@@ -1,37 +1,22 @@
-NEWS for realease 4.4.2 on  5th September 2003.
+NEWS for realease 4.4.3 on  11th September 2003.
 
-Within a few hours of releasing 4.4.1, I realised
-there was a bug that prevented it compiling on 
-at least one BSD system. I'm hoping this prevents that
-problem, but if not, add the option 
---disable-hardware-info and re-configure.
+Someone has done a Windoze port of atlc. Appently it took just 5
+minutes, from start to finish. A single bug was found that prevented 
+atlc compiling, but that was fixed - it needed a left brace removed. 
+This had never been seen on a UNIX system, since the offending code 
+was between a couple of #define's. 
 
-Added a system call to get the number of configured 
-processors online in Linux. This seems to be undocumented
-so it not without its risks, but it seems to work okay on the 
-limited number of systems tested on. 
+I hope to have the Windows binaries up on the site very soon. 
 
-***********************
+It has been bought to my attention that bitmaps created with Photoshop
+prior to version 7.01 could not be read by atlc. This was not a 
+fault of Photoshop, but of atlc, so that bug has been fixed. 
 
-NEWS for realease 4.4.1 on  4th September 2003.
+A man page has been written for the small program 'sysdata'
 
-I new program 'tests/sysdata' has been added, which
-gets information about the hardware and presents it
-quickly.
+Some data on the examples.html file has been corrected. 
 
-atlc is now better at gathering hardware information on
-SGI systems running IRIX. 
+The documentation is improved with typos removed and a general
+improvement in documentation. 
 
-atlc is now better at gathering hardware information on
-BSD systems. This should include OS X, but is as yet 
-untested. 
 
-atlc no longer generates compiler warnings with gcc -Wall
-on the files
-create_bmp_for_rect_in_circ.c or
-read_bitmap_file_headers.c
-sysdata.c
-try_solaris.c
-so should no longer generate *any* compiler warnings, on
-any files on any operating systems. If you get any
-compiler warnings, let me know. 
