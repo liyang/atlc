@@ -3,5 +3,16 @@ AUTOMAKE_OPTIONS = gnits
 
 SUBDIRS =  . src man docs examples tools tests 
 
-EXTRA_DIST = README.solaris README.threads README.windows \
-BUGS README.checks TODO
+EXTRA_DIST = \
+README \
+README.alpha \
+README.checks \
+README.cvs \
+README.help \
+README.mpi \
+README.solaris \
+README.support \
+README.threads \
+README.windows \
+BUGS \
+TODO
