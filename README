@@ -12,7 +12,7 @@ This is the directory layout. .
 ./docs/html-docs/jpgs    // JPGS needed for the html docs above.
 ./docs/qex-december-1996 // A old paper I wrote, gives the theory.
 ./docs/theory            //  
-./man                    // Standard Unix man pages.
+./man                    // Standard UNIX man pages.
 ./examples               // Some examples
 ./tests                  // Self-tests and a benchmark.
 ./tools                  // Some tools that are useful for checkign the code
@@ -24,16 +24,16 @@ This is the directory layout. .
 After building (see INSTALL, which I've modified to be specific to
 atlc) you should run 'make check' after running 'make'. 
 One built, if you want to install the examples and binaries, run
-'make install'. As the examples are large (~120 Mb) you might    
+'make install'. As the examples are large (~220 Mb) you might    
 choose not to install them. In which case run 'make install-exec'
 rather than 'make install'. If you later want to install the 
 examples, run 'make install-data'
 
 A Windows version (not graphical) can be found in an earlier distribution 
-(3.0.7). I'm not going to update that, so get a Unix box if you want 
+(3.0.7). I'm not going to update that, so get a UNIX box if you want 
 to use the latest versions. 
 
-A version with a GUI that should run on Macs, Windoze and Unix is
+A version with a GUI that should run on Macs, Windoze and UNIX is
 planned. This however is expected to be some time from now. 
 
 Please note I'm English, so spellings should be English and dates are in
@@ -45,4 +45,4 @@ If wishing to contact me by email, can I suggest you copy a message to
 both drkirkby@ntlworld.com and davek@medphys.ucl.ac.uk This will allow
 me to see it in the shortest possible time. 
 
-Dr. David Kirkby, G8WRB. 13/06/03
+Dr. David Kirkby, G8WRB. 19/07/03
