@@ -9,6 +9,9 @@ AC_ISC_POSIX
 AC_OUTPUT_COMMANDS([exit])
 dnl Checks for libraries.
 AC_CHECK_LIB(m,log)
+AC_CHECK_LIB(m,main)
+AC_CHECK_LIB(gslcblas,main)
+AC_CHECK_LIB(gsl,main)
 		
 dnl Checks for header files.
 AC_STDC_HEADERS
