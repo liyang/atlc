@@ -38,13 +38,16 @@ Dr. David Kirkby, e-mail drkirkby at ntlworld.com
 #include <stdlib.h>
 #endif
 
+#ifdef HAVE_STDIO_H
+#include <stdio.h>
+#endif
+
 #include "exit_codes.h"
 
 extern double **Vij;
 extern double **Er;
 extern unsigned char *bmp_buff;
 extern int width, height, errno;
-extern size_t size;
 extern signed char **cell_type;
 
 /* Write the following files, assuming an input of example.bmp 
@@ -75,7 +78,7 @@ eexample.U.bin  binary file, with just the energy (U=CV^2).
 
 extern double image_fiddle_factor;
 
-void write_fields_for_two_conductor_lines(char * filename, struct transmission_line_properties data)
+void write_fields_for_two_conductor_lines(char * filename, struct transmission_line_properties data, size_t size)
 {
   FILE *Ex_bin_fp=NULL, *Ey_bin_fp=NULL;
   FILE *E_bin_fp=NULL, *V_bin_fp, *U_bin_fp=NULL;
@@ -184,12 +187,14 @@ void write_fields_for_two_conductor_lines(char * filename, struct transmission_l
       }
     }
 
-    if( fwrite((void *) &(image_data_Ex[0]),size, 1, Ex_bmp_fp) != 1)
+    /* if( fwrite((void *) &(image_data_Ex[0]),size, 1, Ex_bmp_fp) != 1) */
+    if( fwrite((void *) image_data_Ex,size, 1, Ex_bmp_fp) != 1)
       exit_with_msg_and_exit_code("Error#7: Failed to write bitmap file in write_fields_for_two_conductor_lines.c",WRITE_FAILURE);
     if( fclose(Ex_bmp_fp) != 0)
       exit_with_msg_and_exit_code("Error#8: Unable to close file in write_fields_for_two_conductor_lines.c",CANT_CLOSE_FILE);
 
-    if( fwrite((void *) &(image_data_Ey[0]),size, 1, Ey_bmp_fp) != 1)
+    /* if( fwrite((void *) &(image_data_Ey[0]),size, 1, Ey_bmp_fp) != 1) */
+    if( fwrite((void *) image_data_Ey,size, 1, Ey_bmp_fp) != 1)
       exit_with_msg_and_exit_code("Error#9: Failed to write bitmap file in write_fields_for_two_conductor_lines.c",WRITE_FAILURE);
     if( fclose(Ey_bmp_fp) != 0)
       exit_with_msg_and_exit_code("Error#10: Unable to close file in write_fields_for_two_conductor_lines.c",CANT_CLOSE_FILE);

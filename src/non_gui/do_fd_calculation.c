@@ -39,7 +39,7 @@ extern double **Vij;
 extern int height;
 extern int number_of_workers;
 
-void do_fd_calculation(struct transmission_line_properties *data, FILE *where_to_print_fp, char *inputfile_filename)
+void do_fd_calculation(struct transmission_line_properties *data, size_t size, FILE *where_to_print_fp, char *inputfile_filename)
 {
   double capacitance_old, capacitance;
   double velocity_of_light_in_vacuum;
@@ -102,7 +102,7 @@ void do_fd_calculation(struct transmission_line_properties *data, FILE *where_to
       printf("Total of %d iterations ( %d calls to finite_difference() )\n",ITERATIONS*count,count);
 
     if((data->write_binary_field_imagesQ == TRUE || data->write_bitmap_field_imagesQ == TRUE) && data->dielectrics_in_bitmap==1 )
-      write_fields_for_two_conductor_lines(inputfile_filename, *data);
+      write_fields_for_two_conductor_lines(inputfile_filename, *data, size);
     if(data->verbose_level == 0 && data->dielectrics_in_bitmap==1 )
       print_data_for_two_conductor_lines(*data, where_to_print_fp, inputfile_filename);
 
@@ -150,7 +150,7 @@ void do_fd_calculation(struct transmission_line_properties *data, FILE *where_to
       if (data->verbose_level == 0)
         print_data_for_two_conductor_lines(*data, where_to_print_fp, inputfile_filename);
       if(data->write_binary_field_imagesQ == TRUE || data->write_bitmap_field_imagesQ == TRUE)
-        write_fields_for_two_conductor_lines(inputfile_filename, *data);
+        write_fields_for_two_conductor_lines(inputfile_filename, *data, size);
     }
   }
   else if (data->couplerQ==TRUE)
@@ -219,7 +219,7 @@ void do_fd_calculation(struct transmission_line_properties *data, FILE *where_to
 
     /* display bitpamps/binary files if this is the last odd-mode computation */
     if((data->write_binary_field_imagesQ == TRUE || data->write_bitmap_field_imagesQ == TRUE) && data->dielectrics_in_bitmap==1 )
-      write_fields_for_directional_couplers(inputfile_filename, *data, ODD);
+      write_fields_for_directional_couplers(inputfile_filename, *data, size, ODD);
 
     /* Stage 2 - compute the odd-mode impedance taking into account other dielectrics IF NECESSARY */
 
@@ -265,7 +265,7 @@ void do_fd_calculation(struct transmission_line_properties *data, FILE *where_to
 #endif /* ENABLE_MPI */
 
       if((data->write_binary_field_imagesQ == TRUE || data->write_bitmap_field_imagesQ == TRUE) && data->dielectrics_in_bitmap!=1 )
-        write_fields_for_directional_couplers(inputfile_filename, *data, ODD);
+        write_fields_for_directional_couplers(inputfile_filename, *data, size, ODD);
     } /* end of stage 2 for couplers */
 
     /* Stage 3 - compute the even-mode impedance assuming single dielectric */
@@ -323,7 +323,7 @@ void do_fd_calculation(struct transmission_line_properties *data, FILE *where_to
     } while (fabs((capacitance_old-capacitance)/capacitance_old) > data->cutoff); /* end of FD loop */
 
     if((data->write_binary_field_imagesQ == TRUE || data->write_bitmap_field_imagesQ == TRUE) && data->dielectrics_in_bitmap==1)
-      write_fields_for_directional_couplers(inputfile_filename, *data, EVEN);
+      write_fields_for_directional_couplers(inputfile_filename, *data, size, EVEN);
 
     capacitance=VERY_LARGE; /* Can be anything large */
     /* Stage 4 - compute the even-mode impedance assuming multiple dielectrics IF NECESSARY */
@@ -364,7 +364,7 @@ void do_fd_calculation(struct transmission_line_properties *data, FILE *where_to
       } while (fabs((capacitance_old-capacitance)/capacitance_old) > data->cutoff); /* end of FD loop */
 
       if(data->write_binary_field_imagesQ == TRUE || data->write_bitmap_field_imagesQ == TRUE)
-        write_fields_for_directional_couplers(inputfile_filename, *data, EVEN);
+        write_fields_for_directional_couplers(inputfile_filename, *data, size, EVEN);
     } /* end of stage 4 */
     /* Print the results if the verbose level was 0 (no -v flag(s) ). */
     if (data->verbose_level == 0)

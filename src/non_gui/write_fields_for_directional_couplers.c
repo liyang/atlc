@@ -97,9 +97,8 @@ extern double **Vij;
 extern double **Er;
 extern unsigned char *bmp_buff;
 extern int width, height;
-extern size_t size;
 
-void write_fields_for_directional_couplers(char * filename, struct transmission_line_properties data, int odd_or_even)
+void write_fields_for_directional_couplers(char * filename, struct transmission_line_properties data, size_t size, int odd_or_even)
 {
   FILE *Ex_even_bin_fp, *Ey_even_bin_fp, *E_even_bin_fp, *V_even_bin_fp, *U_even_bin_fp;
   FILE *Ex_odd_bin_fp, *Ey_odd_bin_fp, *E_odd_bin_fp, *V_odd_bin_fp, *U_odd_bin_fp;

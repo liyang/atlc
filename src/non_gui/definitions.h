@@ -284,7 +284,6 @@ void free_dmatrix(double **m, long nrl, long nrh, long ncl, long nch);
 void free_cmatrix(char **m, long nrl, long nrh, long ncl, long nch);
 char *string(long nl,long nh);
 void free_string(char *v, long nl, long nh);
-unsigned char *ustring(long nl,long nh);
 void swap_bytes2(unsigned char *buffer, int offset, short *answer);
 void swap_bytes4(unsigned char *buffer, int offset, int *answer);
 void free_ustring(unsigned char *v, long nl, long nh);
@@ -292,16 +291,10 @@ int **imatrix(long nrl, long nrh, long ncl, long nch);
 void setup_arrays(struct transmission_line_properties *data);
 double finite_difference_single_threaded();
 double finite_difference_multi_threaded();
-#ifdef ENABLE_MPI
-void do_columns(int start_col, int num_cols, int calculate_edges, int direction);
-void mpi_worker(int rank);
-#else
 void *do_columns(void *thread_arg);
-#endif /* ENABLE_MPI */
 void usage_atlc(void);
-void write_fields_for_two_conductor_lines(char *filename, struct transmission_line_properties data);
-void write_fields_for_directional_couplers(char *filename, struct transmission_line_properties data, int odd_or_even);
-
+void write_fields_for_two_conductor_lines(char *filename, struct transmission_line_properties data, size_t size);
+void write_fields_for_directional_couplers(char *filename, struct transmission_line_properties data, size_t size, int odd_or_even);
 char          **cmatrix(long nrl, long nrh, long ncl, long nch);
 unsigned char **ucmatrix(long nrl, long nrh, long ncl, long nch);
 signed char **scmatrix(long nrl, long nrh, long ncl, long nch);
@@ -333,7 +326,6 @@ void fill_image_vector_for_thin_strip(int W,int H, int w, unsigned char *unalign
 double K_over_Kdash(double k);
 double calculate_symmetrical_stripline_impedance(int H, int w);
 
-void free_cmatrix(char **m, long nrl, long nrh, long ncl, long nch);
 void free_ucmatrix(unsigned char **m, long nrl, long nrh, long ncl, long nch);
 void free_scmatrix(signed char **m, long nrl, long nrh, long ncl, long nch);
 
@@ -360,7 +352,7 @@ void calculate_Zodd_and_Zeven(double *Zodd, double *Zeven, double *Zo, double w,
 void usage_design_coupler(void);
 void print_copyright(const char *s);
 void give_examples_of_using_design_coupler(void);
-void do_fd_calculation(struct transmission_line_properties *data, FILE *where_to_print_fp, char *inputfile_filename);
+void do_fd_calculation(struct transmission_line_properties *data, size_t size, FILE *where_to_print_fp, char *inputfile_filename);
 void print_data_for_directional_couplers(struct transmission_line_properties data, FILE *where_to_print_fp, char *inputfile_name);
 void print_data_for_two_conductor_lines(struct transmission_line_properties data, FILE *where_to_print_fp, char *inputfile_name);
 void set_data_to_sensible_starting_values(struct transmission_line_properties *data);
