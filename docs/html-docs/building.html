@@ -38,12 +38,12 @@ Extract the compressed file, using gunzip, or gzip -d.
 <PRE>% gzip -d atlc-X.Y.tar.gz
 % tar xvf atlc-X.Y.tar
 % cd atlc-X.Y
-% ./configure --enable-hardware-info
+% ./configure 
 % make
 % make check  <STRONG> // This is very important, as it checks the binaries.</STRONG>
 </PRE>
-<p>It is strongly suggested you <code>configure</code> with the option <code>--enable-hardware-info</code>, which will gather information about the hardware of your computer. However, since this option gathers information on hardware, it is by its very nature less portable than the rest of the code. So it is not enabled by default. You should <code>configure</code> with this option, unless it causes the compilation to fail when running <code>make check</code></p>
-A total of 89 self-tests are performed in the <CODE>make check</CODE> stage.  <strong>No tests should fail</strong> but several will be skipped. Four tests make use of the t <a href="http://sources.redhat.com/gsl/">gsl library</a> and so will be skipped unless that is present. Two tests are used to check the operation of the POSIX threads, so will be skipped unless configured with <CODE>--with-threads</CODE>. 
+<p>The code tries to gather information about the hardware. This is by its very nature less portable than other parts of <em>atlc</em>. If a compilation or linking problem occurs during <code>make check</code> phase, then re-configure using <code>configure --disable-hardware-info</code>. Please let me know about such failures. </p>
+A total of 90 self-tests are performed in the <CODE>make check</CODE> stage.  <strong>No tests should fail</strong> but several will be skipped. Four tests make use of the t <a href="http://sources.redhat.com/gsl/">gsl library</a> and so will be skipped unless that is present. Two tests are used to check the operation of the POSIX threads, so will be skipped unless configured with <CODE>--with-threads</CODE>. 
 <br><br>
 
 Finally you can install the software if you wish. 

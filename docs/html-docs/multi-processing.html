@@ -3,7 +3,7 @@
 <HEAD>
 <META name="generator" content="Mostly bluefish & vi. Sometimes netscape">
 <META http-equiv="CONTENT-TYPE" content="text/html; charset=iso-8859-1">
-<META name="AUTHOR" content="Dr. David Kirkby, drkirkby@ntlworld.com">
+<meta name="author" content="Dr. David Kirkby">
 <META name="DESCRIPTION" content="Muli-processing with atlc">
 <META name="KEYWORDS" content="atlc, transmission line, transmission lines, multi processing, finite difference, Linux">
 <TITLE>Multi-processing with atlc</TITLE>
@@ -16,13 +16,12 @@ To reduced execution time, the program atlc can be configured to support multipl
 <br>
 <CODE>
 <br>
-configure --enable-hardware-info --with-threads<br>
+configure --with-threads<br>
 make <br>
 make check <br>
 make install<br>
 <br></CODE>
-Again, you should try building with the <code>--enable-hardware-info</code>. That option is especially useful on multi-processor machines, as it indicates some performance parameters. However, it might just cause compilation to fail on some systems, so is currently not enabled by default,
-although I might change that. 
+Again, if there are problems compiling or linking during the <code> make check</code> phase, you should try building with the <code>--disable-hardware-info</code>. The gathering of hardware data is especially useful on multi-processor machines, as it indicates some performance parameters. However, it might just cause compilation to fail on some systems, so it can be disabled.
 <br>
 See here <a href="building.html">for detailed building instuctions</a> which includes how to configure<EM> atlc</EM> with support for more than one processor. 
 </LI>
