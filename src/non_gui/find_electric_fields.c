@@ -26,7 +26,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #include "exit_codes.h"
 
 extern double **Vij;
-extern char **cell_type;
+extern signed char **cell_type;
 extern double **Er;
 extern int width, height, coupler;
 
@@ -51,8 +51,14 @@ double find_Ex(int i, int j)
     Ex=0.5*(Vij[i-1][j]-Vij[i+1][j]);
     if((cell_type[i][j]&METAL_LEFT)==METAL_LEFT)
       Ex=(Vij[i][j]-Vij[i+1][j]);
+
     if((cell_type[i][j]&METAL_RIGHT)==METAL_RIGHT)
+    {
+      /* The following should cause a problem if i == 0 */
+      if (i == 0)
+        fprintf(stderr,"This is an error - memory access violation.\n");
       Ex=(Vij[i-1][j]-Vij[i][j]);
+    }
   }
   else
    Ex=0; /* for now */
