@@ -8,10 +8,9 @@ IMPORTANT - if altc won't compile on your system, configure with the
 option --without-hardware-info. It should then compile. 
 *********************************************************************
 
-atlc is available as source code in a file atlc-version.tar.gz, or as
-pre-built binaries for some systems (SPARC 4u, Debian Linux i386,
-Windows and a much older version of atlc has been built on about 30
-different platforms and run on NetBSD.
+atlc is available as source code in a file atlc-version.tar.gz. Some
+older binary releases are in existance but I would advise against 
+using version of atlc prior to 4.6.0 for multiple dielectrics. 
 
 See the file INSTALL if building from sources. Online documentation may
 be found at http://atlc.sourceforge.net/
@@ -42,10 +41,6 @@ choose not to install them. In which case run 'make install-exec'
 rather than 'make install'. If you later want to install the 
 examples, run 'make install-data'
 
-A Windows version (not graphical) can be found in an earlier distribution 
-(4.4.4). I'm not going to update that, so get a UNIX box if you want 
-to use the latest versions. 
-
 If wishing to contact me by email, mail me on drkirkby at ntlworld.com
 
-Dr. David Kirkby, G8WRB. 11th October 2003 Re: atlc-4.5.0
+Dr. David Kirkby, G8WRB. 12th December 2003 Re: atlc-4.6.0
