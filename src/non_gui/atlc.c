@@ -68,6 +68,7 @@ struct pixels Er_in_bitmap[MAX_DIFFERENT_PERMITTIVITIES];
 
 double **Vij;
 double **Er;
+signed char **oddity; 
 signed char **cell_type; 
 unsigned char *image_data;
 int width=-1, height=-1;
@@ -201,6 +202,7 @@ hence built without the mpi\nlibrary.\n",1);
     in getting some now, starting work then finding atlc can't get the 
     rest of what is needed. */
     image_data=ustring(0L,(long)size);
+    oddity=scmatrix(0,width-1,0,height-1);
     cell_type=scmatrix(0,width-1,0,height-1);
     Vij=dmatrix(0,width-1,0,height-1);
     Er=dmatrix(0,width-1,0,height-1);
@@ -265,11 +267,7 @@ hence built without the mpi\nlibrary.\n",1);
     contents of the bitmap image */
 
     setup_arrays(&data);
-    check_for_boundaries();
-    /* Now 'v' has the voltages at each grid element, 'Er' 
-    the permittivites and 'cell_type' is either FIXED or variable, 
-    indicating a dielectric (VARIABLE) or a metal */
-
+    set_oddity_from_Greens_paper();
 
     /* If there are multiple dielectrics, the impedance calculations
     needs to be done twice. We start by doing them once, for an vacuum
@@ -285,7 +283,7 @@ hence built without the mpi\nlibrary.\n",1);
   free_string(outputfile_name,0,1024);
   free_string(appendfile_name,0,1024);
   free_ustring(image_data,0L,(long) size);
-  free_scmatrix(cell_type,0,width-1,0,height-1);
+  free_scmatrix(oddity,0,width-1,0,height-1);
   free_dmatrix(Vij, 0,width-1,0,height-1);
   free_dmatrix(Er,0,width-1,0,height-1);
   return(OKAY); 

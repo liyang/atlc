@@ -43,7 +43,7 @@ Dr. David Kirkby, e-mail drkirkby at ntlworld.com
 
 extern double **Vij;
 extern double **Er;
-extern signed char **cell_type;
+extern signed char **oddity;
 
 void calculate_colour_data(double x, double xmax, int w, int h, int offset, unsigned char *image_dat, int image_type,
 unsigned char *red, unsigned char *green, unsigned char *blue)
@@ -85,15 +85,15 @@ unsigned char *red, unsigned char *green, unsigned char *blue)
   }
   else if (image_type==MIXED) /* Only for permittivity*/
   {
-    if(cell_type[w][h]==CONDUCTOR_ZERO_V)
+    if(oddity[w][h]==CONDUCTOR_ZERO_V)
     {
       *red=0; *green=255; *blue=0;
     }
-    else if(cell_type[w][h]==CONDUCTOR_PLUS_ONE_V)
+    else if(oddity[w][h]==CONDUCTOR_PLUS_ONE_V)
     {
       *red=255; *green=0; *blue=0;
     }
-    else if(cell_type[w][h]==CONDUCTOR_MINUS_ONE_V)
+    else if(oddity[w][h]==CONDUCTOR_MINUS_ONE_V)
     {
       *red=0; *green=0; *blue=255;
     }
