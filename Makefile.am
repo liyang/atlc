@@ -15,6 +15,8 @@ README.threads \
 README.windows \
 BUGS \
 stoptests \
+acx_pthread.m4 \
+gtk.m4 \
 TODO
 
 CLEANFILES = examplestest-coupler2.bmp.txt
