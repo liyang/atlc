@@ -1,14 +1,16 @@
-@dnl Process this file with autoconf to produce a configure script.
-AC_INIT(src/atlc.c)
-AM_INIT_AUTOMAKE(atlc, 3.1.0)
+dnl Process this file with autoconf to produce a configure script.
+
+AC_INIT(atlc, 5.0.0, drkirkby@ntlworld.com)
+AM_INIT_AUTOMAKE(atlc, 5.0.0, drkirkby@ntlworld.com)
 
 dnl Checks for programs.
 AC_PROG_CC
+AC_PROG_CXX
+AC_PROG_CXXCPP
 AC_ISC_POSIX
 
 AC_OUTPUT_COMMANDS([exit])
 dnl Checks for libraries.
-AC_CHECK_LIB(m,log)
 AC_CHECK_LIB(m,main)
 AC_CHECK_LIB(gslcblas,main)
 AC_CHECK_LIB(gsl,main)
@@ -18,9 +20,6 @@ AC_STDC_HEADERS
 AC_HAVE_HEADERS(stdio.h math.h errno.h stdlib.h string.h thread.h pthread.h pthreads.h)
 
 
-
-AC_HAVE_HEADERS("intelligent life")
-
 dnl check to see if the machine is big endian
 AC_C_BIGENDIAN
 
@@ -28,14 +27,40 @@ dnl check size of short. int and long
 AC_CHECK_SIZEOF(short)
 AC_CHECK_SIZEOF(int)
 AC_CHECK_SIZEOF(long)
+AC_CHECK_SIZEOF(size_t)
 
-dnl Checks for library functions.
 						   
 dnl Check for st_blksize in struct stat
 AC_ST_BLKSIZE
 
+dnl Check if the user wants a GUI. If so makes sure GTK and wxWindows are around.
+dnl The macro is in the file gtk.m4, so it must be read it here. 
+sinclude(gtk.m4)
+AC_ARG_WITH(gui, [  --with-gui=[no]            Add a GUI (needs GTK >= 1.2.7 installed) ])
+if test "x$with_gui" = "xyes"; then
+    AC_PATH_GTK(1.2.7, GTK127=1)
+        if test "$GTK127" != 1; then
+            AC_MSG_ERROR([
+                Please check that gtk-config is in path, the directory
+                where GTK+ libraries are installed (returned by
+                'gtk-config --libs' command) is in LD_LIBRARY_PATH or
+                equivalent variable and GTK+ is version 1.2.7 or above.
+            ])
+        fi
+	AC_CHECK_PROG(WXWINDOWS,wx-config, 1, 0)   
+        if test "$WXWINDOWS" != 1; then
+            AC_MSG_ERROR([
+	       wxWindows must be installed to use the GUI version of atlc
+        ])
+        fi
+#EXTRA_WXWINDOWS_CFLAGS = -I /usr/local/stow/wxGTK-2.2.9/lib/wx/include/gtk-2.2 
+        AC_SUBST(EXTRA_WXWINDOWS_LIBS,`wx-config --libs`)
+        AC_SUBST(EXTRA_WXWINDOWS_CFLAGS,`wx-config --cflags`)
+echo XXXXXXx $EXTRA_WXWINDOWS_CFLAGS $EXTRA_WXWINDOWS_LIBS
+fi
+
 dnl Multi-Processor Support
-AC_ARG_WITH(mp, [  --with-mp=[no]           support multiple processors (needs pthreads installed) ])
+AC_ARG_WITH(mp, [  --with-mp=[no]            support multiple processors (needs pthreads installed) ])
 if test "x$with_mp" = "xyes"; then
 AC_DEFINE(ENABLE_MP)
 AC_DEFINE(_REENTRANT)
@@ -60,11 +85,18 @@ fi
 
 dnl Check for the GNU scientific library header files. 
 
-AC_HAVE_HEADERS(gsl/gsl_sf_ellint.h,,AC_MSG_WARN(To get full functionality you should install the GNU \nscientific library (gsl) available at http://sources.redhat.com/gsl. Without \ngsl it will be impossible to evalute the theoretical impedance of a coupler\nusing \"make_coupler\"))
+AC_HAVE_HEADERS(gsl/gsl_sf_ellint.h,,AC_MSG_WARN([
+	To get full functionality you should install the GNU scientific 
+	library (gsl) available at http://sources.redhat.com/gsl. Without gsl
+	it will be impossible to evalute the theoretical impedance of 
+	a coupler  using \"make_coupler\"]))
 
+if test "x$with_gui" = "xyes"; then
 AC_OUTPUT([\
 Makefile                                        \
 src/Makefile                                    \
+src/non_gui/Makefile                            \
+src/gui/Makefile                                \
 man/Makefile                                    \
 examples/Makefile                               \
 docs/Makefile                                   \
@@ -73,3 +105,17 @@ docs/html-docs/jpgs/Makefile                    \
 docs/qex-december-1996/Makefile                 \
 docs/theory/Makefile                            \
 docs/Makefile                                   ])
+else
+AC_OUTPUT([\
+Makefile                                        \
+src/Makefile                                    \
+src/non_gui/Makefile                            \
+man/Makefile                                    \
+examples/Makefile                               \
+docs/Makefile                                   \
+docs/html-docs/Makefile                         \
+docs/html-docs/jpgs/Makefile                    \
+docs/qex-december-1996/Makefile                 \
+docs/theory/Makefile                            \
+docs/Makefile                                   ])
+fi
