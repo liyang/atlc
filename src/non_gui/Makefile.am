@@ -14,7 +14,7 @@ check_for_shorts.c bmp.h definitions.h Erdata.h \
 check_for_boundaries.c find_energy_per_metre.c \
 update_voltage_array.c get_file_pointer_with_right_filename.c \
 find_maximum_values.c calculate_colour_data.c find_electric_fields.c \
-get_options.c error_and_exit.c do_fd_calculation.c \
+get_options.c exit_with_msg_and_error_code.c do_fd_calculation.c \
 swap_conductor_voltages.c print_copyright.c print_data_for_directional_couplers.c \
 print_data_for_two_conductor_lines.c set_data_to_sensible_starting_values.c \
 write_fields_for_two_conductor_lines.c write_fields_for_directional_couplers.c \
@@ -23,7 +23,7 @@ exit_codes.h
 create_bmp_for_rect_cen_in_rect_coupler_SOURCES = create_bmp_for_rect_cen_in_rect_coupler.c \
 usage_create_bmp_for_rect_cen_in_rect_coupler.c \
 convert_doubles_to_integers.c  get_options.c definitions.h memory.c write_bitmap_out.c byteswap.c \
-align_bitmap_image.c check_error.c error_and_exit.c \
+align_bitmap_image.c check_error.c exit_with_msg_and_error_code.c \
 print_copyright.c
 
 create_bmp_for_rect_in_rect_SOURCES = create_bmp_for_rect_in_rect.c \
@@ -31,7 +31,7 @@ usage_create_bmp_for_rect_in_rect.c write_bitmap.c \
 get_Er1_and_Er2_colours.c convert_create_bmp_for_rect_in_rect_dimensions_to_integers.c \
 memory.c write_bitmap_out.c byteswap.c \
 align_bitmap_image.c fill_rect_in_rect.c check_parameters_of_create_bmp_for_rect_in_rect.c \
-check_error.c get_options.c definitions.h  error_and_exit.c print_copyright.c \
+check_error.c get_options.c definitions.h  exit_with_msg_and_error_code.c print_copyright.c \
 exit_codes.h
 
 create_bmp_for_rect_cen_in_rect_SOURCES = create_bmp_for_rect_cen_in_rect.c \
@@ -40,7 +40,7 @@ write_bitmap.c \
 get_Er1_and_Er2_colours.c convert_create_bmp_for_rect_in_rect_dimensions_to_integers.c \
 memory.c write_bitmap_out.c byteswap.c \
 align_bitmap_image.c fill_rect_in_rect.c check_parameters_of_create_bmp_for_rect_in_rect.c \
-check_error.c get_options.c definitions.h error_and_exit.c \
+check_error.c get_options.c definitions.h exit_with_msg_and_error_code.c \
 print_copyright.c Erdata.h exit_codes.h
  
 create_bmp_for_microstrip_coupler_SOURCES = \
@@ -51,14 +51,14 @@ print_copyright.c byteswap.c write_bitmap_out.c memory.c \
 get_options.c check_parameters_of_create_bmp_for_microstrip_coupler.c \
 write_bitmap.c align_bitmap_image.c \
 fill_image_vector_for_create_bmp_for_microstrip_coupler.c \
-check_error.c error_and_exit.c Erdata.h definitions.h exit_codes.h
+check_error.c exit_with_msg_and_error_code.c Erdata.h definitions.h exit_codes.h
 
 create_bmp_for_circ_in_circ_SOURCES = create_bmp_for_circ_in_circ.c \
 usage_create_bmp_for_circ_in_circ.c write_bitmap.c \
 get_Er1_and_Er2_colours.c convert_create_bmp_for_circ_in_circ_dimensions_to_integers.c \
 memory.c write_bitmap_out.c byteswap.c \
 align_bitmap_image.c fill_circ_in_circ.c check_parameters_of_create_bmp_for_circ_in_circ.c \
-check_error.c get_options.c definitions.h error_and_exit.c \
+check_error.c get_options.c definitions.h exit_with_msg_and_error_code.c \
 print_copyright.c Erdata.h
 
 create_bmp_for_circ_in_rect_SOURCES = create_bmp_for_circ_in_rect.c \
@@ -68,7 +68,7 @@ get_Er1_and_Er2_colours.c \
 check_parameters_of_create_bmp_for_circ_in_rect.c \
 memory.c write_bitmap_out.c byteswap.c \
 align_bitmap_image.c fill_circ_in_rect.c  \
-check_error.c get_options.c definitions.h error_and_exit.c \
+check_error.c get_options.c definitions.h exit_with_msg_and_error_code.c \
 print_copyright.c Erdata.h
 
 create_bmp_for_rect_in_circ_SOURCES = create_bmp_for_rect_in_circ.c \
@@ -77,18 +77,18 @@ get_Er1_and_Er2_colours.c \
 convert_create_bmp_for_rect_in_circ_dimensions_to_integers.c \
 memory.c write_bitmap_out.c byteswap.c \
 align_bitmap_image.c fill_rect_in_circ.c check_parameters_of_create_bmp_for_rect_in_circ.c \
-check_error.c get_options.c definitions.h error_and_exit.c \
+check_error.c get_options.c definitions.h exit_with_msg_and_error_code.c \
 print_copyright.c Erdata.h
 
 readbin_SOURCES = readbin.c definitions.h byteswap.c usage_readbin.c \
-get_options.c error_and_exit.c print_copyright.c \
+get_options.c exit_with_msg_and_error_code.c print_copyright.c \
 memory.c
 
 create_bmp_for_symmetrical_stripline_SOURCES = create_bmp_for_symmetrical_stripline.c \
 fill_image_vector_for_create_bmp_for_symmetrical_stripline.c \
 usage_create_bmp_for_symmetrical_stripline.c memory.c  write_bitmap_out.c \
 align_bitmap_image.c byteswap.c calculate_impedance_for_create_bmp_for_symmetrical_stripline.c \
-elliptic_integral.c get_options.c definitions.h error_and_exit.c \
+elliptic_integral.c get_options.c definitions.h exit_with_msg_and_error_code.c \
 print_copyright.c
 
 create_bmp_for_stripline_coupler_SOURCES = create_bmp_for_stripline_coupler.c usage_create_bmp_for_stripline_coupler.c \
@@ -96,16 +96,16 @@ calculate_Zodd_and_Zeven.c get_options.c definitions.h \
 calculate_integer_values.c write_bitmap.c \
 memory.c write_bitmap_out.c byteswap.c \
 align_bitmap_image.c fill_make_coupler.c \
-check_error.c error_and_exit.c \
+check_error.c exit_with_msg_and_error_code.c \
 get_Er1_and_Er2_colours.c print_copyright.c 
 
 design_coupler_SOURCES = design_coupler.c usage_design_coupler.c \
 get_options.c print_copyright.c calculate_Zodd_and_Zeven.c \
-give_examples_of_using_design_coupler.c error_and_exit.c
+give_examples_of_using_design_coupler.c exit_with_msg_and_error_code.c
 
 find_optimal_dimensions_for_microstrip_coupler_SOURCES = \
 find_optimal_dimensions_for_microstrip_coupler.c \
-error_and_exit.c usage_find_optimal_dimensions_for_microstrip_coupler.c \
+exit_with_msg_and_error_code.c usage_find_optimal_dimensions_for_microstrip_coupler.c \
 print_copyright.c get_options.c memory.c \
 check_parameters_for_find_optimal_dimensions_for_microstrip_coupler.c
 
