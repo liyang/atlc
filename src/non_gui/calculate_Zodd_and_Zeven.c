@@ -40,7 +40,7 @@ groundplanes of spacing h. */
 #include <gsl/gsl_complex_math.h>
 #endif
 
-#ifdef HAVE_GSL_GSL_COMPLEX_MATH_H
+#ifdef HAVE_GSL_GSL_BESSEL_MATH_H
 #include <gsl/gsl_bessel_math.h>
 #endif
 
@@ -50,8 +50,12 @@ groundplanes of spacing h. */
 
 void calculate_Zodd_and_Zeven(double *Zodd, double *Zeven, double *Zo, double w, double H, double s, double er)
 {
-#ifdef HAVE_LIBGSL
-#ifdef HAVE_GSL_GSL_COMPLEX_MATH_H
+/*
+#if defined(AS_SPARC64_FLAG) || (defined(IN_LIBGCC2) && (defined(__arch64__) || defined(__sparcv9)))
+*/
+
+#if defined(HAVE_LIBGSL) && defined(HAVE_GSL_GSL_SF_ELLINT_H) 
+
   double ke, ko, ko_dash, ke_dash;
   ke=(tanh((M_PI/2)*(w/H)))*tanh((M_PI/2)*(w+s)/H);
   ko=(tanh((M_PI/2)*(w/H)))/tanh((M_PI/2)*(w+s)/H);
@@ -62,11 +66,10 @@ void calculate_Zodd_and_Zeven(double *Zodd, double *Zeven, double *Zo, double w,
   *Zeven=30.0*M_PI*gsl_sf_ellint_Kcomp(ke_dash, GSL_PREC_DOUBLE)/(gsl_sf_ellint_Kcomp(ke,GSL_PREC_DOUBLE)*sqrt(er));
   *Zodd= 30.0*M_PI*gsl_sf_ellint_Kcomp(ko_dash, GSL_PREC_DOUBLE)/(gsl_sf_ellint_Kcomp(ko,GSL_PREC_DOUBLE)*sqrt(er));
   *Zo=sqrt( (*Zodd)*(*Zeven));
-#else
+#else 
   printf("This was not linked against the GNU scientific library, gsl.\n");
   printf("Obtain gsl from http://sources.redhat.com/gsl then run 'configure' again.\n");
   printf("and rebuild from the sources again.\n");
   exit(1);
-#endif
 #endif
 }

@@ -44,7 +44,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #include <time.h>
 #endif
 
-#ifdef HAVE_GSL_GSL_SF_ELLINT_H
+#if defined(HAVE_LIBGSL) && defined(HAVE_GSL_GSL_SF_ELLINT_H) 
 #include <gsl/gsl_sf_ellint.h>
 #endif
 
@@ -268,7 +268,15 @@ int main(int argc, char **argv) /* Read parameters from command line */
       {
 	/* Results are calculated assuming the box is one unit (mm, inch
 	etc) high and later scaled */
+
+#if defined(HAVE_LIBGSL) && defined(HAVE_GSL_GSL_SF_ELLINT_H) 
         calculate_Zodd_and_Zeven(&Zodd_x, &Zeven_x, &Zo_x, w, 1.0, s, er);
+#else
+        Zodd_x=1.0; Zeven_z=1.0; Zo_z=1.0;
+	fprintf(stderr,"This was not linked against the GNU scientific library (gsl)\n");
+	fprintf(stderr,"So the mode impedances have been set to 1 Ohm.\n");
+
+#endif
 	error=pow(Zodd-Zodd_x,2.0) + pow(Zeven-Zeven_x,2.0);
 	if( error < error_max )
 	{
