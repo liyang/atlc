@@ -36,7 +36,7 @@ CONDUCTOR_MINUS_ONE_V in definitions.h */
 #include "definitions.h"
 
 extern int width, height;
-extern int  **cell_type;
+extern int **cell_type;
 extern double **Vij;
 
 void swap_conductor_voltages(int way_to_swap)

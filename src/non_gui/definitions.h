@@ -37,12 +37,17 @@ Dr. David Kirkby, e-mail drkirkby at ntlworld.com
 #define       FREE_ARG char*
 #define       NR_END 1
 
-#define    UNKNOWN_DIELECTRIC                                            127
-#define    DIELECTRIC                                                      0 
-#define    CONDUCTOR_FLOATING                                            -80
-#define    CONDUCTOR_ZERO_V                                              -70 
-#define    CONDUCTOR_PLUS_ONE_V                                          -60 
-#define    CONDUCTOR_MINUS_ONE_V                                         -50 
+
+#define    CONDUCTOR_FLOATING          -3000
+#define    CONDUCTOR_ZERO_V            -1000 
+#define    CONDUCTOR_PLUS_ONE_V         -999 
+#define    CONDUCTOR_MINUS_ONE_V       -1001 
+#define    DIELECTRIC                      0 
+#define    DIFFERENT_DIELECTRIC_NEARBY     1
+#define    METAL_LEFT                      2
+#define    METAL_RIGHT                     4
+#define    METAL_BELOW                     8
+#define    METAL_ABOVE                    16
 
 /* The following follows Table VIII in Green's paper
 "Numerical Solution of Transmisssiion Line problems", 
@@ -91,8 +96,7 @@ simulation. */
 #define ITERATIONS                      100
 #define POS_TO_NEG                         1
 #define NEG_TO_POS                         -1
-//#define METAL_ER  1e9
-#define METAL_ER  5
+#define METAL_ER  1e9
 
 #define DONT_ZERO_ELEMENTS  0       
 #define ZERO_ELEMENTS_FIRST 1       
@@ -311,10 +315,13 @@ void free_cmatrix(char **m, long nrl, long nrh, long ncl, long nch);
 char *string(long nl,long nh);
 void free_string(char *v, long nl, long nh);
 void swap_bytes2(unsigned char *buffer, int offset, short *answer);
+int **imatrix(long nrl, long nrh, long ncl, long nch);
 void swap_bytes4(unsigned char *buffer, int offset, int *answer);
 void free_ustring(unsigned char *v, long nl, long nh);
 int **imatrix(long nrl, long nrh, long ncl, long nch);
-void setup_arrays(struct transmission_line_properties *data);
+//void setup_arrays(struct transmission_line_properties *data);
+
+void setup_arrays(int *dielectrics_in_bitmap, int dielectrics_on_command_line);
 double finite_difference_single_threaded();
 double finite_difference_multi_threaded();
 void *do_columns(void *thread_arg);
@@ -400,6 +407,11 @@ double check_convergence(double **grid1, double **grid2, int w, int h);
 void error_check(char *s);
 void free_dvector(double *v, long nl, long nh);
 void usage_create_any_bitmap();
+void update_voltage_array(int starti, int endi, int i_index, int j_index, double **from, double **to);
+void nrerror(char error_text[]);
+void check_for_boundaries(void);
+
+
 
 #define ONE
 #define TWO

@@ -68,7 +68,7 @@ struct pixels Er_in_bitmap[MAX_DIFFERENT_PERMITTIVITIES];
 
 double **Vij;
 double **Er;
-signed char **oddity; 
+int **oddity; 
 int **cell_type; 
 unsigned char *image_data;
 int width=-1, height=-1;
@@ -78,6 +78,7 @@ int non_vacuum_found=FALSE;
 int dielectrics_to_consider_just_now;
 int coupler=FALSE;
 double r=1.90;
+double found_this_dielectric=1000000.0;
 
 char *inputfile_name;
 
@@ -202,7 +203,7 @@ hence built without the mpi\nlibrary.\n",1);
     in getting some now, starting work then finding atlc can't get the 
     rest of what is needed. */
     image_data=ustring(0L,(long)size);
-    oddity=scmatrix(0,width-1,0,height-1);
+    oddity=imatrix(0,width-1,0,height-1);
     cell_type=imatrix(0,width-1,0,height-1);
     Vij=dmatrix(0,width-1,0,height-1);
     Er=dmatrix(0,width-1,0,height-1);
@@ -251,6 +252,7 @@ hence built without the mpi\nlibrary.\n",1);
     stupid lines fixed that issue. This will only get compiled under 
     Windoze, the more sensible fread call being used on other operating 
     systems. */
+
 #ifdef WINDOWS
     for(i=0; (i < (long)size ) && (feof(image_data_fp)==0); i++)
       image_data[i]=(unsigned char)fgetc(image_data_fp);
@@ -266,8 +268,8 @@ hence built without the mpi\nlibrary.\n",1);
     /* We now fill the following 3 arrays with the correct data, based on the 
     contents of the bitmap image */
 
-    setup_arrays(&data);
-    //set_oddity_from_Greens_paper();
+    setup_arrays(&data.dielectrics_in_bitmap, data.dielectrics_on_command_line);
+    /* set_oddity_from_Greens_paper(); */
     check_for_boundaries();
 
     /* If there are multiple dielectrics, the impedance calculations
@@ -284,8 +286,7 @@ hence built without the mpi\nlibrary.\n",1);
   free_string(outputfile_name,0,1024);
   free_string(appendfile_name,0,1024);
   free_ustring(image_data,0L,(long) size);
-  free_scmatrix(oddity,0,width-1,0,height-1);
-  free_imatrix(cell_type,0,width-1,0,height-1);
+  free_imatrix(oddity,0,width-1,0,height-1);
   free_dmatrix(Vij, 0,width-1,0,height-1);
   free_dmatrix(Er,0,width-1,0,height-1);
   return(OKAY); 

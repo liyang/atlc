@@ -214,7 +214,6 @@ double *dvector(long nl, long nh)
 	return v-nl+NR_END;
 }
 
-
 void nrerror(char error_text[])
 /* Numerical Recipes standard error handler */
 {

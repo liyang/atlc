@@ -112,3 +112,4 @@ Dr. David Kirkby, e-mail drkirkby at ntlworld.com
 #define FSEEK_FAILURE                                             87
 #define FTELL_FAILURE                                             88
 #define DOMAIN_ERROR                                              89
+#define INTERNAL_ERROR                                            90   

@@ -9,12 +9,13 @@ find_optimal_dimensions_for_microstrip_coupler \
 create_bmp_for_rect_cen_in_rect_coupler 
 
 atlc_SOURCES = atlc.c read_bitmap_file_headers.c \
+check_for_boundaries.c \
 memory.c setup_arrays.c \
 finite_difference_single_threaded.c \
 finite_difference_multi_threaded.c \
 usage_atlc.c \
 check_for_shorts.c bmp.h definitions.h Erdata.h \
-check_for_boundaries.c find_energy_per_metre.c \
+set_oddity_from_Greens_paper.c find_energy_per_metre.c \
 get_file_pointer_with_right_filename.c \
 find_maximum_values.c calculate_colour_data.c find_electric_fields.c \
 get_options.c exit_with_msg_and_exit_code.c do_fd_calculation.c \

@@ -91,7 +91,6 @@ int main(int argc, char **argv)
          other++;
     }
     free_dvector(data,0L,(long) length);
-    printf("there are: %d ones, %d zeros, %d minus ones, %d %g's and %d other values\n",one, zero, minusone, metal_er, METAL_ER, other);
   }
   else
     usage_readbin();

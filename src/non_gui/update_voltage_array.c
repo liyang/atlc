@@ -39,44 +39,55 @@ Out[10]= {{vij ->
                  eij + eijm1    eij + eijp1   eij + eim1j   eij + eip1j
  
 */
-#include <stdio.h>
-#include <math.h>
-#include "definitions.h"
 
-/* This updates the rows (i) of the array Vij for all i between
-starti and end i inclusive. It should be possible to modify it to
-do the same but to read from one array and write to another */
-
-extern int width, height, dielectrics_to_consider_just_now;
-extern double r, **Er, **Vij;
-extern int **cell_type;
-
-void update_voltage_array(int start_row, int end_row)
+/*
+void update_voltage_array(int start_row, int end_row, double **V_from, double **V_to)
 {
   int i, j, type;
   double a, b, c, d, e, f, g, h;
-  start_row=0; end_row=width-2;
-  for(i= start_row; i <end_row; ++i){
-    for(j=1; j<height-1; ++j) {
+*/
+
+#ifdef LOOP_ORDER_A
+  for(i= start_column; i <=end_column; ++i){
+    for(j=0; j<=height-1; ++j) {
+#endif
+
+#ifdef LOOP_ORDER_B
+  for(i= end_column; i >=start_column; --i){
+    for(j=0; j<=height-1; ++j) {
+#endif
+
+#ifdef LOOP_ORDER_C
+  for(i= start_column; i <=end_column; ++i){
+    for(j=height-1; j>=0; --j) {
+#endif
+
+#ifdef LOOP_ORDER_D
+  for(i= end_column; i >=start_column; --i){
+    for(j=height-1; j>=0; --j) {
+#endif
       type = cell_type[i][j];
       if(type >=DIELECTRIC) { /*only update dielectrics, not conductors*/
+	/* normal internal position, dielectric */
         if(type == DIELECTRIC && i > 0 && j > 0 && i < width-1 && j < width-1)
-          Vij[i][j]=r*(Vij[i][j+1]+Vij[i+1][j]+Vij[i][j-1]+Vij[i-1][j])/4.0+(1-r)*Vij[i][j];
-        else if( i > 0 && j > 0 && i < width-1 && j < width-1 ) {
-          a=(Er[i][j] * Er[i][j-1] * Vij[i][j-1])/(Er[i][j] + Er[i][j-1]);
-          b=(Er[i][j] * Er[i][j+1] * Vij[i][j+1])/(Er[i][j] + Er[i][j+1]);
-          c=(Er[i][j] * Er[i-1][j] * Vij[i-1][j])/(Er[i][j] + Er[i-1][j]);
-          d=(Er[i][j] * Er[i+1][j] * Vij[i+1][j])/(Er[i][j] + Er[i+1][j]);
+          V_to[i][j]=r*(V_from[i][j+1]+V_from[i+1][j]+V_from[i][j-1]+V_from[i-1][j])/4.0+(1-r)*V_from[i][j];
+	  /* normal internal position, but non-uniform dielectric */
+        else if( i > 0 && j > 0 && i < width-1 && j < width-1 && type != DIELECTRIC) {
+          a=(Er[i][j] * Er[i][j-1] * V_from[i][j-1])/(Er[i][j] + Er[i][j-1]);
+          b=(Er[i][j] * Er[i][j+1] * V_from[i][j+1])/(Er[i][j] + Er[i][j+1]);
+          c=(Er[i][j] * Er[i-1][j] * V_from[i-1][j])/(Er[i][j] + Er[i-1][j]);
+          d=(Er[i][j] * Er[i+1][j] * V_from[i+1][j])/(Er[i][j] + Er[i+1][j]);
      
           e=(Er[i][j] * Er[i][j-1])/(Er[i][j]+Er[i][j-1]);
           f=(Er[i][j] * Er[i][j+1])/(Er[i][j]+Er[i][j+1]);
           g=(Er[i][j] * Er[i-1][j])/(Er[i][j]+Er[i-1][j]);
           h=(Er[i][j] * Er[i+1][j])/(Er[i][j]+Er[i+1][j]);
                         
-          Vij[i][j]=r*(a+b+c+d)/(e+f+g+h) + (1-r)*Vij[i][j];
+          V_to[i][j]=r*(a+b+c+d)/(e+f+g+h) + (1-r)*V_from[i][j];
         }
         /* the following few lines calculate the voltages at the edges.
         They are not accurate, but better than no calculation at all 
+
 
         if(i==1 && cell_type[0][j]>=0)
           Vij[0][j]=(Vij[0][j+1]+Vij[0][j-1])/2.0; 
@@ -87,7 +98,41 @@ void update_voltage_array(int start_row, int end_row)
         if(j==height-2 && cell_type[i][width-1]>=DIELECTRIC)
           Vij[i][height-1]=(Vij[i][j-1]+Vij[i][j+1])/2.0; */
 
+	else if( i == 0 && j == 0 && cell_type[i][j] >= DIELECTRIC) /* top left */
+	{
+          V_to[i][j]=(V_from[1][0]+V_from[0][1])/2.0;                                        /* top left  */
+        }
+	else if ( i == width-1 && j == 0 && cell_type[i][j] >= DIELECTRIC) {
+          V_to[i][j]=(V_from[width-2][0]+V_from[width-1][1])/2.0;                      /* top right */
+        }
+        else if(i == 0 && j == height-1 && cell_type[i][j] >= DIELECTRIC){
+          V_to[i][j]=(V_from[0][height-2]+V_from[1][height-1])/2.0;                   /* bottom left */
+        }
+	else if( i == width-1 && j == width-1 && cell_type[i][j] >= DIELECTRIC){
+          V_to[i][j]=(V_from[width-2][height-1]+V_from[width-1][height-2])/2.0; /* bottom right */
+	}
+
+	else if( i == 0 && j > 0 && j < height-1 && cell_type[i][j] >= DIELECTRIC) { /* left hand side  */
+	  V_to[i][j]=0.25*(V_from[0][j-1]+V_from[0][j+1] + 2*V_from[1][j]);
+        }
+
+	else if( i == width-1 && j > 0 && j < height-1 && cell_type[i][j] >= DIELECTRIC){                              /* right hand side */
+	  V_to[i][j]=0.25*(V_from[width-1][j+1]+V_from[width-1][j-1]+2*V_from[width-2][j]);
+        }
+        
+	else if( j == 0 && i > 0 &&  i < width-1 && cell_type[i][j] >= DIELECTRIC){                                   /* top row */ 
+	  V_to[i][j]=0.25*(V_from[i-1][0]+V_from[i+1][0]+2*V_from[i][1]);
+        }
+
+	else if( j == height-1 && i > 0 &&  i < width-1 && cell_type[i][j] >= DIELECTRIC){                            /* bottom row */ 
+	  V_to[i][j]=0.25*(V_from[i-1][height-1]+V_from[i+1][height-1]+2*V_from[i][height-2]);
+        }
+	else {
+	  fprintf(stderr,"Internal error in update_voltage_array.c\n");
+	  fprintf(stderr,"i=%d j=%d cell_type[%d][%d]=%d\n",i,j,i,j,cell_type[i][j]);
+	  exit(INTERNAL_ERROR);
+        }
       }
     }
   }
-}
+/* } */
