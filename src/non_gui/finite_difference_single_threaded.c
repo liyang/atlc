@@ -22,7 +22,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 
 */
 
-#if !defined(ENABLE_MP) && !defined(ENABLE_MPI)
+#ifndef ENABLE_POSIX_THREADS
 
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
