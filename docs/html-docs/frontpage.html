@@ -11,18 +11,20 @@
 <BODY>
 
 <H1><COde>atlc</code> - Arbitrary Transmission Line Calculator.</H1>
+The programme <COde>atlc</code> calculates the impedance of two or three wire electrical transmission lines of totally arbitrary cross section, using a numerical technique called <EM>finite difference</EM>. The conductors can be coaxial, run side by side, or in just about any configuration you can think of. The diagrammes below shows 3 types of 2-wire  transmission lines and a directional copuler, all of which may be analysed. In each diagramme, one conductor is shown red, the other conductor shown green and in the case of a coupler, the third conductor is shown blue. The dielectrics are shown in a few other colours, with white being a vacuum and turquoise being a dielectric with an effective permittivity of 4.8 (about the same as fibreglass PCB). 
 
-The programme <COde>atlc</code> calculates the impedance of electrical transmission lines of totally arbitrary cross section. The two conductors can be coaxial, run side by side, or just about anything you can think of. The diagrammes below shows several types of line that may be found. In each diagramme, one conductor is shown red, the other conductor shown green and the dielectrics are shown in a few other colours, with white being vacuum and turquoise being a dielectric with an effective permittivity of 4.8 (about the same as fibreglass PCB). 
 <TABLE>
 <TR>
 <TD><img src="jpgs/coax2.jpg" ALT="round coax" > </TD>
 <TD><img src="jpgs/twin-wire.jpg" ALT="twin wire" ></TD>
 <TD><img src="jpgs/very-odd.jpg" ALT="very odd line" ></TD>
+<TD><img src="jpgs/cop1.jpg" ALT="directional coupler" width="128" height="128"></TD>
 </TR>
 <TR>
 <TD>Zo=42.938 Ohms<BR>C=77.695 pF/m<BR>L=143.25 nH/m<BR></TD>
 <TD>Zo= 53.660 Ohms<br>C= 62.162 pF/m<br>L= 178.99 nH/m </TD>
 <TD>Zo= 58.087 Ohms<br> C= 57.425 pF/m <br>L= 193.757148 nH/m</TD>
+<TD>Zo= 66.3699  Ohms<br> Zeven=138.9950 Ohms<br>Zodd= 31.6915 Ohms<br>C=23.9983  pF/m <br>L= 463.6373 nH/m</TD>
 </TR>
 </TABLE>
 The programme  <COde>atlc</code> needs to know the cross section of the transmission line. This cross section is stored in a data file, which happens to be a Windows bitmap file.  This bitmap file is then read by <COde>atlc</code> There are two ways to generate the bitmap for <COde>atlc</code>. 
