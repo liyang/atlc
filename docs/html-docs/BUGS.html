@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
+<html>
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org">
+<meta name="GENERATOR" content="Bluefish 0.6 and vi on a Sun SPARCstation 20">
+<meta name="Reply-to" content="drkirkby@ntlworld.com">
+<meta name="KEYWORDS" content="transmission lines, tranmission line, CAD, electrical, atlc, impedance, Z0, transmission, line, lines, arbitrary, cross, section, shape, Zo">
+<meta name="DESCRIPTION" content="A finite difference program for computing the  properties of any transmission line ">
+<title>atlc - Arbitrary Transmission Line Calculator</title>
+</head>
+<body>
+<ol>
+<li>
+atlc does NOT run properly on AIX. So far its only been checked on AIX
+5.2 using  IBM's C compiler version 6.0 on an IBM RS/6000 7025 F50
+server. But it behaved <b>very badly</b> on that. Clearly the program <em>atlc</em> is not working right, although at least some of the support programs are
+working.  What is up I don't know. 
+</li>
+<li>
+
+There seems to be problems on SPARC running old versions of Linux
+(Redhat 6.2, kernel  2.2.14-5.0smp) and Debian, when configured
+for multi-processor support.. I'm tempted to belive
+this is a bug in the thread support on old versions of Linux. It's fine
+on newer versions on a PC. 
+</li>
+
+<li>
+The script 'teston' does not seem to work to the local host,
+with instead it giving a lot of failures. Wny ???
+</li>
+
+<li>
+Lack of any way of changing brightness of images without a
+cpu-intenesive re-run. The two example files '
+Thread support on machines other than Solaris is 
+not known. I need to do more testing - preferably
+with multi-processor machines. 
+</li>
+<li>
+There are no manual pages for several programs 
+</li>
+<li>
+The error message shown in the files docs/htlm-docs/errors.html
+is wrong and was generated on an earlier release. However, it
+makes little difference - the meaning should be clear.
+</li>
+
+<li>
+HTML versions of the man pages have diagrams that 
+are completely stupid. This is a problem with the 
+program 'man2html' I'm using - I think so anyway. 
+</li>
+</ol>
+
+Dr. David Kirkby, July 6th 2003 Re: atlc-4.3.3
+<br>
+<a href="http://atlc.sourceforge.net">Return to the atlc homepage</a>
+
+<br>
+<A href="http://sourceforge.net"> <IMG src="http://sourceforge.net/sflogo.php?group_id=25836&amp;type=5" width="210" height="62" border="0" alt="SourceForge.net Logo"></A> 
+
+</body>
+</html>
+
