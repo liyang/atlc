@@ -27,20 +27,23 @@ in 56 on my Dec Alpha. At present, no attempt is made to convert that
 number to a sensible string describing the processor. When a way to do
 that is worked out, this will be done. 
 
+
+For data to be really useful, the benchmark MUST BE RUN ON A QUITE
+SYSTEM!!! 
+
 Here are some benchmarks, collected on a number of different computers
 using version 4.3.1 of the code. However, comaring the results on verison
-4.3.2 should be the same, except the benchmark should be more intelligent
+4.3.3 should be the same, except the benchmark should be more intelligent
 in gather information about the hardware and so is more likely to be
 able to work out some paramters such as speedup and efficiency (defined
 below). This might never be possible, as it probably depends too much
 on operating system versions to make it practical to do.
 
-HARDWARE and EXECUTION TIMES vesion 4.3.1 of atlc: Version 4.3.2
+HARDWARE and EXECUTION TIMES vesion 4.3.1 of atlc: Version 4.3.4
 should give the same results, but provide better information. 
 ----------------------------------------------------------------
 
-Hostname      Machine                CPU(s)   t_seq  t_par speedup
-efficiency
+Hostname      Machine                CPU(s)   t_seq  t_par speedup efficiency
 ----------------------------------------------------------------
 blackbird     Sun SPARCstation 20     75 MHz  1601   N/A     N/A   N/A
 bluetit       Sun SPARCstation 20  2x125 MHz  1141   682     1.67  0.837
@@ -48,9 +51,11 @@ cheetah       PC, Solaris 8 (x86)  2x450 MHz   410   255     1.61  0.804
 crow          Sun SPARCstation 20     75 MHz  3457  3522     0.98  0.982
 dobermann[cc] Dec Alpha PW 600a      600 MHz   950   N/A     N/A   N/A 
 dove          Sun SPARCstation 20     75 MHz  1647   N/A     N/A   N/A
+owl           SGI Octane           2x195 MHz   833   455     1.83  0.915  
 robin         HP C3000               400 MHz   157   N/A     N/A   N/A  
 sparrow[cc]   Sun Ultra 80         4x450 MHz   272   83      3.28  0.819
 sparrow[gcc]  Sun Ultra 80         4x450 MHz   261   86      3.03  0.759
+starling      IBM RS/6000 7025 F50   166 MHz   FAIL  ------------------ 
 tiger         Pentium II PC          350 MHz   333   N/A     N/A   N/A  
 woodpecker    Sun SPARCstation 20  2x125 MHz  1035   FAIL    FAIL  FAIL
 
@@ -66,6 +71,7 @@ dobermann     Dec Alpha PW 600a          1024 Mb   2.000 Mb
 dove          Sun SPARCstation 20         288 Mb   1.000 Mb
 robin         HP C3000                   1536 Mb   1.500 Mb (1 Mb data, 0.5 Mb instruction)
 sparrow       Sun Ultra 80               4096 Mb   4.000 Mb  
+starling      IBM RS/6000 7025 F50        512 Mb   Not known.
 tiger         Pentium II PC               128 Mb   0.544 Mb 16 kb L1 data+16 kb L1 inst. + 512 kb L2 
 woodpecker    Sun SPARCstation 20         224 Mb   0.250 Mb 
 
@@ -81,12 +87,14 @@ dove         Debian  ???  2.2.20         1.2  gcc-2.96        NI
 robin        HP-UX  11                   ---  gcc-3.2.2       NI
 sparrow[gcc] Solaris 9   112233-03       1.3  gcc-3.2.2    1.2.5
 sparrow[cc]  Solaris 9   112233-03       1.3  cc-5.3       1.2.5
+starling[xlc] AIX 5.2                   ---   IBM C 6.0       NI 
 tiger        Redhat  7.2  2.4.10-5       0.8  gcc-2.96     1.2.5
 woodpecker   Linux 6.2   2.2.14-5.0smp   1.0  egcs-2.91.66    NI
 
 IMPORTANT: If you wish to compare your machines performance,
-use are advised to use atlc-4.3.tar.gz. atlc-4.3.1.tar.gz will
-give the same times, but has bugs that are fixed in 4.3.2
+use are advised to use atlc-4.3.3.tar.gz. atlc-4.3.1.tar.gz will
+give the same times, but has bugs that are fixed in 4.3.3, and
+also the latter has improved functionality. 
 
 $ configure --with-threads
 $ make check
