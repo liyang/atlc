@@ -1,0 +1,100 @@
+#!/bin/sh
+# Check that the -s and -S options are indeed doing
+# what they are supposed to be doing. 
+
+# Delete any files that may be left by mistake
+rm -f ../examples/coax2.Ex.bmp
+rm -f ../examples/coax2.Ey.bmp
+rm -f ../examples/coax2.E.bmp
+rm -f ../examples/coax2.U.bmp
+rm -f ../examples/coax2.V.bmp
+rm -f ../examples/coax2.Er.bmp
+
+rm -f ../examples/coax2.Ex.bin
+rm -f ../examples/coax2.Ey.bin
+rm -f ../examples/coax2.E.bin
+rm -f ../examples/coax2.U.bin
+rm -f ../examples/coax2.V.bin
+rm -f ../examples/coax2.Er.bin
+
+
+# Copy coax2.bmp. This is small, so atlc runs fast. 
+
+# Check the -S and -s options together allow no .bmp or .bin files
+../src/non_gui/atlc -s -S ../examples/coax2.bmp > /dev/null
+if [ -f ../examples/coax2.Ex.bmp ]  || [ -f ../examples/coax2.Ey.bin ] || [ -f ../examples/coax2.Er.bin ] ; then
+  echo "FAILEDa:" $0 >> tests.log 
+  exit 1
+fi  
+
+
+# Delete any files created. There should be none.
+
+rm -f ../examples/coax2.Ex.bmp
+rm -f ../examples/coax2.Ey.bmp
+rm -f ../examples/coax2.E.bmp
+rm -f ../examples/coax2.U.bmp
+rm -f ../examples/coax2.V.bmp
+rm -f ../examples/coax2.Er.bmp
+
+rm -f ../examples/coax2.Ex.bin
+rm -f ../examples/coax2.Ey.bin
+rm -f ../examples/coax2.E.bin
+rm -f ../examples/coax2.U.bin
+rm -f ../examples/coax2.V.bin
+rm -f ../examples/coax2.Er.bin
+
+# Check that -S suppresses the creation of .bin, but not .bmp's
+../src/non_gui/atlc -S ../examples/coax2.bmp > /dev/null
+if [ -f ../examples/coax2.Ex.bin ]  || [ -f ../examples/coax2.Ey.bin ] || [ -f ../examples/coax2.Er.bin ] || [ ! -f  ../examples/coax2.Er.bmp ] ; then
+  echo "FAILED:" $0 >> tests.log 
+  exit 1
+fi
+
+rm -f ../examples/coax2.Ex.bmp
+rm -f ../examples/coax2.Ey.bmp
+rm -f ../examples/coax2.E.bmp
+rm -f ../examples/coax2.U.bmp
+rm -f ../examples/coax2.V.bmp
+rm -f ../examples/coax2.Er.bmp
+
+rm -f ../examples/coax2.Ex.bin
+rm -f ../examples/coax2.Ey.bin
+rm -f ../examples/coax2.E.bin
+rm -f ../examples/coax2.U.bin
+rm -f ../examples/coax2.V.bin
+rm -f ../examples/coax2.Er.bin
+
+echo got here 
+
+# Check that -s suppresses the creation of .bmp's, but not .bin's
+../src/non_gui/atlc -s ../examples/coax2.bmp > /dev/null
+if [ -f ../examples/coax2.Ex.bmp ]  || [ -f ../examples/coax2.Ey.bmp ] || [ ! -f ../examples/coax2.Er.bin ]  ; then
+  echo "FAILED:" $0 >> tests.log 
+  exit 1
+fi
+
+rm -f ../examples/coax2.Ex.bmp
+rm -f ../examples/coax2.Ey.bmp
+rm -f ../examples/coax2.E.bmp
+rm -f ../examples/coax2.U.bmp
+rm -f ../examples/coax2.V.bmp
+rm -f ../examples/coax2.Er.bmp
+
+rm -f ../examples/coax2.Ex.bin
+rm -f ../examples/coax2.Ey.bin
+rm -f ../examples/coax2.E.bin
+rm -f ../examples/coax2.U.bin
+rm -f ../examples/coax2.V.bin
+rm -f ../examples/coax2.Er.bin
+
+# Check that no options creates.bmp's and  bin's
+../src/non_gui/atlc ../examples/coax2.bmp  > /dev/null
+if [ ! -f ../examples/coax2.Ex.bmp ]  || [ ! -f ../examples/coax2.Ey.bmp ] || [ ! -f ../examples/coax2.Er.bin ]  ; then
+  echo "FAILED:" $0 >> tests.log 
+  exit 1
+fi
+
+echo "PASSED:" $0 >> tests.log 
+exit 0
+
