@@ -69,8 +69,8 @@ EX2b="Builds and checks atlc-4.2.2.tar.bz2 on woodpecker, configured with x, but
 EX3a="eg #3 teston -m '-j2' -z bluetit atlc-4.0.0"
 EX3b="copies atlc-4.0.0.zip to bluetit and does a parallel build\n"
 
-EX4a="eg #4 teston -M gmake -c '--with--mpi' crow atlc-4.0.0"
-EX4b="copies atlc-4.0.0.tar.gz to crow and uses gmake to build with the MPICH library\n"
+EX4a="eg #4 teston -c --enable-hardware-info -M gmake  crow atlc-4.0.0"
+EX4b="copies atlc-4.0.0.tar.gz to crow, configures with --enable-hardware-info and uses gmake to build\n"
 
 EX5a="eg #5 teston -u root duke@medphys.ucl.ac.uk gcc-3.2.2"
 EX5b="builds+tests gcc-3.2.2.tar.gz on duke@medphys.ucl.ac.uk using username root"
