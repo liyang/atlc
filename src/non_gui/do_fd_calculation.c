@@ -28,7 +28,6 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 
 #include "definitions.h"
 
-#define ITERATIONS 10
 
 extern int append_flag;
 extern int dielectrics_to_consider_just_now, coupler;
@@ -123,6 +122,19 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
   double velocity_of_light_in_vacuum;
   int count=0;
 
+  /* The line of best fit of non_metalic_pixels vs iterations required
+  is y=0.0011 * non_metallic_pixels  + 283. 
+
+  I'll ensure finite_difference is called about 10x by using 
+  0.00011 * the number of non-metallic elements  +28 as the number 
+  of times finite_difference is called each time */
+
+  printf("data->non metalic_pixels = %d\n", data->non_metallic_pixels); 
+  data->tenth_of_estimated_iterations_needed = (int) (0.00011*(double) data->non_metallic_pixels + 28);
+
+  if(data->verbose_level >=4 )
+    printf("finite_difference(%d) is the best guess\n", data->tenth_of_estimated_iterations_needed);
+
   /* The following 10 lines are for a single dielectric 2 conductor line */
   if (data->couplerQ==FALSE)
   {
@@ -139,7 +151,7 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
     do /* Start a finite calculation */
     {
       capacitance_old=capacitance;
-      capacitance=finite_difference(ITERATIONS);
+      capacitance=finite_difference(data->tenth_of_estimated_iterations_needed);
       data->C_vacuum=capacitance;
       data->C=capacitance;
       data->L_vacuum=MU_0*EPSILON_0/capacitance; /* Same as L in *ALL* cases */
@@ -163,7 +175,9 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
       count++;
     } while (fabs((capacitance_old-capacitance)/capacitance_old) > data->cutoff); /* end of FD loop */
     if(data->verbose_level >=4)
-      printf("Total of %d iterations ( %d calls to finite_difference(%d) )\n",ITERATIONS*count,count,ITERATIONS);
+    {
+      printf("Total of %d iterations ( %d calls to finite_difference(%d) )\n",data->tenth_of_estimated_iterations_needed*count,count,data->tenth_of_estimated_iterations_needed);
+    }
 
 #ifdef ENABLE_MPI
 	mpi_receive_updated_vij_strips();
@@ -196,7 +210,7 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
       do /* Start a finite calculation */
       {
         capacitance_old=capacitance;
-        capacitance=finite_difference(ITERATIONS);
+        capacitance=finite_difference(data->tenth_of_estimated_iterations_needed);
         data->C=capacitance;
         data->C_non_vacuum=capacitance;
         data->Zo=sqrt(data->L_vacuum/data->C_non_vacuum);  /* Standard formula for Zo */
@@ -255,7 +269,7 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
     do /* Start a finite difference calculation */
     {
       capacitance_old=capacitance;
-      capacitance=finite_difference(ITERATIONS);
+      capacitance=finite_difference(data->tenth_of_estimated_iterations_needed);
       data->Codd_vacuum=capacitance;
       data->Codd=capacitance;
       data->Lodd_vacuum=MU_0*EPSILON_0/capacitance; /* Same as L in *ALL* cases */
@@ -305,7 +319,7 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
       do /* Start a finite calculation */
       {
         capacitance_old=capacitance;
-        capacitance=finite_difference(ITERATIONS);
+        capacitance=finite_difference(data->tenth_of_estimated_iterations_needed);
         data->Codd=capacitance;
         data->Zodd=sqrt(data->Lodd_vacuum/data->Codd);  /* Standard formula for Zo */
         velocity_of_light_in_vacuum=1.0/(sqrt(MU_0 * EPSILON_0)); /* around 3x10^8 m/s */
@@ -348,7 +362,7 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
     do /* Start a finite difference calculation */
     {
       capacitance_old=capacitance;
-      capacitance=finite_difference(ITERATIONS);
+      capacitance=finite_difference(data->tenth_of_estimated_iterations_needed);
       data->Ceven_vacuum=capacitance;
       data->Ceven=capacitance;
       data->Leven_vacuum=MU_0*EPSILON_0/capacitance; /* Same as L in *ALL* cases */
@@ -395,7 +409,7 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
       do /* Start a finite calculation */
       {
         capacitance_old=capacitance;
-        capacitance=finite_difference(ITERATIONS);
+        capacitance=finite_difference(data->tenth_of_estimated_iterations_needed);
         data->Ceven=capacitance;
         data->Zeven=sqrt(data->Leven_vacuum/data->Ceven);  /* Standard formula for Zo */
         velocity_of_light_in_vacuum=1.0/(sqrt(MU_0 * EPSILON_0)); /* around 3x10^8 m/s */
