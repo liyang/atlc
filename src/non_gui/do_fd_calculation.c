@@ -281,4 +281,5 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
       print_data_for_directional_couplers(*data, where_to_print_fp, inputfile_filename);
     }
   } /* end of if couplers */
+  return(0);
 }
