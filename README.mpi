@@ -9,19 +9,4 @@ is not a lot of point in configuring atlc for MPI support. MPI support
 is a number one pririty now, so soon a better implementation will be
 added to atlc. 
 
-
-Note, if you want to play with atlc and MPI, 
-
-1) An MPICH configured machine needs to be able to access at least one
-machine on the network without a password, using .rhosts securtiy
-procedures. THIS INCLUDES THE LOCAL HOST if you want to run on the local
-
-3) ssh should work if MPICH is configured for this. which is must more 
-secture than using .rhosts and rsh.
-
-3) A small test program, in tests/MPI_16a_PI.c does build okay
-and runs. If you uncommment the printf lines, it will 
-give an estimage of PI. Hence the automake/autoconf and the 
-macro m4/acx_mpi.m4 seems to be okay. 
-
-Full MPI support is expected soon. 
+Dr. David Kirkby, 15th Auguest 2003, Re: Version 4.3.7
