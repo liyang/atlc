@@ -31,3 +31,4 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #define THE_WIDTH_w_DIVIDED_BY_THE_HEIGHT_H_IS_TOO_LARGE           6
 #define PROGRAM_NOT_IMPLEMENTED                                    7
 #define PROGRAM_CALLED_WITH_WRONG_NUMBER_OF_ARGUMENTS              8
+#define UNACCEPTABLE_ERROR_WHEN_CONVERTING_TO_INTEGERS             9

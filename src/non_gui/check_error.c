@@ -34,6 +34,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #include <stdlib.h>
 #endif
 #include "definitions.h"
+#include "exit_codes.h"
 
 /* names, colours and Ers are all arrays of 10. It would be better they were 
 in a structure as they are all linked closely, but they are not and I
@@ -55,7 +56,7 @@ void check_error(double user, int create_bmp_for_rect_in_rect, double gridsize, 
       {
          fprintf(stderr,"Error #14. Unacceptable %f%% error in representing %s on the grid\n", fractional_error*100.0, name);
 	 fprintf(stderr,"Exiting ....\n");
-	 exit(2);
+	 exit(UNACCEPTABLE_ERROR_WHEN_CONVERTING_TO_INTEGERS);
       }
       else if(fractional_error > ACCEPTABLE_ERROR)
          fprintf(stderr,"*WARNING*  %f%% error in representing %s on the grid\n", fractional_error*100.0, name);
