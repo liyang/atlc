@@ -114,9 +114,6 @@ void set_oddity_from_Greens_paper(void)
       ca=cell_type[i][j-1];  /* Cell type above point (i,j) */
       cb=cell_type[i][j+1];  /* Cell type below point (i,j) */
 
-      if(i==20 && j == 58)
-	printf("cl =%d ca = %d cr = %d cb = %d\n",cl, ca, cr, cb);
-
 
       /* If the conductor is at a fixed voltage, it must stay there
       so there is nothing to do with it */
