@@ -1,6 +1,8 @@
 /* Times two commands entered on the command line, to make
 sure the second takes less time than the first. */
 
+#include "config.h"
+
 #ifdef HAVE_STDIO_H
 #include <stdio.h>
 #endif
