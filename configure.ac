@@ -13,7 +13,7 @@
 # checks for system services
 # AC_OUTPUT([file...])
 
-AC_INIT([atlc], [4.2.12], [drkirkby@ntlworld.com])
+AC_INIT([atlc], [4.3.0], [drkirkby@ntlworld.com])
 AM_INIT_AUTOMAKE
 AC_PREREQ([2.57])
 AC_CONFIG_SRCDIR([tools/src/myfilelength.c])
@@ -21,7 +21,7 @@ AC_CONFIG_SRCDIR([tools/src/myfilelength.c])
 # too long, but I find it more of a pain than it is useful. To 
 # make use of it, it would be necessary to hack every source file to 
 # include it. I can't be bother yet. 
-#AC_CONFIG_HEADER([config.h])
+# AC_CONFIG_HEADER([config.h])
 
 
 # Checks for programs.
@@ -35,6 +35,7 @@ AC_ISC_POSIX
 # AC_CHECK_LIB([mopt],[main])
 # check for the optimised
 # AC_CHECK_LIB([copt],[main])
+AC_CHECK_LIB(m,log)
 
 # Checks for header files.
 
@@ -98,28 +99,30 @@ AC_ARG_WITH([gsl],
 # gsl support and see that it exists. 
 # Check for the gsl library, using gsl.m4, supplied with gsl-1.3
 if test "$ac_cv_use_gsl" = "yes"; then
-  AM_PATH_GSL([1.0])
+  AM_PATH_GSL([0.8])
   # no_gsl gets defined in gsl.m4 if version is too old. 
   if test "$no_gsl" != "yes" ; then
     AC_DEFINE( [HAVE_LIBGSL],[1],[gsl library found])
     LIBS="$GSL_LIBS $LIBS"
     CFLAGS="$GSL_CFLAGS $CFLAGS"
-  fi
+  fi  
 fi
 
-# Multi-Processor Support checked with the macro m4/acx_pthread.m4
-building_with_posix_threads="no"
+# Put a usage message so the user can use threads if wanted. 
 AC_ARG_WITH(threads,
 		   AC_HELP_STRING([--with-threads],
 		   [support thread-based parallel computation, using a POSIX thread library (default is NO)]))
 
+# Multi-Processor Support checked with the macro m4/acx_pthread.m4
 if test "x$with_threads" = "xyes"; then
-#AC_CHECK_FUNC(thread, thr_setconcurrency, [AC_DEFINE(HAVE_THR_SETCONCURRENCY)])
-AC_CHECK_FUNC([pthread_setconcurrency])
-ACX_PTHREAD([       AC_DEFINE([ENABLE_POSIX_THREADS],[1],[POSIX thread support okay])                 ])
-LIBS="$PTHREAD_LIBS $LIBS"
-CFLAGS="$CFLAGS $PTHREAD_CFLAGS"
-CC="$PTHREAD_CC"
+  ACX_PTHREAD([AC_DEFINE([ENABLE_POSIX_THREADS],[1],[Enabling POSIX thread support]) ])
+  LIBS="$PTHREAD_LIBS $LIBS"
+  CFLAGS="$CFLAGS $PTHREAD_CFLAGS"
+  CC="$PTHREAD_CC"
+  AC_SUBST(foo,"yes")
+  # if possible for a number of threads to run at once. 
+  AC_CHECK_FUNC([pthread_setconcurrency])
+  AC_SUBST(built_with_posix_threads,yes)
 fi
 
 # MPI and MPE Support
@@ -132,7 +135,6 @@ AC_ARG_WITH(mpe, AC_HELP_STRING([--with-mpe=[mpi_install_prefix]],[implies --wit
   if test "x$with_threads" = "xyes"; then
      AC_MSG_ERROR([it does not make sense to use --with-threads with --with-mpi or --with-mpe])
   fi  
-  #ACX_MPI(    AC_DEFINE([ENABLE_MPI]),AC_MSG_ERROR([Could not determine how to link MPI program])      )
   ACX_MPI(    [AC_DEFINE([ENABLE_MPI],[1],[Enable the use of MPICH library]) ] ,[],[AC_MSG_ERROR([Could not determine how to link MPI program])])
   CC="$MPICC"
   if test "x$with_mpe" = "xyes" ; then
@@ -140,14 +142,14 @@ AC_ARG_WITH(mpe, AC_HELP_STRING([--with-mpe=[mpi_install_prefix]],[implies --wit
   else
     LIBS="$MPILIBS $LIBS"
   fi
-  AC_CHECK_PROG(mpirun,mpirun,yes,no,$PATH)
-  if test "x$mpirun" = "xyes"; then
-    AC_MSG_NOTICE([Don't forget, 'mpirun' MUST be used to call atlc. Don't run atlc directly!!])
-  else
-    AC_MSG_WARN([The program 'mpirun' needed to run atlc, can't be found])
-  fi
+  #AC_CHECK_PROG(mpirun,mpirun,yes,no,$PATH)
+  #if test "x$mpirun" = "xyes"; then
+  #  AC_MSG_NOTICE([Don't forget, 'mpirun' MUST be used to call atlc. Don't run atlc directly!!])
+  #else
+  #  AC_MSG_WARN([The program 'mpirun' needed to run atlc, can't be found])
+  #fi
 fi
-echo miprun=$mpirun 
+
 dnl Only use -Wall if we have gcc
 if test "x$GCC" = "xyes"; then
   if test -z "`echo "$CFLAGS" | grep "\-Wall" 2> /dev/null`" ; then
