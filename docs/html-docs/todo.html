@@ -50,7 +50,7 @@ This could then be used to pipe its output to <code>atlc</code>, saving the need
 rect_in_rect 100 50 5 15 20 2 5 xxxxxxxxxxx | atlc -f example 
 </pre>
 </LI>
-<LI>Add support for coupled transmission lines, so permitting computation of the properties of directional couplers. I've tried this before without much success, but I see no theoretical reason that this can not be done. The programme should be able to calculate the odd mode (Z<sub>odd</sub>) and even mode Z<sub>even</sub> impedances of a pair of coupled transmission lines. From those, it should be possible to calculate the properties of a directional coupler, knowing these two impedances and the length over which the lines are coupled. It sounds easy, but in practice I gave up with this once, due to lack of success. <br><br></LI>
+<LI>Improve support for coupled transmission lines. It is very weak at the present time.<br><br></LI>
 	<LI>I'm considering adding support for <a href="http://www.sun.com/software/solutions/hpc/dotcom.html">Sun's HPC</a>, which allows many machines on a network to act in parrallel to solve a problem. This is perhaps not needed on <COde>atlc</code>, since while it is cpu intensive, it is not massively so. <COde>atlc</code> already supports multiple CPUs, but supporting a network of CPUs is probably a bit over the top. However, I'm interested in such concepts, so might do it anyway. I once developed my own system for using a network of 24 computers for modelling light transport in human tissue. However, HPC is far more sophisticated than what I did.</LI>
 </OL>
 
