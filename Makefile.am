@@ -1,7 +1,8 @@
 # This is Makefile.am, which is proceed by automake
 AUTOMAKE_OPTIONS = gnits
+ACLOCAL_AMFLAGS = -I m4
 
-SUBDIRS =  . src man docs examples tools tests 
+SUBDIRS =  . src m4 man docs examples tools tests 
 
 EXTRA_DIST = \
 README \
@@ -14,9 +15,9 @@ README.support \
 README.threads \
 README.windows \
 BUGS \
+compile \
 stoptests \
-acx_pthread.m4 \
-gtk.m4 \
+teston \
 TODO
 
 CLEANFILES = examplestest-coupler2.bmp.txt
