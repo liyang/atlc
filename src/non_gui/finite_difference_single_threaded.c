@@ -22,12 +22,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 
 */
 
-#ifndef ENABLE_POSIX_THREADS
-
-#ifdef HAVE_STDLIB_H
 #include <stdlib.h>
-#endif
-
 #include "definitions.h"
 
 extern int width, height;
@@ -37,11 +32,13 @@ extern int dielectrics_to_consider_just_now;
 extern double r; 
 
 extern int coupler;
-
-double finite_difference(int number_of_iterations)
+#define OLD
+double finite_difference_single_threaded(int number_of_iterations)
 {
-  int i, j, iteration;
+  int i, j, iteration, type, jstart;
   double capacitance_per_metre, energy_per_metre;
+  double a, b, c, d, e, f, g, h;
+  double r_over_4=r/4.0, one_minus_r=1.0-r;
 
   /* The following might not look very neat, with a whole load of code being 
   written twice, when it would be posible to make it easier to read if the 
@@ -53,12 +50,56 @@ double finite_difference(int number_of_iterations)
   too, as this was in an inner loop. The faster covergence method seems
   to work fine, so there is no need to avoid using it */
 
-  for(iteration=1; iteration<=number_of_iterations; ++iteration)
+  for (iteration = 1; iteration <= ITERATIONS; iteration++) 
   {
-    for(i=1; i<width-1; ++i)
-    {
-      update_voltage_array(i,1); /* finds new v[i][j] for all j's */
-    }  
+    for(i= 1  ; i <= width-2; ++i){
+      if(i%2 ==1 )
+	jstart=1;
+      else
+	jstart=2;
+      for(j=jstart ; j < height-1 ; j+=2){
+        if(cell_type[i][j] == DIELECTRIC) /* Same dielectric all around */
+          Vij[i][j]=r_over_4*(Vij[i][j+1]+Vij[i+1][j]+Vij[i][j-1]+Vij[i-1][j])+one_minus_r*Vij[i][j];
+        else if(cell_type[i][j] > DIELECTRIC) /* only update dielectrics, not conductors */
+        {
+          a=(Er[i][j] * Er[i][j-1] * Vij[i][j-1])/(Er[i][j] + Er[i][j-1]);
+          b=(Er[i][j] * Er[i][j+1] * Vij[i][j+1])/(Er[i][j] + Er[i][j+1]);
+          c=(Er[i][j] * Er[i-1][j] * Vij[i-1][j])/(Er[i][j] + Er[i-1][j]);
+          d=(Er[i][j] * Er[i+1][j] * Vij[i+1][j])/(Er[i][j] + Er[i+1][j]);
+    
+          e=(Er[i][j] * Er[i][j-1])/(Er[i][j]+Er[i][j-1]);
+          f=(Er[i][j] * Er[i][j+1])/(Er[i][j]+Er[i][j+1]);
+          g=(Er[i][j] * Er[i-1][j])/(Er[i][j]+Er[i-1][j]);
+          h=(Er[i][j] * Er[i+1][j])/(Er[i][j]+Er[i+1][j]);
+                        
+          Vij[i][j]=r*(a+b+c+d)/(e+f+g+h) + (1-r)*Vij[i][j];
+        }
+      }
+    }
+    for(i= 1 ; i <= width-2; ++i){
+      if(i%2 ==1 )
+	jstart=2;
+      else
+	jstart=1;
+      for(j=jstart ; j < height -1; j+=2){
+        if(cell_type[i][j] == DIELECTRIC) /* Same dielectric all around */
+          Vij[i][j]=r_over_4*(Vij[i][j+1]+Vij[i+1][j]+Vij[i][j-1]+Vij[i-1][j])+one_minus_r*Vij[i][j];
+        else if(cell_type[i][j] > DIELECTRIC) /* only update dielectrics, not conductors */
+        {
+          a=(Er[i][j] * Er[i][j-1] * Vij[i][j-1])/(Er[i][j] + Er[i][j-1]);
+          b=(Er[i][j] * Er[i][j+1] * Vij[i][j+1])/(Er[i][j] + Er[i][j+1]);
+          c=(Er[i][j] * Er[i-1][j] * Vij[i-1][j])/(Er[i][j] + Er[i-1][j]);
+          d=(Er[i][j] * Er[i+1][j] * Vij[i+1][j])/(Er[i][j] + Er[i+1][j]);
+    
+          e=(Er[i][j] * Er[i][j-1])/(Er[i][j]+Er[i][j-1]);
+          f=(Er[i][j] * Er[i][j+1])/(Er[i][j]+Er[i][j+1]);
+          g=(Er[i][j] * Er[i-1][j])/(Er[i][j]+Er[i-1][j]);
+          h=(Er[i][j] * Er[i+1][j])/(Er[i][j]+Er[i+1][j]);
+                        
+          Vij[i][j]=r*(a+b+c+d)/(e+f+g+h) + (1-r)*Vij[i][j];
+        }
+      }
+    }
   }
   /* Once the voltage distribution is found, the energy in the field may be 
   found. This can be shown to be Energy = 0.5 * integral(E.D) dV, when 
@@ -83,4 +124,3 @@ double finite_difference(int number_of_iterations)
     capacitance_per_metre=energy_per_metre;
   return(capacitance_per_metre);
 }
-#endif
