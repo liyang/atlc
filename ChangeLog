@@ -1,23 +1,119 @@
+****** Version 4.4.0 Released August 30th 2003 ****
+BUGS 
+Added  0 - those I don't know about, 
+Added  3 - tools/src/locatediff don't work on AIX. 
+Added 11 - documentation gets out of date
+Added 12 - CVS sometimes get out of date  
 
-****** Version 4.3.9 Released August ??? 2003 ****
 configure.ac
-Updated the version to 4.3.9
-Added some code that might just work to determine the OS. I don't think it will
-and don't have time to check it now. But it wont do any harm
-AC_CHECK_DECL(__FreeBSD__,,)
-AC_CHECK_DECL(__NetBSD__,,)
-AC_CHECK_DECL(__Solaris__,,)
-AC_CHECK_DECL(__Tru64__,,)
-AC_CHECK_DECL(__HPUX__,,)
-AC_CHECK_DECL(__AIX__,,)
+Updated the version to 4.4.0, as there are some major(ish)
+changes to allow compilation on the Cray Y-MP EL, which
+previously atlc would not work on. 
 
+Added a test for the size of a short, since on a Cray Y-MP, an int is 8
+bytes, so this screwed up things in src/non_gui/definitons.h, as 
+it needed to define int32 as something. 
 
+Changed the default from not enabling hardware information to enabling it.
+It can be changed with --disable-hardware-info
 
+Added a test for _SC_CRAY_NCPU and _SC_CRAY_CPCYCLE, which will help
+debugging any problems. 
+
+Added check for sys/vid.h, which I'm hoping is just on IRIX. 
+
+NEWS
+mention atlc now runs on toys and supercomuters and the fact an option has 
+nw become the default. 
+
+README.hardware-info
+new file added, listing information about what hardware data is 
+gathered on what systems. 
+
+README.--enable-hardware-info
+removed, as the option no longer exists - it's the default. 
+
+INSTALL
+Changed install insturctions, as --enable-hardware-info is now the 
+default. 
+
+Makefile.am
+Added README.hardware-info removed README.--enable-hardware-info
+
+tests/Makefile.am
+Added test 5c-check_numeric_data_from_atlc-2conductor.test
+as well as try_irix.c and try_unicos.c
+tests/try_unicos.c
+Added a function try_unicos() to obtain data about the hardware of 
+a Cray supercomputer. 
 
 tests/try_linux.c
 Removed some variables that were now now longer needed and so generated
 a warning from the compiler. Variables were operating_systems, i, ret
 and one other I think. 
+
+tests/try_solaris.c
+Removed some variables that were now now longer needed and so generated
+a warning from the compiler. Variables were operating_systems, i, ret
+and one other I think. 
+
+tests/try_irix.c
+Added a file to find out information on the SGI running IRIX. 
+Currently little information is found. 
+
+tests/try_unicos.c
+Added a file to find out information on the Cray. 
+
+tests/Makefile.am
+Added entries for try_irix.c and try_unicos.c
+
+tests/benchmark.test
+Changed the wording about what data is collected on each system, as
+previously it stated only Solaris was reasonably well supported, but
+that is not true now, so it has been changed. 
+
+tests/1g-create_bmp_for_symmetrical_stripline.U.bmp.test
+Added the md5 checksum 2a9644a0206c2314006e298f07aae233 as being okay,
+since this is generated on the Cray Y-MP and differs by only a single
+pixel and a single gray-level, from that on the Sun, suggesting 
+its just rounding errors. (I don't think the Cray implements IEEE maths
+anyway). 
+ 
+tests/7g-create_bmp_for_stripline_coupler.U.odd.bmp.test
+Added a new checksum 09f68e1466d68bf8a03e1f90eff411bb which
+is produced on a Cray. 
+
+
+src/non_gui/write_bitmap_out.c
+MAJOR change, so this now writes data out in ONE consistant manner
+that should be very portable. Note this is used only for programs 
+like create_bmp_for_*, and it not used by 'atlc' itself. 
+
+src/non_gui/write_fields_for_two_conductor_lines.c
+changed the name 
+extern bitmap_file_buffer to 
+bmp_buff as the latter was
+shorter and space was at a premium, to stop one needing huge long
+lines everywhere. 
+
+src/non_gui/read_bitmap_file_headers.c
+MAJOR change, so this now writes data out in ONE consistant manner
+that should be very portable. This is used only for programs 
+like create_bmp_for_*, AND 'atlc' itself. 
+
+src/non_gui/byteswap.c
+Removed all functions except byteswap_doubles. 
+
+src/non_gui/definitions.h
+Added definition for try_unicos.c
+Removed all entries for byteswap*, except
+byteswap_doubles, which is used by readbin.c
+Changed definitons of Bitmap_Head_Struct + Bitmap_File_Head_Struct
+as these now use just ints for portability. 
+
+src/non_gui/Makefile.am
+Removed byteswap.c from all binaries except readbin
+
 
 ****** Version 4.3.8 Released August 21sth 2003 ****
 NOTE THE CHANGELOG FOR VERSION 4.3.8 SHOWS 4.3.7 AT THE TOP. THIS WAS AN
