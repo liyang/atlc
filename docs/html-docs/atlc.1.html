@@ -20,8 +20,8 @@
      This man page is not a complete set of documentation  -  the
      complexity  of the atlc project makes man pages not an ideal
      way to document it, although out of completeness, man  pages
-     are  produced.  The best documention that was current at the
-     time version was produced  should  be  found  on  your  hard
+     are produced. The best documentation that was current at the
+     time the version was produced should be found on  your  hard
      drive, usually at
      /usr/local/share/atlc/docs/html-docs/index.html
      although it might be elsewhere if your system  administrator
@@ -43,13 +43,13 @@
         The impedance Zo  (in Ohms)
         The capacitance per unit length (pF/m)
         The inductance per unit length (nF/m)
-        The velocity of propogation v (m/s)
+        The velocity of propagation v (m/s)
         The velocity factor, v/c, which is dimensionless.
 
      A bitmap file (usually with the extension .bmp or  .BMP)  is
      drawn  in  a  graphics  package  such as <B>Gimp</B> available from
      http://www.gimp.org. The bitmap file <B>must</B> be saved as a  24-
-     bit  (16 million colour) uncompressed file. The colours used
+     bit  (16,777,216 colour) uncompqessed file. The colours used
      in the bitmap indicate whether the  region  is  a  conductor
      (pure  red,  pure  green or pure blue) or a dielectric (any-
      thing else). Pure white is assumed to be  a  vacuum  dielec-
@@ -60,7 +60,7 @@
 </PRE>
 <H2>OPTIONS</H2><PRE>
      <B>-C</B>
-     print copyright, licencing and copying information.
+     print copyright, licensing and copying information.
      <B>-s</B>
      Skip writing the Ex, Ey, E, V, U and Er bitmap (.bmp)  files
      <B>-S</B>
@@ -121,8 +121,8 @@
      represent  the  amount  of  red, 8 for blue and 8 for green.
      Hence there are 256 levels of red, green and blue, making  a
      total of 256*256*256=16777216 colours. Every one of the pos-
-     sible i16777216 colours can  be  defined  precisely  by  the
-     stating the exact amount of red, green and blue, as in:
+     sible 16777216 colours can be defined precisely by the stat-
+     ing the exact amount of red, green and blue, as in:
 
      red         = 255,000,000 or 0xff0000
      green       = 000,255,000 or 0x00ff00
@@ -132,7 +132,7 @@
      Brown       = 255,000,255 or 0xff00ff
      gray        = 142,142,142 or 0x8e8e8e
 
-     Some colours, such as pink, terquiose,  sandy,  brown,  gray
+     Some colours, such as pink, turquiose,  sandy,  brown,  gray
      etc  may mean slightly different things to different people.
      This is not so with atlc, as the program expects the colours
      below  to  be exactly defined as given. Whether you feel the
@@ -170,7 +170,10 @@
 </PRE>
 <H2>EXAMPLES</H2><PRE>
      Here are a few examples of the use of atlc. Again,  see  the
-     html documentation in atlc-X.Y.Z9ocsl-docs for for examples.
+     html documentation in atlc-X.Y.Z9ocsl-docs, the documentation
+     on         your         system         (normally          at
+     /usr/local/share/atlc/docs/html-docs/index.html  ) or online
+     at http://atlc.sourceforge.net for examples.
 
      <B>ex_1</B> <B>%</B> <B>atlc</B> <B>coax2.bmp</B>
      This is a simple example (ex_1), in which the geometry of  a
@@ -179,12 +182,12 @@
      2.33,  2.5,  3.3,  3.335, 3.7, 4.8, 6.15 or 10.2) could have
      been used in the bitmap, which would have been done with one
      of  13  different colours. white (0xFFFFFF) for Er=1.0, pink
-     (0xFFCACA) for 1.0006 etc.  No other colour(dilectric) could
-     have  been  used,  since  it  was  not specified with the -d
+     (0xFFCACA) for 1.0006 etc.   No  other  colour  (dielectric)
+     could have been used, since it was not specified with the -d
      option.
 
      <B>ex_2</B> <B>%</B> <B>atlc</B> <B>-d</B> <B>f9e77d=2.43</B> <B>somefile.bmp</B>
-     In ex_2, a dielectic with Er=2.43 was wanted. A colour  with
+     In ex_2, a dielectric with Er=2.43 was wanted. A colour with
      the  RGB  values  of  0xF9E7&amp;d was used. The -d option tells
      atlc what Er this colour refers to.
 
@@ -225,7 +228,6 @@
      image  has width W and height H, the saved binary files will
      be W-1 by H-1.
 
-
      All the saved bitmap files  are  24-bit  uncompressed,  just
      like the input files.
 
@@ -248,8 +250,6 @@
      atlc-X.Y.Z/docs/html-docs/index.html       - HTML docs
      atlc-X.Y.Z/docs/qex-december-1996/atlc.pdf - theory paper
      atlc-X.Y.Z/examples                        - examples
-
-
 
 
 

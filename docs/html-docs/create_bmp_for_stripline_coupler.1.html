@@ -17,6 +17,24 @@
 
 
 </PRE>
+<H2>WARNING</H2><PRE>
+     This man page is not a complete set of documentation  -  the
+     complexity  of the atlc project makes man pages not an ideal
+     way to document it, although out of completeness, man  pages
+     are produced. The best documentation that was current at the
+     time the version was produced should be found on  your  hard
+     drive, usually at
+     /usr/local/share/atlc/docs/html-docs/index.html
+     although it might be elsewhere if your system  administrator
+     chose  to  install  the package elsewhere. Sometimes, errors
+     are  corrected  in   the   documentation   and   placed   at
+     http://atlc.sourceforge.net/ before a new release of atlc is
+     released.  Please, if you notice a problem with the documen-
+     tation - even spelling errors and typos, please let me know.
+
+
+
+</PRE>
 <H2>DESCRIPTION</H2><PRE>
      <B>create_bmp_for_stripline_coupler</B>  is  a  pre-processor   for
      <B>atlc</B>,  the  finite difference program that is used to calcu-
@@ -61,7 +79,6 @@
      <B>-C</B>
      Print the full copyright information and exit.
 
-
      <B>-b</B> <B>bitmapsize</B>
      is used to set the size of the bitmap, and so  the  accuracy
      to which atlc is able to calculate the coupler's properties.
@@ -70,7 +87,7 @@
      'DEFAULT_COUPLER_BITMAP_SIZE' in definitions.h).  The  value
      can  be  set  anywhere from 6 to 28. The size of bitmap pro-
      duced will be between 2^(bitmapsize-1) and 2^(bitmapsize+1),
-     so  if  its  set to 28 the bitmap could be as big as 512 MB,
+     so  if  its  set to 28 the bitmap could be as big as 512 Mb,
      which would take an eternity to compute.
 
      <B>-v</B>
@@ -91,10 +108,6 @@
      small.bmp
      eg3. create_bmp_for_stripline_coupler -v  12  1.23  0.7  4.8
      theory.bmp
-
-
-
-
 
 
 
@@ -150,17 +163,6 @@
      with  the  -C  option.  Otherwise  you can write to the Free
      Software Foundation, Inc., 59 Temple Place - Suite 330, Bos-
      ton, MA  02111-1307, USA.
-
-
-
-
-
-
-
-
-
-
-
 
 
 
