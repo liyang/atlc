@@ -18,7 +18,11 @@ else
   efficiency=`echo $ret | awk '{print $7}'`
   cpu_type=`echo $ret | awk '{print $8}'`
   fpu_type=`echo $ret | awk '{print $9}'`
-  echo "Number of CPUs active = $N_cpus CPU_type = $cpu_type FPU_type = $fpu_type Speed = $mhz MHz"
+  supported_cpus=`echo $ret | awk '{print $10}'`
+  ram=`echo $ret | awk '{print $11}'`
+  echo "number of CPUs supported by system = $supported_cpus ; Number of CPUs online =  $N_cpus"
+  echo "CPU_type = $cpu_type FPU_type = $fpu_type; Speed = $mhz MHz"
+  echo "RAM = $ram Mb."
   if [ "x$built_with_posix_threads" = "xyes" ] ; then
     echo "Run times: T_sequential = $t1 s; T_parallel = $t2 s"
     echo "Speedup=T_parallel/T_sequential = $speedup; Efficiency = Speedup/N_cpus = $efficiency"
