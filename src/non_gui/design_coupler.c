@@ -272,7 +272,7 @@ int main(int argc, char **argv) /* Read parameters from command line */
 #if defined(HAVE_LIBGSL) && defined(HAVE_GSL_GSL_SF_ELLINT_H) 
         calculate_Zodd_and_Zeven(&Zodd_x, &Zeven_x, &Zo_x, w, 1.0, s, er);
 #else
-        Zodd_x=1.0; Zeven_z=1.0; Zo_z=1.0;
+        Zodd_x=1.0; Zeven_x=1.0; Zo_x=1.0;
 	fprintf(stderr,"This was not linked against the GNU scientific library (gsl)\n");
 	fprintf(stderr,"So the mode impedances have been set to 1 Ohm.\n");
 
