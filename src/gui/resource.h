@@ -7,7 +7,7 @@
 enum
 {
     // menu items
-	ID_Save = 1,
+	ID_Save = 100,
     ID_Help,
 	ID_Open,
 	ID_Close,
@@ -30,6 +30,12 @@ enum
     ID_Cut,
     ID_Paste,
     ID_RunFD,
+    ID_ViewExField,
+    ID_ViewEyField,
+    ID_ViewEField,
+    ID_ViewVoltage,
+    ID_ViewPermittivity,
+    ID_ViewEnergy,
     DIALOG_BTN,
     ID_ShowTip
 };
