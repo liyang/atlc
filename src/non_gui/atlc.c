@@ -35,6 +35,10 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #include <stdlib.h>
 #endif  
 
+#ifdef HAVE_ERRNO_H
+#include <errno.h>
+#endif
+
 #include "definitions.h"
 #include "exit_codes.h"
 
@@ -74,6 +78,7 @@ void mpi_kill_workers();
 
 #endif /* ENABLE_MPI */
 
+//#define DEBUG
 
 
 struct pixels Er_on_command_line[MAX_DIFFERENT_PERMITTIVITIES];
@@ -96,11 +101,8 @@ MPI_Status ignored_statuses[MAX_PES];
 unsigned char *image_data;
 int width, height;
 extern int errno;
-double found_this_dielectric=1000000.0;
-int avoid_use_of_fast_convergence_method=FALSE;
 size_t size;
 int max_threads=MAX_THREADS, non_vacuum_found=FALSE;
-int append_flag=FALSE;
 int dielectrics_to_consider_just_now;
 int coupler=FALSE;
 double r=1.95;
@@ -109,7 +111,7 @@ char *inputfile_name;
 extern int main(int argc, char **argv) /* Read parameters from command line */
 {
   FILE *where_to_print_fp=stdout, *image_data_fp;
-  char *outputfile_name, *appendfile_name;
+  char *outputfile_name, *appendfile_name, *output_prefix;
   long i;
   int offset;
   int q;
@@ -121,7 +123,7 @@ extern int main(int argc, char **argv) /* Read parameters from command line */
   char *end_ptr;
 #endif
 
-  
+  errno=0; 
 #ifdef ENABLE_MPI
   MPI_Init(&argc,&argv);
 
@@ -141,14 +143,18 @@ extern int main(int argc, char **argv) /* Read parameters from command line */
 	}
   }
 #endif /* ENABLE_MPI */
-
+#ifdef DEBUG
+  printf("errno=%d in atlc.c #1\n",errno);
+#endif
   set_data_to_sensible_starting_values(&data);
   inputfile_name=string(0,1000);
   outputfile_name=string(0,1000);
   appendfile_name=string(0,1000);
+  output_prefix=string(0,1000);
   /* only use this if we have both a multi-threaded application and that 
   with have the function */
-  while((q=get_options(argc,argv,"Cr:vsSc:d:F:i:t:w:")) != -1)
+  strcpy(output_prefix,"");
+  while((q=get_options(argc,argv,"Cr:vsSc:d:p:i:t:w:")) != -1)
   switch (q) 
   {
     case 'C':
@@ -157,6 +163,7 @@ extern int main(int argc, char **argv) /* Read parameters from command line */
     break;
     case 'b':
       data.should_binary_data_be_written_tooQ=TRUE;
+    break;
     case 'd':
       /* Read a colour from the command line */
       Er_on_command_line[data.dielectrics_on_command_line].other_colour=\
@@ -182,6 +189,9 @@ extern int main(int argc, char **argv) /* Read parameters from command line */
     case 'c':
       data.cutoff=atof(my_optarg);
     break;
+    case 'p':
+      strcpy(output_prefix,my_optarg);
+    break;
     case 'r':
       data.r=atof(my_optarg);
     break;
@@ -190,10 +200,6 @@ extern int main(int argc, char **argv) /* Read parameters from command line */
     break;
     case 'S':
       data.write_binary_field_imagesQ=FALSE;
-    break;
-    case 'F':
-      strcpy(appendfile_name,my_optarg);
-      append_flag=TRUE;
     break;
     case 't':
       max_threads=atol(my_optarg);
@@ -251,8 +257,15 @@ without the threads\nlibrary.\n",1);
 
   if(argc-my_optind == 1)  /* This should be so hopefully !! */
   {
+#ifdef DEBUG
+  printf("errno=%d in atlc.c #2\n",errno);
+#endif
     strcpy(inputfile_name, argv[my_optind]);
-    strcpy(outputfile_name, inputfile_name);
+    //strcpy(outputfile_name, inputfile_name);
+    strcpy(outputfile_name, output_prefix);
+    strcat(output_prefix,inputfile_name);
+    strcpy(outputfile_name,output_prefix);
+    free_string(output_prefix,0,1000);
     read_bitmap_file_headers(inputfile_name, &offset, &size, &width, &height);
     /* Allocate all ram now, so atlc is sure to have it. There is no point
     in getting some now, starting work then finding atlc can't get the 
@@ -303,9 +316,13 @@ without the threads\nlibrary.\n",1);
     if so assumes its reading from stdin. So far, the program is
     unable to read from stdin, so this code is not really doing
     anything useful, but might be expanded at a later date. */
+#ifdef DEBUG
+  printf("errno=%d in atlc.c #3\n",errno);
+#endif
     if( strcmp(argv[my_optind],"-") != 0)
     {
-      if( (image_data_fp=fopen(outputfile_name, "rb")) == NULL)
+      //if( (image_data_fp=fopen(outputfile_name, "rb")) == NULL)
+      if( (image_data_fp=fopen(inputfile_name, "rb")) == NULL)
       {
         fprintf(stderr,"Error #3. Can't open %s!!!!!\n", argv[my_optind]);
         exit_with_msg_and_exit_code("",3);
@@ -352,7 +369,14 @@ without the threads\nlibrary.\n",1);
     /* If there are multiple dielectrics, the impedance calculations
     needs to be done twice. We start by doing them once, for an vacuum
     dielectric. If necessary, they will be done again */
-    do_fd_calculation(&data, where_to_print_fp,inputfile_name);
+    //do_fd_calculation(&data, where_to_print_fp,inputfile_name);
+#ifdef DEBUG
+  printf("errno=%d in atlc.c #4\n",errno);
+#endif
+    do_fd_calculation(&data, where_to_print_fp,outputfile_name);
+#ifdef DEBUG
+  printf("errno=%d in atlc.c #5\n",errno);
+#endif
 
 #ifdef ENABLE_MPI
 	mpi_kill_workers();

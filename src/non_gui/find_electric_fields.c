@@ -29,6 +29,18 @@ extern char **cell_type;
 extern double **Er;
 extern int width, height;
 
+/*
+Note, a bitmap has the following pixel nomecture.
+
+
+(0,0)                  (width-1,0)
+
+(0,height-1)           (width-1, height-1)
+*/
+
+
+#ifndef USE_NEW_FORMULAS
+
 double find_Ex(int i, int j) 
 {
   double Ex;
@@ -67,6 +79,43 @@ double find_Ey(int i, int j)
   return(Ey);
 }
 
+#endif
+
+#ifdef USE_NEW_FORMULAS
+double find_Ex(int i, int j) 
+{
+  /* Ex = -dV/dx by definition, so is left - right */
+  double Ex;
+
+  if( i==0 )                                           /* Far left of image  */
+      Ex=Vij[0][j]-Vij[1][j];
+
+  else if( i == width-1 )                              /* Far right of image */
+      Ex=Vij[width-2][j]-Vij[width-1][j];
+
+  else                                                 /* Not on edges */
+    Ex=0.5*(Vij[i-1][j]-Vij[i+1][j]);
+
+  return(Ex);
+}
+
+double find_Ey(int i, int j) 
+{
+  /* Ey = -dV/dy by definition, so is bottom - top  (big j - little j ) */
+  double Ey;
+
+  if( j==0 )                                           /* Top of image */ 
+      Ey=Vij[i][1]-Vij[i][0];
+
+  else if ( j==height-1 )                              /* Bottom of image */
+      Ey=Vij[i][height-1]-Vij[i][height-2];
+
+  else                                                 /* Not near edges */
+    Ey=0.5*(Vij[i][j+1]-Vij[i][j-1]);
+
+  return(Ey);
+}
+#endif
 double find_E(int w, int h)
 {
   double Ex, Ey, E;

@@ -78,6 +78,7 @@ void write_fields_for_two_conductor_lines(char * filename, struct transmission_l
   FILE *E_bin_fp=NULL, *V_bin_fp, *U_bin_fp=NULL;
   FILE *Ex_bmp_fp=NULL, *Ey_bmp_fp=NULL;
   FILE *E_bmp_fp=NULL, *V_bmp_fp=NULL, *U_bmp_fp=NULL;
+  unsigned char r, g, b;
   FILE *permittivity_bin_fp=NULL, *permittivity_bmp_fp=NULL;
   struct max_values maximum_values;
   int offset=-3, w, h;
@@ -165,12 +166,12 @@ void write_fields_for_two_conductor_lines(char * filename, struct transmission_l
         Ey=find_Ey(w,h);
         E=find_E(w,h); 
         U=find_energy_per_metre(w,h);
-        calculate_colour_data(Ex, maximum_values.Ex_or_Ey_max, w, h, offset,image_data_Ex, COLOUR);
-        calculate_colour_data(Ey, maximum_values.Ex_or_Ey_max, w, h, offset,image_data_Ey, COLOUR);
-        calculate_colour_data(E, maximum_values.E_max, w, h, offset,image_data_E, MONOCHROME);
-        calculate_colour_data(U, maximum_values.U_max, w, h, offset,image_data_U, MONOCHROME);
-        calculate_colour_data(Vij[w][h], maximum_values.V_max, w, h, offset,image_data_V, COLOUR);
-        calculate_colour_data(Er[w][h], MAX_ER, w, h, offset,image_data_Er, MIXED);
+        calculate_colour_data(Ex, maximum_values.Ex_or_Ey_max, w, h, offset,image_data_Ex, COLOUR,&r,&g,&b);
+        calculate_colour_data(Ey, maximum_values.Ex_or_Ey_max, w, h, offset,image_data_Ey, COLOUR,&r,&g,&b);
+        calculate_colour_data(E, maximum_values.E_max, w, h, offset,image_data_E, MONOCHROME,&r,&g,&b);
+        calculate_colour_data(U, maximum_values.U_max, w, h, offset,image_data_U, MONOCHROME,&r,&g,&b);
+        calculate_colour_data(Vij[w][h], maximum_values.V_max, w, h, offset,image_data_V, COLOUR,&r,&g,&b);
+        calculate_colour_data(Er[w][h], MAX_ER, w, h, offset,image_data_Er, MIXED,&r,&g,&b);
       }
     }
 

@@ -45,6 +45,10 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #include <time.h>
 #endif
 
+#ifdef HAVE_MATH_H
+#include <math.h>
+#endif
+
 #if defined(HAVE_LIBGSL) && defined(HAVE_GSL_GSL_SF_ELLINT_H) 
 #include <gsl/gsl_sf_ellint.h>
 #endif
@@ -213,10 +217,7 @@ int main(int argc, char **argv) /* Read parameters from command line */
   fq is the frequency at which the line is a quarter-wave long, we must
   divide the vcf_for_quarter_wave_line by sin(0.5 *PI*f/fq)^2 to get
   the required vcf. */
-  //vcf=vcf_for_quarter_wave_line/pow(sin(0.5*M_PI*fmean/fq),2.0);
-  vcf=vcf_for_quarter_wave_line/pow(sin(0.5*M_PI*fmean/fq),2.0);
   vcf=vcf_for_quarter_wave_line*(1.0/sin(0.5*M_PI*fmean/fq));
-  //XXXXXXXXXXxvcf=vcf_for_quarter_wave_line;
   /* Check that the voltage coupling factor does not exceed one */
   if ( vcf > 1.0 )
   {

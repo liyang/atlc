@@ -87,11 +87,6 @@ void check_for_shorts(void)
           exit_with_msg_and_exit_code("",CONDUCTOR_MINUS_ONE_V);
         }
       } /* end of if(cell_type==CONDUCTOR_PLUS_ONE_V) */
-
-      else /* There are no shorting conductors */
-      {
-      }
-
     } /* end of for w.. loop */
   } /* end of for h .. loop */
 } /* end of function check_for_shorts */

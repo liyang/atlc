@@ -38,7 +38,7 @@ void usage_find_optimal_dimensions_for_microstrip_coupler(void)
       fprintf(stderr,"(they *must* use the same units. Non-integers allowed for all parameters)\n");
       fprintf(stderr,"Options are:\n");
       fprintf(stderr,"  -C              Print copyright, licencing and distribution information.\n");
-      fprintf(stderr,"  -b bmp_size     Sets the size of the bitmap used by 'atlc', in the range 1 to 15 (default %d).\n",DEFAULT_BMP_SIZE);
+      //fprintf(stderr,"  -b bmp_size     Sets the size of the bitmap used by 'atlc', in the range 1 to 15 (default %d).\n",DEFAULT_BMP_SIZE);
       fprintf(stderr,"  -s gmin         Sets the minimum gap between the two coupled lines (default = %f)\n", DEFAULT_SMIN);
       fprintf(stderr,"  -s gmax         Sets the maximum gap between the two coupled lines (default = %f)\n", DEFAULT_SMAX);
       fprintf(stderr,"  -i gstep        Sets the stepsize used for interations between gmin and gmax (default = %f)\n", DEFAULT_SSTEP);

@@ -101,7 +101,8 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
   }
   aligned_image_vector=ustring(0,(W+3)*3*H);
   unaligned_image_vector=ustring(0,(W+3)*3*H);
-  memset((void *) (aligned_image_vector),0xff,W*H*3);
+  //memset((void *) (aligned_image_vector),0xff,W*H*3);
+  memset((void *) (aligned_image_vector),0x0,(W+3)*H*3);
 
   /* Fill a vector with */
   fill_image_vector_for_thin_strip(W,H,w,unaligned_image_vector);
@@ -113,4 +114,7 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
   if(verbose >=1)
     printf("Zo is theoretically %f Ohms (assuming W is infinite)\n",Zo);
   exit_with_msg_and_exit_code("",OKAY);
+  return(OKAY); /* This does not get executed, but keeps the compiler
+  happier, as otherwise it gives a warning about control reaching the
+  end of a non-void function */
 }

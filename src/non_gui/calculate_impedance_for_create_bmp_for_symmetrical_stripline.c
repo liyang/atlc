@@ -44,7 +44,7 @@ It uses the method given in "Filed Theory of Guided Waves, Colen R.E.,
 extern int verbose;
 double calculate_symmetrical_stripline_impedance(int H, int w)
 {
-  double Zo=-1;
+  double Zo;
   double mu=4*M_PI*1e-7, x0, v0,  c, l, k;
   x0=pow(cosh(M_PI*w/(2.0*H)),2.0);
   if (verbose >=2)

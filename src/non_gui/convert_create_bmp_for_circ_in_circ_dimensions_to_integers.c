@@ -44,7 +44,7 @@ extern int D, d, h, W, H;
 extern int verbose;
 extern double Ers[];
 extern int colours[];
-extern char names[];
+//extern char names[];
 extern int lowest;
 extern int highest;
 

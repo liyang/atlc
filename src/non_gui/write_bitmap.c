@@ -65,7 +65,8 @@ void write_bitmap(FILE *image_data_fp, struct transmission_line_properties xyz)
    image_data=ustring(0,(W+3)*3*H);
    unaligned_image_vector=ustring(0,(W+3)*3*H);
 
-   memset((void *) (image_data),0xff,W*H*3);
+   //memset((void *) (image_data),0xff,W*H*3);
+   memset((void *) (image_data),0x0,(W+3)*3*H);
 
    /* Fill a vector with the initial (original) data on the 
    tline. This is not aligned in any way */

@@ -45,7 +45,8 @@ int main(int argc, char **argv)
   double error_min=1e100, error; 
   double ideal_Zodd=0, ideal_Zeven=0; 
   char *outfile_name, *temporary_bmp_file, *temporary_txt_file;
-  int x, q, bmp_size=DEFAULT_BMP_SIZE;
+  int x, q;
+  //int bmp_size=DEFAULT_BMP_SIZE;
   int return_value_from_create_bmp_for_microstrip_coupler=0;
   int return_value_from_atlc=0;
   char *cmd, *null;
@@ -65,9 +66,11 @@ int main(int argc, char **argv)
     case 'g':
       gmin=atof(my_optarg);
     break;
+    /*
     case 'b':
       bmp_size=atoi(my_optarg);
     break;
+    */
     case 'G':
       gmax=atof(my_optarg);
     break;
@@ -113,8 +116,6 @@ int main(int argc, char **argv)
   //(void) temporary_txt_file=tmpnam(temporary_txt_file);
   strcpy(temporary_bmp_file,"1.bmp");
   strcpy(temporary_txt_file,"1.txt");
-  printf("rrrrrrrrrr = %s %s \n", temporary_bmp_file,temporary_txt_file);
-
   pclose(popen("rm 1.txt 1.bmp","w"));
   for(g=gmin; g <=gmax; g+=gstep)
   {

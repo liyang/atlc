@@ -37,8 +37,8 @@ inner and rectangular outer */
 #include <condefs.h>
 #endif
 
-double WW, HH, aa, bb, cc, dd, ww, hh, Er1, Er2, oo;
-int W, H, a, b, c, d, w, h, D, o;
+double WW, HH, aa, bb, cc, dd, ww, hh, Er1, Er2;
+int W, H, a, b, c, d, w, h, D;
 /* The following are only needed, so I can link in two  
 convert_circ_in_circ_dimensions_to_integers.c
 and
@@ -53,7 +53,7 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
 {
    int  bmp_size=DEFAULT_BMP_SIZE;
    int q;
-   FILE *image_data_fp=stdout;
+   FILE *image_data_fp;
    struct transmission_line_properties not_used;
 
    while((q=get_options(argc,argv,"b:f:v")) != -1)

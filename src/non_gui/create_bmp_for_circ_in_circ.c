@@ -65,7 +65,7 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
    FILE *image_data_fp;
    char *filename;
    struct transmission_line_properties not_used;
-   double Zo, x, HHH;
+   double Zo, x;
    filename=string(0,1010);
 
    while((q=get_options(argc,argv,"Cb:v")) != -1)
@@ -97,8 +97,6 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
       check_parameters_of_create_bmp_for_circ_in_circ();
       convert_create_bmp_for_circ_in_circ_dimensions_to_integers(bmp_size);
       write_bitmap(image_data_fp, not_used);
-      HHH=(DD/2.0)-hh;
-      x=(dd*dd+DD*DD-4*hh*hh)/(2*DD*dd);
       x=(double) (d*d+D*D-4*h*h)/(2*D*d);
       Zo=60*log(x+sqrt(x*x-1))/sqrt(Er1); 
       if(verbose == TRUE)

@@ -31,6 +31,10 @@ elected to align these since memory access should be faster */
 #include <stdlib.h>
 #endif
 
+#ifdef MEMALIGN_IN_MALLOC_H
+#include <malloc.h>
+#endif
+
 #include "definitions.h"
 #include "exit_codes.h"
 

@@ -34,11 +34,11 @@ groundplanes of spacing h. */
 
 double calculate_integer_values(struct transmission_line_properties *optimise,int nmax,int accuracy_level)
 {
-  double grid_size=500, error=0, error_max=1e6; 
+  double grid_size, error, error_max=1e6; 
   int i, min_pixels, max_pixels, n, min_critical_pixels, max_critical_pixels;
-  int best_i, most_critical=0, step=1; 
+  int most_critical=0, step=1; 
   double min_pixel_size, max_pixel_size;
-  double W, H, best_grid_size, w, s;
+  double W, H;
 
   for(i=0;i<9;++i)
     optimise->best[i]=-1;   /* A silly value, indicating it is not acceptable */
@@ -56,9 +56,6 @@ double calculate_integer_values(struct transmission_line_properties *optimise,in
 
   W=optimise->float_values[0];  /* The calculated W and H  */ 
   H=optimise->float_values[1];
-  w=optimise->float_values[2];  /* The calculated W and H  */ 
-  s=optimise->float_values[3];
-
   min_pixel_size=sqrt(W*H/max_pixels);
   max_pixel_size=sqrt(W*H/min_pixels);
 
@@ -116,8 +113,6 @@ double calculate_integer_values(struct transmission_line_properties *optimise,in
     if(error<(error_max-TINY)) /* The 1e-9 avoids different results on different*/
     {                          /* machines due to rounding errors */
      error_max=error;
-     best_i=i;
-     best_grid_size=grid_size;
      for(n=0; n<nmax;++n)
        optimise->best[n]=optimise->int_values[n];
      //printf("good at i=%d\n",i);
