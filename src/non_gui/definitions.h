@@ -246,12 +246,17 @@ I'm not sure why the Kerningham and Richie did not use such a schmeme
 rather than short, int and long, but anyway, this is my attempt to avoid
 the problem. */
 
+#if SIZEOF_SHORT==2
+#define int16 short
+#endif
+
 #if SIZEOF_INT==4 
 #define int32 int 
 #elif SIZEOF_LONG==4
 #define int32 long
 #endif
 
+#if SIZEOF_SHORT == 2 
 struct Bitmap_File_Head_Struct
 {
   unsigned char   zzMagic[2];	/* 00 "BM" */
@@ -276,6 +281,32 @@ struct Bitmap_Head_Struct
   int32   biClrImp;    /* 32 */
                         /* 36 */
 };
+#elif SIZEOF_SHORT==8
+struct Bitmap_File_Head_Struct
+{
+  unsigned char   zzMagic[2];	/* 00 "BM" */
+  int     bfSize;      /* 02 */
+  int    zzHotX;	/* 06 */
+  int    zzHotY;	/* 08 */
+  int     bfOffs;      /* 0A */
+  int     biSize;      /* 0E */
+};
+
+struct Bitmap_Head_Struct
+{
+  int     biWidth;     /* 12 */
+  int     biHeight;    /* 16 */
+  int    biPlanes;    /* 1A */
+  int    biBitCnt;    /* 1C */
+  int     biCompr;     /* 1E */
+  int     biSizeIm;    /* 22 */
+  int     biXPels;     /* 26 */
+  int     biYPels;     /* 2A */
+  int     biClrUsed;   /* 2E */
+  int     biClrImp;    /* 32 */
+                        /* 36 */
+};
+#endif
 
 #ifndef M_PI
 #define M_PI 3.141592653589793238462643383279502884197169399375105820975
@@ -285,7 +316,6 @@ struct Bitmap_Head_Struct
 
 int main(int argc, char **argv);
 void byteswap_doubles(double *a);
-void byteswap_shortss(short *a);
 void read_bitmap_file_headers(char *filename, int *offset, size_t *size, int *width, int *height);
 void get_data_interactively(void);
 void help(char *filename);
@@ -325,9 +355,6 @@ void write_bitmap(FILE *image_data_fp, struct transmission_line_properties foo);
 void usage_create_bmp_for_rect_in_rect(void);
 void usage_create_bmp_for_rect_cen_in_rect(void);
 void write_bitmap_out(unsigned char *image_data, FILE *image_data_fp,int image_size, int W, int H);
-void byteswap_ints( int *a);
-void byteswap_longs( long *a);
-void byteswap_shorts( short *a);
 int align_bitmap_image(int W, int H, unsigned char *unaligned_image, unsigned char *byte_aligned_image);
 void fill_create_bmp_for_rect_in_rect(char *image_vector, int colour_Er1, int colour_Er2);
 void check_create_bmp_for_rect_in_rect_ints(void);
