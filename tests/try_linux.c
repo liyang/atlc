@@ -46,11 +46,7 @@ int try_linux(struct computer_data *data)
 #ifdef HAVE_SYS_SYSINFO_H
 #ifdef HAVE_LINUX_IP_H      /* I don't want to include this, but it is proof 
 			       that the system is Linux */
-
-  struct utsname operating_system;
   double ram;
-  size_t string_length;
-  int i, ret;
 
   /* Obtain the maximum number of CPUs supported on the Linux system */
 
