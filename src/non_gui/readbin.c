@@ -39,7 +39,7 @@ int main(int argc, char **argv)
   FILE *fp;
   double *data, x;
   int q;
-  int one=0, zero=0, minusone=0, other=0, length, i, reverse=0;
+  int one=0, zero=0, minusone=0, other=0, length=0, i, reverse=0;
   int metal_er=0;
   while((q=get_options(argc,argv,"Cr")) != -1)
   switch (q)
@@ -71,7 +71,7 @@ int main(int argc, char **argv)
     if( fseek(fp,0,SEEK_SET) != 0)
       exit_with_msg_and_exit_code("failed to fseek in readbin.c #2", FSEEK_FAILURE);
 
-    if (fread(&(data[0]), 1, (size_t) length,fp) != length)
+    if (fread(&(data[0]), (size_t) length, (size_t) 1,fp) != 1)
       exit_with_msg_and_exit_code("can't read all fo the file in readbin.c", CANT_READ_ALL_OF_FILE);
     for(i=0;i<length/sizeof(double);++i)
     {
@@ -89,10 +89,10 @@ int main(int argc, char **argv)
        else 
          other++;
     }
+    free_dvector(data,0L,(long) length);
     printf("there are: %d ones, %d zeros, %d minus ones, %d %g's and %d other values\n",one, zero, minusone, metal_er, METAL_ER, other);
   }
   else
     usage_readbin();
-  free_dvector(data,0L,(long) length);
   return(OKAY);
 }
