@@ -56,7 +56,7 @@ void check_for_shorts(void)
 	  fprintf(stderr,"Pixel (%d,%d) is set to 0V, but pixel\n",w,h);
 	  fprintf(stderr,"(%d,%d) is set to a different fixed voltage\n",w,h+1);
 	  fprintf(stderr,"creating a short. Please correct this.\n");
-          exit(CONDUCTOR_ZERO_V);
+          error_and_exit("",CONDUCTOR_ZERO_V);
         }
       } /* end of if(cell_type==CONDUCTOR_ZERO_V) */
 
@@ -70,7 +70,7 @@ void check_for_shorts(void)
 	  fprintf(stderr,"Pixel (%d,%d) is set to 1 V, but pixel\n",w,h);
 	  fprintf(stderr,"(%d,%d) is set to a different fixed voltage\n",w,h+1);
 	  fprintf(stderr,"creating a short. Please correct this.\n");
-          exit(CONDUCTOR_PLUS_ONE_V);
+          error_and_exit("",CONDUCTOR_PLUS_ONE_V);
         }
       } /* end of if(cell_type==CONDUCTOR_PLUS_ONE_V) */
       
@@ -84,7 +84,7 @@ void check_for_shorts(void)
 	  fprintf(stderr,"Pixel (%d,%d) is set to -1 V, but pixel\n",w,h);
 	  fprintf(stderr,"(%d,%d) is set to a different fixed voltage\n",w,h+1);
 	  fprintf(stderr,"creating a short. Please correct this.\n");
-          exit(CONDUCTOR_MINUS_ONE_V);
+          error_and_exit("",CONDUCTOR_MINUS_ONE_V);
         }
       } /* end of if(cell_type==CONDUCTOR_PLUS_ONE_V) */
 
