@@ -1,3 +1,78 @@
+****** Version 4.2.13 Released April 5th 2003  ********
+
+Top level directory
+
+Added a new directory 'm4' to hold autoconf macros.
+Moved the top level autoconf macros to 'm4'
+
+Added file 'benchmark' to run a test. It takes 
+about 1:17 on Ultra 80 with no thread support. 
+
+ChangeLog
+Updated the ChangeLog of course!!
+
+configure.in changed to configure.ac
+Renamed configure.in to configure.ac, as this is now the preferable
+name for the old configure.in
+Significan chanes made to this. Now there is an m4 macro to check for
+gsl library and the optimal way to link for threads and the optimal 
+way to link for MPI. 
+
+
+Added a check for automake 2.57 or above. 
+
+Replaced 'dnl' witrh '#' for a comment.
+
+Added a macro gsl.m4 
+http://www.ugcs.caltech.edu/info/gsl/usage_4.html
+to check for a sepcific version of gsl and to add
+entries on CFLAGS and LD_FLAGS
+
+Directory atlc/src/no_gui
+atlc/src/no_gui/usage_atlc.c
+Removed references to WITH-MP and replaced with ENABLE-POSIX-THREADS
+as this was a bug. Now changed code so that if the -t option is
+disabled, the code prints the reason (Windoze or not configured
+with --with-threads). Previously it gave two possible reasons.
+
+atlc/src/no_gui/usage_atlc.c
+Added thr_setconcurrancy back in, as that was missing. 
+
+
+atlc/src/no_gui/atlc.c
+removed thr_setconcurrancy and replaced with pthread_setconcurrancy
+as this is portable, whereas the other is Solaris specific. 
+
+atlc/src/no_gui
+A bit of tidying up. No significant changes. 
+
+Directory atlc/tools/src:
+
+atlc/tools/src/Makefile.am
+Change bin_PROGRAM to noinst_PROGRAMS so that the programs
+used only for testing are not installed. They serve no useful
+function apart from when running the tests in atlc/tests.
+
+atlc/tools/src/memory.c
+Removed 'memalign' since it seems to be in some libraries, but with
+no header files. Also, there seems to be POSIX specific versions of 
+it and finally, the compilers will force this with the right
+switches. Hence overall, it seems more hassle than its worth to 
+have 'memalihn' anywhere. For this reason, the check was removed
+from configure.ac too. 
+
+src/gui/Makefile.am
+Commented out most of the things, so a C++ compiler is not needed. The 
+# files in this directory servered no useful purpose, but the icons at 
+# least might be useful. Whether or not a GUI will be added is anyone's
+# guess. 
+
+****** Version 4.2.12 Released 30/3/2003  ********
+
+Top level:
+renamed configure.in to configure.ac, as I gather this is now the 
+prefereed name for the file. 
+
 ****** Version 4.2.11 Released 30/3/2003  ********
 Many many changes!! Not all are documented!
 Started to the use autoconf macro acx_pthread.m4 to configure POSIx
