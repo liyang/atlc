@@ -1,30 +1,3 @@
-/*  
-
-#ifdef __GNUG__
-#pragma implementation "help.cpp"
-#pragma interface "help.cpp"
-#endif
-
-// For compilers that support precompilation, includes "wx/wx.h".
-#include <wx/wxprec.h>
-
-#ifdef __BORLANDC__
-#pragma hdrstop
-#endif
-
-// for all others, include the necessary headers (this file is usually all you
-// need because it includes almost all "standard" wxWindows headers
-#ifndef WX_PRECOMP
-#include <wx/wx.h>
-#endif
-
-#include <wx/image.h>
-#include <wx/wxhtml.h>
-#include <wx/filesys.h>
-#include <wx/fs_zip.h>
-#include <wx/tipdlg.h>
-#include <iostream.h>
-*/
 
 #include "atlc-gui.h"
 
@@ -36,8 +9,19 @@ class RoundCoaxFrame: public wxFrame
     void OnHelp(wxCommandEvent& event);   // public functions. 
     void OnFileMenuClose(wxCommandEvent& event);   // public functions. 
     void OnClose(wxCloseEvent& event);
+    bool LoadImage();;
   DECLARE_EVENT_TABLE()
 };
+
+bool RoundCoaxFrame::LoadImage()
+{
+  wxImage image; 
+  if(image.LoadFile("coax2.bmp"))
+    wxMessageBox("Bitmap Loaded ok");
+  else
+    wxMessageBox("Failed to load bitmap");
+  //frame->Show( TRUE );
+}
 
 // RoundCoax frame constructor
 RoundCoaxFrame::RoundCoaxFrame(const wxString& title, const wxPoint& pos, const wxSize& size)
@@ -54,6 +38,7 @@ RoundCoaxFrame::RoundCoaxFrame(const wxString& title, const wxPoint& pos, const 
   SetMenuBar( menuBar );
   menuBar->Append( menuFile, "&File" );
   menuBar->Append( menuHelp, "&Help" );
+  LoadImage();
 }
 
 class atlc: public wxApp
