@@ -42,16 +42,17 @@ extern double **Vij, **Er;
 extern unsigned char *image_data;
 extern int **cell_type, non_vacuum_found;
 extern int coupler;
+extern char *inputfile_name;
+
 void setup_arrays(struct transmission_line_properties *data)
 {
    struct pixels pixels_found;
    int conductor_found;
+   int conductors = 0;
    int w,h, offset=-3, colour_mixture, i, z;
-   /* int total_pixels_found; */
    unsigned char red, green, blue;
    int dielectric_found;
    int new_colour_in_image;
-   int total_pixels_found;
    data->dielectrics_in_bitmap=0;
    pixels_found.red=0;
    pixels_found.green=0;
@@ -65,7 +66,6 @@ void setup_arrays(struct transmission_line_properties *data)
 	 cell_type[w][height-1-h]=0;
          dielectric_found=FALSE;
          conductor_found=FALSE;
-	 //data->conductor_found=FALSE;
 	 offset+=3;
 	 if((w==0) && (offset%4!=0) && (h!=0)) 
 	    offset++; 
@@ -177,16 +177,27 @@ void setup_arrays(struct transmission_line_properties *data)
          } /* end of if dielctric found */ 
       } /* end of for w */
    } /*end of for h */
-   if(data->verbose_level >=2)
+   /* The following prints a lot of data that is generally not wanted
+   but is when finding statistics of performance etc. */
+   if(data->verbose_level >=3)
    {
      printf("Red (+1 V conductor) pixels found   =        %8d \n",pixels_found.red);
      printf("Green (0 V conductor) pixels found  =        %8d \n",pixels_found.green);
      printf("Blue  (-1 V conductor) pixels found =        %8d \n",pixels_found.blue);
      printf("White (vacuum dielectric) pixels found =     %8d \n",pixels_found.white);
      printf("Others (not vacuum dielectic) pixels found = %8d \n",pixels_found.other_colour);
-     total_pixels_found=pixels_found.red+pixels_found.green+pixels_found.blue+ \
-     pixels_found.white+pixels_found.other_colour;
-     printf("Total number of pixels (sum of all above) =  %8d \n",total_pixels_found);
+     printf("Width  =                                     %8d \n",width);
+     printf("Height =                                     %8d \n",height);
+     printf("Pixels =                                     %8d \n",width*height);
+     printf("Number of Dielectrics found =                %8d \n", data->dielectrics_in_bitmap);
+     printf("filename =             %30s \n",inputfile_name);
+     if (pixels_found.red > 0 )
+       conductors+=1;  
+     if (pixels_found.green > 0 )
+       conductors+=1;  
+     if (pixels_found.blue > 0 )
+       conductors+=1;  
+     printf("Number of Conductors  = %d \n", conductors);
    }
    /* The following should not be necessary, but may be as a test */
    for(h=0;h<height;h++)
