@@ -1,11 +1,27 @@
-Sun's make programme in /usr/ccs/bin/make is not able to compile this
+1) Sun's make programme in /usr/ccs/bin/make is not able to compile this
 properly, giving an error message like 
 
 mksh: Fatal error in reader: = missing from replacement macro reference
 
 Use GNU make to build this. This is often installed on systems as gmake.
+
+2) If you have a copy of Sun's cc compiler, the following 
+CFLAGS are suggested. Using Sun's
+compiler will give about a 25% reduction in run times. 
+
+'-dalign -fns -fsimple=1 -fsingle -xalias_level=basic -xdepend -xlibmil -xO5 -I/usr/local/include -R/usr/local/lib'
  
-pthreads do *not* need to be installed in configuruing this for multiple
+3) pth does *not* need to be installed in configuruing this for multiple
 processors on a Sun, but you can use them if you wish. Sun has its own
 threaded library.
-.  
+
+4) Someone has requerested that 'atlc' be added to the www.sunfreeware.com
+web site for Solaris 8 SPARC (which means it will almost certainly work on 
+Solaris 9 too). At the time of writing, this has not been done, and may
+never happen, since it's entriely up to the site's administrator. If it does 
+happen, the code will be compiled with Sun's compiler, rather than
+gcc. This will give significantly better peformance than gcc. Hence
+if you have only gcc and would like better peformance, try looking
+on www.sunfreeware.com
+
+
