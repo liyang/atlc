@@ -21,12 +21,12 @@
 # program bug, so PLEASE PLEASE let me know about it!!
 # Dr. David Kirkby, drkirkby@ntlworld.com
 
-$top_builddir/src/non_gui/create_bmp_for_circ_in_rect 20 200 100 50 -5 10.2  $top_builddir/tmp/cir.bmp >/dev/null 2>/dev/null
+$top_builddir/src/non_gui/create_bmp_for_circ_in_rect 20 200 100 50 -4.98 10.2  $top_builddir/tmp/cir.bmp >/dev/null 2>/dev/null
 
 MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/cir.bmp`
 rm $top_builddir/tmp/cir.bmp
 if [ $MD5SUM != a081de7d22ef36046ea1db730b99856d ] ; then
-  echo "FAILED (checksum error):" $0 >> tests.log
+  echo "FAILED:" $0 >> tests.log
   exit 1
 else
   echo "PASSED:" $0 >> tests.log

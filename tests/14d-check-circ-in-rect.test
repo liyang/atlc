@@ -32,7 +32,7 @@ rm $top_builddir/tmp/cir.bmp
 #echo "generate some tests failures. This is a bug in atlc, which I hope to fix"
 #echo "*************************************************************************"
 if [ $MD5SUM != b04a136919079fa8e238b09a8631fe5c ] ; then
-  echo "FAILED (checksum error):" $0 >> tests.log
+  echo "FAILED:" $0 >> tests.log
   exit 1
 else
   echo "PASSED:" $0 >> tests.log

@@ -26,7 +26,7 @@ $top_builddir/src/non_gui/create_bmp_for_circ_in_rect 20 180 100 50 -5 1  $top_b
 MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/cir.bmp`
 rm $top_builddir/tmp/cir.bmp
 if [ $MD5SUM != 5b4cd5f44cea3671e3c569c26e88ad0f ] ; then
-  echo "FAILED (checksum error):" $0 >> tests.log
+  echo "FAILED:" $0 >> tests.log
   exit 1
 else
   echo "PASSED:" $0 >> tests.log
