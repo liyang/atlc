@@ -18,9 +18,11 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307,
 USA.
 
-Dr. David Kirkby, e-mail drkirkby@ntlworld.com 
+Dr. David Kirkby, e-mail drkirkby at ntlworld.com 
 
 */
+
+#include "config.h"
 
 #ifdef HAVE_MATH_H
 #include <math.h>
@@ -56,6 +58,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #define    METAL_RIGHT                     4
 #define    METAL_BELOW                     8
 #define    METAL_ABOVE                    16
+
 
 /* The following two determine what happens when a coupler is present
 and the voltages have to be swapped from negative to positive in the
@@ -235,54 +238,12 @@ struct strip {
 };
 #endif /* ENABLE_MPI */
 
-/* The following code has been revised, since it was bought to my
-attention by Dan (mcmahill@mtl.mit.edu) that the code was broken for
-64-bit processors, where long is 8 bytes. Hence the following defines
-these parameters
+/* Despite the fact the Bitmap_File_Head_Struct and Bitmap_Head_Struct
+all have int's for the types of data, in practice these must be 2 and 4
+byte varialbes. As such, they are written a character at a time, so the
+data size is unimportant. This was neeed on the Cray, due to the fact
+sizeof(short)=8 */
 
-int32 - 32 bits or 4 bytes long
-int64 - 64 bits or 8 bytes long
-
-I'm not sure why the Kerningham and Richie did not use such a schmeme
-rather than short, int and long, but anyway, this is my attempt to avoid
-the problem. */
-
-#if SIZEOF_SHORT==2
-#define int16 short
-#endif
-
-#if SIZEOF_INT==4 
-#define int32 int 
-#elif SIZEOF_LONG==4
-#define int32 long
-#endif
-
-#if SIZEOF_SHORT == 2 
-struct Bitmap_File_Head_Struct
-{
-  unsigned char   zzMagic[2];	/* 00 "BM" */
-  int32   bfSize;      /* 02 */
-  short  zzHotX;	/* 06 */
-  short  zzHotY;	/* 08 */
-  int32   bfOffs;      /* 0A */
-  int32   biSize;      /* 0E */
-};
-
-struct Bitmap_Head_Struct
-{
-  int32   biWidth;     /* 12 */
-  int32   biHeight;    /* 16 */
-  short  biPlanes;    /* 1A */
-  short  biBitCnt;    /* 1C */
-  int32   biCompr;     /* 1E */
-  int32   biSizeIm;    /* 22 */
-  int32   biXPels;     /* 26 */
-  int32   biYPels;     /* 2A */
-  int32   biClrUsed;   /* 2E */
-  int32   biClrImp;    /* 32 */
-                        /* 36 */
-};
-#elif SIZEOF_SHORT==8
 struct Bitmap_File_Head_Struct
 {
   unsigned char   zzMagic[2];	/* 00 "BM" */
@@ -307,7 +268,6 @@ struct Bitmap_Head_Struct
   int     biClrImp;    /* 32 */
                         /* 36 */
 };
-#endif
 
 #ifndef M_PI
 #define M_PI 3.141592653589793238462643383279502884197169399375105820975
@@ -421,3 +381,5 @@ void free_ivector(int *v, long nl, long nh);
 double check_convergence(double **grid1, double **grid2, int w, int h);
 void error_check(char *s);
 void free_dvector(double *v, long nl, long nh);
+void usage_create_any_bitmap();
+
