@@ -46,7 +46,6 @@ TESTS =  \
 6j-create_200ohm_201Pixel_high_symmetrical_stripline.test \
 6k-create_200ohm_401Pixel_high_symmetrical_stripline.test \
 6l-create_200ohm_801Pixel_high_symmetrical_stripline.test \
-6m-create_400ohm_1551Pixel_high_symmetrical_stripline.test \
 7a-create_bmp_for_stripline_coupler.bmp.test \
 7b-create_bmp_for_stripline_coupler.txt.test \
 7c-create_bmp_for_stripline_coupler.Ex.odd.bmp.test \
@@ -85,18 +84,26 @@ TESTS =  \
 11j-verify-checksum-of-created-test-coupler1.E.even.bmp.test \
 11k-verify-checksum-of-created-test-coupler1.U.even.bmp.test \
 11l-verify-checksum-of-created-test-coupler1.V.even.bmp.test \
-12c-verify-checksum-of-created-test-coupler1.Ey.odd.bin.test \
-12d-verify-checksum-of-created-test-coupler1.E.odd.bin.test \
-12e-verify-checksum-of-created-test-coupler1.V.odd.bin.test \
-12f-verify-checksum-of-created-test-coupler1.U.odd.bin.test \
-12g-verify-checksum-of-created-test-coupler1.Er.bin.test \
-12h-verify-checksum-of-created-test-coupler1.Ex.even.bin.test \
-12i-verify-checksum-of-created-test-coupler1.Ey.even.bin.test \
-12j-verify-checksum-of-created-test-coupler1.E.even.bin.test \
-12k-verify-checksum-of-created-test-coupler1.U.even.bin.test \
-12l-verify-checksum-of-created-test-coupler1.V.even.bin.test 
+13a-check_rect_cen_in_rect.test \
+14a-check-circ-in-rect.test 
 
 EXTRA_DIST = \
+10a-create-lots-of-examples-check-last-one.test \
+10b-create-lots-of-examples-check-last-one.test \
+11a-verify-checksum-of-supplied-test-coupler1.bmp.test \
+11b-verify-checksum-of-created-test-coupler1.Ex.odd.bmp.test \
+11c-verify-checksum-of-created-test-coupler1.Ey.odd.bmp.test \
+11d-verify-checksum-of-created-test-coupler1.E.odd.bmp.test \
+11e-verify-checksum-of-created-test-coupler1.V.odd.bmp.test \
+11f-verify-checksum-of-created-test-coupler1.U.odd.bmp.test \
+11g-verify-checksum-of-created-test-coupler1.Er.bmp.test \
+11h-verify-checksum-of-created-test-coupler1.Ex.even.bmp.test \
+11i-verify-checksum-of-created-test-coupler1.Ey.even.bmp.test \
+11j-verify-checksum-of-created-test-coupler1.E.even.bmp.test \
+11k-verify-checksum-of-created-test-coupler1.U.even.bmp.test \
+11l-verify-checksum-of-created-test-coupler1.V.even.bmp.test \
+13a-check_rect_cen_in_rect.test \
+14a-check-circ-in-rect.test \
 1a-create_bmp_for_symmetrical_stripline.bmp.test \
 1b-create_bmp_for_symmetrical_stripline.txt.test \
 1c-create_bmp_for_symmetrical_stripline.E.bmp.test \
@@ -160,31 +167,7 @@ EXTRA_DIST = \
 9f-create-100-Ohm-401b.bmp.test \
 9g-create-200-Ohm-201b.bmp.test \
 9h-create-200-Ohm-401b.bmp.test \
-9i-create-200-Ohm-801b.bmp.test \
-10a-create-lots-of-examples-check-last-one.test \
-10b-create-lots-of-examples-check-last-one.test \
-11a-verify-checksum-of-supplied-test-coupler1.bmp.test \
-11b-verify-checksum-of-created-test-coupler1.Ex.odd.bmp.test \
-11c-verify-checksum-of-created-test-coupler1.Ey.odd.bmp.test \
-11d-verify-checksum-of-created-test-coupler1.E.odd.bmp.test \
-11e-verify-checksum-of-created-test-coupler1.V.odd.bmp.test \
-11f-verify-checksum-of-created-test-coupler1.U.odd.bmp.test \
-11g-verify-checksum-of-created-test-coupler1.Er.bmp.test \
-11h-verify-checksum-of-created-test-coupler1.Ex.even.bmp.test \
-11i-verify-checksum-of-created-test-coupler1.Ey.even.bmp.test \
-11j-verify-checksum-of-created-test-coupler1.E.even.bmp.test \
-11k-verify-checksum-of-created-test-coupler1.U.even.bmp.test \
-11l-verify-checksum-of-created-test-coupler1.V.even.bmp.test \
-12c-verify-checksum-of-created-test-coupler1.Ey.odd.bin.test \
-12d-verify-checksum-of-created-test-coupler1.E.odd.bin.test \
-12e-verify-checksum-of-created-test-coupler1.V.odd.bin.test \
-12f-verify-checksum-of-created-test-coupler1.U.odd.bin.test \
-12g-verify-checksum-of-created-test-coupler1.Er.bin.test \
-12h-verify-checksum-of-created-test-coupler1.Ex.even.bin.test \
-12i-verify-checksum-of-created-test-coupler1.Ey.even.bin.test \
-12j-verify-checksum-of-created-test-coupler1.E.even.bin.test \
-12k-verify-checksum-of-created-test-coupler1.U.even.bin.test \
-12l-verify-checksum-of-created-test-coupler1.V.even.bin.test 
+9i-create-200-Ohm-801b.bmp.test 
 
 CLEANFILES = \
 test.E.bin \
