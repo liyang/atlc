@@ -60,7 +60,7 @@ int main(int argc, char **argv)
   {
     case 'C':
       print_copyright( (char *) "1996-2002");
-      exit(1);
+      error_and_exit("",OKAY);
     break;
     case 'g':
       gmin=atof(my_optarg);

@@ -38,6 +38,7 @@ and will produce files such as coax.V.bmp, coax.E.bmp, coax.E.bin etc */
 #endif
 
 #include "definitions.h"
+#include "exit_codes.h"
 
 FILE *get_file_pointer_with_right_filename(char *filename, char *extension)
 {
@@ -54,7 +55,7 @@ FILE *get_file_pointer_with_right_filename(char *filename, char *extension)
   if((fp=fopen(temp,"w+b"))==NULL)
   {
     fprintf(stderr,"Sorry, cant open %s for writing\n", temp);
-    exit(1);
+    error_and_exit("",CANT_OPEN_FOR_WRITING);
   }
   return(fp);
 }

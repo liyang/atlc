@@ -44,6 +44,7 @@ in books. Hence I suspect it is not efficient */
 #endif
 
 #include "definitions.h"
+#include "exit_codes.h"
 
 extern int coupler;
 extern int width, height;
@@ -102,7 +103,7 @@ double finite_difference(int accuracy)
   if(threads == NULL)
   {
     fprintf(stderr,"malloc failed for threads in finite .. .c\n");
-    exit(6);
+    error_and_exit("alloc failed for threads in finite_difference_multi_threaded.c",MALLOC_FAILED);
   }
   y=1;
   inc=(width-max_threads)/max_threads;

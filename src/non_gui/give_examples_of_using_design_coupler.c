@@ -7,10 +7,10 @@
 #endif
 
 #include "definitions.h"
+#include "exit_codes.h"
 
 void give_examples_of_using_design_coupler(void)
 {
-  //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   printf("Here are a examples of how to use 'design_coupler'\n");
   printf("In the examples, the %c sign is used in front of anything you must type\n",'%');
   printf("which is what you will probably see when using the csh or tcsh as a shell. It\n");
@@ -75,5 +75,5 @@ void give_examples_of_using_design_coupler(void)
   printf("This can be reduced by the -q option or reduced to only one line with -Q\n");
   printf("Other options include -Z to change the impedance from the default 50 Ohms\n");
   printf("and -C to see the fully copyright, Licensing and distribution information\n");
-  exit(0);
+  error_and_exit("",OKAY);
 }

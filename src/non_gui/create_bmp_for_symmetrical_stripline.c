@@ -34,6 +34,7 @@ of a thin strip, between two wide plates */
 #include <string.h>
 #endif  
 #include "definitions.h"
+#include "exit_codes.h"
 
 #ifdef WINDOWS
 #pragma hrdstop
@@ -55,7 +56,7 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
   {
     case 'C':
       print_copyright((char *) "2002");
-      exit(1);
+      error_and_exit("",OKAY);
     break;
     case 'i':
       user_requires_effectively_infinite_width=TRUE;
@@ -70,7 +71,7 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
   if(argc-my_optind !=4)
   {
     usage_create_bmp_for_symmetrical_stripline();    
-    exit(1);
+    error_and_exit("",PROGRAM_CALLED_WITH_WRONG_NUMBER_OF_ARGUMENTS);
   }
   W=atoi(argv[my_optind]);
   H=atoi(argv[my_optind+1])+2*BORDER;
@@ -90,14 +91,13 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
     W=RATIO*H+w;
   }
   if(W <= 5 || H <= 5)
-    error_and_exit("W or H is under 6, which is stupid (remember these are pixels !! in this program)\n",12);
+    error_and_exit("W or H is under 6, which is stupid (remember these are pixels !! in this program)",W_OR_H_TOO_SMALL);
   aligned_image_vector=ustring(0,(W+3)*3*H+100);
   unaligned_image_vector=ustring(0,(W+3)*3*H+100);
 
   if((fp=fopen(argv[my_optind+3],"w")) == NULL)
   {
-    fprintf(stderr,"Error in opening file in create_bmp_for_symmetrical_stripline\n");
-    exit(1);
+    error_and_exit("Error in opening file in create_bmp_for_symmetrical_stripline",CANT_OPEN_FOR_WRITING);
   }
   aligned_image_vector=ustring(0,(W+3)*3*H);
   unaligned_image_vector=ustring(0,(W+3)*3*H);
@@ -112,5 +112,5 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
   Zo=calculate_symmetrical_stripline_impedance(H-2*BORDER,w);
   if(verbose >=1)
     printf("Zo is theoretically %f Ohms (assuming W is infinite)\n",Zo);
-  exit(0);
+  error_and_exit("",OKAY);
 }
