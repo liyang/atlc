@@ -1,0 +1,3 @@
+MD5 (atlc-4.4.4.tar.gz) = 0fceca9abc7e3d03fe810db5b0e22c98
+MD5 (atlc-4.4.4_Win32.zip) = f0c94582037f1cec5cd9b986c3139372
+MD5 (atlc-4.5.0-sol9-sun4u-local.gz) = 159df9970e49081f062d03b16cc93baf
