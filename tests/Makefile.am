@@ -45,7 +45,6 @@ TESTS =  \
 10b-create-lots-of-examples-check-last-one.test 
 
 EXTRA_DIST = \
-cop1.bmp \
 1a-create_bmp_for_symmmetrical_stripline.bmp.test \
 1b-create_bmp_for_symmmetrical_stripline.txt.test \
 1c-create_bmp_for_symmmetrical_stripline.E.bmp.test \
