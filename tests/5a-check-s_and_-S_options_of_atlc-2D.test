@@ -1,0 +1,101 @@
+#!/bin/sh
+# Check that the -s and -S options are indeed doing
+# what they are supposed to be doing. 
+
+# Delete any files that may be left by mistake
+rm -f $srcdir/../../examples/coax2.Ex.bmp
+rm -f $srcdir/../../examples/coax2.Ey.bmp
+rm -f $srcdir/../../examples/coax2.E.bmp
+rm -f $srcdir/../../examples/coax2.U.bmp
+rm -f $srcdir/../../examples/coax2.V.bmp
+rm -f $srcdir/../../examples/coax2.Er.bmp
+
+rm -f $srcdir/../../examples/coax2.Ex.bin
+rm -f $srcdir/../../examples/coax2.Ey.bin
+rm -f $srcdir/../../examples/coax2.E.bin
+rm -f $srcdir/../../examples/coax2.U.bin
+rm -f $srcdir/../../examples/coax2.V.bin
+rm -f $srcdir/../../examples/coax2.Er.bin
+
+# Copy coax2.bmp. This is small, so atlc runs fast. 
+
+# Check the -S and -s options together allow no .bmp or .bin files
+../src/non_gui/atlc -s -S $srcdir/../../examples/coax2.bmp 
+if [ -f $srcdir/../../examples/coax2.Ex.bmp ]  || [ -f $srcdir/../../examples/coax2.Ey.bin ] || [ -f $srcdir/../../examples/coax2.Er.bin ] ; then
+  echo "FAILEDa:" $0 >> tests.log 
+  echo "FAILEDaXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX:" $0 
+  exit 1
+fi  
+
+# Delete any files created. There should be none.
+
+rm -f $srcdir/../../examples/coax2.Ex.bmp
+rm -f $srcdir/../../examples/coax2.Ey.bmp
+rm -f $srcdir/../../examples/coax2.E.bmp
+rm -f $srcdir/../../examples/coax2.U.bmp
+rm -f $srcdir/../../examples/coax2.V.bmp
+rm -f $srcdir/../../examples/coax2.Er.bmp
+
+rm -f $srcdir/../../examples/coax2.Ex.bin
+rm -f $srcdir/../../examples/coax2.Ey.bin
+rm -f $srcdir/../../examples/coax2.E.bin
+rm -f $srcdir/../../examples/coax2.U.bin
+rm -f $srcdir/../../examples/coax2.V.bin
+rm -f $srcdir/../../examples/coax2.Er.bin
+
+# Check that -S suppresses the creation of .bin, but not .bmp's
+../src/non_gui/atlc -S $srcdir/../../examples/coax2.bmp 
+if [ -f $srcdir/../../examples/coax2.Ex.bin ]  || [ -f $srcdir/../../examples/coax2.Ey.bin ] || [ -f $srcdir/../../examples/coax2.Er.bin ] || [ ! -f  $srcdir/../../examples/coax2.Er.bmp ] ; then
+  echo "FAILEDb:" $0 >> tests.log 
+  echo "FAILEDb:" $0 
+  exit 1
+fi
+
+rm -f $srcdir/../../examples/coax2.Ex.bmp
+rm -f $srcdir/../../examples/coax2.Ey.bmp
+rm -f $srcdir/../../examples/coax2.E.bmp
+rm -f $srcdir/../../examples/coax2.U.bmp
+rm -f $srcdir/../../examples/coax2.V.bmp
+rm -f $srcdir/../../examples/coax2.Er.bmp
+
+rm -f $srcdir/../../examples/coax2.Ex.bin
+rm -f $srcdir/../../examples/coax2.Ey.bin
+rm -f $srcdir/../../examples/coax2.E.bin
+rm -f $srcdir/../../examples/coax2.U.bin
+rm -f $srcdir/../../examples/coax2.V.bin
+rm -f $srcdir/../../examples/coax2.Er.bin
+
+# Check that -s suppresses the creation of .bmp's, but not .bin's
+../src/non_gui/atlc -s $srcdir/../../examples/coax2.bmp 
+if [ -f $srcdir/../../examples/coax2.Ex.bmp ]  || [ -f $srcdir/../../examples/coax2.Ey.bmp ] || [ ! -f $srcdir/../../examples/coax2.Er.bin ]  ; then
+  echo "FAILEDc:" $0 >> tests.log 
+  echo "FAILEDc:" $0 
+  exit 1
+fi
+
+rm -f $srcdir/../../examples/coax2.Ex.bmp
+rm -f $srcdir/../../examples/coax2.Ey.bmp
+rm -f $srcdir/../../examples/coax2.E.bmp
+rm -f $srcdir/../../examples/coax2.U.bmp
+rm -f $srcdir/../../examples/coax2.V.bmp
+rm -f $srcdir/../../examples/coax2.Er.bmp
+
+rm -f $srcdir/../../examples/coax2.Ex.bin
+rm -f $srcdir/../../examples/coax2.Ey.bin
+rm -f $srcdir/../../examples/coax2.E.bin
+rm -f $srcdir/../../examples/coax2.U.bin
+rm -f $srcdir/../../examples/coax2.V.bin
+rm -f $srcdir/../../examples/coax2.Er.bin
+
+# Check that no options creates.bmp's and  bin's
+../src/non_gui/atlc $srcdir/../../examples/coax2.bmp 
+if [ ! -f $srcdir/../../examples/coax2.Ex.bmp ]  || [ ! -f $srcdir/../../examples/coax2.Ey.bmp ] || [ ! -f $srcdir/../../examples/coax2.Er.bin ]  ; then
+  echo "FAILEDd:" $0 >> tests.log 
+  echo "FAILEDd:" $0 
+  exit 1
+fi
+
+echo "PASSED:" $0 >> tests.log 
+echo "PASSED:" $0 
+exit 0
+
