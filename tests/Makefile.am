@@ -85,7 +85,13 @@ TESTS =  \
 11k-verify-checksum-of-created-test-coupler1.U.even.bmp.test \
 11l-verify-checksum-of-created-test-coupler1.V.even.bmp.test \
 13a-check_rect_cen_in_rect.test \
-14a-check-circ-in-rect.test 
+13b-check_rect_cen_in_rect.test \
+13c-check_rect_cen_in_rect.test \
+13d-check_rect_cen_in_rect.test \
+14a-check-circ-in-rect.test \
+14b-check-circ-in-rect.test \
+14c-check-circ-in-rect.test \
+14d-check-circ-in-rect.test 
 
 EXTRA_DIST = \
 10a-create-lots-of-examples-check-last-one.test \
@@ -103,7 +109,13 @@ EXTRA_DIST = \
 11k-verify-checksum-of-created-test-coupler1.U.even.bmp.test \
 11l-verify-checksum-of-created-test-coupler1.V.even.bmp.test \
 13a-check_rect_cen_in_rect.test \
+13b-check_rect_cen_in_rect.test \
+13c-check_rect_cen_in_rect.test \
+13d-check_rect_cen_in_rect.test \
 14a-check-circ-in-rect.test \
+14b-check-circ-in-rect.test \
+14c-check-circ-in-rect.test \
+14d-check-circ-in-rect.test \
 1a-create_bmp_for_symmetrical_stripline.bmp.test \
 1b-create_bmp_for_symmetrical_stripline.txt.test \
 1c-create_bmp_for_symmetrical_stripline.E.bmp.test \
