@@ -72,7 +72,6 @@ signed char **cell_type;
 unsigned char *image_data;
 int width=-1, height=-1;
 extern int errno;
-size_t size;
 int number_of_workers=MAX_THREADS; 
 int non_vacuum_found=FALSE;
 int dielectrics_to_consider_just_now;
@@ -86,6 +85,7 @@ int main(int argc, char **argv) /* Read parameters from command line */
   FILE *where_to_print_fp=stdout, *image_data_fp;
   char *outputfile_name, *appendfile_name, *output_prefix;
   long i;
+  size_t size;
   int offset;
   int q;
   char *end;
@@ -274,7 +274,7 @@ hence built without the mpi\nlibrary.\n",1);
     /* If there are multiple dielectrics, the impedance calculations
     needs to be done twice. We start by doing them once, for an vacuum
     dielectric. If necessary, they will be done again */
-    do_fd_calculation(&data, where_to_print_fp,outputfile_name);
+    do_fd_calculation(&data, size, where_to_print_fp,outputfile_name);
   }
   else
   {
