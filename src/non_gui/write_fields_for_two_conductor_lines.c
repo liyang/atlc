@@ -207,7 +207,7 @@ void write_fields_for_two_conductor_lines(char * filename, struct transmission_l
         calculate_colour_data(Vij[w][h], maximum_values.V_max, w, h, offset,image_data_V, COLOUR,&r,&g,&b);
         calculate_colour_data(Er[w][h], MAX_ER, w, h, offset,image_data_Er, MIXED,&r,&g,&b);
         calculate_colour_data(U, maximum_values.U_max, w, h, offset,image_data_oddity, MONOCHROME,&r,&g,&b);
-        calculate_colour_data(odd, 255, w, h, offset,image_data_oddity, MONOCHROME,&r,&g,&b);
+        calculate_colour_data(odd, 50 , w, h, offset,image_data_oddity, MONOCHROME,&r,&g,&b);
       }
     }
 
@@ -240,12 +240,14 @@ void write_fields_for_two_conductor_lines(char * filename, struct transmission_l
 
     if( fwrite((void *) &(image_data_Er[0]),size, 1, permittivity_bmp_fp) != 1)
       exit_with_msg_and_exit_code("Error#17: Failed to write bitmap file in write_fields_for_two_conductor_lines.c",WRITE_FAILURE);
-
-    if( fwrite((void *) &(image_data_oddity[0]),size, 1, oddity_bmp_fp) != 1)
-      exit_with_msg_and_exit_code("Error#17: Failed to write bitmap file in write_fields_for_two_conductor_lines.c",WRITE_FAILURE);
-
     if( fclose(permittivity_bmp_fp) != 0)
       exit_with_msg_and_exit_code("Error#18: Unable to close file in write_fields_for_two_conductor_lines.c",CANT_CLOSE_FILE);
+
+    if( fwrite((void *) &(image_data_oddity[0]),size, 1, oddity_bmp_fp) != 1)
+      exit_with_msg_and_exit_code("Error#19: Failed to write bitmap file in write_fields_for_two_conductor_lines.c",WRITE_FAILURE);
+    if( fclose(oddity_bmp_fp) != 0)
+      exit_with_msg_and_exit_code("Error#20: Unable to close file in write_fields_for_two_conductor_lines.c",CANT_CLOSE_FILE);
+
 
     free_ustring(image_data_Ex,0L,(long)size);
     free_ustring(image_data_Ey,0L,(long)size);

@@ -37,7 +37,7 @@ double finite_difference_single_threaded()
 {
   int i, j, iteration;
   double capacitance_per_metre, energy_per_metre;
-  double Vnew;
+  double Vnew, Ka, Kb, Kc, Kd, K;
 
   /* The following symbols, Va, Vb, Vc, Vd and Ke have the same meaning as
   the do in the following paper:
@@ -45,14 +45,14 @@ double finite_difference_single_threaded()
   Harry E. Green, IEEE Transactions on Microwave Theory and Techniques, 
   VOL MITT-13, Number 5, pp 676-692, September 1965 */
   
-  double Va, Vb, Vc, Vd, Ke;
+  double Va, Vb, Vc, Vd;
   Va=0.5; Vb=0.5; Vc=0.5; Vd=0.5;
 
   for (iteration = 1; iteration <= ITERATIONS; iteration++){
     for(i=0; i < width; ++i){
       for(j=0; j < height; ++j){
         
-        /* The voltage at the point (io,j) is computed in the manner described
+        /* The voltage at the point (i,j) is computed in the manner described
         in the paper:
 
         "The Numerical Solution ot Some Important Transmission-Line Problems"
@@ -69,26 +69,46 @@ double finite_difference_single_threaded()
         those cases are first tested. */
 
 
-	if( i > 0)
+	if( i > 0) {
           Va=Vij[i-1][j]; 
-        if( i < width-1)
+	  Ka=Er[i-1][j];
+        }
+
+        if( i < width-1) {
           Vb=Vij[i+1][j];
-        if( j >  0 )
+	  Kb=Er[i+1][j];
+        }
+
+        if( j >  0 ){
           Vc=Vij[i][j-1];
-        if ( j < height-1 )
+          Kc=Er[i][j-1];
+        }
+        if ( j < height-1 ){
           Vd=Vij[i][j+1];
-        Ke=Er[i][j];
-   
+          Kd=Er[i][j+1];
+        }
+
+	K=Er[i][j];
+
         if( oddity[i][j] == CONDUCTOR_ZERO_V)
           Vnew=0.0;
         else if (oddity[i][j] == CONDUCTOR_PLUS_ONE_V)
           Vnew=1.0;
         else if (oddity[i][j] == CONDUCTOR_MINUS_ONE_V )
           Vnew=-1.0;
-
 #ifdef ONE
         /* This is the normal equation valid in an interior node */
-        else if(oddity[i][j] == ORDINARY_INTERIOR_POINT)  /* 1 */
+
+        else if(oddity[i][j] == METAL_DIELECTRIC_INTERFACE )  /* 1 */ 
+          Vnew=(Va+Vb+Vc+Vd)/4.0;
+        else  if (oddity[i][j] == ORDINARY_INTERIOR_POINT )
+          //Vnew=(Va+Vb+Vc+Vd)/4.0;
+          Vnew=(Va+Vb+Vc+Vd)/4.0;
+        else  if (oddity[i][j] == X_DIELECTRIC_DIELECTRIC_INTERFACE)
+	  //Vnew=(Va+Vb)/4.0 + (Vb-Va)*(Kb-Ka)/(16.0*K)+(Vd+Vc)/4.0+(Vc-Vd)*(Kc-Kd)/(16.0*K);
+          Vnew=(Va+Vb+Vc+Vd)/4.0;
+        else  if (oddity[i][j] == Y_DIELECTRIC_DIELECTRIC_INTERFACE)
+	  //Vnew=(Va+Vb)/4.0 + (Vb-Va)*(Kb-Ka)/(16.0*K)+(Vd+Vc)/4.0+(Vc-Vd)*(Kc-Kd)/(16.0*K);
           Vnew=(Va+Vb+Vc+Vd)/4.0;
 #endif
 
@@ -131,6 +151,7 @@ double finite_difference_single_threaded()
         else if (oddity[i][j] == CORNER_POINT_TOP_RIGHT_HAND_EDGE) /* 9 */
           Vnew=(Va+Vc)/2.0;
 #endif
+
 
 #ifdef TEN
         else if (oddity[i][j] == DIELECTRIC_ROW_INTERFACE_DIELECTRIC_TO_TOP ) /* 10 */
@@ -200,15 +221,14 @@ double finite_difference_single_threaded()
 
 #endif
         else{
-	  Vnew=0;
-	  fprintf(stderr,"oddity[%d][%d]=%d\n",i,j,oddity[i][j]);
+	  fprintf(stderr,"oddity[%d][%d]=%d Vnew=%f\n",i,j,oddity[i][j],Vnew);
 	  exit_with_msg_and_exit_code("internal error in finite_difference_single_threaded.c",1);
         }
         Vij[i][j]=r*Vnew+(1-r)*Vij[i][j]; 
- /*         Vij[i][j]=Vnew; */
-// #define DEBUG
-#ifdef DEBUG
-	if( Vnew > 1 || Vnew < 0.0 ) {
+        //Vij[i][j]=Vnew; 
+#define DEBUG
+#ifdef yDEBUG
+	if( fabs(Vnew) > 1 ) {
 	  fprintf(stderr,"Internal error in finite_difference_single_threaded.c\n");
 	  fprintf(stderr,"Vnew=%f i=%d j=%d oddity[i][j]=%d\n",Vnew,i,j,oddity[i][j]);
 	  exit(1);
@@ -226,6 +246,8 @@ double finite_difference_single_threaded()
   by Ex^2 + Ey^2 (by definition of a dot product. */
   for(i=0;i<width;++i)
     for(j=0;j<height-1;++j){
+#define DEBUG
+#ifdef xDEBUG
       if(fabs(Vij[i][j]) > 1.0) {
 	fprintf(stderr, "voltage is %f at %d,%d\n",Vij[i][j],i,j);
 	fprintf(stderr,"Error in finite_difference_single_threaded()\n");  
@@ -233,13 +255,22 @@ double finite_difference_single_threaded()
 	fprintf(stderr,"Try -r 1.7 and reduce if still  unstable.\n");  
 	exit(1);
       }
+#endif
     }
 
 
   energy_per_metre=0.0;
   for(i=0;i<width;++i)
-    for(j=0;j<height-1;++j)
+    for(j=0;j<height-1;++j){
+      if(fabs(Vij[i][j]) > 1.0) {
+	fprintf(stderr, "voltage is %f at %d,%d\n",Vij[i][j],i,j);
+	fprintf(stderr,"Error in finite_difference_single_threaded()\n");  
+	fprintf(stderr,"Reduce the value of r by using the option -r\n");  
+	fprintf(stderr,"Try -r 1.7 and reduce if still  unstable.\n");  
+	exit(1);
+      }
       energy_per_metre+=find_energy_per_metre(i,j);
+    }
 
   /* The capacitance C is relatated to the energy (U) by Energy=0.5*C*V^2 
   so C=2*U/(V^2). When there is a coupler, V is 2 V, not one, so the

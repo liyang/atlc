@@ -23,7 +23,7 @@ Dr. David Kirkby, e-mail drkirkby at ntlworld.com
 */
 
 /* Note, the number of dilectrics defined must be set by the parameter 
-#define NUMBER_OF_DIELECTRICS_DEFINED ?? in definitions.h. There needs
+#define NUMBER_OF_ORDINARY_INTERIOR_POINTS_DEFINED ?? in definitions.h. There needs
 ot be a better way of setting this, but for now it will do */
 
 char *names[]={"Vacuum","Air","PTFE", "duroid_5880","Polyethelene", "Polystyrene", "PVC","Epoxy_resin", "FR4 PCB", "Fibreglass_PCB", "duroid_6006","duroid_6010","one_hundred"};

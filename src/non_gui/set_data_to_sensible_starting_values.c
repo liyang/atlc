@@ -30,7 +30,7 @@ void set_data_to_sensible_starting_values(struct transmission_line_properties *d
   rather than -3 */
   data->dielectrics_in_bitmap=0;
   data->dielectrics_on_command_line=0;
-  data->r=1.95; /* For now at least, this is still global, so this has no effect XXX */
+  data->r=1.9; /* For now at least, this is still global, so this has no effect XXX */
   data->image_fiddle_factor=IMAGE_FIDDLE_FACTOR;
   data->cutoff=0.0001;
   data->avoid_use_of_fast_convergence_methodQ=FALSE;

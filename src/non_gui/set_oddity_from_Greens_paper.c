@@ -42,16 +42,19 @@ extern double **Er;
 void set_oddity_from_Greens_paper(void) 
 {
   int i, j, odd;
+  double Ka, Kb, Kc, Kd, K;
   for(i=0;i<width; ++i)
   {
     for(j=0;j<height;++j)
     {  
       /* If the oddity value is a fixed voltage, then let it 
       remain as such */
+      if(i == 1 && j == 1)
+	printf("hello cell_type[1][1]=%d\n",cell_type[1][1]);
 
-      odd=oddity[i][j]; 
 
       oddity[i][j]=ORDINARY_INTERIOR_POINT; 
+      odd=oddity[i][j]; 
 
       if(cell_type[i][j] == CONDUCTOR_ZERO_V )
         oddity[i][j] = CONDUCTOR_ZERO_V;
@@ -62,12 +65,22 @@ void set_oddity_from_Greens_paper(void)
       else if(cell_type[i][j]== CONDUCTOR_MINUS_ONE_V )
         oddity[i][j] = CONDUCTOR_MINUS_ONE_V; 
 
+      else if( i > 0 && i <width-1 && j > 0 && j < height-1 && cell_type[i][j] >= 0 ) {
+        K=Er[i][j];
+        Ka=Er[i-1][j];
+        Kb=Er[i+1][j];
+        Kc=Er[1][j+1];
+        Kd=Er[i][j-1];
+	if ( K != Ka || K != Kb )
+          oddity[i][j]=X_DIELECTRIC_DIELECTRIC_INTERFACE; 
+	if (  K != Kc || K != Kd)
+          oddity[i][j]=Y_DIELECTRIC_DIELECTRIC_INTERFACE; 
+      }
+
       /* Fill in the edges */
 
 #ifdef TWO
       if ( (j == height-1) && (cell_type[i][j] >= 0)) /* 2 */
-	oddity[i][j]=ORDINARY_POINT_BOTTOM_EDGE;
-      if (j > 0 && j < height-1 && cell_type[i-1][j] < 0 && cell_type[i][j]<0 && cell_type[i+1][j] < 0 )
 	oddity[i][j]=ORDINARY_POINT_BOTTOM_EDGE;
 #endif
 
@@ -84,7 +97,6 @@ void set_oddity_from_Greens_paper(void)
 #ifdef FIVE
       if ( (i == width-1) && (cell_type[i][j] >= 0) ) /* 5 */
 	oddity[i][j]=ORDINARY_POINT_RIGHT_HAND_EDGE;
-      if( 
 #endif
 
 
@@ -111,7 +123,6 @@ void set_oddity_from_Greens_paper(void)
 #endif
 
 
-
       /* Fill in any regions where a conductor (?) meets a dielectric */
 #ifdef TEN
       if ( i > 0 && i <width-1 && j > 0 && j < height-1 && \
@@ -132,8 +143,8 @@ void set_oddity_from_Greens_paper(void)
 #endif
 
 
-
     }/* end of for i=0 to width-1 */
   } /* end of for j= 0 to height-1 */
+  printf("oddity[1][1]=%d in Gree\n",oddity[1][1]);
 }
 

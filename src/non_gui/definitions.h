@@ -36,17 +36,6 @@ Dr. David Kirkby, e-mail drkirkby at ntlworld.com
 
 #define       FREE_ARG char*
 #define       NR_END 1
-/*
-#define    CONDUCTOR_FLOATING          -200
-#define    CONDUCTOR_ZERO_V            -100 
-#define    CONDUCTOR_PLUS_ONE_V         -99 
-#define    CONDUCTOR_MINUS_ONE_V       -101 
-#define    DIFFERENT_DIELECTRIC_NEARBY     1
-#define    METAL_LEFT                      2
-#define    METAL_RIGHT                     4
-#define    METAL_BELOW                     8
-#define    METAL_ABOVE                    16 */
-
 
 #define    UNKNOWN_DIELECTRIC                                            127
 #define    DIELECTRIC                                                      0 
@@ -90,6 +79,10 @@ techniques, vol MIT-13, number 5, September 1965 */
 #define    DIELECTRIC_INTERFACE_TO_RIGHT_HAND_EDGE_DIELECTRIC_TO_TOP          28
 #define    DIELECTRIC_INTERFACE_TO_RIGHT_HAND_EDGE_DIELECTRIC_TO_BOTTOM       29
 
+#define    METAL_DIELECTRIC_INTERFACE  30 
+#define    X_DIELECTRIC_DIELECTRIC_INTERFACE 40
+#define    Y_DIELECTRIC_DIELECTRIC_INTERFACE 50
+
 
 
 /* The following two determine what happens when a coupler is present
@@ -98,7 +91,8 @@ simulation. */
 #define ITERATIONS                      100
 #define POS_TO_NEG                         1
 #define NEG_TO_POS                         -1
-#define METAL_ER  1e9
+//#define METAL_ER  1e9
+#define METAL_ER  5
 
 #define DONT_ZERO_ELEMENTS  0       
 #define ZERO_ELEMENTS_FIRST 1       
@@ -407,3 +401,17 @@ void error_check(char *s);
 void free_dvector(double *v, long nl, long nh);
 void usage_create_any_bitmap();
 
+#define ONE
+#define TWO
+#define THREE
+#define FOUR
+#define FIVE
+#define SIX
+#define SEVEN
+#define EIGHT
+#define NINE
+//#define TEN
+//#define ELEVEN
+//#define TWELVE
+//#define THIRTEEN
+#define HUNDRED
