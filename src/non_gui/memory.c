@@ -46,8 +46,8 @@ char *string(long nl,long nh)
   char *v;
 
   //v=(char *)malloc((unsigned) (nh-nl+1));
-#ifdef DHAVE_MEMALIGN
-  v=(char *)memalign(sizof(long), sizeof(char)*(nh-nl+1));
+#ifdef HAVE_MEMALIGN
+  v=(char *)memalign((size_t) sizeof(long), sizeof(char)*(nh-nl+1));
 #else 
   v=(char *)malloc((unsigned) (nh-nl+1));
 #endif
@@ -61,8 +61,8 @@ unsigned char *ustring(long nl,long nh)
 {
   unsigned char *v;
 
-#ifdef HAVE_MEMALIGNED
-  v=(unsigned char *)memalign(sizof(long), (size_t) sizeof(char)*(nh-nl+1));
+#ifdef HAVE_MEMALIGN
+  v=(unsigned char *)memalign((size_t) sizeof(long), (size_t) sizeof(char)*(nh-nl+1));
 #else
   v=(unsigned char *)malloc((size_t) sizeof(unsigned char)* (nh-nl+1));
 #endif
@@ -181,7 +181,7 @@ unsigned char *cvector(long nl, long nh)
 
 	v=(unsigned char *)malloc((size_t) ((nh-nl+1+NR_END)*sizeof(unsigned char)));
 	if (!v)
-	  error_and_exit("Memory allocation error in cector()",MEMORY_ALLOCATION_ERROR_IN_CVECTOR);
+	  error_and_exit("Memory allocation error in cvector()",MEMORY_ALLOCATION_ERROR_IN_CVECTOR);
 	return v-nl+NR_END;
 }
 
@@ -191,7 +191,7 @@ double *dvector(long nl, long nh)
 	double *v;
 	v=(double *)malloc((size_t) ((nh-nl+1+NR_END)*sizeof(double)));
 	if (!v)
-	  error_and_exit("Memory allocation error in dector()",MEMORY_ALLOCATION_ERROR_IN_DVECTOR);
+	  error_and_exit("Memory allocation error in dvector()",MEMORY_ALLOCATION_ERROR_IN_DVECTOR);
 	return v-nl+NR_END;
 }
 
@@ -202,14 +202,22 @@ float **matrix(long nrl, long nrh, long ncl, long nch)
 	float **m;
 
 	/* allocate pointers to rows */
+#ifdef HAVE_MEMALIGN
+	m=(float **) memalign((size_t) sizeof(long),(size_t)((nrow+NR_END)*sizeof(float*)));
+#else
 	m=(float **) malloc((size_t)((nrow+NR_END)*sizeof(float*)));
+#endif
 	if (!m) 
 	  error_and_exit("Memory allocation error #1 in matrix()",MEMORY_ALLOCATION_ERROR_IN_MATRIX);
 	m += NR_END;
 	m -= nrl;
 
 	/* allocate rows and set pointers to them */
-	m[nrl]=(float *) malloc((size_t)((nrow*ncol+NR_END)*sizeof(float)));
+#ifdef HAVE_MEMALIGN
+	m[nrl]=(float *) memalign((size_t) sizeof(long),(size_t)((nrow*ncol+NR_END)*sizeof(float)));
+#else
+	m[nrl]=(float *) malloc((size_t) ((nrow*ncol+NR_END)*sizeof(float)));
+#endif
 	if (!m[nrl]) 
 	  error_and_exit("Memory allocation error #2 in matrix()",MEMORY_ALLOCATION_ERROR_IN_MATRIX);
 	m[nrl] += NR_END;
@@ -228,14 +236,22 @@ double **dmatrix(long nrl, long nrh, long ncl, long nch)
 	double **m;
 
 	/* allocate pointers to rows */
+#ifdef HAVE_MEMALIGN
+	m=(double **) memalign((size_t) sizeof(long),(size_t)((nrow+NR_END)*sizeof(double*)));
+#else
 	m=(double **) malloc((size_t)((nrow+NR_END)*sizeof(double*)));
+#endif
 	if (!m) 
 	  error_and_exit("Memory allocation error #1 in dmatrix()",MEMORY_ALLOCATION_ERROR_IN_DMATRIX);
 	m += NR_END;
 	m -= nrl;
 
 	/* allocate rows and set pointers to them */
+#ifdef HAVE_MEMALIGN
+	m[nrl]=(double *) memalign((size_t) sizeof(long),(size_t)((nrow*ncol+NR_END)*sizeof(double)));
+#else
 	m[nrl]=(double *) malloc((size_t)((nrow*ncol+NR_END)*sizeof(double)));
+#endif
 	if (!m[nrl]) 
 	  error_and_exit("Memory allocation error #2 in dmatrix()",MEMORY_ALLOCATION_ERROR_IN_DMATRIX);
 	m[nrl] += NR_END;
