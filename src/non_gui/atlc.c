@@ -194,7 +194,7 @@ hence built without the mpi\nlibrary.\n",1);
     /* Allocate all ram now, so atlc is sure to have it. There is no point
     in getting some now, starting work then finding atlc can't get the 
     rest of what is needed. */
-    image_data=ustring(0L,size);
+    image_data=ustring(0L,(long)size);
     cell_type=scmatrix(0,width-1,0,height-1);
     Vij=dmatrix(0,width-1,0,height-1);
     Er=dmatrix(0,width-1,0,height-1);
@@ -278,7 +278,7 @@ hence built without the mpi\nlibrary.\n",1);
   free_string(inputfile_name,0,1024);
   free_string(outputfile_name,0,1024);
   free_string(appendfile_name,0,1024);
-  free_ustring(image_data,0L,size);
+  free_ustring(image_data,0L,(long) size);
   free_scmatrix(cell_type,0,width-1,0,height-1);
   free_dmatrix(Vij, 0,width-1,0,height-1);
   free_dmatrix(Er,0,width-1,0,height-1);

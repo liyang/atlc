@@ -83,7 +83,7 @@ simulation. */
 
 #define MAXIMUM_PROCESSING_DEVICES              1024
 #define MAX_DIFFERENT_PERMITTIVITIES   10000
-#define MAX_ER 12
+#define MAX_ER 12.0
 
 #define COLOUR 0
 #define MONOCHROME 1
@@ -357,16 +357,16 @@ double find_energy_per_metre(int i, int j);
 void update_voltage_array(int i);
 FILE *get_file_pointer_with_right_filename(char *filename, const char *ext);
 void find_maximum_values(struct max_values *maximum_values, int zero_elementsQ);
-void calculate_colour_data(double x, double xmax, int w, int h, int offset, unsigned char *image_dat, char image_type,
+void calculate_colour_data(double x, double xmax, int w, int h, int offset, unsigned char *image_dat, int image_type,
 unsigned char *red, unsigned char *green, unsigned char *blue);
 double find_Ex(int w, int h) ;
 double find_Ey(int w, int h);
 double find_E(int w, int h);
 double voltage_ij(int i, int j);
-int get_options(int argc, char **argv, const char *opts);
 void usage_readbin(void);
-void ERR(char *s, char c, char **argv);
-char *index2(const char *str, char c);
+void ERR(const char *s, char c, char **argv);
+int get_options(int argc, char **argv, const char *opts); 
+char *index2(const char *str, char c); 
 void swap_conductor_voltages(int way_to_swap);
 void usage_create_bmp_for_stripline_coupler(void);
 double calculate_integer_values(struct transmission_line_properties *optimise, int n, int accuarcy_level);
