@@ -71,11 +71,14 @@ of CPUs can be found. */
 
 #ifdef TRY_TO_GET_HARDWARE_INFO 
   try_portable(&data);
+
+  try_aix(&data); 
   try_hpux(&data);
+  try_irix(&data);
+  try_linux(&data); 
   try_solaris(&data);
   try_tru64(&data); 
-  try_aix(&data); 
-  try_linux(&data); 
+  try_unicos(&data); 
 #endif
 
 
