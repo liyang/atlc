@@ -1,15 +1,24 @@
-NEWS for realease 4.4.0 on  30th August 2003.
+NEWS for realease 4.4.1 on  4th September 2003.
 
-atlc now runs on anything from a toy to a supercomuter! Yes, that is
-right. An early version of atlc has been run on a Sony Playstation 2
-games console and version 4.4.0 has been tested on the Cray Y-MP
-supercomputer!! It has also been run on a very large number of other
-UNIX systems, so is hopefully very portable. 
+This is a minor release, since the basic functionality
+is unchanged since the last release 4.4.0, when there
+were significant changes. This release will mainly benifit
+those running IRIX or BSD UNIX (including Mac OS X)
 
-An option that was previously reccommended --enable-hardware-info
-has been removed. It is now enabled by default, but can be   
-over-ridden with --disable-hardware-info.
+atlc is now better at gathering hardware information on
+SGI systems running IRIX. 
 
+atlc is now better at gathering hardware information on
+BSD systems. This should include OS X, but is as yet 
+untested. 
 
-Dr. David Kirkby, 30th August 2003 Re: atlc-4.4.0
+atlc no longer generates compiler warnings with gcc -Wall
+on the files
+create_bmp_for_rect_in_circ.c or
+read_bitmap_file_headers.c
+sysdata.c
+try_solaris.c
+so should no longer generate *any* compiler warnings. 
+
+Dr. David Kirkby, 4th Auguest 2003 Re: atlc-4.4.1
 
