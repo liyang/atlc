@@ -1,0 +1,71 @@
+IMPORTANT - A number of example files are provided in the form of bitmaps
+(.bmp's). Since bitmap files are quite large and there are probrams that
+can generate at least some examples with little effort, not all the 
+example files are distributed. 
+
+The files ending in .bmp.txt are the result of running atlc
+on each of the bitmaps. So this would be run ' atlc x.bmp > x.bmp.txt'
+
+The following output files are of zero length, since running atlc generates
+an error message (quite correclty) if its run with no arguments on the 
+corresponding bitmap files. 
+
+aliased.bmp.txt
+an_odd_er.bmp.txt
+enclosed-microstrip.bmp.txt
+ex2.bmp.txt
+odd-coupler.bmp.txt
+
+The following 3 files are of zero length, since the corresponding bitmaps
+have shorts and so should only output to stderr, not stdout. 
+ground-negative-short.bmp.txt
+positive-ground-short.bmp.txt
+positive-negative-short.bmp.txt
+
+The theoeritical impedances of some of these are listed in the
+documentation in atlc-x.y.z/html-docs/accuracy.html
+
+Note that the files with striplines in have the stripline only one pixel
+high, placed centrally at the interface between the lower and upper
+conductors. You will probably need to zoom in a lot to see it. The same
+goes for the pcb type files - the strip is very thin. 
+
+13inner_22outer_coax.bmp Coax, with inner of 12 mm diameter, outer 22 mm. Zo=31.5656 Ohms
+theortically.
+coax-500-100.bmp        Coax, vacuum dielectric. Theoretically 60*log_e(500/100) = 96.5663 Ohms
+coax-500-200.bmp        Coax, vacuum dielectric. Theoretically 60*log_e(500/200) = 54.9774 Ohms
+coax-500-25.bmp         Coax, vacuum dielectric. Theoretically 60*log_e(500/25) = 174.7439 Ohms
+coax-500-200-Er=100.bmp Coax, Er=100.0           Theoretically 60*log_e(500/200)/sqrt(100) = 5.4997 Ohms
+coax-500-400.bmp        Coax, vacuum dielectric. Theoretically 60*log_e(500/400) = 11.3886 Ohms
+coax-500-50.bmp         Coax, vacuum dielectric. Theoretically 60*log_e(500/50) = 138.1551 Ohms
+coax2.bmp               Coax, vacuum dielectric. 
+coax-500-100.bmp        Coax, vacuum dielectric. 
+coax-500-200.bmp        Coax, vacuum dielectric. 
+coax-500-25.bmp         Coax, vacuum dielectric. 
+coax-500-400-Er=100.bmp Coax, vacuum dielectric. 
+coax-500-400.bmp        Coax, vacuum dielectric. 
+coax-500-50.bmp         Coax, vacuum dielectric. 
+coax2.bmp               Coax, vacuum dielectric. 
+25-Ohm-201.bmp     Stripline, vacuum dielectric.  (run 'make check' to produce this).
+25-Ohm-401.bmp     Stripline, vacuum dielectric.  (run 'make check' to produce this).
+50-Ohm-201.bmp     Stripline, vacuum dielectric.  (run 'make check' to produce this).
+50-Ohm-401.bmp     Stripline, vacuum dielectric.  (run 'make check' to produce this).
+100-Ohm-201.bmp    Stripline, vacuum dielectric.  (run 'make check' to produce this).
+100-Ohm-401.bmp    Stripline, vacuum dielectric.  (run 'make check' to produce this).
+200-Ohm-201.bmp    Stripline, vacuum dielectric.  (run 'make check' to produce this).
+200-Ohm-401.bmp    Stripline, vacuum dielectric.  (run 'make check' to produce this).
+200-Ohm-801.bmp    Stripline, vacuum dielectric.  (run 'make check' to produce this).
+200x200pcb.bmp     PCB in a metal box, Er=4.8, large grid 
+aliased.bmp        Shows the effect of aliasing in images, which atlc dont like.
+not-aliased.bmp    Shows a non-alisaed image, acceptable to atlc. 
+off-centre-coax.bmp Coaxial transmission line, with the inner off-centre. 
+pcb.bmp            A PCB, with Er=4.8 and w/h of conductors =1.000
+air.bmp            A PCB, with Er=1.0006 (as air) with w/h =1.000
+mix.bmp            Stripline, Er=10.8, with *small* area of vacuum. 
+twin-wire.bmp      Twin wire with vacuum dielectric. 
+twin-wire2.bmp     Another twin wire, with outer further away from conductors. 
+twin-wire3.bmp     Another twin wire, with outer further away from conductors. 
+twin-wire4.bmp     Another twin wire, with outer further away from conductors. 
+ushape.bmp         A U-shaped transmission line. 
+very-odd.bmp       A very odd line, just to illustrate the capabilities of atlc. 
+
