@@ -39,7 +39,7 @@ todo.html \
 tutorial.html \
 usage_design_coupler.html 
 
-EXTRA_DIST = BUGS \
+EXTRA_DIST = BUGS.html \
 FAQ.html \
 IMPORTANT.html \
 accuracy.html \
