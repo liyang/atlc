@@ -1,10 +1,16 @@
-This is the last release of atlc without the the addition of 
-the Message Passing Interfact (MPI) support. The next release
-release 5.0, will have support for MPI. Since 5.0 has some 
-major changes, it is possible there are more bugs in that. 
+This is mainly a bug realase as it was bought to my attention
+there is a serious error in the file setup_arrys.c, which means
+that it can dump core - the width and height indeces were swapped
+
+This will probably be the last version 4.x.y realses of atlc
+before the addition of the Message Passing Interfact (MPI) support.
+The next release release 5.0, will have support for MPI. Since 
+5.0 has some major changes, it is possible there are more bugs in that. 
 
 I'm greateful for the help of Patrick Kelsey <kelsey@ieee.org>
-for addint MPI support in version 5.0.0 for MPI.
+for addint MPI support in version 5.0.0 for MPI. Hopefully, 
+relase 5.0.0-alpha will be realsed soon, but we are awaiting until
+testing on more platforms is possible.
 
 Dr. David Kirkby, 10/1/03. 
 
