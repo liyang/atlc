@@ -13,7 +13,7 @@
 # checks for system services
 # AC_OUTPUT([file...])
 
-AC_INIT([atlc], [4.5.0], [drkirkby@ntlworld.com])
+AC_INIT([atlc], [4.5.1], [drkirkby@ntlworld.com])
 AM_INIT_AUTOMAKE
 AC_PREREQ([2.57])
 AC_CONFIG_SRCDIR([tools/src/myfilelength.c])
@@ -97,9 +97,9 @@ AC_ARG_ENABLE(debug, AC_HELP_STRING([--enable-debug],[ with debugging code]), AC
 AC_ARG_ENABLE(hardware-info, AC_HELP_STRING([--disable-hardware-info],[ Find out information about hardware (Disable if compilation fails during 'make check')]), [1],AC_DEFINE([TRY_TO_GET_HARDWARE_INFO],[1],[try to get hardware information]))
 
 # Put a usage message so the user can use threads if wanted. 
-AC_ARG_WITH(threads,
-		   AC_HELP_STRING([--with-threads],
-		   [support thread-based parallel computation, using a POSIX thread library (default is NO)]))
+#AC_ARG_WITH(threads,
+#AC_HELP_STRING([--with-threads],
+#		   [support thread-based parallel computation, using a POSIX thread library (default is NO)]))
 
 # Multi-Processor Support checked with the macro m4/acx_pthread.m4
 if test "x$with_threads" = "xyes"; then
