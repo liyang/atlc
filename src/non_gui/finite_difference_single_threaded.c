@@ -18,6 +18,7 @@ extern double **Vij, **Er;
 extern int  **cell_type;
 extern int dielectrics_to_consider_just_now;
 extern double r; 
+extern int coupler;
 
 #include "exit_codes.h"
 
@@ -81,7 +82,11 @@ double finite_difference_single_threaded()
     { 
       energy_per_metre+=find_energy_per_metre(i,j);
     }
-  capacitance_per_metre=2*energy_per_metre;
+  if(coupler==FALSE)
+    capacitance_per_metre=2*energy_per_metre;
+  else
+    capacitance_per_metre=energy_per_metre;
   return(capacitance_per_metre);
 }
-#endif
+#endif /* #endif to #ifndef ENABLE_MP */
+
