@@ -20,6 +20,12 @@
 #define    METAL_BELOW                     8
 #define    METAL_ABOVE                    16
 
+/* The following two determine what happens when a coupler is present
+and the voltages have to be swapped from negative to positive in the
+simulation. */
+
+#define POS_TO_NEG                         1
+#define NEG_TO_POS                         -1
 #define METAL_ER  1e9
 #define NUMBER_OF_DIELECTRICS_DEFINED  12 /* see Erdata.h */
 
@@ -252,4 +258,4 @@ void usage_readbin(void);
 void ERR(char *s, char c, char **argv);
 char *index2(char *str, char c);
 void do_fd_calculation(double *capacitance, double *inductance,double *Zo, double *Zodd, double *Zeven, int whichZ, double *velocity, double *vf, FILE *where_to_print, double cutoff, int dielectrics_to_consider_just_now, char * filename, int requirement_for_fd_calculations_Q);
-
+void swap_conductor_voltages(int way_to_swap);
