@@ -1,0 +1,17 @@
+#!/bin/sh
+# Check that atlc is able to take the -d command line options and give
+# sensible results.
+
+# Delete any files that may be left by mistake
+
+cp $top_srcdir/examples/undefined_permittivities.bmp $top_builddir/tmp
+Zo=`$top_builddir/src/non_gui/atlc -d dbf2c9=1.2 -d c7e8cb=7.1 $top_builddir/tmp/undefined_permittivities.bmp | awk ' {print $6}'`
+ls -l $top_builddir/tmp
+rm $top_builddir/tmp/undefined_permittivities.bmp
+if [ $Zo = 24.86 ] ; then
+  echo "PASSED:" $0 >> tests.log 
+  exit 0
+else
+  echo "FAILED:" $0  >> tests.log 
+  exit 1
+fi
