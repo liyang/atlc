@@ -46,6 +46,8 @@ calculating all the data in the header correctly */
 
 /* #define DEBUG */
 
+#define BITMAP_HEADER_SIZE 0x36 /* 54 */
+
 void read_bitmap_file_headers(char *filename, int *offset, size_t *size, int *width, int *height)
 {
    FILE *fp;
@@ -53,20 +55,46 @@ void read_bitmap_file_headers(char *filename, int *offset, size_t *size, int *wi
    struct Bitmap_File_Head_Struct Bitmap_File_Head;
    struct Bitmap_Head_Struct Bitmap_Head;
    int ColormapSize, Maps;
-   bmp_buff=ustring(0,0x50);
+   int length_of_file; /* Appently Photoshop versions < 7.01
+		       don't write this into Bitmap_Head.biSizeIm
+		       so it causes a problem. So we will work out
+		       the length by seeking to the end of the file
+		       and finding the position of the file 
+		       pointer */
+
+   bmp_buff=ustring(0,BITMAP_HEADER_SIZE);
    if(strcmp(filename,"-")==0)
    {
       fp=stdin;   
    }
    else  
       fp=fopen(filename,"rb");
+
    if(fp==NULL)
    {
       fprintf(stderr,"cannot open %s\n", filename);
       exit_with_msg_and_exit_code("",CANT_OPEN_FILE_FOR_READING);
    }
+
+   /* deternine the length of the file, as its not always 
+   written into the bitmap. I thought it needed to be, but
+   apparently it does not and photoshop versions < 7.01 
+   don't do it. */
+   if( fseek(fp, 0, SEEK_END)  == -1)
+   {
+     fprintf(stderr," Can't seek to the end of the file in read_bitmap_file_headers.c\n");
+     exit(FSEEK_FAILURE);
+   }
+   if( (length_of_file=ftell(fp))  == -1)
+     exit_with_msg_and_exit_code("Can't find length of file in read_bitmap_file_headers.c",FTELL_FAILURE);
+
+   if( (fseek(fp, 0, SEEK_SET) ) == -1)
+   {
+     fprintf(stderr," Can't seek to the beggining of the file in read_bitmap_file_headers.c\n");
+     exit(FSEEK_FAILURE);
+   }
    /* Read the .bmp file header into a bmp_buff */
-   if (!(fread(bmp_buff, 1,0x36,fp))||(strncmp((char *) bmp_buff,"BM",2)))
+   if (!(fread(bmp_buff, 1,BITMAP_HEADER_SIZE,fp))||(strncmp((char *) bmp_buff,"BM",2)))
    {
       fprintf(stderr,"%s is not a valid BMP file\n", filename);
       exit_with_msg_and_exit_code("",NOT_A_VALID_BITMAP_FILE);
@@ -106,6 +134,10 @@ even if sizeof(short)=8 and sizeof(int)=8. See below for that. */
    Bitmap_Head.biBitCnt = bmp_buff[0x1C] + (bmp_buff[0x1d] << 8);
    Bitmap_Head.biCompr= bmp_buff[0x1E] + ((bmp_buff[0x1f] + ((bmp_buff[0x20] + (bmp_buff[0x21] << 8)) << 8)) <<8);
    Bitmap_Head.biSizeIm=bmp_buff[0x22] + ((bmp_buff[0x23] + ((bmp_buff[0x24] + (bmp_buff[0x25] << 8)) << 8)) <<8);
+   /* I thought the length of the image was always stored in Bitmap_Head.biSizeIm, but 
+   this appears not to be so. Hence it is now calculated from the length of the file
+   */ 
+   Bitmap_Head.biSizeIm=length_of_file-BITMAP_HEADER_SIZE;
    Bitmap_Head.biXPels  = bmp_buff[0x26] + ((bmp_buff[0x27] + ((bmp_buff[0x28] + (bmp_buff[0x29] << 8)) << 8)) <<8);
    Bitmap_Head.biYPels= bmp_buff[0x2A] + ((bmp_buff[0x2b] + ((bmp_buff[0x2c] + (bmp_buff[0x2d] << 8)) << 8)) <<8);
    Bitmap_Head.biClrUsed = bmp_buff[0x2E] + ((bmp_buff[0x2f] + ((bmp_buff[0x30] + (bmp_buff[0x31] << 8)) << 8)) <<8);
@@ -126,6 +158,7 @@ even if sizeof(short)=8 and sizeof(int)=8. See below for that. */
    printf("Bitmap_Head.biBitCnt  =%d =0x%x\n",Bitmap_Head.biBitCnt,Bitmap_Head.biBitCnt);
    printf("Bitmap_Head.biCompr   =%d =0x%x\n",Bitmap_Head.biCompr,Bitmap_Head.biCompr );
    printf("Bitmap_Head.biSizeIm  =%d =0x%x\n",Bitmap_Head.biSizeIm,Bitmap_Head.biSizeIm);
+   printf("size by ftell=%d\n", length_of_file);
    printf("Bitmap_Head.biXPels   =%d =0x%x\n",Bitmap_Head.biXPels,Bitmap_Head.biXPels);
    printf("Bitmap_Head.biYPels   =%d =0x%x\n",Bitmap_Head.biYPels,Bitmap_Head.biYPels);
    printf("Bitmap_Head.biClrUsed =%d =0x%x\n",Bitmap_Head.biClrUsed,Bitmap_Head.biClrUsed);
