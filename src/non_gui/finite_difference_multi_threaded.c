@@ -25,7 +25,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 /* This is my first attempt at multi-processing, beyond simple examples
 in books. Hence I suspect it is not efficient */
 
-#ifdef ENABLE_MP /*file only needed on MP systems. */
+#ifdef ENABLE_POSIX_THREADS 
 
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
@@ -33,10 +33,6 @@ in books. Hence I suspect it is not efficient */
 
 #ifdef HAVE_PTHREAD_H
 #include <pthread.h>
-#endif
-
-#ifdef HAVE_THREAD_H
-#include <thread.h>
 #endif
 
 #ifdef HAVE_STRING_H
