@@ -46,7 +46,7 @@ can't be bothered to change it */
 A problem occurs if a number was zero, so this needs to be carefullly
 controlled. */
 
-void check_error(double user, int create_bmp_for_rect_in_rect, double gridsize, char *name)
+void check_error(double user, int create_bmp_for_rect_in_rect, double gridsize, const char *name)
 {
    double fractional_error;
    fractional_error=fabs((user-(create_bmp_for_rect_in_rect*gridsize))/user);
