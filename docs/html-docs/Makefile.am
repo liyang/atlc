@@ -22,6 +22,8 @@ create_bmp_for_rect_in_circ.1.html \
 create_bmp_for_rect_in_rect.1.html \
 create_bmp_for_stripline_coupler.1.html \
 create_bmp_for_symmetrical_stripline.1.html \
+create_bmp_for_rect_cen_in_rect_coupler.1 \
+design_coupler.1.html \
 determine_dimensions_of_couplers.html \
 errors.html \
 examples.html \
@@ -63,6 +65,8 @@ create_bmp_for_rect_in_circ.1.html \
 create_bmp_for_rect_in_rect.1.html \
 create_bmp_for_stripline_coupler.1.html \
 create_bmp_for_symmetrical_stripline.1.html \
+create_bmp_for_rect_cen_in_rect_coupler.1 \
+design_coupler.1.html \
 determine_dimensions_of_couplers.html \
 errors.html \
 examples.html \
