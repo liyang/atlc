@@ -39,6 +39,9 @@ int main(int argc, char **argv)
 
 #ifdef ENABLE_POSIX_THREADS
   time_t start2, finished2;
+  strcpy((char *) data.eff,"unknown");
+#else
+  strcpy((char *) data.eff,"N/A");
 #endif /* ENABLE_POSIX_THREADS */
 
   strcpy((char *) data.mhz,"unknown");
@@ -47,7 +50,6 @@ int main(int argc, char **argv)
   strcpy((char *) data.max_cpus,"unknown");
   strcpy((char *) data.cpus,"unknown");
   strcpy((char *) data.memory,"unknown");
-  strcpy((char *) data.eff,"unknown");
   strcpy((char *) data.sysname,"unknown");
   strcpy((char *) data.nodename,"unknown");
   strcpy((char *) data.release,"unknown");
@@ -57,6 +59,9 @@ int main(int argc, char **argv)
   strcpy((char *) data.hw_platform,"unknown");
   strcpy((char *) data.speedup,"N/A    ");
   strcpy((char *) data.t2,"N/A    ");
+  strcpy((char *) data.L1data,"unknown");
+  strcpy((char *) data.L1instruction,"unknown");
+  strcpy((char *) data.L2,"unknown");
 
 /* Trying to get information about the hardware is likely to break
 on some platforms, as it is very platform specific. If the option 
@@ -66,10 +71,13 @@ obtain the efficiency of a multi-processor machine if the number
 of CPUs can be found. */
 
 #ifdef TRY_TO_GET_HARDWARE_INFO 
-  operating_system=get_portable_data(&data);
+  operating_system=try_portable(&data);
   operating_system=try_hpux(&data);
   operating_system=try_solaris(&data);
+  fprintf(stderr,"starting tru64\n");
   operating_system=try_tru64(&data); 
+  fprintf(stderr,"done     tru64\n");
+  operating_system=try_aix(&data); 
 #endif
 
 
@@ -125,7 +133,7 @@ always calculate a speedup in these circumstances */
   if(atoi(data.cpus) != 0)
     sprintf(data.eff,"%.3f",atof(data.speedup)/atoi(data.cpus)); /* otherwise unknown */
 #endif
-  printf("0 %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s \n",data.t1, data.t2, data.speedup, data.cpus, data.mhz, data.eff, data.cpu_type,data.fpu_type,data.max_cpus,data.memory,data.sysname,data.nodename,data.release,data.version,data.machine,data.hw_provider, data.hw_platform);
+  printf("0 %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s\n",data.t1, data.t2, data.speedup, data.cpus, data.mhz, data.eff, data.cpu_type,data.fpu_type,data.max_cpus,data.memory,data.sysname,data.nodename,data.release,data.version,data.machine,data.hw_provider, data.hw_platform, data.L1data, data.L1instruction, data.L2);
   return(0);
 }
 
