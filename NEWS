@@ -1,22 +1,9 @@
-The code has been changed slightly so that it compiles (and works) 
-under Windows too. Previoulsy it compiled okay, but some small 
-changes were needed, mainly related to reading binary files in and 
-out. I'm grateful for the help of Randall DuCharme AD5GB for his 
-help with some of that. 
+NEWS for realease 4.2.8 on 8/1/03.
 
-WHILST THE CODE NOW RUNS UNDER WINDOWS, IT WILL NOT BE KEPT
-UP TO DATE SO MUCH AS UNDER UNIX.
+This is the last 4.x.y release. Version 5
+will support MPI (message passing interface), 
+but the 5.0.0 release is likely to have some bugs
+(as all codes does I guess).
 
-The code has been put onto CVS. This is completley new to me and
-Randall, so some problems are likely to occur. This is
-evident that there are three directories 
+Dr. David Kirkby 10/1/03
 
-drk-root
-sources
-root
-
-There should only be one, but they can't be removed on
-SourceForge by me anyway. Anyway, hopfully it will allow for
-the easiler development by two people. 
-
-6/4/2002.

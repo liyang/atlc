@@ -1,4 +1,5 @@
 # This is Makefile.am, which is proceed by automake
+AUTOMAKE_OPTIONS = gnits
 
 SUBDIRS =  . src man docs examples tools tests 
 

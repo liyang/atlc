@@ -1,13 +1,14 @@
-Basic Installation
+Specific Installation Instructions for atlc. 
 ==================
 
-   These are generic installation instructions.
+   These are *not* generic installation instructions, but have been
+   edited somewhat to be specific for atlc. Some of the edits 
+   are *very* important.  In particular, see secions 1, 2 and 7.
 
    The `configure' shell script attempts to guess correct values for
 various system-dependent variables used during compilation.  It uses
 those values to create a `Makefile' in each directory of the package.
-It may also create one or more `.h' files containing system-dependent
-definitions.  Finally, it creates a shell script `config.status' that
+Finally, it creates a shell script `config.status' that
 you can run in the future to recreate the current configuration, a file
 `config.cache' that saves the results of its tests to speed up
 reconfiguring, and a file `config.log' containing compiler output
@@ -15,7 +16,7 @@ reconfiguring, and a file `config.log' containing compiler output
 
    If you need to do unusual things to compile the package, please try
 to figure out how `configure' could check whether to do them, and mail
-diffs or instructions to the address given in the `README' so they can
+diffs or instructions to drkirkby@ntlworld.com so they can
 be considered for the next release.  If at some point `config.cache'
 contains results you don't want to keep, you may remove or edit it.
 
@@ -25,7 +26,37 @@ it or regenerate `configure' using a newer version of `autoconf'.
 
 The simplest way to compile this package is:
 
-  1. `cd' to the directory containing the package's source code and type
+  1 Make sure you have the GNU scientific library (gsl) installed.
+    See
+    http://sources.redhat.com/gsl/
+    ftp://ftp.gnu.org/pub/gnu/gsl/ to download
+
+    atlc will build without it, but some functionality is reduced
+    and some of the self-checks will fail when you run
+    'make check' (which you *must* do, not only to test the 
+    program, but to create some of the examples).
+
+    I've tested this with version 1.1 and the 1.2, which was the
+    latest version at the time of writing. 
+
+  2) *IF* you have a multi-procressor machine, install the pthreads
+     (pth) library:
+     http://www.gnu.org/software/pth/
+     if you wish to take advantage of running your CPUs in 
+     parallel. 
+     If you have another threaed library like that
+     which is inluded with Sun's Solaris, there is no need to
+     bother with pth.
+
+  3) Unzip the compressed tar file
+     gzip -d atlc-x.y.tar.gz
+
+
+  4) Extract the tar archieve
+     tar xvf atlc-x..y.z.tar
+
+  5. `cd' to atlc-X.Y.z (whatever X, Y and Z are for the specific
+      vesion) and type
      `./configure' to configure the package for your system.  If you're
      using `csh' on an old version of System V, you might need to type
      `sh ./configure' instead to prevent `csh' from trying to execute
@@ -34,15 +65,22 @@ The simplest way to compile this package is:
      Running `configure' takes awhile.  While running, it prints some
      messages telling which features it is checking for.
 
-  2. Type `make' to compile the package.
+     If you have a threaded library, use the option:
+     configure --with-mp
 
-  3. Optionally, type `make check' to run any self-tests that come with
-     the package.
+  6. Type `make' to compile the package.
 
-  4. Type `make install' to install the programs and any data files and
-     documentation.
+  7. Type 'make check' to run quite a few checks and to build the
+     bitmaps that are not supplied. THIS STAGE IS IMPORTANT.
+     NOTE: If you have multiple CPUs and gernally build things
+     in parallel, do not do this with the 'make check' stage, as
+     it will break parallel builds. Hence do *NOT* do
+     make -j2 check
 
-  5. You can remove the program binaries and object files from the
+  8  Type 'make install' if you wish to install the programs
+     centrally. 
+
+  9. You can remove the program binaries and object files from the
      source code directory by typing `make clean'.  To also remove the
      files that `configure' created (so you can compile the package for
      a different kind of computer), type `make distclean'.  There is
@@ -107,17 +145,9 @@ option `--program-prefix=PREFIX' or `--program-suffix=SUFFIX'.
 Optional Features
 =================
 
-   Some packages pay attention to `--enable-FEATURE' options to
-`configure', where FEATURE indicates an optional part of the package.
-They may also pay attention to `--with-PACKAGE' options, where PACKAGE
-is something like `gnu-as' or `x' (for the X Window System).  The
-`README' should mention any `--enable-' and `--with-' options that the
-package recognizes.
-
-   For packages that use the X Window System, `configure' can usually
-find the X include and library files automatically, but if it doesn't,
-you can use the `configure' options `--x-includes=DIR' and
-`--x-libraries=DIR' to specify their locations.
+specific options are --with-mp to build a threaded version for
+multi-processor machines. The option --with-gui will not build 
+anything useful. I'm new to C++, so there is only a test program or two. 
 
 Specifying the System Type
 ==========================
@@ -133,11 +163,6 @@ type, such as `sun4', or a canonical name with three fields:
 See the file `config.sub' for the possible values of each field.  If
 `config.sub' isn't included in this package, then this package doesn't
 need to know the host type.
-
-   If you are building compiler tools for cross-compiling, you can also
-use the `--target=TYPE' option to select the type of system they will
-produce code for and the `--build=TYPE' option to select the type of
-system on which you are compiling the package.
 
 Sharing Defaults
 ================
