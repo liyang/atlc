@@ -94,7 +94,7 @@ example.Er.bin       binary file, showing dielectric constant as on grayscale
 
 extern double **Vij;
 extern double **Er;
-extern unsigned char *bitmap_file_buffer;
+extern unsigned char *bmp_buff;
 extern int width, height;
 extern size_t size;
 
@@ -200,12 +200,12 @@ void write_fields_for_directional_couplers(char * filename, struct transmission_
 
     permittivity_bmp_fp=get_file_pointer_with_right_filename(filename,".Er.bmp");
 
-    fwrite(bitmap_file_buffer,0x36,1,Ex_odd_bmp_fp);
-    fwrite(bitmap_file_buffer,0x36,1,Ey_odd_bmp_fp);
-    fwrite(bitmap_file_buffer,0x36,1,E_odd_bmp_fp);
-    fwrite(bitmap_file_buffer,0x36,1,U_odd_bmp_fp);
-    fwrite(bitmap_file_buffer,0x36,1,V_odd_bmp_fp);
-    fwrite(bitmap_file_buffer,0x36,1,permittivity_bmp_fp);
+    fwrite(bmp_buff,0x36,1,Ex_odd_bmp_fp);
+    fwrite(bmp_buff,0x36,1,Ey_odd_bmp_fp);
+    fwrite(bmp_buff,0x36,1,E_odd_bmp_fp);
+    fwrite(bmp_buff,0x36,1,U_odd_bmp_fp);
+    fwrite(bmp_buff,0x36,1,V_odd_bmp_fp);
+    fwrite(bmp_buff,0x36,1,permittivity_bmp_fp);
     offset=-3;
     for(h=height-1;h>=0;h--)
     {
@@ -348,12 +348,12 @@ void write_fields_for_directional_couplers(char * filename, struct transmission_
 
     permittivity_bmp_fp=get_file_pointer_with_right_filename(filename,".Er.bmp");
 
-    fwrite(bitmap_file_buffer,0x36,1,Ex_even_bmp_fp);
-    fwrite(bitmap_file_buffer,0x36,1,Ey_even_bmp_fp);
-    fwrite(bitmap_file_buffer,0x36,1,E_even_bmp_fp);
-    fwrite(bitmap_file_buffer,0x36,1,U_even_bmp_fp);
-    fwrite(bitmap_file_buffer,0x36,1,V_even_bmp_fp);
-    fwrite(bitmap_file_buffer,0x36,1,permittivity_bmp_fp);
+    fwrite(bmp_buff,0x36,1,Ex_even_bmp_fp);
+    fwrite(bmp_buff,0x36,1,Ey_even_bmp_fp);
+    fwrite(bmp_buff,0x36,1,E_even_bmp_fp);
+    fwrite(bmp_buff,0x36,1,U_even_bmp_fp);
+    fwrite(bmp_buff,0x36,1,V_even_bmp_fp);
+    fwrite(bmp_buff,0x36,1,permittivity_bmp_fp);
     offset=-3;
 #ifdef DEBUG
     fpEvenEx=fopen("Ex.even.txt","w");
