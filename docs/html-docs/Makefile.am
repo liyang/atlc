@@ -2,7 +2,7 @@
 
 bin_PROGRAMS = atlc
 
-atlc_SOURCES = atlc.cpp id.h
+atlc_SOURCES = atlc.cpp checksum.cpp id.h
 
 INCLUDES = @EXTRA_WXWINDOWS_CFLAGS@
 atlc_LDADD =  @EXTRA_WXWINDOWS_LIBS@
