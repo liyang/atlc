@@ -55,9 +55,10 @@ extern int max_threads;
 extern double r;
 
 pthread_t *threads;
-void do_columns(int *thread)
+void *do_columns(void *thread_arg)
 {
   int inc, z, i, y=1, k;
+  int *thread = (int *) thread_arg;
   inc=(width-max_threads)/max_threads; /* is this okay? I'm not sure */
   z=inc;
   for(k=0;k<(*thread);++k)
@@ -115,7 +116,7 @@ double finite_difference(int accuracy)
     {   
       id_arg[thread_number] = thread_number;
       if ((ret=pthread_create(&(threads[thread_number]),NULL,\
-      (void*)do_columns,(void *)&(id_arg[thread_number])))!=0)
+      do_columns,(void *)&(id_arg[thread_number])))!=0)
         perror("pthread_create"), exit(7);
     } 
     /* Wait for each thread to join - i.e. once they are all finished.*/
