@@ -48,6 +48,7 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
 {
    int  bmp_size=DEFAULT_BMPSIZE;
    int q;
+   struct transmission_line_properties not_used;
    FILE *image_data_fp=stdout;
 
    while((q=get_options(argc,argv,"b:f:v")) != -1)
@@ -86,7 +87,7 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
       Er1=atof(argv[my_optind+5]);
       check_rect_in_circ_doubles();
       convert_rect_in_circ_dimensions_to_integers(bmp_size);
-      write_bitmap(image_data_fp);
+      write_bitmap(image_data_fp, not_used);
    }
    else
       usage_rect_in_circ();

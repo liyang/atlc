@@ -35,6 +35,7 @@ void usage_atlc(void)
 #endif
   fprintf(stderr,"options are:\n");
   fprintf(stderr,"  -C       \n      Print Licence and copying information\n");
+  fprintf(stderr,"  -b       \n      Output energy, voltage fields etc, as binary data in addition to bitmaps.\n");
   fprintf(stderr,"  -c cutoff\n      where 'cutoff' sets the cutoff criteria - see html docs or man page.\n");
   fprintf(stderr,"  -d rrggbb=Er\n      where the colour rrggbb (in hex) is a (d)ielectric of permittivity Er.\n");
   fprintf(stderr,"  -F appendfile\n");

@@ -53,6 +53,7 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
    int  bmp_size=DEFAULT_BMPSIZE;
    int q;
    FILE *image_data_fp=stdout;
+   struct transmission_line_properties not_used_currently;
 
    while((q=get_options(argc,argv,"b:f:v")) != -1)
    switch (q) 
@@ -94,7 +95,7 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
       convert_rect_in_rect_dimensions_to_integers(bmp_size);
       if(verbose==TRUE)
         printf("W=%d H=%d a=%d b=%d c=%d d=%d w=%d h=%d\n",W,H,a,b,c,d,w,h);
-      write_bitmap(image_data_fp);
+      write_bitmap(image_data_fp, not_used_currently);
    }
    else
       usage_rect_in_rect();

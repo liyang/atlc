@@ -30,7 +30,7 @@
 #include "definitions.h"
 
 
-void set_data_to_sensible_starting_values(struct transmission_line_data *data)
+void set_data_to_sensible_starting_values(struct transmission_line_properties *data)
 {
   /* Most of the values below are set to -3. This is so when they are unchanged,
   its easy to pick them up in a debugger. Others are set to important values
@@ -46,6 +46,7 @@ void set_data_to_sensible_starting_values(struct transmission_line_data *data)
   data->found_this_dielectric=1.0;
   data->couplerQ=FALSE;
   data->verbose_level=0;
+  data->should_binary_data_be_written_tooQ=FALSE;
 
   data->Lodd_vacuum=-3; data->Leven_vacuum=-3;
   data->L_vacuum=-3; data->Codd_vacuum=-3;

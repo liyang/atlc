@@ -38,7 +38,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 
 extern int W, H, w,  s, verbose;
 
-void fill_image_vector_with_data(unsigned char *image_vector, int colour_Er1, int colour_Er2) 
+void fill_image_vector_with_data(unsigned char *image_vector, int colour_Er1, int colour_Er2, struct transmission_line_properties data) 
 {
    int i, j, red, green, blue, vector_original=0;
    int left_edge_blue;

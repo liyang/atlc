@@ -79,7 +79,6 @@ int main(int argc, char **argv)
           }
 	  fprintf(fp_best,"best so far = s=%f w=%f g=%f Zodd=%f Zeven=%f Zdiff=%f Zcomm=%f\n",s,w,g, Zdiff, Zcomm,Zodd, Zeven);
 	  fclose(fp_best);
-	  exit(1);
         }
       }
       exit(0);

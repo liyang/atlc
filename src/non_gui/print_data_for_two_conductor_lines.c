@@ -45,7 +45,7 @@ not, it is or is not possible to quote a value for Er. If Er is passed
 as a mumber < 0, this function interprets that as meaning that the
 dielectric is mixed, and says 'Er= MIXED' */
 
-int print_data_for_two_conductor_lines(struct transmission_line_data data, FILE *where_to_print_fp, char *inputfile_name)
+int print_data_for_two_conductor_lines(struct transmission_line_properties data, FILE *where_to_print_fp, char *inputfile_name)
 {
 /*
   if ( data.dielectrics_in_bitmap == 1 || (data.dielectrics_in_bitmap > 1 && data.dielectrics_to_consider_just_now ==1))

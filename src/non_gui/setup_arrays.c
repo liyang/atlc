@@ -42,14 +42,17 @@ extern double **Vij, **Er;
 extern unsigned char *image_data;
 extern int **cell_type, non_vacuum_found;
 extern int coupler;
-int colour_found, conductor_found, dielectric_found;
-void setup_arrays(struct transmission_line_data *data)
+void setup_arrays(struct transmission_line_properties *data)
 {
    struct pixels pixels_found;
+   int conductor_found;
    int w,h, offset=-3, colour_mixture, i, z;
+   data->dielectrics_in_bitmap=0;
    /* int total_pixels_found; */
    unsigned char red, green, blue;
+   int dielectric_found;
    int new_colour_in_image;
+   int total_pixels_found;
    pixels_found.red=0; pixels_found.white=0; pixels_found.other_colour=0;
    pixels_found.green=0;
    for(h=0;h<height;h++)
@@ -57,8 +60,9 @@ void setup_arrays(struct transmission_line_data *data)
       for (w=0; w<width;++w)
       {
 	 cell_type[w][height-1-h]=0;
-         data->dielectric_found=FALSE;
+         dielectric_found=FALSE;
          conductor_found=FALSE;
+	 //data->conductor_found=FALSE;
 	 offset+=3;
 	 if((w==0) && (offset%4!=0) && (h!=0)) 
 	    offset++; 
@@ -112,7 +116,7 @@ void setup_arrays(struct transmission_line_data *data)
 	       if (colour_mixture == colours[z])
 	       {
 	          Er[w][height-1-h]=Ers[z];
-	          data->dielectric_found=TRUE;
+	          dielectric_found=TRUE;
 		  if(z != 0)
 		  {
 		     non_vacuum_found=TRUE;
@@ -125,25 +129,26 @@ void setup_arrays(struct transmission_line_data *data)
 	       if (Er_on_command_line[i].other_colour ==  colour_mixture)
 	       {
 	          Er[w][height-1-h]=Er_on_command_line[i].epsilon;
-	          data->dielectric_found=TRUE;
+	          dielectric_found=TRUE;
 		  data->found_this_dielectric=Er_on_command_line[i].epsilon;
 		  non_vacuum_found=TRUE;
                }
             }
          }
-         if((data->dielectric_found == FALSE) && (conductor_found==FALSE))
+         if((dielectric_found == FALSE) && (conductor_found==FALSE))
          {
-            fprintf(stderr,"Error#7: The colour r=0x%x g=0x%x b=0x%x exists in the image at pixel %d,%d but\n",red,green,blue,w,h);
+            fprintf(stderr,"Error#7: The colour r=0x%x g=0x%x b=0x%x (0x%2x%2x%2x) exists in the image at pixel %d,%d but\n",red,green,blue,red,green,blue,w,h);
 	    fprintf(stderr,"the programme does not know how to interpret this colour. This is not a\n");
-	    fprintf(stderr,"conductor (pure red, green or blue), nor is it one of the 10 dielectrics that\n");
+	    fprintf(stderr,"conductor (pure red, green or blue), nor is it one of the %d dielectrics that\n",NUMBER_OF_DIELECTRICS_DEFINED);
 	    fprintf(stderr,"are predefined in Erdata.h, nor is a corresponding dielectric constant defined\n");
 	    fprintf(stderr,"on the command line line with the -d option\n");
+	    fprintf(stderr,"e.g. atlc -d %2x%2x%2x=1.9 file.bmp if this colour has a permittivity of 1.9\n",red,green,blue);
 	    exit(1);
          }
          /* We need to keep a record of the number of dielectrics in the image, 
          and determine if they are defined on the command line, or if they are
          defined on in the header file. */ 
-         if (data->dielectric_found == TRUE) 
+         if (dielectric_found == TRUE) 
          {
 	    new_colour_in_image=TRUE;
             for (i=0; i< data->dielectrics_in_bitmap; ++i)
@@ -169,8 +174,7 @@ void setup_arrays(struct transmission_line_data *data)
          } /* end of if dielctric found */ 
       } /* end of for w */
    } /*end of for h */
-   /*
-   if(verbose ==2)
+   if(data->verbose_level >=2)
    {
      printf("Red (+1 V conductor) pixels found   =       %7d \n",pixels_found.red);
      printf("Green (0 V conductor) pixels found  =       %7d \n",pixels_found.green);
@@ -181,7 +185,6 @@ void setup_arrays(struct transmission_line_data *data)
      pixels_found.white+pixels_found.other_colour;
      printf("Total number of pixels (sum of all above) = %7d \n",total_pixels_found);
    }
-   */
    /* The following should not be necessary, but may be as a test */
    for(h=0;h<height;h++)
    {
