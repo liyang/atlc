@@ -77,17 +77,24 @@ void find_maximum_values(struct max_values *maximum_values, int zero_elementsQ)
       }
       else
       {
-        Ex=0;
-	Ey=0;
-	E=0;
-	permittivity=0;
+        Ex=0.0;
+	Ey=0.0;
+	E=0.0;
+	permittivity=0.0;
       }
       if(U> 1.0)             
         printf("U=%f v=%f Er=%f at %d %d\n",U,V,Er[i][j],i, j);
 
-      if(E>maximum_values->E_max)
+      if(E>maximum_values->E_max) // line 88
         maximum_values->E_max=E;
-
+/*
+Read from uninitialized (rui):
+Attempting to read 4 bytes at address 0xffbfe6a8
+    which is 336 bytes above the current stack pointer
+    stopped in find_maximum_values at line 88 in file
+    "find_maximum_values.c"
+       88         if(E>maximum_values->E_max)
+       */
       if(fabs(Ex) > maximum_values->Ex_or_Ey_max)
         maximum_values->Ex_or_Ey_max=fabs(Ex);
 
