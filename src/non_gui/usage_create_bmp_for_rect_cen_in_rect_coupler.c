@@ -28,7 +28,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 
 #include "definitions.h"
 
-void usage_create_bmp_for_rect_cen_in_rect(void)
+void usage_create_bmp_for_rect_cen_in_rect_coupler(void)
 {
       fprintf(stderr,"Usage: rect_cen_in_rect [-b bmp_size] [-f outfile] [-v] W H w h Er1 outfile.bmp\n\n");
       fprintf(stderr,"Version %s\n",PACKAGE_VERSION);
