@@ -86,25 +86,6 @@ which is generally not a good idea.
 .br
 Adds 'prefix', which is usually a directory name, in front of the output files.
 .PP
-\fB-t threads\fR
-.br
-tells atlc to run using that number of threads, to speed calculation. This
-option is only valid if atlc was compiled with the --with-threads option to
-configure. The POSIX library \fBmust\fR be installed in order to compile
-with support for more than one CPU. Generally, setting the number of threads to the
-number of cpus is a good idea, but it is worth experimenting. The number can be
-changed permanently by editing the parameter MAX_THREADS in definitions.h. 
-.PP
-.br
-Using the option -t0 forces atlc to use the same code as it would if 
-configured for single processor operation. This is useful when comparing
-how well atlc behaves on MP machines compared to single processor machines. 
-.PP
-.br
-Using -t1 will cause the 
-multi-threaded code to be used, but with only one thread.  There is 
-not a lot of point in using this but you can if you want to experiment. 
-.PP
 .br
 .PP
 .br
