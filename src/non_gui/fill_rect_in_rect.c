@@ -38,9 +38,10 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 
 extern int W, H, a, b, c, d, w, h;
 
-void fill_image_vector_with_data(unsigned char *image_vector, int colour_Er1, int colour_Er2) 
+void fill_image_vector_with_data(unsigned char *image_vector, int colour_Er1, int colour_Er2, struct transmission_line_properties foo) 
 {
    int i, j, red, green, blue, vector_original=0;
+   fprintf(stderr,"W=%d H=%d\n",W,H);
    for(j=0;j<H;++j)
    {
       for(i=0;i<W; ++i)
