@@ -14,4 +14,8 @@ README.support \
 README.threads \
 README.windows \
 BUGS \
+stoptests \
 TODO
+
+CLEANFILES = examplestest-coupler2.bmp.txt
+DISTCLEANFILES = examplestest-coupler2.bmp.txt

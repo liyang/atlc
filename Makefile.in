@@ -100,8 +100,12 @@ README.support \
 README.threads \
 README.windows \
 BUGS \
+stoptests \
 TODO
 
+
+CLEANFILES = examplestest-coupler2.bmp.txt
+DISTCLEANFILES = examplestest-coupler2.bmp.txt
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
@@ -358,9 +362,11 @@ install-strip:
 mostlyclean-generic:
 
 clean-generic:
+	-test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
 
 distclean-generic:
 	-rm -f Makefile $(CONFIG_CLEAN_FILES) stamp-h stamp-h[0-9]*
+	-test -z "$(DISTCLEANFILES)" || rm -f $(DISTCLEANFILES)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"

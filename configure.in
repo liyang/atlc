@@ -1,8 +1,21 @@
 dnl Process this file with autoconf to produce a configure script.
 
-AC_INIT(atlc, 5.0.0, drkirkby@ntlworld.com)
-dnl AM_CONFIG_HEADER(config.h)
-AM_INIT_AUTOMAKE(atlc, 5.0.0, drkirkby@ntlworld.com)
+dnl Order of itmes is suggested in the autoconf documentation to be that
+dnl below, to be as below. Let's try to stick to it.
+
+dnl AC_INIT(file)
+dnl checks for programs
+dnl checks for libraries
+dnl checks for header files
+dnl checks for typedefs
+dnl checks for structures
+dnl checks for compiler characteristics
+dnl checks for library functions
+dnl checks for system services
+dnl AC_OUTPUT([file...])
+
+AC_INIT(atlc, 4.2.11-alpha, drkirkby@ntlworld.com)
+AM_INIT_AUTOMAKE(atlc, 4.2.11-alpha, drkirkby@ntlworld.com)
 
 dnl Checks for programs.
 AC_PROG_CC
@@ -11,57 +24,50 @@ AC_PROG_CXXCPP
 AC_PROG_RANLIB
 AC_ISC_POSIX
 
-AC_OUTPUT_COMMANDS([exit])
+dnl AC_OUTPUT_COMMANDS([exit])
 
 dnl Checks for libraries.
 AC_CHECK_LIB(m,main)
 AC_CHECK_LIB(c,memalign, AC_DEFINE(HAVE_MEMALIGN))
 
-
 dnl check for optimised math library on SPARC
 dnl AC_CHECK_LIB(mopt,main)
-
 dnl check for the optimised
 dnl AC_CHECK_LIB(copt,main)
 
-gsl_inc_count=0
-AC_HAVE_HEADERS(gsl/gsl_sf_ellint.h,[gsl_inc_count=$(($gsl_inc_count + 1))])
-AC_HAVE_HEADERS(gsl/gsl_sf_bessel.h,[gsl_inc_count=$(($gsl_inc_count + 1))])
 
-gsl_lib_count=0
-AC_CHECK_LIB(gslcblas,main,[gsl_lib_count=$(($gsl_lib_count + 1))])
-AC_CHECK_LIB(gsl,main,[gsl_lib_count=$(($gsl_lib_count + 1))],,-lgslcblas)
-
-gsl_not_installed=0
-gsl_incomplete=0
-
-if test $gsl_inc_count == 0 && test $gsl_lib_count == 0; then
-   gsl_not_installed=1
-elif test $gsl_inc_count != 2 || test $gsl_lib_count != 2; then  
-   gsl_incomplete=1
-fi
+gsl_libgsl=1
+gsl_libcblas=1
+AC_CHECK_LIB(gslcblas,cblas_scasum,,gsl_libcblas=0)
+AC_CHECK_LIB(gsl,main,,gsl_libgsl=0)
 
 
 dnl Checks for header files.
-AC_STDC_HEADERS
+
+dnl AC_STDC_HEADERS
 AC_HAVE_HEADERS(stdio.h math.h errno.h stdlib.h string.h thread.h pthread.h pthreads.h mpi.h)
+gsl_ellint=1
+gsl_bessel=1
+AC_HAVE_HEADERS(gsl/gsl_sf_ellint.h,,gsl_ellint=0)
+AC_HAVE_HEADERS(gsl/gsl_sf_bessel.h,,gsl_bessel=0)
 
+dnl checks for typedefs (none need to be tested)
 
-dnl check to see if the machine is big endian
+dnl checks for structures (none need to be tested)
+
+dnl checks for compiler characteristics
 AC_C_BIGENDIAN
-
-dnl check size of short. int and long
 AC_CHECK_SIZEOF(int)
 AC_CHECK_SIZEOF(long)
 AC_CHECK_SIZEOF(size_t)
-						   
-dnl Check for st_blksize in struct stat
-AC_ST_BLKSIZE
+
+
+dnl checks for system services
 
 dnl Check if the user wants a GUI. If so makes sure GTK and wxWindows are around.
 dnl The macro is in the file gtk.m4, so it must be read it here. 
 sinclude(gtk.m4)
-AC_ARG_WITH(gui, AC_HELP_STRING([--with-gui=[no]],[Add a GUI (needs GTK >= 1.2.7 installed) ]))
+AC_ARG_WITH(gui, AC_HELP_STRING([--with-gui=[no]],[Add a GUI (needs GTK >= 1.2.7 installed) but the GUI does not work!! ]))
 if test "x$with_gui" = "xyes"; then
         AC_PATH_GTK(1.2.7, GTK127=1)
         if test "$GTK127" != 1; then
@@ -132,32 +138,25 @@ if test "x$with_mpi" != "x" \
   fi
 fi
 
-dnl Only use -Wall if we have gcc
-if test "x$GCC" = "xyes"; then
-  if test -z "`echo "$CFLAGS" | grep "\-Wall" 2> /dev/null`" ; then
-    CFLAGS="$CFLAGS -Wall"
-  fi
-fi
+dnl Check for a functioning gsl installation. 
 
-dnl Only use -O3 if we have gcc
-if test "x$GCC" = "xyes"; then
-  CFLAGS="$CFLAGS -O3"
-fi
-
-dnl Check for the GNU scientific library header files. 
-
-if test $gsl_not_installed == 1; then
-  AC_MSG_WARN([To get full functionality you should install the GNU scientific 
-	       library (gsl) available at http://sources.redhat.com/gsl. Without gsl
-	       it will be impossible to evaluate the theoretical impedance of 
-	       a coupler  using \"design_coupler\".])
-elif test $gsl_incomplete == 1; then
-  AC_MSG_WARN([Some of the gsl headers and libraries were found, but others are
-               missing.  Since the installation appears to be broken, the use
-               of gsl will be disabled.  Without gsl, it will be impossible to
-	       evaluate the theoretical impedance of a coupler using \"design_coupler\".])
-else
+if test $gsl_ellint = 1 && test $gsl_bessel = 1 && test $gsl_libcblas = 1 && test $gsl_libgsl = 1; then
   AC_DEFINE(HAVE_GSL)
+elif test $gsl_ellint = 0 || test $gsl_bessel = 0 || test $gsl_libcblas = 0 || test $gsl_libgsl = 0; then
+  AC_MSG_WARN([To get full functionality you should install the GNU 
+  scientific library (gsl) available at http://sources.redhat.com/gsl. Without
+  gsl it will be impossible to evaluate the theoretical impedance of a coupler
+  using \"design_coupler\" or of a stripline using 
+  \"usage_create_bmp_for_symmetrical_stripline\". Some self tests will fail too.
+  However, much of the atlc package will work without gsl.])
+else                 
+dnl some libraries/headers exist, but not all of them. 
+  AC_MSG_WARN([Some of the gsl headers and libraries were found, but
+  others were not. Since the installation appears to be broken, the use of
+  gsl will be disabled. Without gsl, it will be impossible to evaluate the 
+  theoretical impedance of a coupler using \"design_coupler\" or of a stripline
+  using \"usage_create_bmp_for_symmetrical_stripline\". Some self tests will 
+  fail too. However, much of the atlc package will work without gsl.])
 fi
 
 AC_OUTPUT([\
