@@ -35,10 +35,13 @@ int try_irix(struct computer_data *data)
   /* Obtain the maximum number of CPUs supported on the IRIX system */
 
   /* Obtain the number of CPUs online on the IRIX system */
+#ifdef _SC_NPROC_ONLN
   CPUs_online=0;
   CPUs_online=(long) sysconf(_SC_NPROC_ONLN);
   if( CPUs_online >= 1 )
-    sprintf(data->cpu_type,"%ld ",CPUs_online);
+    sprintf(data->cpus,"%ld ",CPUs_online);
+#endif
+
 
 
   /* Obtain the of CPU and FPU on the IRIX box */
