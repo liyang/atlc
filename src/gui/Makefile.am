@@ -1,1 +1,8 @@
+bin_PROGRAMS = checksum
+
+checksum_SOURCES = checksum.cpp
+
+INCLUDES = @EXTRA_WXWINDOWS_CFLAGS@
+checksum_LDADD =  @EXTRA_WXWINDOWS_LIBS@
+
 EXTRA_DIST = README
