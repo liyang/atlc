@@ -26,6 +26,10 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #include <stdlib.h>
 #endif
 
+#ifdef ENABLE_MPI
+#include <mpi.h>
+#endif
+
 #include "definitions.h"
 
 
@@ -35,8 +39,10 @@ void exit_with_msg_and_exit_code(const char *s, int exitnumber)
 	fprintf(stderr,"%s\n",s);
   }
 
-#ifdef ENABLE_MPI
+#ifdef ENABLE_MPI 
+#ifdef NEED_MPI_CODE
   MPI_Finalize();
+#endif
 #endif
 
   exit(exitnumber);
