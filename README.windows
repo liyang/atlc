@@ -1,7 +1,9 @@
 atlc is primarily a Unix programme. Some Microsoft Windows
 binaries have been produced, although these will *not* be
-kept upto date with the source code. Windows binaries may or may not
-be realsed in future, but certainly they will not be kept current.
+kept up to date with the source code. Windows binaries may 
+or may not be released in future, but certainly they will not be 
+kept current.
+
 For this reason you are advised to run atlc on a Unix or
 Linux computer. 
 
@@ -11,5 +13,11 @@ binaries. If you want to add your own front end feel free.
 
 The latest Windows binaries produced are for version 3.0.7
 of the code.
+
+Most of the example files (.bmp's) referred to in the docs are 
+in the file atlc-3.0.7.tar.gz, which is a compressed tar file. 
+Winzip can extract files from that with no problem. The 
+documentation (.html) is also in there - which should be 
+the same as on the web site. http://atlc.sourceforge.net
 
 Dr. David Kirkby, G8WRB, 4th April, 2002.
