@@ -13,7 +13,7 @@
 # checks for system services
 # AC_OUTPUT([file...])
 
-AC_INIT([atlc], [4.4.4], [drkirkby@ntlworld.com])
+AC_INIT([atlc], [4.5.0], [drkirkby@ntlworld.com])
 AM_INIT_AUTOMAKE
 AC_PREREQ([2.57])
 AC_CONFIG_SRCDIR([tools/src/myfilelength.c])
@@ -21,7 +21,7 @@ AC_CONFIG_SRCDIR([tools/src/myfilelength.c])
 # too long, but I find it more of a pain than it is useful. To 
 # make use of it, it would be necessary to hack every source file to 
 # include it. I can't be bothered yet. 
-# AC_CONFIG_HEADER([config.h])
+AC_CONFIG_HEADER([config.h])
 
 
 # Checks for programs.
@@ -55,9 +55,6 @@ AC_TYPE_SIZE_T
 
 # checks for compiler characteristics
 AC_C_BIGENDIAN
-AC_CHECK_SIZEOF([short])
-AC_CHECK_SIZEOF([int])
-AC_CHECK_SIZEOF([long])
 AC_CHECK_SIZEOF([size_t])
 
 # checks for library functions
@@ -94,29 +91,10 @@ AC_CHECK_FUNCS([ cpusetcreate cpucountset cpu_get_num sysctl ])
 #        AC_SUBST(GUI_DIRECTORY,gui)
 #fi
 
-# First give the user the chance to disable the gsl library. This
-# was handy to do when configured with --with-mpi and it kept
-# being unable to find the library. 
-AC_ARG_WITH([gsl],
-     AC_HELP_STRING([--with-gsl], [use gsl library (default is YES)]),
-     [ac_cv_use_gsl=$withval], [ac_cv_use_gsl=yes])
 
-AC_SUBST(no_gsl,"yes")
-# If the user has not chosen to disable gsl support, then check for 
-# gsl support and see that it exists. 
-# Check for the gsl library, using gsl.m4, supplied with gsl-1.3
-if test "$ac_cv_use_gsl" = "yes"; then
-  AM_PATH_GSL([0.8])
-  # no_gsl gets defined in gsl.m4 if version is too old. 
-  if test "x$no_gsl" != "xyes" ; then
-    AC_DEFINE( [HAVE_LIBGSL],[1],[gsl library found])
-    #LIBS="$GSL_LIBS $LIBS"
-    #CFLAGS="$GSL_CFLAGS $CFLAGS"
-  fi
-fi
-
-AC_ARG_ENABLE(debug, AC_HELP_STRING([--enable-debug],[ with debugging code]), AC_DEFINE([DEBUG],[1]))
-AC_ARG_ENABLE(hardware-info, AC_HELP_STRING([--disable-hardware-info],[ Find out information about hardware (Disable if compilation fails during 'make check')]), [1],AC_DEFINE([TRY_TO_GET_HARDWARE_INFO]))
+#AC_ARG_ENABLE(debug, AC_HELP_STRING([--enable-debug],[ with debugging code]), AC_DEFINE([DEBUG],[1]))
+AC_ARG_ENABLE(debug, AC_HELP_STRING([--enable-debug],[ with debugging code]), AC_DEFINE([DEBUG],[1],[with debugging code]))
+AC_ARG_ENABLE(hardware-info, AC_HELP_STRING([--disable-hardware-info],[ Find out information about hardware (Disable if compilation fails during 'make check')]), [1],AC_DEFINE([TRY_TO_GET_HARDWARE_INFO],[1],[try to get hardware information]))
 
 # Put a usage message so the user can use threads if wanted. 
 AC_ARG_WITH(threads,
@@ -130,7 +108,7 @@ if test "x$with_threads" = "xyes"; then
   CFLAGS="$CFLAGS $PTHREAD_CFLAGS"
   CC="$PTHREAD_CC"
   # if possible for a number of threads to run at once. 
-  AC_CHECK_FUNC([pthread_setconcurrency],AC_DEFINE([HAVE_PTHREAD_SETCONCURRENCY]))
+  AC_CHECK_FUNC([pthread_setconcurrency],AC_DEFINE([HAVE_PTHREAD_SETCONCURRENCY],[1],[has the pthread_setconcunacy call, needeed on Solaris]))
   AC_SUBST(built_with_posix_threads,yes)
 fi
 AC_CHECK_DECL(_SC_PHYS_PAGES,,)
@@ -164,14 +142,6 @@ AC_CHECK_DECL(_SC_NPROC_ONLN,,)
   #  AC_MSG_WARN([The program 'mpirun' needed to run atlc, can't be found])
   #fi
 #fi
-
-#if test "x$with_mpi" != "x"  || test "x$with_mpe" != "x"; then
-# If there is no gsl, no mpe and no mpi, then we must have -lm
-#if test  "x$with_mpi"  = "x"  && test "x$with_mpe"  = "x" && test "x$no_gsl" = "xyes" ; then
-
-if test "x$no_gsl" = "xyes" ; then
-  LIBS="$LIBS -lm"
-fi
 
 dnl Only use -Wall if we have gcc
 if test "x$GCC" = "xyes"; then
