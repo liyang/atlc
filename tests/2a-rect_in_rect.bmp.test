@@ -37,9 +37,6 @@
 # 'sum' and see what that gives. If any failures do occur, please let me
 # know. email drkirkby@ntlworld.com and/or davek@medphys.ucl.ac.uk 
 
-# First remove any old files, which might cause problems
-rm -rf test*.bmp test.txt test*.bin 
-
 ../src/non_gui/rect_in_rect -b 4 -f test.bmp 500 100 20 240 20 460 50 40 1 4.8
 CKSUM=`../tools/src/mycksum test.bmp`
 if [ $CKSUM = 19648 ]; then

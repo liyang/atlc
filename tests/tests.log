@@ -1,5 +1,6 @@
-Testing stated at Fri Dec 13 19:35:58 GMT 2002
+Testing stated at Fri Dec 13 23:33:48 GMT 2002
 PASSED: ./1a-sym_strip.bmp.test
+PASSED: ./10a-create-lots-of-examples-check-last-one.test
 PASSED: ./1b-sym_strip.txt.test
 PASSED: ./1c-sym_strip.E.bmp.test
 PASSED: ./1d-sym_strip.Er.bmp.test
@@ -7,6 +8,12 @@ PASSED: ./1e-sym_strip.Ey.bmp.test
 PASSED: ./1f-sym_strip.Ex.bmp.test
 PASSED: ./1g-sym_strip.U.bmp.test
 PASSED: ./1h-sym_strip.V.bmp.test
+PASSED: ./1i-sym_strip.E.bin.test
+PASSED: ./1j-sym_strip.Er.bin.test
+PASSED: ./1k-sym_strip.Ey.bin.test
+PASSED: ./1l-sym_strip.Ex.bin.test
+PASSED: ./1m-sym_strip.U.bin.test
+PASSED: ./1n-sym_strip.V.bin.test
 PASSED: ./2a-rect_in_rect.bmp.test
 PASSED: ./2b-rect_in_rect.txt.test
 PASSED: ./2c-rect_in_rect.E.bmp.test
@@ -20,3 +27,13 @@ PASSED: ./3b-rect_cen_in_rect.txt.test
 PASSED: ./7a-generate_coupler_bitmap.bmp.test
 PASSED: ./7b-generate_coupler_bitmap.bmp.test
 PASSED: ./8a-design_coupler.bmp.test
+PASSED: ./9a-create-25-Ohm-201b.bmp.test
+PASSED: ./9b-create-25-Ohm-401b.bmp.test
+PASSED: ./9c-create-50-Ohm-201b.bmp.test
+PASSED: ./9d-create-50-Ohm-401b.bmp.test
+PASSED: ./9e-create-100-Ohm-201b.bmp.test
+PASSED: ./9f-create-100-Ohm-401b.bmp.test
+PASSED: ./9g-create-200-Ohm-201b.bmp.test
+PASSED: ./9h-create-200-Ohm-401b.bmp.test
+PASSED: ./9i-create-200-Ohm-801b.bmp.test
+PASSED: ./10a-create-lots-of-examples-check-last-one.test

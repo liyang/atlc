@@ -37,9 +37,6 @@
 # 'sum' and see what that gives. If any failures do occur, please let me
 # know. email drkirkby@ntlworld.com and/or davek@medphys.ucl.ac.uk 
 
-# First remove any old files, which might cause problems
-rm -f test*.bmp test.txt test*.bin 
-
 ../src/non_gui/generate_coupler_bitmap -b 16 1 1 1 1.0 test.bmp > /dev/null
 
 CKSUM=`../tools/src/mycksum test.bmp`

@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# The following creates some of the example bitmaps and checks the 
+# file lengths are okay. Checking the checksums would be better, 
+# but I can't easily verify that will be right on a lot of machines
+# and it is tedious to do. 
+
+# The following are around 25 Ohm transmission lines. 
+../src/non_gui/sym_strip 1 401 578  ../examples/50-Ohm-401b.bmp >/dev/null 2>/dev/null
+LENGTH=`../tools/src/myfilelength ../examples/50-Ohm-401b.bmp`
+if [ $LENGTH =  2740602 ]; then
+  echo "PASSED:" $0 >> tests.log
+  exit 0
+else
+  echo "FAILED:" $0  >> tests.log
+  exit 1
+fi
