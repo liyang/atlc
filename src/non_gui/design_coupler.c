@@ -49,7 +49,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #endif
 
 extern int errno;
-int verbose=FALSE;
+int verbose=2;
 
 /* desgin_coupler does two very different things in the one program
 1) Given a frequency range, the required coupling factor, it calcuates
@@ -72,7 +72,7 @@ the parameters w and s by the same multiple.
 
 int main(int argc, char **argv) /* Read parameters from command line */
 {
-  int q, Hflag=FALSE, quite=FALSE, very_quite=FALSE;
+  int q, Hflag=FALSE;
   int calculate_physical_dimensions=FALSE;
   double er, Zo=-1, length=-1, fmin, fmax, fmean, fstep=-1, cf,  Zodd, Zeven; 
   double f, vcf, vcf_for_quarter_wave_line, w, s, error, error_max=1e30;
@@ -108,10 +108,7 @@ int main(int argc, char **argv) /* Read parameters from command line */
     Zo=atof(my_optarg);
     break;
     case 'q': /* Run in quite mode, giving less output */
-    quite=TRUE;
-    break;
-    case 'Q': /* Give just one line of output */          
-    very_quite=TRUE;
+    verbose--;
     break;
     case '?':
       usage_design_coupler();
@@ -134,7 +131,7 @@ int main(int argc, char **argv) /* Read parameters from command line */
   {
     /* I don't think this can happen unless the user enter 0 as the
     first parameter, as a negative number entered will be taken as a
-    commmand line option */
+    command line option */
     fprintf(stderr,"\nThe coupled power must be less than the input power.");
     fprintf(stderr," But please enter a\n*positive* number in dB for the");
     fprintf(stderr," first command line parameter. If you want a \ncoupler");
@@ -239,16 +236,20 @@ int main(int argc, char **argv) /* Read parameters from command line */
   printf("\nFor a %.3f dB %.3f Ohm coupler with a length of %.4f m,\n",wanted_coupling_factor_in_dB, Zo, length);
   printf("you need to have an odd-mode impedance Zodd of %.3f Ohms and\n",Zodd);
   printf("an even mode impedance Zeven of %.3f Ohms\n\n",Zeven);
-  printf("%.3f dB down <-- ************************** ---> %3.3f Ohm termination\n\n",wanted_coupling_factor_in_dB,Zo);
-  printf("Drive this port --> ************************** ---> %3.3f Ohm termination\n",Zo);
-  printf("                    <------- %8.4f m ----->\n",length);
-  printf("\nDrive Port 1, coupler out of port 2 and terminate the other ports in Zo\n");
-  printf("Such a coupler will have the response indicated below.\n\n");
+  if(verbose >=1) /* Only print if user does not specifiy and -qq options */
+  {
+    printf("%.3f dB down <-- ************************** ---> %3.3f Ohm termination\n\n",wanted_coupling_factor_in_dB,Zo);
+    printf("Drive this port --> ************************** ---> %3.3f Ohm termination\n",Zo);
+    printf("                    <------- %8.4f m ----->\n",length);
+    printf("\nDrive Port 1, coupler out of port 2 and terminate the other ports in Zo\n");
+    printf("Such a coupler will have the response indicated below.\n\n");
   //printf("length =%.4f mean=%.3f vcf=%.3f vcf_for_quarter_wave_line=%.3f \n",length, fmean, vcf, vcf_for_quarter_wave_line);
+  }
   for(f=fmin; f<=fmax; f+=fstep)
   {
     cf=20*log10(vcf*sin(0.5*M_PI*f/fq)); /* This is what is now needed for some given length (and so fq) */
-    printf("f = %7.3f MHz   coupling is %.3f dB down on the main arm\n",f,cf);
+    if(verbose == 2)
+      printf("f = %7.3f MHz   coupling is %.3f dB down on the main arm\n",f,cf);
   }
   printf("\nYou may force the length to be any value you want using the -L option - it does\nnot have to be %.4f metres long\n",length);
   if(calculate_physical_dimensions==FALSE)
@@ -280,7 +281,7 @@ int main(int argc, char **argv) /* Read parameters from command line */
         }
       }
     }
-    //printf("w = %.4f s = %.4f which gives Zo = %.4f Zodd = %.4f Zeven = %.4f\n",best_w, best_s, best_Zo, best_Zodd, best_Zeven);
+    printf("w = %.4f s = %.4f which gives Zo = %.4f Zodd = %.4f Zeven = %.4f\n",best_w, best_s, best_Zo, best_Zodd, best_Zeven);
     /* Now try to get closer */
     /*
     for(s = best_s-step; s<=best_s+step; s+=step/1000)
@@ -301,15 +302,17 @@ int main(int argc, char **argv) /* Read parameters from command line */
     }
     */
     best_Zo=sqrt(best_Zodd * best_Zeven);
-
-    printf("|-----------^------------------------------------------------------------------|\n");
-    printf("|           |                                                                  |\n");
-    printf("|           |              <---w---><-----s----><---w-->                       |\n");
-    printf("|           H              ---------            --------                       |\n");
-    printf("|           |                                                                  |\n");
-    printf("|           |   Er=1.0 (air)                                                   |\n");
-    printf("------------v------------------------------------------------------------------\n");
-    printf("<-----------------------------------------W----------------------------------->\n");
+    if(verbose <= 0)
+    {
+      printf("|-----------^------------------------------------------------------------------|\n");
+      printf("|           |                                                                  |\n");
+      printf("|           |              <---w---><-----s----><---w-->                       |\n");
+      printf("|           H              ---------            --------                       |\n");
+      printf("|           |                                                                  |\n");
+      printf("|           |   Er=1.0 (air)                                                   |\n");
+      printf("------------v------------------------------------------------------------------\n");
+      printf("<-----------------------------------------W----------------------------------->\n");
+    }
     printf("H =%.4f w = %.4f s = %.4f\n",height_of_box, height_of_box*best_w, height_of_box*best_s);
     printf("W must be *at least* %.4f, but larger does not matter.\n",5*height_of_box+ 2*best_w*height_of_box + height_of_box*best_s);
     printf("These dimensions give Zo = %.4f Zodd = %.4f Zeven = %.4f Ohms\n", best_Zo, best_Zodd, best_Zeven);
