@@ -1,8 +1,4 @@
 #! /bin/sh
-if [ "x$no_gsl" = "xyes" ] ; then
-  exit 77
-fi   
-
 touch $top_builddir/tmp/test_stripline_coupler2.bmp
 
 Zodd=`$top_builddir/src/non_gui/create_bmp_for_stripline_coupler -vv -b 16 1 1 0.05 1.0 $top_builddir/tmp/test_stripline_coupler2.bmp | tail -4 | head -1 | awk '{print $2}'` 

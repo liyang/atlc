@@ -1,10 +1,5 @@
 #! /bin/sh
 
-if [ "x$no_gsl" = "xyes" ] ; then
-  echo "SKIPPED:" $0 >> tests.log
-  exit 77
-fi
-
 Zodd=`$top_builddir/src/non_gui/create_bmp_for_stripline_coupler -v 1.0 1.0 0.02 1 $top_builddir/tests/coupler8.bmp | tail -4 | head -1 | awk '{print $2}'`
 Zeven=`$top_builddir/src/non_gui/create_bmp_for_stripline_coupler -v 1.0 1.0 0.02 1 $top_builddir/tests/coupler8.bmp | tail -4 | head -1 | awk '{print $4}'`
 Zo=`$top_builddir/src/non_gui/create_bmp_for_stripline_coupler -v 1.0 1.0 0.02 1 $top_builddir/tests/coupler8.bmp | tail -4 | head -1 | awk '{print $6}'`
