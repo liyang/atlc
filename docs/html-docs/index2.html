@@ -13,33 +13,27 @@
 
 <H1><CODE>atlc</CODE> - Arbitrary Transmission Line Calculator.</H1>
 
-The programme <COde>atlc</code> calculates the impedance of electrical transmission lines of totally arbitrary cross section, using a numerical technique called <EM>finite difference</EM>. The two conductors can be coaxial, run side by side, or in just about any configuration you can think of. The diagrammes below shows several types of line that may be analysed. In each diagramme, one conductor is shown red, the other conductor shown green and the dielectrics are shown in a few other colours, with white being a vacuum and turquoise being a dielectric with an effective permittivity of 4.8 (about the same as fibreglass PCB). 
+The programme <COde>atlc</code> calculates the impedance of two or three wire electrical transmission lines of totally arbitrary cross section, using a numerical technique called <EM>finite difference</EM>. The conductors can be coaxial, run side by side, or in just about any configuration you can think of. The diagrammes below shows 3 types of 2-wire  transmission lines and a directional copuler, all of which may be analysed. In each diagramme, one conductor is shown red, the other conductor shown green and in the case of a coupler, the third conductor is shown blue. The dielectrics are shown in a few other colours, with white being a vacuum and turquoise being a dielectric with an effective permittivity of 4.8 (about the same as fibreglass PCB). 
 <TABLE>
 <TR>
 <TD><img src="jpgs/coax2.jpg" ALT="round coax" > </TD>
 <TD><img src="jpgs/twin-wire.jpg" ALT="twin wire" ></TD>
 <TD><img src="jpgs/very-odd.jpg" ALT="very odd line" ></TD>
+<TD><img src="jpgs/cop1.jpg" ALT="directional coupler" width="128" height="128"></TD>
 </TR>
 <TR>
 <TD>Zo=69.690 Ohms<BR>C=47.865 pF/m<BR>L=232.454 nH/m<BR></TD>
 <TD>Zo= 49.335 Ohms<br>C= 67.611 pF/m<br>L= 164.565 nH/m </TD>
 <TD>Zo= 56.020  Ohms<br> C= 59.544 pF/m <br>L= 186.862 nH/m</TD>
+<TD>Zo= 66.3699  Ohms<br> Zeven=138.9950 Ohms<br>Zodd= 31.6915 Ohms<br>C=23.9983  pF/m <br>L= 463.6373 nH/m</TD>
 </TR>
 </TABLE>
 The programme  <COde>atlc</code> needs to know shape of the transmission line's cross section. This cross section is stored in a data file, which happens to be a Windows bitmap file. The  bitmap file is read by <COde>atlc</code>, following which the  programme performs the analysis. <br><br>There are two ways to generate the bitmap for <COde>atlc</code>. 
 <OL>
         <LI> As you might expect, you can draw the transmission line's cross-section in a graphics programme such as <A HREF="http://www.gimp.org">Gimp</A>, <A HREF="http://www.adobe.com/products/photoshop/main.html">Photoshop</A>, Windows <A HREF="http://www.microsoft.com">Paint</A> Corel Photopaint etc.  The programme must be able to save images as bitmap (.BMP or .bmp) files, in 24-bit (true colour) mode The graphics programme can run under whatever operating system you like.  If for example you have some U-section brass and some hollow rectangular tube, and wanted to know the properties of a transmission line formed from these, you might draw something like this, and save it as a file, which we might call <CODE>ushape.bmp</CODE><br><br></LI>
        <img src="jpgs/ushape.jpg" ALT="U-section" > <br><br>
-	<LI> In the case of simple cross-sections, the bitmaps can be generated automatically. Currently 4 programmes 4 such programms has been written, to quickly generate bitmaps for rectangular and circular conductors. An example of such as programme is <CODE><a href="rect_in_rect.html">rect_in_rect</a></CODE>, which is able to automatically generate a bitmap for any <STRONG>rect</STRONG>angular conductor, <STRONG>in</STRONG>side any other <STRONG>rect</STRONG>angular conductor, with no more than 2 dielectrics. One dielectric must lie under the centre conductor. Other programmes include <CODE>circ_in_circ</CODE>  <br>
-<TABLE>
-<TR>
-<TD></TD>
-<TD></TD>
-<TD></TD>
-<TD></TD>
-<TD></TD>
-</TR>
-</TABLE>
+	<LI> In the case of simple cross-sections, the bitmaps can be generated automatically. Currently 6 such programms have been written, to quickly generate bitmaps for rectangular and circular conductors, striplines and a directional copuler. An example of such as programme is <CODE><a href="rect_in_rect.html">rect_in_rect</a></CODE>, which is able to automatically generate a bitmap for any <STRONG>rect</STRONG>angular conductor, <STRONG>in</STRONG>side any other <STRONG>rect</STRONG>angular conductor, with no more than 2 dielectrics. One dielectric must lie under the centre conductor. Other programmes include <CODE>circ_in_circ</CODE>  <br>
+
 <br>
 	Using rect_in_rect,.is very fast - much faster than generating the bitmaps with a graphics programme.</LI>
 </OL>
