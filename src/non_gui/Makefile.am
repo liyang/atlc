@@ -2,7 +2,8 @@ bin_PROGRAMS = atlc create_bmp_for_rect_in_rect \
 create_bmp_for_circ_in_circ create_bmp_for_rect_cen_in_rect \
 create_bmp_for_circ_in_rect create_bmp_for_rect_in_circ readbin create_bmp_for_symmmetrical_stripline \
 design_coupler create_bmp_for_stripline_coupler create_bmp_for_microstrip_coupler\
-find_optimal_dimensions_for_microstrip_coupler
+find_optimal_dimensions_for_microstrip_coupler \
+create_bmp_for_rect_cen_in_rect_coupler
 
 atlc_SOURCES = nrutil.c atlc.c read_bitmap_file_headers.c \
 byteswap.c string.c setup_arrays.c \
@@ -18,6 +19,12 @@ swap_conductor_voltages.c print_copyright.c print_data_for_directional_couplers.
 print_data_for_two_conductor_lines.c set_data_to_sensible_starting_values.c \
 write_fields_for_two_conductor_lines.c write_fields_for_directional_couplers.c \
 exit_codes.h
+
+create_bmp_for_rect_cen_in_rect_coupler_SOURCES = create_bmp_for_rect_cen_in_rect_coupler.c \
+usage_create_bmp_for_rect_cen_in_rect_coupler.c \
+convert_doubles_to_integers.c  get_options.c definitions.h nrutil.c write_bitmap_out.c byteswap.c \
+align_bitmap_image.c check_error.c error_and_exit.c \
+print_copyright.c
 
 create_bmp_for_rect_in_rect_SOURCES = create_bmp_for_rect_in_rect.c \
 usage_create_bmp_for_rect_in_rect.c write_bitmap.c \
@@ -88,7 +95,7 @@ calculate_Zodd_and_Zeven.c get_options.c definitions.h \
 calculate_integer_values.c write_bitmap.c \
 string.c nrutil.c write_bitmap_out.c byteswap.c \
 align_bitmap_image.c fill_make_coupler.c \
-check_error.c  definitions.h  error_and_exit.c \
+check_error.c error_and_exit.c \
 get_Er1_and_Er2_colours.c print_copyright.c 
 
 design_coupler_SOURCES = design_coupler.c usage_design_coupler.c \
