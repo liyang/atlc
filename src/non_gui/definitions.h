@@ -360,3 +360,4 @@ void check_parameters_of_create_bmp_for_circ_in_circ();
 void check_parameters_of_create_bmp_for_circ_in_rect();
 void check_parameters_of_create_bmp_for_rect_in_circ();
 void check_parameters_of_create_bmp_for_rect_in_rect(void);
+void usage_create_bmp_for_symmetrical_stripline(void);
