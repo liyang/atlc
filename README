@@ -1,53 +1,15 @@
-atlc - Arbitrary Transmission Line Calculator.
+Here are a number of example files, falling into 4 catabories:
 
-Program for analysing arbitrary transmission lines and directional
-couplers. See HTML documentation in docs/html-docs
+foo.bmp                       (a bitmap showing the cross section)
+foo.V.bmo, foo.E.bmp ..       (showing the voltage, electric field etc)
+foo.bmp.txt                   (the result of running atlc on foo.bmp)
+foo.V.even.bmp, foo.E.odd.bmp (voltage, E-field etc for coupled lines).
 
-*********************************************************************
-IMPORTANT - if altc won't compile on your system, configure with the 
-option --without-hardware-info. It should then compile. 
-*********************************************************************
+Formally a lot of examples were created during the 'make check' stage.
+However, users of the automake mailing list all thought this was not
+such a good idea and that the files should be distributed. Hence a lot
+more examples are now distrubted. Whilst this makes the package bigger,
+it solves a lot of problems with automake. 
 
-The sources are kept in src/non_gui, as a version with a GUI is planned
-(not started yet). 
-
-This is the directory layout. .
-./docs 
-./docs/html-docs         // As on the atlc web site at atlc.sourgeforge.net
-./docs/html-docs/jpgs    // JPGS needed for the html docs above.
-./docs/qex-december-1996 // A old paper I wrote, gives the theory.
-./docs/theory            //  
-./man                    // Standard UNIX man pages.
-./examples               // Some examples
-./tests                  // Self-tests and a benchmark.
-./tools                  // Some tools that are useful for checkign the code
-./tools/src              // Source code for above
-./src                    // Nothing much - see below
-./src/non_gui            // All the C source code.   
-./tmp                    // Used during tests to dump data. 
-
-After building (see INSTALL, which I've modified to be specific to
-atlc) you should run 'make check' after running 'make'. 
-One built, if you want to install the examples and binaries, run
-'make install'. As the examples are large (~220 Mb) you might    
-choose not to install them. In which case run 'make install-exec'
-rather than 'make install'. If you later want to install the 
-examples, run 'make install-data'
-
-A Windows version (not graphical) can be found in an earlier distribution 
-(3.0.7). I'm not going to update that, so get a UNIX box if you want 
-to use the latest versions. 
-
-A version with a GUI that should run on Macs, Windoze and UNIX is
-planned. This however is expected to be some time from now. 
-
-Please note I'm English, so spellings should be English and dates are in
-the format Day/Month/Year, not the American way of Month/Day/Year. Hence
-3/4/02 is the 3rd of April, and not the 4th of March. 
-
-
-If wishing to contact me by email, can I suggest you copy a message to
-both drkirkby@ntlworld.com and davek@medphys.ucl.ac.uk This will allow
-me to see it in the shortest possible time. 
-
-Dr. David Kirkby, G8WRB. 19/07/03
+Dr. David Kirkby
+29th March 2003.

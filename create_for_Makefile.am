@@ -1,2 +1,2 @@
 #!/bin/sh
-ls README* | awk '{ print $1,"\\"}'
+ls * | awk '{ print $1,"\\"}'
