@@ -4,6 +4,10 @@ Specific Installation Instructions for atlc.
 *********************************************************************
 IMPORTANT - if altc won't compile on your system, configure with the 
 option --without-hardware-info. It should then compile. 
+
+The versions of 'make' from Sun and SGI probably won't work - use
+GNU make instead. 
+
 *********************************************************************
 
 See also the file docs/html-docs/building.html
@@ -34,27 +38,13 @@ it or regenerate `configure' using a newer version of `autoconf'.
 
 The simplest way to compile this package is:
 
-  1) *IF* you have a multi-procressor machine atlc will run considerably
-     faster if you built it as a mutli-threded program. To do this you
-     MUST have a POSIX compatible thread library. Many operating
-     systems come with one (Solaris, Tru64, Sequent, AIX). Linux has a
-     POSIX thread library too, but as with any system, it might not be
-     installed. If you don't have a POSIX compatible thread library,
-     pth should work
-     http://www.gnu.org/software/pth/
-     although I've never used it, since any system I have already has a suitable
-     library.
-
-     So far, I've been unsuccesful in getting the SPARC versions of Linux
-     (Debian or Redhat) to support multi-processing, 
-
-  2) Unzip the compressed tar file
+  1) Unzip the compressed tar file
      gzip -d atlc-x.y.tar.gz
 
-  3) Extract the tar archieve
+  2) Extract the tar archieve
      tar xvf atlc-x..y.z.tar
 
-  4) Set the varialble CFLAGS to whatever flags are appropiate with
+  3) Set the varialble CFLAGS to whatever flags are appropiate with
      your compiler and system. This is particularly important
      on Alpha platforms, when increases in speed of 3.5x were noticed
      when running with appropiate flags. 
@@ -62,14 +52,7 @@ The simplest way to compile this package is:
      A benchmark is provide (see section 8) which can be used
      as a guide to optimising the compiler flags. 
 
-  5) If you have a multi-processor machine, with more than 8 CPUs
-     (lucky you), change the variable MAX_THREADS in the file
-     src/non_gui/definitions.h to reflect the number of CPUs. You
-     can achieve the same result on the command line with the -t
-     options, but changing it here will prevent you needing to 
-     do this each time to get best peformance. 
-
-  6) `cd' to atlc-X.Y.z (whatever X, Y and Z are for the specific
+  4) `cd' to atlc-X.Y.z (whatever X, Y and Z are for the specific
       vesion) and type
      `./configure' to configure the package for your system.  If you're
      using `csh' on an old version of System V, you might need to type
@@ -79,34 +62,24 @@ The simplest way to compile this package is:
      Running `configure' takes a while.  While running, it prints some
      messages telling which features it is checking for.
 
-     IF you want support for multiple processors, add the --with-threads
-     option to configure. 
-
      If atlc compiles and links okay when you run 'make', but fails to compile
      or link when running 'make check', re-configure with the option 
      --disable-hardware-info Let me know of any system that need this 
      option. 
 
-     In the unlikey event you want to add support for MPI (it does not 
-     work, hence it's unlikey you will want this, unless you intend
-     developing this), then add the --with-mpi or --with-mpe options.
+   5) Type `make' to compile the package.
 
-     You can NOT use --with-threads and --with-mpi, or --with-threads with
-     --with-mpe. 
-
-   7) Type `make' to compile the package.
-
-   8) Type 'make check' to run quite a few checks 
+   6) Type 'make check' to run quite a few checks 
 
      This will also run a benchmark, which will generate so
      timing information. This can be used to optimise the flags. 
 
-   9) Type 'make install' if you wish to install the programs and 
+   7) Type 'make install' if you wish to install the programs and 
      example files. If you don't want to install the examples
      (they take up about 120 Mb) run 'make install-exec' and 
      'make install-man'
 
-  10) You can remove the program binaries and object files from the
+   8) You can remove the program binaries and object files from the
      source code directory by typing `make clean'. To also remove the
      files that `configure' created (so you can compile the package for
      a different kind of computer), type `make distclean'.  There is
