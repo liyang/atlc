@@ -67,7 +67,7 @@ eexample.U.bin  binary file, with just the energy (U=CV^2).
 
 extern double image_fiddle_factor;
 
-void write_fields_for_directional_couplers(char * filename, struct transmission_line_data data)
+void write_fields_for_directional_couplers(char * filename, struct transmission_line_properties data)
 {
   FILE *Ex_bin_fp, *Ey_bin_fp, *E_bin_fp, *V_bin_fp, *U_bin_fp;
   FILE *Ex_bmp_fp, *Ey_bmp_fp, *E_bmp_fp, *V_bmp_fp, *U_bmp_fp;
@@ -217,5 +217,4 @@ void write_fields_for_directional_couplers(char * filename, struct transmission_
   fwrite(&(image_dat[0]),size,1,permittivity_bmp_fp);
   fclose(permittivity_bin_fp);
   fclose(permittivity_bmp_fp);
-  exit(8);
 }
