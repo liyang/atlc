@@ -68,6 +68,7 @@ test6.bmp \
 test6.bmp.txt \
 test7.bmp \
 test7.bmp.txt \
+test-coupler1.bmp \
 twin-wire.bmp \
 twin-wire.bmp.txt \
 twin-wire2.bmp \
