@@ -1,0 +1,1 @@
+mix.bmp 2 Er= 10.20 Zo=  38.13 Ohms C=  279.4 pF/m L=  406.2 nH/m v= 9.387e+07 m/s v_f= 0.313 VERSION= 4.2.8

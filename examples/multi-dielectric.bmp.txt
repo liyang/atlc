@@ -1,0 +1,1 @@
+multi-dielectric.bmp 2 Er=  2.35 Zo=  54.58 Ohms C=   93.8 pF/m L=  279.4 nH/m v= 1.954e+08 m/s v_f= 0.652 VERSION= 4.2.8

@@ -1,0 +1,1 @@
+ushape.bmp 2 Er=  1.00 Zo=  43.64 Ohms C=   76.4 pF/m L=  145.6 nH/m v= 2.998e+08 m/s v_f= 1.000 VERSION= 4.2.8
