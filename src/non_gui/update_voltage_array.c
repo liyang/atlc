@@ -40,99 +40,146 @@ Out[10]= {{vij ->
  
 */
 
-/*
-void update_voltage_array(int start_row, int end_row, double **V_from, double **V_to)
+
+#include "config.h"
+
+#ifdef HAVE_STDLIB_H
+#include <stdlib.h>
+#endif 
+
+#ifdef HAVE_STDIO_H
+#include <stdio.h>
+#endif 
+
+#include "definitions.h"
+
+
+extern int width, height;
+extern double **Er;
+extern unsigned char  **oddity;
+extern int dielectrics_to_consider_just_now;
+extern double r; 
+extern int coupler;
+
+#include "exit_codes.h"
+
+/* The following function updates the voltage on the matrix V_to given data about the 
+oddity of the location i,j and the voltages in the matrix V_from. It does this for n interations
+between rows jmin and jmax inclusive and between columns imain and imax inclusive */
+
+void update_voltage_array(int nmax, int imin, int imax, int jmin, int jmax, double **V_from, double **V_to)
 {
-  int i, j, type;
+  int k, i, j, n;  
+  unsigned char oddity_value;
+  double Va, Vb, Vc, Vd, ERa, ERb, ERc, ERd;
   double a, b, c, d, e, f, g, h;
-*/
 
-#ifdef LOOP_ORDER_A
-  for(i= start_column; i <=end_column; ++i){
-    for(j=0; j<=height-1; ++j) {
-#endif
+  for(n=0; n  < nmax; ++n)
+    for(k=0; k < 4; ++k)
+      for (i = k&1 ? imax : imin;   k&1 ? i >=imin : i <= imax ;  k&1 ? i-- : i++)
+        for (j = (k==0 || k ==3) ? jmin : jmax; (k ==0 || k == 3)  ? j <= jmax : j >= jmin ; (k == 0 || k ==3) ?  j++ : j--){
+        oddity_value=oddity[i][j];
+	// if(i==2 && j == 2)
+	  // printf("i=2 and j=2\n");
 
-#ifdef LOOP_ORDER_B
-  for(i= end_column; i >=start_column; --i){
-    for(j=0; j<=height-1; ++j) {
-#endif
+        if( oddity_value == CONDUCTOR_MINUS_ONE_V )
+           V_to[i][j]= -1.0;
 
-#ifdef LOOP_ORDER_C
-  for(i= start_column; i <=end_column; ++i){
-    for(j=height-1; j>=0; --j) {
-#endif
+        else if( oddity_value == CONDUCTOR_ZERO_V ) 
+           V_to[i][j]= 0.0;
 
-#ifdef LOOP_ORDER_D
-  for(i= end_column; i >=start_column; --i){
-    for(j=height-1; j>=0; --j) {
-#endif
-      type = cell_type[i][j];
-      if(type >=DIELECTRIC) { /*only update dielectrics, not conductors*/
-	/* normal internal position, dielectric */
-        if(type == DIELECTRIC && i > 0 && j > 0 && i < width-1 && j < width-1)
-          V_to[i][j]=r*(V_from[i][j+1]+V_from[i+1][j]+V_from[i][j-1]+V_from[i-1][j])/4.0+(1-r)*V_from[i][j];
-	  /* normal internal position, but non-uniform dielectric */
-        else if( i > 0 && j > 0 && i < width-1 && j < width-1 && type != DIELECTRIC) {
-          a=(Er[i][j] * Er[i][j-1] * V_from[i][j-1])/(Er[i][j] + Er[i][j-1]);
-          b=(Er[i][j] * Er[i][j+1] * V_from[i][j+1])/(Er[i][j] + Er[i][j+1]);
-          c=(Er[i][j] * Er[i-1][j] * V_from[i-1][j])/(Er[i][j] + Er[i-1][j]);
-          d=(Er[i][j] * Er[i+1][j] * V_from[i+1][j])/(Er[i][j] + Er[i+1][j]);
-     
-          e=(Er[i][j] * Er[i][j-1])/(Er[i][j]+Er[i][j-1]);
-          f=(Er[i][j] * Er[i][j+1])/(Er[i][j]+Er[i][j+1]);
-          g=(Er[i][j] * Er[i-1][j])/(Er[i][j]+Er[i-1][j]);
-          h=(Er[i][j] * Er[i+1][j])/(Er[i][j]+Er[i+1][j]);
-                        
-          V_to[i][j]=r*(a+b+c+d)/(e+f+g+h) + (1-r)*V_from[i][j];
-        }
-        /* the following few lines calculate the voltages at the edges.
-        They are not accurate, but better than no calculation at all 
-
-
-        if(i==1 && cell_type[0][j]>=0)
-          Vij[0][j]=(Vij[0][j+1]+Vij[0][j-1])/2.0; 
-        if(i==width-2 && cell_type[width-1][j] >= DIELECTRIC)
-          Vij[width-1][j]=(Vij[width-1][j+1]+Vij[width-1][j-1])/2.0;
-        if(j==1 && cell_type[i][0]>=0)
-          Vij[i][0]=(Vij[i][j-1]+Vij[i][j+1])/2.0;
-        if(j==height-2 && cell_type[i][width-1]>=DIELECTRIC)
-          Vij[i][height-1]=(Vij[i][j-1]+Vij[i][j+1])/2.0; */
-
-	else if( i == 0 && j == 0 && cell_type[i][j] >= DIELECTRIC) /* top left */
-	{
-          V_to[i][j]=(V_from[1][0]+V_from[0][1])/2.0;                                        /* top left  */
-        }
-	else if ( i == width-1 && j == 0 && cell_type[i][j] >= DIELECTRIC) {
-          V_to[i][j]=(V_from[width-2][0]+V_from[width-1][1])/2.0;                      /* top right */
-        }
-        else if(i == 0 && j == height-1 && cell_type[i][j] >= DIELECTRIC){
-          V_to[i][j]=(V_from[0][height-2]+V_from[1][height-1])/2.0;                   /* bottom left */
-        }
-	else if( i == width-1 && j == width-1 && cell_type[i][j] >= DIELECTRIC){
-          V_to[i][j]=(V_from[width-2][height-1]+V_from[width-1][height-2])/2.0; /* bottom right */
-	}
-
-	else if( i == 0 && j > 0 && j < height-1 && cell_type[i][j] >= DIELECTRIC) { /* left hand side  */
-	  V_to[i][j]=0.25*(V_from[0][j-1]+V_from[0][j+1] + 2*V_from[1][j]);
-        }
-
-	else if( i == width-1 && j > 0 && j < height-1 && cell_type[i][j] >= DIELECTRIC){                              /* right hand side */
-	  V_to[i][j]=0.25*(V_from[width-1][j+1]+V_from[width-1][j-1]+2*V_from[width-2][j]);
-        }
+        else if( oddity_value == CONDUCTOR_PLUS_ONE_V ) 
+	  V_to[i][j]= +1.0;
         
-	else if( j == 0 && i > 0 &&  i < width-1 && cell_type[i][j] >= DIELECTRIC){                                   /* top row */ 
-	  V_to[i][j]=0.25*(V_from[i-1][0]+V_from[i+1][0]+2*V_from[i][1]);
+        else if(oddity_value == ORDINARY_INTERIOR_POINT)  
+          V_to[i][j]=r*(V_from[i][j+1]+V_from[i+1][j]+V_from[i][j-1]+V_from[i-1][j])/4.0+(1-r)*V_from[i][j];
+        else if (i > 1 && j > 0 && i < width-1 && j < height-1) {
+        a=(Er[i][j] * Er[i][j-1] * V_from[i][j-1])/(Er[i][j] + Er[i][j-1]);
+        b=(Er[i][j] * Er[i][j+1] * V_from[i][j+1])/(Er[i][j] + Er[i][j+1]);
+        c=(Er[i][j] * Er[i-1][j] * V_from[i-1][j])/(Er[i][j] + Er[i-1][j]);
+	d=(Er[i][j] * Er[i+1][j] * V_from[i+1][j])/(Er[i][j] + Er[i+1][j]);
+
+        e=(Er[i][j] * Er[i][j-1])/(Er[i][j]+Er[i][j-1]);
+        f=(Er[i][j] * Er[i][j+1])/(Er[i][j]+Er[i][j+1]);
+        g=(Er[i][j] * Er[i-1][j])/(Er[i][j]+Er[i-1][j]);
+        h=(Er[i][j] * Er[i+1][j])/(Er[i][j]+Er[i+1][j]);
+          Va=V_from[i-1][j]; 
+          Vb=V_from[i+1][j];
+          Vc=V_from[i][j+1];
+          Vd=V_from[i][j-1];
+
+          ERa=V_from[i-1][j]; 
+          ERb=V_from[i+1][j];
+          ERc=V_from[i][j+1];
+          ERd=V_from[i][j-1];
+
+          // V_to[i][j]=(Va+Vb)/4.0 + (Vb-Va)*(ERb-ERa)/(16*Er[i][j]) + (Vd+Vc)/4.0 + (Vc-Vd)*(ERc-ERd)/(16.0*Er[i][j]);
+	  V_to[i][j]=r*(a+b+c+d)/(e+f+g+h) + (1-r)*V_from[i][j];
         }
 
-	else if( j == height-1 && i > 0 &&  i < width-1 && cell_type[i][j] >= DIELECTRIC){                            /* bottom row */ 
-	  V_to[i][j]=0.25*(V_from[i-1][height-1]+V_from[i+1][height-1]+2*V_from[i][height-2]);
+#define gg
+
+#ifdef gg
+        /* the following lines calculate the voltages at the edges and the corners */
+
+        else if( oddity_value == TOP_LEFT_CORNER ) {  /* top left */
+          V_to[i][j]=0.5*(V_from[1][0]+V_from[0][1]);               
+	  // printf("done top left corner %d %d \n",i,j);
         }
-	else {
-	  fprintf(stderr,"Internal error in update_voltage_array.c\n");
-	  fprintf(stderr,"i=%d j=%d cell_type[%d][%d]=%d\n",i,j,i,j,cell_type[i][j]);
-	  exit(INTERNAL_ERROR);
+        else if( oddity_value == TOP_RIGHT_CORNER ) {
+          V_to[i][j]=0.5*(V_from[width-2][0]+V_from[width-1][1]);         /* top right */
+	  // printf("done top right corner %d %d \n",i,j);
         }
-      }
-    }
-  }
-/* } */
+
+        else if(oddity_value == BOTTOM_LEFT_CORNER) {
+          V_to[i][j]=0.5*(V_from[0][height-2]+V_from[1][height-1]);       /* bottom left */
+	  // printf("done bottomleft corner %d %d \n",i,j);
+        }
+
+        else if( oddity_value == BOTTOM_RIGHT_CORNER) {   
+          V_to[i][j]=0.5*(V_from[width-2][height-1]+V_from[width-1][height-2]); /* bottom right */
+	  // printf("done bottom right corner %d %d \n",i,j);
+        }
+
+        /* Now the sides */
+
+        else if( oddity_value == ORDINARY_POINT_LEFT_EDGE )  /* left hand side  */
+          V_to[i][j]=0.25*(V_from[0][j-1]+V_from[0][j+1] + 2*V_from[1][j]);
+
+        else if( oddity_value == ORDINARY_POINT_RIGHT_EDGE)   /* right hand side */
+          V_to[i][j]=0.25*(V_from[width-1][j+1]+V_from[width-1][j-1]+2*V_from[width-2][j]);
+        
+        else if( oddity_value == ORDINARY_POINT_TOP_EDGE ){ /* top row */ 
+          V_to[i][j]=0.25*(V_from[i-1][0]+V_from[i+1][0]+2*V_from[i][1]);
+        }
+
+        else if( oddity_value == ORDINARY_POINT_BOTTOM_EDGE ){   /* bottom row */ 
+          V_to[i][j]=0.25*(V_from[i-1][height-1]+V_from[i+1][height-1]+2*V_from[i][height-2]);
+        }
+
+
+#endif
+
+#ifdef metal
+        /* Now those with metal around */ 
+        else if( oddity_value == METAL_LEFT  ){   /* metal left */ 
+          V_to[i][j]=0.50*(V_from[i-1][height]+V_from[i][height]);
+        }
+        else if( oddity_value == METAL_RIGHT  ){   /* metal right*/ 
+          V_to[i][j]=0.50*(V_from[i-1][height]+V_from[i][height]);
+        }
+        else if( oddity_value == METAL_ABOVE  ){   /* metal above */ 
+          V_to[i][j]=0.50*(V_from[i-1][height]+V_from[i][height]);
+        }
+        else if( oddity_value == METAL_BELOW  ){   /* metal below*/ 
+          V_to[i][j]=0.50*(V_from[i-1][height]+V_from[i][height]);
+        }
+#endif
+        
+	else if ( oddity[i][j] == UNDEFINED_ODDITY)  {
+          fprintf(stderr,"Internal error in update_voltage_array.c\n");
+          fprintf(stderr,"i=%d j=%d oddity[%d][%d]=%d\n",i,j,i,j,oddity[i][j]);
+          exit(INTERNAL_ERROR);
+        } /* end if if an internal error */
+      } /* end of j loop */
+} 

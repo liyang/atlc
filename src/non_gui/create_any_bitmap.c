@@ -51,5 +51,5 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
     usage_create_any_bitmap();    
     exit_with_msg_and_exit_code("",PROGRAM_CALLED_WITH_WRONG_NUMBER_OF_ARGUMENTS);
   }
-  /* return(OKAY); */
+  return(OKAY);
 }

@@ -49,31 +49,6 @@ char *string(long nl,long nh)
   return v-nl;
 }
 
-int **imatrix(long nrl, long nrh, long ncl, long nch)
-/* allocate a int matrix with subscript range m[nrl..nrh][ncl..nch] */
-{
-	long i, nrow=nrh-nrl+1,ncol=nch-ncl+1;
-	int **m;
-
-	/* allocate pointers to rows */
-	m=(int **) malloc((size_t)((nrow+NR_END)*sizeof(int*)));
-	if (!m) nrerror("allocation failure 1 in matrix()");
-	m += NR_END;
-	m -= nrl;
-
-
-	/* allocate rows and set pointers to them */
-	m[nrl]=(int *) malloc((size_t)((nrow*ncol+NR_END)*sizeof(int)));
-	if (!m[nrl]) nrerror("allocation failure 2 in matrix()");
-	m[nrl] += NR_END;
-	m[nrl] -= ncl;
-
-	for(i=nrl+1;i<=nrh;i++) m[i]=m[i-1]+ncol;
-
-	/* return pointer to array of pointers to rows */
-	return m;
-}
-
 unsigned char *ustring(long nl,long nh)
 {
   unsigned char *v;
@@ -127,17 +102,56 @@ signed char **scmatrix(long nrl, long nrh, long ncl, long nch)
 	return m;
 }
 
+
+/* allocate a unsigned char matrix with subscript range m[nrl..nrh][ncl..nch] */
+unsigned char **ucmatrix(long nrl, long nrh, long ncl, long nch)
+{
+	long i, nrow=nrh-nrl+1,ncol=nch-ncl+1;
+	unsigned char **m;
+	/* allocate pointers to rows */
+	m=(unsigned char **) malloc((size_t)((nrow+NR_END)*sizeof(unsigned char*)));
+	if (!m) 
+	  exit_with_msg_and_exit_code("Memory allocation failure #1 in scmatrix()",MEMORY_ALLOCATION_ERROR_IN_UCMATRIX);
+	m += NR_END;
+	m -= nrl;
+
+	/* allocate rows and set pointers to them */
+	m[nrl]=(unsigned char *) malloc((size_t)((nrow*ncol+NR_END)*sizeof(unsigned char)));
+	if (!m[nrl]) 
+	  exit_with_msg_and_exit_code("Memory allocation failure #2 in ucmatrix()",MEMORY_ALLOCATION_ERROR_IN_UCMATRIX);
+
+	m[nrl] += NR_END;
+	m[nrl] -= ncl;
+
+	for(i=nrl+1;i<=nrh;i++) m[i]=m[i-1]+ncol;
+
+	/* return pointer to array of pointers to rows */
+	return m;
+}
+
+
 /* free a signed char matrix allocated by cmatrix() */
 void free_scmatrix(signed char **m, long nrl, long nrh, long ncl, long nch)
 {
   if(nrh <= nrl)
-      exit_with_msg_and_exit_code("nrh <= nrl in free_cmatrix()",SILLY_ARGUMENTS_IN_FREE_SCMATRIX);
+      exit_with_msg_and_exit_code("nrh <= nrl in free_scmatrix()",SILLY_ARGUMENTS_IN_FREE_SCMATRIX);
   if(nch <= ncl)
-      exit_with_msg_and_exit_code("nch <= ncl in free_cmatrix()",SILLY_ARGUMENTS_IN_FREE_SCMATRIX);
+      exit_with_msg_and_exit_code("nch <= ncl in free_scmatrix()",SILLY_ARGUMENTS_IN_FREE_SCMATRIX);
   free((FREE_ARG) (m[nrl]+ncl-NR_END));
   free((FREE_ARG) (m+nrl-NR_END));
 }
 
+
+/* free a unsigned char matrix allocated by ucmatrix() */
+void free_ucmatrix(unsigned char **m, long nrl, long nrh, long ncl, long nch)
+{
+  if(nrh <= nrl)
+      exit_with_msg_and_exit_code("nrh <= nrl in free_ucmatrix()",SILLY_ARGUMENTS_IN_FREE_UCMATRIX);
+  if(nch <= ncl)
+      exit_with_msg_and_exit_code("nch <= ncl in free_ucmatrix()",SILLY_ARGUMENTS_IN_FREE_UCMATRIX);
+  free((FREE_ARG) (m[nrl]+ncl-NR_END));
+  free((FREE_ARG) (m+nrl-NR_END));
+}
 
 double **dmatrix(long nrl, long nrh, long ncl, long nch)
 /* allocate a double matrix with subscript range m[nrl..nrh][ncl..nch] */
@@ -196,14 +210,6 @@ void free_cx(char **m, long nrl, long nrh, long ncl, long nch)
   free((FREE_ARG) (m+nrl-NR_END));
 }
 
-void free_imatrix(int **m, long nrl, long nrh, long ncl, long nch)
-/* free an int matrix allocated by imatrix() */
-{
-  free((FREE_ARG) (m[nrl]+ncl-NR_END));
-  free((FREE_ARG) (m+nrl-NR_END));
-}
-
-
 double *dvector(long nl, long nh)
 /* allocate a double vector with subscript range v[nl..nh] */
 {
@@ -214,10 +220,3 @@ double *dvector(long nl, long nh)
 	return v-nl+NR_END;
 }
 
-void nrerror(char error_text[])
-/* Numerical Recipes standard error handler */
-{
-  fprintf(stderr,"Numerical Recipes run-time error...\n");
-  fprintf(stderr,"%s\n",error_text);
-  fprintf(stderr,"...now exiting to system...\n");
-}

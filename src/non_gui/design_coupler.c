@@ -21,8 +21,8 @@ USA.
 Dr. David Kirkby, e-mail drkirkby at ntlworld.com 
 
 */
-#include "config.h"
 
+#include "config.h"
 
 #include "definitions.h"
 #include "exit_codes.h"

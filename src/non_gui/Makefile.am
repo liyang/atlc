@@ -9,6 +9,7 @@ find_optimal_dimensions_for_microstrip_coupler \
 create_bmp_for_rect_cen_in_rect_coupler 
 
 atlc_SOURCES = atlc.c read_bitmap_file_headers.c \
+update_voltage_array.c \
 check_for_boundaries.c \
 memory.c setup_arrays.c \
 finite_difference_single_threaded.c \

@@ -103,7 +103,7 @@ int main(int argc, char **argv) /* Read parameters from command line here   */
       convert_create_bmp_for_circ_in_circ_dimensions_to_integers(bmp_size);
       write_bitmap(image_data_fp, not_used);
       x=(double) (d*d+D*D-4*h*h)/(2*D*d);
-      Zo=60*log(x+sqrt(x*x-1))/sqrt(Er1); 
+      Zo=59.9585*log(x+sqrt(x*x-1))/sqrt(Er1); 
       Zo=log(x+sqrt(x*x-1))/(1000*sqrt(EPSILON_0)*sqrt(Er1)*sqrt(10*M_PI));
 
       if(verbose == TRUE)

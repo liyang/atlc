@@ -29,10 +29,10 @@ is around it. See Green paper to understand what they mean */
 
 #include "config.h"
 #include "definitions.h"
+#include "exit_codes.h"
 
 extern int width, height;
-extern int **oddity;
-extern int **cell_type;
+extern unsigned char **cell_type, **oddity;
 extern double **Er;
 
 #ifdef HAVE_STDLIB_H
@@ -41,110 +41,124 @@ extern double **Er;
 
 void set_oddity_from_Greens_paper(void) 
 {
-  int i, j, odd;
-  double Ka, Kb, Kc, Kd, K;
-  for(i=0;i<width; ++i)
-  {
-    for(j=0;j<height;++j)
-    {  
-      /* If the oddity value is a fixed voltage, then let it 
-      remain as such */
-      if(i == 1 && j == 1)
-	printf("hello cell_type[1][1]=%d\n",cell_type[1][1]);
+  int i, j;
+  // double Ka, Kb, Kc, Kd, K;
+  int cl, cr, ca, cb;
+  unsigned char c; 
+
+  /* Its easier to set the endge values first, as it
+  reduces the amount of checking needed in the main body.
+  There are only 11 cases here - 3 types of metal, 
+  the four corners, and the four sides */
+
+  for(i=0;i<width; ++i) {
+    for(j=0;j<height;++j) {  
+
+      oddity[i][j]=UNDEFINED_ODDITY;  /* Stick it to some underfined status  */
+
+      c=cell_type[i][j];   /* Cell type at point (i,j) */
 
 
-      oddity[i][j]=ORDINARY_INTERIOR_POINT; 
-      odd=oddity[i][j]; 
+      /* The 3 metal cases can be quickly checked and the 
+      oddity value assigned to a fixed value depending on
+      whether it's -1, 0 or +1 V */
 
-      if(cell_type[i][j] == CONDUCTOR_ZERO_V )
+      if(c <= CONDUCTOR_PLUS_ONE_V ) /* a metal */
+	oddity[i][j]=c;    
+
+
+      /* Now do the 4 courners */
+      else if( (i == 0) && (j ==  height-1)  ) 
+	oddity[i][j]=BOTTOM_LEFT_CORNER;
+
+      else if ( (i == width-1) && (j == height-1)  )  
+	oddity[i][j]=BOTTOM_RIGHT_CORNER;
+
+      else if( (i == 0) && (j == 0) ) 
+	oddity[i][j]=TOP_LEFT_CORNER;
+
+      else if( (i == width-1) && (j == 0)  )
+	oddity[i][j]=TOP_RIGHT_CORNER;
+
+      /* Now the four edges */ 
+      else if ( i == 0 )
+	oddity[i][j]=ORDINARY_POINT_LEFT_EDGE;
+
+      else if ( j == 0 ) 
+	oddity[i][j]=ORDINARY_POINT_TOP_EDGE;
+
+      else if ( j == height-1) 
+	oddity[i][j]=ORDINARY_POINT_BOTTOM_EDGE;
+
+      else if ( i == width-1 ) 
+	oddity[i][j]=ORDINARY_POINT_RIGHT_EDGE;
+
+
+      else if ( (i == 0 || i == width-1 || j == 0 || j == height-1 ) && (oddity[i][j]==UNDEFINED_ODDITY)) {
+	fprintf(stderr,"Internal error: one of the edge points (%d,%d) is still undefined\n",i,j);
+	fprintf(stderr, "ZZZZZZZZZZZZZ width=%d height=%d\n", width, height);
+	fprintf(stderr,"Error set_oddity_from_Greens_paper.c\n");
+	exit(INTERNAL_ERROR);
+      }
+    } /* end of for(j=0;j<height-0;++j) { */
+  } /* end of for(i=0;i<width-0; ++i) { */
+  /* With the oddity values of all the edges now know, the centre
+  values can be attempted */
+
+  for(i=1;i<width-1; ++i) {
+    for(j=1;j<height-1;++j) {  
+
+      c=cell_type[i][j];   /* Cell type at point (i,j) */
+      cl=cell_type[i-1][j];  /* Cell type to left of point (i,j) */
+      cr=cell_type[i+1][j];  /* Cell type to right of point (i,j) */
+      ca=cell_type[i][j-1];  /* Cell type above point (i,j) */
+      cb=cell_type[i][j+1];  /* Cell type below point (i,j) */
+
+      if(i==20 && j == 58)
+	printf("cl =%d ca = %d cr = %d cb = %d\n",cl, ca, cr, cb);
+
+
+      /* If the conductor is at a fixed voltage, it must stay there
+      so there is nothing to do with it */
+
+      if(c == CONDUCTOR_ZERO_V )
         oddity[i][j] = CONDUCTOR_ZERO_V;
 
-      else if(cell_type[i][j]== CONDUCTOR_PLUS_ONE_V)
+      else if(c== CONDUCTOR_PLUS_ONE_V)
         oddity[i][j] = CONDUCTOR_PLUS_ONE_V;
 
-      else if(cell_type[i][j]== CONDUCTOR_MINUS_ONE_V )
+      else if(c == CONDUCTOR_MINUS_ONE_V )
         oddity[i][j] = CONDUCTOR_MINUS_ONE_V; 
 
-      else if( i > 0 && i <width-1 && j > 0 && j < height-1 && cell_type[i][j] >= 0 ) {
-        K=Er[i][j];
-        Ka=Er[i-1][j];
-        Kb=Er[i+1][j];
-        Kc=Er[1][j+1];
-        Kd=Er[i][j-1];
-	if ( K != Ka || K != Kb )
-          oddity[i][j]=X_DIELECTRIC_DIELECTRIC_INTERFACE; 
-	if (  K != Kc || K != Kd)
-          oddity[i][j]=Y_DIELECTRIC_DIELECTRIC_INTERFACE; 
-      }
+      else if ( cr <= CONDUCTOR_PLUS_ONE_V && cb<= CONDUCTOR_PLUS_ONE_V)
+        oddity[i][j]= METAL_BELOW_AND_RIGHT;
 
-      /* Fill in the edges */
+      else if ( cr <= CONDUCTOR_PLUS_ONE_V && ca<= CONDUCTOR_PLUS_ONE_V)
+        oddity[i][j]= METAL_ABOVE_AND_RIGHT;
 
-#ifdef TWO
-      if ( (j == height-1) && (cell_type[i][j] >= 0)) /* 2 */
-	oddity[i][j]=ORDINARY_POINT_BOTTOM_EDGE;
-#endif
+      else if ( cl <= CONDUCTOR_PLUS_ONE_V && cb<= CONDUCTOR_PLUS_ONE_V)
+        oddity[i][j]= METAL_BELOW_AND_LEFT;
 
-#ifdef THREE
-      if ( (j == 0) && (cell_type[i][j] >= 0) ) /* 3 */
-	oddity[i][j]=ORDINARY_POINT_TOP_EDGE;
-#endif
+      else if ( cl <= CONDUCTOR_PLUS_ONE_V && ca<= CONDUCTOR_PLUS_ONE_V)
+        oddity[i][j]= METAL_ABOVE_AND_LEFT;
 
-#ifdef FOUR
-      if ( (i == 0) && (cell_type[i][j] >= 0) ) /* 4 */
-	oddity[i][j]=ORDINARY_POINT_LEFT_HAND_EDGE;
-#endif
+      else if ( cl <= CONDUCTOR_PLUS_ONE_V && cb<= CONDUCTOR_PLUS_ONE_V)
+        oddity[i][j]= METAL_BELOW_AND_LEFT;
 
-#ifdef FIVE
-      if ( (i == width-1) && (cell_type[i][j] >= 0) ) /* 5 */
-	oddity[i][j]=ORDINARY_POINT_RIGHT_HAND_EDGE;
-#endif
+      else if ( ca <= CONDUCTOR_PLUS_ONE_V )
+	oddity[i][j]= METAL_ABOVE;
 
+      else if ( cb <= CONDUCTOR_PLUS_ONE_V )
+	oddity[i][j]= METAL_BELOW;
 
-      /* fill in the corners, overwriting the edges */
+      else if ( cl <= CONDUCTOR_PLUS_ONE_V )
+	oddity[i][j]= METAL_LEFT;
 
-#ifdef SIX
-      if( (i == 0) && (j ==  height-1) && (cell_type[i][j] >= 0) ) /* case  6 */
-	oddity[i][j]=CORNER_POINT_BOTTOM_LEFT_HAND_EDGE;
-#endif
-
-#ifdef SEVEN
-      if ( (i == width-1) && (j == height-1) && (cell_type[i][j] >= 0) )  /* case  7 */
-	oddity[i][j]=CORNER_POINT_BOTTOM_RIGHT_HAND_EDGE;
-#endif
-     
-#ifdef EIGHT
-      if( (i == 0) && (j == 0) && (cell_type[i][j]) >= 0 )  /* case  8 */
-	oddity[i][j]=CORNER_POINT_TOP_LEFT_HAND_EDGE;
-#endif
-
-#ifdef NINE
-      if( (i == width-1) && (j == 0) && (cell_type[i][i]) >= 0 && (cell_type[i][j]) >= 0 )
-	oddity[i][j]=CORNER_POINT_TOP_RIGHT_HAND_EDGE;
-#endif
-
-
-      /* Fill in any regions where a conductor (?) meets a dielectric */
-#ifdef TEN
-      if ( i > 0 && i <width-1 && j > 0 && j < height-1 && \
-      cell_type[i-1][j] < 0 && cell_type[i][j-1] < 0 && cell_type[i+1][j-1] < 0 && \
-      cell_type[i-1][j-1] >= 0 && cell_type[i][j-1] >= 0 && cell_type[i+1][j-1] >= 0) {
-	printf("dielectric to top %d %d\n",i,j);
-	oddity[i][j]=DIELECTRIC_ROW_INTERFACE_DIELECTRIC_TO_TOP; /* case 10 */
-      }
-#endif
-
-#ifdef ELEVEN
-      else if ( i > 0 && i <width-1 && j > 0 && j < height-1 && \
-      cell_type[i-1][j] < 0 && cell_type[i][j] < 0 && cell_type[i+1][j] <  0 && \
-      cell_type[i][j+1] >= 0 ) {
-	printf("dielectric to top %d %d\n",i,j);
-	oddity[i][j]=DIELECTRIC_ROW_INTERFACE_DIELECTRIC_TO_BOTTOM; /* case 11 */
-      }
-#endif
-
-
+      else if ( cr <= CONDUCTOR_PLUS_ONE_V )
+	oddity[i][j]= METAL_RIGHT;
+      else 
+	oddity[i][j]= ORDINARY_INTERIOR_POINT;
     }/* end of for i=0 to width-1 */
   } /* end of for j= 0 to height-1 */
-  printf("oddity[1][1]=%d in Gree\n",oddity[1][1]);
 }
 

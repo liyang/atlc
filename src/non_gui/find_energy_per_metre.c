@@ -25,7 +25,7 @@ Dr. David Kirkby, e-mail drkirkby at ntlworld.com
 #include "definitions.h"
 
 extern double **Vij, **Er;
-extern signed char **oddity;
+extern unsigned char **oddity;
 extern int dielectrics_to_consider_just_now;
 extern double r;
 extern int width, height;

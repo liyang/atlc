@@ -37,57 +37,51 @@ Dr. David Kirkby, e-mail drkirkby at ntlworld.com
 #define       FREE_ARG char*
 #define       NR_END 1
 
+#define    UNDEFINED_ODDITY                                                  255
+#define    CONDUCTOR_MINUS_ONE_V                                               5 
+#define    CONDUCTOR_ZERO_V                                                   10 
+#define    CONDUCTOR_PLUS_ONE_V                                               15 
 
-#define    CONDUCTOR_FLOATING          -3000
-#define    CONDUCTOR_ZERO_V            -1000 
-#define    CONDUCTOR_PLUS_ONE_V         -999 
-#define    CONDUCTOR_MINUS_ONE_V       -1001 
-#define    DIELECTRIC                      0 
-#define    DIFFERENT_DIELECTRIC_NEARBY     1
-#define    METAL_LEFT                      2
-#define    METAL_RIGHT                     4
-#define    METAL_BELOW                     8
-#define    METAL_ABOVE                    16
+#define    CONDUCTOR_FLOATING                                                 20
+#define    DIELECTRIC                                                         30
 
-/* The following follows Table VIII in Green's paper
-"Numerical Solution of Transmisssiion Line problems", 
-Harry E. Green, IEEE Transactions of Microwave theory and 
-techniques, vol MIT-13, number 5, September 1965 */
-
-#define    ORDINARY_INTERIOR_POINT                                             1
-#define    ORDINARY_POINT_BOTTOM_EDGE                                          2
-#define    ORDINARY_POINT_TOP_EDGE                                             3
-#define    ORDINARY_POINT_LEFT_HAND_EDGE                                       4
-#define    ORDINARY_POINT_RIGHT_HAND_EDGE                                      5
-#define    CORNER_POINT_BOTTOM_LEFT_HAND_EDGE                                  6
-#define    CORNER_POINT_BOTTOM_RIGHT_HAND_EDGE                                 7
-#define    CORNER_POINT_TOP_LEFT_HAND_EDGE                                     8
-#define    CORNER_POINT_TOP_RIGHT_HAND_EDGE                                    9
-#define    DIELECTRIC_ROW_INTERFACE_DIELECTRIC_TO_TOP                         10
-#define    DIELECTRIC_ROW_INTERFACE_DIELECTRIC_TO_BOTTOM                      11
-#define    DIELECTRIC_COLUMN_INTERFACE_DIELECTRIC_TO_LEFT_HAND_EDGE           12
-#define    DIELECTRIC_COLUMN_INTERFACE_DIELECTRIC_TO_RIGHT_HAND_EDGE          13
-#define    ANGLE_DIELECTRIC_ACUTE_FIRST_QUADRANT                              14
-#define    ANGLE_DIELECTRIC_ACUTE_SECOND_QUADRANT                             15
-#define    ANGLE_DIELECTRIC_ACUTE_THIRD_QUADRANT                              16
-#define    ANGLE_DIELECTRIC_ACUTE_FOURTH_QUADRANT                             17
-#define    ANGLE_DIELECTRIC_OBTUSE_FIRST_QUADRANT                             18
-#define    ANGLE_DIELECTRIC_OBTUSE_SECOND_QUADRANT                            19
-#define    ANGLE_DIELECTRIC_OBTUSE_THIRD_QUADRANT                             20
-#define    ANGLE_DIELECTRIC_OBTUSE_FOURTH_QUADRANT                            21
-#define    DIELECTRIC_INTERFACE_TO_BOTTOM_EDGE_DIELECTRIC_TO_LEFT_HAND_EDGE   22
-#define    DIELECTRIC_INTERFACE_TO_BOTTOM_EDGE_DIELECTRIC_TO_RIGHT_HAND_EDGE  23
-#define    DIELECTRIC_INTERFACE_TO_TOP_EDGE_DIELECTRIC_TO_LEFT_HAND_EDGE      24
-#define    DIELECTRIC_INTERFACE_TO_TOP_EDGE_DIELECTRIC_TO_RIGHT_HAND_EDGE     25
-#define    DIELECTRIC_INTERFACE_TO_LEFT_HAND_EDGE_DIELECTRIC_TO_TOP           26
-#define    DIELECTRIC_INTERFACE_TO_LEFT_HAND_EDGE_DIELECTRIC_TO_BOTTOM        27
-#define    DIELECTRIC_INTERFACE_TO_RIGHT_HAND_EDGE_DIELECTRIC_TO_TOP          28
-#define    DIELECTRIC_INTERFACE_TO_RIGHT_HAND_EDGE_DIELECTRIC_TO_BOTTOM       29
-
-#define    METAL_DIELECTRIC_INTERFACE  30 
-#define    X_DIELECTRIC_DIELECTRIC_INTERFACE 40
-#define    Y_DIELECTRIC_DIELECTRIC_INTERFACE 50
-
+#define    ORDINARY_INTERIOR_POINT                                            50
+#define    ORDINARY_POINT_BOTTOM_EDGE                                         55
+#define    ORDINARY_POINT_TOP_EDGE                                            60
+#define    ORDINARY_POINT_LEFT_EDGE                                      65
+#define    ORDINARY_POINT_RIGHT_EDGE                                     70
+#define    TOP_LEFT_CORNER                                 75
+#define    BOTTOM_RIGHT_CORNER                                80
+#define    TOP_RIGHT_CORNER                                    85
+#define    BOTTOM_LEFT_CORNER                                   90
+#define    DIELECTRIC_ROW_INTERFACE_DIELECTRIC_TO_TOP                         95
+#define    DIELECTRIC_ROW_INTERFACE_DIELECTRIC_TO_BOTTOM                     100
+#define    DIELECTRIC_COLUMN_INTERFACE_DIELECTRIC_TO_LEFT_HAND_EDGE          105
+#define    DIELECTRIC_COLUMN_INTERFACE_DIELECTRIC_TO_RIGHT_HAND_EDGE         110
+#define    ANGLE_DIELECTRIC_ACUTE_FIRST_QUADRANT                             115
+#define    ANGLE_DIELECTRIC_ACUTE_SECOND_QUADRANT                            120
+#define    ANGLE_DIELECTRIC_ACUTE_THIRD_QUADRANT                             125
+#define    ANGLE_DIELECTRIC_ACUTE_FOURTH_QUADRANT                            135
+#define    ANGLE_DIELECTRIC_OBTUSE_FIRST_QUADRANT                            140
+#define    ANGLE_DIELECTRIC_OBTUSE_SECOND_QUADRANT                           145
+#define    ANGLE_DIELECTRIC_OBTUSE_THIRD_QUADRANT                            150
+#define    ANGLE_DIELECTRIC_OBTUSE_FOURTH_QUADRANT                           155
+#define    DIELECTRIC_INTERFACE_TO_BOTTOM_EDGE_DIELECTRIC_TO_LEFT_HAND_EDGE  160
+#define    DIELECTRIC_INTERFACE_TO_BOTTOM_EDGE_DIELECTRIC_TO_RIGHT_HAND_EDGE 165
+#define    DIELECTRIC_INTERFACE_TO_TOP_EDGE_DIELECTRIC_TO_LEFT_HAND_EDGE     170
+#define    DIELECTRIC_INTERFACE_TO_TOP_EDGE_DIELECTRIC_TO_RIGHT_HAND_EDGE    175
+#define    DIELECTRIC_INTERFACE_TO_LEFT_HAND_EDGE_DIELECTRIC_TO_TOP          180
+#define    DIELECTRIC_INTERFACE_TO_LEFT_HAND_EDGE_DIELECTRIC_TO_BOTTOM       185
+#define    DIELECTRIC_INTERFACE_TO_RIGHT_HAND_EDGE_DIELECTRIC_TO_TOP         190
+#define    DIELECTRIC_INTERFACE_TO_RIGHT_HAND_EDGE_DIELECTRIC_TO_BOTTOM      200
+#define    METAL_LEFT                                                        205
+#define    METAL_RIGHT                                                       210
+#define    METAL_ABOVE                                                       215
+#define    METAL_BELOW                                                       220
+#define    METAL_BELOW_AND_LEFT                                              225
+#define    METAL_BELOW_AND_RIGHT                                             230
+#define    METAL_ABOVE_AND_LEFT                                              235
+#define    METAL_ABOVE_AND_RIGHT                                             240
 
 
 /* The following two determine what happens when a coupler is present
@@ -96,7 +90,7 @@ simulation. */
 #define ITERATIONS                      100
 #define POS_TO_NEG                         1
 #define NEG_TO_POS                         -1
-#define METAL_ER  1e9
+#define METAL_ER  1e9 
 
 #define DONT_ZERO_ELEMENTS  0       
 #define ZERO_ELEMENTS_FIRST 1       
@@ -315,13 +309,10 @@ void free_cmatrix(char **m, long nrl, long nrh, long ncl, long nch);
 char *string(long nl,long nh);
 void free_string(char *v, long nl, long nh);
 void swap_bytes2(unsigned char *buffer, int offset, short *answer);
-int **imatrix(long nrl, long nrh, long ncl, long nch);
+//int **imatrix(long nrl, long nrh, long ncl, long nch);
 void swap_bytes4(unsigned char *buffer, int offset, int *answer);
 void free_ustring(unsigned char *v, long nl, long nh);
-int **imatrix(long nrl, long nrh, long ncl, long nch);
-//void setup_arrays(struct transmission_line_properties *data);
-
-void setup_arrays(int *dielectrics_in_bitmap, int dielectrics_on_command_line);
+void setup_arrays(struct transmission_line_properties *data);
 double finite_difference_single_threaded();
 double finite_difference_multi_threaded();
 void *do_columns(void *thread_arg);
@@ -369,7 +360,7 @@ double find_energy_per_metre(int i, int j);
 FILE *get_file_pointer_with_right_filename(char *filename, const char *ext);
 void find_maximum_values(struct max_values *maximum_values, int zero_elementsQ);
 void calculate_colour_data(double x, double xmax, int w, int h, int offset, unsigned char *image_dat, int image_type,
-unsigned char *red, unsigned char *green, unsigned char *blue);
+unsigned char *red, unsigned char *green, unsigned char *blue, double image_fiddle_factor);
 double find_Ex(int w, int h) ;
 double find_Ey(int w, int h);
 double find_E(int w, int h);
@@ -378,7 +369,7 @@ void usage_readbin(void);
 void ERR(const char *s, char c, char **argv);
 int get_options(int argc, char **argv, const char *opts); 
 char *index2(const char *str, char c); 
-void swap_conductor_voltages(int way_to_swap);
+void swap_conductor_voltages();
 void usage_create_bmp_for_stripline_coupler(void);
 double calculate_integer_values(struct transmission_line_properties *optimise, int n, int accuarcy_level);
 void calculate_Zodd_and_Zeven(double *Zodd, double *Zeven, double *Zo, double w, double H, double s, double er);
@@ -400,14 +391,14 @@ void check_parameters_of_create_bmp_for_rect_in_rect(void);
 void usage_create_bmp_for_symmetrical_stripline(void);
 void check_parameters_for_find_optimal_dimensions_for_microstrip_coupler (double h,double t,double Er1,double Er2,double ideal_Zodd,double ideal_Zeven);
 double *dvector(long nl, long nh);
-void free_imatrix(int **m, long nrl, long nrh, long ncl, long nch);
+//void free_imatrix(int **m, long nrl, long nrh, long ncl, long nch);
 void *worker(void *thread_arg);
 void free_ivector(int *v, long nl, long nh);
 double check_convergence(double **grid1, double **grid2, int w, int h);
 void error_check(char *s);
 void free_dvector(double *v, long nl, long nh);
 void usage_create_any_bitmap();
-void update_voltage_array(int starti, int endi, int i_index, int j_index, double **from, double **to);
+void update_voltage_array(int n, int starti, int endi, int i_index, int j_index, double **from, double **to);
 void nrerror(char error_text[]);
 void check_for_boundaries(void);
 
@@ -422,8 +413,10 @@ void check_for_boundaries(void);
 #define SEVEN
 #define EIGHT
 #define NINE
+/* 
 //#define TEN
 //#define ELEVEN
 //#define TWELVE
 //#define THIRTEEN
+*/
 #define HUNDRED

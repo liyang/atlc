@@ -68,8 +68,8 @@ struct pixels Er_in_bitmap[MAX_DIFFERENT_PERMITTIVITIES];
 
 double **Vij;
 double **Er;
-int **oddity; 
-int **cell_type; 
+unsigned char **oddity; 
+unsigned char **cell_type; 
 unsigned char *image_data;
 int width=-1, height=-1;
 extern int errno;
@@ -78,7 +78,6 @@ int non_vacuum_found=FALSE;
 int dielectrics_to_consider_just_now;
 int coupler=FALSE;
 double r=1.90;
-double found_this_dielectric=1000000.0;
 
 char *inputfile_name;
 
@@ -203,8 +202,8 @@ hence built without the mpi\nlibrary.\n",1);
     in getting some now, starting work then finding atlc can't get the 
     rest of what is needed. */
     image_data=ustring(0L,(long)size);
-    oddity=imatrix(0,width-1,0,height-1);
-    cell_type=imatrix(0,width-1,0,height-1);
+    oddity=ucmatrix(0,width-1,0,height-1);
+    cell_type=ucmatrix(0,width-1,0,height-1);
     Vij=dmatrix(0,width-1,0,height-1);
     Er=dmatrix(0,width-1,0,height-1);
     /* On Solaris systems, if the following is not executed, only one 
@@ -268,14 +267,22 @@ hence built without the mpi\nlibrary.\n",1);
     /* We now fill the following 3 arrays with the correct data, based on the 
     contents of the bitmap image */
 
-    setup_arrays(&data.dielectrics_in_bitmap, data.dielectrics_on_command_line);
-    /* set_oddity_from_Greens_paper(); */
-    check_for_boundaries();
+    //printf("cell_type 0,0 =%d cell_type 6,6=%d prior to setup arrays\n", cell_type[0][0],cell_type[6][6]);
+    setup_arrays(&data);
+    //printf("cell_type 0,0 =%d cell_type 6,6=%d after setup arrays, prior to set_oddity_from_Greens_paper\n", cell_type[0][0],cell_type[6][6]);
+    set_oddity_from_Greens_paper();
+    //printf("oddity 0,0 =%d oddity 6,6=%d after  set_oddity_from_Greens_paper\n", oddity[0][0],oddity[6][6]);
+    //printf("cell_type 0,0 =%d cell_type 6,6=%d after  set_oddity_from_Greens_paper\n", cell_type[0][0],cell_type[6][6]);
+    //check_for_boundaries();
+    //printf("oddity 0,0 =%d oddity 6,6=%d prior to do_fd_calculation\n", oddity[0][0],oddity[6][6]);
+    //printf("cell_type 0,0 =%d cell_type 6,6=%d prior to do_fd_calculation\n", cell_type[0][0],cell_type[6][6]);
 
     /* If there are multiple dielectrics, the impedance calculations
     needs to be done twice. We start by doing them once, for an vacuum
     dielectric. If necessary, they will be done again */
     do_fd_calculation(&data, size, where_to_print_fp,outputfile_name);
+    //printf("oddity(0,0) =%d oddity(6,6)=%d after do_fd_calculation\n", oddity[0][0],oddity[6][6]);
+    //printf("cell_type(0,0) =%d cell_type(6,6)=%d after do_fd_calculation\n", cell_type[0][0],cell_type[6][6]);
   }
   else
   {
@@ -286,8 +293,10 @@ hence built without the mpi\nlibrary.\n",1);
   free_string(outputfile_name,0,1024);
   free_string(appendfile_name,0,1024);
   free_ustring(image_data,0L,(long) size);
-  free_imatrix(oddity,0,width-1,0,height-1);
+  free_ucmatrix(oddity,0,width-1,0,height-1);
+  free_ucmatrix(cell_type,0,width-1,0,height-1);
   free_dmatrix(Vij, 0,width-1,0,height-1);
   free_dmatrix(Er,0,width-1,0,height-1);
+  printf("exited from main\n");
   return(OKAY); 
 }

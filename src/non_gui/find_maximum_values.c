@@ -26,7 +26,7 @@ Dr. David Kirkby, e-mail drkirkby at ntlworld.com
 #include "definitions.h"
 
 extern int width, height;
-extern signed char **oddity;
+extern unsigned char **oddity;
 extern double **Er, **Vij;
 
 void find_maximum_values(struct max_values *maximum_values, int zero_elementsQ)

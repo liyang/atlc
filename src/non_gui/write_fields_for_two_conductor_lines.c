@@ -48,7 +48,7 @@ extern double **Vij;
 extern double **Er;
 extern unsigned char *bmp_buff;
 extern int width, height, errno;
-extern signed char **oddity;
+extern unsigned char **oddity;
 
 /* Write the following files, assuming an input of example.bmp 
 where example.bmp is a 2 conductor transmission lines. For
@@ -91,7 +91,6 @@ void write_fields_for_two_conductor_lines(char * filename, struct transmission_l
   struct max_values maximum_values;
   int offset=-3, w, h;
   double V, E, Ex, Ey, U;
-  int zeros=0, ones=0; 
   double odd;
 
   unsigned char *image_data_Ex=NULL; 
@@ -196,17 +195,14 @@ void write_fields_for_two_conductor_lines(char * filename, struct transmission_l
         Ey=find_Ey(w,h);
         E=find_E(w,h); 
 	odd=(double) oddity[w][h];
-	if( odd < 0 )
-	  odd=-odd;
         U=find_energy_per_metre(w,h);
-        calculate_colour_data(Ex, maximum_values.Ex_or_Ey_max, w, h, offset,image_data_Ex, COLOUR,&r,&g,&b);
-        calculate_colour_data(Ey, maximum_values.Ex_or_Ey_max, w, h, offset,image_data_Ey, COLOUR,&r,&g,&b);
-        calculate_colour_data(E, maximum_values.E_max, w, h, offset,image_data_E, MONOCHROME,&r,&g,&b);
-        calculate_colour_data(U, maximum_values.U_max, w, h, offset,image_data_U, MONOCHROME,&r,&g,&b);
-        calculate_colour_data(Vij[w][h], maximum_values.V_max, w, h, offset,image_data_V, COLOUR,&r,&g,&b);
-        calculate_colour_data(Er[w][h], MAX_ER, w, h, offset,image_data_Er, MIXED,&r,&g,&b);
-        calculate_colour_data(U, maximum_values.U_max, w, h, offset,image_data_oddity, MONOCHROME,&r,&g,&b);
-        calculate_colour_data(odd, 50 , w, h, offset,image_data_oddity, MONOCHROME,&r,&g,&b);
+        calculate_colour_data(Ex, maximum_values.Ex_or_Ey_max, w, h, offset,image_data_Ex, COLOUR,&r,&g,&b,IMAGE_FIDDLE_FACTOR);
+        calculate_colour_data(Ey, maximum_values.Ex_or_Ey_max, w, h, offset,image_data_Ey, COLOUR,&r,&g,&b,IMAGE_FIDDLE_FACTOR);
+        calculate_colour_data(E, maximum_values.E_max, w, h, offset,image_data_E, MONOCHROME,&r,&g,&b,IMAGE_FIDDLE_FACTOR);
+        calculate_colour_data(U, maximum_values.U_max, w, h, offset,image_data_U, MONOCHROME,&r,&g,&b,IMAGE_FIDDLE_FACTOR);
+        calculate_colour_data(Vij[w][h], maximum_values.V_max, w, h, offset,image_data_V, COLOUR,&r,&g,&b,IMAGE_FIDDLE_FACTOR);
+        calculate_colour_data(Er[w][h], MAX_ER, w, h, offset,image_data_Er, MIXED,&r,&g,&b,IMAGE_FIDDLE_FACTOR);
+        calculate_colour_data(odd, 255 , w, h, offset,image_data_oddity, MONOCHROME,&r,&g,&b,1.0);
       }
     }
 

@@ -33,7 +33,7 @@ Dr. David Kirkby, e-mail drkirkby at ntlworld.com
 
 extern int width, height;
 extern double **Vij, **Er;
-extern signed char **oddity;
+extern unsigned char **oddity;
 
 double check_convergence(double **grid1, double **grid2, int width, int height)
 {

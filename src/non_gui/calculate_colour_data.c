@@ -43,12 +43,11 @@ Dr. David Kirkby, e-mail drkirkby at ntlworld.com
 
 extern double **Vij;
 extern double **Er;
-extern signed char **oddity;
+extern unsigned char **oddity;
 
 void calculate_colour_data(double x, double xmax, int w, int h, int offset, unsigned char *image_dat, int image_type,
-unsigned char *red, unsigned char *green, unsigned char *blue)
+unsigned char *red, unsigned char *green, unsigned char *blue, double image_fiddle_factor)
 {
-  double image_fiddle_factor=IMAGE_FIDDLE_FACTOR; /* ZZZZZZZZZZZXXXXXXXXXXXXXX */
   if(image_type==COLOUR) /*Ex, Ey, V */
   {
     if(fabs(x) < 1e-9) /* This is a bit of a fiddle I admit, but */

@@ -280,7 +280,7 @@ void do_fd_calculation(struct transmission_line_properties *data, size_t size, F
     /* Since we want the even mode impedance now, we swap all the -1V
     metallic conductors for +1V */
 
-    swap_conductor_voltages(NEG_TO_POS);
+    swap_conductor_voltages();
 
     data->display = Z_EVEN_SINGLE_DIELECTRIC;
     dielectrics_to_consider_just_now=1;

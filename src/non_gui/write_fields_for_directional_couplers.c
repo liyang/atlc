@@ -225,12 +225,12 @@ void write_fields_for_directional_couplers(char * filename, struct transmission_
         E=find_Ex(w,h);
         U=find_energy_per_metre(w,h);
 
-        calculate_colour_data(Ex, maximum_values.Ex_or_Ey_max, w, h, offset,image_data_Ex, COLOUR,&r,&g,&b);
-        calculate_colour_data(Ey, maximum_values.Ex_or_Ey_max, w, h, offset,image_data_Ey, COLOUR,&r,&g,&b);
-        calculate_colour_data(E, maximum_values.E_max, w, h, offset,image_data_E, MONOCHROME,&r,&g,&b);
-        calculate_colour_data(U, maximum_values.U_max, w, h, offset,image_data_U, MONOCHROME,&r,&g,&b);
-        calculate_colour_data(Vij[w][h], maximum_values.V_max, w, h, offset,image_data_V, COLOUR,&r,&g,&b);
-        calculate_colour_data(Er[w][h], MAX_ER, w, h, offset,image_data_Er, MIXED,&r,&g,&b);
+        calculate_colour_data(Ex, maximum_values.Ex_or_Ey_max, w, h, offset,image_data_Ex, COLOUR,&r,&g,&b, IMAGE_FIDDLE_FACTOR);
+        calculate_colour_data(Ey, maximum_values.Ex_or_Ey_max, w, h, offset,image_data_Ey, COLOUR,&r,&g,&b, IMAGE_FIDDLE_FACTOR);
+        calculate_colour_data(E, maximum_values.E_max, w, h, offset,image_data_E, MONOCHROME,&r,&g,&b, IMAGE_FIDDLE_FACTOR);
+        calculate_colour_data(U, maximum_values.U_max, w, h, offset,image_data_U, MONOCHROME,&r,&g,&b, IMAGE_FIDDLE_FACTOR);
+        calculate_colour_data(Vij[w][h], maximum_values.V_max, w, h, offset,image_data_V, COLOUR,&r,&g,&b, IMAGE_FIDDLE_FACTOR);
+        calculate_colour_data(Er[w][h], MAX_ER, w, h, offset,image_data_Er, MIXED,&r,&g,&b, IMAGE_FIDDLE_FACTOR);
       }
     } 
     if( fwrite((void *) image_data_Ex,size, 1, Ex_odd_bmp_fp) != 1)
@@ -383,12 +383,12 @@ void write_fields_for_directional_couplers(char * filename, struct transmission_
         E=find_Ex(w,h);
         U=find_energy_per_metre(w,h);
 
-        calculate_colour_data(Ex, maximum_values.Ex_or_Ey_max, w, h, offset,image_data_Ex, COLOUR,&r,&g,&b);
-        calculate_colour_data(Ey, maximum_values.Ex_or_Ey_max, w, h, offset,image_data_Ey, COLOUR,&r,&g,&b);
-        calculate_colour_data(E, maximum_values.E_max, w, h, offset,image_data_E, MONOCHROME,&r,&g,&b);
-        calculate_colour_data(U, maximum_values.U_max, w, h, offset,image_data_U, MONOCHROME,&r,&g,&b);
-        calculate_colour_data(Vij[w][h], maximum_values.V_max, w, h, offset,image_data_V, COLOUR,&r,&g,&b);
-        calculate_colour_data(Er[w][h], MAX_ER, w, h, offset,image_data_Er, MIXED,&r,&g,&b);
+        calculate_colour_data(Ex, maximum_values.Ex_or_Ey_max, w, h, offset,image_data_Ex, COLOUR,&r,&g,&b, IMAGE_FIDDLE_FACTOR);
+        calculate_colour_data(Ey, maximum_values.Ex_or_Ey_max, w, h, offset,image_data_Ey, COLOUR,&r,&g,&b, IMAGE_FIDDLE_FACTOR);
+        calculate_colour_data(E, maximum_values.E_max, w, h, offset,image_data_E, MONOCHROME,&r,&g,&b, IMAGE_FIDDLE_FACTOR);
+        calculate_colour_data(U, maximum_values.U_max, w, h, offset,image_data_U, MONOCHROME,&r,&g,&b, IMAGE_FIDDLE_FACTOR);
+        calculate_colour_data(Vij[w][h], maximum_values.V_max, w, h, offset,image_data_V, COLOUR,&r,&g,&b, IMAGE_FIDDLE_FACTOR);
+        calculate_colour_data(Er[w][h], MAX_ER, w, h, offset,image_data_Er, MIXED,&r,&g,&b, IMAGE_FIDDLE_FACTOR);
       }
     } 
     if( fwrite((void *) &(image_data_Ex[0]),size, 1, Ex_even_bmp_fp) != 1)

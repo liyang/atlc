@@ -62,9 +62,6 @@ void fill_image_vector_with_data(unsigned char *image_vector, int colour_Er1, in
 	    blue=0x00;
          }
 	 /* Fill in the inner conductor */
-	 else if(j==D/2)
-	 {
-         }
 	 else /* fill in areas of Er1 */
 	 {
 	    red=colour_Er2/(256*256); /* fill in areas with Er2 */
