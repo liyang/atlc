@@ -217,19 +217,20 @@ without the threads\nlibrary.\n",1);
     if(coupler==FALSE)
       do_fd_calculation(&capacitance, &inductance, &Zo, &Zodd, &Zeven, Z0, \
       &velocity, &vf, stdout, cutoff, dielectrics_to_consider_just_now, \
-      argv[my_optind],REQUIRE_FD_CALCULATIONS);
+      input_filename,REQUIRE_FD_CALCULATIONS);
     else if(coupler==TRUE)
     {
-      printf("**WARNING** This has a negative conductor and is therefore \
-      \nconsidered in atlc as a coupler. This is highly experimental and \
-      \nexpected to be suspect\n");
-
+      /* Do odd mode, as it what must be drawn */
       do_fd_calculation(&capacitance, &inductance, &Zo, &Zodd, &Zeven, Z_ODD, \
       &velocity, &vf, stdout, cutoff, dielectrics_to_consider_just_now, \
       argv[my_optind],REQUIRE_FD_CALCULATIONS);
 
+      /* Swap the negative voltages to positive, so the even mode can be
+      done. */
+
       swap_conductor_voltages(NEG_TO_POS);
 
+      /* Do the even mode calculation */
       do_fd_calculation(&capacitance, &inductance, &Zo, &Zodd, &Zeven, Z_ALL, \
       &velocity, &vf, stdout, cutoff, dielectrics_to_consider_just_now, \
       argv[my_optind],REQUIRE_FD_CALCULATIONS);
