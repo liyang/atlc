@@ -14,6 +14,12 @@
 #include "wx/file.h"
 #include "wx/wxprec.h"
 #include "FiniteDifferenceFrame.h"
+#include "ExFieldFrame.h"
+#include "EyFieldFrame.h"
+#include "EFieldFrame.h"
+#include "VoltageFrame.h"
+#include "PermittivityFrame.h"
+#include "EnergyFrame.h"
 #include "resource.h"
 
 // ----------------------------------------------------------------------------
@@ -46,6 +52,12 @@ BEGIN_EVENT_TABLE(FiniteDifferenceFrame, wxFrame)
     EVT_MENU(ID_CircInCirc, FiniteDifferenceFrame::OnCircInCirc)
     EVT_MENU(ID_CircInRect, FiniteDifferenceFrame::OnCircInRect)
     EVT_MENU(ID_Cut, FiniteDifferenceFrame::OnCut)
+    EVT_MENU(ID_ViewExField, FiniteDifferenceFrame::OnViewExField)
+    EVT_MENU(ID_ViewEyField, FiniteDifferenceFrame::OnViewEyField)
+    EVT_MENU(ID_ViewEField, FiniteDifferenceFrame::OnViewEField)
+    EVT_MENU(ID_ViewVoltage, FiniteDifferenceFrame::OnViewVoltage)
+    EVT_MENU(ID_ViewEnergy, FiniteDifferenceFrame::OnViewEnergy)
+    EVT_MENU(ID_ViewPermittivity, FiniteDifferenceFrame::OnViewPermittivity)
     EVT_MENU(ID_Paste, FiniteDifferenceFrame::OnPaste)
     EVT_CLOSE(FiniteDifferenceFrame::OnClose) //QUESTION - What is This ???
     EVT_BUTTON(DIALOG_BTN, FiniteDifferenceFrame::OnClick)
@@ -59,6 +71,7 @@ FiniteDifferenceFrame::FiniteDifferenceFrame(const wxString& title, const wxPoin
   // create a menu bar
   wxMenu *FileMenu = new wxMenu("", wxMENU_TEAROFF);  
   wxMenu *EditMenu = new wxMenu("", wxMENU_TEAROFF);  
+  wxMenu *ViewMenu = new wxMenu("", wxMENU_TEAROFF);  
   wxMenu *RunMenu = new wxMenu("", wxMENU_TEAROFF);  
   wxMenu *GenerateBitmapMenu = new wxMenu("", wxMENU_TEAROFF);
   wxMenu *HelpMenu = new wxMenu("", wxMENU_TEAROFF);
@@ -70,6 +83,14 @@ FiniteDifferenceFrame::FiniteDifferenceFrame(const wxString& title, const wxPoin
   // Edit menu
   EditMenu->Append( ID_Cut, "&Cut","Cut some of the bitmap out"); 
   EditMenu->Append( ID_Paste, "&Paste","Paste"); 
+
+  // View menu
+  ViewMenu->Append( ID_ViewExField, "E-field in &x-direction","E-field in x-direction shown on a gray scale"); 
+  ViewMenu->Append( ID_ViewEyField, "E-field in &y-direction","E-field in y-direction shown on a gray scale"); 
+  ViewMenu->Append( ID_ViewEField, "&Magnitude of E","Magnitude of E-field shown on a gray scale."); 
+  ViewMenu->Append( ID_ViewVoltage, "&Voltage","Voltage shown on a gray scale."); 
+  ViewMenu->Append( ID_ViewPermittivity, "&Permittivity","Permittivity shown on gray scale - coundutors coloured"); 
+  ViewMenu->Append( ID_ViewEnergy, "&Energy","Energy shown on gray scale"); 
 
   // Run menu
   RunMenu->Append( ID_RunFD, "&Run FD simulation","Run the finite difference simulation");
@@ -91,12 +112,13 @@ FiniteDifferenceFrame::FiniteDifferenceFrame(const wxString& title, const wxPoin
   menuBar->Append(FileMenu, "&File");
   menuBar->Append(EditMenu, "&Edit");
   menuBar->Append(GenerateBitmapMenu, "&Generate Bitmap");
+  menuBar->Append(ViewMenu, "&View");
   menuBar->Append(RunMenu, "&Run");
   menuBar->Append(HelpMenu, "&Help");
   SetMenuBar(menuBar);
   CreateStatusBar(1);
   SetStatusText("You must now get a bitmap");
-  wxImage image("twin-wire3.bmp");
+  //wxImage image("twin-wire3.bmp");
 
   // Initalize the panel and button members.
 
@@ -177,4 +199,36 @@ void FiniteDifferenceFrame::OnClick(wxCommandEvent& WXUNUSED(event))
 {
 	wxMessageBox("Clicked!", "Event", wxOK | wxICON_INFORMATION, this);
 }
+void FiniteDifferenceFrame::OnViewExField(wxCommandEvent& WXUNUSED(event))
+{
+ExFieldFrame *frame = new ExFieldFrame("Ex     x-directed electric field",wxPoint(0,5),wxSize(500,500));
+frame->Show(TRUE);
+}
 
+void FiniteDifferenceFrame::OnViewEyField(wxCommandEvent& WXUNUSED(event))
+{
+EyFieldFrame *frame = new EyFieldFrame("Ey     y-directed electric field",wxPoint(0,5),wxSize(500,500));
+frame->Show(TRUE);
+}
+
+void FiniteDifferenceFrame::OnViewEField(wxCommandEvent& WXUNUSED(event))
+{
+EFieldFrame *frame = new EFieldFrame("E     Electric field",wxPoint(0,5),wxSize(500,500));
+frame->Show(TRUE);
+}
+
+void FiniteDifferenceFrame::OnViewVoltage(wxCommandEvent& WXUNUSED(event))
+{
+VoltageFrame *frame = new VoltageFrame("V     Voltage",wxPoint(0,5),wxSize(500,500));
+frame->Show(TRUE);
+}
+void FiniteDifferenceFrame::OnViewPermittivity(wxCommandEvent& WXUNUSED(event))
+{
+PermittivityFrame *frame = new PermittivityFrame("Er    Permittivity",wxPoint(0,5),wxSize(500,500));
+frame->Show(TRUE);
+}
+void FiniteDifferenceFrame::OnViewEnergy(wxCommandEvent& WXUNUSED(event))
+{
+EnergyFrame *frame = new EnergyFrame("Energy",wxPoint(0,5),wxSize(500,500));
+frame->Show(TRUE);
+}
