@@ -6,7 +6,7 @@
 # and it is tedious to do. 
 
 # The following are around 25 Ohm transmission lines. 
-$top_builddir/src/non_gui/create_bmp_for_symmetrical_stripline 5000 401 202  $top_builddir/tmp/100-Ohm-401b.bmp >/dev/null 2>/dev/null
+$top_builddir/src/create_bmp_for_symmetrical_stripline 5000 401 202  $top_builddir/tmp/100-Ohm-401b.bmp >/dev/null 2>/dev/null
 LENGTH=`$top_builddir/tools/src/myfilelength $top_builddir/tmp/100-Ohm-401b.bmp`
 rm $top_builddir/tmp/100-Ohm-401b.bmp
 if [ $LENGTH =  6165054 ]; then

@@ -62,6 +62,7 @@ no_gsl=$(no_gsl)
 TESTS =  \
 Test_threads_a \
 Test_threads_b \
+find-zero-length.test \
 1a-create_bmp_for_symmetrical_stripline.bmp.test \
 1b-create_bmp_for_symmetrical_stripline.txt.test \
 1c-create_bmp_for_symmetrical_stripline.E.bmp.test \
@@ -141,6 +142,7 @@ Test_threads_b \
 14b-check-circ-in-rect.test \
 14c-check-circ-in-rect.test \
 14d-check-circ-in-rect.test  \
+WARNING-The-next-test-is-a-benchmark-and-takes-a-long-while.test \
 benchmark.test 
 
 #MPI_16a_PI 
@@ -149,6 +151,7 @@ EXTRA_DIST = \
 benchmark.test \
 Test_threads_a.c \
 Test_threads_b.c \
+find-zero-length.test \
 MPI_16a_PI.c      \
 10a-create-lots-of-examples-check-last-one.test \
 10b-create-lots-of-examples-check-last-one.test \
@@ -172,7 +175,7 @@ MPI_16a_PI.c      \
 14b-check-circ-in-rect.test \
 14c-check-circ-in-rect.test \
 14d-check-circ-in-rect.test \
-WARNING--The-next-test+benchmark-takes-a-long-while.test \
+WARNING-The-next-test-is-a-benchmark-and-takes-a-long-while.test \
 1a-create_bmp_for_symmetrical_stripline.bmp.test \
 1b-create_bmp_for_symmetrical_stripline.txt.test \
 1c-create_bmp_for_symmetrical_stripline.E.bmp.test \

@@ -1,4 +1,48 @@
-****** Version 4.6.0 Realeased ??? November 2003  
+****** Version 4.6.1 Released 27th March 2011  *******
+Just minor bug fix and cleanup. 
+
+renamed 'src/non_gui' to just 'src'
+
+Adding a file "WARNING" in the top level. 
+
+Added a new test: WARNING-The-next-test-is-a-benchmark-and-takes-a-long-while.test
+which does not actually test anything, but issues an obvious warning.
+
+Changed my email address in every file. 
+
+Ensured all tests pass even if compliled with -DDEBUG, as before the 
+extra debugging information was causing some tests to fail. 
+
+Removed the code which indicates the amount of RAM, as that was 
+inaccurate, so I gave up with it. 
+
+In the file convert_create_bmp_for_rect_in_rect_dimensions_to_integers.c
+changed test from if(W>=H) to if(WH>=HH) as the former compares
+two values which are both zero. Thanks to Jim Bingham for bringing that
+to my attention. 
+
+Likewise for convert_create_bmp_for_circ_in_rect_dimensions_to_integers.c
+
+In src/atlc.c, add the line:
+fclose(image_data_fp);
+to stop a theoeretical resource leakage. It was not really a leak,
+as the code exits a couple of lines later, but it stops 'cppcheck' 
+complaining. 
+
+Done likewise on read_bitmap_file_headers.c, 
+
+src/write_fields_for_directional_couplers removed some things
+between #ifdef DEBUG, as it declared file pointers and wrote opened
+the files, but never wrote anything or closed them. Again found by cppcheck. 
+
+In src/non_gui/write_fields_for_two_conductor_lines.c, removed some code
+betweend #ifdev DEBUG, as it stops atlc compiling if CFLAGS includes
+-DDEBUG
+
+In the file src/non_gui/byteswap.c, removed some things between
+#ifdef DEBUG, as that too stopped atlc building properly
+
+****** Version 4.6.0 Released 9th December 2003  
 top level directory:
 
 atlc/update 

@@ -22,7 +22,7 @@
 # Dr. David Kirkby, drkirkby@ntlworld.com
 touch  $top_builddir/tmp/test_stripline_coupler.Er.bmp
 MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test_stripline_coupler.Er.bmp`
-if [ $MD5SUM != d119e8dd775f4441364a81b2734b0e47 ] ; then
+if [ $MD5SUM != 6f55c39c0e38239372db0f95b7d5f952 ] ; then
   echo "FAILED:" $0 >> tests.log
   exit 1
 else

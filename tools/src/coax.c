@@ -19,7 +19,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307,
 USA.
 
-Dr. David Kirkby, e-mail drkirkby at ntlworld.com 
+Dr. David Kirkby, e-mail drkirkby at gmail.com 
 
 */
 
@@ -44,56 +44,39 @@ Dr. David Kirkby, e-mail drkirkby at ntlworld.com
 #define EPSILON_0 8.854187817e-12 /* Data taken from NPL */
 
 
+#ifndef PI
+#define PI 3.141592653589793238462643383279502884197169399375105
+#endif
+
+extern int my_optind; 
+extern char *my_optarg;
+
+int get_options(int argc, char **argv, const char *opts);
+void usage_coax();
+
+
 int main (int argc, char **argv)
 {
-  double velocity, velocity_factor, r0, r1, er, c, l, zo;
+  double d, D, er, zo, x;
+  double offset=0.0;
+  int q;
 
-  if (argc != 4)
-  {
-    fprintf(stderr,"Find properties of a coaxial cable \n\n");
 
-    fprintf(stderr,"                              *****************\n"); 
-    fprintf(stderr,"                          ****                 ****\n");                        
-    fprintf(stderr,"                       ****                       ****\n");                     
-    fprintf(stderr,"                     ***                             ***\n");                   
-    fprintf(stderr,"                   ***                                 ***\n");                 
-    fprintf(stderr,"                 ***                                     ***\n");               
-    fprintf(stderr,"                ***                                       ***\n");              
-    fprintf(stderr,"               ***                                         ***\n");             
-    fprintf(stderr,"              ***                                           ***\n");            
-    fprintf(stderr,"             ***                     ***                     ***\n");           
-    fprintf(stderr,"             **                    *******                    **\n");           
-    fprintf(stderr,"            ***                   *********                   ***\n");          
-    fprintf(stderr,"            **         Er        ***********                   **\n");          
-    fprintf(stderr,"            *                    ***********                    *\n");          
-    fprintf(stderr,"            **                    *********                    **\n");          
-    fprintf(stderr,"            **                     *******                     **\n");          
-    fprintf(stderr,"            **                       ****                      **\n");          
-    fprintf(stderr,"            ***                                               ***\n");          
-    fprintf(stderr,"             **                                               **\n");           
-    fprintf(stderr,"             ***                                             ***\n");           
-    fprintf(stderr,"              **                 <----d--->                  **\n");            
-    fprintf(stderr,"               **                                           **\n");             
-    fprintf(stderr,"                **                                         **\n");              
-    fprintf(stderr,"                 ***                                     ***\n");               
-    fprintf(stderr,"                  ****                                 ****\n");                
-    fprintf(stderr,"                    ****                             ****\n");                  
-    fprintf(stderr,"                      *****                       *****\n");                    
-    fprintf(stderr,"                         ******               ******\n");                       
-    fprintf(stderr,"                             *******************\n");                           
-    fprintf(stderr,"                                     ***\n\n");
-    fprintf(stderr,"             <------------------------D----------------------->\n\n");
-    fprintf(stderr,"Usage: coax d  D Er\n");
-    fprintf(stderr,"dualcoax %s: arguments are:\n",PACKAGE_VERSION);
-    fprintf(stderr,"       d  is the diameter of the inner conductor\n"); 
-    fprintf(stderr,"       D  is the inner diameter of the outer conductor\n"); 
-    fprintf(stderr,"       Er is the permittivity of the dielectric\n"); 
-    exit(1);
+  while((q=get_options(argc,argv,"O:")) != -1)
+  switch (q) {
+   case 'O':
+     offset=atof(my_optarg);
+   break;
+   case '?':
+    usage_coax();
+   break;
   }
-  r0=atof(argv[1])/2.0;
-  r1=atof(argv[2])/2.0;
-  er=atof(argv[3]);
-  if ( r0 >= r1){
+  if(argc-my_optind != 3)
+    usage_coax();
+  d=atof(argv[my_optind]);
+  D=atof(argv[my_optind+1]);
+  er=atof(argv[my_optind+2]);
+  if ( d  >=  D){
     fprintf(stderr,"Sorry, the diameter of the inner conductor (d) must be\n");
     fprintf(stderr,"less than the inner diameter of the outer conductor (D)\n");
     exit(1);
@@ -102,12 +85,15 @@ int main (int argc, char **argv)
     fprintf(stderr,"Sorry, the permittivity of the dielectric Er must be >=1");
     exit(1);
   }
-  c=2*M_PI*er*EPSILON_0/log(r1/r0);
-  l=MU_0*log(r1/r0)/(2*M_PI);
-  zo=sqrt(l/c);
-  velocity_factor=1/sqrt(er);
-  velocity=velocity_factor/(sqrt(MU_0 * EPSILON_0));
-  printf("Zo = %8.3f Ohms C= %8.3f pF/m L= %8.3f nH/m v= %g m/s v_f= %8.6f\n", zo,c*1e12,l*1e9, velocity, velocity_factor);
+  if(D/2.0 <= d/2 + offset){
+    fprintf(stderr,"The offset between the inner and outer conductors is too large; the\n");
+    fprintf(stderr,"inner and outer conductors will touch!!\n");
+    exit(1);
+  }
+
+  x=(double) (d*d+D*D-4*offset*offset)/(2*D*d);
+  zo=(1/(2*PI))*sqrt(MU_0)*log(x+sqrt(x*x-1))/sqrt(EPSILON_0*er);
+  printf("Zo = %16f Ohms\n", zo);
   return(0);
 
 }

@@ -1,6 +1,7 @@
 TODO List
 
-Here is a list of the ways I would like to expand atlc, in a rough order of time. 
+Here is a list of the ways I would like to expand atlc, in a rough order 
+of time. 
   1 Re-enable support for multiple processors. 
 
   2 Improve accuraracy on transmission lines where there is more

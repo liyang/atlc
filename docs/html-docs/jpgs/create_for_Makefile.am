@@ -1,2 +1,0 @@
-#!/bin/sh
-ls *.jpg | awk '{ print $1,"\\"}'

@@ -13,7 +13,7 @@
 # checks for system services
 # AC_OUTPUT([file...])
 
-AC_INIT([atlc], [4.6.0], [drkirkby@ntlworld.com])
+AC_INIT([atlc], [4.6.1], [drkirkby@gmail.com])
 AM_INIT_AUTOMAKE
 AC_PREREQ([2.57])
 AC_CONFIG_SRCDIR([tools/src/myfilelength.c])
@@ -154,7 +154,6 @@ AC_SUBST(compiled_with_cflags,"$CFLAGS")
 AC_OUTPUT([\
 Makefile                                        \
 src/Makefile                                    \
-src/non_gui/Makefile                            \
 m4/Makefile                                     \
 man/Makefile                                    \
 man/man1/Makefile                               \

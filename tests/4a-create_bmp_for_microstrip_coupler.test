@@ -22,7 +22,7 @@
 # program bug, so PLEASE PLEASE let me know about it!!
 # Dr. David Kirkby, drkirkby@ntlworld.com
 
-$top_builddir/src/non_gui/create_bmp_for_microstrip_coupler  1.5 2.0 1 1.593 0.035 1 3.7 $top_builddir/tmp/microstrip_coupler.bmp
+$top_builddir/src/create_bmp_for_microstrip_coupler  1.5 2.0 1 1.593 0.035 1 3.7 $top_builddir/tmp/microstrip_coupler.bmp
 MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/microstrip_coupler.bmp`
 rm $top_builddir/tmp/microstrip_coupler.bmp
 #rm microstrip_coupler.bmp

@@ -1,2 +1,0 @@
-#!/bin/sh
-ls *.html | awk '{ print $1,"\\"}'

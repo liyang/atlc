@@ -74,7 +74,6 @@ int main(int argc, char **argv)
   strcpy((char *) data.fpu_type,"unknown");
   strcpy((char *) data.max_cpus,"unknown");
   strcpy((char *) data.cpus,"unknown");
-  strcpy((char *) data.memory,"unknown");
   strcpy((char *) data.sysname,"unknown");
   strcpy((char *) data.nodename,"unknown");
   strcpy((char *) data.release,"unknown");
@@ -163,7 +162,7 @@ always calculate a speedup in these circumstances */
   if(atoi(data.cpus) != 0)
     sprintf(data.eff,"%.3f",atof(data.speedup)/atoi(data.cpus)); /* otherwise unknown */
 #endif
-  printf("0 %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s\n",data.t1, data.t2, data.speedup, data.cpus, data.mhz, data.eff, data.cpu_type,data.fpu_type,data.max_cpus,data.memory,data.sysname,data.nodename,data.release,data.version,data.machine,data.hw_provider, data.hw_platform, data.L1data, data.L1instruction, data.L2);
+  printf("0 %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s\n",data.t1, data.t2, data.speedup, data.cpus, data.mhz, data.eff, data.cpu_type,data.fpu_type,data.max_cpus,data.sysname,data.nodename,data.release,data.version,data.machine,data.hw_provider, data.hw_platform, data.L1data, data.L1instruction, data.L2);
   return(0);
 }
 

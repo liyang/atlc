@@ -19,7 +19,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307,
 USA.
 
-Dr. David Kirkby, e-mail drkirkby at ntlworld.com 
+Dr. David Kirkby, e-mail drkirkby at gmail.com 
 
 */
 #include "config.h"
@@ -99,5 +99,7 @@ int main (int argc, char **argv)
     if(mem1[i] != mem2[i])
       printf("At offset= %ld file1 = %d file2 = %d difference=%d\n",i,(int) mem1[i],(int) mem2[i],(int) (mem1[i]-mem2[i]));
   }
+  fclose(fp1);
+  fclose(fp2);
   return(0);
 }

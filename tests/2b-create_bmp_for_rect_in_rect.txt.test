@@ -4,9 +4,9 @@
 # for the MPICH libraries, atlc gives a huge number of error messages. 
 
 if [ "$mpirun_found" = "yes" ] ; then
-  mpirun -np 2 $top_builddir/src/non_gui/atlc  -S $top_builddir/tmp/test_rect_in_rect.bmp > $top_builddir/tmp/test_rect_in_rect.txt
+  mpirun -np 2 $top_builddir/src/atlc  -S $top_builddir/tmp/test_rect_in_rect.bmp > $top_builddir/tmp/test_rect_in_rect.txt
 else 
-  $top_builddir/src/non_gui/atlc  -S $top_builddir/tmp/test_rect_in_rect.bmp > $top_builddir/tmp/test_rect_in_rect.txt
+  $top_builddir/src/atlc  -S $top_builddir/tmp/test_rect_in_rect.bmp > $top_builddir/tmp/test_rect_in_rect.txt
 fi
 touch $top_builddir/tmp/test_rect_in_rect.txt
 

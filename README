@@ -15,22 +15,19 @@ using version of atlc prior to 4.6.0 for multiple dielectrics.
 See the file INSTALL if building from sources. Online documentation may
 be found at http://atlc.sourceforge.net/
 
-The sources are kept in src/non_gui, as a version with a GUI was
-planned, but I don't think it will happen in the near future.
-
 This is the directory layout. .
-./docs 
+./m4                     // Some autoconf macros
+./docs                   // Various bits of documentation. 
 ./docs/html-docs         // As on the atlc web site at atlc.sourgeforge.net
 ./docs/html-docs/jpgs    // JPGS needed for the html docs above.
-./docs/qex-december-1996 // A old paper I wrote, gives the theory.
-./docs/theory            //  
+./docs/qex-december-1996 // A old paper I wrote for QEX, gives the theory.
+./docs/theory            // Some very rough ideas I have (Word Format)
 ./man                    // Standard UNIX man pages.
 ./examples               // Some examples
 ./tests                  // Self-tests and a benchmark.
-./tools                  // Some tools that are useful for checkign the code
+./tools                  // Some tools that are useful for checking the code
 ./tools/src              // Source code for above
-./src                    // Nothing much - see below
-./src/non_gui            // All the C source code.   
+./src                    // The main source code
 ./tmp                    // Used during tests to dump data. 
 
 After building (see INSTALL, which I've modified to be specific to
@@ -41,6 +38,6 @@ choose not to install them. In which case run 'make install-exec'
 rather than 'make install'. If you later want to install the 
 examples, run 'make install-data'
 
-If wishing to contact me by email, mail me on drkirkby at ntlworld.com
+If wishing to contact me by email, mail me on drkirkby at gmail.com
 
-Dr. David Kirkby, G8WRB. 12th December 2003 Re: atlc-4.6.0
+Dr. David Kirkby, G8WRB. 27th March 2011 Re: atlc-4.6.1

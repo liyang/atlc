@@ -22,7 +22,7 @@
 # program bug, so PLEASE PLEASE let me know about it!!
 # Dr. David Kirkby, drkirkby@ntlworld.com
 
-$top_builddir/src/non_gui/create_bmp_for_rect_cen_in_rect 200.3 100 93  57 1.0  $top_builddir/tmp/central.bmp  >/dev/null 2>/dev/null
+$top_builddir/src/create_bmp_for_rect_cen_in_rect 200.3 100 93  57 1.0  $top_builddir/tmp/central.bmp  >/dev/null 2>/dev/null
 MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/central.bmp`
 rm $top_builddir/tmp/central.bmp
 if [ $MD5SUM != ceb7b80aba008c32d3af257943e8b0db ]; then 

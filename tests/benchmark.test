@@ -7,11 +7,11 @@ if [ "x$mpirun_found" = "xyes" ] ; then
   return 77
 else
   cp $top_srcdir/examples/25ohm-401h.bmp $top_builddir/tmp
-  ret=`$top_builddir/tests/benchmark $top_builddir/src/non_gui/atlc $top_builddir/tmp/25ohm-401h.bmp `
+  ret=`$top_builddir/tests/benchmark $top_builddir/src/atlc $top_builddir/tmp/25ohm-401h.bmp `
   rm -f $top_builddir/tmp/25ohm-401h.bmp
 
 #  cp $top_srcdir/examples/twin-wire3.bmp $top_builddir/tmp
-#  ret=`$top_builddir/tests/benchmark $top_builddir/src/non_gui/atlc $top_builddir/tmp/twin-wire3.bmp `
+#  ret=`$top_builddir/tests/benchmark $top_builddir/src/atlc $top_builddir/tmp/twin-wire3.bmp `
 #  rm -f $top_builddir/tmp/twin-wire3.bmp
 
   exitcode=`echo $ret | awk '{print $1}'`
@@ -71,10 +71,6 @@ else
   echo "CPU_type is $cpu_type. FPU_type is $fpu_type. Speed of CPU(s) is $mhz MHz."
   echo "CPU_type is $cpu_type. FPU_type is $fpu_type. Speed of CPU(s) is $mhz MHz." >> tests.log
   echo "CPU_type is $cpu_type. FPU_type is $fpu_type. Speed of CPU(s) is $mhz MHz.<BR>" >> tests.html
-
-  echo "RAM is $ram MB (On Linux+BSD systems, the memory is a little larger than this.)"
-  echo "RAM is $ram MB. (On Linux+BSD systems, the memory is a little larger than this)" >> tests.log
-  echo "RAM is $ram MB. (On Linux+BSD systems, the memory is a little larger than this)<BR>" >> tests.html
 
   echo "L1 data cache is $L1data kB; L1 instruction cache is $L1instruction kB; L2 cache is $L2 kB"
   echo "L1 data cache is $L1data kB; L1 instruction cache is $L1instruction kB; L2 cache is $L2 kB" >> tests.log

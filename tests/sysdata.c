@@ -96,7 +96,6 @@ int main()
   printf("CPU type:             %s\n",data.cpu_type);
   printf("FPU type:             %s\n",data.fpu_type);
   printf("Speed:                %s MHz\n",data.mhz);
-  printf("RAM:                  %s Mb\n",data.memory);
   printf("L1 data cache         %s kb\n",data.L1data);
   printf("L1 instruction cache: %s kb\n",data.L1instruction);
   printf("L2 cache:             %s kb\n",data.L2);

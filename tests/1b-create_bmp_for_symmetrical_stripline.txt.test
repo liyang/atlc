@@ -4,13 +4,13 @@
 # the mpirun script, which is part of the MPICH distribution. 
 
 if [ -n "$mpirun_found" ] ; then
-  Zo=`mpirun -np 2 $top_builddir/src/non_gui/atlc $top_builddir/tmp/test_sym_strip.bmp | awk '{print $6}'` 2> /dev/null
+  Zo=`mpirun -np 2 $top_builddir/src/atlc $top_builddir/tmp/test_sym_strip.bmp | awk '{print $6}'` 2> /dev/null
 else
-  Zo=`$top_builddir/src/non_gui/atlc $top_builddir/tmp/test_sym_strip.bmp | awk '{print $6}'`
+  Zo=`$top_builddir/src/atlc $top_builddir/tmp/test_sym_strip.bmp | awk '{print $6}'`
 fi
 
-# Check the impedance Zo which should be 122.44 Ohms
-if [ "x$Zo" = "x122.44" ] ; then
+# Check the impedance Zo which should be 122.43 Ohms
+if [ "x$Zo" = "x122.792" ] ; then
   echo "PASSED:" $0 >> tests.log
   exit 0
 else

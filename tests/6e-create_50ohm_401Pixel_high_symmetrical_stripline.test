@@ -5,8 +5,7 @@
 # atlc is then called, and its estimate calaculated, which will differ 
 # slightly from the theoretical data 
 
-ZoTheory=`$top_builddir/src/non_gui/create_bmp_for_symmetrical_stripline -v 2222 401 578 $top_builddir/tmp/50ohm-401h.bmp | awk '{print $4}'`
-#echo "Zo theory = " $ZoTheory "Zo altc= " $Zoatlc " cksum of bitmap" $MD5SUM "cksum of .Ex.bmp= " $EXMD5SUM
+ZoTheory=`$top_builddir/src/create_bmp_for_symmetrical_stripline -v 2222 401 578 $top_builddir/tmp/50ohm-401h.bmp | awk '{print $4}' | tail -1`
 if [ $ZoTheory = 50.026376  ]  ; then
   rm $top_builddir/tmp/50ohm-401h.bmp
   echo "PASSED:" $0 >> tests.log

@@ -153,38 +153,6 @@ arugment detemines what gets returned. */
       sprintf(data->cpus,"%ld",sysconf(_SC_NPROCESSORS_ONLN));
 #endif
 
-  /* Obtain the RAM. This is a bit of a hack using doubles for 
-  this, but longs overflow and long long is not strictly 
-  in the ANSI standard. */
-
-#ifdef _SC_PHYS_PAGES
-#ifdef _SC_PAGESIZE
-
-/* This might look a bit of a hack to use a double to compute
-memory size in Mb, when any machine now will have an
-integer multiple of Mb. However, the problem is that the
-way to do this (multiplying the size of a memory page in 
-bytes by the number of memory pages), produce the ram in bytes.
-That will likely overflow a long on a 32-bit machine. So a 
-double is used, divided by the number of  bytes per Mb, then
-printed as a long. 
-
-I hope that makes some sense */
-
-  if ((long) sysconf(_SC_PHYS_PAGES) > 0L)
-  {
-    if ((long) sysconf(_SC_PAGESIZE) > 0L)
-    {
-      ram=(double) sysconf(_SC_PAGESIZE);
-      ram*= (double) sysconf(_SC_PHYS_PAGES);
-      {
-        ram=ram/BYTES_PER_MB;
-        sprintf(data->memory,"%ld",(long) (ram+0.05));
-      }
-    }
-  }
-#endif /* End of HAVE__SC_PHYS_PAGES */
-#endif  /* End of  HAVE__SC_PHYS_PAGES */
 #endif /* End of #ifdef HAVE_SYSCONF */
   return(0);
 }

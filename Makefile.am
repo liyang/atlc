@@ -6,10 +6,10 @@ SUBDIRS =  . src m4 man docs examples tools tests
 
 EXTRA_DIST = \
 README \
-README.cvs \
 README.help \
 README.mpi \
 README.solaris \
+README.linux \
 README.support \
 README.threads \
 README.windows \

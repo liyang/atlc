@@ -5,7 +5,7 @@
 touch $top_builddir/tmp/test-coupler1.U.odd.bmp
 MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test-coupler1.U.odd.bmp`
 rm $top_builddir/tmp/test-coupler1.U.odd.bmp
-if [ $MD5SUM != 889d88b1fbcd7dda2cef36e1ee8fd3e9 ]; then
+if [ $MD5SUM != 54b0717d79906661309375844cbc9a36 ]; then
   echo "FAILED:" $0  >> tests.log
   exit 1
 else 

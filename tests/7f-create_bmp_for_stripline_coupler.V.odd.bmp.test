@@ -23,7 +23,7 @@
 
 touch $top_builddir/tmp/test_stripline_coupler.V.odd.bmp
 MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test_stripline_coupler.V.odd.bmp`
-if [ $MD5SUM != 54079de65f2a4910447a334358181e22 ] ; then
+if [ $MD5SUM != 078c89104e44cb6e1be0941eb8ff29ad ] ; then
   echo "FAILED:" $0 >> tests.log
   exit 1
 else

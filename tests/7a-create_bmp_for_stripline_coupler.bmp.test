@@ -21,7 +21,7 @@
 # program bug, so PLEASE PLEASE let me know about it!!
 # Dr. David Kirkby, drkirkby@ntlworld.com
 
-$top_builddir/src/non_gui/create_bmp_for_stripline_coupler -vv -b 16 1 1 1 1.0 $top_builddir/tmp/test_stripline_coupler.bmp > $top_builddir/tmp/test_stripline_coupler.bmp.pre-atlc.txt
+$top_builddir/src/create_bmp_for_stripline_coupler -vv -b 16 1 1 1 1.0 $top_builddir/tmp/test_stripline_coupler.bmp > $top_builddir/tmp/test_stripline_coupler.bmp.pre-atlc.txt
 rm $top_builddir/tmp/test_stripline_coupler.bmp.pre-atlc.txt
 
 touch $top_builddir/tmp/test_stripline_coupler.bmp

@@ -5,9 +5,9 @@
 rm -f test.*.bin
 
 if [ -n "$mpirun_found" ] ; then
-  mpirun -np 2 $top_builddir/src/non_gui/atlc -s -S $top_builddir/tmp/test.bmp > $top_builddir/tmp/test.txt 2> /dev/null
+  mpirun -np 2 $top_builddir/src/atlc -s -S $top_builddir/tmp/test.bmp > $top_builddir/tmp/test.txt 2> /dev/null
 else
-  $top_builddir/src/non_gui/atlc -s -S $top_builddir/tmp/test.bmp > $top_builddir/tmp/test.txt
+  $top_builddir/src/atlc -s -S $top_builddir/tmp/test.bmp > $top_builddir/tmp/test.txt
 fi
 
 # Check the inductance per metre, which should be in column 12 and 
@@ -20,7 +20,7 @@ if [ -z "$Lo" ] || [ -z "$Zo" ] ; then
   exit 1
 fi
 
-if [ $Lo = 340.8 ] && [ $Zo = 102.17 ] ; then
+if [ $Lo = 341.9 ] && [ $Zo = 102.506 ] ; then
   rm $top_builddir/tmp/test.txt
   rm $top_builddir/tmp/test.bmp
   echo "PASSED:" $0 >> tests.log

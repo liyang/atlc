@@ -19,7 +19,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307,
 USA.
 
-Dr. David Kirkby, e-mail drkirkby at ntlworld.com 
+Dr. David Kirkby, e-mail drkirkby at gmail.com 
 
 */
 
@@ -53,11 +53,11 @@ int main (int argc, char **argv)
   if (argc != 6)
   {
     fprintf(stderr,"Find properties of a coaxial cable with two different concentric dielectrics.\n\n");
-    fprintf(stderr,"Usage: dualcoax d0 d1 d2 Er1 Er2\n");
+    fprintf(stderr,"Usage: dualcoax D1 D2 D3 Er1 Er2\n");
     fprintf(stderr,"dualcoax %s: arguments are:\n",PACKAGE_VERSION);
-    fprintf(stderr,"       d0 is the diameter of the inner conductor\n"); 
-    fprintf(stderr,"       d1 is the outer diameter of the inner dielectic\n"); 
-    fprintf(stderr,"       d2 is the inner diameter of the outer conductor\n"); 
+    fprintf(stderr,"       D1 is the diameter of the inner conductor\n"); 
+    fprintf(stderr,"       D2 is the outer diameter of the inner dielectic\n"); 
+    fprintf(stderr,"       D3 is the inner diameter of the outer conductor\n"); 
     fprintf(stderr,"       Er1 is the permittivity of the inner dielectric\n"); 
     fprintf(stderr,"       Er2 is the permittivity of the outer dielectric\n"); 
     exit(1);

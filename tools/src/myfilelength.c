@@ -19,7 +19,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307,
 USA.
 
-Dr. David Kirkby, e-mail drkirkby@ntlworld.com 
+Dr. David Kirkby, e-mail drkirkby@gmail.com 
 
 */
 
@@ -33,8 +33,8 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #include <stdlib.h>
 #endif
 
-#include "../../src/non_gui/exit_codes.h"
-#include "../../src/non_gui/definitions.h"
+#include "../../src/exit_codes.h"
+#include "../../src/definitions.h"
 
 int main(int argc, char **argv)
 {

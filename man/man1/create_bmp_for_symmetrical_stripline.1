@@ -1,10 +1,10 @@
-.TH create_bmp_for_symmetrical_stripline 1 "atlc-4.5.0 28th Sept 2003" "Dr. David Kirkby"
+.TH create_bmp_for_symmetrical_stripline 1 "atlc-4.6.0 8th December 2003" "Dr. David Kirkby"
 .ds n 5
 .SH NAME
 \fBcreate_bmp_for_symmetrical_stripline\fR - bitmap generator for thin conductor between two
 infinite groundplanes (part of \fBatlc\fR)
 .SH SYNOPSIS
-\fBcreate_bmp_for_symmetrical_stripline  W H w bitmapfile\fR
+\fBcreate_bmp_for_symmetrical_stripline [-v] W H w bitmapfile\fR
 .br
 .SH WARNING
 This man page is not a complete set of documentation - the complexity of the atlc project makes man pages not an ideal way to document it, although out of completeness, man pages are produced. 
@@ -65,7 +65,12 @@ The bitmaps produced by \fBcreate_bmp_for_symmetrical_stripline\fR are 24-bit bi
 white (vacuum) dielectrics. 
 
 .SH OPTIONS
-There are no options for create_bmp_for_symmetrical_stripline.
+\fB-v\fR
+.br
+Print the theoeretical impedance Zo. This only works if the width W is sufficiently
+wide, otherwise atlc and the value printed here would disagree wildly. 
+.br
+
 .P
 .SH SEE ALSO
 atlc(1)

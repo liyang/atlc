@@ -8,10 +8,14 @@ the md5 checksum.
 *myfilelength*
 Prints the file length of its one argument in bytes.
 
-
 *locatediff*
 Shows the differneces between two binary files. Useful
 if a bitmap shows differing results on two differnt
 macines. This makes it possible to see if its an odd
 pixel, or a major problem. 
 
+*coax* computers the impedance of a coaxial or 
+ecentric coaxial structure. 
+
+*dualcoax* computes the impedance of a coaxial line
+with two concentric dielectrics. 

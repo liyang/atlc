@@ -10,12 +10,12 @@ cp $top_srcdir/examples/coax2.bmp $top_builddir/tmp
 
 # Add the -S and -s options together to prevent all ( .bmp or .bin files ) being created. 
 if [ "$mpirun_found" = "yes" ] ; then
-  Zo=`mpirun -np 2 $top_builddir/src/non_gui/atlc -s -S $top_builddir/tmp/coax2.bmp | awk '{print $6}'`
+  Zo=`mpirun -np 2 $top_builddir/src/atlc -s -S $top_builddir/tmp/coax2.bmp | awk '{print $6}'`
 else
-  Zo=`$top_builddir/src/non_gui/atlc -s -S $top_builddir/tmp/coax2.bmp | awk '{print $6}'`
+  Zo=`$top_builddir/src/atlc -s -S $top_builddir/tmp/coax2.bmp | awk '{print $6}'`
 fi
 
-if [ $Zo != 70.02 ] ; then
+if [ $Zo != 70.199 ] ; then
   echo "FAILED:" $0 >> tests.log 
   exit 1
 fi  

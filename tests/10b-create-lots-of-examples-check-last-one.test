@@ -38,11 +38,11 @@
 # know. email drkirkby@ntlworld.com and/or davek@medphys.ucl.ac.uk 
 
 
-Zodd=`$top_builddir/src/no*/create_bmp_for_stripline_coupler -v 1.0 1.0 1.0 1.0 $top_builddir/tmp/coupler1.bmp | tail -1 | awk '{print $2 }' `
-Zeven=`$top_builddir/src/no*/create_bmp_for_stripline_coupler -v 1.0 1.0 1.0 1.0 $top_builddir/tmp/coupler1.bmp | tail -1 | awk '{print $4 }' `
-Zo=`$top_builddir/src/no*/create_bmp_for_stripline_coupler -v 1.0 1.0 1.0 1.0 $top_builddir/tmp/coupler1.bmp | tail -1 | awk '{print $6 }' `
+Zodd=`$top_builddir/src/create_bmp_for_stripline_coupler -v 1.0 1.0 1.0 1.0 $top_builddir/tmp/coupler1.bmp | tail -1 | awk '{print $2 }' `
+Zeven=`$top_builddir/src/create_bmp_for_stripline_coupler -v 1.0 1.0 1.0 1.0 $top_builddir/tmp/coupler1.bmp | tail -1 | awk '{print $4 }' `
+Zo=`$top_builddir/src/create_bmp_for_stripline_coupler -v 1.0 1.0 1.0 1.0 $top_builddir/tmp/coupler1.bmp | tail -1 | awk '{print $6 }' `
 rm -f $top_builddir/tmp/coupler1.bmp
-if [ $Zodd = 64.767502 ] && [ $Zeven = 66.015168 ] && [ $Zo = 65.388359 ] ; then
+if [ $Zodd = 64.722695 ] && [ $Zeven = 65.969498 ] && [ $Zo = 65.343123 ] ; then
   echo "PASSED:" $0 >> tests.log
   exit 0
 else

@@ -25,7 +25,7 @@
 # Check the Ex.odd file created by running 7a
 touch $top_builddir/tmp/test_stripline_coupler.Ex.odd.bmp
 MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test_stripline_coupler.Ex.odd.bmp`
-if [ $MD5SUM != bbe776a384f770719f1ef36b9c341a9c ] ; then
+if [ $MD5SUM != 03f1e8bb5484b9052b4891ba14df0a2a ] ; then
   echo "FAILED:" $0 >> tests.log
   exit 1
 else
