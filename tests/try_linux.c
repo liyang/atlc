@@ -7,7 +7,8 @@
 #ifdef HAVE_UNISTD_H 
 #ifdef HAVE_STRING_H
 #ifdef HAVE_SYS_SYSINFO_H
-#ifdef HAVE_LINUX_IP_H
+#ifdef HAVE_LINUX_IP_H      /* I don't want to include this, but it is proof 
+			       that the system is Linux */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -16,6 +17,11 @@
 #include <unistd.h>
 #include <string.h>
 #include <sys/sysinfo.h>
+
+#ifdef HAVE_ERRNO_H
+#include <errno.h>
+#endif
+
 
 #endif
 #endif
@@ -38,12 +44,13 @@ int try_linux(struct computer_data *data)
 #ifdef HAVE_UNISTD_H 
 #ifdef HAVE_STRING_H
 #ifdef HAVE_SYS_SYSINFO_H
-#ifdef HAVE_LINUX_IP_H
+#ifdef HAVE_LINUX_IP_H      /* I don't want to include this, but it is proof 
+			       that the system is Linux */
 
   struct utsname operating_system;
   double ram;
   size_t string_length;
-  int i;
+  int i, ret;
 
   /* Obtain the maximum number of CPUs supported on the Linux system */
 
@@ -51,7 +58,6 @@ int try_linux(struct computer_data *data)
 
 
   /* Obtain the of CPU and FPU on the Linux box */
-
 
   /* Obtain the RAM on the Linux system if possible */
 
@@ -61,7 +67,7 @@ int try_linux(struct computer_data *data)
   {
     if ((long) sysconf(_SC_PAGESIZE) > 0L)
     {
-      ram=(double) sysconf(_SC_PAGESIZE);
+      ram= (double) sysconf(_SC_PAGESIZE);
       ram*= (double) sysconf(_SC_PHYS_PAGES);
       {
         ram=ram/(double) BYTES_PER_MB;
@@ -72,20 +78,8 @@ int try_linux(struct computer_data *data)
 #endif
 #endif
 
-
   /* Obtain operating system informaton */
-  uname(&operating_system);
-  strcpy(data->sysname,operating_system.sysname);
-  strcpy(data->nodename,operating_system.nodename);
-  strcpy(data->release,operating_system.release);
-  string_length=strlen(data->version);
-  strcpy(data->version,operating_system.version);
-  for(i=0;i<string_length; ++i)
-  {
-    if (data->version[i] == ' ')
-       data->version[i]='_';
-  }
-  strcpy(data->machine,operating_system.machine);
+  /* This is done using uname() in try_portable.c */
 
   /* Obtain the manufacturer */
 

@@ -104,13 +104,8 @@ int try_solaris(struct computer_data *data)
     }
   }
 
-  /* Obtain operating system informaton */
-  uname(&operating_system);
-  strcpy(data->sysname,operating_system.sysname);
-  strcpy(data->nodename,operating_system.nodename);
-  strcpy(data->release,operating_system.release);
-  strcpy(data->version,operating_system.version);
-  strcpy(data->machine,operating_system.machine);
+  /* Obtain operating system informaton, which should have 
+  been found with try_portable.c */
 
   /* Obtain the manufacturer */
   sysinfo(SI_HW_PROVIDER,data->hw_provider,MAX_SIZE);
