@@ -208,9 +208,9 @@ else
   echo Failed test 6b indicating atlc failed to calculate the correct impedance when Er is 4.8 everywhere.
 fi
 
-../src/make_coupler 1 1 1 66.74-66.02.bmp 
+../src/make_coupler -b 16 1 1 1 66.74-66.02.bmp 
 CKSUM=`sum 66.74-66.02.bmp | awk '{print $1}'`
-if [ $CKSUM = 25424 ]; then
+if [ $CKSUM = 58890 ]; then
   echo Passed test 7a
 else
   echo Failed test 7a indicating make_coupler failed to generate the correct bitmap
@@ -218,7 +218,7 @@ fi
 
 ../src/atlc 66.74-66.02.bmp > /dev/null
 CKSUM=`cat 66.74-66.02.txt | awk '{print $11}' | sum | awk '{print $1}'`
-if [ $CKSUM = 07232 ]; then
+if [ $CKSUM = 64572 ]; then
   echo Passed test 7b
 else
   echo Failed test 7b indicating atlc failed to calculate the correct coupler impedance.
