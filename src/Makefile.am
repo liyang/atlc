@@ -1,5 +1,6 @@
 bin_PROGRAMS = atlc rect_in_rect circ_in_circ rect_cen_in_rect \
-circ_in_rect rect_in_circ readbin sym_strip make_coupler 
+circ_in_rect rect_in_circ readbin sym_strip make_coupler \
+design_coupler
 
 atlc_SOURCES = nrutil.c atlc.c read_bitmap_file_headers.c \
 byteswap.c string.c setup_arrays.c finite_difference_single_threaded.c \
@@ -56,5 +57,8 @@ string.c nrutil.c write_bitmap_out.c byteswap.c \
 align_bitmap_image.c fill_make_coupler.c \
 check_error.c  definitions.h  error_and_exit.c \
 get_Er1_and_Er2_colours.c
+
+design_coupler_SOURCES = design_coupler.c usage_design_coupler.c \
+get_options.c
 
 EXTRA_DIST = create winatlc tests DO_NOT_EDIT_THIS_FILE
