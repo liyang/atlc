@@ -35,6 +35,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #endif  
 
 #include "definitions.h"
+#include "exit_codes.h"
 
 #ifdef ENABLE_MP
 
@@ -459,6 +460,9 @@ without the threads\nlibrary.\n",1);
 
   }
   else
+  {
     usage_atlc();
-  error_and_exit("",5);
+    return(PROGRAM_CALLED_WITH_WRONG_NUMBER_OF_ARGUMENTS); 
+  }
+  return(OKAY); 
 }
