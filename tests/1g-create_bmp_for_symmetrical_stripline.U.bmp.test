@@ -13,17 +13,17 @@
 # the normal md5 or md5sum command.  It does not print the filename 
 # to stdout, as the normal version does. 
 
-# I have tried to test these checksums on as many systems as possible and 
-# know all tests pass on all systems I have checked this on. Typically the
-# systems have been mainly Suns, but running various operating systems. 
-# such as Solaris 9, NetBSD, Solaris 2.5, Linux but also a PC running
-# rehat Linux and a Dec Alpha. Any failure probably indicates a 
-# program bug, so PLEASE PLEASE let me know about it!!
+# Due to rounding errors, some systems do generate a different checksum on 
+# one machines to another. Usually this is only a single pixel differing
+# by one gray level. In this case, the 3 consequive bytes 301041, 
+# 301042 and 301043 are 254 on a Cray Y-MP but 255 on a Sun. AS such, 
+# in this case, more than one checksum is acceptable. 
 
 touch $top_builddir/tmp/test_sym_strip.U.bmp
 
 MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test_sym_strip.U.bmp`
-if [ $MD5SUM = 353a368663a112d7e8f0af6a63df75f3 ] || [ $MD5SUM = a983da63a2f7b5d56d263d93988c1f8d ]; then
+if [ $MD5SUM = 353a368663a112d7e8f0af6a63df75f3 ] || [ $MD5SUM = a983da63a2f7b5d56d263d93988c1f8d ] || [ $MD5SUM =
+2a9644a0206c2314006e298f07aae233] ; then
   rm -f $top_builddir/tmp/test_sym_strip.U.bmp 
   echo "PASSED:" $0 >> tests.log
   exit 0
