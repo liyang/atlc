@@ -14,6 +14,7 @@ jpg_DATA= 000000.jpg \
 8e8e8e.jpg \
 aliased.jpg \
 bc7f60.jpg \
+bluefish.jpg \
 central.jpg \
 centred.jpg \
 cir.jpg \
