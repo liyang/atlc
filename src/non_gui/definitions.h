@@ -26,7 +26,9 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #include <math.h>
 #endif 
 
+#ifdef HAVE_STDIO_H
 #include <stdio.h>
+#endif
 
 #define EXIT_READ_FAILURE
 
@@ -242,9 +244,8 @@ void swap_bytes4(unsigned char *buffer, int offset, int *answer);
 void free_ustring(unsigned char *v, long nl, long nh);
 int **imatrix(long nrl, long nrh, long ncl, long nch);
 void setup_arrays(struct transmission_line_properties *data);
-void get_data_interactively(void);
 double finite_difference(int iterations);
-void do_columns(int *thread);
+void *do_columns(void *thread);
 void usage_atlc(void);
 void write_fields_for_two_conductor_lines(char *filename, struct transmission_line_properties data);
 void write_fields_for_directional_couplers(char *filename, struct transmission_line_properties data, int odd_or_even);
@@ -309,7 +310,7 @@ void calculate_Zodd_and_Zeven(double *Zodd, double *Zeven, double *Zo, double w,
 void usage_design_coupler(void);
 void print_copyright(char *s);
 void give_examples_of_using_design_coupler(void);
-void do_fd_calculation(struct transmission_line_properties *data, FILE *where_to_print_fp, char *inputfile_filename);
+void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_to_print_fp, char *inputfile_filename);
 int print_data_for_directional_couplers(struct transmission_line_properties data, FILE *where_to_print_fp, char *inputfile_name);
 int print_data_for_two_conductor_lines(struct transmission_line_properties data, FILE *where_to_print_fp, char *inputfile_name);
 void set_data_to_sensible_starting_values(struct transmission_line_properties *data);
