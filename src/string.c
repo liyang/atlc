@@ -21,7 +21,7 @@ char *string(long nl,long nh)
 
   //v=(char *)malloc((unsigned) (nh-nl+1));
   v=(char *)calloc(nh-nl+1,sizeof(unsigned));
-  if (!v) nrerror("allocation failure in string()");
+  if (!v) nrerror((char *) "allocation failure in string()");
   return v-nl;
 }
 
@@ -30,7 +30,7 @@ unsigned char *ustring(long nl,long nh)
   unsigned char *v;
 
   v=(unsigned char *)malloc((unsigned) (nh-nl+1));
-  if (!v) nrerror("allocation failure in ustring()");
+  if (!v) nrerror((char *) "allocation failure in ustring()");
   return v-nl;
 }
 
@@ -63,13 +63,13 @@ char **cmatrix(long nrl, long nrh, long ncl, long nch)
 
 	/* allocate pointers to rows */
 	m=(char **) malloc((size_t)((nrow+NR_END)*sizeof(char*)));
-	if (!m) nrerror("allocation failure 1 in matrix()");
+	if (!m) nrerror((char *) "allocation failure 1 in matrix()");
 	m += NR_END;
 	m -= nrl;
 
 	/* allocate rows and set pointers to them */
 	m[nrl]=(char *) malloc((size_t)((nrow*ncol+NR_END)*sizeof(char)));
-	if (!m[nrl]) nrerror("allocation failure 2 in cmatrix()");
+	if (!m[nrl]) nrerror((char *) "allocation failure 2 in cmatrix()");
 	m[nrl] += NR_END;
 	m[nrl] -= ncl;
 
@@ -87,13 +87,13 @@ unsigned char **ucmatrix(long nrl, long nrh, long ncl, long nch)
 	unsigned char **m;
 	/* allocate pointers to rows */
 	m=(unsigned char **) malloc((size_t)((nrow+NR_END)*sizeof(unsigned char*)));
-	if (!m) nrerror("allocation failure 1 in matrix()");
+	if (!m) nrerror((char *) "allocation failure 1 in matrix()");
 	m += NR_END;
 	m -= nrl;
 
 	/* allocate rows and set pointers to them */
 	m[nrl]=(unsigned char *) malloc((size_t)((nrow*ncol+NR_END)*sizeof(unsigned char)));
-	if (!m[nrl]) nrerror("allocation failure 2 in cmatrix()");
+	if (!m[nrl]) nrerror((char *) "allocation failure 2 in cmatrix()");
 	m[nrl] += NR_END;
 	m[nrl] -= ncl;
 
