@@ -6,6 +6,9 @@
 #include <stdlib.h>
 #endif
 
+#include "../../src/non_gui/exit_codes.h"
+#include "../../src/non_gui/definitions.h"
+
 int main(int argc, char **argv)
 {
   FILE *fp;
@@ -24,5 +27,5 @@ int main(int argc, char **argv)
   fseek(fp,0,SEEK_END);
   length=ftell(fp);
   printf("%d\n",length);
-  exit(0);
+  exit_with_msg_and_exit_code("",OKAY);
 }

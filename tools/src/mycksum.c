@@ -43,6 +43,9 @@ are identical. */
 #include <stdlib.h>
 #endif
 
+#include "../../src/non_gui/exit_codes.h"
+#include "../../src/non_gui/definitions.h"
+
 #define ROTATE_RIGHT(c) if ((c) & 01) (c) = ((c) >>1) + 0x8000; else (c) >>= 1;
 
 int main(int argc, char **argv)
@@ -53,7 +56,7 @@ int main(int argc, char **argv)
 
   if( (fp=fopen(argv[1],"r")) == NULL)
   {
-    printf("Error: can't open file\n");
+    fprintf(stderr,"Error: can't open file\n");
     exit(1);
   }
   while ((ch = getc (fp)) != EOF)
@@ -63,5 +66,5 @@ int main(int argc, char **argv)
     checksum &= 0xffff;       /* Keep it within bounds. */
   }
   printf ("%05lu\n", checksum);
-  exit(0);
+  exit_with_msg_and_exit_code("",OKAY);
 }
