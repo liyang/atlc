@@ -42,12 +42,8 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #include "definitions.h"
 #include "exit_codes.h"
 
-#ifdef ENABLE_THREADS
-
-#ifdef HAVE_PTHREAD_H
+#ifdef ENABLE_POSIX_THREADS
 #include <pthread.h>
-#endif
-
 #endif
 
 
@@ -257,15 +253,15 @@ without the threads\nlibrary.\n",1);
     strcpy(outputfile_name, output_prefix);
     strcat(output_prefix,inputfile_name);
     strcpy(outputfile_name,output_prefix);
-    free_string(output_prefix,0,1000);
+    free_string(output_prefix,0,1024);
     read_bitmap_file_headers(inputfile_name, &offset, &size, &width, &height);
     /* Allocate all ram now, so atlc is sure to have it. There is no point
     in getting some now, starting work then finding atlc can't get the 
     rest of what is needed. */
     image_data=ustring(0L,size);
-    cell_type=cmatrix(0,width,0,height);
-    Vij=dmatrix(0,width,0,height);
-    Er=dmatrix(0,width,0,height);
+    cell_type=cmatrix(0,width-1,0,height-1);
+    Vij=dmatrix(0,width-1,0,height-1);
+    Er=dmatrix(0,width-1,0,height-1);
     /* On Solaris systems, if the following is not executed, only one 
     thread will run at any one time, which rather defeats the object of 
     running multi-threaded. */
@@ -381,6 +377,14 @@ without the threads\nlibrary.\n",1);
     usage_atlc();
     return(PROGRAM_CALLED_WITH_WRONG_NUMBER_OF_ARGUMENTS); 
   }
+  free_string(inputfile_name,0,1024);
+  free_string(outputfile_name,0,1024);
+  free_string(appendfile_name,0,1024);
+  free_ustring(image_data,0L,size);
+  free_cmatrix(cell_type,0,width-1,0,height-1);
+  free_dmatrix(Vij, 0,width-1,0,height-1);
+  free_dmatrix(Er,0,width-1,0,height-1);
+
   return(OKAY); 
 }
 
