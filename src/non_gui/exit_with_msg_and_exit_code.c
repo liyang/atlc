@@ -29,7 +29,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #include "definitions.h"
 
 
-void exit_with_msg_and_exit_code(char s[], int exitnumber)
+void exit_with_msg_and_exit_code(const char *s, int exitnumber)
 {
   if ((NULL != s) && (s[0] != '\0')) {
 	fprintf(stderr,"%s\n",s);
