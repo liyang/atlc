@@ -80,7 +80,7 @@ Laboratory's list of physical constants found on the web. */
 
 #define EPSILON_0 8.854187817e-12
 #define MU_0 M_PI*4e-7
-#define MAX_THREADS  2
+#define MAX_THREADS  4
 #define BORDER   5 /* The border to put around images. 1 is minimum, but 5 looks better */
 
 #define TINY 1e-12
