@@ -8,6 +8,7 @@
 #include "wx/wxprec.h"
 #include "wx/panel.h"
 #include "wx/gdicmn.h"
+#include <wx/toolbar.h>
 #include "atlcFrm.h"
 #include "RoundCoaxFrm.h"
 #include "FiniteDifferenceFrame.h"
@@ -107,6 +108,15 @@ atlcFrame::atlcFrame(const wxString& title, const wxPoint& pos, const wxSize& si
 
   // create a status bar just for fun (by default with 1 pane only)
   CreateStatusBar(1);
+  wxBitmap *myBitmap = new wxBitmap("coax-toolbar.bmp",wxBITMAP_TYPE_BMP);
+  if(myBitmap->Ok() != TRUE)
+  {
+    wxMessageDialog *msg = new wxMessageDialog(this, "bitmap NOT loaded !!!!", "Error", wxICON_HAND,wxDefaultPosition);
+    msg->ShowModal();
+  }
+  wxToolBar *myToolBar = new wxToolBar(this,-1,wxPoint(-1,-1), wxSize(-1,-1), wxTB_HORIZONTAL, "foo");
+  myToolBar->AddTool(-1, *myBitmap , "foo", "lots of foos");
+  myToolBar->Realize();
   SetStatusText("Ready");
 }
   
