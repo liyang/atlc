@@ -21,11 +21,29 @@ USA.
 Dr. David Kirkby, e-mail drkirkby@ntlworld.com 
 
 */
+#define SLOW
 
-/* This is my first attempt at multi-processing, beyond simple examples
-in books. Hence I suspect it is not efficient */
+#ifndef ENABLE_POSIX_THREADS 
+
+/* If we are not comiling for multi-threaded use, a function
+is defined, but it is not used. This keeps the linker happy */
+
+double finite_difference_multi_threaded(int number_of_iterations)
+{
+  return(0.0);
+}
+#endif
+
 
 #ifdef ENABLE_POSIX_THREADS 
+
+#ifdef HAVE_SYS_TYPES_H
+#include <sys/types.h>
+#endif
+
+#ifdef HAVE_SEMAPHORE_H
+#include <semaphore.h>
+#endif
 
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
@@ -42,116 +60,240 @@ in books. Hence I suspect it is not efficient */
 
 extern int coupler;
 extern int width, height;
-extern double **Vij, **Er;
+extern double **Vij, **Vij2, **Er;
 extern char **cell_type;
 extern int dielectrics_to_consider_just_now;
-extern int max_threads; 
+extern int number_of_workers; 
+extern int errno;
+
+
+/* The algorithm for this is based on one in the book 'Foundations of Multithraded, 
+Parallel and Distributed Programming' by G. A. Andrews, (2000). Especially 
+chapter 11, Fig 11.6, "Red/Black Gauss-Seidel using shared vairables'. 
+
+Basically the array is a considered a chess board. Since we only use in the computation the
+values above, below, to the left and the right of the current pixel, these will all be the
+same colour on the chess board (black or white). So we compute all the white squares, which
+can all be done in parallel, since they don't depend on each other. Once the white squares
+are done, the black ones can be done. Again, these don't depend on the white squares, but
+only the black ones. So the algorithm does
+
+1) Covers the array with a large chess board with black and white squares. 
+
+
+B W B W B W B W B W B W B W B W B W B W B W B W B W B W
+W B W B W B W B W B W B W B W B W B W B W B W B W B W B
+B W B W B W B W B W B W B W B W B W B W B W B W B W B W 
+W B W B W B W B W B W B W B W B W B W B W B W B W B W B 
+B W B W B W B W B W B W B W B W B W B W B W B W B W B W 
+W B W B W B W B W B W B W B W B W B W B W B W B W B W B 
+B W B W B W B W B W B W B W B W B W B W B W B W B W B W 
+W B W B W B W B W B W B W B W B W B W B W B W B W B W B 
+B W B W B W B W B W B W B W B W B W B W B W B W B W B W 
+W B W B W B W B W B W B W B W B W B W B W B W B W B W B
+B W B W B W B W B W B W B W B W B W B W B W B W B W B W 
+W B W B W B W B W B W B W B W B W B W B W B W B W B W B
+
+
+2) Split the array into a number of columns, one for each CPU.
+
+B W B W B W B   W B W B W B W   B W B W B W B   W B W B W B W
+W B W B W B W   B W B W B W B   W B W B W B W   B W B W B W B
+B W B W B W B   W B W B W B W   B W B W B W B   W B W B W B W 
+W B W B W B W   B W B W B W B   W B W B W B W   B W B W B W B 
+B W B W B W B   W B W B W B W   B W B W B W B   W B W B W B W 
+W B W B W B W   B W B W B W B   W B W B W B W   B W B W B W B 
+B W B W B W B   W B W B W B W   B W B W B W B   W B W B W B W 
+W B W B W B W   B W B W B W B   W B W B W B W   B W B W B W B 
+B W B W B W B   W B W B W B W   B W B W B W B   W B W B W B W 
+W B W B W B W   B W B W B W B   W B W B W B W   B W B W B W B
+B W B W B W B   W B W B W B W   B W B W B W B   W B W B W B W 
+W B W B W B W   B W B W B W B   W B W B W B W   B W B W B W B
+
+3) Do all columns in parallel on the black squares. 
+
+B   B   B   B     B   B   B     B   B   B   B     B   B   B  
+  B   B   B     B   B   B   B     B   B   B     B   B   B   B
+B   B   B   B     B   B   B     B   B   B   B     B   B   B   
+  B   B   B     B   B   B   B     B   B   B     B   B   B   B 
+B   B   B   B     B   B   B     B   B   B   B     B   B   B   
+  B   B   B     B   B   B   B     B   B   B     B   B   B   B 
+B   B   B   B     B   B   B     B   B   B   B     B   B   B   
+  B   B   B     B   B   B   B     B   B   B     B   B   B   B 
+B   B   B   B     B   B   B     B   B   B   B     B   B   B   
+  B   B   B     B   B   B   B     B   B   B     B   B   B   B
+B   B   B   B     B   B   B     B   B   B   B     B   B   B   
+  B   B   B     B   B   B   B     B   B   B     B   B   B   B
+
+Thread 0          Thread 1        Thread 2         Thread 3
+
+4) Wait until all the black squares are done.
+
+5) Compute all the white squares in parallel. 
+
+  W   W   W     W   W   W   W     W   W   W     W   W   W   W
+W   W   W   W     W   W   W     W   W   W   W     W   W   W  
+  W   W   W     W   W   W   W     W   W   W     W   W   W   W 
+W   W   W   W     W   W   W     W   W   W   W     W   W   W   
+  W   W   W     W   W   W   W     W   W   W     W   W   W   W 
+W   W   W   W     W   W   W     W   W   W   W     W   W   W   
+  W   W   W     W   W   W   W     W   W   W     W   W   W   W 
+W   W   W   W     W   W   W     W   W   W   W     W   W   W   
+  W   W   W     W   W   W   W     W   W   W     W   W   W   W 
+W   W   W   W     W   W   W     W   W   W   W     W   W   W  
+  W   W   W     W   W   W   W     W   W   W     W   W   W   W 
+W   W   W   W     W   W   W     W   W   W   W     W   W   W  
+Thread 0          Thread 1        Thread 2         Thread 3
+
+
+6) Repeat a large number (typically 100) times. 
+
+7) Check for convergence. 
+
+8) Stop if the solution has converged. 
+*/
+
 extern double r;
 
-pthread_t *threads;
-void *do_columns(void *thread_arg)
-{
-  int inc, z, i, y=1, k;
-  int *thread = (int *) thread_arg;
-  inc=(width-max_threads)/max_threads; /* is this okay? I'm not sure */
-  z=inc;
-  for(k=0;k<(*thread);++k)
-  {
-    y+=inc+1;
-    z+=inc+1;
-  }
-  if(*thread==max_threads-1)
-    z=width-1; 
-  for(i=y; i<=z; ++i)
-  {
-    //printf("i=%d y=%d z=%d in do cols\n",i,y,z);
-    /* the following is a bit of a hack and needs clearing up. Basically
-    the formual used for computing v(i,j) in the routine
-    update_voltage_arrary breaks down when i==width-1. However, I've
-    added a hack to that, to take care of the situation when i==width-2.
-    to compute v(i==width-1) */
-    if(i!=width-1)
-      update_voltage_array(i,1);
-  }
+pthread_mutex_t barrier;  /* mutex semaphore for the barrier */
+pthread_cond_t go;        /* condition variable for leaving */
+int numArrived = 0;       /* count of the number who have arrived */
+
+void Barrier() {
+  pthread_mutex_lock(&barrier);
+  numArrived++;
+  if (numArrived == number_of_workers) {
+    numArrived = 0;
+    pthread_cond_broadcast(&go);
+  } else
+    pthread_cond_wait(&go, &barrier);
+  pthread_mutex_unlock(&barrier);
 }
 
-/* There are two versions of finite_difference. Both take the same 
-arguments and are both return the same data. One is single threaded, the
-other multi-threaded. */
 
-double finite_difference(int accuracy)
-{
-  int i, j, a, y, z, thread_number, *id_arg, ret;
-  int inc;
-  double capacitance_per_metre=0.0, energy_per_metre;
-  /* We split the width into max_threads regions, and calculate the voltage at
-  each point using a different thread for each. To do this safely, a single line
-  of calculations must be missed between each set. ie with a 256 wide image, we
-  would do 1 to 63, 65 to 127, 129 to 191 and 193 to 255. We later do the 
-  missing ones sequentially */
-  /* allocate space for threads  */
-  threads = (pthread_t *) malloc(max_threads*sizeof(pthread_t));
-  id_arg = ivector(0,max_threads-1);
-  if(threads == NULL)
+/* Each Worker computes values in one strip of the grids.
+   The main worker loop does two computations to avoid copying from
+   one grid to the other.  */
+
+void *worker(void *arg) {
+  int myid = (int) arg;
+  double maxdiff, temp, r_over_4,a,b,c,d,e,f,g,h;
+  double one_minus_r;
+  int i, j, iters, jstart;
+  int firstcol, lastcol;
+  int strip_width=width/number_of_workers;
+
+  firstcol = myid*strip_width+1;
+  lastcol = firstcol + strip_width - 1;
+  r_over_4=r/4.0;
+  one_minus_r=1-r;
+  if(myid == number_of_workers -1) 
+    lastcol=width-2;
+  // printf("firstcol=%d lastcol=%d width=%d height=%d \n",firstcol,lastcol,width,height);
+  Barrier();
+  for (iters = 1; iters <= ITERATIONS; iters++) 
   {
-    fprintf(stderr,"malloc failed for threads in finite .. .c\n");
-    exit_with_msg_and_exit_code("alloc failed for threads in finite_difference_multi_threaded.c",MALLOC_FAILED);
+    for(i= firstcol ; i <= lastcol; ++i){
+      if(i%2 ==1 )
+	jstart=1;
+      else
+	jstart=2;
+      for(j=jstart ; j < height-1 ; j+=2){
+        if(cell_type[i][j] == DIELECTRIC) /* Same dielectric all around */
+          Vij[i][j]=r_over_4*(Vij[i][j+1]+Vij[i+1][j]+Vij[i][j-1]+Vij[i-1][j])+one_minus_r*Vij[i][j];
+        else if(cell_type[i][j] > DIELECTRIC) /* only update dielectrics, not conductors */
+        {
+          a=(Er[i][j] * Er[i][j-1] * Vij[i][j-1])/(Er[i][j] + Er[i][j-1]);
+          b=(Er[i][j] * Er[i][j+1] * Vij[i][j+1])/(Er[i][j] + Er[i][j+1]);
+          c=(Er[i][j] * Er[i-1][j] * Vij[i-1][j])/(Er[i][j] + Er[i-1][j]);
+          d=(Er[i][j] * Er[i+1][j] * Vij[i+1][j])/(Er[i][j] + Er[i+1][j]);
+    
+          e=(Er[i][j] * Er[i][j-1])/(Er[i][j]+Er[i][j-1]);
+          f=(Er[i][j] * Er[i][j+1])/(Er[i][j]+Er[i][j+1]);
+          g=(Er[i][j] * Er[i-1][j])/(Er[i][j]+Er[i-1][j]);
+          h=(Er[i][j] * Er[i+1][j])/(Er[i][j]+Er[i+1][j]);
+                        
+          Vij[i][j]=r*(a+b+c+d)/(e+f+g+h) + (1-r)*Vij[i][j];
+        }
+      }
+    }
+    Barrier();
+    //printf("all done top half id = %d\n",myid);
+    for(i= firstcol ; i <= lastcol; ++i){
+      if(i%2 ==1 )
+	jstart=2;
+      else
+	jstart=1;
+      for(j=jstart ; j < height -1; j+=2){
+        if(cell_type[i][j] == DIELECTRIC) /* Same dielectric all around */
+          Vij[i][j]=r_over_4*(Vij[i][j+1]+Vij[i+1][j]+Vij[i][j-1]+Vij[i-1][j])+one_minus_r*Vij[i][j];
+        else if(cell_type[i][j] > DIELECTRIC) /* only update dielectrics, not conductors */
+        {
+          a=(Er[i][j] * Er[i][j-1] * Vij[i][j-1])/(Er[i][j] + Er[i][j-1]);
+          b=(Er[i][j] * Er[i][j+1] * Vij[i][j+1])/(Er[i][j] + Er[i][j+1]);
+          c=(Er[i][j] * Er[i-1][j] * Vij[i-1][j])/(Er[i][j] + Er[i-1][j]);
+          d=(Er[i][j] * Er[i+1][j] * Vij[i+1][j])/(Er[i][j] + Er[i+1][j]);
+    
+          e=(Er[i][j] * Er[i][j-1])/(Er[i][j]+Er[i][j-1]);
+          f=(Er[i][j] * Er[i][j+1])/(Er[i][j]+Er[i][j+1]);
+          g=(Er[i][j] * Er[i-1][j])/(Er[i][j]+Er[i-1][j]);
+          h=(Er[i][j] * Er[i+1][j])/(Er[i][j]+Er[i+1][j]);
+                        
+          Vij[i][j]=r*(a+b+c+d)/(e+f+g+h) + (1-r)*Vij[i][j];
+        }
+      }
+    }
+    Barrier();
+    //printf("all done bot half id = %d\n",myid);
   }
-  y=1;
-  inc=(width-max_threads)/max_threads;
-  z=inc;
-  for(a=1; a<=accuracy; ++a)
+  Barrier();
+  //printf("XXXXXXXXXXX %d\n",myid);
+  return(0);
+}
+
+double finite_difference_multi_threaded(int number_of_iterations)
+{
+  int i, j, ret, thread_number;
+  pthread_attr_t attr;
+  pthread_t thread_id[MAXIMUM_PROCESSING_DEVICES];
+
+
+  double capacitance_per_metre, energy_per_metre;
+
+
+  /* set global thread attributes */
+  pthread_attr_init(&attr);
+  pthread_attr_setscope(&attr, PTHREAD_SCOPE_SYSTEM);
+
+  /* initialize mutex and condition variable */
+  pthread_mutex_init(&barrier, NULL);
+  pthread_cond_init(&go, NULL);
+  //do{
+  for(thread_number=0;thread_number<number_of_workers;thread_number++){   
+    ret=pthread_create(&thread_id[thread_number],&attr, worker,(void *)thread_number);
+    if(ret != 0)
+      exit_with_msg_and_exit_code("failed to create thread in finite_difference_multi_threaded.c",THREAD_CREATION_FAILED);
+  } 
+  /* Wait for each thread to join - i.e. once they are all finished. */
+  for(thread_number=0;thread_number<number_of_workers;thread_number++)
   {
-    /* Perform the calculations on each column in parallel, missing
-    out one column for each thread eneabled. */
-
-    for(thread_number=0;thread_number<max_threads;thread_number++)
-    {   
-      id_arg[thread_number] = thread_number;
-      if ((ret=pthread_create(&(threads[thread_number]),NULL,\
-      do_columns,(void *)&(id_arg[thread_number])))!=0)
-        perror("pthread_create"), exit(7);
-    } 
-    /* Wait for each thread to join - i.e. once they are all finished.*/
-    for(thread_number=0;thread_number<max_threads;++thread_number)
-    {
-      if (pthread_join(threads[thread_number], NULL) != 0)
-        perror("pthread_join"),exit(8);
-    }
-    /* All threads have now finished, so most of the voltages have 
-    been calculated - just a few remain. 
-
-    We now complete the accuracy calculation of the missing lines.
-    If the arrary width was 256, these would be the lines 
-    64, 128 and 192. */
-    i=0;
-    for(thread_number=0;thread_number<max_threads-1;++thread_number)
-    {
-      i+=inc+1;
-      update_voltage_array(i,1);
-    }
-    /* Now the voltage matrix has been calculated once. Note the
-    voltages calculated are slightly different from those of the
-    single threaded case. We need to know the voltage at all
-    points around where we are calculationg (ie to find v(i,j), we
-    need v(i+1,j), v)i-1,j), v(i,j+1) and v(i,j-1). Hence by splitting
-    the matrix up as we have done here, the values will be different.
-    However, the difference shluld be slight. */
-  } /* end of accuracy loop */
+    ret=pthread_join(thread_id[thread_number], NULL);
+    if(ret != 0)
+      exit_with_msg_and_exit_code("failed to join thread in finite_difference_multi_threaded.c",THREAD_FAILED_TO_JOIN);
+      }
+  //} while (check_convergence(Vij,Vij2,width,height) > 1e-3);
   /* The energy in the matrix has now been minimised a number
-  (accuracy) times, so we now calcuate the capacitance to see if it is
-  converging */
+  (number_of_iterations) times, so we now calcuate the capacitance to see if it
+  has converged */
   energy_per_metre=0.0;
   for(i=0;i<width;++i)
     for(j=0;j<height;++j)
-    { 
 	energy_per_metre+=find_energy_per_metre(i,j);
-    }
+ 
   if(coupler==FALSE)
     capacitance_per_metre=2*energy_per_metre;
-  else if (coupler==TRUE)
+  else 
     capacitance_per_metre=energy_per_metre;
-
   return(capacitance_per_metre);
 }
 #endif
