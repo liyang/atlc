@@ -513,6 +513,35 @@ This structure, which has a w/H value of 1.442786, has a theoretical impedance c
 </TABLE>
 <p>
 Note, due to their large size, most of the  files *Ohm*.bmp are not distributed with <CODE>atlc</CODE>. but may be produced easily with the aid of a script called <CODE>create</CODE> in the examples directory. The script create calls a programme <CODE>sym_strip</CODE>, which was developed for the purpose of producing symmetrical stripline bitmaps. Sorry there is no documentation for <CODE>sym_strip</CODE> now, but if look at the script <CODE>create</CODE>, its use should be obvious.
+ <a name="Accuracy_coupler"><H2>Accuracy of <CODE>atlc</CODE> with coupled lines</H2></a>
+Testing the accuracy of <CODE>atlc</CODE> with coupled lines is more difficult that with single isolated lines, since there is to my knowledge only one structure for which exact analytical results exist. For two infinitely thin conductors halfway beween two infinitely wide groundplanes, the odd and even mode impedances can be calculated analytically. If the spacing between the two groundplanes is H, the width of the conductors w, the spacing between the conductors s, and the permittivity of the medium Er, 
+ 
+<CODE><pre>
+----------^-------------------------------------------------------------
+          |                                               
+          |              <---w---><-----s----><---w-->
+          H              ---------            --------            Er
+          |                                      
+          |                               
+----------v-------------------------------------------------------------
+</pre></CODE>
+ 
+then the impedances are given by. <p>
+ 
+Zeven=(30*pi/sqrt(er))*(K(ke')/K(ke))<br>
+Zodd=(30*pi/sqrt(er))*(K(ko')/K(ko))<p>
+
+K(kx)=complete elliptic integral of the first kind. <p>
+
+ke=(tanh((pi/2)*(w/H)))*tanh((pi/2)*(w+s)/H)<br>
+ko=(tanh((pi/2)*(w/H)))*coth((pi/2)*(w+s)/H)<p>
+
+ke'=sqrt(1-(ke^2))<br>
+ko'=sqrt(1-(ko^2))<p>
+
+This data is taken from Matthaei, Young and Jones, "Microwave Filters, Impedance Matching Networks and Coupling Structures,"  Artech House, Dedham, MA., 1980. I'm very grateful to Paul Mason AA1LL / KB1CZP  <aa1ll@email.com> for prviding me with these equations, references and nomongraphs. 
+<p>
+A programme <CODE>calc_coupler</CODE> was written to calculate Zodd and Zeven from the dimensions. This makes use of the GNU scientific library at <a href="http://sources.redhat.com/gsl">http://sources.redhat.com/gsl</a>, so this <STRONG>must</STRONG> be installed on the system for <CODE>calc_coupler</CODE> to work properly. 
 
 <p>atlc is written and supported by <a href="mailto: drkirkby@ntlworld.com?subject=atlc%20-%20Arbitrary%20Transmission%20Line%20Calculator">Dr. David Kirkby (G8WRB)</A> It it issued under the <a href="http://www.gnu.org/copyleft/gpl.html">GNU General Public Licence</A><p>
 <a href="http://atlc.sourceforge.net">Return to the atlc homepage</a>
