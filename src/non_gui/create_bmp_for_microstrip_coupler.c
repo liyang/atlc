@@ -78,6 +78,10 @@ int main(int argc, char **argv) /* Read parameters from command line here   */
       pcb.Er2=atof(argv[my_optind+6]);
       Er1=pcb.Er1;
       Er2=pcb.Er2;
+      if(pcb.WW<0)
+        pcb.WW=6*pcb.hh+6*pcb.gg+6*pcb.ww+4*pcb.ss;
+      if(pcb.HH<0)
+        pcb.HH=6*(pcb.hh+pcb.tt);
       /* Do some sanaity checks */
       check_parameters_of_create_bmp_for_microstrip_coupler(pcb);
       convert_create_create_bmp_for_coupled_microstrip_dimensions_to_integers(&pcb);

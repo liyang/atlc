@@ -123,14 +123,13 @@ int main(int argc, char **argv)
       for(s=smin; s<=smax; s+=sstep)
       {
 	sprintf(cmd,"create_bmp_for_microstrip_coupler %f %f %f %f %f %f %f %s\n",w, s, g, h, t, Er1, Er2,temporary_bmp_file);
-	printf(cmd);
 	//system(cmd);
 	return_value_from_create_bmp_for_microstrip_coupler=pclose(popen(cmd,"w"));
 	sprintf(cmd,"atlc -S -s %s > %s\n", temporary_bmp_file, temporary_txt_file);
-	printf(cmd);
+	//printf(cmd);
 	return_value_from_atlc=pclose(popen(cmd,"w"));
-	printf("atlc ret= %d create_bmp_for_microstrip_coupler ret = %d \n",return_value_from_atlc,
-	return_value_from_create_bmp_for_microstrip_coupler);
+	//printf("atlc ret= %d create_bmp_for_microstrip_coupler ret = %d \n",return_value_from_atlc,
+	//return_value_from_create_bmp_for_microstrip_coupler);
 	//system(cmd);
 	if ((fp=fopen(temporary_txt_file,"r")) ==NULL)
 	  exit_with_msg_and_exit_code("Error #1 cant't open file in find_optimal_dimensions_for_microstrip_coupler.c", CANT_OPEN_FILE_FOR_READING);

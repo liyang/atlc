@@ -64,6 +64,9 @@ void usage_create_bmp_for_microstrip_coupler(void)
       fprintf(stderr,"GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  |\n");
       fprintf(stderr,"GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG. v\n");
       fprintf(stderr,"<-----------------------------------W----------------------------------->\n\n");
-      fprintf(stderr,"E.g. \ncreate_bmp_for_microstrip_coupler 1.5 2.0 1 1.593 0.035 1 3.7 foo.bmp\n\n");
+      fprintf(stderr,"E.g. \ncreate_bmp_for_microstrip_coupler 1.5 2.0 1 1.593 0.035 1 3.7 foo.bmp\n");
+      fprintf(stderr,"In this example, the conductor thickness t was small, but the width w is\n");
+      fprintf(stderr,"large, so a fine grid (large bitmap) was needed. Hence the bitmap size\n");
+      fprintf(stderr,"was increassed with the -b optoin. Without it, an error would result\n");
       exit_with_msg_and_exit_code("",PROGRAM_CALLED_WITH_WRONG_NUMBER_OF_ARGUMENTS);
 }
