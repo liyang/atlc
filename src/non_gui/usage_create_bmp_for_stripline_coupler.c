@@ -18,7 +18,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307,
 USA.
 
-Dr. David Kirkby, e-mail drkirkby@ntlworld.com 
+Dr. David Kirkby, e-mail drkirkby at ntlworld.com 
 
 */
 #include "config.h"
@@ -31,7 +31,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 
 void usage_create_bmp_for_stripline_coupler(void)
 {
-  fprintf(stderr,"Usage: create_bmp_for_stripline_coupler [-C] [-b bitmapsize] H w s Er filename\n\n");
+  fprintf(stderr,"Usage: create_bmp_for_stripline_coupler [-C] [-b bitmapsize] [-v] H w s Er filename\n\n");
   fprintf(stderr,"Version %s\n",PACKAGE_VERSION);
   fprintf(stderr,"Options:\n");
   fprintf(stderr,"         -C\n");
@@ -39,7 +39,7 @@ void usage_create_bmp_for_stripline_coupler(void)
   fprintf(stderr,"         -b  bitmapsize\n");
   fprintf(stderr,"            Set the size of the bitmap to about 2^bitmapsize bytes\n");
   fprintf(stderr,"         -v\n");
-  fprintf(stderr,"            Print a little extra information on goodness of fit\n");
+  fprintf(stderr,"            Prints the theoretical impedances too - good for verifying atlc\n");
   fprintf(stderr,"------------^------------------------------------------------------------------\n");
   fprintf(stderr,"            |                                               \n");
   fprintf(stderr,"            |              <---w---><-----s----><---w-->\n");

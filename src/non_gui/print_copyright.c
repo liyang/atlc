@@ -5,7 +5,7 @@
 void print_copyright(const char *s)
 {
   printf("Copyright (C) %s. Dr. David Kirkby, PhD (G8WRB).\n",s);
-  printf("Dr. David Kirkby, e-mail drkirkby@ntlworld.com \n");
+  printf("Dr. David Kirkby, e-mail drkirkby at ntlworld.com \n");
   printf("Stokes Hall Lodge, Burnham Road, Althorne, Essex, CM3 6DT, UK.\n\n");
 
   printf("This program is free software; you can redistribute it and/or\n");
