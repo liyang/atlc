@@ -119,10 +119,7 @@ extern int main(int argc, char **argv) /* Read parameters from command line */
   MPI_Comm_size(MPI_COMM_WORLD, &num_pes);
 
   if (num_pes < 2) {
-	fprintf(stderr,"You must use more than 1 PE\n");
-	fprintf(stderr,"You must *not* run atlc directly when configured to use the MPI\n");
-	fprintf(stderr,"library. Instead use: mpirun -map machine1:machine2:machine3 atlc my_design.bmp\n");
-	exit_with_msg_and_exit_code("You must use more than 1 PE.",5);
+	exit_with_msg_and_exit_code("You must use more than 1 PE. run via mpirun (man mpirun)",5);
   }
 
   if (0 != my_rank) {
