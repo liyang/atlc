@@ -28,6 +28,7 @@ TESTS = 1a-sym_strip.bmp.test \
 3b-rect_cen_in_rect.txt.test \
 7a-generate_coupler_bitmap.bmp.test \
 7b-generate_coupler_bitmap.bmp.test \
+7c-generate_coupler_bitmap.txt.test \
 8a-design_coupler.bmp.test \
 9a-create-25-Ohm-201b.bmp.test \
 9b-create-25-Ohm-401b.bmp.test \
@@ -38,5 +39,6 @@ TESTS = 1a-sym_strip.bmp.test \
 9g-create-200-Ohm-201b.bmp.test \
 9h-create-200-Ohm-401b.bmp.test \
 9i-create-200-Ohm-801b.bmp.test \
-10a-create-lots-of-examples-check-last-one.test 
-EXTRA_DIST = defs
+10a-create-lots-of-examples-check-last-one.test \
+10b-create-lots-of-examples-check-last-one.test 
+EXTRA_DIST = *.test generate.list README

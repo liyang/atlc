@@ -1,5 +1,5 @@
-This is the first of a set of test that generate checksums after files are
-created. Generally a bitmap if first produced by a program such as sym_strip, 
+This directory has a set of tests that generate checksums after files are
+created. Generally a bitmap is first produced by a program such as sym_strip, 
 rect_in_rect, rect_cen_in_rect, circ_in_circ, circ_in_rect, 
 generate_coupler_bitmap etc.
 
@@ -16,8 +16,10 @@ the .txt file are checked. The .bin's are not, since they will be
 dependent on the whether the machine is Big Endian (like Suns) or
 Little Endian like PCs. It will also be too dependent on rounding
 difference caused by the different FPUs in the different machines. 
+The size of some .bin files are checked. 
 
-Any failure to generate the correct checksums are noted. 
+Any failure to generate the correct checksums are noted as a failure.
+Not linking against the gsl library will cause failures. 
 
 Any failure in an Xa-... where X is an integer will cause
 Xb, Xc, Xd ...etc to fail. Any pass of Xa, but faiure of Xb will cause
@@ -26,27 +28,6 @@ Xd etc will. However, Xd, Xe etc does not rely on the correct functioning of
 Xc. The Xc, Xd, ... only need Xa and Xb to pass, so Xc, Xd etc are
 independent of each other. 
 
-I would add that *most* of these checksums have been checked using the GNU
-textutils on about 15 different computers, from PCs, to Suns to Dec etc.
-However, there are a few:
-
-2f-rect_in_rect.Ex.bmp.test
-2h-rect_in_rect.V.bmp.test
-3b-rect_cen_in_rect.txt.test
-7a-generate_coupler_bitmap.bmp.test
-8a-design_coupler.bmp.test
-
-that have never been tested elsewhere. Failures can be expected on these
-since a small change in how numbers are rounded can result in a
-different bitmap or text file. However, the others have been
-tested on so many that I doubt this situation will arrive. 
-
-The only other reason I can think of a failure is that there is a difference
-in the outout of 'mycksum' to the GNU utilites one, but that is
-unlikely. So if any problems occur, check the checksum with the GNU
-'sum' and see what that gives. If *any* failures do occur, please let me
-know. 
-
-Dr. David Kirkby,
+Dr. David Kirkby 15/12/02,
 email drkirkby@ntlworld.com and/or davek@medphys.ucl.ac.uk 
 
