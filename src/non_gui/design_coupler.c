@@ -184,7 +184,7 @@ int main(int argc, char **argv) /* Read parameters from command line */
     fprintf(stderr,"Sorry, you can't make a %6.3f dB coupler with a coupled line of %7.4f m long.\n",wanted_coupling_factor_in_dB, length);
     fprintf(stderr,"Either couple off a smaller fraction of the main power to the coupled port,\n");
     fprintf(stderr,"or make the line closer to an odd multiple of a quarter wave.\n");
-    fprintf(stderr,"Odd mulitples of a quarter wave are: %f, %f, %f, %f .. m\n", 75/fmean, 3*75/fmean, 5*75/fmean, 7*75/fmean);
+    fprintf(stderr,"Odd mulitples of a quarter wave are: %.4f, %.4f, %.4f, %.4f .. m\n", 75/fmean, 3*75/fmean, 5*75/fmean, 7*75/fmean);
     exit(1);
   }
 
@@ -194,21 +194,21 @@ int main(int argc, char **argv) /* Read parameters from command line */
   Zodd = sqrt(1-vcf)*Zo/sqrt(1+vcf);
   Zeven=Zo*Zo/Zodd;
 
-  printf("\nFor a %f dB %f Ohm coupler with a length of %f m,\n",wanted_coupling_factor_in_dB, Zo, length);
-  printf("you need to have an odd-mode impedance Zodd to be %f Ohms and \n",Zodd);
-  printf("an even mode impedance Zeven to be %f Ohms\n\n",Zeven);
-  printf("%7.3f dB down <-- ************************** ---> %3.6f Ohm termination\n\n",wanted_coupling_factor_in_dB,Zo);
-  printf("Drive this port --> ************************** ---> %3.6f Ohm termination\n",Zo);
-  printf("                    <------ %10.7f m ---->\n",length);
+  printf("\nFor a %.3f dB %.3f Ohm coupler with a length of %.4f m,\n",wanted_coupling_factor_in_dB, Zo, length);
+  printf("you need to have an odd-mode impedance Zodd to be %.3f Ohms and \n",Zodd);
+  printf("an even mode impedance Zeven to be %.3f Ohms\n\n",Zeven);
+  printf("%7.3f dB down <-- ************************** ---> %3.3f Ohm termination\n\n",wanted_coupling_factor_in_dB,Zo);
+  printf("Drive this port --> ************************** ---> %3.3f Ohm termination\n",Zo);
+  printf("                    <------- %8.4f m ----->\n",length);
   printf("\nDrive Port 1, coupler out of port 2 and terminate the other ports in Zo\n");
   printf("Such a coupler will have the response indicated below.\n\n");
-  printf("length =%f mean=%f vcf=%f vcf_for_quarter_wave_line=%f \n",length, fmean, vcf, vcf_for_quarter_wave_line);
+  //printf("length =%.4f mean=%.3f vcf=%.3f vcf_for_quarter_wave_line=%.3f \n",length, fmean, vcf, vcf_for_quarter_wave_line);
   for(f=fmin; f<=fmax; f+=fstep)
   {
     cf=20*log10(vcf*pow(sin(0.5*M_PI*f/fq),2.0) ); /* This is what is now needed for some given length (and so fq) */
-    printf("frequency = %f MHz coupling is %f dB down on the main arm\n",f,cf);
+    printf("frequency = %.3f MHz coupling is %.3f dB down on the main arm\n",f,cf);
   }
-  printf("\nYou may force the length to be any value you want using the -L option - it does not have to be %f metres long\n",length);
+  printf("\nYou may force the length to be any value you want using the -L option - it does\nnot have to be %.4f metres long\n",length);
   if(calculate_physical_dimensions==FALSE)
   {
     printf("You may try to find a coupler with these dimensions using the -d option\n\n");
@@ -238,7 +238,7 @@ int main(int argc, char **argv) /* Read parameters from command line */
         }
       }
     }
-    //printf("w = %f s = %f which gives Zo = %f Zodd = %f Zeven = %f\n",best_w, best_s, best_Zo, best_Zodd, best_Zeven);
+    //printf("w = %.4f s = %.4f which gives Zo = %.4f Zodd = %.4f Zeven = %.4f\n",best_w, best_s, best_Zo, best_Zodd, best_Zeven);
     /* Now try to get closer */
     /*
     for(s = best_s-step; s<=best_s+step; s+=step/1000)
@@ -268,20 +268,20 @@ int main(int argc, char **argv) /* Read parameters from command line */
     printf("|           |   Er=1.0 (air)                                                   |\n");
     printf("------------v------------------------------------------------------------------\n");
     printf("<-----------------------------------------W----------------------------------->\n");
-    printf("H =%f w = %f s = %f\n",height_of_box, height_of_box*best_w, height_of_box*best_s);
-    printf("W must be *at least* %f, but larger does not matter.\n",5*height_of_box+ 2*best_w*height_of_box + height_of_box*best_s);
-    printf("These dimensions give Zo = %f Zodd = %f Zeven = %f Ohms\n", best_Zo, best_Zodd, best_Zeven);
+    printf("H =%.4f w = %.4f s = %.4f\n",height_of_box, height_of_box*best_w, height_of_box*best_s);
+    printf("W must be *at least* %.4f, but larger does not matter.\n",5*height_of_box+ 2*best_w*height_of_box + height_of_box*best_s);
+    printf("These dimensions give Zo = %.4f Zodd = %.4f Zeven = %.4f Ohms\n", best_Zo, best_Zodd, best_Zeven);
     if(Hflag==FALSE)
     {
       printf("****NOTE ****\n");
       printf("Although H is shown as 1.0, it can be 1 mm, 1 cm or even 1 m. It is important\n");
-      printf("that w is %f times whatever H is, and that s is %f times whatever H is, but the absolute numbers are irrelavant.\n",best_w, best_s);
+      printf("that w is %.4f times whatever H is, and that s is %.4f times whatever H is, but the absolute numbers are irrelavant.\n",best_w, best_s);
       printf("If you know the height H of your enclosure, use the -H option to indicate\n");
       printf("its value. This will ensure all the dimensions are scaled automatically for you.\n"); 
     }
     printf("****NOTE 2****\n");
-    printf("The length *must* be %f m if you use these dimensions for W, H, w and s.\n",length); 
-    printf("If %f m is inconvenient, change it with the -L option and recalculate to get new values of W, H, w and s\n",length);
+    printf("The length *must* be %.4f m if you use these dimensions for W, H, w and s.\n",length); 
+    printf("If %.4f m is inconvenient, change it with the -L option and recalculate\n to get new values of W, H, w and s\n",length);
     printf("See: http://atlc.sourceforge.net\n");
     printf("See: http://atlc.sourceforge.net/couplers.html\n");
   }

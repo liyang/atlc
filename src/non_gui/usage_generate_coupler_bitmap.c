@@ -45,9 +45,9 @@ void usage_generate_coupler_bitmap(void)
   fprintf(stderr,"            |                                      \n");
   fprintf(stderr,"            |   Er                          \n");
   fprintf(stderr,"------------v------------------------------------------------------------------\n");
-  fprintf(stderr,"e.g. generate_coupler_bitmap  1.23 0.7 1.2 1   coupler.bmp\n");
-  fprintf(stderr,"e.g. generate_coupler_bitmap -b 8 1.23 0.7 1   small.bmp\n");
-  fprintf(stderr,"e.g. generate_coupler_bitmap -v 12 1.23 0.7 1   theory.bmp\n");
+  fprintf(stderr,"e.g. generate_coupler_bitmap  1.23 0.7 1.2 1.0 coupler.bmp\n");
+  fprintf(stderr,"e.g. generate_coupler_bitmap -b 8 1.23 0.7 1.0 1.0 smaller.bmp\n");
+  fprintf(stderr,"e.g. generate_coupler_bitmap -v 12 1.23 0.7 1.006  air.bmp\n");
   fprintf(stderr,"\nThe default bitmap_bitmap size b is %d. Files will be between 2^(b-1)\n", DEFAULT_COUPLER_BITMAP_SIZE);
   fprintf(stderr,"and 2^(b+1) bytes in length\n");
 }

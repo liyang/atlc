@@ -1,14 +1,14 @@
 bin_PROGRAMS = atlc rect_in_rect circ_in_circ rect_cen_in_rect \
 circ_in_rect rect_in_circ readbin sym_strip \
-design_coupler generate_coupler_bitmap
+design_coupler generate_coupler_bitmap 
 
 atlc_SOURCES = nrutil.c atlc.c read_bitmap_file_headers.c \
 byteswap.c string.c setup_arrays.c finite_difference_single_threaded.c \
 finite_difference_multi_threaded.c usage_atlc.c write_fields.c\
 check_for_shorts.c print_data.c bmp.h definitions.h Erdata.h \
 check_for_boundaries.c find_energy_per_metre.c \
-update_voltage_array.c get_file_pointer_with_right_filename.c\
-find_maximum_values.c calculate_colour_data.c find_electric_fields.c\
+update_voltage_array.c get_file_pointer_with_right_filename.c \
+find_maximum_values.c calculate_colour_data.c find_electric_fields.c \
 get_options.c error_and_exit.c do_fd_calculation.c \
 swap_conductor_voltages.c print_copyright.c print_data2.c
 
@@ -67,4 +67,6 @@ get_Er1_and_Er2_colours.c print_copyright.c
 design_coupler_SOURCES = design_coupler.c usage_design_coupler.c \
 get_options.c print_copyright.c calculate_Zodd_and_Zeven.c 
 
-EXTRA_DIST = create tests DO_NOT_EDIT_THIS_FILE
+EXTRA_DIST = create tests DO_NOT_EDIT_THIS_FILE \
+output_from_design_coupler-Sun-Ultra-80.txt
+
