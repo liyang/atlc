@@ -104,11 +104,11 @@ int dielectrics_to_consider_just_now;
 int coupler=FALSE;
 double r=1.95;
 
-
+char *inputfile_name;
 extern int main(int argc, char **argv) /* Read parameters from command line */
 {
   FILE *where_to_print_fp=stdout, *image_data_fp;
-  char *outputfile_name, *inputfile_name, *appendfile_name;
+  char *outputfile_name, *appendfile_name;
   long i;
   int offset;
   int q;
