@@ -63,3 +63,10 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #define ARGUMENT_W_OUT_OF_RANGE                                   36
 #define ARGUMENT_H_OUT_OF_RANGE                                   38
 #define ARGUMENT_t_OUT_OF_RANGE                                   39
+#define ARGUMENT_ideal_Zodd_OUT_OF_RANGE                          41
+#define ARGUMENT_ideal_Zeven_OUT_OF_RANGE                         42
+#define IDEAL_Zodd_NOT_LESS_THAN_IDEAL_Zeven                      43
+#define NOT_LINKED_WITH_GSL_LIBRARY                               44
+#define NOT_LINKED_WITH_THREADS_LIBRARY                           45
+#define NOT_LINKED_WITH_MPI_LIBRARY                               46
+#define UNDEFINED_COLOUR_IN_BITMAP                                47
