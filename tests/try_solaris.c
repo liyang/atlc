@@ -58,7 +58,6 @@ int try_solaris(struct computer_data *data)
   long max_CPUs=0, CPUs_online=0;
   int clock_speed_in_MHz;
   processor_info_t infop;
-  struct utsname operating_system;
   double ram;
 
   /* Obtain the maximum number of CPUs supported on the Solaris system */
