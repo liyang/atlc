@@ -67,7 +67,7 @@ Out[10]= {{vij ->
 
 extern int width, height, **cell_type;
 extern double r, **Er, **Vij;
-void update_voltage_array(int i, int calculate_edges)
+void update_voltage_array(int i)
 {
   int j, type;
   double a, b, c, d, e, f, g, h;
@@ -96,17 +96,14 @@ void update_voltage_array(int i, int calculate_edges)
       /* the following few lines calculate the voltages at the edges.
       They are not accurate, but better than no calculation at all */
 
-	  if (calculate_edges) {
-		if(i==1 && cell_type[0][j]>=0)
-		  Vij[0][j]=(Vij[0][j+1]+Vij[0][j-1])/2.0; //ok
-		if(i==width-2 && cell_type[width-1][j] >= DIELECTRIC)
-		  Vij[width-1][j]=(Vij[width-1][j+1]+Vij[width-1][j-1])/2.0;
-	  } /* calculate_edges */
-
-	  if(j==1 && cell_type[i][0]>=0)
-		Vij[i][0]=(Vij[i][j-1]+Vij[i][j+1])/2.0;
-	  if(j==height-2 && cell_type[i][height-1]>=DIELECTRIC)
-		Vij[i][height-1]=(Vij[i][j-1]+Vij[i][j+1])/2.0;
+      if(i==1 && cell_type[0][j]>=0)
+	Vij[0][j]=(Vij[0][j+1]+Vij[0][j-1])/2.0; //ok
+      if(i==width-2 && cell_type[width-1][j] >= DIELECTRIC)
+	Vij[width-1][j]=(Vij[width-1][j+1]+Vij[width-1][j-1])/2.0;
+      if(j==1 && cell_type[i][0]>=0)
+	Vij[i][0]=(Vij[i][j-1]+Vij[i][j+1])/2.0;
+      if(j==height-2 && cell_type[i][height-1]>=DIELECTRIC)
+	Vij[i][height-1]=(Vij[i][j-1]+Vij[i][j+1])/2.0;
     }
   }
 }
