@@ -178,8 +178,9 @@ int main(int argc, char **argv) /* Read parameters from command line */
   divide the vcf_for_quarter_wave_line by sin(0.5 *PI*f/fq)^2 to get
   the required vcf. */
   //vcf=vcf_for_quarter_wave_line/pow(sin(0.5*M_PI*fmean/fq),2.0);
-  vcf=vcf_for_quarter_wave_line/sin(0.5*M_PI*fmean/fq);
-  vcf=vcf_for_quarter_wave_line;
+  vcf=vcf_for_quarter_wave_line/pow(sin(0.5*M_PI*fmean/fq),2.0);
+  vcf=vcf_for_quarter_wave_line*(1.0/sin(0.5*M_PI*fmean/fq));
+  //XXXXXXXXXXxvcf=vcf_for_quarter_wave_line;
   /* Check that the voltage coupling factor does not exceed one */
   if ( vcf > 1.0 )
   {
@@ -198,9 +199,9 @@ int main(int argc, char **argv) /* Read parameters from command line */
   Zeven=Zo*Zo/Zodd;
 
   printf("\nFor a %.3f dB %.3f Ohm coupler with a length of %.4f m,\n",wanted_coupling_factor_in_dB, Zo, length);
-  printf("you need to have an odd-mode impedance Zodd to be %.3f Ohms and \n",Zodd);
-  printf("an even mode impedance Zeven to be %.3f Ohms\n\n",Zeven);
-  printf("%7.3f dB down <-- ************************** ---> %3.3f Ohm termination\n\n",wanted_coupling_factor_in_dB,Zo);
+  printf("you need to have an odd-mode impedance Zodd of %.3f Ohms and\n",Zodd);
+  printf("an even mode impedance Zeven of %.3f Ohms\n\n",Zeven);
+  printf("%.3f dB down <-- ************************** ---> %3.3f Ohm termination\n\n",wanted_coupling_factor_in_dB,Zo);
   printf("Drive this port --> ************************** ---> %3.3f Ohm termination\n",Zo);
   printf("                    <------- %8.4f m ----->\n",length);
   printf("\nDrive Port 1, coupler out of port 2 and terminate the other ports in Zo\n");
@@ -209,7 +210,7 @@ int main(int argc, char **argv) /* Read parameters from command line */
   for(f=fmin; f<=fmax; f+=fstep)
   {
     cf=20*log10(vcf*sin(0.5*M_PI*f/fq)); /* This is what is now needed for some given length (and so fq) */
-    printf("frequency = %.3f MHz coupling is %.3f dB down on the main arm\n",f,cf);
+    printf("f = %7.3f MHz   coupling is %.3f dB down on the main arm\n",f,cf);
   }
   printf("\nYou may force the length to be any value you want using the -L option - it does\nnot have to be %.4f metres long\n",length);
   if(calculate_physical_dimensions==FALSE)
