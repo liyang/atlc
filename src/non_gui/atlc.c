@@ -80,7 +80,7 @@ struct pixels Er_in_bitmap[MAX_DIFFERENT_PERMITTIVITIES];
 
 double **Vij;
 double **Er;
-int **cell_type; 
+char **cell_type; 
 #ifdef ENABLE_MPI
 int num_pes=0;
 int width_height[2];
@@ -253,7 +253,13 @@ without the threads\nlibrary.\n",1);
     strcpy(inputfile_name, argv[my_optind]);
     strcpy(outputfile_name, inputfile_name);
     read_bitmap_file_headers(inputfile_name, &offset, &size, &width, &height);
+    /* Allocate all ram now, so atlc is sure to have it. There is no point
+    in getting some now, starting work then finding atlc can't get the 
+    rest of what is needed. */
     image_data=ustring(0L,size);
+    cell_type=cmatrix(0,width,0,height);
+    Vij=dmatrix(0,width,0,height);
+    Er=dmatrix(0,width,0,height);
     /* On Solaris systems, if the following is not executed, only one 
     thread will run at any one time, which rather defeats the object of 
     running multi-threaded. */
@@ -329,10 +335,6 @@ without the threads\nlibrary.\n",1);
       error_and_exit("",5);
     }
     /* declare matrix's to indicate what pixels are fixed and variable */
-    cell_type=imatrix(0,width,0,height);
-    Vij=dmatrix(0,width,0,height);
-    Er=dmatrix(0,width,0,height);
-
     /* We now fill the following 3 arrays with the correct data, based on the 
     contents of the bitmap image */
 
