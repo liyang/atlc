@@ -31,6 +31,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 void usage_create_bmp_for_stripline_coupler(void)
 {
   fprintf(stderr,"Usage: create_bmp_for_stripline_coupler [-C] [-b bitmapsize] H w s Er filename\n\n");
+  fprintf(stderr,"Version %s\n",PACKAGE_VERSION);
   fprintf(stderr,"Options:\n");
   fprintf(stderr,"         -C\n");
   fprintf(stderr,"            Print copyright, licencing and distribution information\n");

@@ -31,6 +31,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 void usage_create_bmp_for_rect_cen_in_rect(void)
 {
       fprintf(stderr,"Usage: rect_cen_in_rect [-b bmp_size] [-f outfile] [-v] W H w h Er1 outfile.bmp\n\n");
+      fprintf(stderr,"Version %s\n",PACKAGE_VERSION);
       fprintf(stderr,"outfile.bmp is the file to write the bitmap to\n");      
       fprintf(stderr,"W, H, w, and h  are all in mm or all in inches\n");      
       fprintf(stderr,"(they *must* use the same units. Non-integers allowed for all parameters)\n");

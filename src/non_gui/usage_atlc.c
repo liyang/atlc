@@ -33,7 +33,7 @@ void usage_atlc(void)
 #ifdef ENABLE_MP
   fprintf(stderr,"Usage: atlc [options ...] bitmap\n\n");
 #endif
-  fprintf(stderr,"options are:\n");
+  fprintf(stderr,"atlc %s: options are:\n",PACKAGE_VERSION);
   fprintf(stderr,"  -C       \n      Print Licence and copying information\n");
   fprintf(stderr,"  -s       \n      Skip writing the Ex, Ey, E, V, U and Er files bitmap (.bmp) files\n");
   fprintf(stderr,"  -S       \n      Skip writing the Ex, Ey, E, V, U and Er files binary (.bin) files\n");

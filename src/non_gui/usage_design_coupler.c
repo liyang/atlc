@@ -27,6 +27,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 void usage_design_coupler()
 {
   fprintf(stderr,"\nUsage: design_coupler [-d] -[e] [-q] [-s fstep] [-C] [-H height] [-L length] [-Z Zo] CF fmin fmax\n");
+  fprintf(stderr,"Version %s\n",PACKAGE_VERSION);
   fprintf(stderr,"where: \n");
   fprintf(stderr,"     CF          is the coupling factor required in dB [10 log(P1/P2)]\n");
   fprintf(stderr,"     fmin        is the minimum frequency (MHz)\n");

@@ -31,6 +31,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 void usage_create_bmp_for_rect_in_circ(void)
 {
       fprintf(stderr,"Usage: rect_in_circ [-b bmp_size] [-f outfile] [-v] D w h x y Er\n\n");
+      fprintf(stderr,"Version %s\n",PACKAGE_VERSION);
       fprintf(stderr,"Where \n");
       fprintf(stderr,"  D  is the internal diameter of the outer conductor \n");
       fprintf(stderr,"  w  is the width of the inner conductor\n");

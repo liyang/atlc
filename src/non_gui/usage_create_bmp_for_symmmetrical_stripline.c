@@ -31,6 +31,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 void usage_symmetrical_strip(void)
 {
   fprintf(stderr,"create_bmp_for_sym_strip produces a bitmap for a wide stripline and \ncalculates Zo ASSUMING IT IT INFINITELY WIDE (which it is not of course)\n\n");
+  fprintf(stderr,"Version %s\n",PACKAGE_VERSION);
   fprintf(stderr,"Usage: create_bmp_for_sym_strip [-C] W H w filename\n\n");
   fprintf(stderr,"---------^-----------------------------------------------------\n");
   fprintf(stderr,"         |                                     \n");

@@ -31,6 +31,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 void usage_readbin(void)
 {
   fprintf(stderr,"Usage: readbin [-r] binaryfile.V.bin\n\n");
+  fprintf(stderr,"Version %s\n",PACKAGE_VERSION);
   fprintf(stderr,"options are:\n");
   fprintf(stderr,"  -C        Print copyright, licencing and distribution information\n");
   fprintf(stderr,"  -r        Used when analysing binary files created on\

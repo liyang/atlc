@@ -32,6 +32,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 void usage_find_optimal_dimensions_for_microstrip_coupler(void)
 {
       fprintf(stderr,"Usage: find_optimal_dimensions_for_microstrip_coupler [-s smin] [-S smax] [-t sstep] [-w wmin] [-W wmax] [-x wstep] [-g gmin] [-G GMAX] [-i gstep] h t Er1 Er2 Zodd_required Zeven_required output_filename\n\n");
+      fprintf(stderr,"Version %s\n",PACKAGE_VERSION);
       fprintf(stderr,"where h and t are all, in mm, all in inches or all in ..;   Zodd_required and Zeven are in Ohms\n");
       fprintf(stderr,"(they *must* use the same units. Non-integers allowed for all parameters)\n");
       fprintf(stderr,"Options are:\n");
