@@ -1,7 +1,15 @@
-********************Version 3.0.8 Dated ?????????*************************
+********************Version 3.0.8 Note yet released  *********************
 **************************************************************************
 Put a bit more info in the README.windows
 
+Added a function do_fd_calculation() and therefore added the file
+do_fd_calculation.c This helps clean up atlc.c a lot, since a lot of
+repetition has been removed. 
+
+Changed setup_arrays.c so that it now sets a variable 'coupler' to TRUE
+if there is a blue ( - 1 V) conductor. 
+
+Made a start towared  handling the coupler. 
 
 ********************Version 3.0.7 Dated 6/4/2002**************************
 **************************************************************************
