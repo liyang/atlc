@@ -28,10 +28,11 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 
 #include "definitions.h"
 
-extern int verbose;
+#define ITERATIONS 100
+
 extern int append_flag;
 extern int dielectrics_to_consider_just_now, coupler;
-void do_fd_calculation(struct transmission_line_data *data, FILE *where_to_print, char *inputfile_name)
+void do_fd_calculation(struct transmission_line_properties *data, FILE *where_to_print_fp, char *inputfile_filename)
 {
   double capacitance_old, capacitance;
   double velocity_of_light_in_vacuum;
@@ -39,13 +40,15 @@ void do_fd_calculation(struct transmission_line_data *data, FILE *where_to_print
   /* The following 10 lines are for a single dielectric 2 conductor line */
   if (data->couplerQ==FALSE)
   {
+    if(data->verbose_level >= 2)
+      printf("Solving assuming a vacuum dielectric\n");
     capacitance=VERY_LARGE; /* Can be anything large */
     do /* Start a finite calculation */
     {
       dielectrics_to_consider_just_now=1;
       data->dielectrics_to_consider_just_now=1;
       capacitance_old=capacitance;
-      capacitance=finite_difference(100);
+      capacitance=finite_difference(ITERATIONS);
       data->C_vacuum=capacitance;
       data->C=capacitance;
       data->L_vacuum=MU_0*EPSILON_0/capacitance; /* Same as L in *ALL* cases */
@@ -58,13 +61,15 @@ void do_fd_calculation(struct transmission_line_data *data, FILE *where_to_print
       }
       else
 	data->Er=1.0;
-      data->Zo=sqrt(data->L_vacuum/data->C);  /* Standard formula for Zo */
+      //data->Zo=sqrt(data->L_vacuum/data->C);  /* Standard formula for Zo */
+      data->Zodd=sqrt(data->L_vacuum/data->C);  /* Standard formula for Zo */
       velocity_of_light_in_vacuum=1.0/(sqrt(MU_0 * EPSILON_0)); /* around 3x10^8 m/s */
       data->velocity=1.0/pow(data->L_vacuum*data->C,0.5);
       data->velocity_factor=data->velocity/velocity_of_light_in_vacuum;
       data->relative_permittivity=sqrt(data->velocity_factor); /* ??? XXXXXX */
       if(data->verbose_level > 0 ) // Only needed if intermediate results wanted. 
-        print_data_for_two_conductor_lines(*data, where_to_print, inputfile_name);
+        print_data_for_two_conductor_lines(*data, where_to_print_fp, inputfile_filename);
+      write_fields_for_two_conductor_lines(inputfile_filename, *data);
     } while (fabs((capacitance_old-capacitance)/capacitance_old) > data->cutoff); /* end of FD loop */
 
     if ( data->dielectrics_in_bitmap >1)
@@ -74,6 +79,8 @@ void do_fd_calculation(struct transmission_line_data *data, FILE *where_to_print
       is independant of the dielectric, the capacitance is not, so this
       has to be recalculated, taking care not to alter the inductance
       at all */
+      if(data->verbose_level >= 2)
+        printf("Now taking into account the permittivities of the different dielectrics.\n");
 
       dielectrics_to_consider_just_now=3; /* Any number > 1 */
       data->dielectrics_to_consider_just_now=2; /* Any number > 1 */
@@ -82,7 +89,7 @@ void do_fd_calculation(struct transmission_line_data *data, FILE *where_to_print
       do /* Start a finite calculation */
       {
         capacitance_old=capacitance;
-        capacitance=finite_difference(100);
+        capacitance=finite_difference(ITERATIONS);
         data->C=capacitance;
         data->C_non_vacuum=capacitance;
         data->Zo=sqrt(data->L_vacuum/data->C_non_vacuum);  /* Standard formula for Zo */
@@ -91,15 +98,17 @@ void do_fd_calculation(struct transmission_line_data *data, FILE *where_to_print
         data->relative_permittivity=sqrt(data->velocity_factor); /* ??? XXXXXX */
 	data->Er=data->C/data->C_vacuum;
         if(data->verbose_level > 0 ) // Only needed if intermediate results wanted. 
-          print_data_for_two_conductor_lines(*data, where_to_print, inputfile_name);
+          print_data_for_two_conductor_lines(*data, where_to_print_fp, inputfile_filename);
+        write_fields_for_two_conductor_lines(inputfile_filename, *data);
       } while (fabs((capacitance_old-capacitance)/capacitance_old) > data->cutoff); /* end of FD loop */
 
       /* We must print the results now, but only bother if the verbose level was 
       not not incremented on the commmand line, otherwide there will be two duplicate
       lines */
 
-      if (data->verbose_level == 0)
-        print_data_for_two_conductor_lines(*data, where_to_print, inputfile_name);
+      if (data->verbose_level >= 1)
+        print_data_for_two_conductor_lines(*data, where_to_print_fp, inputfile_filename);
+      write_fields_for_two_conductor_lines(inputfile_filename, *data);
     }
   }
   else if (data->couplerQ==TRUE)
@@ -125,10 +134,12 @@ void do_fd_calculation(struct transmission_line_data *data, FILE *where_to_print
     data->dielectrics_to_consider_just_now=1;
 
     capacitance=VERY_LARGE; /* Can be anything large */
+    if(data->verbose_level >= 2)
+      printf("Solving assuming a vacuum dielectric to compute the odd-mode impedance\n");
     do /* Start a finite difference calculation */
     {
       capacitance_old=capacitance;
-      capacitance=finite_difference(100);
+      capacitance=finite_difference(ITERATIONS);
       data->Codd_vacuum=capacitance;
       data->Codd=capacitance;
       data->Lodd_vacuum=MU_0*EPSILON_0/capacitance; /* Same as L in *ALL* cases */
@@ -146,14 +157,18 @@ void do_fd_calculation(struct transmission_line_data *data, FILE *where_to_print
       data->relative_permittivity_odd=sqrt(data->velocity_factor); /* ??? XXXXXX */
       data->Er_odd=data->Codd/data->Codd_vacuum;
       data->Zdiff=2.0*data->Zodd;
-      if(data->verbose_level > 0 ) // Only needed if intermediate results wanted. 
-        print_data_for_directional_couplers(*data, where_to_print, inputfile_name);
+      if(data->verbose_level>=1)
+        print_data_for_directional_couplers(*data, where_to_print_fp, inputfile_filename);
+      write_fields_for_directional_couplers(inputfile_filename, *data);
     } while (fabs((capacitance_old-capacitance)/capacitance_old) > data->cutoff); /* end of FD loop */
 
     /* Stage 2 - compute the odd-mode impedance taking into account other dielectrics IF NECESSARY */
 
     if ( data->dielectrics_in_bitmap >1)
     {
+    printf("fff");
+      if(data->verbose_level >= 2)
+        printf("Now taking into account the permittivities of the different dielectrics to compute Zodd.\n");
       data->display = Z_ODD_SINGLE_DIELECTRIC;
       capacitance=VERY_LARGE; /* Can be anything large */
 
@@ -163,7 +178,7 @@ void do_fd_calculation(struct transmission_line_data *data, FILE *where_to_print
       do /* Start a finite calculation */
       {
         capacitance_old=capacitance;
-        capacitance=finite_difference(100);
+        capacitance=finite_difference(ITERATIONS);
         data->Codd=capacitance;
         data->Zodd=sqrt(data->Lodd_vacuum/data->Codd);  /* Standard formula for Zo */
         velocity_of_light_in_vacuum=1.0/(sqrt(MU_0 * EPSILON_0)); /* around 3x10^8 m/s */
@@ -172,8 +187,9 @@ void do_fd_calculation(struct transmission_line_data *data, FILE *where_to_print
         data->relative_permittivity_odd=sqrt(data->velocity_factor); /* ??? XXXXXX */
 	data->Er_odd=data->Codd/data->Codd_vacuum;
 	data->Zdiff=2.0*data->Zodd;
-        if(data->verbose_level > 0 ) // Only needed if intermediate results wanted. 
-          print_data_for_directional_couplers(*data, where_to_print, inputfile_name);
+	if(data->verbose_level>=1)
+          print_data_for_directional_couplers(*data, where_to_print_fp, inputfile_filename);
+        write_fields_for_directional_couplers(inputfile_filename, *data);
       } while (fabs((capacitance_old-capacitance)/capacitance_old) > data->cutoff); /* end of FD loop */
     } /* end of stage 2 for couplers */
 
@@ -187,12 +203,14 @@ void do_fd_calculation(struct transmission_line_data *data, FILE *where_to_print
     data->display = Z_EVEN_SINGLE_DIELECTRIC;
     dielectrics_to_consider_just_now=1;
     data->dielectrics_to_consider_just_now=1;
+    if(data->verbose_level >= 2)
+        printf("Now assuming a vacuum dielectric to compute Zeven\n");
 
     capacitance=VERY_LARGE; /* Can be anything large */
     do /* Start a finite difference calculation */
     {
       capacitance_old=capacitance;
-      capacitance=finite_difference(100);
+      capacitance=finite_difference(ITERATIONS);
       data->Ceven_vacuum=capacitance;
       data->Ceven=capacitance;
       data->Leven_vacuum=MU_0*EPSILON_0/capacitance; /* Same as L in *ALL* cases */
@@ -211,14 +229,17 @@ void do_fd_calculation(struct transmission_line_data *data, FILE *where_to_print
       data->Er_even=data->Ceven/data->Ceven_vacuum;
       data->Zcomm=data->Zeven/2.0;
       data->Zo=sqrt(data->Zodd * data->Zeven);
-      if(data->verbose_level > 0 ) // Only needed if intermediate results wanted. 
-        print_data_for_directional_couplers(*data, where_to_print, inputfile_name);
+	if(data->verbose_level>=1)
+          print_data_for_directional_couplers(*data, where_to_print_fp, inputfile_filename);
+      write_fields_for_directional_couplers(inputfile_filename, *data);
     } while (fabs((capacitance_old-capacitance)/capacitance_old) > data->cutoff); /* end of FD loop */
 
     /* Stage 4 - compute the even-mode impedance assuming multiple dielectics IF NECESSARY */
     data->display = Z_EVEN_SINGLE_DIELECTRIC;
     dielectrics_to_consider_just_now=2;
     data->dielectrics_to_consider_just_now=2;
+    if(data->verbose_level >= 2)
+      printf("Now taking into account the permittivities of the different dielectrics to compute Zeven\n");
 
     capacitance=VERY_LARGE; /* Can be anything large */
     if ( data->dielectrics_in_bitmap >1)
@@ -226,7 +247,7 @@ void do_fd_calculation(struct transmission_line_data *data, FILE *where_to_print
       do /* Start a finite calculation */
       {
         capacitance_old=capacitance;
-        capacitance=finite_difference(100);
+        capacitance=finite_difference(ITERATIONS);
         data->Ceven=capacitance;
         data->Zeven=sqrt(data->Leven_vacuum/data->Ceven);  /* Standard formula for Zo */
         velocity_of_light_in_vacuum=1.0/(sqrt(MU_0 * EPSILON_0)); /* around 3x10^8 m/s */
@@ -234,14 +255,23 @@ void do_fd_calculation(struct transmission_line_data *data, FILE *where_to_print
         data->velocity_factor_even=data->velocity/velocity_of_light_in_vacuum;
         data->relative_permittivity_even=sqrt(data->velocity_factor); /* ??? XXXXXX */
 	data->Er_even=data->Ceven/data->Ceven_vacuum;
-	data->Zdiff=2.0*data->Zeven;
-        if(data->verbose_level > 0 ) // Only needed if intermediate results wanted. 
-          print_data_for_directional_couplers(*data, where_to_print, inputfile_name);
+	data->Zdiff=2.0*data->Zodd;
+        data->Zcomm=data->Zeven/2.0; //XXXXXXx
+	data->Zo=sqrt(data->Zeven*data->Zodd);
+	if(data->verbose_level>=1)
+          print_data_for_directional_couplers(*data, where_to_print_fp, inputfile_filename);
+        write_fields_for_directional_couplers(inputfile_filename, *data);
       } while (fabs((capacitance_old-capacitance)/capacitance_old) > data->cutoff); /* end of FD loop */
     } /* end of stage 4 */
-    printf("hello XXX\n");
     /* Print the results if the verbose level was 0 (no -v flag(s) ). */
     if (data->verbose_level == 0)
-      print_data_for_directional_couplers(*data, where_to_print, inputfile_name);
+    {
+      /* We need to print the data. The next function will only print if 
+      the verbose_level is 1 or more, so I'll fix it at one. Then we print
+      the final results and exit. */
+      data->verbose_level=1;
+      data->display = Z_EVEN_SINGLE_DIELECTRIC;
+      print_data_for_directional_couplers(*data, where_to_print_fp, inputfile_filename);
+    }
   } /* end of if couplers */
 }
