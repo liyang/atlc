@@ -13,6 +13,8 @@
 # PARTICULAR PURPOSE.
 
 @SET_MAKE@
+
+# This is Makefile.am, which is proceed by automake
 SHELL = @SHELL@
 
 srcdir = @srcdir@
@@ -84,9 +86,9 @@ am__include = @am__include@
 am__quote = @am__quote@
 install_sh = @install_sh@
 
-# This is Makefile.am, which is proceed by automake
 SUBDIRS = jpgs
-EXTRA_DIST = BUGS\
+
+EXTRA_DIST = BUGS \
 FAQ.html \
 IMPORTANT.html \
 accuracy.html \
@@ -116,12 +118,15 @@ index2.html \
 man-pages.html \
 options.html \
 readbin.1.html \
+rect_in_rect.html \
+theory.html \
 todo.html \
 tutorial.html \
 usage_design_coupler.html 
 
 
 CLEANFILES = 
+
 DISTCLEANFILES = 
 subdir = docs/html-docs
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs

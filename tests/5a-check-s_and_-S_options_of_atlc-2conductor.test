@@ -55,6 +55,7 @@ rm -f ../examples/coax2.U.bin
 rm -f ../examples/coax2.V.bin
 rm -f ../examples/coax2.Er.bin
 
+echo checking -S now
 # Check that -S suppresses the creation of .bin, but not .bmp's
 ../src/non_gui/atlc -S ../examples/coax2.bmp > /dev/null
 if [ -f ../examples/coax2.Ex.bin ]  || [ -f ../examples/coax2.Ey.bin ] || [ -f ../examples/coax2.Er.bin ] || [ ! -f  ../examples/coax2.Er.bmp ] ; then

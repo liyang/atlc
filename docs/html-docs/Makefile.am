@@ -1,6 +1,8 @@
 # This is Makefile.am, which is proceed by automake
+
 SUBDIRS = jpgs
-EXTRA_DIST = BUGS\
+
+EXTRA_DIST = BUGS \
 FAQ.html \
 IMPORTANT.html \
 accuracy.html \
@@ -30,9 +32,12 @@ index2.html \
 man-pages.html \
 options.html \
 readbin.1.html \
+rect_in_rect.html \
+theory.html \
 todo.html \
 tutorial.html \
 usage_design_coupler.html 
 
 CLEANFILES =
+
 DISTCLEANFILES =

@@ -233,3 +233,5 @@ test_sym_strip.txt \
 test-coupler2.bmp.txt \
 tests.log \
 microstrip_coupler.bmp
+
+DISTCLEANFILES = foo
