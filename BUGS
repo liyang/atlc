@@ -1,18 +1,33 @@
+When the package is configured with threads (--with-threads)
+or with MPI libary support (--with-mpi), the results differ
+a little from those when not configured in this way. I hope
+to update the algorithm, so this does not happen.
+
+When configured with --with-mpi, the package seems to
+fail misserablly on Solaris, but is apparnetly okay on
+x86 PC. 
+
+Have received a 'pthread_create: Interrupted system call' 
+error whilse running on a Sun SPARCstation 20 with 2x125 MHz
+HyperSPARC CPUs and 224 Mb of RAM running Linux woodpecker
+2.2.14-5.0smp #1 SMP. (machine name 'woodpecker') when 
+configured with the --with-threads option. This has
+an SMP kernel, so it should have worked okay. Why ?????
+
+The fact that some welf-tests fail on threaded enabled 'atlc' 
+is annoying. I know why, but can't do a lot about it. 
+other than to disable the tests, which is what is done 
+now, by exiting with an exit code of 77 if the package
+was configured with --with-threads. 
+
+The script 'teston' does not seem to work to the local host,
+with instead it giving a lot of failures. Wny ???
+
 Lack of any way of changing brightness of images without a
-cpu-intenesive re-run. 
-The two example files '
+cpu-intenesive re-run. The two example files '
 Thread support on machines other than Solaris is 
 not known. I need to do more testing - preferably
 with multi-processor machines. 
-
-'make check' wouild be better named 'make test'
-as is more common. 
-
-'make examples' would be nice.
-
-The fact that some self-tests fail on threaded 
-enabled 'atlc' is annoying. I know why, but can't
-do a lot about it. 
 
 There are no manual pages for several programs 
 
@@ -23,3 +38,5 @@ makkes little difference - the meaning should be clear.
 HTML versions of the man pages have diagrams that 
 are completely stupid. This is a problem with the 
 program 'man2html' I'm using - I think so anyway. 
+
+Dr. David Kirkby, April 17th 2003 Re: atlc-4.3.0
