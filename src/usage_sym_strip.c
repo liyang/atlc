@@ -31,13 +31,19 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 void usage_symmetrical_strip(void)
 {
   fprintf(stderr,"sym_strip produces a bitmap for a wide stripline and \ncalculates Zo ASSUMING IT IT INFINITELY WIDE (which it is not of course)\n\n");
-  fprintf(stderr,"Usage: sym_strip W H w filename\n\n");
-  fprintf(stderr,"-----------------------------------------------\n");
-  fprintf(stderr,"                                               \n");
-  fprintf(stderr,"              <----------w----------->\n");
-  fprintf(stderr,"              ------------------------\n");
-  fprintf(stderr,"                                      \n");
-  fprintf(stderr,"                                      \n");
-  fprintf(stderr,"------------------------------------------------\n");
-  fprintf(stderr,"<-----------------------W---------------------->\n\n");
+  fprintf(stderr,"Usage: sym_strip [-C] W H w filename\n\n");
+  fprintf(stderr,"---------^-----------------------------------------------------\n");
+  fprintf(stderr,"         |                                     \n");
+  fprintf(stderr,"         |         <----------w----------->\n");
+  fprintf(stderr,"         H         ------------------------\n");
+  fprintf(stderr,"         |                              \n");
+  fprintf(stderr,"         |                              \n");
+  fprintf(stderr,"---------v-----------------------------------------------------\n");
+  fprintf(stderr,"<-----------------------------W-------------------------------->\n\n");
+  fprintf(stderr,"Option:\n");
+  fprintf(stderr,"     -C      Print copyright, licensing and distribution information\n\n");
+  fprintf(stderr,"WARNING sym_strip does *NOT* take floating points for W, H and w. You must\n");
+  fprintf(stderr,"enter only integers. The programme was put together quickly, so does NOT\n");
+  fprintf(stderr,"automatically convert floating point values to integers like rect_in_rect,\n");
+  fprintf(stderr,"circ_in_circ, circ_in_rect, rect_cen_in_rect and make_coupler\n");
 }

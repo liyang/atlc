@@ -95,11 +95,12 @@ extern int main(int argc, char **argv) /* Read parameters from command line */
   input_filename=string(0,1000);
   /* only use this if we have both a multi-threaded application and that 
   with have the function */
-  while((q=get_options(argc,argv,"r:vsc:d:F:i:t:")) != -1)
+  while((q=get_options(argc,argv,"Cr:vsc:d:F:i:t:")) != -1)
   switch (q) 
   {
-    case 'a':
-      avoid_use_of_fast_convergence_method=TRUE;
+    case 'C':
+      print_copyright( (char *) "1996-2002");
+      exit(1);
     break;
 
     case 'd':

@@ -44,18 +44,29 @@ int verbose=FALSE;
 
 extern int main(int argc, char **argv) /* Read parameters from command line here   */
 {
-  int W, H, w, size_of_image;
+  int W, H, w, size_of_image, q;
   double Zo;
   unsigned char *unaligned_image_vector, *aligned_image_vector;
   FILE *fp;
 
+  while((q=get_options(argc,argv,"Cl:s:Z:")) != -1)
+  switch (q) 
+  {
+    case 'C':
+      print_copyright((char *) "2002");
+      exit(1);
+    break;
+    case '?':
+      usage_symmetrical_strip();
+    break;
+  } /* End of the switch statement */
   if(argc-my_optind !=4)
   {
     usage_symmetrical_strip();    
     exit(1);
   }
-  W=atoi(argv[1]);
-  H=atoi(argv[2])+2*BORDER;
+  W=atoi(argv[my_optind]);
+  H=atoi(argv[my_optind+1])+2*BORDER;
   if(H%2==0) /* make it odd, so that the inner can sit in the middle */
   {
     H++;

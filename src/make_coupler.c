@@ -52,9 +52,13 @@ int main(int argc, char **argv)
   FILE *image_data_fp;
   struct data optimise;
 
-  while((q=get_options(argc,argv,"b:f:v")) != -1)
+  while((q=get_options(argc,argv,"Cb:f:v")) != -1)
   switch (q) 
   {
+    case 'C':
+      print_copyright((char *) "2002");
+      exit(1);
+    break;
     case 'b':
       bmp_size=atol(my_optarg); 
     break;
