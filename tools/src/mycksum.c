@@ -66,6 +66,5 @@ int main(int argc, char **argv)
     checksum &= 0xffff;       /* Keep it within bounds. */
   }
   printf ("%05lu\n", checksum);
-  exit_with_msg_and_exit_code("",OKAY);
-  return(0); // keeps compiler happy. 
+  return(OKAY);
 }

@@ -27,5 +27,5 @@ int main(int argc, char **argv)
   fseek(fp,0,SEEK_END);
   length=ftell(fp);
   printf("%d\n",length);
-  exit_with_msg_and_exit_code("",OKAY);
+  return(OKAY); 
 }
