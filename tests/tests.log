@@ -1,0 +1,22 @@
+Testing stated at Fri Dec 13 19:35:58 GMT 2002
+PASSED: ./1a-sym_strip.bmp.test
+PASSED: ./1b-sym_strip.txt.test
+PASSED: ./1c-sym_strip.E.bmp.test
+PASSED: ./1d-sym_strip.Er.bmp.test
+PASSED: ./1e-sym_strip.Ey.bmp.test
+PASSED: ./1f-sym_strip.Ex.bmp.test
+PASSED: ./1g-sym_strip.U.bmp.test
+PASSED: ./1h-sym_strip.V.bmp.test
+PASSED: ./2a-rect_in_rect.bmp.test
+PASSED: ./2b-rect_in_rect.txt.test
+PASSED: ./2c-rect_in_rect.E.bmp.test
+PASSED: ./2d-rect_in_rect.Er.bmp.test
+PASSED: ./2e-rect_in_rect.Ey.bmp.test
+PASSED: ./2f-rect_in_rect.Ex.bmp.test
+PASSED: ./2g-rect_in_rect.U.bmp.test
+PASSED: ./2h-rect_in_rect.V.bmp.test
+PASSED: ./3a-rect_cen_in_rect.bmp.test
+PASSED: ./3b-rect_cen_in_rect.txt.test
+PASSED: ./7a-generate_coupler_bitmap.bmp.test
+PASSED: ./7b-generate_coupler_bitmap.bmp.test
+PASSED: ./8a-design_coupler.bmp.test
