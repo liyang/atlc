@@ -1,0 +1,6 @@
+This distribution should exactly match the CVS tree at the time
+of generation of the file atlc-4.2.8.tar.gz. This has rarely been
+the case in the past, with the CVS out of date with the 
+.tar.gz's posted, but with another developer now, this 
+should no longer be the case, is it will be necessary 
+for the CVS to be kept up to date. 

@@ -1,0 +1,3 @@
+After buiding, make sure to run 'make check' to test your binaries
+and to create some of the examples which due to their size are better
+built than put into the distribution. 

@@ -1,0 +1,8 @@
+If anyone can help advise me of sucess and/or failure on building a
+threaded version of atlc on any plantform other than Solaris for SPARC,
+I would apprecite it. Any indication of the amount the extra CPUs
+improves performance would be nice too. Note that only the program
+'atlc' and not any of the other half or dozen or so programs are written
+to support multiple processors. 
+
+

@@ -1,20 +1,44 @@
-ATLC Arbitrary Transmission Line Calculator.
+atlc - Arbitrary Transmission Line Calculator.
 
-Programme for analysing arbitrary transmission lines. See
-HTML documentation in docs.
+Programme for analysing arbitrary transmission lines and directional
+couplers. See HTML documentation in docs/html-docs
 
-Then run the script src/tests. That will test your binaries. 
+The sources are kept in src/non_gui, as a version with a GUI is planned
+(not started yet). 
 
-After making atlc (see install) run the script  src/tests to
-test your binaries. 
+This is the directory layout. .
+./docs 
+./docs/html-docs         // As on the atlc web site at atlc.sourgeforge.net
+./docs/html-docs/jpgs    // JPGS needed for the html docs above.
+./docs/qex-december-1996 // A old paper I wrote, gives the theory.
+./docs/theory            //  
+./man                    // Standard Unix man pages.
+./examples               // Some odd examples - most are created.
+./src                    // Nothing much - see below
+./src/non_gui            // All the C source code.   
 
-Assuming the tests pass, then run the script examples/create to
-will create some of the example bitmaps which are referred to in the
+After building (see INSTALL, which I've modified to be specific to
+atlc) you *MUST* run 'make check' after running 'make'. Firstly,
+it creates some files and checks them, but secondly it creates
+all the exmxples files which are referred to in the
 documentation, but which are too large to distribute. It is easier for
-them to be created. 
+them to be created. I've kept the example files sepparte from the source,
+but you might want to copy them to the src/non_gui directory. I tend to
+do that, but felt it better not to when distributing the code. 
 
 A Windows version (not graphical) can be found in an earlier distribution 
-(3.0.7). I'm not going to update that as often as the Unix version, so get a 
-Unix box if you want the latest code. 
+(3.0.7). I'm not going to update that, so get a Unix box if you want to use the latest versions. 
 
-Dr. David Kirkby, G8WRB. 11/4/02
+A version with a GUI that should run on Macs, Windoze and Unix is
+planned. This however is expected to be some time from now. 
+
+Please note I'm English, so spellings should be English and dates are in
+the format Day/Month/Year, not the American way of Month/Day/Year. Hence
+3/4/02 is the 3rd of April, and not the 4th or March. 
+
+
+If wishing to contact me by email, can I suggest you copy a message to
+both drkirkby@ntlworld.com and davek@medphys.ucl.ac.uk This will allow
+me to see it in the shortest possible time. 
+
+Dr. David Kirkby, G8WRB. 13/12/02

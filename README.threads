@@ -1,26 +1,60 @@
 This file is README.threads
 
-atlc is written as a multi-threaded application. The routine
+atlc is written as a multi-threaded applicationi, to exploit multiple
+CPUs if you have them. 'atlc' was built on a Sun and tested under Solaris. 
+Some testing with threads on other systems has been done,
+but not very much. As such, using a threaded verison of the program
+under GNU/Linux may be more of a haslle to set up. As far as I am
+aware, the program needs 'pthreads'. There are 'pthreads' libraries
+around and by default it exists in Sun's Solaris. The GNU library 
+Portable Threads Library (pth)
+
+http://www.gnu.org/software/pth/
+
+does not by default offer 'pthreads', but it will if configured  with
+the --enable-pthread option to configure. So using pth and adding that
+option and the configure process will enable pthreads and allow a
+threaded version to be built. I have tested this briefly under GNU/Linux
+and it seemed to work. 
+
+
+However, you should NOT
+attempt to generate a threaded version of the program until AFTER you
+have built a version without threads and run 'make check'. By running
+'make check' you will test your program and generate all the bitmaps
+that are too large to distribute. Once you have done this, you can
+reconfigure with the option --with-mp and build a threaded version. 
+(The results from the threaded and non-threaded vesion differ very very
+slightly and this is enough to causes the checksums on files to differ.
+It does not cause any significant differences though - far less than the
+erros which are under 1% at worst.) 
+
+The routine
 'finite_difference' has two versions, one of which is multi-threaded and
 will therefore use more than one cpu, and another which is not
 multi-threaded. These are in the files
 finite_difference_single_threaded.c and
 finite_difference_multi_threaded.c
 
-In order to use the programme in multi-threaded mode, you will need to
-use a thread library. pthreads should be fine. Solaris threads work
-fine. I'm not sure about the others - feedback welcome. 
-
 If you have more than one cpu, it is beneficial to use the option
 --with-mp when configuring. This will enable the threads. By default,
-the programme will run two threads simultaneously. This is generally optimal 
-for a dual processor machine. With a quad processor machine, it would be
-advantageous to run 4 threads. The number of threads that the system
+the programme will run four threads simultaneously. This is generally optimal 
+for a quad processor machine. With a dual processor machine, it would be
+advantageous to run 2 threads. The number of threads that the system
 creates by default is in the file definitions.h, as a parameter
-MAX_THREADS
+MAX_THREADS.
 
+So in summary you must
+1) Build pth with the --enable-pthread option while configuring, or
+otherwise use another pthreads library.
+2) Build atlc wit the --with-mp option. 
 
 You may specify the number of threads the programme uses on atlc's
 command line (-t option), but for a permanent change, compile it into
-atlc by changing the number in definitions.h
+atlc by changing the number in definitions.h Since I use a quad
+processor machine (Sun Ultra 80), it is for now at least defaulting to 4
+threads.  There is probably not a lot to be gained by droping it to two
+on a dual prccessor machine, but perhaps a bit. 
+
+Dr. David Kirkby, 14/12/02
 

@@ -1,0 +1,11 @@
+Sun's make programme in /usr/ccs/bin/make is not able to compile this
+properly, giving an error message like 
+
+mksh: Fatal error in reader: = missing from replacement macro reference
+
+Use GNU make to build this. This is often installed on systems as gmake.
+ 
+pthreads do *not* need to be installed in configuruing this for multiple
+processors on a Sun, but you can use them if you wish. Sun has its own
+threaded library.
+.  

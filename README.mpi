@@ -1,0 +1,10 @@
+This is the last release of atlc without the the addition of 
+the Message Passing Interfact (MPI) support. The next release
+release 5.0, will have support for MPI. Since 5.0 has some 
+major changes, it is possible there are more bugs in that. 
+
+I'm greateful for the help of Patrick Kelsey <kelsey@ieee.org>
+for addint MPI support in version 5.0.0 for MPI.
+
+Dr. David Kirkby, 10/1/03. 
+
