@@ -1,60 +1,59 @@
 This file is README.threads
 
-atlc is written as a multi-threaded applicationi, to exploit multiple
-CPUs if you have them. 'atlc' was built on a Sun and tested under Solaris. 
-Some testing with threads on other systems has been done,
-but not very much. As such, using a threaded verison of the program
-under GNU/Linux may be more of a haslle to set up. As far as I am
-aware, the program needs 'pthreads'. There are 'pthreads' libraries
-around and by default it exists in Sun's Solaris. The GNU library 
+atlc is written as a multi-threaded application, to exploit multiple
+CPUs if you have them AND your operating systems supports multiple 
+CPUs. 
+
+'atlc' was built on a Sun and tested under Solaris. 
+atlc has been built with thread support on other systems, but since
+in many cases these have only one CPU, it has been difficult to test 
+them fully.  If an operating system does not support multiple CPU
+(as currently OpenBSD does not), then trying to compile with thread
+support will be a pointless exercise and probably result in 
+compilation problems. 
+
+To use atlc with multiple CPUs, a POSIX compatable thread library is 
+necessary. Solaris threads in Sun's Solaris are fine, and most other
+systems have a suitable thread library. If not, installing the GNU
 Portable Threads Library (pth)
 
 http://www.gnu.org/software/pth/
 
-does not by default offer 'pthreads', but it will if configured  with
-the --enable-pthread option to configure. So using pth and adding that
-option and the configure process will enable pthreads and allow a
-threaded version to be built. I have tested this briefly under GNU/Linux
-and it seemed to work. 
+should be okay. To configure with support for threads, run:
+configure --with-threads. 
 
-
-However, you should NOT
-attempt to generate a threaded version of the program until AFTER you
-have built a version without threads and run 'make check'. By running
-'make check' you will test your program and generate all the bitmaps
-that are too large to distribute. Once you have done this, you can
-reconfigure with the option --with-mp and build a threaded version. 
-(The results from the threaded and non-threaded vesion differ very very
-slightly and this is enough to causes the checksums on files to differ.
-It does not cause any significant differences though - far less than the
-erros which are under 1% at worst.) 
-
-The routine
-'finite_difference' has two versions, one of which is multi-threaded and
-will therefore use more than one cpu, and another which is not
-multi-threaded. These are in the files
-finite_difference_single_threaded.c and
-finite_difference_multi_threaded.c
-
-If you have more than one cpu, it is beneficial to use the option
---with-mp when configuring. This will enable the threads. By default,
-the programme will run four threads simultaneously. This is generally optimal 
+By default, the programme will run four threads simultaneously. 
+This is generally optimal 
 for a quad processor machine. With a dual processor machine, it would be
 advantageous to run 2 threads. The number of threads that the system
 creates by default is in the file definitions.h, as a parameter
-MAX_THREADS.
+MAX_THREADS.  
 
-So in summary you must
-1) Build pth with the --enable-pthread option while configuring, or
-otherwise use another pthreads library.
-2) Build atlc wit the --with-mp option. 
+So in summary you must:
+1) Have an operating system that supports multiple CPUs.
+2) Have a POSIX threaded library. If not build the GNU pth http://www.gnu.org/software/pth/
+3) configure atlc with the --with-threads option. 
+4) To gain anything from using atlc in this way, you must have multiple CPUs.
 
 You may specify the number of threads the programme uses on atlc's
 command line (-t option), but for a permanent change, compile it into
 atlc by changing the number in definitions.h Since I use a quad
 processor machine (Sun Ultra 80), it is for now at least defaulting to 4
-threads.  There is probably not a lot to be gained by droping it to two
-on a dual prccessor machine, but perhaps a bit. 
+threads.  There is probably not a lot to be gained by dropping it to two
+on a dual processor machine, but perhaps a bit. On a machine with more than 4 
+CPUs, the parameter should be increased either on the command 
+line or permanently in the souce code. 
 
-Dr. David Kirkby, 14/12/02
+Note, even if configured with --with-threads, passing the option -t0 to
+atlc during runtime will force the use of a single threaded algorithm,
+which should be faster on machines with only one CPU.
+
+Versions of atlc prior to 4.3.0 used different algorithms for
+single and multi-threaded versions, meaning the results differed
+very slightly, making testing difficult. As from version 4.3.0, this
+has been eliminated, buy using an algorithm suitable for single or 
+multiple threads.
+
+Dr. David Kirkby, 31 May 2003
+
 
