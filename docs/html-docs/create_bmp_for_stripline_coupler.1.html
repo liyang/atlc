@@ -1,0 +1,184 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+</PRE>
+<H2>NAME</H2><PRE>
+     <B>create_coupler_bitmap</B> - bitmap generator  for  coupler  with
+     thin  striplines  between  two  infinitly  wide groundplanes
+     (part of <B>atlc</B>)
+
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+     <B>create_coupler_bitmap</B> <B>[-C]</B> <B>[-b</B> <B>bitmapsize]</B> <B>[-v]</B>  <B>H</B>  <B>w</B>  <B>s</B>  <B>Er</B>
+     <B>outputfile</B>
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+     <B>create_coupler_bitmap</B> is a pre-processor for <B>atlc</B>, the  fin-
+     ite  difference programme that is used to calculate the pro-
+     perties of a two and three conductor electrical transmission
+     lines    of   arbitrary   cross   section.   The   programme
+     <B>create_coupler_bitmap</B> is used as a fast  way  of  generating
+     bitmaps  (there is no need to use a graphics programme), for
+     a pair of 1 pixel thick conductors of width w, spaced a dis-
+     tance  s apart, inside a pair of groundplanes of  separation
+     H. This has an exact analytical answer, when  the  inner  is
+     infinitely  thin and the overall width W is infinitely wide.
+     This theoretical impedance  is  calculated  and  printed  to
+     stderr if:
+     a) The -v option is given on create_coupler_bitmap's command
+     line. AND
+     b) create_coupler_bitmap was linked against the gsl  library
+     at http://sources.redhat.com/gsl/
+
+     -----------------------------------------------------  ^
+     |                                                   |  |
+     |                  Er                               |  |
+     |                                                   |  |
+     |            -----------       -----------          |  H
+     |            &lt;----w----&gt;&lt;--s--&gt;&lt;----w----&gt;          |  |
+     |                                                   |  |
+     |                                                   |  |
+     |                                                   |  |
+     -----------------------------------------------------  v
+     &lt;-------------------------W-------------------------&gt;
+
+     The overall width W is calculated  internally  to  be  large
+     enough that making it any larger will have negligable effect
+     on the results.  The dielectric is assumed that of vacuum.
+
+     The bitmaps produced by <B>create_coupler_bitmap</B> are 24-bit bit
+     colour bitmaps, as are required by <B>atlc</B>.
+
+
+
+</PRE>
+<H2>OPTIONS</H2><PRE>
+     <B>-C</B>
+     Print the full copyright information and exit.
+
+
+     <B>-b</B> <B>bitmapsize</B>
+     is used to set the size of the bitmap, and so  the  accuracy
+     to which atlc is able to calculate the coupler's properties.
+     The default value for 'bitmapsize' is normally  18  although
+     this     can     be    set    at    compile    time.    (see
+     'DEFAULT_COUPLER_BITMAP_SIZE' in definitions.h).  The  value
+     can  be  set  anywhere from 6 to 28. The size of bitmap pro-
+     duced will be between 2^(bitmapsize-1) and 2^(bitmapsize+1),
+     so  if  its  set to 28 the bitmap could be as big as 512 Mb,
+     which would take an eternity to compute.
+
+     <B>-v</B>
+     Print some extra data to stdout on the theoetical  impedance
+     of the structure. This is useful to compare with the numeri-
+     cal result from <B>atlc</B>
+
+
+</PRE>
+<H2>EXAMPLES</H2><PRE>
+     In the first example, a standard coupler is  created,  where
+     the
+
+
+     eg1. create_coupler_bitmap  1.23 0.7 1.2 1.0  coupler.bmp
+     eg2. create_coupler_bitmap -b 8 1.23 0.7 3.3  small.bmp
+     eg3. create_coupler_bitmap -v 12 1.23 0.7 4.8  theory.bmp
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</PRE>
+<H2>SEE ALSO</H2><PRE>
+     <B>atlc(1)</B>,                 <B>create_bmp_for_rect_cen_in_rect(1)</B>,
+     <B>create_bmp_for_circ_in_circ(1)</B>.
+     <B>create_bmp_for_rect_in_rect(1)</B>,
+     <B>create_bmp_for_circ_in_rect(1)</B>.
+     <B>create_bmp_for_rect_in_circ(1)</B>,        <B>readbin(1)</B>        and
+     <B>create_bmp_for_sym_strip(1)</B>.
+
+     http://atlc.sourceforge.net                - Home page
+     http://sourceforge.net/projects/atlc       - Download area
+     atlc-X.Y.Z/docs/html-docs/index.html       - HTML docs
+     atlc-X.Y.Z/docs/qex-december-1996/atlc.pdf - theory paper
+     atlc-X.Y.Z/examples                        - examples
+     http://www.david-kirkby.co.uk              - my home page
+     http://www.david-kirkby.co.uk/ham          - ham radio pages
+
+
+</PRE>
+<H2>AUTHOR</H2><PRE>
+     Dr. David Kirkby PhD, email drkirkby@ntlworld.com, G8WRB.
+
+
+</PRE>
+<H2>COPYRIGHT</H2><PRE>
+     Copyright (c) 2002 Dr. David Kirkby.
+
+     This program is  free  software;  you  can  redistribute  it
+     and/or  modify  it under the terms of the GNU General Public
+     License as published by the Free Software Foundation; either
+     version 2 of the License, or (at your option) any later ver-
+     sion.  This program is distributed in the hope that it  will
+     be  useful,  but  WITHOUT  ANY  WARRANTY;  without  even the
+     implied warranty of MERCHANTABILITY or FITNESS FOR A PARTIC-
+     ULAR  PURPOSE.   See the GNU General Public License for more
+     details.  You should have received a copy of the GNU General
+     Public  License  (in  the file COPYING) along with this pro-
+     gram. You may get a full copy of it by running the programme
+     with  the  -C  option.  Otherwise  you can write to the Free
+     Software Foundation, Inc., 59 Temple Place - Suite 330, Bos-
+     ton, MA  02111-1307, USA.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>
