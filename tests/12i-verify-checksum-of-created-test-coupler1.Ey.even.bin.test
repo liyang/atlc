@@ -1,0 +1,14 @@
+#!/bin/sh
+# There should be a supplied bitmap file test-coupler1.bmp
+# We will generate all the binary files and check they 
+# are all okay
+CKSUM=`$top_builddir/tools/src/mycksum $top_builddir/examples/test-coupler1.Ey.even.bin`
+if [ $CKSUM != 06425 ]; then
+  echo "FAILED:" $0  >> tests.log
+  echo "FAILED checksum" $CKSUM $0
+  exit 1
+else 
+  echo "PASSED:" $0 >> tests.log
+  exit 0
+fi
+
