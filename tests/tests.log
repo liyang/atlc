@@ -1,10 +1,10 @@
-Testing stated at Fri Jan 10 14:36:18 GMT 2003
+Testing stated at Fri Jan 10 15:46:16 GMT 2003
 PASSED: ./1a-create_bmp_for_symmmetrical_stripline.bmp.test
 PASSED: ./1b-create_bmp_for_symmmetrical_stripline.txt.test
 PASSED: ./1c-create_bmp_for_symmmetrical_stripline.E.bmp.test
 PASSED: ./1d-create_bmp_for_symmmetrical_stripline.Er.bmp.test
 PASSED: ./1e-create_bmp_for_symmmetrical_stripline.Ey.bmp.test
-FAILED: ./1f-create_bmp_for_symmmetrical_stripline.Ex.bmp.test
+PASSED: ./1f-create_bmp_for_symmmetrical_stripline.Ex.bmp.test
 PASSED: ./1g-create_bmp_for_symmmetrical_stripline.U.bmp.test
 PASSED: ./1h-create_bmp_for_symmmetrical_stripline.V.bmp.test
 PASSED: ./1i-create_bmp_for_symmmetrical_stripline.E.bin.test
@@ -26,7 +26,7 @@ PASSED: ./3b-rect_cen_in_rect.txt.test
 PASSED: ./7a-generate_coupler_bitmap.bmp.test
 PASSED: ./7b-generate_coupler_bitmap.bmp.test
 PASSED: ./7c-generate_coupler_bitmap.Ex.test
-PASSED: ./7c-generate_coupler_bitmap.txt.test
+PASSED: ./7d-generate_coupler_bitmap.txt.test
 PASSED: ./8a-design_coupler.bmp.test
 PASSED: ./9a-create-25-Ohm-201b.bmp.test
 PASSED: ./9b-create-25-Ohm-401b.bmp.test

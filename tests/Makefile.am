@@ -27,10 +27,10 @@ TESTS =  \
 2h-create_bmp_for_rect_in_rect.V.bmp.test \
 3a-rect_cen_in_rect.bmp.test \
 3b-rect_cen_in_rect.txt.test \
-7a-generate_coupler_bitmap.bmp.test \
-7b-generate_coupler_bitmap.bmp.test \
-7c-generate_coupler_bitmap.Ex.test \
-7c-generate_coupler_bitmap.txt.test \
+7a-create_bmp_for_stripline_coupler.bmp.test \
+7b-create_bmp_for_stripline_coupler.bmp.test \
+7c-create_bmp_for_stripline_coupler.Ex.test \
+7d-create_bmp_for_stripline_coupler.Ey.test \
 8a-design_coupler.bmp.test \
 9a-create-25-Ohm-201b.bmp.test \
 9b-create-25-Ohm-401b.bmp.test \
@@ -57,20 +57,6 @@ TESTS =  \
 11l-verify-checksum-of-created-cop1.V.even.bmp.test 
 
 EXTRA_DIST = \
-10a-create-lots-of-examples-check-last-one.test \
-10b-create-lots-of-examples-check-last-one.test \
-11a-verify-checksum-of-supplied-cop1.bmp.test \
-11b-verify-checksum-of-created-cop1.Ex.odd.bmp.test \
-11c-verify-checksum-of-created-cop1.Ey.odd.bmp.test \
-11d-verify-checksum-of-created-cop1.E.odd.bmp.test \
-11e-verify-checksum-of-created-cop1.V.odd.bmp.test \
-11f-verify-checksum-of-created-cop1.U.odd.bmp.test \
-11g-verify-checksum-of-created-cop1.Er.bmp.test \
-11h-verify-checksum-of-created-cop1.Ex.even.bmp.test \
-11i-verify-checksum-of-created-cop1.Ey.even.bmp.test \
-11j-verify-checksum-of-created-cop1.E.even.bmp.test \
-11k-verify-checksum-of-created-cop1.U.even.bmp.test \
-11l-verify-checksum-of-created-cop1.V.even.bmp.test \
 1a-create_bmp_for_symmmetrical_stripline.bmp.test \
 1b-create_bmp_for_symmmetrical_stripline.txt.test \
 1c-create_bmp_for_symmmetrical_stripline.E.bmp.test \
@@ -95,10 +81,10 @@ EXTRA_DIST = \
 2h-create_bmp_for_rect_in_rect.V.bmp.test \
 3a-rect_cen_in_rect.bmp.test \
 3b-rect_cen_in_rect.txt.test \
-7a-generate_coupler_bitmap.bmp.test \
-7b-generate_coupler_bitmap.bmp.test \
-7c-generate_coupler_bitmap.Ex.test \
-7c-generate_coupler_bitmap.txt.test \
+7a-create_bmp_for_stripline_coupler.bmp.test \
+7b-create_bmp_for_stripline_coupler.bmp.test \
+7c-create_bmp_for_stripline_coupler.Ex.test \
+7d-create_bmp_for_stripline_coupler.Ey.test \
 8a-design_coupler.bmp.test \
 9a-create-25-Ohm-201b.bmp.test \
 9b-create-25-Ohm-401b.bmp.test \
@@ -108,7 +94,21 @@ EXTRA_DIST = \
 9f-create-100-Ohm-401b.bmp.test \
 9g-create-200-Ohm-201b.bmp.test \
 9h-create-200-Ohm-401b.bmp.test \
-9i-create-200-Ohm-801b.bmp.test 
+9i-create-200-Ohm-801b.bmp.test \
+10a-create-lots-of-examples-check-last-one.test \
+10b-create-lots-of-examples-check-last-one.test \
+11a-verify-checksum-of-supplied-cop1.bmp.test \
+11b-verify-checksum-of-created-cop1.Ex.odd.bmp.test \
+11c-verify-checksum-of-created-cop1.Ey.odd.bmp.test \
+11d-verify-checksum-of-created-cop1.E.odd.bmp.test \
+11e-verify-checksum-of-created-cop1.V.odd.bmp.test \
+11f-verify-checksum-of-created-cop1.U.odd.bmp.test \
+11g-verify-checksum-of-created-cop1.Er.bmp.test \
+11h-verify-checksum-of-created-cop1.Ex.even.bmp.test \
+11i-verify-checksum-of-created-cop1.Ey.even.bmp.test \
+11j-verify-checksum-of-created-cop1.E.even.bmp.test \
+11k-verify-checksum-of-created-cop1.U.even.bmp.test \
+11l-verify-checksum-of-created-cop1.V.even.bmp.test 
 
 CLEANFILES = \
 test.bmp \
