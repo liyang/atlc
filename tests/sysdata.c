@@ -62,7 +62,8 @@ int main(int argc, char **argv)
   printf("Machine:              %s\n",data.machine);
   printf("Sysname:              %s\n",data.sysname);
   printf("Release:              %s\n",data.release);
-  printf("Nodename:             %s\n",data.version);
+  printf("Version:              %s\n",data.version);
+  printf("Nodename:             %s\n",data.nodename);
   printf("#CPUs supported:      %s\n",data.max_cpus);
   printf("#CPUs online:         %s\n",data.cpus);
   printf("CPU type:             %s\n",data.cpu_type);
