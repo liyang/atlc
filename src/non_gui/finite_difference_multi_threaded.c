@@ -31,9 +31,7 @@ in books. Hence I suspect it is not efficient */
 #include <stdlib.h>
 #endif
 
-#ifdef HAVE_PTHREAD_H
 #include <pthread.h>
-#endif
 
 #ifdef HAVE_STRING_H
 #include <string.h>
