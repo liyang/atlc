@@ -4,8 +4,8 @@
      thread support on old versions of Linux. It's fine on newer versions on a 
      PC. 
 
-2.   The script 'teston' does not seem to work to the local host, with instead 
-     it giving a lot of failures. Wny ??? 
+2    Data on machines is only gathered properly on a few machines (Solaris
+     Tru64 and HP-UX). On AIX, IRIX, Linux, *BSD, it is next to useless.
 
 3.   Lack of any way of changing brightness of images without a cpu-intenesive 
      re-run. The two example files ' Thread support on machines other than 
@@ -22,4 +22,8 @@
      This is a problem with the program 'man2html' I'm using - I think so 
      anyway. 
 
-Dr. David Kirkby, July 19th 2003 Re: atlc-4.3.4 
+7.   The script 'teston' does not seem to work to the local host, with instead 
+     it giving a lot of failures. Wny ??? 
+
+
+Dr. David Kirkby, July 26th 2003 Re: atlc-4.3.5 
