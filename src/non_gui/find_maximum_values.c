@@ -104,5 +104,5 @@ void find_maximum_values(struct max_values *maximum_values, int zero_elementsQ)
         maximum_values->permittivity_max=permittivity; 
     }
   }
-  printf("Ex_or_Ey_max=%f E_max=%f V_max=%f U_max=%g Er_max=%f\n",maximum_values->Ex_or_Ey_max, maximum_values->E_max, maximum_values->V_max, maximum_values->U_max, maximum_values->permittivity_max);
+  //printf("Ex_or_Ey_max=%f E_max=%f V_max=%f U_max=%g Er_max=%f\n",maximum_values->Ex_or_Ey_max, maximum_values->E_max, maximum_values->V_max, maximum_values->U_max, maximum_values->permittivity_max);
 }
