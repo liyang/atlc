@@ -210,7 +210,7 @@ atlcFrame::atlcFrame(const wxString& title, const wxPoint& pos, const wxSize& si
   // Calculate menue. 
   menuCalculate->Append( ID_FiniteDifference,    "&Finite difference (numerical)",\
   "Calculate properties using an accurate, very general but slow numerical technique.");   
-  menuFile->AppendSeparator();
+  menuCalculate->AppendSeparator();
 
   menuCalculate->Append( ID_RoundCoax, "&Round Coaxial cable (exact)","Calculate properties standard round coaxial cable");   
     
@@ -242,12 +242,12 @@ atlcFrame::atlcFrame(const wxString& title, const wxPoint& pos, const wxSize& si
   help.UseConfig(wxConfig::Get());
   bool ret;
   help.SetTempDir(".");
-  help.AddBook("helpfiles/testing.hhp");
+  help.AddBook("html-docs/testing.hhp");
   if (! ret)
-    wxMessageBox("Failed adding book helpfiles/testing.hhp");
-  ret = help.AddBook("helpfiles/another.hhp");
+    wxMessageBox("Failed adding book html-docs/testing.hhp");
+  ret = help.AddBook("html-docs/another.hhp");
   if (! ret)
-    wxMessageBox("Failed adding book helpfiles/another.hhp");
+    wxMessageBox("Failed adding book html-docs/another.hhp");
 }
 
 // event handlers
