@@ -112,7 +112,7 @@ int convert_rect_in_rect_dimensions_to_integers(int accuracy_level)
           error+=pow((ww-w*gridsize)/ww,2.0);
       if(h>0)
           error+=pow((hh-h*gridsize)/hh,2.0);
-      if(error < error_min)
+      if(error < (error_min-1e-9))
       {
           error_min=error;
           best_W=W;
