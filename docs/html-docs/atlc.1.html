@@ -95,25 +95,6 @@
      Adds 'prefix', which is usually a directory name,  in  front
      of the output files.
 
-     <B>-t</B> <B>threads</B>
-     tells atlc to run using that number  of  threads,  to  speed
-     calculation.  This option is only valid if atlc was compiled
-     with the  --with-threads  option  to  configure.  The  POSIX
-     library  <B>must</B>  be installed in order to compile with support
-     for more than one CPU.  Generally,  setting  the  number  of
-     threads  to  the  number  of  cpus is a good idea, but it is
-     worth experimenting. The number can be  changed  permanently
-     by editing the parameter MAX_THREADS in definitions.h.
-
-     Using the option -t0 forces atlc to use the same code as  it
-     would  if configured for single processor operation. This is
-     useful when comparing how well atlc behaves on  MP  machines
-     compared to single processor machines.
-
-     Using -t1 will cause the multi-threaded code to be used, but
-     with  only one thread.  There is not a lot of point in using
-     this but you can if you want to experiment.
-
 
 </PRE>
 <H2>COLOURS</H2><PRE>
@@ -250,6 +231,25 @@
      atlc-X.Y.Z/docs/html-docs/index.html       - HTML docs
      atlc-X.Y.Z/docs/qex-december-1996/atlc.pdf - theory paper
      atlc-X.Y.Z/examples                        - examples
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
