@@ -5,7 +5,6 @@ SUBDIRS =  . src man docs examples tools tests
 
 EXTRA_DIST = \
 README \
-README.alpha \
 README.checks \
 README.cvs \
 README.help \
