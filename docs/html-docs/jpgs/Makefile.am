@@ -114,6 +114,7 @@ EXTRA_DIST = 000000.jpg \
 8235ef.jpg \
 8e8e8e.jpg \
 aliased.jpg \
+bluefish.jpg \
 bc7f60.jpg \
 central.jpg \
 centred.jpg \
