@@ -20,6 +20,13 @@ class FiniteDifferenceFrame: public wxFrame
     void OnClose(wxCloseEvent& event);
 
     void OnClick(wxCommandEvent& event);
+    void OnViewExField(wxCommandEvent& event);
+    void OnViewEyField(wxCommandEvent& event);
+    void OnViewEField(wxCommandEvent& event);
+    void OnViewVoltage(wxCommandEvent& event);
+    void OnViewPermittivity(wxCommandEvent& event);
+    void OnViewEnergy(wxCommandEvent& event);
+    void OnView(wxCommandEvent& event);
 
   private:
     // Added Panel and button members.
