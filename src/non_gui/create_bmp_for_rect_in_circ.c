@@ -93,5 +93,5 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
    }
    else
       usage_create_bmp_for_rect_in_circ();
-   exit(0);
+   return(0);
 }
