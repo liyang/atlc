@@ -1,12 +1,15 @@
 NEWS for realease 4.3.8 on  21st August 2003.
 
-Some changes have been made to the bests so that when
-the benchmark runs it should not produce junk for
-the hardware information on any system. Previosly
-is could create a lot of junk, that was all wrong. 
+Some changes have been made to the tests so that when the benchmark 
+runs it should not produce junk for the hardware information on any 
+system. Previosly is could create a lot of junk, that was all wrong. 
 
-uname is now only called once from try_portable.c
-and the splatform specific stuff computed elsewhere
+It should now build on a system that needs errno.h for errno to be
+defined. Previously, errno.h was not included, which one of the testers
+found on his Suse Linux system. 
+
+uname is now only called once from try_portable.c and the platform 
+specific stuff computed elsewhere
 
 Dr. David Kirkby, 21st August 2003
 
