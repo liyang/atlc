@@ -1,3 +1,5 @@
-On 18/4/02 I moved all the sources from atlc-x.y.z/src to
-atlc-x.y.z/src/non_gui and will start work on some graphical code in the
-src/gui directory. You will find gui does not exist in any distribution.
+On 18/4/02 I moved all the sources from atlc-x.y.z/src to atlc-x.y.z/src/non_gui with
+the intention of starting on some graphical code in the src/gui directory. You will find 
+the gui stuff does nothing useful, so ignore it.
+
+Dr. David Kirkby 14/12/02
