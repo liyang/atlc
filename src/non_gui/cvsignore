@@ -1,1 +1,1 @@
-*.bmp *.o *.cln *.bin *.tar *.gz Makefile Makefile.in *.old *.bak
+*.bmp *.o *.cln *.bin *.tar *.gz Makefile *.old *.bak
