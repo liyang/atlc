@@ -1,10 +1,43 @@
-Here are some benchmarks, collected on a number of different computers
-using Here are some benchmarks, collected on a number of different computers
-using version ***version 4.3.1*** of the code. Any comparisions should be
-made to this version only. 
+When 'make check' is run, the final check is a benchmark. This benchmark
+tries to run a reasonably large problem with atlc, using both a
+single-threaded and a multi-threaded algorithm. It reports the times of
+both the single and multi-threaded cases. 
 
-HARDWARE and EXECUTION TIMES:
------------------------------------------
+This can be useful for three reasons.
+
+1) It will report the time taken for a large problem, giving the 
+user the oppotunity to alter the CFLAGS variable to optimise compiler
+flags for optimal efficieny. This is PARTICULARLY IMPORTANT
+on the Alpha platform, as the wrong flags can can a HUGE change in 
+performance. 3.5x improvements have been observed on the Alpha  
+with appropiate choice of flags, with '-arch host' on cc being 
+particulary appropate, but check the compilers manual page.
+
+Of course, if this is done on an active system, with other processes
+running, the results will be of little value. 
+
+2) The program will show if there is a spedup when the number of CPUs
+is changed. If you have more than 4 CPUs, be sure to edit the file
+src/non_gui/definitions.h and change the value of MAX_THREADS from
+4 to the number of CPUs present. 
+
+3) The benchmark attempts to compute the number of CPUs, the CPU the 
+RAM etc. Note the CPU time migth well be returned as just a number - as
+in 56 on my Dec Alpha. At present, no attempt is made to convert that
+number to a sensible string describing the processor. When a way to do
+that is worked out, this will be done. 
+
+Here are some benchmarks, collected on a number of different computers
+using version 4.3.1 of the code. However, comaring the results on verison
+4.3.2 should be the same, except the benchmark should be more intelligent
+in gather information about the hardware and so is more likely to be
+able to work out some paramters such as speedup and efficiency (defined
+below). This might never be possible, as it probably depends too much
+on operating system versions to make it practical to do.
+
+HARDWARE and EXECUTION TIMES vesion 4.3.1 of atlc: Version 4.3.2
+should give the same results, but provide better information. 
+----------------------------------------------------------------
 
 Hostname      Machine                CPU(s)   t_seq  t_par speedup
 efficiency
@@ -29,10 +62,10 @@ blackbird     Sun SPARCstation 20         256 Mb   1.000 Mb
 bluetit       Sun SPARCstation 20         320 Mb   0.250 Mb
 cheetah       PC, Solaris 8 (x86)         768 Mb   0.544 Mb 16kb L1 data+16 kb L1 inst. + 512 kb L2
 crow          Sun SPARCstation 20         320 Mb   1.000 Mb
-dobermann     Dec Alpha PW 600a          1024 Mb   4.000 Mb 
+dobermann     Dec Alpha PW 600a          1024 Mb   2.000 Mb 
 dove          Sun SPARCstation 20         288 Mb   1.000 Mb
 robin         HP C3000                   1536 Mb   1.500 Mb (1 Mb data, 0.5 Mb instruction)
-sparrow       Sun Ultra 80               4096 Mb   4.000 Mb 
+sparrow       Sun Ultra 80               4096 Mb   4.000 Mb  
 tiger         Pentium II PC               128 Mb   0.544 Mb 16 kb L1 data+16 kb L1 inst. + 512 kb L2 
 woodpecker    Sun SPARCstation 20         224 Mb   0.250 Mb 
 
@@ -52,8 +85,8 @@ tiger        Redhat  7.2  2.4.10-5       0.8  gcc-2.96     1.2.5
 woodpecker   Linux 6.2   2.2.14-5.0smp   1.0  egcs-2.91.66    NI
 
 IMPORTANT: If you wish to compare your machines performance,
-use atlc-4.3.1.tar.gz, NOT an earlier realease, NOT
-a later released  
+use are advised to use atlc-4.3.tar.gz. atlc-4.3.1.tar.gz will
+give the same times, but has bugs that are fixed in 4.3.2
 
 $ configure --with-threads
 $ make check
@@ -98,6 +131,11 @@ floating point.
 
 10) Machines had differing memory from 128 Mb to 
 4 Gb, but none should be swapping. 
+
+11) The results don't use any flags to the compiler, except 
+possibly under gcc. Hence set appropiate CFLAGS if you want
+to improve on these results. 
+
 -- 
 Dr. David Kirkby,
 Senior Research Fellow,
