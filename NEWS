@@ -1,29 +1,26 @@
-NEWS for realease 4.2.11-alpha on 13/3/03.
+NEWS for realease 4.2.11 on  29/3/03.
 
-This release has a bug, in that some of the tests, 
-fail sometimes, pass on others. 
+A rather annoying bug has finally been found. The checksums of some of
+the bitmaps generated changed a bit from tiem to time, for no apparent
+reasson. It was found that some of the vaiables were being used
+unitialised! Thanks to Sun's compiler, this was easy to find. 
 
-Although not tested well at all, and not reccomened
-for general use, version 4.2.11-alpha supports
-support MPI (message passing interface), 
-but the release has bugs and does not work at all on
-Solaris. 
-(as all codes does I guess). The 4.x.y should be the 
-more stable (at least initally) but hopefully the 
-MPI support in version 5.0.0 will be of use to  
-someone who runs atlc a lot and has access to a network
-of computers. 
+Support for MPI (message passing interface), has been added, so a
+network of computers can be used to solve a problem. This was added by
+Patrick Kelsey <kelsey@ieee.org>. Apparently it works under Linux on a
+PC but it won't work on my Sun Ultra 80 running Solaris 9.  As such,
+this feature is not really working well, but anyone can feel free to
+play with it. See the INSTALL file for a bit more iformation and also
+run 'configure --help'. 
 
-Putting bitmaps where there are electical shorts will
-now develope an error, rather than produce an incorrect
-result.         
 
-The output from atlc run on all the bitmaps in the 
-examples directory are included - they are small files
-and might be useful to people. 
+Putting bitmaps where there are electical shorts will now develope an error, 
+rather than produce an incorrect result.         
 
-Running the binary programs incorrectly will print
-a version number. 
+The output from atlc run on all the bitmaps in the examples directory are 
+included - they are small files and might be useful to people. 
 
-Dr. David Kirkby 13/3/03
+Running the binary programs incorrectly will print a version number. 
+
+Dr. David Kirkby 29/3/2003
 
