@@ -35,21 +35,12 @@ dnl AC_CHECK_LIB(mopt,main)
 dnl check for the optimised
 dnl AC_CHECK_LIB(copt,main)
 
-
-gsl_libgsl=1
-gsl_libcblas=1
-AC_CHECK_LIB(gslcblas,cblas_scasum,,gsl_libcblas=0)
-AC_CHECK_LIB(gsl,main,,gsl_libgsl=0)
-
+AC_CHECK_LIB(m,main)
 
 dnl Checks for header files.
 
 dnl AC_STDC_HEADERS
-AC_HAVE_HEADERS(stdio.h math.h errno.h stdlib.h string.h thread.h pthread.h pthreads.h mpi.h)
-gsl_ellint=1
-gsl_bessel=1
-AC_HAVE_HEADERS(gsl/gsl_sf_ellint.h,,gsl_ellint=0)
-AC_HAVE_HEADERS(gsl/gsl_sf_bessel.h,,gsl_bessel=0)
+AC_HAVE_HEADERS(stdio.h math.h errno.h stdlib.h string.h)
 
 dnl checks for typedefs (none need to be tested)
 
@@ -89,17 +80,26 @@ if test "x$with_gui" = "xyes"; then
         AC_SUBST(GUI_DIRECTORY,gui)
 fi
 
+
+AC_ARG_WITH(gsl=yes,[  --without-gsl           disable use of gsl library (by default it's enabled)])
+if test "x$with_gsl" = "xno"; then
+AC_MSG_WARN([Use of the gsl library has been disabled - some self-tests will fail])
+else
+AC_CHECK_LIB(gslcblas,main)
+AC_CHECK_LIB(gsl,main,,AC_MSG_WARN([To get full functionality you should link atlc with the GNU Scientific Library (gsl)
+available at http://sources.redhat.com/gsl. Some self-tests will fail without gsl.]))
+fi  
 dnl Multi-Processor Support
-AC_ARG_WITH(threads, AC_HELP_STRING([--with-threads=[no]],[support multiple processors (needs pthreads or similar installed)]))
+sinclude(acx_pthread.m4)
+AC_ARG_WITH(threads, 
+[  --with-threads          support thread-based parallel computation - this 
+                          needs a POSIX thread library (pthreads or similar) 
+                          installed])
+
 if test "x$with_threads" = "xyes"; then
-AC_DEFINE(ENABLE_MP)
-AC_DEFINE(_REENTRANT)
-AC_DEFINE(_THREAD_SAFE)
-AC_CHECK_LIB(thread,  pthread_create)
-AC_CHECK_LIB(pthread,  pthread_create)
-dnl thr_setconcurrency is only needed on Solaris as far as I know. 
-AC_CHECK_LIB(thread, thr_setconcurrency, [AC_DEFINE(HAVE_THR_SETCONCURRENCY)])
+ACX_PTHREAD([AC_DEFINE(ENABLE_POSIX_THREADS)])
 fi
+
 
 dnl MPI and MPE Support
 AC_ARG_WITH(mpi, AC_HELP_STRING([--with-mpi=[mpi_install_prefix]],[support MPI-based parallel computation (needs MPICH installed)]))
@@ -111,8 +111,7 @@ if test "x$with_mpi" != "x" \
   if test "x$with_mp" = "xyes"; then
     AC_MSG_ERROR([it does not make sense to use --with-mp with --with-mpi or --with-mpe])
   fi  
-
-
+  AC_HAVE_HEADERS(mpi.h)
   AC_DEFINE(ENABLE_MPI)
   AC_CHECK_LIB(socket, getsockopt)
   AC_CHECK_LIB(nsl, xdr_void)
@@ -136,27 +135,6 @@ if test "x$with_mpi" != "x" \
     CFLAGS="$CFLAGS -I$path_to_mpi/include -L$path_to_mpi/lib"
     AC_CHECK_LIB(mpich,  MPI_Init, , [AC_MSG_ERROR([Could not link test program with libmpich.a])])
   fi
-fi
-
-dnl Check for a functioning gsl installation. 
-
-if test $gsl_ellint = 1 && test $gsl_bessel = 1 && test $gsl_libcblas = 1 && test $gsl_libgsl = 1; then
-  AC_DEFINE(HAVE_GSL)
-elif test $gsl_ellint = 0 || test $gsl_bessel = 0 || test $gsl_libcblas = 0 || test $gsl_libgsl = 0; then
-  AC_MSG_WARN([To get full functionality you should install the GNU 
-  scientific library (gsl) available at http://sources.redhat.com/gsl. Without
-  gsl it will be impossible to evaluate the theoretical impedance of a coupler
-  using \"design_coupler\" or of a stripline using 
-  \"usage_create_bmp_for_symmetrical_stripline\". Some self tests will fail too.
-  However, much of the atlc package will work without gsl.])
-else                 
-dnl some libraries/headers exist, but not all of them. 
-  AC_MSG_WARN([Some of the gsl headers and libraries were found, but
-  others were not. Since the installation appears to be broken, the use of
-  gsl will be disabled. Without gsl, it will be impossible to evaluate the 
-  theoretical impedance of a coupler using \"design_coupler\" or of a stripline
-  using \"usage_create_bmp_for_symmetrical_stripline\". Some self tests will 
-  fail too. However, much of the atlc package will work without gsl.])
 fi
 
 AC_OUTPUT([\
