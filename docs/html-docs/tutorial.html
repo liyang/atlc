@@ -30,14 +30,14 @@ However, in the majority of the cases, the transmission lines to be analysed wil
 Since the cross section consists of a <STRONG>circ</STRONG>ular conductor <STRONG>in</STRONG>side another <STRONG>circ</STRONG>ular conductor, the programme <CODE>circ_in_circ</CODE> is used to generate the bitmap, rather than the more time consuming procedure of using a graphics package.  <br><br>
 We will assume that the inner diameter of the outer conductor is 12 mm, the outer diameter of the inner conductor is 3.9  mm, and the dielectric has a permittivity of 1.0. Since the conductors are coaxial, there is zero offset between their centres.. The programme <CODE>circ_in_circ</CODE> is used to generate the bitmap, with these physical dimensions <br>
 <br>
-If we run <CODE>circ_in_circ</CODE> without any arguments, it will print a usage message, showing the first argument should the the outer diamater (D=12 mm), the second the inner conductor (d=3.9 mm), the third the offset h between the conductors (h is zero since they are coaxial) and the fourth argument is the permittivity (1.0 in this case).
+If we run <CODE>circ_in_circ</CODE> without any arguments, it will print a usage message, showing the first argument should the the outer diamater (D=12 mm), the second the inner conductor (d=3.9 mm), the third the offset 'O' between the conductors (O is zero since they are coaxial and there is therefore no offset between centres).  The fourth argument is the permittivity (1.0 in this case).
 
 
 Ignoring the options, which are not necessary unless we wish to change the behaviour of <CODE>circ_in_circ</CODE>, we would type <br><br>
 <CODE>
 % circ_in_circ 12 3.9 0 1.0 &gt; coaxial_1.bmp <br> 
 </code>
-This will produce a bitmap like the image on the left. The inner conductor is red, the outer green and the dielectric is white in this case, as Er=1.0. Don't worry about the fact that the inner outer conductor is square, as the inside of it is round. it 
+This will produce a bitmap like the image on the left. The inner conductor is red, the outer green and the dielectric is white in this case, as Er=1.0. Don't worry about the fact that the outer conductor is square, as the inside of it is round, which is all that matters.
 <br>
 <img src="jpgs/coaxial1.jpg" ALT="coax 12/3.9 mm" >
 <br>
