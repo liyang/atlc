@@ -358,8 +358,12 @@ without the threads\nlibrary.\n",1);
       }
       /* The function write_fields needs to have a file with the
       extension .bmp. We need to be sure this is the case, so if not, we
-      append .bmp */
-      if(write_field_images==1)
+      append .bmp
+      
+      Currently the fields on copulers are not properly defined
+      so I won't plot them. */
+      
+      if(write_field_images==TRUE && coupler==FALSE)
         write_fields(output_filename);
       free_dmatrix(Vij,0,width,0,height);
       free_dmatrix(Er,0,width,0,height);
