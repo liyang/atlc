@@ -32,7 +32,7 @@ groundplanes of spacing h. */
 #include <stdlib.h>
 #endif
 
-double calculate_integer_values(struct data *optimise,int nmax,int accuracy_level)
+double calculate_integer_values(struct transmission_line_properties *optimise,int nmax,int accuracy_level)
 {
   double grid_size=500, error=0, error_max=1e6; 
   int i, min_pixels, max_pixels, n, min_critical_pixels, max_critical_pixels;
