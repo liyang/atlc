@@ -3,8 +3,10 @@
 # differ on differnt Endian'ness and with different rounding errors on FP
 # units. Hence only the length is checked on the binary files
 
-CKSUM=`$top_builddir/tools/src/mycksum $top_builddir/examples/test_sym_strip.Ex.bmp`
-if [ $CKSUM = 16645 ]; then
+MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test_sym_strip.Ex.bmp`
+rm $top_builddir/tmp/test_sym_strip.Ex.bmp
+#if [ $MD5SUM = a5c5f715499719e27a7e00c23b7fdeea ]; then
+if [ $MD5SUM = a8a6023247b624e6e3091dd7570904db ]; then
   echo "PASSED:" $0 >> tests.log
   exit 0
 else

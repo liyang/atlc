@@ -2,8 +2,9 @@
 # There should be a supplied bitmap file test-coupler1.bmp
 # We will generate all the bitmaps and check they 
 # are all okay. 
-CKSUM=`$top_builddir/tools/src/mycksum $top_builddir/examples/test-coupler1.Er.bmp`
-if [ $CKSUM != 56534 ]; then
+MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test-coupler1.Er.bmp`
+rm $top_builddir/tmp/test-coupler1.Er.bmp
+if [ $MD5SUM != bd0c2f3fa5ad99463499d568e417cfcb ]; then
   echo "FAILED:" $0  >> tests.log
   exit 1
 else 

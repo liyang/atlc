@@ -1,6 +1,7 @@
 #!/bin/sh
 # Removed since this uses too much RAM
-Zo=`$top_builddir/src/non_gui/create_bmp_for_symmetrical_stripline -v 6449 1551 5 $top_builddir/examples/400ohm-1551h.bmp | awk '{print $4}'`
+Zo=`$top_builddir/src/non_gui/create_bmp_for_symmetrical_stripline -v 6449 1551 5 $top_builddir/tmp/400ohm-1551h.bmp | awk '{print $4}'`
+rm $top_builddir/tmp/400ohm-1551h.bmp
 if [ $Zo = 400.038921 ]; then
   echo "PASSED:" $0 >> tests.log
   exit 0

@@ -3,7 +3,8 @@
 # differ on differnt Endian'ness and with different rounding errors on FP
 # units. Hence only the length is checked on the binary files
 
-LENGTH=`$top_builddir/tools/src/myfilelength $top_builddir/examples/test_sym_strip.E.bin`
+LENGTH=`$top_builddir/tools/src/myfilelength $top_builddir/tmp/test_sym_strip.V.bin`
+rm $top_builddir/tmp/test_sym_strip.V.bin  $top_builddir/tmp/test_sym_strip.bmp
 if [ $LENGTH = 1603600 ]; then
   echo "PASSED:" $0 >> tests.log
   exit 0

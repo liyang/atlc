@@ -5,7 +5,7 @@
 # create_bmp_for_stripline_coupler etc.
 
 # The checksum of the bitmap generated is compared to what is known to be 
-# the correct checksum using a program 'mycksum' which is a cut-down version of
+# the correct checksum using a program 'mymd5sum' which is a cut-down version of
 # the GNU program 'sum'. Using my own version avoids the need for the user to 
 # have the GNU textutils installed and avoids the possibility that they have
 # 'textutils' installed but have another version of 'sum' (such as the one 
@@ -21,17 +21,11 @@
 # Any failure to generate the correct checksums are noted. 
 
 # Check the Ex.even file created by running 7a
-CKSUM=`$top_builddir/tools/src/mycksum $top_builddir/examples/test_stripline_coupler.Ex.even.bmp`
-#MD5SUM=`md5sum $top_builddir/examples/test_stripline_coupler.Ex.even.bmp | awk '{print $1}'`
-GENERATEDSIZE=`$top_builddir/tools/src/myfilelength $top_builddir/examples/test_stripline_coupler.Ex.even.bmp`
-if [ $GENERATEDSIZE != 112194 ] ; then
-  echo "FAILED (size mismatch):" $0 >> tests.log
-  echo "FAILED (size mismatch):" $0 
-  exit 1
-elif [ $CKSUM != 28821 ] ; then
-#elif [ $CKSUM != 19756 ] ; then
+MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test_stripline_coupler.Ex.even.bmp`
+rm $top_builddir/tmp/test_stripline_coupler.Ex.even.bmp
+#if [ $MD5SUM != 4b458458dd96faef948a283f5624f54f ] ; then
+if [ $MD5SUM != 3bb46b28eabb69f841f2302225ebb3bd ] ; then
   echo "FAILED:(checksum failure)" $0 >> tests.log
-  echo "FAILED (checksum error):" $CKSUM $0
   exit 1
 else
   echo "PASSED:" $0 >> tests.log

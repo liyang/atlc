@@ -3,42 +3,16 @@
 # lenght. Here I create lots and do a length test on the last one.
 
 # Now create some eccentric cables (off-center coax).
-$top_builddir/src/non_gui/create_bmp_for_circ_in_circ 500 400 0 1  $top_builddir/examples/eccentric-a.bmp  2>/dev/null
-$top_builddir/src/non_gui/create_bmp_for_circ_in_circ 500 400 40 1  $top_builddir/examples/eccentric-b.bmp  2>/dev/null
-$top_builddir/src/non_gui/create_bmp_for_circ_in_circ 500 200 0 1  $top_builddir/examples/eccentric-c.bmp  2>/dev/null
-$top_builddir/src/non_gui/create_bmp_for_circ_in_circ 500 200 50 1  $top_builddir/examples/eccentric-d.bmp  2>/dev/null
-$top_builddir/src/non_gui/create_bmp_for_circ_in_circ 500 200 100 1  $top_builddir/examples/eccentric-e.bmp  2>/dev/null
-$top_builddir/src/non_gui/create_bmp_for_circ_in_circ 500 100 0 1  $top_builddir/examples/eccentric-f.bmp  2>/dev/null
-$top_builddir/src/non_gui/create_bmp_for_circ_in_circ 500 100 50 1  $top_builddir/examples/eccentric-g.bmp  2>/dev/null
-$top_builddir/src/non_gui/create_bmp_for_circ_in_circ 500 100 100 1  $top_builddir/examples/eccentric-h.bmp  2>/dev/null
-$top_builddir/src/non_gui/create_bmp_for_circ_in_circ 500  50   0 1  $top_builddir/examples/eccentric-i.bmp  2>/dev/null
-$top_builddir/src/non_gui/create_bmp_for_circ_in_circ 500  50  50 1  $top_builddir/examples/eccentric-j.bmp  2>/dev/null
-$top_builddir/src/non_gui/create_bmp_for_circ_in_circ 500  50 100 1  $top_builddir/examples/eccentric-k.bmp  2>/dev/null
-$top_builddir/src/non_gui/create_bmp_for_circ_in_circ 500  50 150 1  $top_builddir/examples/eccentric-l.bmp  2>/dev/null
-$top_builddir/src/non_gui/create_bmp_for_circ_in_circ 500  50 200 1  $top_builddir/examples/eccentric-m.bmp  2>/dev/null
-$top_builddir/src/non_gui/create_bmp_for_circ_in_circ -b 10 500 50 200 1  $top_builddir/examples/eccentric-n.bmp  2>/dev/null
-$top_builddir/src/non_gui/create_bmp_for_symmetrical_stripline 1 201 301 $top_builddir/examples/wide.bmp >/dev/null 2>/dev/null
-$top_builddir/src/non_gui/create_bmp_for_create_bmp_for_rect_in_rect 268 100 10 40 25 200 100 45 1.0 4.8  $top_builddir/examples/pcb2.bmp >/dev/null 2>/dev/null
-$top_builddir/src/non_gui/create_bmp_for_rect_cen_in_rect 268 100 100 50 4.8  $top_builddir/examples/central.bmp  >/dev/null 2>/dev/null
-$top_builddir/src/non_gui/create_bmp_for_circ_in_circ 100 30 25 1.006  $top_builddir/examples/off-centre2.bmp >/dev/null 2>/dev/null
-$top_builddir/src/non_gui/create_bmp_for_circ_in_rect 20 200 100 50 -5 10.2  $top_builddir/examples/cir.bmp >/dev/null 2>/dev/null
-
-$top_builddir/src/non_gui/create_bmp_for_stripline_coupler 1.0  1.0 1.0 1.0  $top_builddir/examples/coupler1.bmp  
-$top_builddir/src/non_gui/create_bmp_for_stripline_coupler 2.0  1.0 1.0 1.0  $top_builddir/examples/coupler2.bmp  
-$top_builddir/src/non_gui/create_bmp_for_stripline_coupler 3.0  1.0 1.0 1.0  $top_builddir/examples/coupler3.bmp  
-$top_builddir/src/non_gui/create_bmp_for_stripline_coupler 4.0  1.0 1.0 1.0  $top_builddir/examples/coupler4.bmp  
-$top_builddir/src/non_gui/create_bmp_for_stripline_coupler 5.0  1.0 1.0 1.0006  $top_builddir/examples/coupler5.bmp  
-$top_builddir/src/non_gui/create_bmp_for_stripline_coupler 1.0  1.0 0.5 3.335  $top_builddir/examples/coupler6.bmp  
-$top_builddir/src/non_gui/create_bmp_for_stripline_coupler 1.0  1.0 0.1 2.33  $top_builddir/examples/coupler7.bmp  
-Zodd=`$top_builddir/src/non_gui/create_bmp_for_stripline_coupler -v 1.0 1.0 0.02 1 $top_builddir/examples/coupler8.bmp | tail -4 | head -1 | awk '{print $2}'`
-Zeven=`$top_builddir/src/non_gui/create_bmp_for_stripline_coupler -v 1.0 1.0 0.02 1 $top_builddir/examples/coupler8.bmp | tail -4 | head -1 | awk '{print $4}'`
-Zo=`$top_builddir/src/non_gui/create_bmp_for_stripline_coupler -v 1.0 1.0 0.02 1 $top_builddir/examples/coupler8.bmp | tail -4 | head -1 | awk '{print $6}'`
+Zodd=`$top_builddir/src/non_gui/create_bmp_for_stripline_coupler -v 1.0 1.0 0.02 1 $top_builddir/tests/coupler8.bmp | tail -4 | head -1 | awk '{print $2}'`
+Zeven=`$top_builddir/src/non_gui/create_bmp_for_stripline_coupler -v 1.0 1.0 0.02 1 $top_builddir/tests/coupler8.bmp | tail -4 | head -1 | awk '{print $4}'`
+Zo=`$top_builddir/src/non_gui/create_bmp_for_stripline_coupler -v 1.0 1.0 0.02 1 $top_builddir/tests/coupler8.bmp | tail -4 | head -1 | awk '{print $6}'`
 #echo $Zodd
 #echo $Zeven
 #echo $Zo
 # Write text to test2.txt and check that. Lack of gsl will show up. 
 # Now check the length of the last file. It this is okay, it probably means
 # the user has not run out of disk space. 
+rm $top_builddir/tests/coupler8.bmp
 
 if [ $Zodd = 40.423384 ] && [ $Zeven = 76.594453 ]  && [ $Zo = 55.643571 ] ; then
   echo "PASSED:" $0 >> tests.log

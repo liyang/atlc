@@ -3,9 +3,11 @@
 # We will generate all the bitmaps and check they 
 # are all okay. 
 
-$top_builddir/src/non_gui/atlc $top_builddir/examples/test-coupler1.bmp  > /dev/null
-CKSUM=`$top_builddir/tools/src/mycksum $top_builddir/examples/test-coupler1.Ex.odd.bmp`
-if [ $CKSUM != 34975 ]; then
+$top_builddir/src/non_gui/atlc -S $top_builddir/tmp/test-coupler1.bmp  > /dev/null
+MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test-coupler1.Ex.odd.bmp`
+rm $top_builddir/tmp/test-coupler1.Ex.odd.bmp
+#if [ $MD5SUM != d968e91be8530ddbf823fa4baca8d744 ]; then
+if [ $MD5SUM != 94310b8f3f9502a788429cba4f48cc27 ]; then
   echo "FAILED:" $0  >> tests.log
   exit 1
 else 

@@ -2,15 +2,22 @@
 # A bitmap is created of a symmetrical_stripline. By adding the -v option
 # to create_bmp_for_symmetrical_stripline the theoretical impedance
 # is computed. 
-# atlc is then called, and its estimate calaculated, which will differ 
+# atlc is then called, and its estimate calculated, which will differ 
 # slightly from the theoretical data 
-ZoTheory=`$top_builddir/src/non_gui/create_bmp_for_symmetrical_stripline -v 1512 201 668 $top_builddir/examples/25ohm-201h.bmp | awk '{print $4}'`
-Zoatlc=`$top_builddir/src/non_gui/atlc -S $top_builddir/examples/25ohm-201h.bmp | awk '{print $6}'`
-CKSUM=`$top_builddir/tools/src/mycksum $top_builddir/examples/25ohm-201h.bmp`
-EXCKSUM=`$top_builddir/tools/src/mycksum $top_builddir/examples/25ohm-201h.Ex.bmp`
-#echo "Zo theory = " $ZoTheory "Zo altc= " $Zoatlc " cksum of bitmap" $CKSUM "cksum of .Ex.bmp= " $EXCKSUM
-if [ $ZoTheory = 25.017590  ] && [ $Zoatlc = 24.92 ] && [ $CKSUM = 21503 ] && [ $EXCKSUM = 64158 ] ; then
+ZoTheory=`$top_builddir/src/non_gui/create_bmp_for_symmetrical_stripline -v 1512 201 668 $top_builddir/tmp/25ohm-201h.bmp | awk '{print $4}'`
+Zoatlc=`$top_builddir/src/non_gui/atlc -S $top_builddir/tmp/25ohm-201h.bmp | awk '{print $6}'`
+MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/25ohm-201h.bmp`
+EXMD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/25ohm-201h.Ex.bmp`
+#echo "Zo theory = " $ZoTheory "Zo altc= " $Zoatlc " cksum of bitmap" $MD5SUM "cksum of .Ex.bmp= " $EXMD5SUM
+if [ $ZoTheory = 25.017590  ] && [ $Zoatlc = 24.92 ] && [ $MD5SUM = 44e86f6bcec1a61db9564040ec93557c ] && [ $EXMD5SUM = cfc9b5d2ca0afa1bcb5cb9e38d0579db ] ; then
   echo "PASSED:" $0 >> tests.log
+  rm $top_builddir/tmp/25ohm-201h.bmp
+  rm $top_builddir/tmp/25ohm-201h.Er.bmp
+  rm $top_builddir/tmp/25ohm-201h.Ex.bmp
+  rm $top_builddir/tmp/25ohm-201h.Ey.bmp
+  rm $top_builddir/tmp/25ohm-201h.U.bmp
+  rm $top_builddir/tmp/25ohm-201h.V.bmp
+  rm $top_builddir/tmp/25ohm-201h.E.bmp
   exit 0
 else
   echo "The following test will always fail if  not linked against the gsl library"

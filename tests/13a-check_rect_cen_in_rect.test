@@ -22,13 +22,15 @@
 # program bug, so PLEASE PLEASE let me know about it!!
 # Dr. David Kirkby, drkirkby@ntlworld.com
 
-MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/test_stripline_coupler.E.odd.bmp`
-rm $top_builddir/tmp/test_stripline_coupler.E.odd.bmp
-#if [ $MD5SUM != 5844506aa701de68c1a514ae4b11435c ] ; then
-if [ $MD5SUM != af7f221974ce5fec41e92df0d8c25886 ] ; then
+$top_builddir/src/non_gui/create_bmp_for_rect_cen_in_rect 268 100 100 50 4.8  $top_builddir/tmp/central.bmp  >/dev/null 2>/dev/null
+MD5SUM=`$top_builddir/tools/src/mymd5sum $top_builddir/tmp/central.bmp`
+rm $top_builddir/tmp/central.bmp
+if [ $MD5SUM != 48dc0ac8fc6092d7bee8cd2b00fa7da2 ]; then 
   echo "FAILED (checksum error):" $0 >> tests.log
   exit 1
 else
   echo "PASSED:" $0 >> tests.log
   exit 0
 fi
+
+

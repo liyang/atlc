@@ -6,7 +6,7 @@
 # create_bmp_for_stripline_coupler etc.
 
 # The checksum of the bitmap generated is compared to what is known to be 
-# the correct checksum using a program 'mycksum' which is a cut-down version of
+# the correct checksum using a program 'mymd5sum' which is a cut-down version of
 # the GNU program 'sum'. Using my own version avoids the need for the user to 
 # have the GNU textutils installed and avoids the possibility that they have
 # 'textutils' installed but have another version of 'sum' (such as the one 
@@ -32,14 +32,15 @@
 # textutils on about 15 different computers, from PCs, to Suns to Dec etc.
 # So they are okay and I would suggest any failures is a problem. 
 # The only reason I can think of a failure is that there is a difference
-# in the outout of 'mycksum' to the GNU utilites one, but that is
+# in the outout of 'mymd5sum' to the GNU utilites one, but that is
 # unlikely. So if any problems occur, check the checksum with the GNU
 # 'sum' and see what that gives. If any failures do occur, please let me
 # know. email drkirkby@ntlworld.com and/or davek@medphys.ucl.ac.uk 
 
-Zodd=`$top_builddir/src/no*/create_bmp_for_stripline_coupler -v 1.0 1.0 1.0 1.0 $top_builddir/examples/coupler1.bmp | tail -1 | awk '{print $2 }' `
-Zeven=`$top_builddir/src/no*/create_bmp_for_stripline_coupler -v 1.0 1.0 1.0 1.0 $top_builddir/examples/coupler1.bmp | tail -1 | awk '{print $4 }' `
-Zo=`$top_builddir/src/no*/create_bmp_for_stripline_coupler -v 1.0 1.0 1.0 1.0 $top_builddir/examples/coupler1.bmp | tail -1 | awk '{print $6 }' `
+Zodd=`$top_builddir/src/no*/create_bmp_for_stripline_coupler -v 1.0 1.0 1.0 1.0 $top_builddir/tmp/coupler1.bmp | tail -1 | awk '{print $2 }' `
+Zeven=`$top_builddir/src/no*/create_bmp_for_stripline_coupler -v 1.0 1.0 1.0 1.0 $top_builddir/tmp/coupler1.bmp | tail -1 | awk '{print $4 }' `
+Zo=`$top_builddir/src/no*/create_bmp_for_stripline_coupler -v 1.0 1.0 1.0 1.0 $top_builddir/tmp/coupler1.bmp | tail -1 | awk '{print $6 }' `
+rm -f $top_builddir/tmp/coupler1.bmp
 if [ $Zodd = 64.767502 ] && [ $Zeven = 66.015168 ] && [ $Zo = 65.388359 ] ; then
   echo "PASSED:" $0 >> tests.log
   exit 0

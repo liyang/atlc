@@ -6,7 +6,7 @@
 # create_bmp_for_stripline_coupler etc.
 
 # The checksum of the bitmap generated is compared to what is known to be 
-# the correct checksum using a program 'mycksum' which is a cut-down version of
+# the correct checksum using a program 'mymd5sum' which is a cut-down version of
 # the GNU program 'sum'. Using my own version avoids the need for the user to 
 # have the GNU textutils installed and avoids the possibility that they have
 # 'textutils' installed but have another version of 'sum' (such as the one 
@@ -21,8 +21,8 @@
 
 # compute Zo of a bitmap, and compare it to what is the known value
 # of 63.70 Ohms.
-Zo=`$top_builddir/src/non_gui/atlc  $top_builddir/examples/test_stripline_coupler.bmp | awk '{print $8}'`
-#Zo=`$top_builddir/src/non_gui/atlc  $top_builddir/examples/test_stripline_coupler.bmp`
+Zo=`$top_builddir/src/non_gui/atlc -S $top_builddir/tmp/test_stripline_coupler.bmp | awk '{print $8}'`
+rm -f $top_builddir/tmp/test_stripline_coupler.bmp
 if [ $Zo = 63.70 ] ; then
   echo "PASSED:" $0 >> tests.log
   exit 0
