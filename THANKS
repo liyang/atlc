@@ -14,7 +14,8 @@ Eric Sosman for help with porting to the Cray-Y-MP
 ****HELP from testers****
 I'm always willing to know of systems on which atlc either passes or fails 
 its tests. This is particularly so of the uncommon platforms, operating
-systems or versions of Linux. 
+systems or versions of Linux. I hope I have not forgotten anyone
+in the list below. If so let me know and I'll add you to the list. 
 
 David Anderson GM4JJJ for testing. 
 Steve Thompson G8GSQ for testing and finding a real bug affecting Suse. 
