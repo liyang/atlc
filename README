@@ -1,6 +1,6 @@
 atlc - Arbitrary Transmission Line Calculator.
 
-Programme for analysing arbitrary transmission lines and directional
+Program for analysing arbitrary transmission lines and directional
 couplers. See HTML documentation in docs/html-docs
 
 The sources are kept in src/non_gui, as a version with a GUI is planned
@@ -13,18 +13,18 @@ This is the directory layout. .
 ./docs/qex-december-1996 // A old paper I wrote, gives the theory.
 ./docs/theory            //  
 ./man                    // Standard Unix man pages.
-./examples               // Some odd examples - most are created.
+./examples               // Some examples
 ./src                    // Nothing much - see below
 ./src/non_gui            // All the C source code.   
+./tmp                    // Used during tests to dump data. 
 
 After building (see INSTALL, which I've modified to be specific to
-atlc) you *MUST* run 'make check' after running 'make'. Firstly,
-it creates some files and checks them, but secondly it creates
-all the exmxples files which are referred to in the
-documentation, but which are too large to distribute. It is easier for
-them to be created. I've kept the example files sepparte from the source,
-but you might want to copy them to the src/non_gui directory. I tend to
-do that, but felt it better not to when distributing the code. 
+atlc) you should run 'make check' after running 'make'. 
+One built, if you want to install the examples and binaries, run
+'make install'. As the examples are large (~120 Mb) you might    
+choose not to install them. In which case run 'make install-bin'
+rather than 'make install'. If you later want to install the 
+examples, run 'make install-data'
 
 A Windows version (not graphical) can be found in an earlier distribution 
 (3.0.7). I'm not going to update that, so get a Unix box if you want to use the latest versions. 
