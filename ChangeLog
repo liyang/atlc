@@ -1,4 +1,9 @@
-********************Version 3.0.7 Dated 6/4/2002*************************
+********************Version 3.0.8 Dated ?????????*************************
+**************************************************************************
+Put a bit more info in the README.windows
+
+
+********************Version 3.0.7 Dated 6/4/2002**************************
 **************************************************************************
 Corrected the file man/makehtml, as it was not making an html page for
 rect_cen_in_rect from the rect_cen_in_rect.1 man page. 
