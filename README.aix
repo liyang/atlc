@@ -1,4 +1,10 @@
-'atlc' does not work on AIX!!!
+      atlc does not work too well on AIX. 
+
+The previous version of atlc would not compile using either
+/usr/vac/cc or /usr/vac/Xlc compilers version 6.0 on 
+IBM's AIX operating system. All C++ style comments have been
+removed, so it now compiles, links and runs, BUT ......
+
 
 When compiled with IBM's C compiler (version 6.0) under AIX 5.2 on an
 IBM RS/6000 7025 F50, *SERIOUS* problems occur. Results from atlc are
