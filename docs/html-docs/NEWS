@@ -1,16 +1,28 @@
-NEWS for realease 4.2.10 on 30/1/03.
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 TRANSITIONAL//EN">
+<HTML>
+<HEAD>
 
-Main news is that a bug that caused crashes under Windoze
-ZP has been removed from setup_arrays.c This was potntially
-serious and could have caused a crash under any operating 
-system. I don't know why it was not spotted before.
+<META name="generator" content="bluefish & vi">
+<META http-equiv="CONTENT-TYPE" content="text/html; charset=iso-8859-1">
+<meta name="author" content="Dr. David Kirkby">
+<META name="DESCRIPTION" content="Accuracy of atlc - Arbitrary Transmission Line Calculator">
+<META name="KEYWORDS" content="cad Transmission line calculator atlc accuracy finite difference">
+<TITLE>Accuracy of atlc - Arbitrary Transmission Line Calculator</TITLE>
+</HEAD>
+<BODY>
+<pre>
+This is a bug release. Code had been tidied a bit so now gcc
+-Wconversion does not complain about much code. I think there is a bug
+in gcc-3.2.2 with this option, as it sometimes thinks code is wrong when it is
+not.
 
-Some changes to the documention, with better spelling
-(one day I'll use an HTML enitor with a spellchecker 
-as Bluefish's does not seem to work for me). 
+Remove the --with-extra-benchmark-data, listed under Optional Packages,
+as it was not an optional package at all. The option --enable-hardware-info
+does this job, but is listed in the right section (Optional Features:
+), rather than 'Optional Packages'
 
-Added Sourceforge logo on many pages that did not have it 
-before. 
+Dr. David Kirkby, 3rd August 2003</pre>
+</body>
+</html>
 
-Dr. David Kirkby 30/1/03
 
