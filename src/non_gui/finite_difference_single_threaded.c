@@ -35,7 +35,7 @@ extern int coupler;
 #define OLD
 double finite_difference_single_threaded(int number_of_iterations)
 {
-  int i, j, iteration, type, jstart;
+  int i, j, iteration, jstart;
   double capacitance_per_metre, energy_per_metre;
   double a, b, c, d, e, f, g, h;
   double r_over_4=r/4.0, one_minus_r=1.0-r;

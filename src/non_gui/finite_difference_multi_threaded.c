@@ -41,15 +41,15 @@ double finite_difference_multi_threaded(int number_of_iterations)
 #include <sys/types.h>
 #endif
 
-#ifdef HAVE_SEMAPHORE_H
-#include <semaphore.h>
-#endif
-
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
 #endif
 
 #include <pthread.h>
+
+#ifdef HAVE_SCHED_H
+#include <sched.h>
+#endif
 
 #ifdef HAVE_STRING_H
 #include <string.h>
@@ -159,6 +159,9 @@ pthread_mutex_t barrier;  /* mutex semaphore for the barrier */
 pthread_cond_t go;        /* condition variable for leaving */
 int numArrived = 0;       /* count of the number who have arrived */
 
+#define BARRIER2 
+
+#ifdef BARRIER1
 void Barrier() {
   pthread_mutex_lock(&barrier);
   numArrived++;
@@ -169,6 +172,31 @@ void Barrier() {
     pthread_cond_wait(&go, &barrier);
   pthread_mutex_unlock(&barrier);
 }
+#endif
+
+#ifdef BARRIER2
+int numArrived2[2] = {0, 0};
+int barrierNdx = 0;
+
+void Barrier() {
+  int localNdx;
+  pthread_mutex_lock(&barrier);
+  numArrived2[barrierNdx]++;
+  if (numArrived2[barrierNdx] == number_of_workers) {
+    barrierNdx = (barrierNdx + 1)%2;  /* toggle */
+    numArrived2[barrierNdx] = 0; /* reset other count */
+    pthread_cond_broadcast(&go);
+  }
+  else
+  {
+    localNdx = barrierNdx; /* wait on "current" numArrived. */
+    while (numArrived2[localNdx] != number_of_workers)
+       pthread_cond_wait(&go, &barrier);
+  } 
+  pthread_mutex_unlock(&barrier);
+}
+#endif
+
 
 
 /* Each Worker computes values in one strip of the grids.
@@ -177,7 +205,7 @@ void Barrier() {
 
 void *worker(void *arg) {
   int myid = (int) arg;
-  double maxdiff, temp, r_over_4,a,b,c,d,e,f,g,h;
+  double r_over_4,a,b,c,d,e,f,g,h;
   double one_minus_r;
   int i, j, iters, jstart;
   int firstcol, lastcol;
@@ -260,10 +288,21 @@ double finite_difference_multi_threaded(int number_of_iterations)
 
   double capacitance_per_metre, energy_per_metre;
 
+  ret=pthread_attr_init(&attr);
+  if(ret != 0)
+    exit_with_msg_and_exit_code("pthread_attr_init failed in finite_difference_multi_threaded.c",PTHREAD_ATTR_INIT_FAILED);
 
+#ifdef linuxqqqq
   /* set global thread attributes */
-  pthread_attr_init(&attr);
-  pthread_attr_setscope(&attr, PTHREAD_SCOPE_SYSTEM);
+  ret=pthread_attr_setscope(&attr, PTHREAD_SCOPE_SYSTEM);
+  if(ret != 0)
+    exit_with_msg_and_exit_code("pthread_attr_setscope failed in finite_difference_multi_threaded.c",PTHREAD_ATTR_SETSCOPE_FAILED);
+
+  printf("fffffffffffffffffffffffffffffffffffffff\n");
+  ret=pthread_attr_setinheritsched(&attr, PTHREAD_INHERIT_SCHED);
+  if(ret != 0)
+    exit_with_msg_and_exit_code("pthread_attr_setinheritsched in finite_difference_multi_threaded.c",PTHREAD_ATTR_SETINHERITSCHED_FAILED);
+#endif
 
   /* initialize mutex and condition variable */
   pthread_mutex_init(&barrier, NULL);
