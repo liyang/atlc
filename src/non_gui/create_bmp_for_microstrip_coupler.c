@@ -78,18 +78,12 @@ int main(int argc, char **argv) /* Read parameters from command line here   */
       pcb.Er2=atof(argv[my_optind+6]);
       Er1=pcb.Er1;
       Er2=pcb.Er2;
-      if(pcb.WW<0)
-	pcb.WW=6*pcb.hh+6*pcb.gg+6*pcb.ww+4*pcb.ss;
-      if(pcb.HH<0)
-	pcb.HH=6*(pcb.hh+pcb.tt);
+      /* Do some sanaity checks */
       check_parameters_of_create_bmp_for_microstrip_coupler(pcb);
       convert_create_create_bmp_for_coupled_microstrip_dimensions_to_integers(&pcb);
       W=pcb.W;
       H=pcb.H;
       image_data_fp=fopen(argv[my_optind+7],"w");
-      //if (pcb.verbose_level >=2)
-        //printf("W=%d H=%d w=%d s=%d g=%d h=%d t=%d\n",pcb.W,pcb.H,pcb.w,pcb.s,pcb.g,pcb.h,pcb.t);
-        //fprintf(stderr,"floats W=%f H=%f w=%f s=%f g=%f h=%f t=%f\n",pcb.WW,pcb.HH,pcb.ww,pcb.ss,pcb.gg,pcb.hh,pcb.tt);
         //fprintf(stderr,"ints W=%d H=%d w=%d s=%d g=%d h=%d t=%d\n",pcb.W,pcb.H,pcb.w,pcb.s,pcb.g,pcb.h,pcb.t);
       write_bitmap(image_data_fp, pcb);
    }
