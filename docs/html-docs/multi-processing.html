@@ -12,20 +12,34 @@
 <H1>Multi-processing with atlc</H1>
 </p>The executable program <CODE>atlc</CODE>, which is part of the <EM>atlc</EM> package of programs,  can be quite CPU intensive. This is especially troublesome if atlc is executed  a large number of times in an itterative loop, as the program <EM>desgin_coupler</EM> will do if asked to find the phyical dimensions of  a directional coupler.  </p>
 
-To reduced execution time, the program atlc can be configured to support multiple processors This obviously requires a computer with more than one CPU, but also a POSIX compatable thread library. Most systems, including GNU/Linux, normally  have such a library installed, although a minimal setup of the operating system might well not have such a library present. You can if you wish try using the GNU Pth library at <a href="http://www.gnu.org/software/pth/">http://www.gnu.org/software/pth/ </a>, although <em>atlc</em> has not been tested with Pth. In order to configure atlc as a multi-threaded program for use on multiple CPUs, use the <CODE>--with-threads</CODE> option to the <CODE>configure</CODE> script i.e. run
-<br>
-<CODE>
-<br>
-configure --with-threads<br>
-make <br>
-make check <br>
-make install<br>
-<br></CODE>
-Again, if there are problems compiling or linking during the <code> make check</code> phase, you should try building with the <code>--disable-hardware-info</code>. The gathering of hardware data is especially useful on multi-processor machines, as it indicates some performance parameters. However, it might just cause compilation to fail on some systems, so it can be disabled.
-<br>
-See here <a href="building.html">for detailed building instuctions</a> which includes how to configure<EM> atlc</EM> with support for more than one processor. 
-</LI>
+To reduced execution time, the program atlc could (until release 4.5.1) be configured to support multiple processors This obviously requires a computer with more than one CPU. <br><br>
 
-</OL>
+<b>However, I have recently realised there is a possible problem with the multi-threaded code, so it has been temporarily disabled until the problem is resolved. </b>
+
+
+<br>
+<br>
+<a href="http://atlc.sourceforge.net">Return to the atlc homepage</a>
+
+<br><br>
+atlc is written and supported by <a href="jpgs/home-email.jpg">Dr. David Kirkby (G8WRB)</A> It it issued under the <a href="http://www.gnu.org/copyleft/gpl.html">GNU General Public License</A>
+<br>
+<BR>
+<BR>
+
+<A href="http://sourceforge.net"> <IMG
+src="http://sourceforge.net/sflogo.php?group_id=25836&amp;type=5"
+width="210" height="62" border="0" alt="SourceForge.net
+Logo"></A><a href="http://validator.w3.org/check/referer"><img border="0"
+src="valid-html40.gif"
+alt="Valid HTML 4.01!" height="31" width="88"></a>
+<a href="http://bluefish.openoffice.nl/"><img SRC="jpgs/bluefish.jpg" WIDTH="88" HEIGHT="31" ALT="Bluefish"></a>
+<p><a href="http://homepage.ntlworld.com/drkirkby/list1.html">.</a>
+<a href="http://homepage.ntlworld.com/drkirkby/list2.html">.</a>
+<a href="http://homepage.ntlworld.com/drkirkby/list3.html">.</a>
+<a href="http://homepage.ntlworld.com/drkirkby/list4.html">.</a>
+<a href="http://homepage.ntlworld.com/drkirkby/list5.html">.</a>
+<a href="http://homepage.ntlworld.com/drkirkby/list6.html">.</a>
+<a href="http://homepage.ntlworld.com/drkirkby/list7.html">.</a>
 </BODY>
 </HTML>
