@@ -36,7 +36,7 @@ there are more than one dielectric, we need to calculate it twice. */
 
 extern struct pixels Er_in_bitmap[MAX_DIFFERENT_PERMITTIVITIES];
 extern struct pixels Er_on_command_line[MAX_DIFFERENT_PERMITTIVITIES];
-extern int width, height, verbose;
+extern int width, height;
 
 extern double **Vij, **Er;
 extern unsigned char *image_data;
@@ -53,8 +53,11 @@ void setup_arrays(struct transmission_line_properties *data)
    int dielectric_found;
    int new_colour_in_image;
    int total_pixels_found;
-   pixels_found.red=0; pixels_found.white=0; pixels_found.other_colour=0;
+   pixels_found.red=0;
    pixels_found.green=0;
+   pixels_found.blue=0;
+   pixels_found.white=0; 
+   pixels_found.other_colour=0; 
    for(h=0;h<height;h++)
    {
       for (w=0; w<width;++w)
@@ -176,14 +179,14 @@ void setup_arrays(struct transmission_line_properties *data)
    } /*end of for h */
    if(data->verbose_level >=2)
    {
-     printf("Red (+1 V conductor) pixels found   =       %7d \n",pixels_found.red);
-     printf("Green (0 V conductor) pixels found  =       %7d \n",pixels_found.green);
-     printf("Blue  (-1 V conductor) pixels found =       %7d \n",pixels_found.blue);
-     printf("White (vacuum dielectric) pixels found =       %7d \n",pixels_found.white);
-     printf("Others (not vacuum dielectic) pixels found =   %7d \n",pixels_found.other_colour);
+     printf("Red (+1 V conductor) pixels found   =        %8d \n",pixels_found.red);
+     printf("Green (0 V conductor) pixels found  =        %8d \n",pixels_found.green);
+     printf("Blue  (-1 V conductor) pixels found =        %8d \n",pixels_found.blue);
+     printf("White (vacuum dielectric) pixels found =     %8d \n",pixels_found.white);
+     printf("Others (not vacuum dielectic) pixels found = %8d \n",pixels_found.other_colour);
      total_pixels_found=pixels_found.red+pixels_found.green+pixels_found.blue+ \
      pixels_found.white+pixels_found.other_colour;
-     printf("Total number of pixels (sum of all above) = %7d \n",total_pixels_found);
+     printf("Total number of pixels (sum of all above) =  %8d \n",total_pixels_found);
    }
    /* The following should not be necessary, but may be as a test */
    for(h=0;h<height;h++)
