@@ -1,23 +1,15 @@
-NEWS for realease 4.5.1 on  16th October 2003.
+NEWS for realease 4.6.0  Nobember 2003.
 
-This is the sort of release I don't like to make. I have to disable two
-features in atlc, since I have some concerns the results may not be
-accurate in these cases.
+This is a very different from the last release (4.5.1) in
+two very important ways.
 
-1) When there are multiple dielectrics - there is clearly a problem
-here. This does *not* affect configurations with single dielectrics,
-but does (at least under some circumstances) affect multi-dielectric 
-cases.     
+1) The basic accuracy for single dielectrics has been improved.
+Now typical errors are only around 0.1%
 
-2) There is a small possibility that the multi-threaded code may be
-wrong, so I'm disabling the ability to built it multi-threaded. 
-code for now. This will be re-instated soon. 
+2) I have re-enabled the calculation of multiple dielectrics
+which were disabled due to accuracy concerns. I'm still not
+100% happy with the algorithms, but on tests with a dual 
+coaxial cable with two dielectrics shows errors of under 2%, 
+I hope to improve this further at a later date. 
 
-
-I woudld add I have every confidence in the results for single 
-dielectrics and for single threaded code. EXTENSIVE testing has
-shown this to be so. It should be impossible to get the wrong 
-results with atlc now, as any attempt to use feature that I
-have some suspicions about have been disabled. 
-
-Dr. David Kirkby, 16th October 2003. Re: atlc-4.5.1
+Dr. David Kirkby, 7th December 2003. Re: atlc-4.6.0
