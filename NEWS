@@ -1,22 +1,13 @@
-NEWS for realease 4.4.3 on  11th September 2003.
+NEWS for realease 4.4.4 on  13th September 2003.
 
-Someone has done a Windoze port of atlc. Appently it took just 5
-minutes, from start to finish. A single bug was found that prevented 
-atlc compiling, but that was fixed - it needed a left brace removed. 
-This had never been seen on a UNIX system, since the offending code 
-was between a couple of #define's. 
+The main changes in this release are a those that 
+allow the code to work under Windoze somewhat better
+I hope, although I personally can't be bothered   
+buiding Windoze binaries, I have tried to change the 
+code to be compatable with Windoze where it is can
+be done without affecting the UNIX code's peformance.
 
-I hope to have the Windows binaries up on the site very soon. 
+There are a couple of changes to make the documetation
+to improve it. 
 
-It has been bought to my attention that bitmaps created with Photoshop
-prior to version 7.01 could not be read by atlc. This was not a 
-fault of Photoshop, but of atlc, so that bug has been fixed. 
-
-A man page has been written for the small program 'sysdata'
-
-Some data on the examples.html file has been corrected. 
-
-The documentation is improved with typos removed and a general
-improvement in documentation. 
-
-
+Dr. David Kirkby, 13th September 2003. 
