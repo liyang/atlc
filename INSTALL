@@ -2,9 +2,7 @@ Specific Installation Instructions for atlc.
 ==================
 
    These are *NOT* generic installation instructions, but have been
-   edited somewhat to be specific for atlc. In particular, 1,2,3,6,8
-   9 and 10 are quite specific to atlc, so it is suggested you read
-   them all. 
+   edited CONSIDERABLY to be specific for atlc. 
 
    The `configure' shell script attempts to guess correct values for
 various system-dependent variables used during compilation.  It uses
@@ -51,6 +49,9 @@ The simplest way to compile this package is:
      although I've never used it, since any system I have already has a suitable
      library.
 
+     So far, I've been unsuccesful in getting the SPARC versions of Linux
+     (Debian or Redhat) to support multi-processing, 
+
   3) If you have access to a network of computers and wish to take advantages
      of the distributed processors, download the MPICH library
      from http://www-unix.mcs.anl.gov/mpi/mpich/indexold.html
@@ -72,7 +73,22 @@ The simplest way to compile this package is:
   5) Extract the tar archieve
      tar xvf atlc-x..y.z.tar
 
-  6) `cd' to atlc-X.Y.z (whatever X, Y and Z are for the specific
+  6) Set the varialble CFLAGS to whatever flags are appropiate with
+     your compiler and system. This is particularly important
+     on Alpha platforms, when increases in speed of 3.5x were noticed
+     when running with appropiate flags. 
+
+     A benchmark is provide (see section 8) which can be used
+     as a guide to optimising the compiler flags. 
+
+  7) If you have a multi-processor machine, with more than 8 CPUs
+     (lucky you), change the variable MAX_THREADS in the file
+     src/non_gui/definitions.h to reflect the number of CPUs. You
+     can achieve the same result on the command line with the -t
+     options, but changing it here will prevent you needing to 
+     do this each time to get best peformance. 
+
+  8) `cd' to atlc-X.Y.z (whatever X, Y and Z are for the specific
       vesion) and type
      `./configure' to configure the package for your system.  If you're
      using `csh' on an old version of System V, you might need to type
@@ -92,16 +108,19 @@ The simplest way to compile this package is:
      You can NOT use --with-threads and --with-mpi, or --with-threads with
      --with-mpe. 
 
-  7) Type `make' to compile the package.
+   9) Type `make' to compile the package.
 
-  8) Type 'make check' to run quite a few checks 
+  10) Type 'make check' to run quite a few checks 
 
-  9) Type 'make install' if you wish to install the programs and 
+     This will also run a benchmark, which will generate so
+     timing information. This can be used to optimise the flags. 
+
+  11) Type 'make install' if you wish to install the programs and 
      example files. If you don't want to install the examples
      (they take up about 120 Mb) run 'make install-exec' and 
      'make install-man'
 
- 10) You can remove the program binaries and object files from the
+  12) You can remove the program binaries and object files from the
      source code directory by typing `make clean'. To also remove the
      files that `configure' created (so you can compile the package for
      a different kind of computer), type `make distclean'.  There is
