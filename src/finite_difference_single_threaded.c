@@ -12,6 +12,8 @@ extern int **cell_type;
 extern int dielectrics_to_consider_just_now;
 extern double r; 
 
+extern int coupler;
+
 double finite_difference(int number_of_iterations)
 {
   int i, j, iteration;
@@ -48,7 +50,13 @@ double finite_difference(int number_of_iterations)
     { 
       energy_per_metre+=find_energy_per_metre(i,j);
     }
-  capacitance_per_metre=2*energy_per_metre;
+  /* The capacitance C is relatated to the energy (U) by Energy=0.5*C*V^2 
+  so C=2*U/(V^2). When there is a coupler, V is 2 V, not one, so the
+  capciance C=0.5*U; */
+  if(coupler==FALSE)
+    capacitance_per_metre=2*energy_per_metre;
+  else
+    capacitance_per_metre=energy_per_metre;
   return(capacitance_per_metre);
 }
 #endif
