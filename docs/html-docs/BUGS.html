@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="generator" content="HTML Tidy, see www.w3.org">
-<meta name="GENERATOR" content="Bluefish 0.6 and vi on a Sun SPARCstation 20">
+<meta name="GENERATOR" content="Bluefish and vi">
 
 <meta name="KEYWORDS" content="transmission lines, tranmission line, CAD, electrical, atlc, impedance, Z0, transmission, line, lines, arbitrary, cross, section, shape, Zo">
 <meta name="DESCRIPTION" content="A finite difference program for computing the  properties of any transmission line ">
@@ -10,54 +10,37 @@
 </head>
 <body>
 <pre>
-  0 I was advised on the 15th of October 2003 there is a problem with atlc
-    when there are multiple different dielectrics. As such, that has
-    been disabled. 
-
-  1 There is a theoretical risk of an error occuring when running
+  1 There was a theoretical risk of an error occurring when running
     atlc with multi-threaded coded on multi-processor systems. As
     such, the option to configure atlc for multiple processors has 
-    been disabled. This will be re-enabled asap. 
+    been disabled. This will be re-enabled asap - by Feb 2004
   
   2 Not every version of make will build atlc. GNU make will do, which
-    is of course free. Sun's make will NOT. I think it is true to say 
-    Sun's is the only version of make that is unsuitable, but if you find
-    another one, use GNU make, but please advise me of the version. 
+    is of course free. Sun's make will NOT, neighter will that from  
+    SGI under IRIX. There's not much I can do about this, since the 
+    problem is with automake. But GNU make **will** build atlc okay. 
 
-  3.There are two test failures on IBM's AIX operating system, using IBM's 
-    compiler version 6.0 when compiled multi-threaded I've no idea of the
-    source of these problems. Many pixels differ, but by a small amount. I 
-    find it hard to believe this is rounding errors. 
-    1f-create_bmp_for_symmetrical_stripline.Ex.bmp.test
-    6d-create_and_check_50ohm_201Pixel_high_symmetrical_stripline.test
-    sometimes fails. Building multi-threaded tends to increase the 
-    chances of a failure. 
-
-  4.Data on machines is only gathered properly on a few machines (Solaris,
+  3 Data on machines is only gathered properly on a few machines (Solaris,
      Tru64, AIX IRIX and HP-UX). On Linux and  *BSD, it is next to useless. 
 
-  6 Sometimes the CVS is not as current as it should be. 
+  4 Sometimes the CVS is not as current as it should be. 
 
-  7.The lack of any way of changing brightness of images without a 
+  5.The lack of any way of changing brightness of images without a 
     cpu-intensive re-run. 
 
-  8.There are no manual pages for several programs 
+  6.There are no manual pages for several programs 
 
-  9.The error messages shown in the files docs/htlm-docs/errors.html are 
-    wrong and were generated on an earlier release. However, it makes little
-    difference - the meaning should be clear. 
-
- 10.HTML versions of the man pages have diagrams that are completely stupid. #
+  7.HTML versions of the man pages have diagrams that are completely stupid. #
     This is a problem with the program 'man2html' I'm using - I think so anyway. 
 
- 11 Sometimes documention in one file is out of date with documention in
+  8 Sometimes documention in one file is out of date with documention in
     another. The web pages might not agree with those in docs/html-docs.
     or README's contradict each other. Where possible I've tried to   
     remember to update the ChangeLog and add a date to a file, but this
     does not always happen I'm afraid. 
 
 
-Dr. David Kirkby,  16th October 2003 Re: atlc-4.5.1 
+Dr. David Kirkby,  December 7th 2003 Re: atlc-4.6.0 
 </pre>
 <A href="http://sourceforge.net"> <IMG src="http://sourceforge.net/sflogo.php?group_id=25836&amp;type=5" width="210" height="62" border="0" alt="SourceForge.net Logo"></A><a href="http://validator.w3.org/check/referer"><img border="0" src="valid-html40.gif" alt="Valid HTML 4.01!" height="31" width="88"></a>
 <a href="http://bluefish.openoffice.nl/"><img SRC="jpgs/bluefish.jpg" WIDTH="88" HEIGHT="31" ALT="Bluefish"></a>
