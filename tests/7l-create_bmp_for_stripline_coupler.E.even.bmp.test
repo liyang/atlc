@@ -19,15 +19,36 @@
 # Little Endian like PCs. It will also be too dependent on rounding
 # difference caused by the different FPUs in the different machines. 
 
-# If any failures do occur, please let me
+# Any failure to generate the correct checksums are noted. 
+
+# Any failure in an Xa-$top_builddir. where X is an integer will cause
+# Xb, Xc, Xd $top_builddir.etc to fail. Any pass of Xa, but faiure of Xb will cause
+# all the Xc, Xd $top_builddir. to fail. If both Xa and Xb pass, then hopefully Xc,
+# Xd etc will. However, Xd, Xe etc does not rely on the correct functioning of 
+# Xc. The Xc, Xd, $top_builddir. only need Xa and Xb to pass, so Xc, Xd etc are
+# independent of each other. 
+
+# I would add that these checksums have been checked using the GNU
+# textutils on about 15 different computers, from PCs, to Suns to Dec etc.
+# So they are okay and I would suggest any failures is a problem. 
+# The only reason I can think of a failure is that there is a difference
+# in the outout of 'mycksum' to the GNU utilites one, but that is
+# unlikely. So if any problems occur, check the checksum with the GNU
+# 'sum' and see what that gives. If any failures do occur, please let me
 # know. email drkirkby@ntlworld.com and/or davek@medphys.ucl.ac.uk 
 
 
-CKSUM=`../tools/src/mycksum ../examples/test_stripline_coupler.E.even.bmp`
-if [ $CKSUM = 15092 ]; then
+CKSUM=`$top_builddir/tools/src/mycksum $top_builddir/examples/test_stripline_coupler.E.even.bmp`
+GENERATEDSIZE=`$top_builddir/tools/src/myfilelength $top_builddir/examples/test_stripline_coupler.E.even.bmp`
+if [ $GENERATEDSIZE != 112194 ] ; then
+  echo "FAILED (size mismatch):" $0 >> tests.log
+  echo "FAILED (size mismatch):" $0
+  exit 1
+elif [ $CKSUM != 13900 ] ; then
+  echo "FAILED (checksum error):" $0 >> tests.log
+  echo "FAILED (checksum error):" $CKSUM $0
+  exit 1
+else
   echo "PASSED:" $0 >> tests.log
   exit 0
-else
-  echo "FAILED:" $0  >> tests.log
-  exit 1
 fi

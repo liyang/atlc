@@ -1,5 +1,4 @@
 #!/bin/sh
-
 # This is one of a set of test that generate checksums after files are
 # created. Generally a bitmap if first produced by a program such as create_bmp_for_symmetrical_stripline, 
 # create_bmp_for_create_bmp_for_rect_in_rect, create_bmp_for_rect_cen_in_rect, create_bmp_for_circ_in_circ, create_bmp_for_circ_in_rect, 
@@ -19,11 +18,22 @@
 # Little Endian like PCs. It will also be too dependent on rounding
 # difference caused by the different FPUs in the different machines. 
 
-CKSUM=`../tools/src/mycksum ../examples/test_stripline_coupler.Ex.even.bmp`
-if [ $CKSUM = 27819 ]; then
+# Any failure to generate the correct checksums are noted. 
+
+# Check the Ex.even file created by running 7a
+CKSUM=`$top_builddir/tools/src/mycksum $top_builddir/examples/test_stripline_coupler.Ex.even.bmp`
+#MD5SUM=`md5sum $top_builddir/examples/test_stripline_coupler.Ex.even.bmp | awk '{print $1}'`
+GENERATEDSIZE=`$top_builddir/tools/src/myfilelength $top_builddir/examples/test_stripline_coupler.Ex.even.bmp`
+if [ $GENERATEDSIZE != 112194 ] ; then
+  echo "FAILED (size mismatch):" $0 >> tests.log
+  echo "FAILED (size mismatch):" $0 
+  exit 1
+elif [ $CKSUM != 28821 ] ; then
+#elif [ $CKSUM != 19756 ] ; then
+  echo "FAILED:(checksum failure)" $0 >> tests.log
+  echo "FAILED (checksum error):" $CKSUM $0
+  exit 1
+else
   echo "PASSED:" $0 >> tests.log
   exit 0
-else
-  echo "FAILED:" $0 >> tests.log
-  exit 1
 fi

@@ -6,9 +6,9 @@
 # and it is tedious to do. 
 
 # The following are around 25 Ohm transmission lines. 
-../src/non_gui/create_bmp_for_symmetrical_stripline 1 201 668  ../examples/25-Ohm-201b.bmp >/dev/null 2>/dev/null
-LENGTH=`$srcdir/../tools/src/myfilelength $srcdir/../examples/25-Ohm-201b.bmp`
-if [ $LENGTH = 957150 ]; then
+$top_builddir/src/non_gui/create_bmp_for_symmetrical_stripline 800 201 668  $top_builddir/examples/25-Ohm-201b.bmp 
+LENGTH=`$top_builddir/tools/src/myfilelength $top_builddir/examples/25-Ohm-201b.bmp`
+if [ $LENGTH = 506454 ]; then
   echo "PASSED:" $0 >> tests.log
   exit 0
 else

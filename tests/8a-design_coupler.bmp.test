@@ -21,11 +21,11 @@
 
 # Any failure to generate the correct checksums are noted. 
 
-# Any failure in an Xa-... where X is an integer will cause
-# Xb, Xc, Xd ...etc to fail. Any pass of Xa, but faiure of Xb will cause
-# all the Xc, Xd ... to fail. If both Xa and Xb pass, then hopefully Xc,
+# Any failure in an Xa-$top_builddir. where X is an integer will cause
+# Xb, Xc, Xd $top_builddir.etc to fail. Any pass of Xa, but faiure of Xb will cause
+# all the Xc, Xd $top_builddir. to fail. If both Xa and Xb pass, then hopefully Xc,
 # Xd etc will. However, Xd, Xe etc does not rely on the correct functioning of 
-# Xc. The Xc, Xd, ... only need Xa and Xb to pass, so Xc, Xd etc are
+# Xc. The Xc, Xd, $top_builddir. only need Xa and Xb to pass, so Xc, Xd etc are
 # independent of each other. 
 
 # I would add that these checksums have been checked using the GNU
@@ -40,16 +40,13 @@
 # First remove any old files, which might cause problems
 #rm -rf test*.bmp test.txt test*.bin 
 
-../src/non_gui/design_coupler -d 20 144 146 > /tmp/$$ 
-CKSUM=`../tools/src/mycksum /tmp/$$`
+$top_builddir/src/non_gui/design_coupler -d 20 144 146 > /tmp/$$ 2> /dev/null
+CKSUM=`$top_builddir/tools/src/mycksum /tmp/$$`
 rm /tmp/$$
 if [ $CKSUM = 54211 ]; then
   echo "PASSED:" $0 >> tests.log 
   exit 0
 else
-  echo "FAILED:" $0   "This will *always* fail unless you link with the GNU"
-  echo                "scientific library gsl. You need to do this to use"
-  echo                "to get full functionality. 'design_coupler' will"
-  echo                "not work without this library"
+  echo "The following test will always fail if  not linked against the gsl library"
   exit 1
 fi

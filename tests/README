@@ -16,6 +16,14 @@ have the GNU textutils installed and avoids the possibility that they have
 'textutils' installed but have another version of 'sum' (such as the one 
 supplied by Sun with Solaris), which generates a different checksum. 
 
+SOME OF THE TESTS ARE KNOWN TO GIVE DIFFERENT RESULTS EACH
+TIME THEY ARE RUN, THERE ARE:
+
+7j-create_bmp_for_stripline_coupler.Ex.even.bmp.test
+7k-create_bmp_for_stripline_coupler.Ey.even.bmp.test
+11h-verify-checksum-of-created-test-coupler1.Ex.even.bmp.test
+11i-verify-checksum-of-created-test-coupler1.Ey.even.bmp.test
+
 Dr. David Kirkby,
 email drkirkby@ntlworld.com and/or davek@medphys.ucl.ac.uk 
 18/01/03
