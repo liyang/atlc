@@ -1,10 +1,28 @@
-This is the last release of atlc without the the addition of 
-the Message Passing Interfact (MPI) support. The next release
-release 5.0, will have support for MPI. Since 5.0 has some 
-major changes, it is possible there are more bugs in that. 
+'atlc' has C code to allow it to use the Message Passing Interface (MPI),
+which shouls allow 'atltc' to run on distributed processors on a network
+of computers. In order to do this, you will need to install the MPICH
+library from 
+http://www-unix.mcs.anl.gov/mpi/mpich/indexold.html
 
-I'm greateful for the help of Patrick Kelsey <kelsey@ieee.org>
-for addint MPI support in version 5.0.0 for MPI.
+However, at the time of writing, I can't get to work properly. However, 
+another person, Patrick Kelsey <kelsey@ieee.org> has got this working
+ona Linux machine, although I've tried an have never been able to.  
 
-Dr. David Kirkby, 10/1/03. 
+If you want to try this distributed processing code, be prepared for a
+lot of experimentation - it is certainly not easy to configure, if it
+works at all. Here are a couple of notes on using the MPICH library with
+'atlc'
 
+
+configure --without-gsl --with-mpi
+
+2) An MPICH configured machine need to be able to access at least one
+machine on the network without a password, using .rhosts securtiy
+procedures. THIS INCLUDES THE LOCAL HOST if you want to run on the local
+
+3) ssh should work if MPICH is configured for this.
+
+4) A small test program, in tests/MPI_16a_PI.c does build okay
+and runs. If you uncommment the printf lines, it will 
+give an estimage of PI. Hence the automake/autoconf and the 
+macro m4/acx_mpi.m4 seems to be okay. 
