@@ -12,3 +12,4 @@ nroff -man man1/create_bmp_for_circ_in_rect.1 | man2html > ../docs/html-docs/cre
 nroff -man man1/create_bmp_for_symmetrical_stripline.1 | man2html > ../docs/html-docs/create_bmp_for_symmetrical_stripline.1.html
 nroff -man man1/create_bmp_for_stripline_coupler.1 | man2html > ../docs/html-docs/create_bmp_for_stripline_coupler.1.html
 nroff -man man1/readbin.1 | man2html > ../docs/html-docs/readbin.1.html
+nroff -man man1/sysdata.1 | man2html > ../docs/html-docs/sysdata.1.html
