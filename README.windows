@@ -1,17 +1,14 @@
 atlc is primarily a UNIX program. Some Microsoft Windows
-binaries have been produced,  the latest of which is 
-atlc-4.4.4_Win32.zip, so is not quite as current as the 
-latest version of atlc. atlc-4.4.4_Win32.zip can be  
-downloaded from:
+binaries have been produced in the past, one of which
+was atlc-4.4.4_Win32.zip. However, some problems were
+found in atlc with multiple dielectrics. As such I've 
+removed the windows binaries. 
 
-http://prdownloads.sourceforge.net/atlc/atlc-4.4.4_Win32.zip?download
+If someone wants to build some, based on the latest
+code I'll put them up again, but whilst the code
+is not working optimally with multi-dielectrics, it 
+is not seriously broken as it was before. 
 
-These binaries were not produced by me, but by Mark Chun 
-KH6HPQ and others. 
 
-If you want to have the latest version of atlc, you will 
-in general have to use a UNIX or Linux computer and 
-compile it yourself. 
-
-Dr. David Kirkby, G8WRB, 11th Oct, 2003.
-Re: atlc-4.5.0
+Dr. David Kirkby, G8WRB,  7th Dec, 2003.
+Re: atlc-4.6.0
