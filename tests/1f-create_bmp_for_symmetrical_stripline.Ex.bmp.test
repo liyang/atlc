@@ -1,0 +1,13 @@
+#!/bin/sh
+# It is pointless checking the checksum's on binary files as they will
+# differ on differnt Endian'ness and with different rounding errors on FP
+# units. Hence only the length is checked on the binary files
+
+CKSUM=`../tools/src/mycksum test_sym_strip.Ex.bmp`
+if [ $CKSUM = 16645 ]; then
+  echo "PASSED:" $0 >> tests.log
+  exit 0
+else
+  echo "FAILED:" $0  >> tests.log
+  exit 1
+fi
