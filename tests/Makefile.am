@@ -25,8 +25,8 @@ TESTS =  \
 2f-create_bmp_for_rect_in_rect.Ex.bmp.test \
 2g-create_bmp_for_rect_in_rect.U.bmp.test \
 2h-create_bmp_for_rect_in_rect.V.bmp.test \
-3a-rect_cen_in_rect.bmp.test \
-3b-rect_cen_in_rect.txt.test \
+3a-create_bmp_for_rect_cen_in_rect.bmp.test \
+3b-create_bmp_for_rect_cen_in_rect.txt.test \
 4a-create_bmp_for_microstrip_coupler.test \
 7a-create_bmp_for_stripline_coupler.bmp.test \
 7b-create_bmp_for_stripline_coupler.txt.test \
@@ -78,8 +78,8 @@ EXTRA_DIST = \
 2f-create_bmp_for_rect_in_rect.Ex.bmp.test \
 2g-create_bmp_for_rect_in_rect.U.bmp.test \
 2h-create_bmp_for_rect_in_rect.V.bmp.test \
-3a-rect_cen_in_rect.bmp.test \
-3b-rect_cen_in_rect.txt.test \
+3a-create_bmp_for_rect_cen_in_rect.bmp.test \
+3b-create_bmp_for_rect_cen_in_rect.txt.test \
 4a-create_bmp_for_microstrip_coupler.test \
 5a-check-s_and_-S_options_of_atlc-2D.test \
 5b-check-s_and_-S_options_of_atlc-3D.test \
