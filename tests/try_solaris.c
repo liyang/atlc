@@ -51,13 +51,11 @@ int try_solaris(struct computer_data *data)
 #ifdef HAVE_PROCESSOR_INFO
 #ifdef HAVE_SYSCONF
 
-#ifdef _SC_NPROCESSORS_ONLN
 #ifdef _SC_NPROCESSORS_MAX
 
-  long max_CPUs=0, CPUs_online=0;
+  long max_CPUs=0;
   int clock_speed_in_MHz;
   processor_info_t infop;
-  double ram;
 
   /* Obtain the maximum number of CPUs supported on the Solaris system */
   max_CPUs=0;
@@ -87,7 +85,6 @@ int try_solaris(struct computer_data *data)
 
   return(PROBABLY_SOLARIS);
 
-#endif
 #endif
 #endif
 #endif
