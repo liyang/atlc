@@ -45,11 +45,11 @@ int verbose=0;
 
 extern int main(int argc, char **argv) /* Read parameters from command line here   */
 {
+  fprintf(stderr,"Sorry, create_any_bitmap is under construction and not finished\n");
+  exit(1);
   if(argc !=2){
     usage_create_any_bitmap();    
     exit_with_msg_and_exit_code("",PROGRAM_CALLED_WITH_WRONG_NUMBER_OF_ARGUMENTS);
   }
-  fprintf(stderr,"Sorry, create_any_bitmap is under construction and not finished\n");
-  exit(1);
   /* return(OKAY); */
 }

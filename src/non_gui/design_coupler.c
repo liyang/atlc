@@ -18,7 +18,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307,
 USA.
 
-Dr. David Kirkby, e-mail drkirkby@ntlworld.com 
+Dr. David Kirkby, e-mail drkirkby at ntlworld.com 
 
 */
 #include "config.h"
@@ -51,9 +51,6 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #include <math.h>
 #endif
 
-#ifdef HAVE_LIBGSL
-#include <gsl/gsl_sf_ellint.h>
-#endif
 
 extern int errno;
 int verbose=2;
@@ -285,13 +282,7 @@ int main(int argc, char **argv) /* Read parameters from command line */
 	/* Results are calculated assuming the box is one unit (mm, inch
 	etc) high and later scaled */
 
-#ifdef HAVE_LIBGSL
         calculate_Zodd_and_Zeven(&Zodd_x, &Zeven_x, &Zo_x, w, 1.0, s, er);
-#else
-        Zodd_x=1.0; Zeven_x=1.0; 
-	fprintf(stderr,"This was not linked against the GNU scientific library (gsl)\n");
-	exit_with_msg_and_exit_code("So the mode impedances have been set to 1 Ohm",NOT_LINKED_WITH_GSL_LIBRARY);
-#endif
 	error=pow(Zodd-Zodd_x,2.0) + pow(Zeven-Zeven_x,2.0);
 	if( error < error_max )
 	{

@@ -18,7 +18,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307,
 USA.
 
-Dr. David Kirkby, e-mail drkirkby@ntlworld.com 
+Dr. David Kirkby, e-mail drkirkby at ntlworld.com 
 
 */
 
@@ -38,10 +38,6 @@ groundplanes of spacing h. */
 
 #ifdef HAVE_STRING_H
 #include <string.h>
-#endif
-
-#ifdef HAVE_GSL_GSL_SF_ELLINT_H
-#include <gsl/gsl_sf_ellint.h>
 #endif
 
 double WW, HH, ww, Er1, Er2;

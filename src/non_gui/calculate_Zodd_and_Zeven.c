@@ -18,7 +18,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307,
 USA.
 
-Dr. David Kirkby, e-mail drkirkby@ntlworld.com 
+Dr. David Kirkby, e-mail drkirkby at ntlworld.com 
 
 */
 
@@ -28,13 +28,9 @@ groundplanes of spacing h. */
 
 #include "config.h"
 
+#include "gsl_types.h"
+#include "gsl_definitions.h"
 #include "definitions.h"
-
-#ifdef  HAVE_LIBGSL
-#include <gsl/gsl_sf_ellint.h>
-#include <gsl/gsl_complex.h>
-#include <gsl/gsl_complex_math.h>
-#endif
 
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
@@ -48,12 +44,6 @@ groundplanes of spacing h. */
 
 void calculate_Zodd_and_Zeven(double *Zodd, double *Zeven, double *Zo, double w, double H, double s, double er)
 {
-/*
-#if defined(AS_SPARC64_FLAG) || (defined(IN_LIBGCC2) && (defined(__arch64__) || defined(__sparcv9)))
-*/
-
-#ifdef HAVE_LIBGSL
-
   double ke, ko, ko_dash, ke_dash;
   ke=(tanh((M_PI/2)*(w/H)))*tanh((M_PI/2)*(w+s)/H);
   ko=(tanh((M_PI/2)*(w/H)))/tanh((M_PI/2)*(w+s)/H);
@@ -64,10 +54,4 @@ void calculate_Zodd_and_Zeven(double *Zodd, double *Zeven, double *Zo, double w,
   *Zeven=30.0*M_PI*gsl_sf_ellint_Kcomp(ke_dash, GSL_PREC_DOUBLE)/(gsl_sf_ellint_Kcomp(ke,GSL_PREC_DOUBLE)*sqrt(er));
   *Zodd= 30.0*M_PI*gsl_sf_ellint_Kcomp(ko_dash, GSL_PREC_DOUBLE)/(gsl_sf_ellint_Kcomp(ko,GSL_PREC_DOUBLE)*sqrt(er));
   *Zo=sqrt( (*Zodd)*(*Zeven));
-#else 
-  printf("This was not linked against the GNU scientific library, gsl.\n");
-  printf("Obtain gsl from http://sources.redhat.com/gsl then run 'configure' again.\n");
-  printf("and rebuild from the sources again.\n");
-  exit_with_msg_and_exit_code("",NOT_LINKED_WITH_GSL_LIBRARY);
-#endif
 }
