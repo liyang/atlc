@@ -90,8 +90,8 @@ Laboratory's list of physical constants found on the web. */
 
 #define TINY 1e-12
 #define VERY_LARGE 1e15
-#define DEFAULT_BMPSIZE 6
-#define DEFAULT_COUPLER_BITMAP_SIZE 18
+#define DEFAULT_BMP_SIZE 6
+#define DEFAULT_COUPLER_BMP_SIZE 18
 
 #define IMAGE_FIDDLE_FACTOR 2.0
 #define ACCEPTABLE_ERROR 0.02
@@ -275,7 +275,6 @@ void get_data_interactively(void);
 void help(char *filename);
 double **dmatrix(long nrl, long nrh, long ncl, long nch);
 void free_dmatrix(double **m, long nrl, long nrh, long ncl, long nch);
-void nrerror(char *error_text);
 char *string(long nl,long nh);
 void free_string(char *v, long nl, long nh);
 unsigned char *ustring(long nl,long nh);
@@ -368,3 +367,5 @@ void check_parameters_of_create_bmp_for_circ_in_rect();
 void check_parameters_of_create_bmp_for_rect_in_circ();
 void check_parameters_of_create_bmp_for_rect_in_rect(void);
 void usage_create_bmp_for_symmetrical_stripline(void);
+void check_parameters_for_find_optimal_dimensions_for_microstrip_coupler (double h,double t,double Er1,double Er2,double ideal_Zodd,double ideal_Zeven);
+double *dvector(long nl, long nh);
