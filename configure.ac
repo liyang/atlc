@@ -13,19 +13,18 @@
 # checks for system services
 # AC_OUTPUT([file...])
 
-AC_INIT([atlc], [4.3.2], [drkirkby@ntlworld.com])
+AC_INIT([atlc], [4.3.4], [drkirkby@ntlworld.com])
 AM_INIT_AUTOMAKE
 AC_PREREQ([2.57])
 AC_CONFIG_SRCDIR([tools/src/myfilelength.c])
 # defining a config.h might be useful as it can prevent a command line becoming
 # too long, but I find it more of a pain than it is useful. To 
 # make use of it, it would be necessary to hack every source file to 
-# include it. I can't be bother yet. 
+# include it. I can't be bothered yet. 
 # AC_CONFIG_HEADER([config.h])
 
 
 # Checks for programs.
-#AC_PROG_CXX # Test for C++ compiler characteristics
 AC_ISC_POSIX
 
 # AC_OUTPUT_COMMANDS([exit])
@@ -35,13 +34,14 @@ AC_ISC_POSIX
 # AC_CHECK_LIB([mopt],[main])
 # check for the optimised
 # AC_CHECK_LIB([copt],[main])
-#AC_CHECK_LIB(m,log)
+AC_CHECK_LIB(m,log)
 
 # Checks for header files.
 
 AC_CHECK_HEADERS([stdio.h math.h malloc.h stdlib.h string.h time.h ])
 AC_CHECK_HEADERS([strings.h sys/types.h machine/hal_sysinfo.h sys/sysinfo.h ])
 AC_CHECK_HEADERS([sys/processor.h sched.h sys/param.h sys/pstat.h sys/unistd.h ])
+AC_CHECK_HEADERS([ sys/utsname.h sys/systeminfo.h unistd.h ])
 
 # Checks for typedefs
 AC_HEADER_STDBOOL
@@ -61,7 +61,7 @@ AC_CHECK_SIZEOF([size_t])
 # checks for library functions
 AC_FUNC_STRTOD
 AC_CHECK_FUNCS([memset strchr strtol processor_info getsysinfo pthread_num_processors_np ])
-AC_CHECK_FUNCS([ cpu_get_max pstat ])
+AC_CHECK_FUNCS([ cpu_get_max pstat pstat_getdynamic uname sysconf sysinfo ])
 AC_CHECK_SIZEOF([long long])
 
 # checks for system services
@@ -70,6 +70,7 @@ AC_CHECK_SIZEOF([long long])
 # The macro is in the file gtk.m4 in the 'm4' subdirectory.
 
 #AC_ARG_WITH(gui, AC_HELP_STRING([--with-gui=[no]],[Add a GUI (needs GTK >= 1.2.7 installed) but the GUI does not work!! ]))
+#AC_PROG_CXX # Test for C++ compiler characteristics
 #if test "x$with_gui" = "xyes"; then
 #        AC_PATH_GTK(1.2.7, GTK127=1)
 #        if test "$GTK127" != 1; then
@@ -81,7 +82,7 @@ AC_CHECK_SIZEOF([long long])
 #            ])
 #        fi
 #	AC_CHECK_PROG(WXWINDOWS,wx-config, 1, 0)   
-#        if test "$WXWINDOWS" != 1; then
+#       if test "$WXWINDOWS" != 1; then
 #            AC_MSG_ERROR([
 #	       wxWindows must be installed to use the GUI version of atlc
 #        ])
@@ -110,6 +111,17 @@ if test "$ac_cv_use_gsl" = "yes"; then
     #LIBS="$GSL_LIBS $LIBS"
     #CFLAGS="$GSL_CFLAGS $CFLAGS"
   fi
+fi
+
+AC_ARG_ENABLE(debug, AC_HELP_STRING([--enable-debug],[ with debugging code]), AC_DEFINE([DEBUG],[1]))
+
+# Put a usage message so the user can use threads if wanted. 
+AC_ARG_WITH(benchmark,
+		   AC_HELP_STRING([--with-extra-benchmark-data],
+		   [provides more data on the benchmark. This is less portable, so might not build (default is NO)]))
+if test "x$with_extra_benchmark_data" = "xyes"; then
+  AC_SUBST(with_extra_benchmark_data,yes)
+  AC_DEFINE([WITH_EXTRA_BENCHMARK_DATA])
 fi
 
 # Put a usage message so the user can use threads if wanted. 
@@ -167,7 +179,8 @@ if test "x$GCC" = "xyes"; then
       CFLAGS="$CFLAGS -Wall"
   fi
 fi
-
+AC_SUBST(compiled_with_compiler,"$CC")
+AC_SUBST(compiled_with_cflags,"$CFLAGS")
 AC_OUTPUT([\
 Makefile                                        \
 src/Makefile                                    \
