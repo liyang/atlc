@@ -129,7 +129,6 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
   0.00011 * the number of non-metallic elements  +28 as the number 
   of times finite_difference is called each time */
 
-  printf("data->non metalic_pixels = %d\n", data->non_metallic_pixels); 
   data->tenth_of_estimated_iterations_needed = (int) (0.00011*(double) data->non_metallic_pixels + 28);
 
   if(data->verbose_level >=4 )
