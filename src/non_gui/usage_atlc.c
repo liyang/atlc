@@ -57,11 +57,14 @@ void usage_atlc(void)
   fprintf(stderr,"To add support for multiple threads (for an MP machine), \"make clean\" then \nre-run the configure script with the option --with-threads\n");
 #endif
 #ifndef ENABLE_MPI
+  fprintf(stderr," ");
+/*
   fprintf(stderr,"****************NOTE******************************\n");
   fprintf(stderr,"The -w option setting the weights to use when dividing up the work for\n");
   fprintf(stderr,"multiple CPUs on distributed processors is disabled since this was not\n");
   fprintf(stderr,"for distributed processing. To add such support, \"make clean\" then re-run\n");
   fprintf(stderr,"the configure script with the option --with-mpi\n");
+  */
 #endif
 #ifdef WINDOWS
   fprintf(stderr,"****************NOTE******************************\n");
