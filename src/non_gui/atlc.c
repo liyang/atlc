@@ -83,9 +83,9 @@ extern int main(int argc, char **argv) /* Read parameters from command line */
   char *outputfile_name, *inputfile_name, *appendfile_name;
   long i;
   int offset;
-  int q, dielectrics_on_command_line=0;
+  int q;
   char *end;
-  struct transmission_line_data data;
+  struct transmission_line_properties data;
 
   set_data_to_sensible_starting_values(&data);
   inputfile_name=string(0,1000);
@@ -100,9 +100,11 @@ extern int main(int argc, char **argv) /* Read parameters from command line */
       print_copyright( (char *) "1996-2002");
       exit(1);
     break;
+    case 'b':
+      data.should_binary_data_be_written_tooQ=TRUE;
     case 'd':
       /* Read a colour from the command line */
-      Er_on_command_line[dielectrics_on_command_line].other_colour=\
+      Er_on_command_line[data.dielectrics_on_command_line].other_colour=\
       strtol(my_optarg, &end, 16);
       /* Sepparte it into the Red, Green and Blue components */
       Er_on_command_line[data.dielectrics_on_command_line].blue=\
@@ -112,7 +114,7 @@ extern int main(int argc, char **argv) /* Read parameters from command line */
       Er_on_command_line[data.dielectrics_on_command_line].red=\
       Er_on_command_line[data.dielectrics_on_command_line].other_colour/(256*256);
       *end++; /* Gets rid of '=' sign which we put on the command line */
-      Er_on_command_line[dielectrics_on_command_line].epsilon=atof(end);
+      Er_on_command_line[data.dielectrics_on_command_line].epsilon=atof(end);
       if (verbose > 1)
         printf("r=%x g=%x b=%x col=%x Er=%f\n",\
       Er_on_command_line[data.dielectrics_on_command_line].red,\
@@ -120,7 +122,7 @@ extern int main(int argc, char **argv) /* Read parameters from command line */
       Er_on_command_line[data.dielectrics_on_command_line].blue, \
       Er_on_command_line[data.dielectrics_on_command_line].other_colour, \
       Er_on_command_line[data.dielectrics_on_command_line].epsilon);
-      dielectrics_on_command_line++;
+      data.dielectrics_on_command_line++;
     break;
     case 'c':
       data.cutoff=atof(my_optarg);
@@ -234,7 +236,6 @@ without the threads\nlibrary.\n",1);
     needs to be done twice. We start by doing them once, for an vacuum
     dielectric. If necessary, they will be done again */
     do_fd_calculation(&data, where_to_print_fp,inputfile_name);
-    write_fields(inputfile_name);
 
   }
   else
