@@ -2,7 +2,9 @@ Specific Installation Instructions for atlc.
 ==================
 
    These are *NOT* generic installation instructions, but have been
-   edited CONSIDERABLY to be specific for atlc. 
+   edited CONSIDERABLY to be specific for atlc. There are a couple of 
+   optional arguments that you can give to the configure script that 
+   will improve functionality, so check read this **carefully**
 
    The `configure' shell script attempts to guess correct values for
 various system-dependent variables used during compilation.  It uses
@@ -69,7 +71,6 @@ The simplest way to compile this package is:
   4) Unzip the compressed tar file
      gzip -d atlc-x.y.tar.gz
 
-
   5) Extract the tar archieve
      tar xvf atlc-x..y.z.tar
 
@@ -100,6 +101,17 @@ The simplest way to compile this package is:
 
      IF you want support for multiple processors, add the --with-threads
      option to configure. 
+
+     It is worth trying the --hardware-info option which will gather information
+     about the number of CPUs, RAM etc. This information is used to compute
+     the efficiency if you are using a multi-processor machine.   
+
+     HOWEVER, THE --enable-hardware-info OPTION MIGHT NOT WORK ON EVERY
+     SYSTEM - IT IS LIKELY TO CAUSE THE COMPILATION TO FAIL ON SOME SYSTEMS.
+     IF SO, LET ME KNOW THE SYSTEM AND i'LL LOOK INTO FIXING IT. If atlc 
+     will not build with the --enable-hardware-info option to configure,    
+     then build it without that option. In this case it should build on
+     any system. 
 
      In the unlikey event you want to add support for MPI (it does not 
      work, hence it's unlikey you will want this, unless you intend
