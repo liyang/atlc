@@ -42,18 +42,10 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #include "definitions.h"
 #include "exit_codes.h"
 
-#ifdef ENABLE_MP
-
-#ifdef HAVE_THREAD_H
-#include <thread.h>
-#endif
+#ifdef ENABLE_THREADS
 
 #ifdef HAVE_PTHREAD_H
 #include <pthread.h>
-#endif
-
-#ifdef HAVE_PTHREADS_H
-#include <pthreads.h>
 #endif
 
 #endif
@@ -147,10 +139,10 @@ extern int main(int argc, char **argv) /* Read parameters from command line */
   printf("errno=%d in atlc.c #1\n",errno);
 #endif
   set_data_to_sensible_starting_values(&data);
-  inputfile_name=string(0,1000);
-  outputfile_name=string(0,1000);
-  appendfile_name=string(0,1000);
-  output_prefix=string(0,1000);
+  inputfile_name=string(0,1024);
+  outputfile_name=string(0,1024);
+  appendfile_name=string(0,1024);
+  output_prefix=string(0,1024);
   /* only use this if we have both a multi-threaded application and that 
   with have the function */
   strcpy(output_prefix,"");
@@ -369,7 +361,6 @@ without the threads\nlibrary.\n",1);
     /* If there are multiple dielectrics, the impedance calculations
     needs to be done twice. We start by doing them once, for an vacuum
     dielectric. If necessary, they will be done again */
-    //do_fd_calculation(&data, where_to_print_fp,inputfile_name);
 #ifdef DEBUG
   printf("errno=%d in atlc.c #4\n",errno);
 #endif
