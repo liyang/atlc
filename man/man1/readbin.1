@@ -1,0 +1,75 @@
+.TH readbin 1 "atlc-3.0.1 29/3/02" "Dr. David Kirkby"
+.ds n 5
+.SH NAME
+\fBreadbin\fR - ATLC's binary file information provider
+.SH SYNOPSIS
+\fBreadbin  filename.bin\fR
+.br
+.SH WARNING
+This man page is not a complete set of documentation. See the html files
+for more complete information. So far, I've not managed to install the
+html files into /usr/local, so you will have to look into the
+atlc-X.Y.Z/docs/html-docs directory for them. 
+.SH DESCRIPTION
+\fBreadbin\fR  reports on the number and type of pixels created 
+by the programme atlc. 
+.PP 
+.SH OPTIONS
+.br
+There are no options for readbin
+.SH EXAMPLE
+% readbin coax2.V.bin
+.br
+file length=127008 bytes = 15876 pixels
+.br
+there are: 489 ones, 10852 zeros, 0 -ones, 4535 other values
+.br
+.SH FILES
+atlc-X.Y.Z/docs/html-docs/index.html
+.br
+the full documentation. 
+bitmapfile.bmp
+   Original bitmap file. Must be 24-bit colour uncompressed.
+.br
+.br 
+bitmapfile.Ex.bin
+.br 
+   X-component of E-field as a binary.  
+.br
+bitmapfile.Ey.bin
+.br
+   y-component of E-field as a binary. .
+.br 
+bitmapfile.E.bin
+.br 
+   Sqrt(Ex^2+Ey^2), as a binary. 
+bitmapfile.V.bin
+.br 
+bitmapfile.V.bin
+.br 
+   Voltage as a binary. 
+.PP
+All the saved binary files (.bin's) are saved as a double precision
+number for each of the pixels. The first double is the top left, the
+last the bottom right. 
+.PP
+.SH SEE ALSO
+
+atlc(1), rect_cen_in_rect(1), circ_in_circ(1). rect_in_rect(1), circ_in_rect(1).
+rect_in_circ(1) and sym_strip(1).
+.P 
+.br
+http://atlc.sourceforge.net                - Home page 
+.br
+http://sourceforge.net/projects/atlc       - Download area
+.br
+atlc-X.Y.Z/docs/html-docs/index.html       - HTML docs
+.br
+atlc-X.Y.Z/docs/qex-december-1996/atlc.pdf - theory paper
+.br
+atlc-X.Y.Z/examples                        - examples
+.br
+http://www.david-kirkby.co.uk              - my home page
+.br
+http://www.david-kirkby.co.uk/ham          - ham radio pages
+.br
