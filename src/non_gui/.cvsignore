@@ -1,1 +1,18 @@
 .deps SunWS_config 
+atlc create_any_bitmap:create_bmp_for_circ_in_circ
+create_bmp_for_circ_in_rect 
+create_any_bitmap
+create_bmp_for_circ_in_circ
+runlint
+foo
+create_bmp_for_microstrip_coupler 
+create_bmp_for_rect_cen_in_rect
+create_bmp_for_rect_cen_in_rect_coupler
+create_bmp_for_rect_in_circ
+create_bmp_for_rect_in_rect
+create_bmp_for_stripline_coupler
+create_bmp_for_symmetrical_stripline
+design_coupler
+find_optimal_dimensions_for_microstrip_coupler
+readbin 
+

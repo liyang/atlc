@@ -1,1 +1,3 @@
 .deps benchmark sysdata Test_threads_a Test_threads_b tests.log tests.html foo
+temp runlint locatediff myfilelength mymd5sum
+
