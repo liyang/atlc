@@ -11,10 +11,10 @@ for more complete information. So far, I've not managed to install the
 html files into /usr/local, so you will have to look into the
 atlc-X.Y.Z/docs/html-docs directory for them. 
 .SH DESCRIPTION
-\fBcreate_bmp_for_circ_in_circ\fR is a pre-processor for \fBatlc\fR, the finite difference programme that is used to calculate the 
+\fBcreate_bmp_for_circ_in_circ\fR is a pre-processor for \fBatlc\fR, the finite difference program that is used to calculate the 
 properties of a two and three conductor electrical transmission line of arbitrary 
-cross section. The programme \fBcreate_bmp_for_circ_in_circ\fR is used as a fast way of
-generating bitmaps (there is no need to use a graphics programme), for a circular conductor inside a circular conductor (coaxial conductors), like this:
+cross section. The program \fBcreate_bmp_for_circ_in_circ\fR is used as a fast way of
+generating bitmaps (there is no need to use a graphics program), for a circular conductor inside a circular conductor (coaxial conductors), like this:
 
 .P
                     *****************
@@ -96,7 +96,7 @@ colours in the bitmap. If Er is 1.0, 1.006, 2.1, 2.2, 2.33, 2.5, 3.3,
 will be set according to the colours defined in COLOURS below. If Er
 is not one of those permittivities, the region of permittivity Er
 will be set to the colour 0xCAFF00. The
-programme \fBatlc\fR does not know what this permittivity is, so 
+program \fBatlc\fR does not know what this permittivity is, so 
 \fBatlc\fR, must be told with the command line option -d, as in example 4
 below.
 .P
@@ -142,15 +142,15 @@ Brown       = 255,000,255 or 0xff00ff
 .br
 gray        = 142,142,142 or 0x8e8e8e
 .PP
-Some colours, such as pink, turquiose, sandy, brown, gray etc may mean slightly
+Some colours, such as pink, turquoise, sandy, brown, gray etc may mean slightly
 different things to different people. This is not so with \fBatlc\fR, as the 
-programme expects the colours below to be EXACTLY defined as given. Whether 
+program expects the colours below to be EXACTLY defined as given. Whether 
 you feel the colour is sandy or yellow is up to you, but if you use it in 
-your bitmap, then it either needs to be a colour recognised by atlc, \fBor\fR
+your bitmap, then it either needs to be a colour reconised by atlc, \fBor\fR
 you must define it with a command line option (see OPTIONS and example 5
 below).
 .br
-The following conductors are recognised by atlc:
+The following conductors are reconised by atlc:
 .br
 red    = 255,000,000 or 0xff0000 is the live conductor. 
 .br
@@ -160,10 +160,10 @@ blue   = 000,000,000 or 0x000000 is the negative conductor
 .PP
 All bitmaps \fBmust\fR have the live (red) and grounded (green) conductor. The blue
 conductor is not currently supported, but it will be used to indicate a 
-negative conductor, which will be needed if/when the programme gets extended 
+negative conductor, which will be needed if/when the program gets extended 
 to analyse directional couplers. 
 .PP
-The following dielectrics are recognised by \fRatlc\fB and so are
+The following dielectrics are reconised by \fRatlc\fB and so are
 produced by \fRcreate_bmp_for_circ_in_circ\fB. 
 .PP
 .br
@@ -219,7 +219,7 @@ which is then processed by \fBatlc\fR
 \fB% atlc not_in_centre.bmp\fR
 .br
 The impedance of this is theoretically 24.315342 Ohms, as create_bmp_for_circ_in_circ
-will calculate for you. atlc's esitmate is 24.2493 Ohms, an error of
+will calculate for you. atlc's estimate is 24.2493 Ohms, an error of
 only -0.271 %. 
 .P
 3) In the third example the bitmap is made larger, to increase accuracy, but
@@ -230,8 +230,8 @@ otherwise this is identical to the previous one.
 \fB% atlc bigger_not_in_centre.bmp\fR
 .br
 This time atlc will take much longer to calculate Zo, since the bitmap is larger and so it needs to do more calculations. However,
-the final result should be more accurate. In this case, the result reported is 24.2461 Ohms, an error that't manginally smaller than before at 0.285 %.
-It is possible there may be something to be gained by decreassing the
+the final result should be more accurate. In this case, the result reported is 24.2461 Ohms, an error that's marginally smaller than before at 0.285 %.
+It is possible there may be something to be gained by decreasing the
 cutoff at larger grids, so this is being investigated. However, errors
 almost always below 0.25 %, no matter what is being analysed. 
 .P
