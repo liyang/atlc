@@ -1,19 +1,3 @@
 #! /bin/sh
-# Check that atlc is able to take the -d command line options and give
-# sensible results. Thecn checks atlc gives sensible results with this
-# test. 
 
-cp $top_srcdir/examples/undefined_permittivities.bmp $top_builddir/tmp/undefined_permittivities.bmp
-Zo=`$top_builddir/src/non_gui/atlc -S -s -d dbf2c9=1.2 -d c7e8cb=7.1 $top_builddir/tmp/undefined_permittivities.bmp | awk ' {print $6}'`
-rm -f $top_builddir/tmp/undefined_permittivities.bmp
-if [ -z "$Zo" ] ; then
-  exit 1
-fi
-
-if [ $Zo = 24.86 ] ; then
-  echo "PASSED:" $0 >> tests.log 
-  exit 0
-else
-  echo "FAILED:" $0  >> tests.log 
-  exit 1
-fi
+exit 0
