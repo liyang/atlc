@@ -1,0 +1,608 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 TRANSITIONAL//EN">
+<HTML>
+<HEAD>
+
+<META name="generator" content="Mostly bluefish & vi. Sometimes netscape">
+<META http-equiv="CONTENT-TYPE" content="text/html; charset=iso-8859-1">
+<META name="AUTHOR" content="Dr. David Kirkby, drkirkby@ntlworld.com">
+<META name="DESCRIPTION" content="Accuracy of atlc - Arbitrary Transmission Line Calculator">
+<META name="KEYWORDS" content="Transmission line calculator atlc accuracy finite difference">
+<TITLE>Accuracy of atlc - Arbitrary Transmission Line Calculator</TITLE>
+</HEAD>
+<BODY>
+
+<H1>Accuracy and run-times of <CODE>atlc</code></H1>
+atlc is very accurate, as the data below will confirm. In a total of 31 tests performed on standard two-conductor transmission lines the maximum error was only 0.945 % and the rms error was 0.259  %. On a <a href="accuracy.html#Accuracy_coupler">directional coupler</a>, the maximum error was 0.927%, but the typical error was around 0.6%.  Read on if you wish to know how these figures were arrived at. <p>
+In order to test the accuracy of  <CODE>atlc</code>, some simple geometries were devised, for which there are known exact analytical solutions. Three cases were considered for two-wire lines - the <a href="accuracy.html#Accuracy_coax">standard coaxial cable</a>, an off-centre or <a href="accuracy.html#Accuracy_eccentric_coax">eccentric coaxial cable</a> and a   <a href="accuracy.html#Accuracy_symmetrical_strip">symmetrical strip transmission line</a>. For three-wires, which can be used two make a 4-port directional coupler, the  accuracy was compared using <a href="accuracy.html#Accuracy_coupler">two edge-on strip lines.</a>.
+<STRONG><H2><a name="Accuracy_coax" >Comparisons between atlc and a round coaxial cable</a></H2></STRONG>
+<p>
+
+<img src="jpgs/coax2.jpg" ALT="coaxial line" align="left">One obvious case is the round coaxial cable, which has a well known and exact formula for its impedance. In the case of an vacuum dielectric, it is simply <p><STRONG>Zo=60.0*log<sub>e</sub>(D/d)</STRONG><p>, where D is the inner diameter of the outer conductor and d is the outer diameter of the inner conductor. <br>
+Circular conductors can never be defined exactly using a square grid, so differences between the exact answer and <CODE>atlc's</code> answer are due to:
+<UL>
+<LI>Errors in representing a circle on a square grid</LI>
+<LI>Errors in the method <COde>atlc</code> uses. </LI>
+</UL>
+<br>
+Four coaxial cables were defined, which all had the internal dimensions of the outer conductor being 500 pixels. The inners were made 25, 50, 100, 200, and 400 pixels. The table below shows the results.
+<TABLE border align="bottom">
+<TR>
+<TD><STRONG>Filename</STRONG></td>
+<TD><STRONG>D</STRONG></TD>
+<TD><STRONG>d</STRONG></TD>
+<TD>Er</TD>
+<TD><STRONG>Zo (theory)</STRONG></TD>
+<TD><STRONG>Zo (<COde>atlc</code>)</STRONG></TD>
+<TD><STRONG>Error (%)</STRONG></TD>
+
+</TR>
+<TR>
+<td>coax-a</td>
+<TD>500</TD>
+<TD>400</TD>
+<TD>1.0</TD>
+<TD>13.388</TD>
+<TD>13.3710</TD>
+<TD>-0.127 %</TD>
+
+</TR>
+<TR>
+<TD>coax-b</TD>
+<TD>500</TD>
+<TD>200</TD>
+<TD>1.0</TD>
+<TD>54.977</TD>
+<TD>54.9031</TD>
+<TD>-0.134%</TD>
+
+</TR>
+<TR>
+<TD>coax-c</TD>
+<TD>500</TD>
+<TD>200</TD>
+<TD>100.0</TD>
+<TD>5.4977</TD>
+<TD>5.49031</TD>
+<TD>-0.134%</TD>
+
+</TR>
+<TR>
+<TD>coax-d</TD>
+<TD>500</TD>
+<TD>100</TD>
+<TD>1.0</TD>
+<TD>96.566</TD>
+<TD>96.4277</TD>
+<TD>-0.143%</TD>
+</TR>
+
+<TR>
+<TD>coax-e</TD>
+<TD>500</TD>
+<TD>50</TD>
+<TD>1.0</TD>
+<TD>138.155</TD>
+<TD>137.8984</TD>
+<TD>-0.186%</TD>
+</TR>
+
+<TR>
+<TD>coax-f</TD>
+<TD>500</TD>
+<TD>25</TD>
+<TD>1.0</TD>
+<TD>179.744</TD>
+<TD>179.8969</TD>
+<TD>+0.085 %</TD>
+</TR>
+
+</TABLE>
+<br>
+<STRONG>Notes:</STRONG> 
+<p>
+<OL>
+	<LI>On a dual processor Sun Ultra 60 (300 MHz), run times varied from 7 to 38 s when atlc was compiled with multi-processor support and from 9 to 66 when it was not
+</LI>
+<LI>
+<STRONG>The largest error for the coaxial cables is only 0.186%, with the RMS value being  0.139 %. </STRONG>
+</LI>
+<LI>
+In all of these situations, accuracy can be improved at the expense of memory and CPU time, by using a finer grid. </LI>
+</OL>
+
+<H2><STRONG><a name="Accuracy_eccentric_coax" >Comparisons between atlc and an eccentric coaxial line</A></STRONG></H2>
+<img src="jpgs/eccentric_coax2.jpg" ALT="eccentric coaxial line" align="bottom"><p>According to the book <EM>Microwave and Optical Components, Volume 1, - Microwave Passive and Antenna Components</EM>, page 7, there is an exact formula for the impedance of a coaxial line (see below). If O is the offset between the centres of the two conductors, then the impedance Zo assuming Er=1, is 
+<p><STRONG> 60 log<sub>e</sub>(x+sqrt(x^2-1)) </STRONG>where <STRONG>x=(d<sup>2</sup>+D<sup>2</sup>-4 O<sup>2</sup>)/(2*D*d)  </STRONG>
+<p>
+<p>
+<p>
+<p>
+
+<TABLE border align="bottom">
+<TR>
+<TD><STRONG>Filename</STRONG></td>
+<TD><STRONG>D</STRONG></TD>
+<TD><STRONG>d</STRONG></TD>
+<TD><STRONG>O</STRONG></TD>
+<TD>Er</TD>
+<TD><STRONG>Zo (theory)</STRONG></TD>
+<TD><STRONG>Zo (<COde>atlc</code>)</STRONG></TD>
+<TD><STRONG>Error (%)</STRONG></TD>
+
+</TR>
+<TR>
+<td>eccen-a</td>
+<TD>400</TD>
+<TD>320</TD>
+<TD>0</TD>
+<TD>1.0</TD>
+<TD>13.388</TD>
+<TD>13.375</TD>
+<TD>-0.097 %</TD>
+
+</TR>
+<TR>
+<td>eccen-b</td>
+<TD>500</TD>
+<TD>400</TD>
+<TD>40</TD>
+<TD>1.0</TD>
+<TD>8.044</TD>
+<TD>8.024</TD>
+<TD>-0.246%</TD>
+
+</TR>
+<TR>
+<td>eccen-c</td>
+<TD>400</TD>
+<TD>160</TD>
+<TD>0</TD>
+<TD>1.0</TD>
+<TD>54.977</TD>
+<TD>54.955</TD>
+<TD>-0.040%</TD>
+
+</TR>
+<TR>
+<td>eccen-d</td>
+<TD>500</TD>
+<TD>200</TD>
+<TD>150</TD>
+<TD>1.0</TD>
+<TD>52.021</TD>
+<TD>51.998</TD>
+<TD>-0.043%</TD>
+
+</TR>
+<TR>
+<td>eccen-e</td>
+<TD>500</TD>
+<TD>200</TD>
+<TD>100</TD>
+<TD>1.0</TD>
+<TD>41.589</TD>
+<TD>41.562</TD>
+<TD>-0.063%</TD>
+
+</TR>
+<TR>
+<td>eccen-f</td>
+<TD>500</TD>
+<TD>100</TD>
+<TD>0</TD>
+<TD>1.0</TD>
+<TD>96.566</TD>
+<TD>96.489</TD>
+<TD>-0..080%</TD>
+
+</TR>
+<TR>
+<td>eccen-g</td>
+<TD>500</TD>
+<TD>100</TD>
+<TD>50</TD>
+<TD>1.0</TD>
+<TD>94.008</TD>
+<TD>93.930</TD>
+<TD>-0.083%</TD>
+
+</TR>
+<TR>
+<td>eccen-h</td>
+<TD>500</TD>
+<TD>100</TD>
+<TD>100</TD>
+<TD>1.0</TD>
+<TD>85.525</TD>
+<TD>85.443</TD>
+<TD>-0.096%</TD>
+
+</TR>
+<TR>
+<td>eccen-i</td>
+<TD>400</TD>
+<TD>40</TD>
+<TD>0</TD>
+<TD>1.0</TD>
+<TD>138.155</TD>
+<TD>138.052</TD>
+<TD>-0.075%</TD>
+
+</TR>
+<TR>
+<td>eccen-j</td>
+<TD>500</TD>
+<TD>50</TD>
+<TD>50</TD>
+<TD>1.0</TD>
+<TD>135.679</TD>
+<TD>135.575</TD>
+<TD>-0.077%</TD>
+
+</TR>
+<TR>
+<td>eccen-k</td>
+<TD>500</TD>
+<TD>50</TD>
+<TD>100</TD>
+<TD>1.0</TD>
+<TD>127.556</TD>
+<TD>127.448</TD>
+<TD>-0.085%</TD>
+
+</TR>
+<TR>
+<td>eccen-l</td>
+<TD>400</TD>
+<TD>40</TD>
+<TD>12</TD>
+<TD>1.0</TD>
+<TD>110.835</TD>
+<TD>110.709</TD>
+<TD>-0.113%</TD>
+
+</TR>
+<TR>
+<td>eccen-m</td>
+<TD>400</TD>
+<TD>40</TD>
+<TD>160</TD>
+<TD>1.0</TD>
+<TD>73.540</TD>
+<TD>73.237</TD>
+<TD>-0.411%</TD>
+
+</TR>
+<TR>
+<td>eccen-n</td>
+<TD>1600</TD>
+<TD>160</TD>
+<TD>640</TD>
+<TD>1.0</TD>
+<TD>73.540</TD>
+<TD>73.238</TD>
+<TD>-0.134%</TD>
+
+</TR>
+
+</TABLE><p>
+Note, due to their large size, the eccentric coax files are not distributed. They can however easily be made with the supplied script <a href="../../examples/create">create</a>, which itself calls the programme <a href="circ_in_circ.1.html">circ_in_circ</a>, which is used for creating a circular conductor  inside another circular conductor. 
+<pre><CODE>circ_in_circ 500 400 0 1 &gt eccentric-a.bmp
+circ_in_circ 500 400 40 1 &gt eccentric-b.bmp
+circ_in_circ 500 200 0 1 &gt eccentric-c.bmp</CODE>
+</pre>
+the file <CODE>create </CODE>. 
+<p>
+<STRONG><H2><a name="Accuracy_symmetrical_strip" >Comparisions between atlc and a symmetrical strip transmission line</A></H2></STRONG>
+Another obvious test is a symmetrical strip transmission line - see diagramme below. <p>
+<img src="jpgs/symmetrical_strip.jpg" ALT="Symmetrical Strip Transmission Line"><p>
+This has an exact analytical solution, dependent on the ratio of the width of the inner conductor w, to the distance between the two outer conductors H.  This assumes that the outer conductors extend to plus and minus infinity and the inner conductor is infinitely thin. This structure has the advantage of requiring no curves, so can be represented more accurately with the square grid used in <CODE>atlc.</CODE> However, its impossible to have an inner conductor that is less than 1 pixel high and it is impossible to make the dimension W  infinity wide as it was take an infinite amount of disk space, RAM and CPU time).  However, if the width W is made at least 4xH+w, then making it any larger does not seem to have much affect on the result. Hence the results below were obtained by setting the internal W equal to 4 times the internal height plus the inner width W. The actual bitmaps used by atlc are 10 pixels higher and 10 pixels wider, to enforce a boundary. The programme <CODE>sym_strip</CODE> can be used to quickly produce suitable bitmaps for such circumstances. It enforces having the width W of the  equal to at least w+4*h, as well as H being at least 201 pixels. It must be odd, since the one pixel inner conductor must fit centrally between the two outer conductors.<br>
+<CODE>sym_strip 1200 201 290 50-201.bmp<br>
+w=290 H=201 w/H=1.442786 xo=23.753772<br>
+Zo is theoretically 49.989477 Ohms (assuming W is infinite)<br></CODE>
+<br>
+This structure, which has a w/H value of 1.442786, has a theoretical impedance close to 50 Ohms (49.989477 to be precise). atlc calculates this to be 49.8457 Ohms, an error of only 0.087%, when using a  grid 1134x201. Increasing the number of pixels to 2222x401,  the results are surprisingly somewhat worst with an error of 0.191%. I have no explanation for this. but increasing the pixels further to 4399x801, results in a larger error still, as atlc reports this as 49.9127.<p>
+<TABLE border align="bottom">
+<TR>
+<TD><STRONG>Filename</STRONG></TD>
+<TD><STRONG>W</STRONG></TD>
+<TD><STRONG>H</STRONG></TD>
+<TD><STRONG>w</STRONG></TD>
+<TD><STRONG>w/H</STRONG></TD>
+<TD><STRONG>Zo<sup>exact</sup></STRONG></TD>
+<TD><STRONG>Zo<sup>atlc</sup></STRONG></TD>
+<TD><STRONG>Error (%)</STRONG></TD>
+</TR>
+<TR>
+<TD>25-201</TD>
+<TD>1512</TD>
+<TD>201</TD>
+<TD>668</TD>
+<TD>3.3234</TD>
+<TD>25.018</TD>
+<TD>24.919</TD>
+<TD>-0.392%</TD>
+
+</TR>
+<TR>
+<TD>25-401</TD>
+<TD>2978</TD>
+<TD>401</TD>
+<TD>1334</TD>
+<TD>3.3267</TD>
+<TD>24.996</TD>
+<TD>24.938</TD>
+<TD>-0.409%</TD>
+
+</TR>
+<TR>
+<TD>25-801</TD>
+<TD>2978</TD>
+<TD>401</TD>
+<TD>1334</TD>
+<TD>3.3267</TD>
+<TD>24.996</TD>
+<TD>24.938</TD>
+<TD>-0.409%</TD>
+</TR>
+<TR>
+<td>50-201</td>
+<TD>1134</TD>
+<TD>201</TD>
+<TD>290</TD>
+<TD>1.42786</TD>
+<TD>49.989</TD>
+<TD>49.846</TD>
+<TD>+0.087%</TD>
+
+</TR>
+<TR>
+<TD>50-401</TD>
+<TD>2222</TD>
+<TD>401</TD>
+<TD>578</TD>
+<TD>1.4419</TD>
+<TD>50.026</TD>
+<TD>49.931</TD>
+<TD>-0.191%</TD>
+
+</TR>
+<TR>
+<TD>50-801</TD>
+<TD>4399</TD>
+<TD>801</TD>
+<TD>1155</TD>
+<TD>1.4419</TD>
+<TD>50.012</TD>
+<TD>Zo atlc</TD>
+<TD>error</TD>
+
+</TR>
+<TR>
+<TD>100-201</TD>
+<TD>945</TD>
+<TD>201</TD>
+<TD>101</TD>
+<TD>0.5025</TD>
+<TD>100.161</TD>
+<TD>100.093</TD>
+<TD>-0.068%</TD>
+
+</TR>
+<TR>
+<TD>100-401</TD>
+<TD>1846</TD>
+<TD>401</TD>
+<TD>202</TD>
+<TD>0.5037</TD>
+<TD>100.02</TD>
+<TD>99.911</TD>
+<TD>-0.329%</TD>
+
+</TR>
+<TR>
+<TD>100-801</TD>
+<TD>1846</TD>
+<TD>401</TD>
+<TD>202</TD>
+<TD>0.5037</TD>
+<TD>100.02</TD>
+<TD>99.912</TD>
+<TD>-0.329%</TD>
+
+</TR>
+
+<TR>
+<TD>200-201</TD>
+<TD>862</TD>
+<TD>201</TD>
+<TD>18</TD>
+<TD>0.0896</TD>
+<TD>200.81</TD>
+<TD>202.716</TD>
+<TD>+0.945%</TD>
+
+</TR>
+<TR>
+<TD>200-401</TD>
+<TD>1680</TD>
+<TD>401</TD>
+<TD>36</TD>
+<TD>0.08978</TD>
+<TD>200.669</TD>
+<TD>201.182</TD>
+<TD>+0.255%</TD>
+
+</TR>
+<TR>
+<TD>200-801</TD>
+<TD>3317</TD>
+<TD>801</TD>
+<TD>73</TD>
+<TD>0.09114</TD>
+<TD>199.771</TD>
+<TD>199.634</TD>
+<TD>-0.068%</TD>
+
+</TR>
+</TABLE>
+<p>
+Notes:
+<p>
+<OL>
+<LI>
+Due to their large size, most of the  files *Ohm*.bmp are not distributed with <CODE>atlc</CODE>. but may be produced easily with the aid of a script called <CODE>create</CODE> in the examples directory. The script create calls a programme <CODE>sym_strip</CODE>, which was developed for the purpose of producing symmetrical stripline bitmaps. 
+<LI>
+<LI>Run times were up to 1977 s when atlc was compiled with support for multiple processors and up to 3447 s when it was not.</LI></OL>
+ <H2><a name="Accuracy_coupler">Accuracy of <CODE>atlc</CODE> with coupled lines</a></H2>
+Testing the accuracy of <CODE>atlc</CODE> with coupled lines is more difficult that with single isolated lines, since there is to my knowledge only one structure for which exact analytical results exist. For two infinitely thin conductors halfway between two infinitely wide groundplanes (see below)
+<p>
+<img src="jpgs/coupler.jpg" ALT="coupled lines" width="400"><p>
+the odd and even mode impedances can be calculated analytically. If the spacing between the two groundplanes is H, the width of the conductors w, the spacing between the conductors s, and the permittivity of the medium Er, 
+ 
+<CODE><pre>
+----------^-------------------------------------------------------------
+          |                                               
+          |               <---w---> <-----s----><---w-->
+          H              ---------                                 --------            Er
+          |                                      
+          |                               
+----------v-------------------------------------------------------------
+</pre></CODE>
+ 
+then the impedances are given by. <p>
+ 
+Zeven=(30*pi/sqrt(er))*(K(ke')/K(ke))<br>
+Zodd=(30*pi/sqrt(er))*(K(ko')/K(ko))<p>
+
+K(kx)=complete elliptic integral of the first kind. <p>
+
+ke=(tanh((pi/2)*(w/H)))*tanh((pi/2)*(w+s)/H)<br>
+ko=(tanh((pi/2)*(w/H)))*coth((pi/2)*(w+s)/H)<p>
+
+ke'=sqrt(1-(ke^2))<br>
+ko'=sqrt(1-(ko^2))<p>
+
+Those equations are taken from Matthaei, Young and Jones, <EM>Microwave Filters, Impedance Matching Networks and Coupling Structures</EM>,  Artech House, Dedham, MA., 1980. I'm very grateful to Paul Gili AA1LL / KB1CZP  <a href="mailto:aa1ll@email.com">aa1l@email.com</a>  for providing me with these equations, references and nomographs. 
+<p>
+A programme <CODE>make_coupler</CODE> was written to automatically generate bitmaps given the height H between the groundplanes, the conductor widths w and spacing s. Ideally this needs simulating from -infinity to +infinity, but that is not practical. It was assumed that if the complete structure width W was equal to 2*w+s+8*H that would be adequate (this seemed <EM>about right</EM>, but I've no proof it is optimal). As well as producing a bitmap, <CODE>make_coupler</CODE>also calculate the theoretical values of impedance. In order to perform calculations of the theoetical impedance, <CODE>make_coupler </CODE> uses the GNU scientific library <a href="http://sources.redhat.com/gsl">gsl</a>  for the elliptic integral calculations. Hence to obtain the theoretical values, gsl, available at <a href="http://sources.redhat.com/gsl">http://sources.redhat.com/gsl</a>,  <STRONG>must</STRONG> be installed. The bitmaps will still be produced without the gsl library.<p>
+<TABLE border align="bottom">
+<TR>
+<TD><STRONG>Filename</STRONG></TD>
+<TD><STRONG>W</STRONG></TD>
+<TD><STRONG>H</STRONG></TD>
+<TD><STRONG>w</STRONG></TD>
+<TD><STRONG>s</STRONG></TD>
+<TD><STRONG>Er</STRONG></TD>
+<TD><STRONG>Zodd</STRONG></TD>
+<TD><STRONG>Zodd<sup>atlc</sup></STRONG></TD>
+<TD><STRONG>Error</STRONG></TD>
+<TD><STRONG>Zeven</STRONG></TD>
+<TD><STRONG>Zeven<sup>atlc</sup></STRONG></TD>
+<TD><STRONG>Error</STRONG></TD>
+</TR>
+<TR>
+<TD>coupler1</TD>
+<TD>11</TD>
+<TD>1.0</TD>
+<TD>1.0</TD>
+<TD>1.0</TD>
+<TD>1.0</TD>
+<TD>64.768</TD>
+<TD>64.375</TD>
+<TD>-0.61%</TD>
+<TD>66.015</TD>
+<TD>65.621</TD>
+<TD>-0.56%</TD>
+</TR>
+<TR>
+<TD>coupler2</TD>
+<TD>19</TD>
+<TD>1.991</TD>
+<TD>1.0</TD>
+<TD>1.0</TD>
+<TD>1.0</TD>
+<TD>93.282</TD>
+<TD>92.418</TD>
+<TD>-0.93%</TD>
+<TD>107.23</TD>
+<TD>106.36 </TD>
+<TD>-0.80%</TD>
+</TR>
+<TR>
+<TD>coupler3</TD>
+<TD>27</TD>
+<TD>3.0</TD>
+<TD>1.0</TD>
+<TD>1.0</TD>
+<TD>1.0</TD>
+<TD>105.48</TD>
+<TD>104.71</TD>
+<TD>-0.73%</TD>
+<TD>139.77</TD>
+<TD>138.93</TD>
+<TD>-0.60%</TD>
+</TR>
+<TR>
+<TD>coupler5</TD>
+<TD>43</TD>
+<TD>5.0</TD>
+<TD>1.0</TD>
+<TD>1.0</TD>
+<TD>1.0</TD>
+<TD>114.32</TD>
+<TD>113.33</TD>
+<TD>-0.86%</TD>
+<TD>189.27</TD>
+<TD>188.13</TD>
+<TD>-0.60%</TD>
+</TR>
+<TR>
+<TD>coupler6</TD>
+<TD>10.0</TD>
+<TD>1.0</TD>
+<TD>1.0</TD>
+<TD>0.5</TD>
+<TD>1.0</TD>
+<TD>62.200</TD>
+<TD>61.792</TD>
+<TD>-0.66%</TD>
+<TD>68.243</TD>
+<TD>67.869</TD>
+<TD>-0.55%</TD>
+</TR>
+<TR>
+<TD>coupler7</TD>
+<TD>10.0</TD>
+<TD>1.0</TD>
+<TD>1.0</TD>
+<TD>.099</TD>
+<TD>1.0</TD>
+<TD>50.723</TD>
+<TD>50.322</TD>
+<TD>-0.79%</TD>
+<TD>74.403</TD>
+<TD>74.000</TD>
+<TD>-0.54%</TD>
+</TR>
+<TR>
+<TD>coupler8</TD>
+<TD>5</TD>
+<TD>0.25</TD>
+<TD>1.0</TD>
+<TD>1.0</TD>
+<TD>1.0</TD>
+<TD>21.221</TD>
+<TD>21.069</TD>
+<TD>-0.72%</TD>
+<TD>21.221</TD>
+<TD>21.069</TD>
+<TD>-0.71%</TD>
+</TR>
+</TABLE>
+<p>
+Note, because of the need to simulate a large width W, these calculations are much slower than those above. The fact the simulation has to be done twice also adds to the time taken. A typical run, using the default bitmap size (18, which gives bitmap of 128 to 512kb), the time taken is approximately 2 minutes on a dual 300 MHz Sun Ultra 60. 
+<p>atlc is written and supported by <a href="mailto: drkirkby@ntlworld.com?subject=atlc%20-%20Arbitrary%20Transmission%20Line%20Calculator">Dr. David Kirkby (G8WRB)</A> It it issued under the <a href="http://www.gnu.org/copyleft/gpl.html">GNU General Public License</A><p>
+<a href="http://atlc.sourceforge.net">Return to the atlc homepage</a>
+</body>
+</html>
