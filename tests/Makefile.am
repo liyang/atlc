@@ -162,5 +162,5 @@ test.V.odd.bin \
 test.V.odd.bmp \
 test.bmp \
 test.txt \
-test.log \
-tests2.txt
+tests.log \
+test2.txt
