@@ -1,6 +1,6 @@
 #include "definitions.h"
 
-void print_copyright(char *s)
+void print_copyright(const char *s)
 {
   printf("Copyright (C) %s. Dr. David Kirkby, PhD (G8WRB).\n",s);
   printf("Dr. David Kirkby, e-mail drkirkby@ntlworld.com \n");
