@@ -1,3 +1,20 @@
+******Chnages to unrelesed 5.0.0 ********
+
+src/non_gui/Makefile.am
+removed a double entry for the header file definitions.h
+in create_bmp_for_stripline_coupler_SOURCES
+
+Added the followign files that were ommited when put into CVS
+
+gtk.m4
+depcomp
+src/non_gui/output_from_design_coupler-Sun-Ultra-80.txt
+
+Makefile.am
+Remmoved entry for README.alpha. It's contents were out of date but we might 
+want to add a file with the same name later. Who knows?
+
+
 ******Version 4.2.8 Released 12 Jan 2003 ********
 Copied onto Sourceforge CVS *all* the 4.2.8 files. Some 
 were missing before. 
