@@ -52,6 +52,8 @@ simulation. */
 #define NEG_TO_POS                         -1
 #define METAL_ER  1e9
 
+#define ZERO_ELEMENTS_FIRST 0       
+
 #ifndef TRUE 
 #define TRUE 1
 #define FALSE 0
@@ -98,6 +100,18 @@ Laboratory's list of physical constants found on the web. */
 #define CIRC_IN_RECT 3
 #define RECT_IN_CIRC 4
 
+#define DEFAULT_GMIN 0.5
+#define DEFAULT_GMAX 5.0
+#define DEFAULT_GSTEP 0.5
+
+#define DEFAULT_SMIN 0.5
+#define DEFAULT_SMAX 5.0
+#define DEFAULT_SSTEP 0.5
+
+#define DEFAULT_WMIN 0.5
+#define DEFAULT_WMAX 5.0
+#define DEFAULT_WSTEP 0.5
+
 extern char *my_optarg;
 /* I needed to invent add my_ in front of the usual name for optind,
 opterr, optopt etc, since they are defined by the system, and I'm using
@@ -133,7 +147,8 @@ int dielectrics_on_command_line;
 int dielectrics_in_bitmap;
 int avoid_use_of_fast_convergence_methodQ;
 int couplerQ;
-int write_field_imagesQ;
+int write_binary_field_imagesQ;
+int write_bitmap_field_imagesQ;
 double float_values[10];
 int int_values[10];
 int importance[10];
@@ -232,41 +247,38 @@ double finite_difference(int iterations);
 void do_columns(int *thread);
 void usage_atlc(void);
 void write_fields_for_two_conductor_lines(char *filename, struct transmission_line_properties data);
-void write_fields_for_directional_couplers(char *filename, struct transmission_line_properties data);
+void write_fields_for_directional_couplers(char *filename, struct transmission_line_properties data, int odd_or_even);
 char **cmatrix(long nrl, long nrh, long ncl, long nch);
 unsigned char **ucmatrix(long nrl, long nrh, long ncl, long nch);
 int *ivector(long nl, long nh);
 void get_Er1_and_Er2_colours(int *colour_Er1, int *colour_Er2);
-int convert_rect_in_rect_dimensions_to_integers(int bmp_size);
-int convert_circ_in_circ_dimensions_to_integers(int bmp_size);
+int convert_create_bmp_for_rect_in_rect_dimensions_to_integers(int bmp_size);
+int convert_create_bmp_for_circ_in_circ_dimensions_to_integers(int bmp_size);
 unsigned char *ustring(long nl,long nh);
 void write_bitmap(FILE *image_data_fp, struct transmission_line_properties foo);
-void usage_rect_in_rect(void);
-void usage_calc_coupler(void);
-void usage_rect_cen_in_rect(void);
+void usage_create_bmp_for_rect_in_rect(void);
+void usage_create_bmp_for_rect_cen_in_rect(void);
 void write_bitmap_out(unsigned char *image_data, FILE *image_data_fp,int image_size, int W, int H);
 void byteswap_ints( int *a);
 void byteswap_longs( long *a);
 void byteswap_shorts( short *a);
 int align_bitmap_image(int W, int H, unsigned char *unaligned_image, unsigned char *byte_aligned_image);
-void fill_rect_in_rect(char *image_vector, int colour_Er1, int colour_Er2);
-void check_rect_in_rect_ints(void);
-void check_rect_in_rect_doubles(void);
+void fill_create_bmp_for_rect_in_rect(char *image_vector, int colour_Er1, int colour_Er2);
+void check_create_bmp_for_rect_in_rect_ints(void);
+//void check_create_bmp_for_rect_in_rect_doubles(void);
 void error_and_exit(char error_text[], int exitnumber);
-void check_error(double user, int rect_in_rect, double gridsize, char
+void check_error(double user, int create_bmp_for_rect_in_rect, double gridsize, char
 *name);
-void check_rect_in_rect_doubles(void);
+//void check_create_bmp_for_rect_in_rect_doubles(void);
 void error_and_exit(char error_text[], int exitnumber);
-void check_error(double user, int rect_in_rect, double gridsize, char *name);
-void check_circ_in_circ_doubles(void);
+void check_error(double user, int create_bmp_for_rect_in_rect, double gridsize, char *name);
+void check_parameters_for_create_bmp_for_circ_in_circ(void);
 void fill_image_vector_with_data(unsigned char *image_vector, int colour_Er1, int colour_Er2, struct transmission_line_properties x);
-void usage_circ_in_circ(void);
-void check_circ_in_rect_doubles(void);
-void check_rect_in_circ_doubles(void);
-int convert_rect_in_circ_dimensions_to_integers(int accuracy_level);
-void usage_rect_in_circ(void);
-int convert_circ_in_rect_dimensions_to_integers(int accuracy_level);
-void usage_circ_in_rect(void);
+void usage_create_bmp_for_circ_in_circ(void);
+int convert_create_bmp_for_rect_in_circ_dimensions_to_integers(int accuracy_level);
+void usage_create_bmp_for_rect_in_circ(void);
+int convert_create_bmp_for_circ_in_rect_dimensions_to_integers(int accuracy_level);
+void usage_create_bmp_for_circ_in_rect(void);
 void check_for_shorts(void);
 void usage_symmetrical_strip(void);
 void fill_image_vector_for_thin_strip(int W,int H, int w, unsigned char *unaligned_image_vector);
@@ -278,10 +290,9 @@ int print_data(FILE *fp, char *filename, double Er, double C, double L, double Z
 Zodd, double Zeven, int whichZ, double v, double vf);
 void check_for_boundaries(void);
 double find_energy_per_metre(int i, int j);
-
 void update_voltage_array(int i);
 FILE *get_file_pointer_with_right_filename(char *filename, char *ext);
-void find_maximum_values(struct max_values *maximum_values);
+void find_maximum_values(struct max_values *maximum_values, int zero_elementsQ);
 void calculate_colour_data(double x, double xmax, int w, int h, int offset, unsigned char *image_dat, char image_type);
 double find_Ex(int w, int h) ;
 double find_Ey(int w, int h);
@@ -292,7 +303,7 @@ void usage_readbin(void);
 void ERR(char *s, char c, char **argv);
 char *index2(char *str, char c);
 void swap_conductor_voltages(int way_to_swap);
-void usage_generate_coupler_bitmap(void);
+void usage_create_bmp_for_stripline_coupler(void);
 double calculate_integer_values(struct transmission_line_properties *optimise, int n, int accuarcy_level);
 void calculate_Zodd_and_Zeven(double *Zodd, double *Zeven, double *Zo, double w, double H, double s, double er);
 void usage_design_coupler(void);
@@ -302,6 +313,11 @@ void do_fd_calculation(struct transmission_line_properties *data, FILE *where_to
 int print_data_for_directional_couplers(struct transmission_line_properties data, FILE *where_to_print_fp, char *inputfile_name);
 int print_data_for_two_conductor_lines(struct transmission_line_properties data, FILE *where_to_print_fp, char *inputfile_name);
 void set_data_to_sensible_starting_values(struct transmission_line_properties *data);
-void check_parameters_of_generate_bmp_for_coupled_microstrip(struct transmission_line_properties pcb);
-void convert_generate_coupled_microstrip_bitmap_dimensions_to_integers(struct transmission_line_properties *pcb);
-void usage_generate_bmp_for_coupled_microstrip(void);
+void check_parameters_of_create_bmp_for_microstrip_coupler(struct transmission_line_properties pcb);
+void convert_create_create_bmp_for_coupled_microstrip_dimensions_to_integers(struct transmission_line_properties *pcb);
+void usage_create_bmp_for_microstrip_coupler(void);
+void usage_find_optimal_dimensions_for_microstrip_coupler();
+void check_parameters_of_create_bmp_for_circ_in_circ();
+void check_parameters_of_create_bmp_for_circ_in_rect();
+void check_parameters_of_create_bmp_for_rect_in_circ();
+void check_parameters_of_create_bmp_for_rect_in_rect(void);
