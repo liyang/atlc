@@ -26,62 +26,127 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #include <stdlib.h>
 #endif  
 
-#include "definitions.h"
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
 
+#include "definitions.h"
+#include "exit_codes.h"
+
+extern char *my_optarg;
 int main(int argc, char **argv)
 {
-  double s, w, g, Zcomm, Zdiff, Zodd, Zeven;  
+  double g, gmin=0.5, gmax=5, gstep=0.5, best_g;  
+  double s, smin=0.5, smax=5, sstep=0.5, best_s;
+  double w, wmin=0.5, wmax=5, wstep=0.5, best_w;
+  double Er1=1, Er2=1, h=1, t=1; /* keep the compiler from issuing warnings */   
+  double Zcomm, Zdiff, Zodd, Zeven;  
   double Er_odd, Er_even, Zo;
-  double error_min=1e100, error, best_s, best_w, best_g; 
-  double ideal_Zcomm=30; 
-  double ideal_Zdiff=90;
-  int x;
+  double error_min=1e100, error; 
+  double ideal_Zodd=0, ideal_Zeven=0; 
+  char *outfile_name, *temporary_bmp_file, *temporary_txt_file;
+  int x, q;
   char *text, *null;
   FILE *fp, *fp_best;
-  text = (char *) malloc(4000);
-  null = (char *) malloc(4000);
-
-  //for(s=0.1; s<5; s+=0.5)
-  s=0.5;
-    for(w=0.1; w<=5; w+=0.5)
-      for(g=0.1; g<=5; g+=0.5)
+  outfile_name = string(0,4000);
+  text = string(0,4000);
+  null = string(0,4000);
+  temporary_bmp_file = string(0,4000);
+  temporary_txt_file = string(0,4000);
+  while((q=get_options(argc,argv,"g:G:w:W:s:S:")) != -1)
+  switch (q) 
+  {
+    case 'C':
+      print_copyright( (char *) "1996-2002");
+      exit(1);
+    break;
+    case 'g':
+      gmin=atof(my_optarg);
+    break;
+    case 'G':
+      gmax=atof(my_optarg);
+    break;
+    case 'h':
+      gstep=atof(my_optarg);
+    break;
+    case 's':
+      smin=atof(my_optarg);
+    break;
+    case 'S':
+      smax=atof(my_optarg);
+    break;
+    case 't':
+      sstep=atof(my_optarg);
+    break;
+    case 'w':
+      wmin=atof(my_optarg);
+    break;
+    case 'W':
+      wmax=atof(my_optarg);
+    break;
+    case 'x':
+      wstep=atof(my_optarg);
+    break;
+    case '?':
+      usage_find_optimal_dimensions_for_microstrip_coupler();
+    break;
+  }
+  if(argc-my_optind == 7)
+  {
+    h=atof(argv[my_optind]);
+    t=atof(argv[my_optind+1]);
+    Er1=atof(argv[my_optind+2]);
+    Er2=atof(argv[my_optind+3]);
+    ideal_Zodd=atof(argv[my_optind+4]);
+    ideal_Zeven=atof(argv[my_optind+5]);
+    strcpy(outfile_name, argv[my_optind+6]);
+  }
+  else
+   usage_find_optimal_dimensions_for_microstrip_coupler(); 
+  //(void) tmpnam(temporary_bmp_file); 
+  //(void) temporary_txt_file=tmpnam(temporary_txt_file);
+  strcpy(temporary_bmp_file,"1.bmp");
+  strcpy(temporary_txt_file,"1.txt");
+  printf("rrrrrrrrrr = %s %s \n", temporary_bmp_file,temporary_txt_file);
+  for(g=gmin; g <=gmax; g+=gstep)
+  {
+    for(w=wmin; w<=wmax; w+=wstep)
+    {
+      for(s=smin; s<=smax; s+=sstep)
       {
-	//printf("s=%f w=%f g=%f >>iterate.txt");
-	sprintf(text,"generate_bmp_for_coupled_microstrip %f %f %f 1.593 0.035 1 3.7 iterate.bmp\n",w, s, g);
+	sprintf(text,"create_bmp_for_microstrip_coupler %f %f %f %f %f %f %f %s\n",w, s, g, h, t, Er1, Er2,temporary_bmp_file);
 	system(text);
 	//printf(text);
-	//printf(text);
-	sprintf(text,"atlc iterate.bmp >> foo.txt\n");
-	//printf(text);
+	sprintf(text,"atlc -S -s %s > %s\n", temporary_bmp_file, temporary_txt_file);
+	printf(text);
 	system(text);
-	fp=fopen("foo.txt","r");
-	if(fp==NULL)
-	{
-	  fprintf(stderr,"can't open file\n");
-	  exit(2);
-        }
+	if ((fp=fopen(temporary_txt_file,"r")) ==NULL)
+	  error_and_exit("Error #1 cant't open file in find_optimal_dimensions_for_microstrip_coupler.c", CANT_OPEN_FILE_FOR_READING);
 	fscanf(fp,"%s %d %s %lf %s %lf %s %lf %s %lf %s %lf %s %lf %s %lf",null,&x,null,&Er_odd,null,&Er_even, null, &Zodd,null,&Zeven,null,&Zo, null, &Zdiff,null,&Zcomm);
-	fclose(fp);
+	if (fclose(fp) !=0)
+	  error_and_exit("Error #2 Unable to close file in ind_optimal_dimensions_for_microstrip_coupler.c",CANT_CLOSE_FILE);
 	printf("x=%d Er_odd=%f Er_even=%f Zodd=%lf Zeven=%lf Zo=%lf Zdiff=%lf Zcomm=%lf\n",x, Er_odd,Er_even,Zodd, Zeven,Zo, Zdiff, Zcomm);
-	error=fabs(Zdiff-ideal_Zdiff)/ideal_Zdiff+fabs(Zcomm-ideal_Zcomm)/ideal_Zcomm;
-	if(error< error_min)
+	error=fabs(Zodd-ideal_Zodd)/ideal_Zodd+fabs(Zeven-ideal_Zeven)/ideal_Zeven;
+	/* By forcing the error to be a be not just bettter, but better by at 
+	least TINY, it means the results will be the same on differerent computers,
+	with no difference due to rouunding errors */
+	if(error< error_min+TINY)
 	{
 	  best_s=s;
 	  best_w=w; 
 	  best_g=g;
 	  error_min=error;
-	  printf("best so far = s=%f w=%f g=%f Zodd=%f Zeven=%f Zdiff=%f Zcomm=%f\n",s,w,g, Zodd, Zeven,Zdiff, Zcomm);
-	  fp_best=fopen("test_results.txt","a");
-	  if(fp_best == NULL)
-	  {
-	    fprintf(stderr,"Can't open file  test_results.txt for update\n");
-	    exit(1);
-          }
+	  printf("best so far = s=%f w=%f g=%f Zodd=%f Zeven=%f Zdiff=%f Zcomm=%f error=%f\n",s,w,g, Zodd, Zeven,Zdiff, Zcomm,error);
+	  if ((fp_best=fopen(outfile_name,"a")) == NULL)
+	    error_and_exit("Error #3 Can't open file output file update",CANT_OPEN_FILE_FOR_APPENDING);
 	  fprintf(fp_best,"best so far = s=%f w=%f g=%f Zodd=%f Zeven=%f Zdiff=%f Zcomm=%f\n",s,w,g, Zdiff, Zcomm,Zodd, Zeven);
-	  fclose(fp_best);
-        }
-      }
-      exit(0);
+	  if (fclose(fp_best)  != 0)
+	    error_and_exit("Error #4 Unable to close file in optimal_dimensions_for_microstrip_coupler.c",CANT_CLOSE_FILE);
+        } // end of if
+      } // end of for s
+    } // end of for w
+  } // end of for g
+  exit(0);
 }
 	
     

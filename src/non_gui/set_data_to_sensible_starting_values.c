@@ -47,6 +47,8 @@ void set_data_to_sensible_starting_values(struct transmission_line_properties *d
   data->couplerQ=FALSE;
   data->verbose_level=0;
   data->should_binary_data_be_written_tooQ=FALSE;
+  data->write_binary_field_imagesQ=TRUE;
+  data->write_bitmap_field_imagesQ=TRUE;
 
   data->Lodd_vacuum=-3; data->Leven_vacuum=-3;
   data->L_vacuum=-3; data->Codd_vacuum=-3;

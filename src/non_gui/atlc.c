@@ -78,8 +78,7 @@ double r=1.95;
 
 extern int main(int argc, char **argv) /* Read parameters from command line */
 {
-  //FILE *appendfile_fp;
-  FILE *resultfile_fp, *where_to_print_fp=stdout, *image_data_fp;
+  FILE *where_to_print_fp=stdout, *image_data_fp;
   char *outputfile_name, *inputfile_name, *appendfile_name;
   long i;
   int offset;
@@ -93,7 +92,7 @@ extern int main(int argc, char **argv) /* Read parameters from command line */
   appendfile_name=string(0,1000);
   /* only use this if we have both a multi-threaded application and that 
   with have the function */
-  while((q=get_options(argc,argv,"Cr:vsc:d:F:i:t:")) != -1)
+  while((q=get_options(argc,argv,"Cr:vsSc:d:F:i:t:")) != -1)
   switch (q) 
   {
     case 'C':
@@ -131,7 +130,10 @@ extern int main(int argc, char **argv) /* Read parameters from command line */
       data.r=atof(my_optarg);
     break;
     case 's':
-      data.write_field_imagesQ=FALSE;
+      data.write_bitmap_field_imagesQ=FALSE;
+    break;
+    case 'S':
+      data.write_binary_field_imagesQ=FALSE;
     break;
     case 'F':
       strcpy(appendfile_name,my_optarg);
@@ -169,7 +171,6 @@ without the threads\nlibrary.\n",1);
   {
     strcpy(inputfile_name, argv[my_optind]);
     strcpy(outputfile_name, inputfile_name);
-    resultfile_fp=get_file_pointer_with_right_filename(inputfile_name,".txt");
     read_bitmap_file_headers(inputfile_name, &offset, &size, &width, &height);
     image_data=ustring(0L,size);
     /* On Solaris systems, if the following is not executed, only one 
