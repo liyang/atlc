@@ -61,7 +61,7 @@ void do_fd_calculation(struct transmission_line_properties *data, FILE *where_to
       }
       else
 	data->Er=1.0;
-      //data->Zo=sqrt(data->L_vacuum/data->C);  /* Standard formula for Zo */
+      data->Zo=sqrt(data->L_vacuum/data->C);  /* Standard formula for Zo */
       data->Zodd=sqrt(data->L_vacuum/data->C);  /* Standard formula for Zo */
       velocity_of_light_in_vacuum=1.0/(sqrt(MU_0 * EPSILON_0)); /* around 3x10^8 m/s */
       data->velocity=1.0/pow(data->L_vacuum*data->C,0.5);
@@ -69,8 +69,11 @@ void do_fd_calculation(struct transmission_line_properties *data, FILE *where_to
       data->relative_permittivity=sqrt(data->velocity_factor); /* ??? XXXXXX */
       if(data->verbose_level > 0 ) // Only needed if intermediate results wanted. 
         print_data_for_two_conductor_lines(*data, where_to_print_fp, inputfile_filename);
-      write_fields_for_two_conductor_lines(inputfile_filename, *data);
     } while (fabs((capacitance_old-capacitance)/capacitance_old) > data->cutoff); /* end of FD loop */
+    if((data->write_binary_field_imagesQ == TRUE || data->write_bitmap_field_imagesQ == TRUE) && data->dielectrics_in_bitmap==1 )
+      write_fields_for_two_conductor_lines(inputfile_filename, *data);
+    if(data->verbose_level == 0 && data->dielectrics_in_bitmap==1 )
+      print_data_for_two_conductor_lines(*data, where_to_print_fp, inputfile_filename);
 
     if ( data->dielectrics_in_bitmap >1)
     {
@@ -80,7 +83,7 @@ void do_fd_calculation(struct transmission_line_properties *data, FILE *where_to
       has to be recalculated, taking care not to alter the inductance
       at all */
       if(data->verbose_level >= 2)
-        printf("Now taking into account the permittivities of the different dielectrics.\n");
+        printf("Now taking into account the permittivities of the different dielectrics for 2 conductors.\n");
 
       dielectrics_to_consider_just_now=3; /* Any number > 1 */
       data->dielectrics_to_consider_just_now=2; /* Any number > 1 */
@@ -99,16 +102,16 @@ void do_fd_calculation(struct transmission_line_properties *data, FILE *where_to
 	data->Er=data->C/data->C_vacuum;
         if(data->verbose_level > 0 ) // Only needed if intermediate results wanted. 
           print_data_for_two_conductor_lines(*data, where_to_print_fp, inputfile_filename);
-        write_fields_for_two_conductor_lines(inputfile_filename, *data);
       } while (fabs((capacitance_old-capacitance)/capacitance_old) > data->cutoff); /* end of FD loop */
 
       /* We must print the results now, but only bother if the verbose level was 
       not not incremented on the commmand line, otherwide there will be two duplicate
       lines */
 
-      if (data->verbose_level >= 1)
+      if (data->verbose_level == 0)
         print_data_for_two_conductor_lines(*data, where_to_print_fp, inputfile_filename);
-      write_fields_for_two_conductor_lines(inputfile_filename, *data);
+      if(data->write_binary_field_imagesQ == TRUE || data->write_bitmap_field_imagesQ == TRUE)
+        write_fields_for_two_conductor_lines(inputfile_filename, *data);
     }
   }
   else if (data->couplerQ==TRUE)
@@ -157,16 +160,18 @@ void do_fd_calculation(struct transmission_line_properties *data, FILE *where_to
       data->relative_permittivity_odd=sqrt(data->velocity_factor); /* ??? XXXXXX */
       data->Er_odd=data->Codd/data->Codd_vacuum;
       data->Zdiff=2.0*data->Zodd;
+      /* Print text if uses wants it */
       if(data->verbose_level>=1)
         print_data_for_directional_couplers(*data, where_to_print_fp, inputfile_filename);
-      write_fields_for_directional_couplers(inputfile_filename, *data);
     } while (fabs((capacitance_old-capacitance)/capacitance_old) > data->cutoff); /* end of FD loop */
+    /* display bitpamps/binary files if this is the last odd-mode computation */
+    if((data->write_binary_field_imagesQ == TRUE || data->write_bitmap_field_imagesQ == TRUE) && data->dielectrics_in_bitmap==1 )
+      write_fields_for_directional_couplers(inputfile_filename, *data, ODD);
 
     /* Stage 2 - compute the odd-mode impedance taking into account other dielectrics IF NECESSARY */
 
     if ( data->dielectrics_in_bitmap >1)
     {
-    printf("fff");
       if(data->verbose_level >= 2)
         printf("Now taking into account the permittivities of the different dielectrics to compute Zodd.\n");
       data->display = Z_ODD_SINGLE_DIELECTRIC;
@@ -189,8 +194,9 @@ void do_fd_calculation(struct transmission_line_properties *data, FILE *where_to
 	data->Zdiff=2.0*data->Zodd;
 	if(data->verbose_level>=1)
           print_data_for_directional_couplers(*data, where_to_print_fp, inputfile_filename);
-        write_fields_for_directional_couplers(inputfile_filename, *data);
       } while (fabs((capacitance_old-capacitance)/capacitance_old) > data->cutoff); /* end of FD loop */
+      if((data->write_binary_field_imagesQ == TRUE || data->write_bitmap_field_imagesQ == TRUE) && data->dielectrics_in_bitmap!=1 )
+        write_fields_for_directional_couplers(inputfile_filename, *data, ODD);
     } /* end of stage 2 for couplers */
 
     /* Stage 3 - compute the even-mode impedance assuming single dielectic */
@@ -231,19 +237,19 @@ void do_fd_calculation(struct transmission_line_properties *data, FILE *where_to
       data->Zo=sqrt(data->Zodd * data->Zeven);
 	if(data->verbose_level>=1)
           print_data_for_directional_couplers(*data, where_to_print_fp, inputfile_filename);
-      write_fields_for_directional_couplers(inputfile_filename, *data);
+      /* display bitpamps/binary files if this is the last even-mode computation */
     } while (fabs((capacitance_old-capacitance)/capacitance_old) > data->cutoff); /* end of FD loop */
-
-    /* Stage 4 - compute the even-mode impedance assuming multiple dielectics IF NECESSARY */
-    data->display = Z_EVEN_SINGLE_DIELECTRIC;
-    dielectrics_to_consider_just_now=2;
-    data->dielectrics_to_consider_just_now=2;
-    if(data->verbose_level >= 2)
-      printf("Now taking into account the permittivities of the different dielectrics to compute Zeven\n");
+    if((data->write_binary_field_imagesQ == TRUE || data->write_bitmap_field_imagesQ == TRUE) && data->dielectrics_in_bitmap==1)
+      write_fields_for_directional_couplers(inputfile_filename, *data, EVEN);
 
     capacitance=VERY_LARGE; /* Can be anything large */
+    /* Stage 4 - compute the even-mode impedance assuming multiple dielectics IF NECESSARY */
     if ( data->dielectrics_in_bitmap >1)
     {
+      dielectrics_to_consider_just_now=2;
+      data->dielectrics_to_consider_just_now=2;
+      if(data->verbose_level >= 2)
+        fprintf(stderr,"Now taking into account the permittivities of the different dielectrics to compute Zeven\n");
       do /* Start a finite calculation */
       {
         capacitance_old=capacitance;
@@ -260,8 +266,9 @@ void do_fd_calculation(struct transmission_line_properties *data, FILE *where_to
 	data->Zo=sqrt(data->Zeven*data->Zodd);
 	if(data->verbose_level>=1)
           print_data_for_directional_couplers(*data, where_to_print_fp, inputfile_filename);
-        write_fields_for_directional_couplers(inputfile_filename, *data);
       } while (fabs((capacitance_old-capacitance)/capacitance_old) > data->cutoff); /* end of FD loop */
+      if(data->write_binary_field_imagesQ == TRUE || data->write_bitmap_field_imagesQ == TRUE)
+        write_fields_for_directional_couplers(inputfile_filename, *data, EVEN);
     } /* end of stage 4 */
     /* Print the results if the verbose level was 0 (no -v flag(s) ). */
     if (data->verbose_level == 0)
