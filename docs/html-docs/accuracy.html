@@ -11,7 +11,9 @@
 <BODY>
 
 <H1>Accuracy and run-times of <CODE>atlc</code></H1>
-atlc is very accurate, as the data below will confirm. In a total of 31 tests performed on standard two-conductor transmission lines the maximum error was only 0.945 % and the rms error was 0.259  %. On a <a href="accuracy.html#Accuracy_coupler">directional coupler</a>, the maximum error was 0.927%, but the typical error was around 0.6%.  Read on if you wish to know how these figures were arrived at. 
+atlc is very accurate, as the data below will confirm. In a total of 31 tests performed on standard two-conductor transmission lines the maximum error was only 0.945 % and the rms error was 0.259  %. On a <a href="accuracy.html#Accuracy_coupler">directional coupler</a>, the maximum error was 0.927%, but the typical error was around 0.6%.  Read on if you wish to know how these figures were arrived at. </p>
+
+<p>However, on the 16th of October 2003 I was advised atlc is not accurate when there are more than one dielectric, so as of version 4.5.1 (released on the 15th of October 2003), this facility has been disabled. atlc still work very accurate when there is a single dielectric. </p>
 
 <p>In order to test the accuracy of  <CODE>atlc</code>, some simple geometries were devised, for which there are known exact analytical solutions. Three cases were considered for two-wire transmission lines - the <a href="accuracy.html#Accuracy_coax">standard coaxial cable</a>, an off-centre or <a href="accuracy.html#Accuracy_eccentric_coax">eccentric coaxial cable</a> and a <a href="accuracy.html#Accuracy_symmetrical_strip">symmetrical strip transmission line</a>. For three-wires, which can be used to make a 4-port directional coupler, the  accuracy was compared using <a href="accuracy.html#Accuracy_coupler">two edge-on strip lines.</a>, as that is the only case I am aware of that has an exact analytical solution. No significant tested has been peformed with mulitple dielectrics, due mainly to the lack of any exact analytical equations. I've made limited comparisions to other numerical techniques, but it is difficult to know what causes any differences in this case. 
 
