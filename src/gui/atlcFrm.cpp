@@ -172,6 +172,7 @@ void atlcFrame::OnFiniteDifference(wxCommandEvent& WXUNUSED(event))
 {
 
   FiniteDifferenceFrame *frame = new FiniteDifferenceFrame("Use a Finite Difference numerical method",wxPoint(50,50),wxSize(500,300) );
+  SetAutoLayout(TRUE);
   // Make a panel with a message
   //wxPanel *panel = new wxPanel(frame, -1, wxPoint(0,0),wxSize(100,100),wxTAB_TRAVERSAL,"foo");
   //wxPanel *panel = new wxPanel(atlcFrame, -1, wxPoint(0,0),wxSize(100,100),wxTAB_TRAVERSAL,"foo");
@@ -194,8 +195,8 @@ void atlcFrame::OnFiniteDifference(wxCommandEvent& WXUNUSED(event))
 void atlcFrame::OnRoundCoax(wxCommandEvent& WXUNUSED(event))
 {
   // Create the window for the standard round coax. 
-  RoundCoaxFrame *frame = new RoundCoaxFrame("Standard Round Coaxial Cable",wxPoint(50,50),wxSize(500,500) );
-
+  RoundCoaxFrame *frame = new RoundCoaxFrame("Standard Round Coaxial Cable",wxPoint(0,5),wxSize(500,500) );
+  SetAutoLayout(TRUE); 
   frame->Show(TRUE);
 }
 
