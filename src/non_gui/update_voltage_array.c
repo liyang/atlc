@@ -75,6 +75,7 @@ void update_voltage_array(int nmax, int imin, int imax, int jmin, int jmax, doub
   unsigned char oddity_value;
   double Va, Vb, Vc, Vd, ERa, ERb, ERc, ERd;
   double a, b, c, d, e, f, g, h;
+  double vnew;
 
   for(n=0; n  < nmax; ++n)
     for(k=0; k < 4; ++k)
@@ -82,8 +83,10 @@ void update_voltage_array(int nmax, int imin, int imax, int jmin, int jmax, doub
         for (j = (k==0 || k ==3) ? jmin : jmax; (k ==0 || k == 3)  ? j <= jmax : j >= jmin ; (k == 0 || k ==3) ?  j++ : j--){
         oddity_value=oddity[i][j];
         
-        if(oddity_value == ORDINARY_INTERIOR_POINT)  
-          V_to[i][j]=r*(V_from[i][j+1]+V_from[i+1][j]+V_from[i][j-1]+V_from[i-1][j])/4.0+(1-r)*V_from[i][j];
+        if(oddity_value == ORDINARY_INTERIOR_POINT)  {
+          //V_to[i][j]=r*(V_from[i][j+1]+V_from[i+1][j]+V_from[i][j-1]+V_from[i-1][j])/4.0+(1-r)*V_from[i][j];
+          vnew=(V_from[i][j+1]+V_from[i+1][j]+V_from[i][j-1]+V_from[i-1][j])/4.0;
+        }
         else if (i > 1 && j > 0 && i < width-1 && j < height-1) {
 
         a=(Er[i][j-1] * V_from[i][j-1])/(Er[i][j] + Er[i][j-1]);
@@ -108,15 +111,17 @@ void update_voltage_array(int nmax, int imin, int imax, int jmin, int jmax, doub
           ERd=V_from[i][j-1];
 
           // V_to[i][j]=(Va+Vb)/4.0 + (Vb-Va)*(ERb-ERa)/(16*Er[i][j]) + (Vd+Vc)/4.0 + (Vc-Vd)*(ERc-ERd)/(16.0*Er[i][j]);
-	  V_to[i][j]=r*(a+b+c+d)/(e+f+g+h) + (1-r)*V_from[i][j];
+	  //V_to[i][j]=r*(a+b+c+d)/(e+f+g+h) + (1-r)*V_from[i][j];
+	  vnew=(a+b+c+d)/(e+f+g+h);
         }
+	V_to[i][j]=r*vnew+(1-r)*V_from[i][j];
 
 #define gg
 
 #ifdef gg
         /* the following lines calculate the voltages at the edges and the corners */
 
-        else if( oddity_value == TOP_LEFT_CORNER ) {  /* top left */
+        if( oddity_value == TOP_LEFT_CORNER ) {  /* top left */
           V_to[i][j]=0.5*(V_from[1][0]+V_from[0][1]);               
 	  // printf("done top left corner %d %d \n",i,j);
         }
