@@ -1,4 +1,141 @@
-******Version 4.2.4 Release 31/12/02********
+******Version 4.2.8 Released ??????********
+Copied onto Sourceforge CVS *all* the 4.2.8 files. Some 
+were missing before. 
+
+examples/Makefile.am
+Changed the CLEANFILE line to DISCLEANFILES, so that
+running 'make clean' will not delete the example files
+created, but running 'make distclean' will. 
+Added a lot of txt files (see note below). 
+
+in examples diretory
+Added ....bmp.txt files, as the output of running atlc
+on each of the .bmp files. 
+
+
+src/non_gui/usage_atlc.c
+src/non_gui/usage_circ_in_rect.c
+src/non_gui/usage_create_bmp_for_circ_in_circ.c
+src/non_gui/usage_create_bmp_for_circ_in_rect.c
+src/non_gui/usage_create_bmp_for_microstrip_coupler.c
+src/non_gui/usage_create_bmp_for_rect_cen_in_rect.c
+src/non_gui/usage_create_bmp_for_rect_in_circ.c
+src/non_gui/usage_create_bmp_for_rect_in_rect.c
+src/non_gui/usage_create_bmp_for_stripline_coupler.c
+src/non_gui/usage_create_bmp_for_symmmetrical_stripline.c
+src/non_gui/usage_design_coupler.c
+src/non_gui/usage_find_optimal_dimensions_for_microstrip_coupler.c
+src/non_gui/usage_readbin.c
+All above files have been modified to print a version number if 
+run incorrectly. Perhaps adding a -V option that just prints 
+the version and exits would not be a bad idea, at a later date
+
+examples/cvsignore
+Removed *.bmp and added *.bin. Put cvsignore on CVS
+
+src/non_gui/do_fd_calculation 
+added a return(0) to prevent the compiler from preventing a warning.
+
+src/non_gui/setup_arrays.c
+Uncommented the check_for_shorts line, as it does do something 
+very useful. 
+
+src/non_gui/check_for_shorts.c
+Remove remarks about setting a floating conductor to +1 V
+as floating conductors are not supported. 
+
+examples/README
+Updated examples/README, so it is more up to date,
+listing only the files in the 4.2.8 distribution
+and no more. The theretical impedance for some 
+examples are included, where there is an exact
+theoerically answer. Sometimes the structure tries
+to approximate a stucture that has an exact theoreticas
+answer, but never can exactly (we can't make the bitmaps
+infinitely wide!!). There are noted where appropiate.
+Not all the theoretical answers are at this point in the
+README. 
+
+configure.in 
+Changed to look for optimised
+math library (libmopt) and optimised c 
+library (libcopt) as are used on SPARC systems.
+
+Removed one copy of the function 
+get_data_interactively() from definitions.h, as
+it was defined twice. 
+
+tools/README
+corrected a simple spelling error.
+
+configure.in
+Remmoved the extra docs/Makefile in it.
+ 
+src/non_gui/setup_arrays.c
+Moved line 'data->dielectrics_in_bitmap=0;' to after declaration of
+local variables.  gcc 2.96 will not accept the initialization as it
+was when compiling c code, and generates an error.
+
+src/non_gui/atlc.c
+Removed extraneous dereference, replacing the line '*end++;' 
+with 'end++;' in the argument processing section.
+
+examples/create
+This was removed from CVS, as 'make check' already did this and
+it has been removed a while ago, but not from the CVS.
+
+src/non_gui/find_optimal_dimensions_for_microstrip_coupler.c
+
+******Version 4.2.7 Released 8/1/03********
+Corrected a bug such that -s and -S did not work.
+
+Corrected a bug in setup_arrays.c wherby the number
+of blue conductors was not set to zero at the start
+so the total number reported was wrong. 
+
+Made changes to write_fields_for_directional_couplers.c
+such that the the images for even mode are now 
+written. 
+
+Further attempts to improve the documentation. 
+
+******Version 4.2.6 Released 1/1/03********
+Corrected a bug in do_do_calculation.c, which
+was bought to my attention by (thanks Dan).
+
+Added two files into the distrtibution from
+former versions 'cop1.bmp' and 'rect9.bmp'
+since these were metnioned in the tutorial,
+but not available. 
+
+Slightly improved the look of the homepage by
+editing index2.html 
+
+Updateed 'tutorial.html' as it was a bit out 
+of date, showing old versions of files. 
+
+******Version 4.2.5 Released 1/1/03********
+Arragned for the Makefile.am's to have a line
+CLEANFILES = ... to remove the example files
+if the user does a 'make clean'.  
+Running 'make distcheck' should now work
+
+Reinstated some more tests.
+
+Corrected a problem with some of the tests
+-create-lots-of-examples-check-last-one.test' such that
+a lot of example files were created with a length of 
+zero bytes. This was becaused I changed the format
+of all the crate_bmp_for_... files so they no longer 
+printed to stdout, but -create-lots-of-examples-check-last-one.test'
+relied on them printing to stdout to work.
+
+Images of permittivity are now okay, but not sure
+about the Ex, Ey, U etc. These have not been checked
+for 2-conductor lines, which needs doing. 
+
+
+******Version 4.2.4 Released 31/12/02********
 
 Changed all the files create_bmp_for_....
 such that they now write to a file on the command
@@ -159,7 +296,6 @@ possible before that some numbers would be generated on one machine and
 some on another, due to rounding errors. This hopefully stops that. 
 
 Changed src/non_gui/tests to point out what a dodgy gcc does. 
-
 Added a few scrips 'tests' in other directories to src/non_gui, since
 someone was looking for them and could not find them. Hence I've tried to
 make it a bit clearer. 
