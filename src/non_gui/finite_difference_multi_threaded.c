@@ -62,9 +62,7 @@ extern int coupler;
 extern int width, height;
 extern double **Vij, **Vij2, **Er;
 extern char **cell_type;
-extern int dielectrics_to_consider_just_now;
 extern int number_of_workers; 
-extern int errno;
 
 
 /* The algorithm for this is based on one in the book 'Foundations of Multithraded, 
@@ -292,18 +290,6 @@ double finite_difference_multi_threaded(int number_of_iterations)
   if(ret != 0)
     exit_with_msg_and_exit_code("pthread_attr_init failed in finite_difference_multi_threaded.c",PTHREAD_ATTR_INIT_FAILED);
 
-#ifdef linuxqqqq
-  /* set global thread attributes */
-  ret=pthread_attr_setscope(&attr, PTHREAD_SCOPE_SYSTEM);
-  if(ret != 0)
-    exit_with_msg_and_exit_code("pthread_attr_setscope failed in finite_difference_multi_threaded.c",PTHREAD_ATTR_SETSCOPE_FAILED);
-
-  printf("fffffffffffffffffffffffffffffffffffffff\n");
-  ret=pthread_attr_setinheritsched(&attr, PTHREAD_INHERIT_SCHED);
-  if(ret != 0)
-    exit_with_msg_and_exit_code("pthread_attr_setinheritsched in finite_difference_multi_threaded.c",PTHREAD_ATTR_SETINHERITSCHED_FAILED);
-#endif
-
   /* initialize mutex and condition variable */
   pthread_mutex_init(&barrier, NULL);
   pthread_cond_init(&go, NULL);
@@ -320,7 +306,6 @@ double finite_difference_multi_threaded(int number_of_iterations)
     if(ret != 0)
       exit_with_msg_and_exit_code("failed to join thread in finite_difference_multi_threaded.c",THREAD_FAILED_TO_JOIN);
       }
-  //} while (check_convergence(Vij,Vij2,width,height) > 1e-3);
   /* The energy in the matrix has now been minimised a number
   (number_of_iterations) times, so we now calcuate the capacitance to see if it
   has converged */
