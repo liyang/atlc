@@ -34,8 +34,19 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 
 #define       FREE_ARG char*
 #define       NR_END 1
-
+/*
 #define    CONDUCTOR_FLOATING          -200
+#define    CONDUCTOR_ZERO_V            -100 
+#define    CONDUCTOR_PLUS_ONE_V         -99 
+#define    CONDUCTOR_MINUS_ONE_V       -101 
+#define    DIELECTRIC                      0 
+#define    DIFFERENT_DIELECTRIC_NEARBY     1
+#define    METAL_LEFT                      2
+#define    METAL_RIGHT                     4
+#define    METAL_BELOW                     8
+#define    METAL_ABOVE                    16 */
+
+#define    CONDUCTOR_FLOATING          -120
 #define    CONDUCTOR_ZERO_V            -100 
 #define    CONDUCTOR_PLUS_ONE_V         -99 
 #define    CONDUCTOR_MINUS_ONE_V       -101 
@@ -49,7 +60,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 /* The following two determine what happens when a coupler is present
 and the voltages have to be swapped from negative to positive in the
 simulation. */
-
+#define ITERATIONS                      100
 #define POS_TO_NEG                         1
 #define NEG_TO_POS                         -1
 #define METAL_ER  1e9
@@ -66,6 +77,11 @@ simulation. */
 #define ODD                                1
 #define EVEN                               2
 
+#define Vij_TO_Vij                         1
+#define VijB_TO_Vij                        2
+#define Vij_TO_VijB                        3
+
+#define MAXIMUM_PROCESSING_DEVICES              1024
 #define MAX_DIFFERENT_PERMITTIVITIES   10000
 #define MAX_ER 12
 
@@ -205,8 +221,8 @@ double Ex_or_Ey_max, E_max, V_max, U_max, permittivity_max;
 
 struct fit_doubles_to_integers{
 int n_min, n_max, n;
-int m, *in;
-double *out, good, acceptable;
+int m, in[100];
+double out[100], weight[100], good, acceptable;
 double largest_errror;
 double rms_errror;
 };
@@ -276,6 +292,7 @@ void get_data_interactively(void);
 void help(char *filename);
 double **dmatrix(long nrl, long nrh, long ncl, long nch);
 void free_dmatrix(double **m, long nrl, long nrh, long ncl, long nch);
+void free_cmatrix(char **m, long nrl, long nrh, long ncl, long nch);
 char *string(long nl,long nh);
 void free_string(char *v, long nl, long nh);
 unsigned char *ustring(long nl,long nh);
@@ -284,9 +301,10 @@ void swap_bytes4(unsigned char *buffer, int offset, int *answer);
 void free_ustring(unsigned char *v, long nl, long nh);
 int **imatrix(long nrl, long nrh, long ncl, long nch);
 void setup_arrays(struct transmission_line_properties *data);
-double finite_difference(int iterations);
+double finite_difference_single_threaded(int iterations);
+double finite_difference_multi_threaded(int iterations);
 #ifdef ENABLE_MPI
-void do_columns(int start_col, int num_cols, int calculate_edges);
+void do_columns(int start_col, int num_cols, int calculate_edges, int direction);
 void mpi_worker(int rank);
 #else
 void *do_columns(void *thread_arg);
@@ -328,12 +346,12 @@ void fill_image_vector_for_thin_strip(int W,int H, int w, unsigned char *unalign
 double K_over_Kdash(double k);
 double calculate_symmetrical_stripline_impedance(int H, int w);
 char **charmatrix(long nrl, long nrh, long ncl, long nch);
-void free_charmatrix(char **m, long nrl, long nrh, long ncl, long nch);
+void free_iharmatrix(int **m, long nrl, long nrh, long ncl, long nch);
 int print_data(FILE *fp, char *filename, double Er, double C, double L, double Zo, double
 Zodd, double Zeven, int whichZ, double v, double vf);
 void check_for_boundaries(void);
 double find_energy_per_metre(int i, int j);
-void update_voltage_array(int i, int calculate_edges);
+void update_voltage_array(int i);
 FILE *get_file_pointer_with_right_filename(char *filename, const char *ext);
 void find_maximum_values(struct max_values *maximum_values, int zero_elementsQ);
 void calculate_colour_data(double x, double xmax, int w, int h, int offset, unsigned char *image_dat, char image_type,
@@ -368,3 +386,7 @@ void check_parameters_of_create_bmp_for_rect_in_rect(void);
 void usage_create_bmp_for_symmetrical_stripline(void);
 void check_parameters_for_find_optimal_dimensions_for_microstrip_coupler (double h,double t,double Er1,double Er2,double ideal_Zodd,double ideal_Zeven);
 double *dvector(long nl, long nh);
+void free_imatrix(int **m, long nrl, long nrh, long ncl, long nch);
+void *worker(void *thread_arg);
+void free_ivector(int *v, long nl, long nh);
+double check_convergence(double **grid1, double **grid2, int w, int h);
