@@ -27,7 +27,7 @@ AC_FUNC_ALLOCA
 
 dnl Checks for header files.
 AC_STDC_HEADERS
-AC_HAVE_HEADERS(stdio.h math.h errno.h stdlib.h string.h thread.h pthread.h pthreads.h)
+AC_HAVE_HEADERS(stdio.h math.h errno.h stdlib.h string.h thread.h pthread.h pthreads.h mpi.h)
 
 
 dnl check to see if the machine is big endian
