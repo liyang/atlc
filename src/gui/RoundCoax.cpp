@@ -1,2 +1,0 @@
-#include "atlc-gui.h"
-
