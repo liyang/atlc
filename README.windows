@@ -1,0 +1,15 @@
+atlc is primarily a Unix programme. Some Microsoft Windows
+binaries have been produced, although these will *not* be
+kept upto date with the source code. Windows binaries may or may not
+be realsed in future, but certainly they will not be kept current.
+For this reason you are advised to run atlc on a Unix or
+Linux computer. 
+
+The Windows binaries are not fancy programmes with a
+graphical front end - they are simple command-line driven
+binaries. If you want to add your own front end feel free. 
+
+The latest Windows binaries produced are for version 3.0.7
+of the code.
+
+Dr. David Kirkby, G8WRB, 4th April, 2002.

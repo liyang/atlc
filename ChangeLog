@@ -1,0 +1,420 @@
+********************Version 3.0.7 Dated 6/4/2002*************************
+**************************************************************************
+Corrected the file man/makehtml, as it was not making an html page for
+rect_cen_in_rect from the rect_cen_in_rect.1 man page. 
+
+Put an error number each time a programme exits, so it is clear what
+error caused it. 
+
+Made a set of diectories called 'binaries' and subdirectories from that.
+Please the latest Windows executables in binaries/Windows. 
+
+Changed the line 
+image_data=ustring(0L,width*height*3); in atlc.c
+to
+image_data=ustring(0L,size);
+ 
+Removed all references to stdio.h and math.h in all files, since they
+are included in definitions.h
+
+Changed the line 
+if( (image_data_fp=fopen(output_filename, "r")) == NULL)
+to 
+if( (image_data_fp=fopen(output_filename, "rb")) == NULL)
+in atlc.c, so the bitmap is opened as a binary in Windoze.
+
+put the line 
+if((fp=fopen(temp,"w+b"))==NULL) instead of 
+if((fp=fopen(temp,"w+b"))==NULL)
+in get_file_pointer_with_right_filename.c
+as the bitmaps were screwed up when written to disk in text mode, which
+was happening under Windoze. 
+
+Used a more complex method suggested by AD5GB to get open the bitmap
+file for reading. I don't see why it should be necessary, but it keeps
+Windows happy. 
+
+defined M_PI if not already done so in definitions.h
+
+Changed malloc call to a calloc in string.h
+
+Corrected an error in the docs where it said in accuracy.html that the
+error was 1.8% on the bottom of a table. That may have been so, but it
+is a lot better now. 
+
+
+********************Version 3.0.6 Dated 3/4/2002*************************
+**************************************************************************
+(note there was no release 3.0.5, as it got screwed up going up to
+Sourceforge, after which is is impossible to overwrite the file). 
+
+
+Removed all reference to the voltage v and instead replaced these by
+Vij. The reason being that  Randall DuCharme <ad5gb@yahoo.com> has
+advised me that the symbol v is defined in IBM's AIX operating sysytem.
+Hence it would not compile without some hacking. 
+
+Since the voltage is now called Vij, it makes sense for its indices to
+be i and j and not w and h. Hence I've replaced at least some of the
+v[j][h] to v[i][j]. 
+
+Changed reference to longs and replaced by ints in write_bitmap_out.c,
+since it was clear the longs would break it on 64-bit machines. 
+
+Checked atlc one my Sun Ultra 60 with a 64-bit compiler using Sun's CC
+compiler. All was okay and the generated bitmaps looked fine. 
+
+Found a problem on the Sourforge Compile Farm with the programme
+sym_strip. It crashed at the last but one line, where these is
+flose(fp). Put in code to check if the file pointer was valid. This
+can't be a bad thing, but it did not solve the problem. 
+
+Another bug spotted on Sourceforge's compile farm. rect_in_rect,
+circ_in_circ, circ_in_rect, and beadbin (but not atlc) all declare 
+a character q, then use
+q=get_options
+whereas get_options returns an int, not a character. I don't know why the 
+compiler does not spot that one. Anyway, it caused get_options to loop forever. 
+
+All programme now seem to run okay on drkirkby@usf-cf-ppc-linux-1:,
+which is a linux powered PowerPC RS6000. Not attempted compileing
+multi-threaded. 
+
+
+Attempted compiling on the Sourceforge Sun Ultra 60. This is the same as
+my machine, so one might expect it to work okay. In fact, atlc 
+compiles and runs okay on every machine tests (Dec Alpha, Suns
+running Solaris, Suns running linux, linux PC, ... 
+
+Correct typo, where it said 'is is' in usage_sym_strip.c
+
+Changed the order and name or parameters in rect_cen_in_rect, so
+it now
+
+% rect_cen_in_rect W H w h Er1  > filename.bmp
+
+Changed man page to suite. It was silly before. 
+
+Removed note in the bitmap generators (rect_in_rect, circ_in_circ etc)
+about piping into atlc, since atlc does not support reading from 
+standard input. 
+
+Changed circ_in_circ so the information it can provide about theoretical
+impedances is only produced if the -v flag is given. 
+
+corrected usage_circ_in_rect.c, as information at the bottom on usage
+was all wrong. 
+
+Added a test suite in the script src/tests. I might well add a version of
+sum to the distribution, as it appears to be implementation dependant. 
+
+Removed #include <malloc.h> as it is depricated according to gcc and
+files compile fine without it. Also removed stddef.h from nrutil.c, as
+that too is not needed. 
+
+Changed the names of the variables opterr, optind, optopt and optarg to be
+my_opterr, my_optind, my_optopt and my_optarg in get_options.c This is to
+avoid a warning from one of the compilers (I think on a Mac) about the fact
+that it is defined elsewhere. 
+
+
+********************Version 3.0.4 Dated 1/4/2002*************************
+**************************************************************************
+NOTE 3.0.3 never released, since the upload to sourceforge failed. 
+
+Corrected bug in write_fields.c which caused a crash under Linux
+(as reported by Randall DuCharme <ad5gb@yahoo.com>) and With 
+Borland C++ builder on my SunPCi card. 
+
+Corrected a bug in atlc.c, which was causing a crash on the SunPCi
+card and possibly a crash (not yet confirmed) under Solaris on 
+a Sun Ultra 30 belonging to Randall DuCharme <ad5gb@yahoo.com>
+
+Added an option to atlc.c to avoid writing the bitmap files. 
+
+Corrected a bug in readbin.c, which caused it to report any 
+number >.99 as a one, when it might well be METAL_ER. Also checked more
+carefully for -1 V, by only looking from -0.999999999 to - 1.000000000001
+
+Added the following lines to readbin and atlc.c, which are necessary
+when compiling with C++ Builder version 3. I need to do likewise to the
+rect_in_rect etc, but for now I have not. 
+
+#ifdef WINDOWS
+#pragma hrdstop
+#include <condefs.h>
+#endif
+
+(I need to define WINDOWS when compiling on Windoze).
+
+Corrected usage_atlc so it now does not take the filename, but knows it
+is atlc. 
+
+Added (void) to the defintion of any function that takes no arguments. I
+found that while gcc is happy to accept a fuction with an argument that is
+declared like this:
+int somefunction()
+Borland C++ Builder was not happy with that. Hence I now declare functions
+as taking void when they don't take argments. This keeps Borland C++
+builder happy and allows for stricter checking with gcc. 
+
+Added a piece of code 'get_options.c' which was necessary since 
+Borland C++ Builder does not have such a function.  
+
+Stopped print_data taking an argument 'version' and then reading it from
+VERSION. It now just reads from VERSION
+
+Remved 'ER' from check_for_boundaries.c and all references to it, which
+were all in comments. The Borland C++ Builder is better at spotting such
+problems than gcc, so is Sun's C compiler. 
+
+Added code to check if the upper number (eg nh) is less than or equal to
+the lower number (eg nl) in functions free_* in files nrutuil.c and
+string.c This stops the Borland C++ Builder complaining about the
+arguments not being used and also does some sanity checking. 
+
+********************Version 3.0.2 Dated 30/3/2002*************************
+**************************************************************************
+Fixed a problem with the Makefile.am's which meant not all the files were 
+included and the sym_strip.1 was spelt wrong. 
+
+********************Version 3.0.1 Dated 29/3/2002*************************
+**************************************************************************
+SIGNIFICANT IMPROVEMENTS TO ACCURACY !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SIGNIFICANT IMPROVEMENTS TO ACCURACY !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SIGNIFICANT IMPROVEMENTS TO ACCURACY !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+In a comparisson of 3 analytic models (coax, eccentric coax and
+stripline), and 31 tests (roughly a third of each), the maximum error
+was only 0.945 % and the RMS error is only 0.259 %. The programme now
+undereads more than overreads, so I still think there may be a
+systematic error, but any problems are now very small. Despite the fact
+atlc is supporting multiple dielectrics, I've not managed to find any
+models with exact analytic solutions to compare against atlc. When
+calculationg the E-field across a dielectric, the method used does not
+properly consider a boundary between two dielectrics. Hence I can expect
+the error with multiple dielectrics to be a bit higher than with one.
+This will be sorted out later. 
+
+Added a man page for sym_strip and updated all other man pages. Keeping
+the documentation up to date is a problem. 
+
+Since many of the bitmaps used in the examples are large, I decided to
+not bother distributing them all, but instead write a script 'create' to
+make them. 'create' may be found in both  the examples and src
+directories. 
+
+Added a small script 'makehtml' in man, to create easily html version of
+the man pages. 
+
+It was necessary to take into account when a dielectric is next to
+metal, as otherwise the E-fields calculated in the dielectric are in
+erro when next to metal. This is done. check_for_boundaries.c has been changed
+to indicate whether a dielectric has metal to the left, right, above or
+below it.  
+
+function calculate_colour_data() added to calculate the colour a pixel
+should be set to - this is called by write_fields(). 
+
+Added a file find_electric_fields.c, which has 3 functions in it -
+find_Ex(), find_Ey() and find_E(). This avoids different parts of the
+programme using different definitions for Ex, Ey and E. 
+
+Changed write_fields almost completely. It now prints more files
+and uses less ram, as not all the data is stored before writing to 
+disk. Now only one set is stored in ram before writing to disk.
+This is a bit slower, but it will save a lot of ram. 
+
+After thinking about it a lot, I feel it is necessary to change the -1 V
+conductor (which has never been used) from black to blue. Since I've
+stated before that black is -1 V and blue is a dielectric with a
+permittivity of 2.1, this is a bit annoying. However, it seems illogical
+to have a negative electric field shown as blue, and negative voltages
+as blue, yet have -1 V as black. Hence the definition of -1 V is changed
+and another colour (a light blue) has been selected to reprsent the
+permittivity of PTFE. 
+
+Made a significant improvement to accuracy, but using the following
+defintion for Ex
+Ex=0.5*(v[i+1][j]-v[i-1][j]);
+but changing it a bit when at a boundary with metal. i.e.
+if((cell_type[i][j]&METAL_LEFT)==METAL_LEFT)
+  Ex=(v[i+1][j]-v[i][j]);
+Same is done in an obvious manner for Ey and the right hand side. This
+has made a significant improvement to accuracy, so html docs have been
+re-written.
+
+Changed the definition of Ex and Ey in write_fields.c, since they were
+defined at dV/dx, and dV/dy, but the electric field is defined as the
+reverse of that. i.e. ex=-dV/dx and Ey is -dV/dy. 
+
+Added some code in write_fields.c to print the energy (CV^2) too. 
+
+********************Version 3.0.0 Dated 24/3/2002*************************
+**************************************************************************
+Added support for multiple dielectrics. More work needs to be done to
+confirm the accuracy of this, but it is now working at least. 
+
+Spent a lot of time thinking carefully about exactly where the voltage
+are defined (top left of a pixel) and exactly where the E-field should
+be calculated (centre of a pixel) and exactly what the E-field is. The
+results seem no more accurate than before (still a small over-estimate
+of Zo), but at least it should give anyone else chance to find a fault.
+Before it was too obvious that a few problems remained on exactly what
+happens on a boundardy. 
+
+Programme should be able to cope with 4 different dielectrics in a
+square - i.e. it can be really arbitrary. 
+
+Changed the value of r in atlc.c from 1.5 to 1.95. This has made a HUGE
+INCREASE IN SPEED!!! The programme is now about 6x quicker than before.
+
+Added a function check_for_boundaries(), which looks for changes of
+index and metals around a pixel. Its not really used now, but it has the
+potential for speeding the code up, since it can avoid a lot of checking
+every time the FD loop executes. It makes sence to do the checking once
+and use those results. 
+
+Removed all C++ commments, as this would stop it compiling on a C
+compiler. One of the Sun compilers I have is only C. 
+
+Added a file 'fd.c' which is not in the makefile. It is included in the
+C functions finite_difference_*.c. It is better to use it like this
+rather than put the code inline, for speed reasons. It is called several
+times. Putting it in one file insures all the times its called are
+calling exactly the same code. It is too easy to have errors otherwise.
+
+
+
+Added a programme 'thin_strip; which produces a stipline like this:
+
+          ------^-------------------------------------
+                |
+                H        -----w------
+                |
+-infinity ------v------------------------------------ +infinity
+
+This has a well defined impedance, which is given in "Field Theory of Guided 
+Waves", Colin R.E., 2nd edition, pp 259-273, IEEE Press, (1990).
+
+I realised the programme was taking too much memory. Reading in a 24 Mb
+bitmap, resulted in the programme using 179 Mb of RAM. It was discoverd
+that the variable 'cell_type' defined in atlc, was an integer array,
+when a character one would have done, saving 3 bytes per pixel of RAM. I
+Added functions charmatrix and freecharmatrix in nrutil.c, for allocation
+and dealocation of the matrix.
+
+Removed the '-m' option from usage_atlc.c, since the option no longer
+worked - it was removed some time ago. 
+
+Removed the '-F' option from usage_atlc.c, since the option  did not 
+work. I decided not to bother fixing it, but instead of writing data
+to a user-specified file name, write it to example.txt, when the 
+bitmap file is example.bmp. 
+
+Removed the handling of option 'h' in atlc.c, since the option no longer
+existed. 
+
+Printed a messge with usage_atlc, so that it indicated that if
+multi-processor support was not compiled into atlc. 
+
+Added a few commments are correct a few typos in other commments, in the
+file finite_difference_multi_threaded.c
+
+Checked the system reasonably well with multi-threading enabled on my
+dual preocessor Sun Ultra 60. The programme speeds up quite a bit,
+depending on the size of the job. Certainly runing with two threads
+(either by defining #define MAX_CPUS 2 in definintions.h, or the -p2
+command line option, seem to work best for my dual processor machine. Running
+a few more threads (up to 5 or so) does not slow the system much, but as
+more and more are added, there is a definate slowdown. 
+
+renamed usage to usage_atlc, to be consistant with all the other
+programmes (usage_rect_in_rect etc) 
+
+Added quit a few comments to atlc.c, and generally made the code tidier,
+with more consistant indenting. 
+
+**************************Version 2.32 Dated 9/3/2002***************************
+********************************************************************************
+Wrote manpage for readbin
+Moved man page from man to man/man1.
+Removed function free_ucmatrix, free_ucmatrix and byteswap, none of which
+were used. 
+Added a new ability to calculate Zo assuming a round conductor - which
+it might not be. Its useful to check the software against coax, which
+has well defined values. Needs -v option to see the result. 
+Added a new programme (only one file) 'readbin' which analyses the .bin
+files and reports on the number of each colour pixel. 
+Corrected write_fields.c, so that a conductor is printed with zero
+E-field. Sometimes this was not so, as there was no check before writing
+the E-fields out that the pixels was not a conductor. 
+Added new file/function check_for_shorts(), which causes the programme to
+exit if a conductor of one voltage is in contact with a conductor of
+another voltage. 
+Compiled with Sun's CC compiler, which threw up a few prolems. It's more
+fussy that gcc!!  Hence made these changes:
+a) Replaced strncmp(bitmap_file_buffer, with strncmp((char *)
+   bitmap_file_buffer, on line 41 of read_bitmap_file_headers.c. 
+b) Changed atlc.c so a fread((void *)... image_data from fread(image_data...
+c) Removed multiple declaration of some variables in rect_in_rect.c,
+circ_in_circ.c
+d) Changed fill_image_vector_with_data in rect_in_rect.c,
+rect_in_circ.c, circ_in_circ.c circ_in_rect.c and definitions.h, such
+that the first argument is an unsigned char *, not char*  as before. 
+e) align_bitmap_image in align_bitmap_image.c changed so its arguments
+are unsigned *char, not *char as before. Updated header file to reflect
+this. 
+f) 
+
+In several C files, changed variables so they were initialised to -1 - it stops
+compiler complaining about possible use of unitialisd variables. 
+Removed multi-line fprintf statement, and made into two statements in rect_in_circ.c
+Changed else if(j=D/2) to else if(j==D/2) in fill_rect_in_circ.c
+Added exit(0) to end of circ_in_circ.c
+Added exit(0) to end of circ_in_rect.c
+Added exit(0) to end of rect_in_circ.c
+Added definition of usage_circ_in_rect() to definitions.h 
+
+Removed the note about version 2.4 from this ChangeLog, as it wasn't released. 
+Corrected a serious bug in setup_arrays.c, where v was set to 0.3 instead of 0 V. 
+Removed 'byteswap' from byteswap.c and definitions.h
+Added code in configure.in to enable -Wall with gcc.
+
+
+************Version 2.2 Dated 2/12/2001**************
+*****************************************************
+Changed some of the html documentation, to be more in line with the
+source and man pages. 
+
+Verion 2.1 Dated 1/12/2001
+Many updates to documentation:
+Added man pages for rect_cen_in_rect
+Added man pages for circ_in_rect
+Added man pages for rect_in_rect
+Added man pages for circ_in_circ
+
+Added binaries for:
+rect_cen_in_rect
+circ_in_rect
+circ_in_circ
+rect_in_circ - this dones NOT work, so it is configured to always exit.
+
+Changed atlc so that it no longer uses the faster convergence algorithm.
+I now know it can fail, so will remove it. 
+
+Changed usage.c and atlc.c so that the -p option is not displayed if not 
+MP enabled.
+usage.c Changed the usage message about '-i fiddle' as it was wrong before, in assuming default to be
+1.
+atlc.c Added a '-c' option, to change the cutoff. 
+atlc.c Changed the reading of the '-i fiddle' option, so its read a double and not a long
+
+
+
+25/4/2001, verison 2.01 put on SorgeForce unix only, supports multiple
+CPUs. 
+
+Version 1.09 - Windows verison, put on my web site.
+
+Version 1 - published in QEX, see qex-december-1996/atlc.pdf.

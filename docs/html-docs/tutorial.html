@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 TRANSITIONAL//EN">
+<HTML>
+<HEAD>
+<META name="generator" content="Mostly bluefish & vi. Sometimes netscape">
+<META http-equiv="CONTENT-TYPE" content="text/html; charset=iso-8859-1">
+<META name="AUTHOR" content="Dr. David Kirkby, drkirkby@ntlworld.com">
+<META name="DESCRIPTION" content="FAQ for atlc">
+<META name="KEYWORDS" content="atlc tutorial arbitrary transmission line calculator">
+<TITLE>atlc - Arbitrary Transmission Line Calculator Tutorial</TITLE>
+</HEAD>
+<BODY>
+
+<H1><CODE>atlc's</CODE> Tutorial</H1>
+The arbitrary transmission line calculator (<CODE>atlc</CODE>) project is used when you wish to know the properties (Zo, capacitance per unit length, velocity factor, electric-field distribution, etc) of a transmission line. Unlike the well know analytical formulas printed in any book on transmission lines, <CODE>atlc</CODE> has great flexibility, as <STRONG>any</STRONG> cross section can be drawn, even one like this. <br>
+<img src="jpgs/very-odd.jpg" ALT="very odd line">
+All this is required, is that the cross section can be drawn and saved as a bitmap file. 
+<br>
+<br>
+However, in the majority of the cases, the transmission lines to be analysed will be much simpler in cross section than above. It is then not necessary to draw the cross section with a graphics package, but instead it can be generated automatically with a few support programmes, <CODE>rect_cen_in_rect, rect_in_rect, circ_in_circ</CODE>. These are much faster to use than trying to draw the cross section in a graphics package. The following tutorial shows how to use all four programmes - <CODE>rect_cen_in_rect, rect_in_rect, circ_in_circ</CODE> and of course the main calculation programme, <CODE>atlc</code>. 
+<OL>
+        <LI><a href="#coax">Coaxial cable</A>In the first tutoraial, a standard piece of coaxial cable will be analysed. </LI>
+        <LI><a href="#sym_rectangular">Symmetrical rectangular transmission line.</A> In the second tutorial, a transmission line with one <STRONG>rect</STRONG>angular conductor <STRONG>cen</STRONG>trally located <STRONG>in</STRONG>side another <STRONG>rect</STRONG>angular conductor will be analysed. The programme <CODE>rect_cen_in_rect</CODE> will be used for this - the name hopefully conveying the conductor shapes and the symmetry. </LI>
+</OL>
+
+<OL>
+<Li>
+<STRONG><a name="coax" >Coaxial cable</a></STRONG> To analyse coaxial cable, we would normally use the formulas published in book. The impedance for instance, is given by Zo=(log<sub>e</sub>(D/d))/sqrt(Er).  but <CODE>atlc</CODE> can be used too. We are not suggesting that <CODE>atlc</CODE> is used instead of the normal formula for coax on a regular basis, but since it's a simple example, it is useful for demonstration. Also, as there is an analytical expression for Zo, we can get some idea of the accuracy of <CODE>atlc</CODE>
+<br>
+<br>
+Since the cross section consists of a <STRONG>circ</STRONG>ular conductor <STRONG>in</STRONG>side another <STRONG>circ</STRONG>ular conductor, the programme <CODE>circ_in_circ</CODE> is used to generate the bitmap, rather than the more time consuming procedure of using a graphics package.  <br><br>
+We will assume that the inner diameter of the outer conductor is 12 mm, the outer diameter of the inner conductor is 3.9  mm, and the dielectric has a permittivity of 1.0. Since the conductors are coaxial, there is zero offset between their centres.. The programme <CODE>circ_in_circ</CODE> is used to generate the bitmap, with these physical dimensions <br>
+<br>
+If we run <CODE>circ_in_circ</CODE> without any arguments, it will print a usage message, showing the first argument should the the outer diamater (D=12 mm), the second the inner conductor (d=3.9 mm), the third the offset h between the conductors (h is zero since they are coaxial) and the fourth argument is the permittivity (1.0 in this case).
+
+
+Ignoring the options, which are not necessary unless we wish to change the behaviour of <CODE>circ_in_circ</CODE>, we would type <br><br>
+<CODE>
+% circ_in_circ 12 3.9 0 1.0 &gt; coaxial_1.bmp <br> 
+</code>
+This will produce a bitmap like the image on the left. The inner conductor is red, the outer green and the dielectric is white in this case, as Er=1.0. Don't worry about the fact that the inner outer conductor is square, as the inside of it is round. it 
+<br>
+<img src="jpgs/coaxial1.jpg" ALT="coax 12/3.9 mm" >
+<br>
+To calculate the properties of this coaxial cable, we then run <CODE>atlc</CODE>, where it will print the important properties to the screen.
+<code>
+% atlc coaxial_1.bmp
+coaxial_1.bmp Er= 1.0000 C= 49.5449 pF/m L= 224.5743 nH/m Zo= 67.3257 Ohms v= 2.99792e+08 m/s v_f= 1.0000 VERSION= 3.0.0
+</code>
+<br><br>
+The correct answer, given by the formula  Zo=log<sub>e</sub>(D/d)/sqrt(Er) is 67.4358 Ohms, so atlc's estimate of Zo= 67.3257 Ohms is in error by only 0.16%. We can easily increase the accuracy, by generating a larger bitmap with <CODE>circ_in_circ</CODE>, by adding a -b command line option. 
+
+
+</LI>
+<LI>
+<STRONG><a name="sym_rectangular" >Symmetrical rectangular transmission line.</a></STRONG> In this tutorial we will analyse a <STRONG>rect</STRONG>angular conductor placed <STRONG>cen</STRONG>trally <STRONG>in</STRONG>side a second <STRONG>rect</STRONG>angular conductor, like that this. The programme rect_cen_in_rect can generate a suitable bitmap very quickly. In order to understand how to use rect_cen_in_rect (or any other programme for that matter), we should run it with no arguments. <br>
+<pre>
+parrot  % rect_cen_in_rect
+Usage: rect_cen_in_rect [-b bmp_size] [-f outfile] [-v] W H c w Er1
+
+where W, H, c, and w  are all in mm or all in inches
+(they *must* use the same units. Non-integers allowed for all parameters)
+options are:
+  -b bmp_size
+     Sets the size of the bitmap, in the range 1 to 15 (default 6)
+  -f outfile
+     Write output to 'outfile' instead of stdout
+  -v        
+     Write diagnostic information to stderr
+-----------------------------------------------------  ^
+|                                                   |  |
+|     Er1     &lt;----------w-----------&gt;              |  |
+|             ------------------------   ^          |  |
+|             |                      |   |          |  |
+|             |  Metallic conductor  |   |          |  H
+|             |  conductor (centred  |   c          |  |
+|             |  vertically and      |   |          |  |
+|             |  horizontally)       |   |          |  |
+|             ------------------------              |  |
+|                                                   |  |
+-----------------------------------------------------  |
+&lt;-------------------------W-------------------------&gt;
+<br>
+***WARNING*** Since the output from rect_cen_in_rect is binary data (the bitmap) it
+will screw up your terminal unless you redirect the output to a file. 
+The '-f' option can be used to send the output to 'outfile'
+or you can use rect_cen_in_rect W H c w Er1 &gt; filename.bmp
+parrot  %
+</pre>
+We will assume W=8, H=1, c=0.004 w=1.4423896, so run:<br>
+rect_cen_in_rect -b 7 8 1 0.004 1.4423896 1 > 50.bmp
+<br>
+which produces a bitmap that looks like this. 
+<img src="jpgs/50.jpg" ALT="50 Ohm transmission line" width="512">
+<br>
+
+If the width W was infinite (instead of 8) and the thickness c was 0 instead of 0.004, then the theoretical impedance of this would be 50.0000 Ohms -see the book <EM>Field Theory of Guided Waves</EM>, second edition, IEEE Press, 1990 pp 259-273 for the formula. Unfortunately this requires elliptic integrals to by evaluated, so is not easy to evaluate on a pocket calculator. <br><br>
+Since the electric fields will be confined around the red centre conductor, they should not extend too far and so the finite width of the outer should not affect the impedance much. Hence we would expect atlc to report an impedance close to the theoretical 50 Ohms. The answer given by atlc is 49.6412 Ohms, an error of only 0.72%. 
+<p>
+Note, there is a formula in the UHF Compendium for such a line, which would give an answer of infinity if W is infinitely wide. Clearly, this is not the case and so the formula should be ignored. The programme 'sym_strip' is easier for producing thin striplines like this, but its manpages and documentation have not been developed yet - run the programme to see it in use. 
+</LI>
+</OL>
+<p>atlc is written and supported by <a href="mailto: drkirkby@ntlworld.com?subject=atlc%20-%20Arbitrary%20Transmission%20Line%20Calculator">Dr. David Kirkby (G8WRB)</A> It it issued under the <a href="http://www.gnu.org/copyleft/gpl.html">GNU General Public Licence</A><p>
+<a href="http://atlc.sourceforge.net">Return to the atlc homepage</a>
+</body>
+</html>

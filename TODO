@@ -1,0 +1,14 @@
+1) Determine if there is a systematic error, which results in calculations 
+being a fraction of 1% too high on Zo.  I would expect them always to be low, 
+so this is a little strange. Estimation of Zo *always* rises, as it
+approaches the true value. It should not overshoot as it appears to do.
+
+2) *Possibly* support calcultion across a network of computers. Currently 
+multiple processors on the one computer are supported, but I might extend 
+this to a network of computers - at least for Solaris machines. 
+
+3) Make rect_in_circ work (programme for computing Zo of rectangular 
+conductors inside circular ones). The man page for it exists, but the
+code does not. 
+
+Dr. David Kirkby, 2/12/2001

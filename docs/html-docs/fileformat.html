@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 TRANSITIONAL//EN">
+<HTML>
+<HEAD>
+<META name="generator" content="Mostly bluefish & vi. Sometimes Netscape">
+<META http-equiv="CONTENT-TYPE" content="text/html; charset=iso-8859-1">
+<META name="AUTHOR" content="Dr. David Kirkby, drkirkby@ntlworld.com">
+<META name="DESCRIPTION" content="<COde>atlc</code>'s Binary File Format">
+<META name="KEYWORDS" content="transmission line calculator <COde>atlc</code> binary file">
+<TITLE>Files saved by<COde>atlc</code>.</TITLE>
+</HEAD>
+<BODY>
+
+<H1>Files produced by atlc.</H1>
+<COde>atlc</code> reads a <a href="bmp.html">bitmap file</a>, such as pcb.bmp After running atlc<p>
+<code>
+% atlc pcb.bmp
+
+</code>
+<p>
+ you will have the following files. 
+<TABLE border width="700">
+<TR>
+	<TD><img src="jpgs/pcb.jpg" ALT="Original PCB"></TD>
+	<TD><img src="jpgs/pcb.Er.jpg" ALT="Permittivity"></TD>
+	<TD><img src="jpgs/pcb.Ex.jpg" ALT="x-directed E-field"></TD>
+	
+</TR>
+<TR>
+	<TD><STRONG>pcb.bmp</STRONG> Original microstrip enclosed in a box. Note the thin red inner conductor, the green outer conductor, the white vaccum and the terquoise dielectric (E<sub>r</sub>=4.8).</TD>
+	<TD><STRONG>pcb.Er.bmp</STRONG> Permittivity diagramme. This  shows the permittivity  as a grayscale - lighter for increasing permittivity. The conductors are shown red, green and blue,  +1 V is shown red, 0V green and -1V blue. 
+	<TD><STRONG>pcb.Ex.bmp</STRONG> x-directed electric field. Blue is negative, Red is positive. Recall Ex=-dV/dx.</TD>
+</TR>
+<TR>
+	<TD><img src="jpgs/pcb.Ey.jpg" ALT="y-directed E-field"></TD>
+	<TD><img src="jpgs/pcb.E.jpg" ALT="E-field (Ex^2+Ey^2)"></TD>
+	<TD><img src="jpgs/pcb.V.jpg" ALT="Voltage"></TD>
+</TR>
+<TR>
+	<TD><STRONG>pcb.Ey.bmp</STRONG> y-directed electric field. Blue is negative, Red is positive. Recall Ey=-dV/dy.</TD>
+	<TD><STRONG>pcb.E.bmp</STRONG> Magnitude of the electric field. E=Ex<sup>2</sup>+Ey<sup>2</sup>. Shown lighter for increasing E-field. </TD>
+	<TD><STRONG>pcb.V.bmp</STRONG> Voltage field. Red is shown positive, black as no voltage and nagataive voltages would be shown as blue.</TD>
+</TR>
+<TR>
+	<TD><img src="jpgs/pcb.U.jpg" ALT="Energy"></TD>
+	<TD><CODE>pcb.bmp Er= MIXED C= 94.2540 pF/m L= 387.2186 nH/m Zo= 64.0956 Ohms v= 1.65528e+
+08 m/sv_f= 0.5521 VERSION=3.0.1</CODE></TD>
+	<TD><CODE>01010010<br>00101010<br>00011101<br>00001111<br>11110010<br>00000001<br>11111110</CODE></TD>
+</TR>
+<TR>
+	<TD><STRONG>pcb.U.bmp</STRONG> Energy. Since E=0.5 C V<sup>2</sup>, this is proportinal to capacitance (and hence Er) and the E-field on a pixel</TD>
+	<TD><STRONG>pcb.txt</STRONG> Text file with all the results from the simulation on one line. </TD>
+	<TD><STRONG>pcb.Er.bin, pcb.Ex.bin, pcb.Ey.bin, pb.E.bin, pcb.V.bin and pcbU.bin</STRONG> Six binary files have the same data as the bitmaps, but in a quantitative manner. </TD>
+</TR>
+<TR>
+	<TD></TD>
+	<TD></TD>
+	<TD></TD>
+</TR>
+<TR>
+	<TD></TD>
+	<TD></TD>
+	<TD></TD>
+</TR>
+<TR>
+	<TD></TD>
+	<TD></TD>
+	<TD></TD>
+</TR>
+</TABLE>
+<PRE>
+
+</PRE>
+The bitmap files do not show quantitative data - ie the numbers are optimised to look okay, rather than to be scientifically rigorous.<p>
+The binary files show similar data to the bitmaps, but in a more scientific way. They show the electric field in volts/pixel (.Ex.bmp, .Ey.bmp and .E.bmp) and voltage (.V.bmp)  assuming one conductor is earthed to 0v (the green one) and the other is at +1V (the red one). If your two conductors have a real voltage difference of V between them, the data file shows a value of E_data V/m, the dimensions of your transmission line are X mm across and the number of pixels in the x-direction allocated for the transmission line is N, then the true field strength that will be achieved in practice is 
+E_real=E_data * N / X        (V/mm)<p>
+<p>atlc is written and supported by <a href="mailto: drkirkby@ntlworld.com?subject=atlc%20-%20Arbitrary%20Transmission%20Line%20Calculator">Dr. David Kirkby (G8WRB)</A> It it issued under the <a href="http://www.gnu.org/copyleft/gpl.html">GNU General Public Licence</A><p>
+<a href="http://atlc.sourceforge.net">Return to the atlc homepage</a>
+</body>
+</HTML>

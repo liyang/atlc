@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 TRANSITIONAL//EN">
+<HTML>
+<HEAD>
+<META name="generator" content="Mostly bluefish & vi. Sometimes netscape">
+<META http-equiv="CONTENT-TYPE" content="text/html; charset=iso-8859-1">
+<META name="AUTHOR" content="Dr. David Kirkby, drkirkby@ntlworld.com">
+<META name="DESCRIPTION" content="atlc's Binary File Format">
+<META name="KEYWORDS" content="atlc transmission line calculator error messages">
+<TITLE>atlc's Binary File Format.</TITLE>
+</HEAD>
+<BODY>
+
+<H1>Error messages.</H1>
+Like any programme, <COde>atlc</code> generates error messages. Most are pretty obvious in meaning, but you might get an error like this, which is not quite so obviousl:
+
+<pre>
+% atlc bad-file.bmp
+Error: The colour r=0x9 g=0xff b=0x9 exists in the image, but the programme does not know how to interpret this colour. This is not a conductor (pure red, green or black), nor is it one of the 10 dielectrics that are predefined in definitions.h, nor is a corresponding dielectric constant defined on the command line
+</pre>
+You may get this error if you simply try to use a different colour for another dielectric (remember these are not supported as of version 2.1), but forgot to define it. This can also happen if your graphics programme interpolates the colours in your image. For example, assume you intend drawing an elliptical conductor inside a rectangular cross section. The square grid will never fit an ellipse precisely, so the shape will look like this, which is shown on a very low-resolution image to make it more obvious<br>
+<img src="jpgs/not-aliased.jpg" ALT="Not aliased" width="128" height="128"><br>
+However, many graphics packages implement 'anti aliasing' or 'smoothing' or other such method to smooth the edges of sharp objects. Hence what your graphics package <STRONG>may</STRONG> produce is like this <br>
+<img src="jpgs/aliased.jpg" ALT="Aliased" width="128" height="128"><br>
+For most applications, the smoother edges are preferable. However, this is not so if the bitmaps are to be read by <COde>atlc</code>. At any sensible size of bitmap, the smoothing will not be obvious, so you may find <COde>atlc</code> exits, when the image looks fine.<br>
+You should be aware of this problem and turn off any such smoothing funcions in your graphics package. In <a href="http://www.gimp.org">Gimp</A>, you should make sure that both <STRONG>feather</STRONG> and <STRONG>antialising</STRONG> are turned off (buttons up) for any tool you use. (double click on the ellipse or rectangle tools, to view or set these options)<br>
+Sometimes one makes a mistake and sets a background, (rgb=255,0,1), instead of  rgb=255,0,0. However, whatever causes this message, it is a result of using a colour what <COde>atlc</code> is not sure how to use. 
+<p>atlc is written and supported by <a href="mailto: drkirkby@ntlworld.com?subject=atlc%20-%20Arbitrary%20Transmission%20Line%20Calculator">Dr. David Kirkby (G8WRB)</A> It it issued under the <a href="http://www.gnu.org/copyleft/gpl.html">GNU General Public Licence</A><p>
+<a href="http://atlc.sourceforge.net">Return to the atlc homepage</a>
+</body>
+</html>

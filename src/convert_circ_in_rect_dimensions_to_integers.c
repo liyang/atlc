@@ -1,0 +1,143 @@
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
+
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
+
+#ifdef HAVE_STDLIB_H
+#include <stdlib.h>
+#endif
+#include "definitions.h"
+
+/* names, colours and Ers are all arrays of 10. It would be better they were 
+in a structure as they are all linked closely, but they are not and I
+can't be bothered to change it */
+
+extern double dd, WW, HH, xx, yy, Er1;
+extern int d, W, H, x, y;
+extern int verbose;
+extern double Ers[];
+extern int colours[];
+extern char names[];
+extern int lowest;
+extern int highest;
+
+int convert_circ_in_rect_dimensions_to_integers(int accuracy_level) 
+{
+   int best_d=-1, best_W=-1, best_H=-1, best_x=-1, best_y=-1;
+   int min, max;
+   int i;
+   double max_gridsize, min_gridsize;
+   double error, error_min=VERY_LARGE, gridsize, best_grid_size=-1;
+
+   /* scale grid size,  according to a command line option */
+   lowest*=(int) 0.5+pow(2,accuracy_level);
+   highest*=(int) 0.5+pow(2,accuracy_level);
+
+   max_gridsize=sqrt(WW*HH/(double )lowest);  /* minimum dimension in m */
+   min_gridsize=sqrt(WW*HH/(double )highest);
+   if(W>=H)
+   {
+      min=WW/max_gridsize;
+      max=WW/min_gridsize;
+   }
+   else
+   {
+      min=HH/max_gridsize;
+      max=HH/min_gridsize;
+   }
+   for(i=min;i<=max;++i)
+   {
+      /* Try various combinations for  d, W, H, etc */
+      if(W>H)
+         gridsize=WW/i;
+      else
+         gridsize=HH/i;
+      d=(int)(dd/gridsize + 0.5);
+      W=(int)(WW/gridsize + 0.5);
+      H=(int)(HH/gridsize + 0.5);
+      x=(int)(xx/gridsize + 0.5);
+      y=(int)(yy/gridsize + 0.5);
+      error=0.0;
+      error+=pow((WW-W*gridsize)/WW,2.0); /* relative error in W */
+      error+=pow((HH-H*gridsize)/HH,2.0);
+      error+=pow((dd-d*gridsize)/dd,2.0);
+      if(x>0)
+         error+=pow((xx-x*gridsize)/xx,2.0);
+      if(y>0)
+          error+=pow((yy-y*gridsize)/yy,2.0);
+      if(error < error_min)
+      {
+          error_min=error;
+          best_d=d;
+          best_W=W;
+          best_H=H;
+          best_x=x;
+          best_y=y;
+          best_grid_size=gridsize;
+      }
+   }
+   if(best_d==-1) /* it has not been initialised */
+   {
+      fprintf(stderr,"d has not been initialised \n");
+      exit(1);
+   }
+   else
+     d=best_d;
+   if(best_W==-1) /* it has not been initialised */
+   {
+      fprintf(stderr,"W has not been initialised \n");
+      exit(1);
+   }
+   else
+     W=best_W;
+   if(best_H==-1) /* it has not been initialised */
+   {
+      fprintf(stderr,"H has not been initialised \n");
+      exit(1);
+   }
+   else
+     H=best_H;
+   if(best_x==-1) /* it has not been initialised */
+   {
+      fprintf(stderr,"x has not been initialised \n");
+      exit(1);
+   }
+   else
+     x=best_x;
+   if(best_y==-1) /* it has not been initialised */
+   {
+      fprintf(stderr,"y has not been initialised \n");
+      exit(1);
+   }
+   else
+     y=best_y;
+   if(verbose==TRUE)
+   {
+      fprintf(stderr,"error_min=%.16f\n",error_min);
+      fprintf(stderr,"User requested: dd=%f WW=%f HH=%f xx=%f yy=%f Er=%f\n\n",dd,WW,HH,xx,yy,Er1);
+      fprintf(stderr,"Internally the programme is using the following grid:\n");
+      fprintf(stderr,"d=%d W=%d H=%d x=%d y=%d \n", d, W, H, x, y);
+      fprintf(stderr,"The  grid size is %f mm, inches or whatever\n\n", best_grid_size);
+      if(error_min > TINY)
+      {
+         fprintf(stderr,"This means we are simulating a transmission line with these dimensions:\n");
+         fprintf(stderr,"d=%f W=%f H=%f x=%f y=%f (mm, inches or whatever)\n",d*best_grid_size,W*best_grid_size,H*best_grid_size,x*best_grid_size,y*best_grid_size);
+         fprintf(stderr,"\nThese are slightly different to what you indicated on the command line,\n");
+         fprintf(stderr,"but they are the best approximation possible, given the grid size\n");
+      }
+   }
+   if( (d/2+x >= W) || (d/2+y >=H))
+   {
+      fprintf(stderr,"The gap between the two conductors is too small. Either increase the bitmap size (-b option), or change the dimensions of one the conductors\n");
+      exit(1);
+   }
+   check_error(dd,d,best_grid_size,"d");
+   check_error(WW,W,best_grid_size,"W");
+   check_error(HH,H,best_grid_size,"H");
+   check_error(xx,x,best_grid_size,"x");
+   check_error(yy,y,best_grid_size,"y");
+   return(0);
+}

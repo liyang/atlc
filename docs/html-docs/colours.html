@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 TRANSITIONAL//EN -x">
+<html>
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org">
+<meta name="generator" content="Mostly bluefish &amp; vi. Sometimes netscape">
+<meta http-equiv="CONTENT-TYPE" content="text/html; charset=iso-8859-1">
+<meta name="AUTHOR" content="Dr. David Kirkby, drkirkby@ntlworld.com">
+<meta name="DESCRIPTION" content="Colour codes for atlc">
+<meta name="KEYWORDS" content="Colour color atlc">
+<title>Colour codes for atlc software.</title>
+</head>
+<body>
+<h1>Predefined colours in <code>atlc</code></h1>
+The input file to atlc, which is a bitmap, must have the correct colours to indicate what parts of the image are conductors and dielectrics. Parts at ground (0 V) potential must be drawn green and those at +1 V must be drawn red. Vacuume dielectric must be drawn while. Many other colours have very specific meanings as shown below. 
+<p>
+The following colours are predefined in <code>atlc</code>. These can be used, without the user specifying what they mean. 
+
+<h2>Predefined conductors</h2>
+
+<table>
+<tr>
+<td><img src="jpgs/ff0000.jpg" alt="+1 V conductor" width="128" height="128"></td>
+<td><img src="jpgs/00ff00.jpg" alt="0 V conductor" width="128" height="128"></td>
+<td><img src="jpgs/0000ff.jpg" alt="-1 V conductor" width="128" height="128"></td>
+</tr>
+
+<tr>
+<td>Red<br>
+live conductor<br>
+RGB=0xff0000<br>
+rgb=255,0,0</td>
+<td>Green<br>
+ground conductor<br>
+RGB=0x00ff00<br>
+rgb=0,255,0</td>
+<td>Blue<br>
+-1v conductor<br>
+RGB=0x0000ff<br>
+rgb=0,0,255</td>
+</tr>
+</table>
+
+The following dielectrics are pre-defined. 
+
+<h2>Predefined dielectrics</h2>
+
+<table>
+<tr>
+<td><img src="jpgs/ffffff.jpg" alt="Vacuum" width="128" height="128"></td>
+<td><img src="jpgs/ffcaca.jpg" alt="Air" width="128" height="128"></td>
+<td><img src="jpgs/8235ef.jpg" alt="PTFE" width="128" height="128"></td>
+<td><img src="jpgs/8e8e8e.jpg" alt="RT Duroid 5880" width="128" height="128"></td>
+<td><img src="jpgs/ff00ff.jpg" alt="Polyethelene" width="128" height="128"></td>
+</tr>
+
+<tr>
+<td>White<br>
+<font face="symbol">e</font><font face="ariel"><sub>r</sub></font>=1.0<br>
+Vacuum<br>
+RGB=0xffffff<br>
+RGB=255,255,255</td>
+<td>Pink<br>
+<font face="symbol">e</font><font face="ariel"><sub>r</sub></font>=1.0006<br>
+Vacuum<br>
+RGB=0xffcaca<br>
+RGB=255,202,202</td>
+<td>Light Blue<br>
+<font face="symbol">e</font><font face="ariel"><sub>r</sub></font>=2.1<br>
+PTFE<br>
+RGB=0x8235ef<br>
+RGB=130,52,255</td>
+<td>Gray<br>
+<font face="symbol">e</font><font face="ariel"><sub>r</sub></font>=2.2<br>
+RT duroid 5880<br>
+RGB=0x8e8e8e<br>
+RGB=142,142,142</td>
+<td>Mauve<br>
+<font face="symbol">e</font><font face="ariel"><sub>r</sub></font>=2.33<br>
+Polyethelene<br>
+RGB=0xff00ff<br>
+RGB=255,0,255</td>
+<td></td>
+</tr>
+
+<tr>
+<td><img src="jpgs/ffff00.jpg" alt="Polystyrene" width="128" height="128"></td>
+<td><img src="jpgs/efcc1a.jpg" alt="PVC" width="128" height="128"></td>
+<td><img src="jpgs/bc7f60.jpg" alt="Epoxy resin" width="128" height="128"></td>
+<td><img src="jpgs/1aefb3.jpg" alt="Fibreglass" width="128" height="128"></td>
+<td><img src="jpgs/696969.jpg" alt="RT Duroid 6006" width="128" height="128"></td>
+</tr>
+
+<tr>
+<td>Yellow<br>
+<font face="symbol">e</font><font face="ariel"><sub>r</sub></font>=2.5<br>
+Polystyrene<br>
+RGB=0xffff00<br>
+RGB=255,255,0</td>
+<td>Sandy<br>
+<font face="symbol">e</font><font face="ariel"><sub>r</sub></font>=3.3<br>
+PVC (at 1MHz)<br>
+RGB=0xefcc1a<br>
+RGB=239,203,27</td>
+<td>Brown<br>
+<font face="symbol">e</font><font face="ariel"><sub>r</sub></font>=3.335<br>
+Epoxy resin<br>
+RGB=0xbc7f60<br>
+RGB=188,127,96</td>
+<td>Terquoise<br>
+<font face="symbol">e</font><font face="ariel"><sub>r</sub></font>=4.8<br>
+Fibreglass PCB<br>
+RGB=0x1aefb3<br>
+RGB=26,239,179</td>
+<td>Dark grey<br>
+<font face="symbol">e</font><font face="ariel"><sub>r</sub></font>=6.15.<br>
+RT duroid 6006<br>
+RGB=0x696969<br>
+RGB=142,142,142</td>
+</tr>
+
+<tr>
+<td><img src="jpgs/dcdcdc.jpg" alt="RT duroid 6010" width="128" height="128"></td>
+<td><img src="jpgs/d5a04d.jpg" alt="Er = 100" width="128" height="128"></td>
+</tr>
+
+<tr>
+<td>Light gray<br>
+<font face="symbol">e</font><font face="ariel"><sub>r</sub></font>=10.2<br>
+RT duroid 6010<br>
+RGB=0xdcdcdc<br>
+RGB=240,240,240</td>
+<td>Dark Orange<br>
+<font face="symbol">e</font><font face="ariel"><sub>r</sub></font>=100<br>
+Er of 100.0<br>
+RGB=0xd5a04d<br>
+RGB=213,160,77</td>
+</tr>
+</table>
+
+Note, the permitivity of free space (vacuum) is by definition 1.0. Air is very close to 1, but depends on pressure and temperature. Although the difference in permittivity between air and vacuum is smaller than the errors in <code>atlc</code>, having another permittivity very close to 1.0 is useful, as for test purposes. The figures for the plastics given above are only approximate. The permittivity of plastics are usually frequency dependant and temperature dependant. 
+
+<h2>Entering the permittivity of other materials into <code>atlc</code></h2>
+
+If you know the exact value of your dielectric material, draw the dielectric in a new colour, but define the colour with a command line option. For example, if your transmission line has a dielectric of 2.42 somewhere, then you must 
+
+<ol>
+<li>Draw the image, using a different colour (say a golden colour with RGB=0xf9e77d or in decimal RGB=249,231,125)</li>
+
+<li>Run <code>atlc</code> with the following command line option.<br>
+ % atlc -d f9e77d=2.43</li>
+</ol>
+
+this sets the colour f9e77 to reresent a permittivity of 2.43. 
+<p>
+atlc is written and supported by <a href="mailto: drkirkby@ntlworld.com?subject=atlc%20-%20Arbitrary%20Transmission%20Line%20Calculator">Dr. David Kirkby (G8WRB)</A><p>
+<a href="http://atlc.sourceforge.net">Return to the atlc homepage</a>
+</body>
+</html>
+

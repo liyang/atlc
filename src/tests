@@ -1,0 +1,193 @@
+#!/bin/sh
+PATH=/usr/local/bin:/opt/bin:/usr/bin:$PATH
+export PATH
+CKSUM=`sum DO_NOT_EDIT_THIS_FILE | awk '{print $1}'`
+if [ $CKSUM != 20224 ]; then
+echo The version of sum on your system is not suitable. Please obtain the
+echo GNU version of sum at http://www.gnu.org/software/textutils/textutils.html
+echo If you have it, make sure the path in this script points to that before 
+echo any other version of \'sum\'. Sun\'s version gives different numbers, 
+echo so is not suitable
+exit 
+fi
+
+echo The following tests *MUST* be executed only when atlc is configured without 
+echo the --with-mp option to configure. The method  used is *slightly* different
+echo when configured with that option, so will give slightly different results.
+echo This test suite will consider those results an error, but they are not. 
+echo " "
+echo The tests make use of the \'sum\' which generates a checksum. The GNU
+echo version of this in the textutils is fine. Sun's implementation in
+echo /usr/bin/sum uses a different agorithm and so can't be used. 
+echo " "
+echo If the following tests pass okay, you can be confident all the programmes
+echo are functioning properly. Should any test fail, it does not prove a
+echo problem, since rounding errors on different machines could given different 
+echo results. However, it would most likely indicate a problem, since I have
+echo checked these on about ten different machines  - all tests pass on all
+echo machines. If lots of tests fail, then there is most certainly a problem. 
+echo " "
+echo If test 1a fails, then you would expect  1b, 1c ..  to fail too.
+echo Likewise if any \'a\' test fails, then \'b\', \'c\' .. will too. 
+echo " "
+
+rm -f test-1.E.bin
+rm -f test-1.E.bmp
+rm -f test-1.Er.bin
+rm -f test-1.Er.bmp
+rm -f test-1.Ex.bin
+rm -f test-1.Ex.bmp
+rm -f test-1.Ey.bin
+rm -f test-1.Ey.bmp
+rm -f test-1.U.bin
+rm -f test-1.U.bmp
+rm -f test-1.V.bin
+rm -f test-1.V.bmp
+rm -f test-1.V.txt
+rm -f test-1.bmp
+rm -f test-1.txt
+rm -f test-2.E.bin
+rm -f test-2.E.bmp
+rm -f test-2.Er.bin
+rm -f test-2.Er.bmp
+rm -f test-2.Ex.bin
+rm -f test-2.Ex.bmp
+rm -f test-2.Ey.bin
+rm -f test-2.Ey.bmp
+rm -f test-2.U.bin
+rm -f test-2.U.bmp
+rm -f test-2.V.bin
+rm -f test-2.V.bmp
+rm -f test-2.bmp
+rm -f test-2.txt
+rm -f test-3.bmp
+rm -f test-4.bmp
+rm -f test-5.bmp
+
+../src/sym_strip 950 201  68  test-1.bmp > /dev/null
+CKSUM=`sum test-1.bmp  | awk '{print $1}'`
+if [ $CKSUM = 25604 ]; then
+  echo Passed test 1a
+else
+  echo Failed test 1b indicating sym_strip failed to generate the correct bitmap
+fi
+
+../src/atlc test-1.bmp > /dev/null
+CKSUM=`cat test-1.txt | awk '{print $11}' | sum | awk '{print $1}'`
+if [ $CKSUM = 44350 ]; then
+  echo Passed test 1b
+else
+  echo Failed test 1b indicating atlc failed to calculate the corrent impedance
+fi
+
+CKSUM=`sum test-1.V.bmp  | awk '{print $1}'`
+if [ $CKSUM = 48389 ]; then
+  echo Passed test 1c
+else
+  echo Failed test 1c indicating atlc failed to generate the correct voltage bitmap.
+fi
+
+CKSUM=`sum test-1.Ex.bmp  | awk '{print $1}'`
+if [ $CKSUM = 16645 ]; then
+  echo Passed test 1d
+else
+  echo Failed test 1d indicating atlc failed to generate the correct Ex field bitmap.
+fi
+
+CKSUM=`sum test-1.Ey.bmp  | awk '{print $1}'`
+if [ $CKSUM = 38039 ]; then
+  echo Passed test 1e
+else
+  echo Failed test 1e indicating atlc failed to generate the correct Ey field bitmap.
+fi
+
+CKSUM=`sum test-1.E.bmp  | awk '{print $1}'`
+if [ $CKSUM = 43471 ]; then
+  echo Passed test 1f
+else
+  echo Failed test 1f indicating atlc failed to generate the correct E-field bitmap.
+fi
+
+CKSUM=`sum test-1.U.bmp  | awk '{print $1}'`
+if [ $CKSUM = 20346 ]; then
+  echo Passed test 1g
+else
+  echo Failed test 1g indicating atlc failed to generate the correct energy bitmap.
+fi
+
+CKSUM=`sum test-1.Er.bmp  | awk '{print $1}'`
+if [ $CKSUM = 21148 ]; then
+  echo Passed test 1h
+else
+  echo Failed test 1h indicating atlc failed to generate the correct permittivity bitmap.
+fi
+
+../src/rect_in_rect -b 4 -f test-2.bmp 500 100 20 240 20 460 50 40 1 4.8
+CKSUM=`sum test-2.bmp  | awk '{print $1}'`
+if [ $CKSUM = 19648 ]; then
+  echo Passed test 2a
+else
+  echo Failed test 2a indicating rect_in_rect failed to generate the correct bitmap
+fi
+
+../src/atlc test-2.bmp > /dev/null
+CKSUM=`cat test-2.txt | awk '{print $11}' | sum | awk '{print $1}'`
+if [ $CKSUM = 59454 ]; then
+  echo Passed test 2b
+else
+  echo Failed test 2b indicating atlc failed to calculate the correct impedance
+fi
+
+CKSUM=`sum test-2.Ey.bmp  | awk '{print $1}'`
+if [ $CKSUM = 61002 ]; then
+  echo Passed test 2c
+else
+  echo Failed test 2c indicating atlc failed to generate the correct Ey field bitmap.
+fi
+
+CKSUM=`sum test-2.E.bmp  | awk '{print $1}'`
+if [ $CKSUM = 26634 ]; then
+  echo Passed test 2d
+else
+  echo Failed test 2d indicating atlc failed to generate the correct E-field bitmap.
+fi
+
+CKSUM=`sum test-2.U.bmp  | awk '{print $1}'`
+if [ $CKSUM = 55983 ]; then
+  echo Passed test 2e
+else
+  echo Failed test 2e indicating atlc failed to generate the correct energy bitmap.
+fi
+
+CKSUM=`sum test-2.Er.bmp  | awk '{print $1}'`
+if [ $CKSUM = 55698 ]; then
+  echo Passed test 2f
+else
+  echo Failed test 2f indicating atlc failed to generate the correct permittivity bitmap.
+fi
+
+../src/rect_cen_in_rect -b 4 -f test-3.bmp 500 100 20 20 1
+CKSUM=`sum test-3.bmp  | awk '{print $1}'`
+if [ $CKSUM = 17785 ]; then
+  echo Passed test 3a
+else
+  echo Failed test 3a indicating rect_cen_in_rect failed to generate the correct bitmap
+fi
+
+../src/circ_in_circ -b 4 -f test-4.bmp 500 100 20 1
+CKSUM=`sum test-4.bmp  | awk '{print $1}'`
+if [ $CKSUM = 18162 ]; then
+  echo Passed test 4a
+else
+  echo Failed test 4a indicating circ_in_circ failed to generate the correct bitmap
+fi
+
+../src/circ_in_rect -b 4 -f test-5.bmp 90 200 200 20 30 1
+CKSUM=`sum test-5.bmp  | awk '{print $1}'`
+if [ $CKSUM = 64135 ]; then
+  echo Passed test 5a
+else
+  echo Failed test 5a indicating circ_in_rect failed to generate the correct bitmap
+fi
+
+

@@ -1,0 +1,13 @@
+#!/bin/sh
+echo this file is not meant for general distibution, but is used by the
+echo author of atlc for generating some html versions of man pages. Feel
+echo to use it if you update the man pages. Note it relies on having the
+echo package man2html, which is available online -its open-source.
+nroff -man atlc.1 | man2html > ../docs/html-docs/atlc.1.html
+nroff -man rect_in_rect.1 | man2html > ../docs/html-docs/rect_in_rect.1.html
+nroff -man rect_cen_in_rect.1 | man2html > ../docs/html-docs/rect_cen_in_rect.1.html
+nroff -man circ_in_circ.1 | man2html > ../docs/html-docs/circ_in_circ.1.html
+nroff -man rect_in_circ.1 | man2html > ../docs/html-docs/rect_in_circ.1.html
+nroff -man circ_in_rect.1 | man2html > ../docs/html-docs/circ_in_rect.1.html
+nroff -man sym_strip.1 | man2html > ../docs/html-docs/sym_strip.1.html
+nroff -man readbin.1 | man2html > ../docs/html-docs/readbin.1.html

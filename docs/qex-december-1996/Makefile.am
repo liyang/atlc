@@ -1,0 +1,1 @@
+EXTRA_DIST = ATLC.C README atlc.pdf 

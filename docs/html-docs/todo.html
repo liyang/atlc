@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 TRANSITIONAL//EN">
+<HTML>
+<HEAD>
+<META name="generator" content="Mostly bluefish & vi. Sometimes netscape">
+<META http-equiv="CONTENT-TYPE" content="text/html; charset=iso-8859-1">
+<META name="AUTHOR" content="Dr. David Kirkby, drkirkby@ntlworld.com">
+<META name="DESCRIPTION" content="Transmission line calculator, or *any* cross section">
+<META name="KEYWORDS" content="Transmission line calculator arbitrary any cross section">
+<TITLE>Arbitrary Transmission Line Calculator (atlc) version 2.02</TITLE>
+</HEAD>
+<BODY>
+
+<H1>To Do list..</H1>
+Here is a list of the ways I would like to expand <COde>atlc</code>, in a rough order of time.
+<OL>
+	<LI>Implement a better way of enabling a user to change the contrast/brightness in an image. Current, this can only be done with the '<a href ="options.html">-f option</a> to <code>atlc</code>, but this requires a re-run of <code>atlc</code> to do this, which is hardly very useful, given <code>atlc</code> is so CPU intensive. There are faster ways of doing this, just from the binary files (example.E.bin, example.Ex.bin and example.Ey.bin)..<br><br></LI>
+	<LI>Try other methods of thread syncronisation in the version of the programme that supports multiple CPUs. Currently, threads are created and destroyed to given syncronisation. I think there may be a faster method by the use of 'mutex variables', but this has not be tried.<br><br></LI>
+	
+<pre>
+Usage: rect_in_rect  W H a b c w h Er1 Er2 accuracy_level filename
+
+where W, H, a, b, c, w and h  are all in mm or all in
+inches - they *must* use the same units!
+Accuracy should be 1, 2, 3, 4, ... 10  which  sets the internal array size.
+3 gives is pretty good accuracy - any more than 5 will take ages.
+-----------------------------------------------------------------------  ^
+|                                                                     |  |
+|               Dielectric, permittivity=Er1                          |  |
+|                                                                     |  |
+|                                                                     |  |
+|             &lt;----------w-----------&gt;                                |  |
+|             ------------------------   ^                            |  |
+|             |                      |   |                            |  |
+|             |                      |   |                            |  H
+|&lt;-----b-----&gt;|  Inner conductor     |   c                            |  |
+|             | (can be off-centre)  |   |                            |  |
+|             |                      |   |                            |  |
+|       |------------------------------------------- ^                |  |
+|       |..........................................| |                |  |
+|       |.... Dielectric, permittivity=Er2.........| |                |  |
+|&lt;--a--&gt;|..  ...(can be off centre )...............| h                |  |
+|       |..........................................| |                |  |
+|       |..........................................| |                |  |
+-----------------------------------------------------------------------  |
+&lt;----------------------------------W---------------------------------&gt;
+
+</pre>
+This could then be used to pipe its output to <code>atlc</code>, saving the need to create an intermediate bitmap file.
+<pre>
+rect_in_rect 100 50 5 15 20 2 5 xxxxxxxxxxx | atlc -f example 
+</pre>
+</LI>
+<LI>Add support for coupled transmission lines, so permitting computation of the properties of directional couplers. I've tried this before without much success, but I see no theoretical reason that this can not be done. The programme should be able to calculate the odd mode (Z<sub>odd</sub>) and even mode Z<sub>even</sub> impedances of a pair of coupled transmission lines. From those, it should be possible to calculate the properties of a directional coupler, knowing these two impedances and the length over which the lines are coupled. It sounds easy, but in practice I gave up with this once, due to lack of success. <br><br></LI>
+	<LI>I'm considering adding support for <a href="http://www.sun.com/software/solutions/hpc/dotcom.html">Sun's HPC</a>, which allows many machines on a network to act in parrallel to solve a problem. This is perhaps not needed on <COde>atlc</code>, since while it is cpu intensive, it is not massively so. <COde>atlc</code> already supports multiple CPUs, but supporting a network of CPUs is probably a bit over the top. However, I'm interested in such concepts, so might do it anyway. I once developed my own system for using a network of 24 computers for modelling light transport in human tissue. However, HPC is far more sophisticated than what I did.</LI>
+</OL>
+
+If anyone has any suggestions for how to improve <COde>atlc</code>, please <a href="mailto: drkirkby@ntlworld.com?subject=atlc%20-%20Arbitrary%20Transmission%20Line%20Calculator">email me</A>.
+<p>atlc is written and supported by <a href="mailto: drkirkby@ntlworld.com?subject=atlc%20-%20Arbitrary%20Transmission%20Line%20Calculator">Dr. David Kirkby (G8WRB)</A> It it issued under the <a href="http://www.gnu.org/copyleft/gpl.html">GNU General Public Licence</A><p>
+<a href="http://atlc.sourceforge.net">Return to the atlc homepage</a>
+</BODY>
+
+</HTML>

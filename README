@@ -1,0 +1,17 @@
+ATLC Arbitrary Transmission Line Calculator.
+
+Programme for analysing arbitrary transmission lines. See
+HTML documentation in docs.
+
+After making atlc (see install) run the script examples/create. This
+will create some of the example bitmaps which are referred to in the
+documentation, but which are too large to distribute. It is easier for
+them to be created. 
+
+Then run the script src/tests. That will test your binaries. 
+
+A Windows version (not graphical) can be found in an earlier distribution 
+(3.0.4). I'm not going to update that as often as the Unix version, so get a 
+Unix box if you want the latest code. 
+
+Dr. David Kirkby, G8WRB. 2/4/02

@@ -1,0 +1,9 @@
+#!/bin/sh
+# Assuming there are .cpp file for each C.
+rm atlc.cpp rect_in_rect.cpp rect_in_circ.cpp circ_in_rect.cpp \
+circ_in_circ.cpp  rect_cen_in_rect.cpp sym_strip.cpp
+tar cvf winatlc.tar *.cpp atlc.c rect_in_rect.c rect_in_circ.c \
+circ_in_rect.c circ_in_circ.c rect_cen_in_rect.c sym_strip.c \
+definitions.h Erdata.h
+cp winatlc.tar $HOME
+

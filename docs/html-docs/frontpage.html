@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 TRANSITIONAL//EN">
+<HTML>
+<HEAD>
+<META name="generator" content="Mostly bluefish & vi. Sometimes netscape">
+<META http-equiv="CONTENT-TYPE" content="text/html; charset=iso-8859-1">
+<META name="AUTHOR" content="Dr. David Kirkby, drkirkby@ntlworld.com">
+<META name="DESCRIPTION" content="Transmission line calculator, or *any* cross section">
+<META name="KEYWORDS" content="Transmission line calculator arbitrary any cross section">
+<TITLE>Arbitrary Transmission Line Calculator (atlc) version 2.3</TITLE>
+</HEAD>
+<BODY>
+
+<H1><COde>atlc</code> - Arbitrary Transmission Line Calculator.</H1>
+
+The programme <COde>atlc</code> calculates the impedance of electrical transmission lines of totally arbitrary cross section. The two conductors can be coaxial, run side by side, or just about anything you can think of. The diagrammes below shows several types of line that may be found. In each diagramme, one conductor is shown red, the other conductor shown green and the dielectrics are shown in a few other colours, with white being vacuum and turquoise being a dielectric with an effective permittivity of 4.8 (about the same as fibreglass PCB). 
+<TABLE>
+<TR>
+<TD><img src="jpgs/coax2.jpg" ALT="round coax" > </TD>
+<TD><img src="jpgs/twin-wire.jpg" ALT="twin wire" ></TD>
+<TD><img src="jpgs/very-odd.jpg" ALT="very odd line" ></TD>
+</TR>
+<TR>
+<TD>Zo=42.938 Ohms<BR>C=77.695 pF/m<BR>L=143.25 nH/m<BR></TD>
+<TD>Zo= 53.660 Ohms<br>C= 62.162 pF/m<br>L= 178.99 nH/m </TD>
+<TD>Zo= 58.087 Ohms<br> C= 57.425 pF/m <br>L= 193.757148 nH/m</TD>
+</TR>
+</TABLE>
+The programme  <COde>atlc</code> needs to know the cross section of the transmission line. This cross section is stored in a data file, which happens to be a Windows bitmap file.  This bitmap file is then read by <COde>atlc</code> There are two ways to generate the bitmap for <COde>atlc</code>. 
+<OL>
+        <LI> As you might expect, you can draw the transmission line's cross-section in a graphics programme such as <A HREF="http://www.gimp.org">Gimp</A>, <A HREF="http://www.adobe.com/products/photoshop/main.html">Photoshop</A>, Windows <A HREF="http://www.microsoft.com">Paint</A> Corel Photopaint etc.  The programme must be able to save images as bitmap (.BMP or .bmp) files, in 24-bit (true colour) mode The graphics programme can run under whatever operating system you like.  If for example you have some U-section brass and some hollow rectangular tube, and wanted to know the properties of a transmission line formed from these, you might draw something like this, and save it as a file, which we might call <CODE>ushape.bmp</CODE><br><br></LI>
+       <img src="jpgs/ushape.jpg" ALT="U-section" > <br><br>
+	<LI> In the case of simple cross-sections, the bitmaps can be generated automatically. Currently only one such programme has been written, called <EM>rect_in_rect</EM>, which is able to automatically generate a bitmap for any rectangular conductor, surrounded by any other rectangular conductor, with no more than 2 dielectrics. One dielectric must like under the centre conductor. Any of the following may be generated quickly with <EM>rect_in_rect</EM>  Using rect_in_rect is very fast - much faster than generating the bitmaps with a graphics programme, but complex cross sections can only be generated with the aid of a
+	graphics programme </LI>
+</OL>
+
+A unix computer, with a <A HREF="http://www.gnu.org/software/gcc/gcc.html">gcc</A> or other C compiler, is needed  to compile and run <COde>atlc</code>. The programme should compile very easily and quickly. Being rather CPU intensive, <COde>atlc</code> has been written to support multiple processors if available. Here is an example of using atlc, with the file <CODE>ushape.bmp</CODE> being drawn by a graphics programme. <br>
+
+<br>
+<pre>
+% atlc -v ushape.bmp
+ushape.bmp C= 81.9168 pF/m L= 135.826831 nH/m Zo= 40.719859 Ohms v= 299792458.010503 m/s v_f= 1.000000 VERSION=2.02
+ushape.bmp C= 75.2508 pF/m L= 147.858988 nH/m Zo= 44.327010 Ohms v= 299792458.010503 m/s v_f= 1.000000 VERSION=2.02
+ushape.bmp C= 73.8758 pF/m L= 150.610988 nH/m Zo= 45.152038 Ohms v= 299792458.010503 m/s v_f= 1.000000 VERSION=2.02
+ushape.bmp C= 73.5329 pF/m L= 151.313183 nH/m Zo= 45.362551 Ohms v= 299792458.010503 m/s v_f= 1.000000 VERSION=2.02
+ushape.bmp C= 73.4469 pF/m L= 151.490478 nH/m Zo= 45.415703 Ohms v= 299792458.010503 m/s v_f= 1.000000 VERSION=2.02
+ushape.bmp C= 73.4254 pF/m L= 151.534724 nH/m Zo= 45.428967 Ohms v= 299792458.010503 m/s v_f= 1.000000 VERSION=2.02
+ushape.bmp C= 73.4201 pF/m L= 151.545603 nH/m Zo= 45.432229 Ohms v= 299792458.010503 m/s v_f= 1.000000 VERSION=2.02
+</pre>
+It will be seen that <COde>atlc</code> makes several estimates of the transmission lines properties, each subsequent one being closer to the true value. (normally only the final result is shown, but the -v option added above causes <COde>atlc</code> to print intermediate results). 
+<br><br>
+Here's an example of using <EM>rect_in_rect</EM> to generate a bitmap The programme needs 11 parameters on its command line, which are described fully elsewhere. For now, just accept that these 11 parameters describe a transmission line. The output of <EM>rect_in_rect</EM> is redirected to the file <CODE>ex2.bmp</CODE>, which is then read by <COde>atlc</code>
+<pre>
+
+% rect_in_rect 250 175 10 32 4 200 56 25 1.0 2.5 3 &gt; 2.bmp
+% atlc 2.bmp
+2.bmp Er=MIXED C= 47.0033 pF/m L= 256.338161 nH/m Zo= 73.848653 Ohms v= 288090749.890245 m/s v_f= 0.960967 VERSION=2.02
+
+</pre>
+<br>
+
+The programme <COde>atlc</code> was written by, and is supported by, Dr. David Kirkby (G8WRB). It is issued under the GNU public license. 
+<p>
+<a href="http://atlc.sourceforge.net">Return to the atlc homepage</a>
+</BODY>
+</HTML>

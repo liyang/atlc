@@ -1,0 +1,34 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 TRANSITIONAL//EN">
+<html>
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org">
+<meta name="generator" content="Mostly bluefish &amp; vi. Sometimes netscape">
+<meta http-equiv="CONTENT-TYPE" content="text/html; charset=iso-8859-1">
+<meta name="AUTHOR" content="Dr. David Kirkby, drkirkby@ntlworld.com">
+<meta name="DESCRIPTION" content="Transmission line calculator, or *any* cross section">
+<meta name="KEYWORDS" content="Transmission line calculator arbitrary any cross section">
+<title>Arbitrary Transmission Line Calculator - atlc</title>
+</head>
+<body>
+<h1>Automatic Bitmap Generators.</h1>
+
+In order to describe the cross sections of the transmission lines, you can either use a graphics programme, or one of several programmes which will be written in order to generate bitmaps more quickly. Currently several automatica bitmap generators have been written. Unix manual pages are avialable for all the programmes:
+<OL>
+	<LI><code><a href="rect_in_rect.1html">rect_in_rect</a></code> for a rectangular conductor placed anywhere inside another  rectangular conductor.</LI>
+ 	<LI><code><a href="rect_cen_in_rect.1.html">rect_cen_in_rect</a></code> for a rectangular conductor placed <STRONG>centrally</STRONG> inside another  rectangular conductor.</LI>
+	<LI><code><a href="circ_in_circ.1.html">circ_in_circ</a></code> for a circular conductor placed inside another circular conductor </LI> 
+
+	<LI><code><a href="circ_in_rect.1.html">circ_in_rect</a></code> for a circular conductor placed inside a rectangular one </LI>
+	<LI><code><a href="rect_in_circ.1.html">rect_in_circ</a></code> for a rectangular conductor placed inside a circular conductor. <FONT COLOR="#FF0000">rect_in_circ  is currently still under development</FONT></LI>
+	<LI><code><a href="sym_strip.1.html">sym_strip</a></code> for a thin conductor equally spaced between two wide groundplanes</LI>
+</OL>
+Slightly more comprehensive documemtation exists for <a href="rect_in_rect.html">rect_in_rect</a>
+The programmes such as <code><a href="rect_in_rect.html">rect_in_rect</a></code>  will by default produce a bitmap of around 250 kb, which should be analysed in about minutes at most, depending on the speed of your computer. You can increase or decrease the size of the bitmap, by use of the -b option. <br>
+<br>
+The output from <code>rect_in_rect</code> is sent to standard output. Since this is binary data, it will possibly screw up your terminal unless it is redirectected to a file. In each case, you can either use the &gt; sign and put directly into a file, or use the -o option. <br>
+<br>
+<p>atlc is written and supported by <a href="mailto: drkirkby@ntlworld.com?subject=atlc%20-%20Arbitrary%20Transmission%20Line%20Calculator">Dr. David Kirkby (G8WRB)</A> It it issued under the <a href="http://www.gnu.org/copyleft/gpl.html">GNU General Public Licence</A><p>
+<a href="http://atlc.sourceforge.net">Return to the atlc homepage</a>
+</body>
+</html>
+
