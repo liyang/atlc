@@ -12,23 +12,25 @@
 
 <H1>Building <COde>atlc</code> from sources</H1>
 <p><EM>atlc</EM> is highly portable program and should run on any UNIX system and some non-UNIX systems. </P>
-An early version for <EM>atlc</EM> forms part of the <a href="http://www.netbsd.org/">NetBSD</a>  project and has been ported to <a href=" ftp://ftp.netbsd.org/pub/NetBSD/packages/pkgsrc/cad/atlc/README.html">23 different systems</a>, including the Acorn 32, Amiga, Arm32, Atari, Cobalt, Dec Alpha, HP 300, i386 PC, Mac 68000, Power PC, Sun SPARC, VAX etc. <STRONG><EM>atlc</EM> has even been run on a Sony Playstation 2!!</STRONG>.  In addition to the systems running NetBSD UNIX, <EM>atlc</EM> has been run on the following platforms. 
+An early version for <EM>atlc</EM> forms part of the <a href="http://www.netbsd.org/">NetBSD</a>  project and has been ported to <a href=" ftp://ftp.netbsd.org/pub/NetBSD/packages/pkgsrc/cad/atlc/README.html">23 different systems</a>, including the Acorn 32, Amiga, Arm32, Atari, Cobalt, Dec Alpha, HP 300, i386 PC, Mac 68000, Power PC, Sun SPARC, VAX etc. <STRONG><EM>atlc</EM> has even been run on a Sony Playstation 2!!</STRONG>.  In addition to the systems running NetBSD UNIX, <EM>atlc</EM> has been run on the following operating systems
 <OL>
-	<LI>Dual processor Sun Ultra 60 running Solaris 8l</LI>
-	<LI>Quad processor (4x450 MHz) Sun Ultra 80 running Solaris 9</LI>
-	<LI>64-bit Dec Alpha, running Linux 2.4.17</LI>
-	<LI>x86 PC running linux   2.4.13</LI>
-	<LI>Sun (unknown) running Linux 2.2.18pre21</LI>
-	<LI>Dual processor DEC Alpha running Linux 2.4.17</LI>
-	<LI>Sun R220 running Solaris 8</LI>
-	<LI>x86 PC's running Windows 98 and NT</LI>
+	<LI>Solaris 2.5, 8 and Solaris 9 for SPARC</LI>
+	<LI>Solaris 8 for Intel</LI>
+	<LI>Linux 2.4.17 for a Dec Alpha </LI>
+	<LI>Tru64 UNIX 5.1B on a Dec Alpha 600a Personal Workstation</LI>
+	<LI>Redhat 7.2 Linux on PC</LI>
+	<LI>Redhat 6.2 on SPARC<LI>
+	<LI>Debian 3.0 Linux on SPARC</LI>
+	<LI>NetBSD 1.6 on SPARC</LI>
+	<LI>OpenBSD 
+	<LI>x86 PC's run Windoze 98 and NT</LI>
 </OL>
 To install <EM>altc</EM> you should download the souce code from <a href="http://sourceforge.net/projects/atlc/"><COde>atlc</code>'s download area on SourceForge.</A> It is preferable to also have following software too, although none, apart from a compatible version of <CODE>make</CODE>, are essential. 
 <OL>
 	<LI>The <a href="http://sources.redhat.com/gsl/">GNU scientific library (gsl).</a> While not essentail, this is <STRONG>highly reccomended</STRONG>.</LI>
 	<LI><a href="http://www.gnu.org/software/make/make.html">GNU make</a>, sometimes installed as <CODE>gmake</CODE>. Sun's version of make in <CODE>/usr/ccs/bin/make</CODE> is <STRONG>not</STRONG> suitable, although I don't know about other versions of make. The GNU one works fine. </LI>
-	<LI>If you have a system with more than one CPU, <EM>atlc</EM> can be configured to use any number of CPUs in parallel, using a POSIX compatable thread library, or pthreads. Sun's Solaris implementation works fine, but any other POSIX library should work. If you don't have one you  should install <a href="http://www.gnu.org/software/pth">GNU Portable Threads</A>,. <STRONG>If your computer has only one CPU, there is no point in building atlc to use multiple threads, as it will slow the program down</STRONG>.</LI>
-<LI>If you have access to a network of computers and wish to use some <STRONG>highly experimental (i.e. probably unstable) </STRONG>distributed processing code, you will need to have installed the <a href="http://www-unix.mcs.anl.gov/mpi/mpich/indexold.html">MPICH library</A>, which is a portable implementation of the <a href="http://www.mcs.anl.gov/mpi/index.html">Message Passing Interface</a> standard. Using the <a href="http://www-unix.mcs.anl.gov/mpi/mpich/indexold.html">MPICH library</A> a network of computers can be used to solve problems more quickly. The author of <a href="http://atlc.sourceforge.net/"><CODE>atlc</CODE></a> , Dr. David Kirkby, has not seen this work, but has been told it works under GNU/Linux. In contrast, using multiple processors on one computer via the use of threads works well. </LI>
+	<LI>If you have a system with more than one CPU, <EM>atlc</EM> can be configured to use any number of CPUs in parallel to speed execution, using a POSIX compatable thread library, or pthreads. Sun's Solaris implementation works fine, but any other POSIX library should work. If you have multiple CPUs and don't  have a thread library, install  <a href="http://www.gnu.org/software/pth">GNU Portable Threads</A>,. <STRONG>If your computer has only one CPU, there is no point in building atlc to use multiple threads, as it will slow the program down</STRONG>.</LI>
+	<LI>If you have access to a distributed set of computers and want to put a <STRONG>lot</STRONG> of effort in, you might like to help develop an MPI version of atlc. In which case, install the <a href="http://www-unix.mcs.anl.gov/mpi/mpich/indexold.html">MPICH library</A>. This will enable some tests to check the MPI implementation, but will not do anything useful to atlc now. Hence for 99.999% of users, installing the <a href="http://www-unix.mcs.anl.gov/mpi/mpich/indexold.html">MPICH library</A> would be a waste of time.
 </OL>
 <br>
 Extract the compressed file, using gunzip, or gzip -d.
@@ -36,10 +38,15 @@ Extract the compressed file, using gunzip, or gzip -d.
 % tar xvf atlc-X.Y.tar
 % cd atlc-X.Y
 % ./configure
-% make 
+% make
 % make check  <STRONG> // This is very important, as it checks the binaries.</STRONG>
 </PRE>
-This should run around 90 self-tests. All should pass, but if you don't have the <a href="http://sources.redhat.com/gsl/">GNU scientific library.(gsl)</a>, approximately 4 tests will fail. Without <a href="http://sources.redhat.com/gsl/">gsl</a>, <EM>atlc</EM> suffers some loss of functionality, so these tests fail. <br>
+If you have multiple CPUs, add the option --with-threads to <CODE>configure</CODE> before running <CODE>make</CODE>. <br><p>
+A total of 89 self-tests are performed in the <CODE>make check</CODE> stage.  <strong>No tests should fail</strong> but several will be skipped. Four tests make use of the t <a href="http://sources.redhat.com/gsl/">gsl library</a> and so will be skipped unless that is present. Two tests are used to check the operation of the POSIX threads, so will be skipped unless configured with <CODE>--with-threads</CODE>. One test checks the operation of the <a href="http://www-unix.mcs.anl.gov/mpi/mpich/indexold.html">MPICH library</A>, so will be skipped unless <CODE>configure --with-mpi</CODE> is run. 
+<br><br>
+Note, you can <strong>not</strong> run <br>
+ <CODE>% configure --with-mpi --with-threads</CODE> <br>as these options are mutually exclusive. Because of this, at leasat one test will always be skipped. <br><br>
+Finally you can install the software if you wish. 
 <PRE>
 % su
 # make install. </PRE>
@@ -52,21 +59,14 @@ The<CODE> make install</CODE> stage will install:
 	<LI>Some example files (by default to<CODE> /usr/local/share/atlc/examples</CODE>)</LI>
 </OL>
 <br>
-If you have a system with more than one CPU and wish to exploit multiple-processing using  threads, you should then <STRONG>(after first building a single threaded version above)</STRONG>, re-run the configure script. 
-<PRE>
-% configure --with-threads
-% make 
-% su
-# make install.
- </PRE>
+
 To build atlc with support for distributed processing using the <a href="http://www-unix.mcs.anl.gov/mpi/mpich/indexold.html">MPICH library</A>, run:
 <pre>
 % configure --with-mpi=/path_to_your_mpi_library
 </pre>
 There are several other options to the configure script, which can be obtained by running <CODE>configure --help</CODE>
 <p>
-Note, <EM>atlc</EM> should first be configured without threads and <CODE>make check</CODE> run. The algorithm used for a threaded 
-version of <EM>atlc</EM> is slightly different, so will result in a lot of tests failinig, as the files are <STRONG>slightly </STRONG>different and so have different checksums.It is hoped to fixed this problem soon, so that the tests can be run properly on a threaded version of atlc. 
+
 <p>atlc is written and supported by <a href="mailto: drkirkby@ntlworld.com?subject=atlc%20-%20Arbitrary%20Transmission%20Line%20Calculator">Dr. David Kirkby (G8WRB)</A> It it issued under the <a href="http://www.gnu.org/copyleft/gpl.html">GNU General Public License</A><p>
 <a href="http://atlc.sourceforge.net">Return to the atlc homepage</a>
 <a href="http://homepage.ntlworld.com/drkirkby/list1.html"></a>
