@@ -10,6 +10,30 @@
 <title>Colour codes for atlc software.</title>
 </head>
 <body>
+<H1>Producing suitable bitmaps</H1>
+<a name="produce"> </a><COdE>atlc</code> expects to find the transmission line's cross section to be found in a standard bitmap (.BMP or .bmp) file. There are several forms of bitmaps, some grayscale, some 8-bit colour (256 colours), some 16 bit colour, some 24-bit colour. Some bitmaps are compressed. <COde>atlc</code> expects to see uncompressed 24-bit bitmaps. This may sound restrictive, but in practice most graphics software can save such files. </P>
+
+Since the form of the input file is critical, we will discuss this a little. 24-bit images have 8 bits per colour (8 for red, 8 for green and 8 for blue). Hence there are 256 shades of red, 256 shades of green and 256 shades of blue, giving a total of 256*256*256=16,777,216 possible colours. It follows that 3 bytes of data are needed to describe each pixel (ignoring compressed images which are not supported). Each bitmap has a small header of around 56 bytes, followed by 3 bytes for every pixel. The minimum possible length for a bitmap of x by y pixels is then 56+3*width*height (bytes). In practice, images are usually a little larger than this, as there is some padding. If your images are not at least this size, something is wrong! For a more detailed discussion of bitmap files <STRONG>(unnecessary for using <COde>atlc</code>)</STRONG>, see this <a href="bmp.html">HTML page</A> I found on the web somewhere. <br><br>
+Colours in bitmap files are often written as red,green.blue as in 26,239,179 indicating the amount of red (26), the amount of green (239) and the amount of blue (179). Amounts vary from 0 (none of the colour) to 255 (the maximum possible amount of the colour. Often the colours are written in hexadecimal format as 0x1aefb3 or 0x1AEFB3. Such a colour will look like this. <br><img src="jpgs/1aefb3.jpg" ALT="The colour 0x1AEFB3 or 26,239,179" width="32" height="32">
+
+<br> <br>
+It is absolutely <STRONG>essential</STRONG> that you are able to produce bitmap images with <STRONG>exactly</STRONG> the colours <COde>atlc</code> needs. <br><br>
+
+One conductor must be produced in <STRONG>pure red</STRONG>. i.e 255,0,0 or 0xFF0000. This red will look like the red square on the left. The one on the right is very slightly different, having a very small amount of blue, and so has the colour representation 255,0,1 or 0xFF0001. The colour on the left will be interpreted by <COde>atlc</code> as one conductor, the one on the right will not. Hence it is essential to check the colours produced by your graphics package not only look <EM>about right</EM>, but are <STRONG>exactly</STRONG> right. <TABLE>
+<TR>
+<TD><img src="jpgs/ff0000.jpg" ALT="Pure red 0xFF0000" width="32" height="32"></TD>
+<TD><img src="jpgs/ff0001.jpg" ALT="Re with a little blue 0xFF0001" width="32" height="32"></TD>
+</TR>
+</TABLE>
+<br> 
+Graphics packages such as <A HREF="http://www.gimp.org">Gimp</A> (freely available for no cost on unix systems) will allow you to set a colour precisely. <br><br>
+You then need to draw an image of the cross section of the transmission line to be analysed. The scale can be anything you reasonably want, but should result in the largest dimension in your transmission line have 200 or more pixels allocated to it. Making the bitmap much smaller (say 32 pixels in one dimension) will results in fast but inaccurate results. Much larger bitmaps, say 1000x1000, will take a long time to compute. The bitmaps don't have to be square. You should aim to fill the whole of the bitmap with the relevant details, and not have a lot of unused space on the bitmap. For example, the image on the left below is fine, but the one on the right will spend a lot of time computing nothing of value. <br>
+<table>
+<tr>
+<TD><img src="jpgs/full-size.jpg" ALT="Relevant data fills bitmap" width="128" ></TD>
+<TD><img src="jpgs/too-small.jpg" ALT="Wasted space = wasted computing time." width="128"></td>
+</tr>
+</table>
 <h1>Predefined colours in <code>atlc</code></h1>
 The input file to atlc, which is a bitmap, must have the correct colours to indicate what parts of the image are conductors and dielectrics. Parts at ground (0 V) potential must be drawn green, those at +1 V must be drawn red and those at -1V must be drawn blue. Only red and green are noramlly used for conductors, with blue being used only on couplers. Vacuum dielectric must be drawn while. Many other colours have very specific meanings as shown below. 
 <p>
