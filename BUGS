@@ -1,4 +1,6 @@
-   
+  0.The program will not compile on the Cray Y-MP supercomputer. This is
+    because the Cray has no integer data types that are not 8-bytes. I
+    hope to work around this some time soon. 
   1.There are two test failures on IBM's AIX operating system, using IBM's 
     compiler version 6.0 when compiled multi-threaded I've no idea of the
     source of these problems. Many pixels differ, but by a small amount. I 
