@@ -12,45 +12,10 @@
 <H1>Coupled transmission lines</H1>
 Unlike a standard two-conductor transmission line, such as coaxial cable that has a ground and  one other conductor, a  transmission line with 3 conductors forms a directional coupler. A directional coupler has 2 characteristic impedances - an odd-mode impedance Zodd and an even-mode impedance Zeven. <p>
 The support for coupled lines is not completely finished  yet. However, it is possible to perform most tasks one would want to do with such a program. <STRONG>From a user's specification of a frequency response and coupling factor of a directional coupler, it is now possible to generate a physical layout that will have those specifications!</STRONG>. It is hoped this will be useful. 
-<OL>
- 
-	<LI><a href="determine_dimensions_of_couplers.html">Determine the physical dimensions of a directional coupler, given its specifications of frequency response and coupling factor.</a> </LI> This is probably what most people will be interested in doing, so it is listed first. <p>Using the program <CODE>design_coupler</CODE> it is possible to fully automate the process of designing a directional coupler. Note that the directional coupler designed must have a fixed physical shape shown below<p>
+<OL><LI><a href="determine_dimensions_of_couplers.html">Determine the physical dimensions of a directional coupler, given its specifications of frequency response and coupling factor.</a> </LI> This is probably what most people will be interested in doing, so it is listed first. <p>Using the program <CODE>design_coupler</CODE> it is possible to fully automate the process of designing a directional coupler. Note that the directional coupler designed must have a fixed physical shape shown below<p>
 <img src="jpgs/3dcoup.jpg" wiidth="616" height="140" ALT="a directional coupler">
-<br>
- although the shape is in practice quite a practical one to use for air-spaced lines. In fact, most people would consider it the easiest directional coupler to make for such situations. <p>However, <CODE>design_coupler</CODE> can  <STRONG>not</STRONG> be used to fully automate the process of designing directional couplers on PCBs, but other methods exist to make that job easier. Some manaul and fairly tedious work is needed to design a directional coupler on a PCB having the properties (frequency response, coupling factor) that you want. However, it can be done with the aid of the package of programs provided in <EM>atlc</EM>. <p>
-<LI><a href = "#given">Determine the properties of an arbitrary directional directional coupler, given its physical dimensions. </a> After dawing a bitmap of the directional coupler's physical dimensions with a graphics package, then using the program <CODE>atlc</CODE>, it is possible to calculate the capacitance per m, inductance per m, mode impedances, etc of an arbitrary shaped directional coupler. The directional coupler can have any shape of conductors and any number of dielectrics. From the data obtained from <CODE>atlc</CODE> it is possible to compute the properties of the directional coupler.  <p>It is not currently possible to design an arbitrary shaped directional coupler to have the properties you need., using a fully automated process. It is hoped at a later date to allow the process to be fully automated for PCB based directional couplers and perhaps some other common designs. That process will probably be fairly computationally expensive.</LI><p>
-	<LI><a href="generate_for_coupler.html">Generate a bitmap for one particular structure, for analysis with atlc</a> Using the program <CODE>generate_coupler</CODE>, (rather than <CODE>design_coupler</CODE>) one can very quickly generate a bitmap of a directional coupler, for analysis by the program <CODE>atlc</CODE>. In fact, since there is an analytical solution for the the particular shaped generated, that exact solution is calculated too. This was primarily designed for <a href="accuracy.html#Accuracy_coupler">checking for errors in atlc with coupled lines</a>, which were always found to be less than 0.8%</LI>
-<p>
-</OL>
-<p>
-
-Next how to peform these tasks will be be described, followed by a few examples. </OL>
-<p>
-
-
-
-
-<H1>) <a name = "given" >Calculate Zodd and Zeven for an arbitrary directional coupler using <CODE>atlc</CODE></A></H1>
-<p>Consider the transmission lines below, which has three metal conductors - a ground shown in green and the two inner conductors shown (shown red and blue) coupled together. <p><img src="jpgs/directional coupler.jpg" width="400" ALT="coupled lines">
-<p>Such a structure has two characteristic impedances - an odd-mode impedance Zodd and an even-mode impedance Zeven. If the structure is drawn in red, blue and green, <CODE>atlc</CODE> will interpret this as a directional coupler and therefore computes both impedances.
-<pre>
-wren  % atlc -v  directional couplerxx.bmp
-
-directional couplerxx.bmp Er= 1.0000 C= 55.1412 pF/m L= 201.7820 nH/m Zo= N/A Ohms Zodd= 60.4927 Ohms Zeven= N/A Ohms v= 2.9979 e+08 m/s v_f= 1.0000 VERSION= 4.0.0
-directional couplerxx.bmp Er= 1.0000 C= 54.1717 pF/m L= 205.3932 nH/m Zo= N/A Ohms Zodd= 61.5753 Ohms Zeven= N/A Ohms v= 2.9979 e+08 m/s v_f= 1.0000 VERSION= 4.0.0
-directional couplerxx.bmp Er= 1.0000 C= 54.0835 pF/m L= 205.7283 nH/m Zo= N/A Ohms Zodd= 61.6758 Ohms Zeven= N/A Ohms v= 2.9979 e+08 m/s v_f= 1.0000 VERSION= 4.0.0
-directional couplerxx.bmp Er= 1.0000 C= 54.0683 pF/m L= 205.7862 nH/m Zo= N/A Ohms Zodd= 61.6931 Ohms Zeven= N/A Ohms v= 2.9979 e+08 m/s v_f= 1.0000 VERSION= 4.0.0
-directional couplerxx.bmp Er= 1.0000 C= 54.0657 pF/m L= 205.7958 nH/m Zo= N/A Ohms Zodd= 61.6960 Ohms Zeven= N/A Ohms v= 2.99792e+08 m/s v_f= 1.0000 VERSION= 4.0.0
-directional couplerxx.bmp Er= 1.0000 C= 36.6079 pF/m L= 303.9368 nH/m Zo= 74.9774 Ohms Zodd= 61.6960 Ohms Zeven= 91.1180 Ohms v= 2.99792e+08 m/s v_f= 1.0000 VERSION= 4.0.0
-directional couplerxx.bmp Er= 1.0000 C= 35.5586 pF/m L= 312.9064 nH/m Zo= 76.0757 Ohms Zodd= 61.6960 Ohms Zeven= 93.8070 Ohms v= 2.99792e+08 m/s v_f= 1.0000 VERSION= 4.0.0
-directional couplerxx.bmp Er= 1.0000 C= 35.4672 pF/m L= 313.7124 nH/m Zo= 76.1736 Ohms Zodd= 61.6960 Ohms Zeven= 94.0486 Ohms v= 2.99792e+08 m/s v_f= 1.0000 VERSION= 4.0.0
-directional couplerxx.bmp Er= 1.0000 C= 35.4513 pF/m L= 313.8534 nH/m Zo= 76.1908 Ohms Zodd= 61.6960 Ohms Zeven= 94.0909 Ohms v= 2.99792e+08 m/s v_f= 1.0000 VERSION= 4.0.0
-directional couplerxx.bmp Er= 1.0000 C= 35.4486 pF/m L= 313.8773 nH/m Zo= 76.1937 Ohms Zodd= 61.6960 Ohms Zeven= 94.0980 Ohms v= 2.99792e+08 m/s v_f= 1.0000 VERSION= 4.0.0
-directional couplerxx.bmp Er= 1.0000 C= 35.4486 pF/m L= 313.8773 nH/m Zo= 76.1937 Ohms Zodd= 61.6960 Ohms Zeven= 94.0980 Ohms v= 2.99792e+08 m/s v_f= 1.0000 VERSION= 4.0.0</pre>
-<p>
-Note that atlc first computes the odd-mode impedance, and then on a second run computes the even-mode impedance. The characteristic impedance is Zo=sqrt(Zodd*Zeven), so this is also computed on the second run. The accuracy of the calculation of odd and even-mode impedances in directional couplers is discussed in the <a href="accuracy.html#Accuracy_directional coupler">accuracy section</a> <p>
-
-<p>
-Later version of atlc will include some software to make use of the impedance values to calculate the properties of a directional directional coupler, although you should be able to use these in the free versions of spice or pspice. I have not tried that I must admit. There is also a cheapish ($10) programme called Puff available from <a href="http://www.its.caltech.edu/~mmic/puffindex/puffE/puffE.htm">http://www.its.caltech.edu/~mmic/puffindex/puffE/puffE.htm </a> . That would certainly allow such calculations. There's a GNU/Linux verison too at <a href="http://wwwhome.cs.utwente.nl/~ptdeboer/ham/puff.html">http://wwwhome.cs.utwente.nl/~ptdeboer/ham/puff.html.</a>  Puff is very good. A combination of atlc to find the electrical properties (Zo, Zodd Zeven etc) of transmission lines and Puff to simulate the properties (coupling factor, directivity, frequency response etc) given those parameters, should be very useful. <p>
-</BODY>
-</HTML>
+<br>although the shape is in practice quite a practical one to use for air-spaced lines. In fact, most people would consider it the easiest directional coupler to make for such situations. <p>However, <CODE>design_coupler</CODE> can  <STRONG>not</STRONG> be used to fully automate the process of designing directional couplers on PCBs, but other methods exist to make that job easier. Some manaul and fairly tedious work is needed to design a directional coupler on a PCB having the properties (frequency response, coupling factor) that you want. However, it can be done with the aid of the package of programs provided in <EM>atlc</EM>. <p>
+<LI><a href = "calculate_zodd_and_zeven.html">Determine the properties of an arbitrary directional coupler, given its physical dimensions. </a> Using <CODE>atlc</CODE>, one can determine the properties of any of the couplers below:<br><img src="jpgs/coupler4.jpg"  ALT="directional couplers"><br>where the green, red and blue are the three conductors and the other colours are different dielectrics (white being vacuum)</LI><p>
+	<LI><a href="generate_for_coupler.html">Generate a bitmap for one particular structure with <CODE>generate_coupler_bitmap</CODE> , for analysis with <CODE>atlc</CODE></a> Using the program <CODE>generate_coupler_bitmap</CODE>, one can very quickly generate a bitmap of a directional coupler like this :<br>
+<img src="jpgs/coupler3.jpg"  wiidth="616" height="140" ALT="a directional coupler">for analysis by the program <CODE>atlc</CODE>. In fact, since there is an analytical solution for this coupler (strictly only valid when the conductors are of zero thickness and W infinitely wide),  <CODE>generate_coupler_bitmap</CODE> calculates the theoretical answer too. This was primarily designed for <a href="accuracy.html#Accuracy_coupler">checking for errors in atlc with coupled lines</a>, which were always found to be less than 0.8% </LI>
+<p></OL></BODY></HTML>

@@ -1,0 +1,238 @@
+<HTML>
+<BODY>
+<PRE>
+<!-- Manpage converted by man2html 3.0.1 -->
+
+</PRE>
+<H2>NAME</H2><PRE>
+     <B>atlc</B> - an Arbitrary Transmission Line Calculator
+
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+     <B>atlc</B>  <B>[-v]</B> <B>[-c</B> <B>cutoff]</B> <B>[-d</B> <B>rrggbb=Er]</B>  <B>[-F</B>  <B>appendfile]</B>  <B>[-i</B>
+     <B>factor]</B> <B>[-p</B> <B>threads]</B> <B>[-r</B> <B>rate_multiplier]</B> <B>bitmapfile</B>
+
+
+</PRE>
+<H2>WARNING</H2><PRE>
+     This man page is not a complete set  of  documentation.  See
+     the  html  files for more complete information. So far, I've
+     not managed to install the html files  into  /usr/local,  so
+     you  will  have  to  look into the atlc-X.Y.Z/docs/html-docs
+     directory for them.
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+     <B>atlc</B> is a finite difference programme that is used to calcu-
+     late  the properties of a two-conductor electrical transmis-
+     sion line of arbitrary cross section. It  is  used  whenever
+     there are no analytical formula known, yet you still require
+     an answer. It can calculate:
+        The impedance Zo  (in Ohms)
+        The capacitance per unit length (pF/m)
+        The inductance per unit length (nF/m)
+        The velocity of propogation v (m/s)
+        The velocity factor, v/c, which is dimensionless.
+
+     A bitmap file (usually with the extension .bmp or  .BMP)  is
+     drawn  in  a  graphics  package  such as <B>Gimp</B> available from
+     http://www.gimp.org. The bitmap file <B>must</B> be saved as a  24-
+     bit  (16 million colour) uncompressed file. The colours used
+     in the bitmap indicate whether the  region  is  a  conductor
+     (pure  red,  pure  green or pure blue) or a dielectric (any-
+     thing else). Pure white is assumed to be  a  vacuum  dielec-
+     tric,  but other colours have diferent meanings. See COLOURS
+     below for precise definitions of the colours.
+
+
+</PRE>
+<H2>OPTIONS</H2><PRE>
+     <B>-c</B> <B>cutoff</B>
+     Sets the convergence criteria of the finite difference  pro-
+     gramme.  The  default is 0.0001, meaning two separate itera-
+     tions must be within 01% for the programme to  stop  iterat-
+     ing.  Setting  to a smaller positive number gives more accu-
+     racy, but takes longer.
+
+     <B>-d</B> <B>rrggbb=Er</B>
+     is used to indicate the colour 0xrrggbb  in  the  bitmap  is
+     used  to represent a material with permittivity Er. See also
+     COLOURS below
+
+     <B>-F</B> <B>appendfile</B>
+     Causes the results to be  appended  to  a  file  appendfile,
+     which  will  be  a text file.  If the -v option is selected,
+     intermediate results will go there too.
+
+     <B>-i</B> <B>factor</B>
+     is used to lighten or darken the .bmp electric field profile
+     images  produced  by  atlc.  Set  factor  &gt;  2 to lighten or
+     between 1 and 2 to darken.
+
+     <B>-t</B> <B>threads</B>
+     tells atlc to run using that number  of  threads,  to  speed
+     calculation.  This option is only valid if atlc was compiled
+     with the --with-mp option to configure. The Pthreads library
+     ()  <B>must</B>  be  installed in order to compile with support for
+     more than one CPU. Generally, setting the number of  threads
+     to the number of cpus is a good idea, but it is worth exper-
+     imenting. The number can be changed permanently  by  editing
+     the parameter MAX_THREADS in definitions.h.
+
+     <B>-r</B> <B>ratemultiplier</B>
+     Sets the parameter 'r' used internally  when  computing  the
+     voltage  at  a point w,h.  The default, which is (as of ver-
+     sion 3.0.0) 1.95, results in what is belived to  be  optimal
+     results.  Setting to 1.0 will avoid the use of the fast con-
+     vergence method, which is generally not a good idea.
+
+     <B>-v</B>
+     makes the output more verbose/talkative.
+
+
+</PRE>
+<H2>COLOURS</H2><PRE>
+     The 24-bitmaps that  atlc  uses  have  8  bits  assigned  to
+     represent  the  amount  of  red, 8 for blue and 8 for green.
+     Hence there are 256 levels of red, green and blue, making  a
+     total of 256*256*256=16777216 colours. Every one of the pos-
+     sible i16777216 colours can  be  defined  precisely  by  the
+     stating the exact amount of red, green and blue, as in:
+
+     red         = 255,000,000 or 0xff0000
+     green       = 000,255,000 or 0x00ff00
+     blue        = 000,000,255 or 0x0000ff
+     black       = 000,000,000 or 0x000000
+     white       = 255,255,255 or 0xffffff
+     Brown       = 255,000,255 or 0xff00ff
+     gray        = 142,142,142 or 0x8e8e8e
+
+     Some colours, such as pink, terquiose,  sandy,  brown,  gray
+     etc  may mean slightly different things to different prople.
+     This is not so with  atlc,  as  the  programme  expects  the
+     colours  below  to  be exactly defined as given. Whether you
+     feel the colour is sandy or yellow is up to you, but if  you
+     use  it  in your bitmap, then it either needs to be a colour
+     reconised by atlc, <B>or</B> you <B>must</B> define it with a command line
+     option (see OPTIONS).
+     red    = 255,000,000 or 0xFF0000 is the live conductor.
+     green  = 000,255,000 or 0x00FF00 is the grounded conductor.
+     blue   = 000,000,255 or 0x0000FF is the negative conductor
+
+     All bitmaps <B>must</B> have the live (red)  and  grounded  (green)
+     conductor.  The  blue  conductor is not currently supported,
+     but it will be used to indicate a negative conductor,  which
+     will  be  needed  if/when  the  programme  gets  extended to
+     analyse directional couplers.
+
+     The following dielectrics are recognised by atlc <B>and</B> <B>so</B>  <B>are</B>
+     <B>produced</B> <B>by</B> rect_cen_in_rect<B>.</B>
+
+     white     255,255,255 or 0xFFFFFF as Er=1.0    (vacuum)
+     pink      255,202,202 or 0xFFCACA as Er=1.0006 (air)
+     L. blue   130,052,255 or 0x8235EF as Er=2.1    (PTFE)
+     Mid gray  142,242,142 or 0x8E8E8E as Er=2.2    (duroid 5880)
+     mauve     255.000,255 or 0xFF00FF as Er=2.33  (polyethylene)
+     yellow    255,255,000 or 0xFFFF00 as Er=2.5    (polystyrene)
+     sandy     239,203,027 or 0xEFCC1A as Er=3.3    (PVC)
+     brown     188,127,096 or 0xBC7F60 as Er=3.335  (epoxy resin)
+     Terquoise 026,239,179 or 0x1AEFB3 as Er=4.8    (glass PCB)
+     Dark gray 142,142,142 or 0x696969 as Er=6.15   (duroid 6006)
+     L. gray   240,240,240 or 0xDCDCDC as Er=10.2  (duroid 6010)
+     D. orange 213,160,067 or 0xD5A04D as  Er=100.0  (mainly  for
+     test purposes)
+
+
+</PRE>
+<H2>EXAMPLES</H2><PRE>
+     Here are a few examples of the use of atlc. Again,  see  the
+     html documentation in atlc-X.Y.Z9ocsl-docs for for examples.
+
+     <B>ex_1</B> <B>%</B> <B>atlc</B> <B>coax2.bmp</B>
+     This is a simple example (ex_1), in which the geometry of  a
+     transmission  line is defined in coax2.bmp. In this example,
+     only the predefined dielectrics (Er =1.0, 1.0006, 2.1,  2.2,
+     2.33,  2.5,  3.3,  3.335, 4.8, 6.15 or 10.2) could have been
+     used in the bitmap, which would have been done with  one  of
+     10  different  colours  (white  (0xFFFFFF)  for Er=1.0, pink
+     (0xFFCACA) for 1.0006 etcin the  bitmap  file  coax2.bmp  No
+     other  colour(dilectric)  could have been used, since it was
+     not specified with the -d option.
+
+     <B>ex_2</B> <B>%</B> <B>atlc</B> <B>-d</B> <B>f9e77d=2.43</B> <B>somefile.bmp</B>
+     In ex_2, a dielectic with Er=2.43 was wanted. A colour  with
+     the  RGB  values  of  0xF9E7&amp;d was used. The -d option tells
+     atlc what Er this colour refers to.
+
+     <B>ex_3</B> <B>%</B> <B>atlc</B> <B>-v</B> <B>.bmp</B> <B>coax2.bmp</B>
+     In ex_3, atlc has been instructed to print  the  results  of
+     intermediate  calculations  to  stdout.   Normally, only the
+     final result is printed.
+
+
+
+</PRE>
+<H2>FILES</H2><PRE>
+     bitmapfile.bmp
+        Original bitmap file. Must be 24-bit colour uncompressed.
+     bitmapfile.Ex.bmp
+        X-component of E-field as a bitmap. Red=+dV/dx,  blue  =-
+     dV/dx
+     bitmapfile.Ey.bmp
+        y-component of E-field as a bitmap. Red=+y, blue =-y
+     bitmapfile.E.bmp
+        E-field, as E=sqrt(Ex^2+Ey^2).
+     bitmapfile.V.bin
+        Voltage as a bitmap, red= positive, blue =negative.
+     bitmapfile.Er.bin
+        Bitmap showing the permittivity as a  grayscale.  Lighter
+     is a higher
+        permittivity.
+     bitmapfile.U.bmp
+        Energy.
+     bitmapfile.txt Results, in a text file for easy reading.
+
+     In addition to the bitmaps, the data is also saved in binary
+     files.
+
+     All the saved binary files (.bin's) are saved  as  a  double
+     precision number for each of the pixels. The first double is
+     the top left, the last the bottom  right.  If  the  original
+     image  has width W and height H, the saved binary files will
+     be W-1 by H-1.
+
+     All the saved bitmap files  are  24-bit  uncompressed,  just
+     like the input files.
+
+
+</PRE>
+<H2>SEE ALSO</H2><PRE>
+     <B>rect_cen_in_rect(1)</B>,    <B>circ_in_circ(1)</B>.    <B>rect_in_rect(1)</B>,
+     <B>circ_in_rect(1)</B>.      <B>rect_in_circ(1)</B>,     <B>readbin(1)</B>    and
+     <B>sym_strip(1)</B>.
+
+     http://atlc.sourceforge.net                - Home page
+     http://sourceforge.net/projects/atlc       - Download area
+     atlc-X.Y.Z/docs/html-docs/index.html       - HTML docs
+     atlc-X.Y.Z/docs/qex-december-1996/atlc.pdf - theory paper
+     atlc-X.Y.Z/examples                        - examples
+     http://www.david-kirkby.co.uk              - my home page
+     http://www.david-kirkby.co.uk/ham          - ham radio pages
+
+
+
+
+
+
+
+
+</PRE>
+<HR>
+<ADDRESS>
+Man(1) output converted with
+<a href="http://www.oac.uci.edu/indiv/ehood/man2html.html">man2html</a>
+</ADDRESS>
+</BODY>
+</HTML>
