@@ -45,7 +45,7 @@ void fill_image_vector_with_data(unsigned char *image_vector, int colour_Er1, in
    int left_edge_red;
    left_edge_red=W/2 - w -s/2;
    left_edge_blue=(W+s)/2;
-   //if(verbose)
+   if(verbose >=2)
      printf("\nw=%d s=%d W=%d H=%d Er1=%x Er2=%x in fill..data for couplers\n", w, s, W, H,colour_Er1, colour_Er2);
    for(j=0;j<H;++j)
    {
