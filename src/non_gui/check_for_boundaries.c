@@ -60,7 +60,7 @@ void check_for_boundaries(void)
 	  if(Er[i][j+1]==METAL_ER)
 	    cell_type[i][j]+=METAL_BELOW;
         }
-	if( j < height-1)
+	if( (j < height-1) && (j > 0))
 	{
 	  if(Er[i][j-1]==METAL_ER)
 	    cell_type[i][j]+=METAL_ABOVE;
