@@ -22,6 +22,8 @@ groundplanes of spacing h. */
 
 int main(int argc, char **argv)
 {
+//#ifdef HAVE_LIBGSLCBLAS 
+#ifdef HAVE_LIBGSLP
   double H, w, s, er, ke_dash, ko_dash,ke, ko, Zodd, Zeven, Zo;
   gsl_complex z;
   GSL_SET_COMPLEX(&z, 3, 4);
@@ -41,4 +43,10 @@ int main(int argc, char **argv)
   ke=(tanh((M_PI/2)*(w/H)))*tanh((M_PI/2)*(w+s)/H);
   //z=(M_PI/2)*(w+s)/H;
   //ko=(tanh((M_PI/2)*(w/H)))*coth((M_PI/2)*(w+s)/H);
+#else
+  printf("calc_coupler was not linked against the GNU scientific library, gsl.\n");
+  printf("Obtain gsl from http://sources.redhat.com/gsl then run 'configure' again.\n");
+  printf("and rebuild calc_coupler from the sources again.\n");
+  exit(1);
+#endif
 }
