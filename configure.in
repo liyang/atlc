@@ -53,10 +53,9 @@ if test "x$with_gui" = "xyes"; then
 	       wxWindows must be installed to use the GUI version of atlc
         ])
         fi
-#EXTRA_WXWINDOWS_CFLAGS = -I /usr/local/stow/wxGTK-2.2.9/lib/wx/include/gtk-2.2 
         AC_SUBST(EXTRA_WXWINDOWS_LIBS,`wx-config --libs`)
         AC_SUBST(EXTRA_WXWINDOWS_CFLAGS,`wx-config --cflags`)
-echo XXXXXXx $EXTRA_WXWINDOWS_CFLAGS $EXTRA_WXWINDOWS_LIBS
+        AC_SUBST(GUI_DIRECTORY,gui)
 fi
 
 dnl Multi-Processor Support
@@ -91,7 +90,6 @@ AC_HAVE_HEADERS(gsl/gsl_sf_ellint.h,,AC_MSG_WARN([
 	it will be impossible to evalute the theoretical impedance of 
 	a coupler  using \"make_coupler\"]))
 
-if test "x$with_gui" = "xyes"; then
 AC_OUTPUT([\
 Makefile                                        \
 src/Makefile                                    \
@@ -105,17 +103,3 @@ docs/html-docs/jpgs/Makefile                    \
 docs/qex-december-1996/Makefile                 \
 docs/theory/Makefile                            \
 docs/Makefile                                   ])
-else
-AC_OUTPUT([\
-Makefile                                        \
-src/Makefile                                    \
-src/non_gui/Makefile                            \
-man/Makefile                                    \
-examples/Makefile                               \
-docs/Makefile                                   \
-docs/html-docs/Makefile                         \
-docs/html-docs/jpgs/Makefile                    \
-docs/qex-december-1996/Makefile                 \
-docs/theory/Makefile                            \
-docs/Makefile                                   ])
-fi
