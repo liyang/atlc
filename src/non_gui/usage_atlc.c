@@ -37,7 +37,7 @@ void usage_atlc(void)
   fprintf(stderr,"  -C       \n      Print Licence and copying information\n");
   fprintf(stderr,"  -s       \n      Skip writing the Ex, Ey, E, V, U and Er files bitmap (.bmp) files\n");
   fprintf(stderr,"  -S       \n      Skip writing the Ex, Ey, E, V, U and Er files binary (.bin) files\n");
-  fprintf(stderr,"  -v       \n      Be verbose (-vv -vvv or -vvvv gives progressively more information)\n\n");
+  fprintf(stderr,"  -v       \n      Be verbose (-vv -vvv or -vvvv gives progressively more information)\n");
   fprintf(stderr,"  -c cutoff\n      where 'cutoff' sets the cutoff criteria - see html docs or man page.\n");
   fprintf(stderr,"  -d rrggbb=Er\n      where the colour rrggbb (in hex) is a (d)ielectric of permittivity Er.\n");
   fprintf(stderr,"  -i factor\n      which lightens (factor>%.1f) or darkens (1.0 <factor<%.1f) output bitmaps.\n",
@@ -45,23 +45,30 @@ void usage_atlc(void)
   fprintf(stderr,"  -p prefix\n      where 'prefix' is a name (normally a directory) added in front of output files\n");
   fprintf(stderr,"  -r rate_multiplier\n      where 'rate_multiplier' sets the rate multipler (called r in source code)\n");  
 #ifdef ENABLE_POSIX_THREADS
-  fprintf(stderr,"  -t THREADs. \n      Where THREADs is the number of threads to use (normally best set to \n      the number of cpus). The default is %d.\n",MAX_THREADS);
+  fprintf(stderr,"  -t THREADs. \n      Where THREADs is the number of threads to use (normally best set to \n      the number of cpus). The default is %d. Set to 0 for single threaded algorithm.\n",MAX_THREADS);
 #endif
 #ifdef ENABLE_MPI
   fprintf(stderr,"  -w weights\n     where weights is a colon-separated list of weights to use when dividing up the work amongst the processors.\n"); 
 #endif
 #ifndef ENABLE_POSIX_THREADS
   fprintf(stderr,"****************NOTE******************************\n");
-  fprintf(stderr,"The -t option setting the number of threads is disabled since\n");
+  fprintf(stderr,"The -t option setting the number of threads to use is disabled since\n");
   fprintf(stderr,"since this was not configured with multi-processor support.\n");
-  fprintf(stderr,"To add support for multiple CPUs, \"make clean\" then re-run\n");
-  fprintf(stderr,"the configure script with the option --with-threads\n");
+  fprintf(stderr,"To add support for multiple threads (for an MP machine), \"make clean\" then \nre-run the configure script with the option --with-threads\n");
+#endif
+#ifndef ENABLE_MPI
+  fprintf(stderr,"****************NOTE******************************\n");
+  fprintf(stderr,"The -w option setting the weights to use when dividing up the work for\n");
+  fprintf(stderr,"multiple CPUs on distributed processors is disabled since this was not\n");
+  fprintf(stderr,"for distributed processing. To add such support, \"make clean\" then re-run\n");
+  fprintf(stderr,"the configure script with the option --with-mpi\n");
 #endif
 #ifdef WINDOWS
   fprintf(stderr,"****************NOTE******************************\n");
-  fprintf(stderr,"The -t option setting the number of threads is disabled since either\n");
-  fprintf(stderr,"This is a Windoze executable OR\n");
-  fprintf(stderr,"There are no plans to add multi-processor support to Windoze, but if this is a\n");
-  fprintf(stderr,"Unix executable, then re-run 'configure' using the '--with-threads' option\n");
+  fprintf(stderr,"The -t and -w options are disabled disabled since\n");
+  fprintf(stderr,"this is a Windoze executable.\n");
+  fprintf(stderr,"There are no plans to add multi-processor or distributed\n");
+  fprintf(stderr,"processing to Windoze.\n");
+
 #endif
 }
