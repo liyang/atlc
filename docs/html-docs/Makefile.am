@@ -30,6 +30,7 @@ generate_for_coupler.html \
 generators.html \
 index.html \
 index2.html \
+make-check.html \
 man-pages.html \
 options.html \
 readbin.1.html \
@@ -66,6 +67,7 @@ generate_for_coupler.html \
 generators.html \
 index.html \
 index2.html \
+make-check.html \
 man-pages.html \
 options.html \
 readbin.1.html \
