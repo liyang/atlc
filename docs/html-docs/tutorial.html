@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 TRANSITIONAL//EN">
+<HTML>
+<HEAD>
+<META name="generator" content="Mostly bluefish & vi. Sometimes netscape">
+<META http-equiv="CONTENT-TYPE" content="text/html; charset=iso-8859-1">
+<META name="AUTHOR" content="Dr. David Kirkby, drkirkby@ntlworld.com">
+<META name="DESCRIPTION" content="FAQ for atlc">
+<META name="KEYWORDS" content="atlc tutorial arbitrary transmission line calculator">
+<TITLE>atlc - Arbitrary Transmission Line Calculator Tutorial</TITLE>
+</HEAD>
+<BODY>
+
+<H1><CODE>atlc's</CODE> Tutorial</H1>
+The arbitrary transmission line calculator (<CODE>atlc</CODE>) project is used when you wish to know the properties (Zo, capacitance per unit length, velocity factor, electric-field distribution, etc) of a transmission line or directional copuler. Unlike the well known analytical formulas printed in any book on transmission lines, <CODE>atlc</CODE> has great flexibility, as <STRONG>any</STRONG> cross section can be analysed, even one like this. <br>
+<img src="jpgs/very-odd.jpg" ALT="very odd line"><p>
+All this is required, is that the cross section can be drawn and saved as a bitmap file and the programme <CODE>atlc</CODE> used to evaluate the bitmap. 
+
+The following examples show how this is done. 
+<OL>
+
+<br>
+<LI> <a href="#very_odd">Very odd transmission line</A> In the first tutorial, that very odd transmissionl line  will be analysed. It is shown just how easy it is.By far the most difficult part in using atlc is drawing the cross sections. </LI>
+        <LI><a href="#coax">Coaxial cable</A> In the second example, a standard piece of coaxial cable will be analysed. This has the advantage for now that we calculate the answer for a sanity check.</LI>
+        <LI><a href="#sym_rectangular">Symmetrical rectangular transmission line.</A> In the example, a transmission line with one <STRONG>rect</STRONG>angular conductor <STRONG>cen</STRONG>trally located <STRONG>in</STRONG>side another <STRONG>rect</STRONG>angular conductor will be analysed. The programme <CODE>rect_cen_in_rect</CODE> will be used for this - the name hopefully conveying the conductor shapes and the symmetry. </LI>
+        <LI><a href="#coupler1">Directional coupler.</A> Assume we wished to analyse the coupling between two closely spaced square conductors in a rectangular outer conductor. Assume a vacuume dielectric - for now at least,<STRONG> only a vacuum dielectrics is support with directional couplers</STRONG>. </LI>
+</OL>
+
+<OL>
+
+
+<LI>
+<a name="very_odd" ><STRONG>Very odd line</STRONG></a> Assuming we wanted to analyse that rather strange transmission line above, its cross-section would first be saved as a bitmap. One conductor would be drawn pure red, the other pure green. Assuming for a monent the dielectric is a vacuum (virtually the same permittivity as air), the dielectic would be drawn pure whilte. (The colours are critical and are discussed more in the section marked <a href="colours.html">Colours</a> at the top of the page). Assuming the cross section was in a file very_odd.bmp, we would run atlc like this:
+<PRE>
+wren % atlc very-odd.bmp
+</PRE>
+atlc would produce the following output. 
+<pre>
+very-odd.bmp Er= 1.0000 C= 59.1756 pF/m L= 188.0251 nH/m Zo= 56.3685 Ohms Zodd= N/A Ohms Zeven= N/A Ohms v= 2.99792e+08 m/s v_f= 1.0000 VERSION= 4.0.0
+</PRE>
+All information is printed on one long line so its easy to process with other software. Note the impedance Zo  is 56.3685 Ohms. Ignore the columns marked Zodd and Zeven. All the others should be self expanatory, except Er which is the effective permittivity and v_f which is the velocity factor.  
+<p>
+The size (number of pixels) in the bitmap should be sufficient that the structure can be drawn accurately, but not so large that it takes too long to process. About 1 Mb is reasonable. 
+</LI>
+
+<LI>
+<STRONG><a name="coax" >Coaxial cable</a></STRONG> To analyse coaxial cable, we would normally use the formulas published in book. The impedance for instance, is given by Zo=(log<sub>e</sub>(D/d))/sqrt(Er).  but <CODE>atlc</CODE> can be used too. We are not suggesting that <CODE>atlc</CODE> is used instead of the normal formula for coax on a regular basis, but since it's a simple example, it is useful for demonstration. Also, as there is an analytical expression for Zo, we can get some idea of the <a href="accuracy.html">accuracy</a> of <CODE><a href="atlc.1.html">atlc</a></CODE>
+<br>
+<br>
+Since the cross section consists of a <STRONG>circ</STRONG>ular conductor <STRONG>in</STRONG>side another <STRONG>circ</STRONG>ular conductor, the programme <CODE><a href="circ_in_circ.1.html">circ_in_circ</a></CODE> can be used to generate the bitmap, rather than the more time consuming procedure of using a graphics package and drawing it manually.. <br><br>
+We will assume that the inner diameter of the outer conductor is 12 mm, the outer diameter of the inner conductor is 3.9  mm, and the dielectric has a permittivity of 1.0. Since the conductors are coaxial, there is zero offset between their centres.. The programme <a href="circ_in_circ.1.html">circ_in_circ</a></CODE> will be used to generate the bitmap, with these physical dimensions <br>
+<br>
+If we run  <CODE><a href="circ_in_circ.1.html">circ_in_circ</a></CODE> without any arguments, it will print a usage message, showing the first argument should the the outer diamater (D=12 mm), the second the inner conductor (d=3.9 mm), the third the offset 'O' between the conductors (O is zero since they are coaxial and there is therefore no offset between centres).  The fourth argument is the permittivity (1.0 in this case).
+
+Ignoring the options, which are not necessary unless we wish to change the behaviour of  <CODE><a href="circ_in_circ.1.html">circ_in_circ</a></CODE>, we would type <br><br>
+<CODE>
+% circ_in_circ 12 3.9 0 1.0 &gt; coaxial_1.bmp <br> 
+</code>
+This will produce a bitmap like the image on the left. The inner conductor is red, the outer green and the dielectric is white in this case, as Er=1.0. Don't worry about the fact that the outer conductor is square, as the inside of it is round, which is all that matters.
+<br>
+<img src="jpgs/coaxial1.jpg" ALT="coax 12/3.9 mm" >
+<br>
+To calculate the properties of this coaxial cable, we then run    <CODE><a href="atlc.1.html">atlc</a></CODE>, where it will print the important properties to the screen, again on one long line (you will have to scroll the brower to see it all).<p>
+<pre>
+% atlc coaxial_1.bmp
+coaxial_1.bmp Er= 1.0000 C= 49.5449 pF/m L= 224.5743 nH/m Zo= 67.3257 Ohms v= 2.99792e+08 m/s v_f= 1.0000 VERSION= 3.0.0
+</pre>
+<br>
+The correct answer, given by the formula  Zo=log<sub>e</sub>(D/d)/sqrt(Er) is 67.4358 Ohms, so atlc's estimate of Zo= 67.3257 Ohms is in error by only 0.16%. We can easily increase the accuracy, by generating a larger bitmap with <CODE>circ_in_circ</CODE>, by adding a -b command line option. <p>
+</LI>
+
+<LI>
+<STRONG><a name="sym_rectangular" >Symmetrical rectangular transmission line.</a></STRONG> In this tutorial we will analyse a <STRONG>rect</STRONG>angular conductor placed <STRONG>cen</STRONG>trally <STRONG>in</STRONG>side a second <STRONG>rect</STRONG>angular conductor. We will assume the outer is 10x7  mm, the inner 2 by 5 mm and assume the dielectric is not air, but a polystryene with a relative permittity of Er=2.5. The section marked <a href="colours.html">Colours</A> will show that for a dielectric of Er=2.5, the dielectric must be drawn in yellow, with 255 parts red, 255 parts green and no blue. We could draw this quite easily by a graphics package and produce someting like this. <p>
+<img src="jpgs/rect9.jpg" ALT="rectangular transmission line">
+<p>The outer conductor needs only to be 2 pixels thick. Drawing a few more is usually benificial, as otherwise they can be hard to see. Do not make it too thick (say more than 30 pixels) as it will start to  slow the atlc. <p>
+Once the bitmap is drawn, atlc is used to process the bitmap. 
+<pre>
+% atlc rect9.bmp</pre>
+which produces the output 
+<pre>
+rect9.bmp Er= 2.5000 C= 220.2036 pF/m L= 126.3206 nH/m Zo= 23.9511 Ohms Zodd= N/A Ohms Zeven= N/A Ohms v= 1.89605e+08 m/s v_f= 0.6325 VERSION= 4.0.0
+</pre>
+Although drawning that would not be hard in the Gimp, Photoshop or whatever, it is even easier to used  <a href="rect_cen_in_rect.1.html"><code>rect_cen_in_rect</code></a> to generate the bitmap, giving it the 4 dimensions in the order W H w h and the permittivity
+<pre>
+% rect_cen_in_rect 10 7 2 5 2.5 > rect10.bmp
+% atlc rect10.bmp
+</pre>
+In order to understand how to use rect_cen_in_rect (or any other programme for that matter), we should run it with no arguments, to get a list of the paramters it needs and any options it may have.  <br>
+</LI>
+<LI
+<STRONG><a name="coupler1" >Directional coupler.</a> Now consider analysing this structure, which is a coupler. 
+<p>
+<img src="jpgs/cop1.jpg" ALT="rectangular transmission line" width="50%"><p>
+This time, since this is a coupler, the second inner conductor must be drawn pure blue. Coupled lines are quite a complex suhject, but the important properties to know are the odd and even mode impedance, Zodd and Zeven. Again atlc is used to determine these. 
+<pre>
+% atlc cop1.bmp
+</pre>
+atlc responds, but this time giving both the odd mode impedance, the even mode impedance and the characteristic impedance Zo. 
+<pre>
+cop1.bmp Er= 1.0000 C= 23.9983 pF/m L= 463.6373 nH/m Zo= 66.3699 Ohms Zodd= 31.6915 Ohms Zeven= 138.9950 Ohms 
+v= 2.99792e+08 m/s v_f= 1.0000 VERSION= 4.0.0</pre>
+The characteristic impedance Zo is the square root of the odd and even mode impedances. 
+Zo=sqrt(Zodd*Zeven)=sqrt(31.6915*138.9950)=66.3699
+The voltage coupling factor c is defined as c=(Zeven-Zodd)/(Zeve+Zodd)=0.628658 = 4.03 dB. 
+<p>
+Later version of atlc will include some software to make use of the impedance values to calculate the properties of a directional coupler, although you should be able to use these in the free versions of spice or pspice. I have not tried that I must admit. There is also a cheapish ($10) programme called Puff available from <a href="http://www.its.caltech.edu/~mmic/puffindex/puffE/puffE.htm">http://www.its.caltech.edu/~mmic/puffindex/puffE/puffE.htm </a> . That would certainaly allow such calculations. There's a Unix verison too at <a href="http://wwwhome.cs.utwente.nl/~ptdeboer/ham/puff.html">http://wwwhome.cs.utwente.nl/~ptdeboer/ham/puff.html.</a>  Puff is very good. A combination of atlc to find the electrical properties (Zo, Zodd Zeven etc) of transmission lines and Puff to simulate the properties (coupling factor, directivity, frequency response etc) given those parameters, should be very useful. 
+</LI
+</OL>
+<p>atlc is written and supported by <a href="mailto: drkirkby@ntlworld.com?subject=atlc%20-%20Arbitrary%20Transmission%20Line%20Calculator">Dr. David Kirkby (G8WRB)</A> It it issued under the <a href="http://www.gnu.org/copyleft/gpl.html">GNU General Public License</A><p>
+<a href="http://atlc.sourceforge.net">Return to the atlc homepage</a>
+</body>
+</html>
