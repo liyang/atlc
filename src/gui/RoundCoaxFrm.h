@@ -11,8 +11,22 @@ class RoundCoaxFrame: public wxFrame
     void OnHelp(wxCommandEvent& event);   // public functions. 
     void OnFileMenuClose(wxCommandEvent& event);   // public functions. 
     void OnClose(wxCloseEvent& event);
-  
-	DECLARE_EVENT_TABLE()
+    void OnClick(wxCommandEvent& event);
+
+  private:
+    // Added Panel, text control and button members.
+    wxButton *ComputeZoButton;
+    wxPanel  *RoundCoaxPanel;
+    wxTextCtrl *ErTextCtrl;
+    wxTextCtrl *DTextCtrl;
+    wxTextCtrl *dTextCtrl;
+    wxTextEntryDialog *ErTextEntryDialog;
+    wxTextEntryDialog *DTextEntryDialog;
+    wxTextEntryDialog *dTextEntryDialog;
+    wxStaticText *dStaticText;
+    wxStaticText *DStaticText;
+    wxStaticText *ErStaticText;
+  DECLARE_EVENT_TABLE()
 };
 
 
