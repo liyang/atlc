@@ -65,6 +65,7 @@ print_copyright.c Erdata.h
 create_bmp_for_rect_in_circ_SOURCES = create_bmp_for_rect_in_circ.c \
 usage_create_bmp_for_rect_in_circ.c write_bitmap.c \
 get_Er1_and_Er2_colours.c \
+convert_create_bmp_for_rect_in_circ_dimensions_to_integers.c \
 string.c nrutil.c write_bitmap_out.c byteswap.c \
 align_bitmap_image.c fill_rect_in_circ.c check_parameters_of_create_bmp_for_rect_in_circ_.c \
 check_error.c get_options.c definitions.h error_and_exit.c \
