@@ -74,8 +74,8 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
       printf("read a ? exiting\n");
    }
       /*usage_create_bmp_for_rect_in_circ();*/
-      fprintf(stderr,"SORRY RECT_IN_CIRC IS NOT YET WORKING, SO HAS BEEN DISABLED. IT\n");
-      fprintf(stderr,"BE ENABLED ON A FORTHCOMING PACKAGE_VERSION\n");
+      fprintf(stderr,"SORRY create_bmp_for_rect_in_circ IS NOT YET WORKING, SO HAS BEEN DISABLED. IT\n");
+      fprintf(stderr,"BE ENABLED ON A FORTHCOMING VERSION\n");
       exit(1);
    if(argc-my_optind == 6)
    {
