@@ -6,7 +6,7 @@
 </PRE>
 <H2>NAME</H2><PRE>
      <B>create_bmp_for_stripline_coupler</B>  -  bitmap  generator   for
-     coupler  with  thin  striplines  between  two infinitly wide
+     coupler  with  thin  striplines  between two infinitely wide
      groundplanes (part of <B>atlc</B>)
 
 
@@ -19,12 +19,12 @@
 </PRE>
 <H2>DESCRIPTION</H2><PRE>
      <B>create_bmp_for_stripline_coupler</B>  is  a  pre-processor   for
-     <B>atlc</B>, the finite difference programme that is used to calcu-
+     <B>atlc</B>,  the  finite difference program that is used to calcu-
      late the properties of a two and three conductor  electrical
-     transmission lines of arbitrary cross section. The programme
+     transmission  lines  of arbitrary cross section. The program
      <B>create_bmp_for_stripline_coupler</B> is used as a  fast  way  of
      generating  bitmaps (there is no need to use a graphics pro-
-     gramme), for a pair of 1 pixel thick conductors of width  w,
+     gram), for a pair of 1 pixel thick conductors  of  width  w,
      spaced  a distance s apart, inside a pair of groundplanes of
      separation H. This has an exact analytical answer, when  the
      inner  is  infinitely thin and the overall width W is infin-
@@ -48,7 +48,7 @@
      &lt;-------------------------W-------------------------&gt;
 
      The overall width W is calculated  internally  to  be  large
-     enough that making it any larger will have negligable effect
+     enough that making it any larger will have negligible effect
      on the results.  The dielectric is assumed that of vacuum.
 
      The bitmaps produced by <B>create_bmp_for_stripline_coupler</B> are
@@ -70,11 +70,11 @@
      'DEFAULT_COUPLER_BITMAP_SIZE' in definitions.h).  The  value
      can  be  set  anywhere from 6 to 28. The size of bitmap pro-
      duced will be between 2^(bitmapsize-1) and 2^(bitmapsize+1),
-     so  if  its  set to 28 the bitmap could be as big as 512 Mb,
+     so  if  its  set to 28 the bitmap could be as big as 512 MB,
      which would take an eternity to compute.
 
      <B>-v</B>
-     Print some extra data to stdout on the theoetical  impedance
+     Print some extra data to stdout on the theoretical impedance
      of the structure. This is useful to compare with the numeri-
      cal result from <B>atlc</B>
 
@@ -146,7 +146,7 @@
      ULAR  PURPOSE.   See the GNU General Public License for more
      details.  You should have received a copy of the GNU General
      Public  License  (in  the file COPYING) along with this pro-
-     gram. You may get a full copy of it by running the programme
+     gram. You may get a full copy of it by running  the  program
      with  the  -C  option.  Otherwise  you can write to the Free
      Software Foundation, Inc., 59 Temple Place - Suite 330, Bos-
      ton, MA  02111-1307, USA.
