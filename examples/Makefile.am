@@ -7,4 +7,4 @@ mix.bmp multi-dielectric.bmp not-aliased.bmp not_in_centre.bmp \
 off-centre-coax.bmp offset.bmp pcb.bmp positive-ground-short.bmp \
 positive-negative-short.bmp test.bmp test3.bmp test4.bmp test6.bmp test7.bmp \
 twin-wire.bmp twin-wire2.bmp twin-wire3.bmp twin-wire4.bmp \
-ushape.bmp very-odd.bmp wide-9pixel.bmp
+ushape.bmp very-odd.bmp wide-9pixel.bmp coupler.bmp
