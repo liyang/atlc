@@ -78,8 +78,19 @@ void free_ustring(unsigned char *v, long nl, long nh)
   free((FREE_ARG) (v+nl));
 }
 
+
+
+
+
+
+
+
+
+
+/* allocate a char matrix with subscript range m[nrl..nrh][ncl..nch] 
+Whetther is is signed or not depends on the system */
+
 char **cmatrix(long nrl, long nrh, long ncl, long nch)
-/* allocate a char matrix with subscript range m[nrl..nrh][ncl..nch] */
 {
 	long i, nrow=nrh-nrl+1,ncol=nch-ncl+1;
 	char **m;
@@ -131,8 +142,35 @@ unsigned char **ucmatrix(long nrl, long nrh, long ncl, long nch)
 	return m;
 }
 
-void free_cmatrix(char **m, long nrl, long nrh, long ncl, long nch)
+/* allocate a signed char matrix with subscript range m[nrl..nrh][ncl..nch] */
+signed char **scmatrix(long nrl, long nrh, long ncl, long nch)
+{
+	long i, nrow=nrh-nrl+1,ncol=nch-ncl+1;
+	signed char **m;
+	/* allocate pointers to rows */
+	m=(signed char **) malloc((size_t)((nrow+NR_END)*sizeof(signed char*)));
+	if (!m) 
+	  exit_with_msg_and_exit_code("Memory allocation failure #1 in scmatrix()",MEMORY_ALLOCATION_ERROR_IN_SCMATRIX);
+	m += NR_END;
+	m -= nrl;
+
+	/* allocate rows and set pointers to them */
+	m[nrl]=(signed char *) malloc((size_t)((nrow*ncol+NR_END)*sizeof(signed char)));
+	if (!m[nrl]) 
+	  exit_with_msg_and_exit_code("Memory allocation failure #2 in ucmatrix()",MEMORY_ALLOCATION_ERROR_IN_UCMATRIX);
+
+	m[nrl] += NR_END;
+	m[nrl] -= ncl;
+
+	for(i=nrl+1;i<=nrh;i++) m[i]=m[i-1]+ncol;
+
+	/* return pointer to array of pointers to rows */
+	return m;
+}
+
+
 /* free a char matrix allocated by cmatrix() */
+void free_cmatrix(char **m, long nrl, long nrh, long ncl, long nch)
 {
   if(nrh <= nrl)
       exit_with_msg_and_exit_code("nrh <= nrl in free_cmatrix()",SILLY_ARGUMENTS_IN_FREE_CMATRIX);
@@ -141,6 +179,30 @@ void free_cmatrix(char **m, long nrl, long nrh, long ncl, long nch)
   free((FREE_ARG) (m[nrl]+ncl-NR_END));
   free((FREE_ARG) (m+nrl-NR_END));
 }
+
+/* free a unsigned char matrix allocated by cmatrix() */
+void free_ucmatrix(unsigned char **m, long nrl, long nrh, long ncl, long nch)
+{
+  if(nrh <= nrl)
+      exit_with_msg_and_exit_code("nrh <= nrl in free_cmatrix()",SILLY_ARGUMENTS_IN_FREE_UCMATRIX);
+  if(nch <= ncl)
+      exit_with_msg_and_exit_code("nch <= ncl in free_cmatrix()",SILLY_ARGUMENTS_IN_FREE_UCMATRIX);
+  free((FREE_ARG) (m[nrl]+ncl-NR_END));
+  free((FREE_ARG) (m+nrl-NR_END));
+}
+
+/* free a signed char matrix allocated by cmatrix() */
+void free_scmatrix(signed char **m, long nrl, long nrh, long ncl, long nch)
+{
+  if(nrh <= nrl)
+      exit_with_msg_and_exit_code("nrh <= nrl in free_cmatrix()",SILLY_ARGUMENTS_IN_FREE_SCMATRIX);
+  if(nch <= ncl)
+      exit_with_msg_and_exit_code("nch <= ncl in free_cmatrix()",SILLY_ARGUMENTS_IN_FREE_SCMATRIX);
+  free((FREE_ARG) (m[nrl]+ncl-NR_END));
+  free((FREE_ARG) (m+nrl-NR_END));
+}
+
+
 
 float *vector(long nl, long nh)
 /* allocate a float vector with subscript range v[nl..nh] */

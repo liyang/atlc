@@ -32,7 +32,6 @@ groundplanes of spacing h. */
 #include <gsl/gsl_sf_ellint.h>
 #include <gsl/gsl_complex.h>
 #include <gsl/gsl_complex_math.h>
-//#include <gsl/gsl_bessel_math.h>
 #endif
 
 #ifdef HAVE_STDLIB_H

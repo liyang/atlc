@@ -56,6 +56,9 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
    FILE *image_data_fp;
    struct transmission_line_properties not_used;
 
+   /* The following line is just to keep SGI's compiler happy. */
+   not_used.W=1;
+
    while((q=get_options(argc,argv,"b:f:v")) != -1)
    switch (q) 
    {

@@ -25,7 +25,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #include "definitions.h"
 
 extern double **Vij, **Er;
-extern char **cell_type;
+extern signed char **cell_type;
 extern int dielectrics_to_consider_just_now;
 extern double r;
 extern int width, height;

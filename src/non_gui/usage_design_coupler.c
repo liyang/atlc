@@ -26,7 +26,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 
 void usage_design_coupler()
 {
-  fprintf(stderr,"\nUsage: design_coupler [-d] -[e] [-q] [-s fstep] [-C] [-H height] [-L length] [-Z Zo] CF fmin fmax\n");
+  fprintf(stderr,"\nUsage: design_coupler [-d] [-e] [-q] [-s fstep] [-C] [-D] [-H height] [-L length] [-Z Zo] CF fmin fmax\n");
   fprintf(stderr,"Version %s\n",PACKAGE_VERSION);
   fprintf(stderr,"where: \n");
   fprintf(stderr,"     CF          is the coupling factor required in dB [10 log(P1/P2)]\n");
@@ -38,6 +38,7 @@ void usage_design_coupler()
   fprintf(stderr,"      -q           Run in quite mode, giving less output.\n");
   fprintf(stderr,"      -s fstep     Set the analysis frequency step in MHz.\n");
   fprintf(stderr,"      -C           Print Copyright, Licencing and Distribution information.\n");
+  fprintf(stderr,"      -D           Calculate physical dimensions to high accuracy (takes a *very* long while).\n");
   fprintf(stderr,"      -H height    to set the height of the enclosure (defaults to 1 unit).\n");
   fprintf(stderr,"      -L length    to set the coupler length (m). Defaults to lambda/4.\n");
   fprintf(stderr,"      -Q           Run in very quite mode, giving just one line of output\n");

@@ -49,7 +49,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #define SILLY_ARGUMENTS_IN_FREE_DVECTOR                           24
 #define SILLY_ARGUMENTS_IN_FREE_DMATRIX                           25
 #define SILLY_ARGUMENTS_IN_FREE_CMATRIX                           26
-#define SILLY_ARGUMENTS_IN_FREE_UCRMATRIX                         27
+#define SILLY_ARGUMENTS_IN_FREE_UCMATRIX                          27
 #define SILLY_ARGUMENTS_IN_FREE_IMATRIX                           28
 #define SILLY_ARGUMENTS_IN_FREE_STRING                            29
 #define SILLY_ARGUMENTS_IN_FREE_USTRING                           30
@@ -102,3 +102,11 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #define PTHREAD_ATTR_SETINHERITSCHED_FAILED                       77
 #define PTHREAD_ATTR_INIT_FAILED                                  78 
 #define PTHREAD_ATTR_SETSCOPE_FAILED                              79
+#define PTHREAD_MUTEX_LOCK_FAILED                                 80
+#define PTHREAD_MUTEX_UNLOCK_FAILED                               81
+#define PTHREAD_COND_WAIT_FAILED                                  82
+#define PTHREAD_COND_BROADCAST_FAILED                             83
+#define SILLY_ARGUMENTS_IN_FREE_SCMATRIX                          84
+#define MEMORY_ALLOCATION_ERROR_IN_SCMATRIX                       85
+#define CANT_READ_ALL_OF_FILE                                     86
+#define FSEEK_FAILURE                                             87

@@ -46,12 +46,12 @@ FILE *get_file_pointer_with_right_filename(char *filename, const char *extension
   FILE *fp;
   basename=string(0,1024);
   temp=string(0,1024);
-  memset((void *)temp,0,1024);
-  memset((void *)basename,0,1024);
+  (void) memset((void *)temp,0,(size_t) 1024);
+  (void) memset((void *)basename,0,(size_t) 1024);
 
   basename=strncpy(basename,filename,strlen(filename)-4);
-  strcpy(temp,basename);
-  strcat(temp,extension);
+  (void) strcpy(temp,basename);
+  (void) strcat(temp,extension);
   if((fp=fopen(temp,"w+b"))==NULL)
   {
     fprintf(stderr,"Sorry, cant open %s for writing\n", temp);

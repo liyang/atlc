@@ -75,11 +75,11 @@ void read_bitmap_file_headers(char *filename, int *offset, size_t *size, int *wi
    swap_bytes4(bitmap_file_buffer,0x0A,(int *) &Bitmap_File_Head.bfOffs);
    swap_bytes4(bitmap_file_buffer,0x0E,(int *) &Bitmap_File_Head.biSize);
 #else
-   memcpy(&Bitmap_File_Head.bfSize,bitmap_file_buffer+0x2,4);
-   memcpy(&Bitmap_File_Head.zzHotX,bitmap_file_buffer+0x6,2);
-   memcpy(&Bitmap_File_Head.zzHotY,bitmap_file_buffer+0x8,2);
-   memcpy(&Bitmap_File_Head.bfOffs,bitmap_file_buffer+0xa,4);
-   memcpy(&Bitmap_File_Head.biSize,bitmap_file_buffer+0xe,4);
+   (void) memcpy(&Bitmap_File_Head.bfSize,bitmap_file_buffer+0x2,4);
+   (void) memcpy(&Bitmap_File_Head.zzHotX,bitmap_file_buffer+0x6,2);
+   (void) memcpy(&Bitmap_File_Head.zzHotY,bitmap_file_buffer+0x8,2);
+   (void) memcpy(&Bitmap_File_Head.bfOffs,bitmap_file_buffer+0xa,4);
+   (void) memcpy(&Bitmap_File_Head.biSize,bitmap_file_buffer+0xe,4);
 #endif
    /*
    printf("bfSize = %ld \n",Bitmap_File_Head.bfSize);
@@ -112,16 +112,16 @@ void read_bitmap_file_headers(char *filename, int *offset, size_t *size, int *wi
    swap_bytes4(bitmap_file_buffer,0x2E,(int *) &Bitmap_Head.biClrUsed);
    swap_bytes4(bitmap_file_buffer,0x32,(int *) &Bitmap_Head.biClrImp);
 #else
-   memcpy(&Bitmap_Head.biWidth,bitmap_file_buffer+0x12,4);
-   memcpy(&Bitmap_Head.biHeight,bitmap_file_buffer+0x16,4);
-   memcpy(&Bitmap_Head.biPlanes,bitmap_file_buffer+0x1a,2);
-   memcpy(&Bitmap_Head.biBitCnt,bitmap_file_buffer+0x1c,2);
-   memcpy(&Bitmap_Head.biCompr,bitmap_file_buffer+0x1e,4);
-   memcpy(&Bitmap_Head.biSizeIm,bitmap_file_buffer+0x22,4);
-   memcpy(&Bitmap_Head.biXPels,bitmap_file_buffer+0x26,4);
-   memcpy(&Bitmap_Head.biYPels,bitmap_file_buffer+0x2a,4);
-   memcpy(&Bitmap_Head.biClrUsed,bitmap_file_buffer+0x2e,4);
-   memcpy(&Bitmap_Head.biClrImp,bitmap_file_buffer+0x32,4);
+   (void) memcpy(&Bitmap_Head.biWidth,bitmap_file_buffer+0x12,4);
+   (void) memcpy(&Bitmap_Head.biHeight,bitmap_file_buffer+0x16,4);
+   (void) memcpy(&Bitmap_Head.biPlanes,bitmap_file_buffer+0x1a,2);
+   (void) memcpy(&Bitmap_Head.biBitCnt,bitmap_file_buffer+0x1c,2);
+   (void) memcpy(&Bitmap_Head.biCompr,bitmap_file_buffer+0x1e,4);
+   (void) memcpy(&Bitmap_Head.biSizeIm,bitmap_file_buffer+0x22,4);
+   (void) memcpy(&Bitmap_Head.biXPels,bitmap_file_buffer+0x26,4);
+   (void) memcpy(&Bitmap_Head.biYPels,bitmap_file_buffer+0x2a,4);
+   (void) memcpy(&Bitmap_Head.biClrUsed,bitmap_file_buffer+0x2e,4);
+   (void) memcpy(&Bitmap_Head.biClrImp,bitmap_file_buffer+0x32,4);
 #endif
    Maps=4;
    if(Bitmap_Head.biBitCnt!=24)

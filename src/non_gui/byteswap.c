@@ -26,6 +26,8 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #include <string.h>
 #endif
 
+#include "definitions.h"
+
 extern int errno;
 
 /* This routine swaps data from the little-endian format to the big-endian 
@@ -34,7 +36,7 @@ format or visa-versa. */
 void byteswap_doubles(double *a)
 {
 	unsigned char b[8],c[8];
-	memcpy(b,a,8); 
+	(void) memcpy(b,a,8); 
 	c[0]=b[7]; /* swap data around */
 	c[1]=b[6];
 	c[2]=b[5];
@@ -43,7 +45,7 @@ void byteswap_doubles(double *a)
 	c[5]=b[2];
 	c[6]=b[1];
 	c[7]=b[0];
-	memcpy(a,c,8);
+	(void) memcpy(a,c,8);
 #ifdef DEBUG
 	error_check("byteswap");
 #endif
@@ -53,12 +55,12 @@ void byteswap_doubles(double *a)
 void byteswap_ints(int *a)
 {
 	unsigned char b[4],c[4];
-	memcpy(b,a,4); 
+	(void) memcpy(b,a,4); 
 	c[0]=b[3]; /* swap data around */
 	c[1]=b[2];
 	c[2]=b[1];
 	c[3]=b[0];
-	memcpy(a,c,4);
+	(void) memcpy(a,c,4);
 #ifdef DEBUG
 	error_check("byteswap_ints (8 byte variety)");
 #endif
@@ -69,7 +71,7 @@ void byteswap_ints(int *a)
 void byteswap_ints(int *a)
 {
 	unsigned char b[8],c[8];
-	memcpy(b,a,8); 
+	(void) memcpy(b,a,8); 
 	c[0]=b[7]; /* swap data around */
 	c[1]=b[6];
 	c[2]=b[5];
@@ -78,7 +80,7 @@ void byteswap_ints(int *a)
 	c[5]=b[2];
 	c[6]=b[1];
 	c[7]=b[0];
-	memcpy(a,c,8);
+	(void) memcpy(a,c,8);
 #ifdef DEBUG
 	error_check("byteswap_ints (8 byte variety)");
 #endif
@@ -90,12 +92,12 @@ void byteswap_ints(int *a)
 void byteswap_longs(long *a)
 {
 	unsigned char b[4],c[4];
-	memcpy(b,a,4); 
+	(void) memcpy(b,a,4); 
 	c[0]=b[3]; /* swap data around */
 	c[1]=b[2];
 	c[2]=b[1];
 	c[3]=b[0];
-	memcpy(a,c,4);
+	(void) memcpy(a,c,4);
 #ifdef DEBUG
 	error_check("byteswap_longs (4 byte variety)");
 #endif
@@ -106,7 +108,7 @@ void byteswap_longs(long *a)
 void byteswap_longs(long *a)
 {
 	unsigned char b[8],c[8];
-	memcpy(b,a,8); 
+	(void) memcpy(b,a,8); 
 	c[0]=b[7]; /* swap data around */
 	c[1]=b[6];
 	c[2]=b[5];
@@ -115,7 +117,7 @@ void byteswap_longs(long *a)
 	c[5]=b[2];
 	c[6]=b[1];
 	c[7]=b[0];
-	memcpy(a,c,8);
+	(void) memcpy(a,c,8);
 #ifdef DEBUG
 	error_check("byteswap_longs (8 byte variety)");
 #endif
@@ -125,10 +127,10 @@ void byteswap_longs(long *a)
 void byteswap_shorts(short *a)
 {
 	unsigned char b[2],c[2];
-	memcpy(b,a,2); 
+	(void) memcpy(b,a,2); 
 	c[0]=b[1]; /* swap data around */
 	c[1]=b[0];
-	memcpy(a,c,2);
+	(void) memcpy(a,c,2);
 }
 
 /* The function swap_bytes4() swaps 4 bytes of data some distance 'offset' into a buffer.

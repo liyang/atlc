@@ -62,13 +62,17 @@ int main(int argc, char **argv)
       fprintf(stderr,"Can't open %s for reading\n",argv[my_optind]);
       exit_with_msg_and_exit_code("Can't open file for reading",CANT_OPEN_FILE_FOR_READING);
     }
-    fseek(fp,0,SEEK_END);
+    if (fseek(fp,0,SEEK_END) != 0)
+      exit_with_msg_and_exit_code("failed to fseek in readbin.c #1", FSEEK_FAILURE);
     length=ftell(fp);
     printf("file length=%d bytes. There are %ld pixels\n", length, (long)
     length/sizeof(double));
     data=dvector(0,length);
-    fseek(fp,0,SEEK_SET);
-    fread(&(data[0]), sizeof(double), length/sizeof(double),fp);
+    if( fseek(fp,0,SEEK_SET) != 0)
+      exit_with_msg_and_exit_code("failed to fseek in readbin.c #2", FSEEK_FAILURE);
+
+    if (fread(&(data[0]), 1, length,fp) != length)
+      exit_with_msg_and_exit_code("can't read all fo the file in readbin.c", CANT_READ_ALL_OF_FILE);
     for(i=0;i<length/sizeof(double);++i)
     {
        x=data[i];

@@ -47,7 +47,7 @@ extern int colours[];
 extern int lowest;
 extern int highest;
 
-int convert_create_bmp_for_circ_in_circ_dimensions_to_integers(int accuracy_level) 
+void convert_create_bmp_for_circ_in_circ_dimensions_to_integers(int accuracy_level) 
 {
    int best_D=-1, best_d=-1, best_h=-1;
    int min, max;
@@ -105,6 +105,5 @@ int convert_create_bmp_for_circ_in_circ_dimensions_to_integers(int accuracy_leve
    check_error(dd,d,best_grid_size,"d");
    if(h > 0.0)
       check_error(hh,h,best_grid_size,"h");
-   return(0);
 }
 

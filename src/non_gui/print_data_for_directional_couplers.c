@@ -30,7 +30,7 @@ not, it is or is not possible to quote a value for Er. If Er is passed
 as a mumber < 0, this function interprets that as meaning that the
 dielectric is mixed, and says 'Er= MIXED' */
 
-int print_data_for_directional_couplers(struct transmission_line_properties data, FILE *where_to_print_fp, char *inputfile_name)
+void print_data_for_directional_couplers(struct transmission_line_properties data, FILE *where_to_print_fp, char *inputfile_name)
 {
   if(data.display==Z_ODD_SINGLE_DIELECTRIC)
   {
@@ -46,5 +46,4 @@ int print_data_for_directional_couplers(struct transmission_line_properties data
     else if (data.verbose_level ==2)
       fprintf(where_to_print_fp,"%s 3 Er_odd= %6.2f Er_even= %6.2f Zodd= %6.2f Zeven= %6.2f Zo= %6.2f Zdiff= %6.2f Zcomm= %6.2f Ohms VERSION=%s\n",inputfile_name,data.Er_odd, data.Er_even, data.Zodd, data.Zeven, data.Zo,data.Zdiff, data.Zcomm, PACKAGE_VERSION);
   }
-  return(0);
 }

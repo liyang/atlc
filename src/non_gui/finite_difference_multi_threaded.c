@@ -60,8 +60,8 @@ double finite_difference_multi_threaded(int number_of_iterations)
 
 extern int coupler;
 extern int width, height;
-extern double **Vij, **Vij2, **Er;
-extern char **cell_type;
+extern double **Vij, **Er;
+extern signed char **cell_type;
 extern int number_of_workers; 
 
 
@@ -161,14 +161,25 @@ int numArrived = 0;       /* count of the number who have arrived */
 
 #ifdef BARRIER1
 void Barrier() {
+#ifndef DEBUG
   pthread_mutex_lock(&barrier);
+#else
+  if( pthread_mutex_lock(&barrier) != 0 )
+    exit_with_msg_and_exit_code("pthread_mutex_lock failed",PTHREAD_MUTEX_LOCK_FAILED);
+#endif
+  
   numArrived++;
   if (numArrived == number_of_workers) {
     numArrived = 0;
     pthread_cond_broadcast(&go);
   } else
     pthread_cond_wait(&go, &barrier);
+#ifndef DEBUG
   pthread_mutex_unlock(&barrier);
+#else
+  if( pthread_mutex_unlock(&barrier) != 0 )
+    exit_with_msg_and_exit_code("pthread_mutex_unlock failed",PTHREAD_MUTEX_UNLOCK_FAILED);
+#endif
 }
 #endif
 
@@ -178,20 +189,42 @@ int barrierNdx = 0;
 
 void Barrier() {
   int localNdx;
+#ifndef DEBUG
   pthread_mutex_lock(&barrier);
+#else
+  if( pthread_mutex_lock(&barrier) != 0 )
+    exit_with_msg_and_exit_code("pthread_mutex_lock failed in finite_difference_multi_threaded.c",PTHREAD_MUTEX_LOCK_FAILED);
+#endif
+  
   numArrived2[barrierNdx]++;
   if (numArrived2[barrierNdx] == number_of_workers) {
     barrierNdx = (barrierNdx + 1)%2;  /* toggle */
     numArrived2[barrierNdx] = 0; /* reset other count */
+
+#ifndef DEBUG
     pthread_cond_broadcast(&go);
+#else
+    if( pthread_cond_broadcast(&go) != 0)
+      exit_with_msg_and_exit_code("pthread_cond_broadcast failed in finite_difference_multi_threaded.c",PTHREAD_COND_BROADCAST_FAILED);
+#endif
   }
   else
   {
     localNdx = barrierNdx; /* wait on "current" numArrived. */
     while (numArrived2[localNdx] != number_of_workers)
+#ifndef DEBUG
        pthread_cond_wait(&go, &barrier);
+#else
+       if( pthread_cond_wait(&go, &barrier) != 0)
+         exit_with_msg_and_exit_code("pthread_cond_wait failed finite_difference_multi_threaded.c",PTHREAD_COND_WAIT_FAILED);
+#endif
   } 
+#ifndef DEBUG
   pthread_mutex_unlock(&barrier);
+#else
+  if( pthread_mutex_unlock(&barrier) != 0 )
+    exit_with_msg_and_exit_code("pthread_mutex_unlock failed finite_difference_multi_threaded.c",PTHREAD_MUTEX_UNLOCK_FAILED);
+#endif
 }
 #endif
 
@@ -215,7 +248,6 @@ void *worker(void *arg) {
   one_minus_r=1-r;
   if(myid == number_of_workers -1) 
     lastcol=width-2;
-  // printf("firstcol=%d lastcol=%d width=%d height=%d \n",firstcol,lastcol,width,height);
   Barrier();
   for (iters = 1; iters <= ITERATIONS; iters++) 
   {
@@ -244,7 +276,6 @@ void *worker(void *arg) {
       }
     }
     Barrier();
-    //printf("all done top half id = %d\n",myid);
     for(i= firstcol ; i <= lastcol; ++i){
       if(i%2 ==1 )
 	jstart=2;
@@ -270,32 +301,25 @@ void *worker(void *arg) {
       }
     }
     Barrier();
-    //printf("all done bot half id = %d\n",myid);
   }
   Barrier();
-  //printf("XXXXXXXXXXX %d\n",myid);
   return(0);
 }
 
-double finite_difference_multi_threaded(int number_of_iterations)
+double finite_difference_multi_threaded()
 {
   int i, j, ret, thread_number;
-  pthread_attr_t attr;
   pthread_t thread_id[MAXIMUM_PROCESSING_DEVICES];
 
 
   double capacitance_per_metre, energy_per_metre;
 
-  ret=pthread_attr_init(&attr);
-  if(ret != 0)
-    exit_with_msg_and_exit_code("pthread_attr_init failed in finite_difference_multi_threaded.c",PTHREAD_ATTR_INIT_FAILED);
 
   /* initialize mutex and condition variable */
   pthread_mutex_init(&barrier, NULL);
   pthread_cond_init(&go, NULL);
-  //do{
   for(thread_number=0;thread_number<number_of_workers;thread_number++){   
-    ret=pthread_create(&thread_id[thread_number],&attr, worker,(void *)thread_number);
+    ret=pthread_create(&thread_id[thread_number],NULL, worker,(void *)thread_number);
     if(ret != 0)
       exit_with_msg_and_exit_code("failed to create thread in finite_difference_multi_threaded.c",THREAD_CREATION_FAILED);
   } 
@@ -310,8 +334,16 @@ double finite_difference_multi_threaded(int number_of_iterations)
   (number_of_iterations) times, so we now calcuate the capacitance to see if it
   has converged */
   energy_per_metre=0.0;
+  /*
+  The following code is wrong, but worked on all systems apart from AIX !!
+
   for(i=0;i<width;++i)
     for(j=0;j<height;++j)
+	energy_per_metre+=find_energy_per_metre(i,j);
+	*/
+
+  for(i=1;i<width-1;++i)
+    for(j=1;j<height-1;++j)
 	energy_per_metre+=find_energy_per_metre(i,j);
  
   if(coupler==FALSE)

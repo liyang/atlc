@@ -24,7 +24,6 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 
 #include "definitions.h"
 
-//#define DEBUG
 
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
@@ -180,13 +179,13 @@ void write_fields_for_directional_couplers(char * filename, struct transmission_
     image_data_V=ustring(0,size);
     image_data_Er=ustring(0,size);
     image_data_U=ustring(0,size);
-#ifdef HAVE_MEMSET /* There might be portability issues using memset */
-    memset((void *) image_data_Ex,0,size);
-    memset((void *) image_data_Ey,0,size);
-    memset((void *) image_data_E,0,size);
-    memset((void *) image_data_U,0,size);
-    memset((void *) image_data_V,0,size);
-    memset((void *) image_data_Er,0,size); 
+#ifdef HAVE_MEMSET /* There might be portability issues using (void) memset */
+    (void) memset((void *) image_data_Ex,0,size);
+    (void) memset((void *) image_data_Ey,0,size);
+    (void) memset((void *) image_data_E,0,size);
+    (void) memset((void *) image_data_U,0,size);
+    (void) memset((void *) image_data_V,0,size);
+    (void) memset((void *) image_data_Er,0,size); 
 #else 
     for(memory_location=0; memory_location < size; ++memory_location)
     {
@@ -220,10 +219,6 @@ void write_fields_for_directional_couplers(char * filename, struct transmission_
     fwrite(bitmap_file_buffer,0x36,1,V_odd_bmp_fp);
     fwrite(bitmap_file_buffer,0x36,1,permittivity_bmp_fp);
     offset=-3;
-#ifdef DEBUG
-    fpOddEx=fopen("Ex.odd.txt","w");
-    fpOddEy=fopen("Ey.odd.txt","w");
-#endif
     for(h=height-1;h>=0;h--)
     {
       for(w=0;w<width;++w)
@@ -242,16 +237,8 @@ void write_fields_for_directional_couplers(char * filename, struct transmission_
         calculate_colour_data(U, maximum_values.U_max, w, h, offset,image_data_U, MONOCHROME,&r,&g,&b);
         calculate_colour_data(Vij[w][h], maximum_values.V_max, w, h, offset,image_data_V, COLOUR,&r,&g,&b);
         calculate_colour_data(Er[w][h], MAX_ER, w, h, offset,image_data_Er, MIXED,&r,&g,&b);
-#ifdef DEBUG
-	fprintf(fpOddEx,"Ex w= %d h= %d r= %d g=%d blue= %d maximum_values.Ex_or_Ey_max= %g\n",w,h,r,g,b,maximum_values.Ex_or_Ey_max);
-	fprintf(fpOddEy,"Ey w= %d h= %d r= %d g=%d blue= %d maximum_values.Ex_or_Ey_max= %g\n",w,h,r,g,b,maximum_values.Ex_or_Ey_max);
-#endif
       }
     } 
-#ifdef DEBUG
-    fclose(fpOddEx);
-    fclose(fpOddEy);
-#endif
     if( fwrite((void *) image_data_Ex,size, 1, Ex_odd_bmp_fp) != 1)
       exit_with_msg_and_exit_code("Error#25: Failed to write bitmap file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
     if( fwrite((void *) &(image_data_Ey[0]),size, 1, Ey_odd_bmp_fp) != 1)
@@ -341,12 +328,12 @@ void write_fields_for_directional_couplers(char * filename, struct transmission_
     image_data_Er=ustring(0,size);
     image_data_U=ustring(0,size);
 #ifdef HAVE_MEMSET
-    memset((void *) image_data_Ex,0,size);
-    memset((void *) image_data_Ey,0,size);
-    memset((void *) image_data_E,0,size);
-    memset((void *) image_data_U,0,size);
-    memset((void *) image_data_V,0,size);
-    memset((void *) image_data_Er,0,size);
+    (void) memset((void *) image_data_Ex,0,size);
+    (void) memset((void *) image_data_Ey,0,size);
+    (void) memset((void *) image_data_E,0,size);
+    (void) memset((void *) image_data_U,0,size);
+    (void) memset((void *) image_data_V,0,size);
+    (void) memset((void *) image_data_Er,0,size);
 #else
     for(memory_location=0; memory_location < size; ++memory_location)
     {
@@ -402,16 +389,8 @@ void write_fields_for_directional_couplers(char * filename, struct transmission_
         calculate_colour_data(U, maximum_values.U_max, w, h, offset,image_data_U, MONOCHROME,&r,&g,&b);
         calculate_colour_data(Vij[w][h], maximum_values.V_max, w, h, offset,image_data_V, COLOUR,&r,&g,&b);
         calculate_colour_data(Er[w][h], MAX_ER, w, h, offset,image_data_Er, MIXED,&r,&g,&b);
-#ifdef DEBUG
-	fprintf(fpEvenEx,"Ex w= %d h= %d r= %d g=%d blue= %d maximum_values.Ex_or_Ey_max= %g\n",w,h,r,g,b,maximum_values.Ex_or_Ey_max);
-	fprintf(fpEvenEy,"Ey w= %d h= %d r= %d g=%d blue= %d maximum_values.Ex_or_Ey_max= %g\n",w,h,r,g,b,maximum_values.Ex_or_Ey_max);
-#endif 
       }
     } 
-#ifdef DEBUG
-    fclose(fpEvenEx);
-    fclose(fpEvenEy);
-#endif
     if( fwrite((void *) &(image_data_Ex[0]),size, 1, Ex_even_bmp_fp) != 1)
       exit_with_msg_and_exit_code("Error#25: Failed to write bitmap file in write_fields_for_directional_couplers.c",WRITE_FAILURE);
     if( fwrite((void *) &(image_data_Ey[0]),size, 1, Ey_even_bmp_fp) != 1)

@@ -36,7 +36,7 @@ to take this into account have been included, but commentted out.*/
 #include "definitions.h"
 
 extern int width, height;
-extern char **cell_type;
+extern signed char **cell_type;
 
 /* This checks for shorts. We only check to the right (increasing w) and below (increasing h)
 since its pointless checking all directions when one moves to an adjacent pixel later */

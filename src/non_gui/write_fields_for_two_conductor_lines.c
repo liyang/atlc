@@ -41,8 +41,9 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 extern double **Vij;
 extern double **Er;
 extern unsigned char *bitmap_file_buffer;
-extern int width, height, size, errno;
-extern char **cell_type;
+extern int width, height, errno;
+extern size_t size;
+extern signed char **cell_type;
 
 /* Write the following files, assuming an input of example.bmp 
 where example.bmp is a 2 conductor transmission lines. For
@@ -148,12 +149,18 @@ void write_fields_for_two_conductor_lines(char * filename, struct transmission_l
     U_bmp_fp=get_file_pointer_with_right_filename(filename,".U.bmp");
     permittivity_bmp_fp=get_file_pointer_with_right_filename(filename,".Er.bmp");
 
-    fwrite(bitmap_file_buffer,0x36,1,Ex_bmp_fp);
-    fwrite(bitmap_file_buffer,0x36,1,Ey_bmp_fp);
-    fwrite(bitmap_file_buffer,0x36,1,E_bmp_fp);
-    fwrite(bitmap_file_buffer,0x36,1,V_bmp_fp);
-    fwrite(bitmap_file_buffer,0x36,1,U_bmp_fp);
-    fwrite(bitmap_file_buffer,0x36,1,permittivity_bmp_fp);
+    if( fwrite(bitmap_file_buffer,0x36,1,Ex_bmp_fp) != 1)
+      exit_with_msg_and_exit_code("failed to write file with the pointer Ex_bmp_fp in write_fields_for_two_conductor_lines.c",WRITE_FAILURE);
+    if( fwrite(bitmap_file_buffer,0x36,1,Ey_bmp_fp) != 1)
+      exit_with_msg_and_exit_code("failed to write file with the pointer Ey_bmp_fp in write_fields_for_two_conductor_lines.c",WRITE_FAILURE);
+    if( fwrite(bitmap_file_buffer,0x36,1,E_bmp_fp) != 1)
+      exit_with_msg_and_exit_code("failed to write file with the pointer E_bmp_fp in write_fields_for_two_conductor_lines.c",WRITE_FAILURE);
+    if( fwrite(bitmap_file_buffer,0x36,1,V_bmp_fp) != 1)
+      exit_with_msg_and_exit_code("failed to write file with the pointer V_bmp_fp in write_fields_for_two_conductor_lines.c",WRITE_FAILURE);
+    if( fwrite(bitmap_file_buffer,0x36,1,U_bmp_fp) != 1)
+      exit_with_msg_and_exit_code("failed to write file with the pointer U_bmp_fp in write_fields_for_two_conductor_lines.c",WRITE_FAILURE);
+    if( fwrite(bitmap_file_buffer,0x36,1,permittivity_bmp_fp) != 1)
+      exit_with_msg_and_exit_code("failed to write file with the pointer permittivity_bmp_fp in write_fields_for_two_conductor_lines.c",WRITE_FAILURE);
     offset=-3;
     for(h=height-1;h>=0;h--)
     {

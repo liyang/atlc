@@ -22,12 +22,15 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 
 */
 
+#ifdef HAVE_STDLIB_H
 #include <stdlib.h>
+#endif
+
 #include "definitions.h"
 
 extern int width, height;
 extern double **Vij, **Er;
-extern char **cell_type;
+extern signed char **cell_type;
 
 double check_convergence(double **grid1, double **grid2, int width, int height)
 {

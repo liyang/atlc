@@ -68,7 +68,7 @@ void write_bitmap(FILE *image_data_fp, struct transmission_line_properties xyz)
    unaligned_image_vector=ustring(0,(W+3)*3*H);
 
 #ifdef HAVE_MEMSET
-   memset((void *) (image_data),0x0,(size_t) ((W+3)*3*H));
+   (void) memset((void *) (image_data),0x0,(size_t) ((W+3)*3*H));
 #else
    for(memory_location=0; memory_location < (W+3)*3*H; ++ memory_location)
      image_data[memory_location]=0;

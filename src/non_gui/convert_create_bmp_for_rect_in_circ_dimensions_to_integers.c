@@ -48,7 +48,7 @@ extern char names[];
 extern int lowest;
 extern int highest;
 
-int convert_create_bmp_for_rect_in_circ_dimensions_to_integers(int accuracy_level) 
+void convert_create_bmp_for_rect_in_circ_dimensions_to_integers(int accuracy_level) 
 {
    int best_D=-1, best_w=-1, best_h=-1, best_x=-1, best_y=-1;
    int min=-1, max=-1;
@@ -113,5 +113,4 @@ int convert_create_bmp_for_rect_in_circ_dimensions_to_integers(int accuracy_leve
    check_error(hh,h,best_grid_size,"h");
    check_error(xx,x,best_grid_size,"x");
    check_error(yy,y,best_grid_size,"y");
-   return(0);
 }

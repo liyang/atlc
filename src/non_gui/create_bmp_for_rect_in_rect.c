@@ -56,6 +56,10 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
    FILE *image_data_fp=stdout;
    struct transmission_line_properties not_used_currently;
 
+   /* The following jut keeps compilers happy. SGI's is very fussy!! */
+
+   not_used_currently.W=1;
+
    while((q=get_options(argc,argv,"b:v")) != -1)
    switch (q) 
    {
@@ -92,5 +96,5 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
    }
    else
       usage_create_bmp_for_rect_in_rect();
-   exit(0);
+   return(OKAY);
 }

@@ -27,13 +27,13 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 
 extern int width, height;
 extern double **Vij, **Er;
-extern char **cell_type;
+extern signed char **cell_type;
 extern int dielectrics_to_consider_just_now;
 extern double r; 
 
 extern int coupler;
 #define OLD
-double finite_difference_single_threaded(int number_of_iterations)
+double finite_difference_single_threaded()
 {
   int i, j, iteration, jstart;
   double capacitance_per_metre, energy_per_metre;

@@ -38,7 +38,8 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 
 void fill_image_vector_for_thin_strip(int W,int H, int w, unsigned char *image_vector) 
 {
-   int i, j, red, green, blue, vector_original=0;
+   int i, j, vector_original=0;
+   unsigned char red, green, blue;
    for(j=0;j<H;++j)
    {
       for(i=0;i<W; ++i)

@@ -66,17 +66,17 @@ Out[10]= {{vij ->
 #include "definitions.h"
 
 extern int width, height;
-extern char **cell_type;
+extern signed char **cell_type;
 extern double r, **Er, **Vij;
 void update_voltage_array(int i)
 {
   int j;
-  int type;
+  signed char type;
   double a, b, c, d, e, f, g, h;
   double r_over_4=0.25*r, one_minus_r=(1-r);
   for(j=1; j<height-1; ++j)
   {
-    type = cell_type[i][j];
+    type  = cell_type[i][j];
 
     if(type == DIELECTRIC) /* Same dielectric all around */
       Vij[i][j]=r_over_4*(Vij[i][j+1]+Vij[i+1][j]+Vij[i][j-1]+Vij[i-1][j])+one_minus_r*Vij[i][j];

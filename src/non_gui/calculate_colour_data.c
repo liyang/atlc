@@ -30,10 +30,6 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #include <strings.h>
 #endif
 
-#ifdef HAVE_MATH_H
-#include <math.h>
-#endif
-
 #ifdef HAVE_STDLIB_h
 #include <stdlib.h>
 #endif
@@ -42,7 +38,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 
 extern double **Vij;
 extern double **Er;
-extern char **cell_type;
+extern signed char **cell_type;
 
 void calculate_colour_data(double x, double xmax, int w, int h, int offset, unsigned char *image_dat, char image_type,
 unsigned char *red, unsigned char *green, unsigned char *blue)

@@ -79,17 +79,29 @@ int main(int argc, char **argv) /* Read parameters from command line */
 {
   int q, Hflag=FALSE;
   int calculate_physical_dimensions=FALSE;
-  double er, Zo=-1, length=-1, fmin, fmax, fmean, fstep=-1, cf,  Zodd, Zeven; 
+  int calculate_physical_dimensions_to_high_accuracy=FALSE;
+  double er;
+  double Zo=-1, length=-1, fmin, fmax, fmean, fstep=-1, cf,  Zodd, Zeven; 
   double f, vcf, vcf_for_quarter_wave_line, w, s, error, error_max=1e30;
   double wanted_coupling_factor_in_dB, step=0.02, fq;
-  double Zo_x=-1, Zeven_x=-1, Zodd_x=-1, best_s=-1, best_w=-1;
+  double Zeven_x=-1, Zodd_x=-1, best_s=-1, best_w=-1;
   double height_of_box=1.0;
   double best_Zodd=-1, best_Zeven=-1, best_Zo=-1;
-  while((q=get_options(argc,argv,"eQqdCL:s:Z:H:")) != -1)
+
+  /* SGI's MipsPro compiler is very fussy. The following line, along
+  with one right at the end, forces Zo_x to be set and used,
+  alhtough it serves no other userful purpose but to keep the 
+  compiler happy */
+  double Zo_x=1;
+  while((q=get_options(argc,argv,"DeQqdCL:s:Z:H:")) != -1)
   switch (q) 
   {
     case 'd':
     calculate_physical_dimensions=TRUE;
+    break;
+    case 'D':
+    calculate_physical_dimensions=TRUE;
+    calculate_physical_dimensions_to_high_accuracy=TRUE;
     break;
     case 'e':
     give_examples_of_using_design_coupler();
@@ -274,7 +286,7 @@ int main(int argc, char **argv) /* Read parameters from command line */
 #ifdef HAVE_LIBGSL
         calculate_Zodd_and_Zeven(&Zodd_x, &Zeven_x, &Zo_x, w, 1.0, s, er);
 #else
-        Zodd_x=1.0; Zeven_x=1.0; Zo_x=1.0;
+        Zodd_x=1.0; Zeven_x=1.0; 
 	fprintf(stderr,"This was not linked against the GNU scientific library (gsl)\n");
 	exit_with_msg_and_exit_code("So the mode impedances have been set to 1 Ohm",NOT_LINKED_WITH_GSL_LIBRARY);
 #endif
@@ -291,25 +303,26 @@ int main(int argc, char **argv) /* Read parameters from command line */
       }
     }
     printf("w = %.4f s = %.4f which gives Zo = %.4f Zodd = %.4f Zeven = %.4f\n",best_w, best_s, best_Zo, best_Zodd, best_Zeven);
-    /* Now try to get closer */
-    /*
-    for(s = best_s-step; s<=best_s+step; s+=step/1000)
+    /* Now try to get closer, if -D option given */
+    if (calculate_physical_dimensions_to_high_accuracy == TRUE)
     {
-      for(w = best_w-step; w<= best_w+step; w += step/1000)
+      for(s = best_s-step; s<=best_s+step; s+=step/1000)
       {
-        calculate_Zodd_and_Zeven(&Zodd_x, &Zeven_x, &Zo_x, w, 1.0, s, er);
-	error=fabs(Zodd-Zodd_x) + fabs(Zeven-Zeven_x);
-	if( error < error_max )
-	{
-	  best_s=s; 
-	  best_w=w; 
-	  best_Zodd=Zodd;
-	  best_Zeven=Zeven;
-	  error_max=error;
+        for(w = best_w-step; w<= best_w+step; w += step/1000)
+        {
+          calculate_Zodd_and_Zeven(&Zodd_x, &Zeven_x, &Zo_x, w, 1.0, s, er);
+	  error=fabs(Zodd-Zodd_x) + fabs(Zeven-Zeven_x);
+	  if( error < error_max )
+          {    
+            best_s=s; 
+	    best_w=w; 
+	    best_Zodd=Zodd;
+	    best_Zeven=Zeven;
+	    error_max=error;
+          }
         }
       }
     }
-    */
     best_Zo=sqrt(best_Zodd * best_Zeven);
     if(verbose <= 0)
     {

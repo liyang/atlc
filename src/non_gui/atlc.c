@@ -61,14 +61,15 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 struct pixels Er_on_command_line[MAX_DIFFERENT_PERMITTIVITIES];
 struct pixels Er_in_bitmap[MAX_DIFFERENT_PERMITTIVITIES];
 
-double **Vij, **Vij2;
+double **Vij;
 double **Er;
-char **cell_type; 
+signed char **cell_type; 
 unsigned char *image_data;
 int width=-1, height=-1;
 extern int errno;
 size_t size;
-int number_of_workers=MAX_THREADS, non_vacuum_found=FALSE;
+static int number_of_workers=MAX_THREADS; 
+int non_vacuum_found=FALSE;
 int dielectrics_to_consider_just_now;
 int coupler=FALSE;
 double r=1.95;
@@ -91,7 +92,7 @@ extern int main(int argc, char **argv) /* Read parameters from command line */
   output_prefix=string(0,1024);
   /* only use this if we have both a multi-threaded application and that 
   with have the function */
-  strcpy(output_prefix,"");
+  (void) strcpy(output_prefix,"");
   while((q=get_options(argc,argv,"Cr:vsSc:d:p:i:t:w:")) != -1)
   switch (q) 
   {
@@ -128,7 +129,7 @@ extern int main(int argc, char **argv) /* Read parameters from command line */
       data.cutoff=atof(my_optarg);
     break;
     case 'p':
-      strcpy(output_prefix,my_optarg);
+      (void) strcpy(output_prefix,my_optarg);
     break;
     case 'r':
       data.r=atof(my_optarg);
@@ -180,12 +181,13 @@ hence built without the mpi\nlibrary.\n",1);
   if(argc-my_optind == 1)  /* This should be so hopefully !! */
   {
 #ifdef DEBUG
-  printf("errno=%d in atlc.c #2\n",errno);
+  if (errno != 0)
+    fprintf(stderr,"errno=%d in atlc.c #2\n",errno);
 #endif
-    strcpy(inputfile_name, argv[my_optind]);
-    strcpy(outputfile_name, output_prefix);
-    strcat(output_prefix,inputfile_name);
-    strcpy(outputfile_name,output_prefix);
+    (void) strcpy(inputfile_name, argv[my_optind]);
+    (void) strcpy(outputfile_name, output_prefix);
+    (void) strcat(output_prefix,inputfile_name);
+    (void) strcpy(outputfile_name,output_prefix);
     free_string(output_prefix,0,1024);
     read_bitmap_file_headers(inputfile_name, &offset, &size, &width, &height);
 
@@ -193,9 +195,8 @@ hence built without the mpi\nlibrary.\n",1);
     in getting some now, starting work then finding atlc can't get the 
     rest of what is needed. */
     image_data=ustring(0L,size);
-    cell_type=cmatrix(0,width-1,0,height-1);
+    cell_type=scmatrix(0,width-1,0,height-1);
     Vij=dmatrix(0,width-1,0,height-1);
-    Vij2=dmatrix(0,width-1,0,height-1);
     Er=dmatrix(0,width-1,0,height-1);
     /* On Solaris systems, if the following is not executed, only one 
     thread will run at any one time, which rather defeats the object of 
@@ -218,7 +219,8 @@ hence built without the mpi\nlibrary.\n",1);
     unable to read from stdin, so this code is not really doing
     anything useful, but might be expanded at a later date. */
 #ifdef DEBUG
-  printf("errno=%d in atlc.c #3\n",errno);
+  if (errno != 0)
+    fprintf(stderr,"errno=%d in atlc.c #3\n",errno);
 #endif
     if( strcmp(argv[my_optind],"-") != 0)
     {
@@ -277,9 +279,8 @@ hence built without the mpi\nlibrary.\n",1);
   free_string(outputfile_name,0,1024);
   free_string(appendfile_name,0,1024);
   free_ustring(image_data,0L,size);
-  free_cmatrix(cell_type,0,width-1,0,height-1);
+  free_scmatrix(cell_type,0,width-1,0,height-1);
   free_dmatrix(Vij, 0,width-1,0,height-1);
-  free_dmatrix(Vij2, 0,width-1,0,height-1);
   free_dmatrix(Er,0,width-1,0,height-1);
   return(OKAY); 
 }

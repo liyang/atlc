@@ -52,6 +52,8 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
    struct transmission_line_properties not_used;
    FILE *image_data_fp=stdout;
 
+   not_used.W=1; /* Keeps SGI's MipsPro compiler happy */
+
    while((q=get_options(argc,argv,"b:f:v")) != -1)
    switch (q) 
    {

@@ -37,7 +37,7 @@ extern double **Vij;
 extern int height;
 extern int number_of_workers;
 
-void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_to_print_fp, char *inputfile_filename)
+void do_fd_calculation(struct transmission_line_properties *data, FILE *where_to_print_fp, char *inputfile_filename)
 {
   double capacitance_old, capacitance;
   double velocity_of_light_in_vacuum;
@@ -67,11 +67,11 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
 
 #ifdef ENABLE_POSIX_THREADS
       if (number_of_workers == 0)
-        capacitance=finite_difference_single_threaded(ITERATIONS);
+        capacitance=finite_difference_single_threaded();
       else
-        capacitance=finite_difference_multi_threaded(ITERATIONS);
+        capacitance=finite_difference_multi_threaded();
 #else  
-      capacitance=finite_difference_single_threaded(ITERATIONS);
+      capacitance=finite_difference_single_threaded();
 #endif
 
       data->C_vacuum=capacitance;
@@ -97,7 +97,7 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
       count++;
     } while (fabs((capacitance_old-capacitance)/capacitance_old) > data->cutoff); /* end of FD loop */
     if(data->verbose_level >=4)
-      printf("Total of %d iterations ( %d calls to finite_difference(%d) )\n",ITERATIONS*count,count,ITERATIONS);
+      printf("Total of %d iterations ( %d calls to finite_difference() )\n",ITERATIONS*count,count);
 
     if((data->write_binary_field_imagesQ == TRUE || data->write_bitmap_field_imagesQ == TRUE) && data->dielectrics_in_bitmap==1 )
       write_fields_for_two_conductor_lines(inputfile_filename, *data);
@@ -124,11 +124,11 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
         capacitance_old=capacitance;
 #ifdef ENABLE_POSIX_THREADS
       if (number_of_workers == 0)
-         capacitance=finite_difference_single_threaded(ITERATIONS);
+         capacitance=finite_difference_single_threaded();
       else
-        capacitance=finite_difference_multi_threaded(ITERATIONS);
+        capacitance=finite_difference_multi_threaded();
 #else  
-      capacitance=finite_difference_single_threaded(ITERATIONS);
+      capacitance=finite_difference_single_threaded();
 #endif
         data->C=capacitance;
         data->C_non_vacuum=capacitance;
@@ -182,11 +182,11 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
       capacitance_old=capacitance;
 #ifdef ENABLE_POSIX_THREADS
       if (number_of_workers == 0)
-         capacitance=finite_difference_single_threaded(ITERATIONS);
+         capacitance=finite_difference_single_threaded();
       else
-        capacitance=finite_difference_multi_threaded(ITERATIONS);
+        capacitance=finite_difference_multi_threaded();
 #else  
-      capacitance=finite_difference_single_threaded(ITERATIONS);
+      capacitance=finite_difference_single_threaded();
 #endif
       data->Codd_vacuum=capacitance;
       data->Codd=capacitance;
@@ -240,11 +240,11 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
         capacitance_old=capacitance;
 #ifdef ENABLE_POSIX_THREADS
       if (number_of_workers == 0)
-         capacitance=finite_difference_single_threaded(ITERATIONS);
+         capacitance=finite_difference_single_threaded();
       else
-        capacitance=finite_difference_multi_threaded(ITERATIONS);
+        capacitance=finite_difference_multi_threaded();
 #else  
-      capacitance=finite_difference_single_threaded(ITERATIONS);
+      capacitance=finite_difference_single_threaded();
 #endif
         data->Codd=capacitance;
         data->Zodd=sqrt(data->Lodd_vacuum/data->Codd);  /* Standard formula for Zo */
@@ -290,11 +290,11 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
       capacitance_old=capacitance;
 #ifdef ENABLE_POSIX_THREADS
       if (number_of_workers == 0)
-         capacitance=finite_difference_single_threaded(ITERATIONS);
+         capacitance=finite_difference_single_threaded();
       else
-        capacitance=finite_difference_multi_threaded(ITERATIONS);
+        capacitance=finite_difference_multi_threaded();
 #else  
-      capacitance=finite_difference_single_threaded(ITERATIONS);
+      capacitance=finite_difference_single_threaded();
 #endif
 
       data->Ceven_vacuum=capacitance;
@@ -341,11 +341,11 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
         capacitance_old=capacitance;
 #ifdef ENABLE_POSIX_THREADS
         if (number_of_workers == 0)
-           capacitance=finite_difference_single_threaded(ITERATIONS);
+           capacitance=finite_difference_single_threaded();
         else
-          capacitance=finite_difference_multi_threaded(ITERATIONS);
+          capacitance=finite_difference_multi_threaded();
 #else  
-        capacitance=finite_difference_single_threaded(ITERATIONS);
+        capacitance=finite_difference_single_threaded();
 #endif
         data->Ceven=capacitance;
         data->Zeven=sqrt(data->Leven_vacuum/data->Ceven);  /* Standard formula for Zo */
@@ -375,5 +375,4 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
       print_data_for_directional_couplers(*data, where_to_print_fp, inputfile_filename);
     }
   } /* end of if couplers */
-  return(0);
 }

@@ -106,7 +106,7 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
   unaligned_image_vector=ustring(0,(W+3)*3*H);
 
 #ifdef HAVE_MEMSET
-  memset((void *) (aligned_image_vector),0x00,W*H*3);
+  (void) memset((void *) (aligned_image_vector),0x00,(size_t) W*H*3);
 #else
   for(memory_location=0; memory_location < W*H*3; memory_location++)
     aligned_image_vector[memory_location]=0;

@@ -34,13 +34,13 @@ CONDUCTOR_MINUS_ONE_V in definitions.h */
 #include "definitions.h"
 
 extern int width, height;
-extern char **cell_type;
+extern signed char **cell_type;
 extern double **Vij;
-extern char **cell_type;
 
 void swap_conductor_voltages(int way_to_swap)
 {
-  int i, j, pixel;
+  int i, j;
+  signed char pixel;
   for(i=0;i<width;++i)
   {
     for(j=0;j<height;++j)

@@ -60,6 +60,5 @@ void check_error(double user, int create_bmp_for_rect_in_rect, double gridsize, 
       }
       else if(fractional_error > ACCEPTABLE_ERROR)
          fprintf(stderr,"*WARNING*  %f%% error in representing %s on the grid\n", fractional_error*100.0, name);
-      else{}
    }
 }

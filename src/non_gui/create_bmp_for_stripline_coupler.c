@@ -42,7 +42,8 @@ groundplanes of spacing h. */
 #include <gsl/gsl_sf_ellint.h>
 #endif
 
-double WW, HH, ss, ww, Er1, Er2;
+double WW, HH, ww, Er1, Er2;
+static double ss; 
 int W, H, s,  w,  verbose=FALSE;
 
 int main(int argc, char **argv)
@@ -52,7 +53,9 @@ int main(int argc, char **argv)
   int bmp_size=DEFAULT_COUPLER_BMP_SIZE, q; 
   FILE *image_data_fp;
   struct transmission_line_properties optimise;
-  struct transmission_line_properties foo;
+  struct transmission_line_properties not_used;
+
+  not_used.W=1; /* keep MipsPro compiler happy on IRIX */
 
   while((q=get_options(argc,argv,"Cb:v")) != -1)
   switch (q) 
@@ -118,7 +121,7 @@ int main(int argc, char **argv)
   H=optimise.best[1];
   w=optimise.best[2];
   s=optimise.best[3];
-  write_bitmap(image_data_fp, foo);
+  write_bitmap(image_data_fp, not_used);
   if(verbose >= 1)
   {
     calculate_Zodd_and_Zeven(&Zodd, &Zeven, &Zo, ww, HH, ss, er);

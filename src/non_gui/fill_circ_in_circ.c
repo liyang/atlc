@@ -40,7 +40,9 @@ extern int D, h, W, H, d;
 
 void fill_image_vector_with_data(unsigned char *image_vector, int colour_Er1, int colour_Er2, struct transmission_line_properties foo) 
 {
-   int i, j, red, green, blue, vector_original=0;
+   int i, j; 
+   unsigned char red, green, blue;
+   int vector_original=0;
    for(j=0;j<H;++j)
    {
       for(i=0;i<W; ++i)

@@ -59,6 +59,10 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
    int q;
    struct transmission_line_properties not_used;
    FILE *image_data_fp=stdout;
+   
+   /* The following just keeps the compiler happy, as not_used is 
+   not used in this case */
+   not_used.W=1;
 
    while((q=get_options(argc,argv,"b:v")) != -1)
    switch (q) 

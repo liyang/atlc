@@ -68,6 +68,10 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
    double Zo, x;
    filename=string(0,1010);
 
+   /* The following line just prevents a warning from the compiler (SGI's to 
+   be precise). There is not reason to set W=1 */
+   not_used.W=1;
+
    while((q=get_options(argc,argv,"Cb:v")) != -1)
    switch (q) 
    {
