@@ -87,7 +87,7 @@ install_sh = @install_sh@
 
 bin_PROGRAMS = atlc
 
-atlc_SOURCES = atlc.cpp checksum.cpp id.h
+atlc_SOURCES = atlc.cpp checksum.cpp RoundCoax.cpp id.h atlc-gui.h
 
 INCLUDES = @EXTRA_WXWINDOWS_CFLAGS@
 atlc_LDADD = @EXTRA_WXWINDOWS_LIBS@
@@ -99,7 +99,7 @@ CONFIG_CLEAN_FILES =
 bin_PROGRAMS = atlc$(EXEEXT)
 PROGRAMS = $(bin_PROGRAMS)
 
-am_atlc_OBJECTS = atlc.$(OBJEXT) checksum.$(OBJEXT)
+am_atlc_OBJECTS = atlc.$(OBJEXT) checksum.$(OBJEXT) RoundCoax.$(OBJEXT)
 atlc_OBJECTS = $(am_atlc_OBJECTS)
 atlc_DEPENDENCIES =
 atlc_LDFLAGS =
@@ -111,7 +111,8 @@ LDFLAGS = @LDFLAGS@
 LIBS = @LIBS@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
-@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/atlc.Po ./$(DEPDIR)/checksum.Po
+@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/RoundCoax.Po ./$(DEPDIR)/atlc.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/checksum.Po
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 CXXLD = $(CXX)
@@ -172,6 +173,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/RoundCoax.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/atlc.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/checksum.Po@am__quote@
 

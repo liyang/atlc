@@ -87,7 +87,7 @@ install_sh = /export/home/davek/atlc/install-sh
 
 bin_PROGRAMS = atlc
 
-atlc_SOURCES = atlc.cpp checksum.cpp id.h
+atlc_SOURCES = atlc.cpp checksum.cpp RoundCoax.cpp id.h atlc-gui.h
 
 INCLUDES = -I/usr/local/lib/wx/include/gtk-2.2 -I/usr/local/include -DGTK_NO_CHECK_CASTS -D__WXGTK__ -D_REENTRANT
 atlc_LDADD = -L/usr/local/lib -lwx_gtk-2.2 -L/usr/local/stow/gtk+-1.2.8/lib -L/usr/openwin/lib -R/usr/openwin/lib -lgtk -lgdk -L/usr/local/stow/glib-1.2.10/lib -lgmodule -lgthread -lglib -lthread -ldl -lXext -lX11 -lsocket -lnsl -lm -lpng -ljpeg -ltiff -ldl -lposix4 -lnsl -lsocket -lpthread -lz -lm
@@ -99,7 +99,7 @@ CONFIG_CLEAN_FILES =
 bin_PROGRAMS = atlc$(EXEEXT)
 PROGRAMS = $(bin_PROGRAMS)
 
-am_atlc_OBJECTS = atlc.$(OBJEXT) checksum.$(OBJEXT)
+am_atlc_OBJECTS = atlc.$(OBJEXT) checksum.$(OBJEXT) RoundCoax.$(OBJEXT)
 atlc_OBJECTS = $(am_atlc_OBJECTS)
 atlc_DEPENDENCIES =
 atlc_LDFLAGS =
@@ -111,7 +111,8 @@ LDFLAGS =
 LIBS = -lgsl -lgslcblas -lm 
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
-DEP_FILES = ./$(DEPDIR)/atlc.Po ./$(DEPDIR)/checksum.Po
+DEP_FILES = ./$(DEPDIR)/RoundCoax.Po ./$(DEPDIR)/atlc.Po \
+	./$(DEPDIR)/checksum.Po
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 CXXLD = $(CXX)
@@ -172,6 +173,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+include ./$(DEPDIR)/RoundCoax.Po
 include ./$(DEPDIR)/atlc.Po
 include ./$(DEPDIR)/checksum.Po
 
