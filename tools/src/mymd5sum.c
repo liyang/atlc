@@ -1,4 +1,5 @@
 
+#include "config.h"
 /*
  * RFC 1321 compliant MD5 implementation,
  * by Christophe Devine <devine@cr0.net>;
