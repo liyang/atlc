@@ -1,3 +1,7 @@
+Having the gsl library around causes a varaiable to be 
+defined, but if this is not linked in, the program
+refuses to compile
+
 Lack of any way of changing brightness of images without a
 cpu-intenesive re-run. 
 The two example files '
