@@ -143,10 +143,12 @@ benchmark_SOURCES = \
 benchmark.c \
 try_aix.c \
 try_hpux.c \
+try_irix.c \
 try_linux.c \
 try_portable.c \
 try_solaris.c \
 try_tru64.c \
+try_unicos.c \
 defs.h
 
 
@@ -197,6 +199,7 @@ Test_threads_b \
 4a-create_bmp_for_microstrip_coupler.test \
 5a-check-s_and_-S_options_of_atlc-2conductor.test \
 5b-check-s_and_-S_options_of_atlc-3conductor.test \
+5c-check_numeric_data_from_atlc-2conductor.test \
 6a-create_and_check_25ohm_201Pixel_high_symmetrical_stripline.test \
 6b-create_25ohm_401Pixel_high_symmetrical_stripline.test \
 6c-create_25ohm_801Pixel_high_symmetrical_stripline.test \
@@ -316,6 +319,7 @@ WARNING--The-next-test+benchmark-takes-a-long-while.test \
 4a-create_bmp_for_microstrip_coupler.test \
 5a-check-s_and_-S_options_of_atlc-2conductor.test \
 5b-check-s_and_-S_options_of_atlc-3conductor.test \
+5c-check_numeric_data_from_atlc-2conductor.test \
 6a-create_and_check_25ohm_201Pixel_high_symmetrical_stripline.test \
 6b-create_25ohm_401Pixel_high_symmetrical_stripline.test \
 6c-create_25ohm_801Pixel_high_symmetrical_stripline.test \
@@ -445,8 +449,9 @@ Test_threads_b_OBJECTS = $(am_Test_threads_b_OBJECTS)
 Test_threads_b_DEPENDENCIES =
 Test_threads_b_LDFLAGS =
 am_benchmark_OBJECTS = benchmark.$(OBJEXT) try_aix.$(OBJEXT) \
-	try_hpux.$(OBJEXT) try_linux.$(OBJEXT) try_portable.$(OBJEXT) \
-	try_solaris.$(OBJEXT) try_tru64.$(OBJEXT)
+	try_hpux.$(OBJEXT) try_irix.$(OBJEXT) try_linux.$(OBJEXT) \
+	try_portable.$(OBJEXT) try_solaris.$(OBJEXT) \
+	try_tru64.$(OBJEXT) try_unicos.$(OBJEXT)
 benchmark_OBJECTS = $(am_benchmark_OBJECTS)
 benchmark_LDADD = $(LDADD)
 benchmark_DEPENDENCIES =
@@ -458,9 +463,11 @@ am__depfiles_maybe = depfiles
 @AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/Test_threads_a-Test_threads_a.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/Test_threads_b-Test_threads_b.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/benchmark.Po ./$(DEPDIR)/try_aix.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/try_hpux.Po ./$(DEPDIR)/try_linux.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/try_hpux.Po ./$(DEPDIR)/try_irix.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/try_linux.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/try_portable.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/try_solaris.Po ./$(DEPDIR)/try_tru64.Po
+@AMDEP_TRUE@	./$(DEPDIR)/try_solaris.Po ./$(DEPDIR)/try_tru64.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/try_unicos.Po
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
@@ -505,10 +512,12 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/benchmark.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/try_aix.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/try_hpux.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/try_irix.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/try_linux.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/try_portable.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/try_solaris.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/try_tru64.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/try_unicos.Po@am__quote@
 
 distclean-depend:
 	-rm -rf ./$(DEPDIR)
