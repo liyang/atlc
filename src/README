@@ -1,5 +1,5 @@
 On 18/4/02 I moved all the sources from atlc-x.y.z/src to atlc-x.y.z/src/non_gui with
-the intention of starting on some graphical code in the src/gui directory. You will find 
-the gui stuff does nothing useful, so ignore it.
+the intention of starting on some graphical code in the src/gui directory. Nothing ever 
+happened to that, so on 3rd May 2003 the src/gui directory was removed. 
 
 Dr. David Kirkby 14/12/02
