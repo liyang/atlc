@@ -283,9 +283,9 @@ void mpi_worker(int rank) {
 					&status);
 
 		if (0 == index) {
-		  update_voltage_array(num_cols + 2,0);
+		  update_voltage_array(num_cols + 2,0,Vij_TO_Vij);
 		} else {
-		  update_voltage_array(1,0);
+		  update_voltage_array(1,0,Vij_TO_Vij);
 		}
 
 		MPI_Waitany(2, 
@@ -294,9 +294,9 @@ void mpi_worker(int rank) {
 					&status);
 
 		if (0 == index) {
-		  update_voltage_array(num_cols + 2,0);
+		  update_voltage_array(num_cols + 2,0,Vij_TO_Vij);
 		} else {
-		  update_voltage_array(1,0);
+		  update_voltage_array(1,0,Vij_TO_Vij);
 		}
 
 
@@ -339,7 +339,7 @@ void do_columns(int start_col, int num_cols, int calculate_edges)
 
   for(i=start_col; i<=end_col; ++i)
   {
-	update_voltage_array(i, calculate_edges);
+	update_voltage_array(i, calculate_edges,Vij_TO_Vij);
   }
 }
 
@@ -439,8 +439,8 @@ double finite_difference(int accuracy)
 
 	/* update the columns adjacent to our strip
 	   edges */
-	update_voltage_array(left_num_cols, 1);
-	update_voltage_array(right_start_col - 1, 1);
+	update_voltage_array(left_num_cols, 1,Vij_TO_Vij);
+	update_voltage_array(right_start_col - 1, 1,Vij_TO_Vij);
 
 	MPI_Waitall(2, send_requests, send_statuses);
 
