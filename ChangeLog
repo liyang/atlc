@@ -1,6 +1,96 @@
-********************Version 3.0.8 Note yet released  *********************
+
+********************Version 4.1.6  Released  22/12/02 ********************
+Made it more obvious there is a bug that prevents the use of atlc
+where there is more than one dielectric on a directional coupler.
+
+Updated the documentation so removing references to make_coupler
+
+Changed the atlc homepage a bit, as it was out of date. 
+
+********************Version 4.1.4  Released  15/12/02 ********************
+Corrected bug found in design_coupler.c that prevented it compiling
+under old versions of gcc. 
+
+Added a few more tests that fail if gsl is not included. 
+
+Updated the documentation. Some showed the output from 
+atlc 2.x, which was a lot less accurate than 4.x.
+
+Added a line for pth in Makefile.am. Threads on machines
+othe than Solaris still needs some work. 
+
+Added the file 'IMPORTANT.html' back into the release. For
+some reason this got lost and was not present in any recent 
+release, despite being on the web page and still valid.
+
+Updated the FAQ, as some information was out of date.
+
+********************Version 4.1.1  Released  14/12/02 ********************
+**************************************************************************
+
+Changed the default number of threads a mutli-threaded version of the
+prorgram runs from 2 to 4, as I now own a quad processor machine. It is
+changed in definitions.h
+
+The program 'make_coupler' has been renamed to generate_coupler_bitmap,
+as it never really did make a coupler, but only generate a bitmap for
+one with the dimensions you gave. 
+
+Added a new program 'design_coupler' which is very able. It can find the
+required odd and even mode impedances given the coupling factor and
+frequency range, and then design you a coupler with the right
+dimensions!
+
+Added much better documentation to support the directional couplers. New
+files 'calculate_zodd_and_zeven.html',
+'determine_dimensions_of_couplers.html' have been created. 
+
+No significant changes have taken place to the code for two conductor
+lines. I still need to address the problem of consistancy amoungst some
+of the programs. 
+
+A new directory 'tests' has been set up and automake configured such
+that running 'make check' now performms a lot of checks and creates
+all the examples. 
+
+********************Version 4.0.1  Released  21/4/02 *********************
+**************************************************************************
+
+Added copyright notices to all files and added a -C option on all 
+binaries to print out information on copyright. 
+
+Corrected an error in READED.threads, since it refered to the -p options
+for number of processors, which I later changed to -t threads to be more
+accurate. 
+
+Added my e-mail addres to the AUTHORS file. 
+
+Update the TODO list. 
+
+Remvoed the printing of L and C in the documentation (frontpage.html and
+index2.html) for couplers, as these are mode-dependant and so one value
+is not enough. 
+
+Added a CVS entry on the banner page. 
+
+Spent some time spell checking many of the html documents. 
+
+Made some changes in the rect_in.. circ_in.. so that the integer values
+create on a machine should be exactly the same on each machine. It was
+possible before that some numbers would be generated on one machine and
+some on another, due to rounding errors. This hopefully stops that. 
+
+Changed src/non_gui/tests to point out what a dodgy gcc does. 
+
+Added a few scrips 'tests' in other directories to src/non_gui, since
+someone was looking for them and could not find them. Hence I've tried to
+make it a bit clearer. 
+
+********************Version 4.0.0 Released 11/4/02  *********************
 **************************************************************************
 Put a bit more info in the README.windows
+Removed check for "intelligent life" in configure.in, as this was not working
+with autoconf 2.13.
 
 Added a function do_fd_calculation() and therefore added the file
 do_fd_calculation.c This helps clean up atlc.c a lot, since a lot of
@@ -43,6 +133,10 @@ Added information to accuracy.html on accuaracy with coupled lines.
 Changed finite_difference_multi_threaded.c & finite_difference_multi_threaded.c
 to handle correctly the case of coupled lines - at least for vacuum
 dielectric. 
+
+Added a couple of tests in the file 'tests' to check the coupler 
+related items. 
+
 
 ********************Version 3.0.7 Dated 6/4/2002**************************
 **************************************************************************
@@ -459,8 +553,6 @@ usage.c Changed the usage message about '-i fiddle' as it was wrong before, in a
 1.
 atlc.c Added a '-c' option, to change the cutoff. 
 atlc.c Changed the reading of the '-i fiddle' option, so its read a double and not a long
-
-
 
 25/4/2001, verison 2.01 put on SorgeForce unix only, supports multiple
 CPUs. 

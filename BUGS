@@ -1,14 +1,24 @@
-Probably quite a few, but I'm not aware of any major ones except with
-respect to directional couplers. 
+Not working for directional couplers that have more than
+one dielectric. See file WARNING.txt
 
-Support on directional couplers is weak, but will be improved. Specific
-areas of problems are:
-a) Only able to do vaccume lines - no multiple dielectrics or fixed Er > 1.
-b) Can't plot fields on couplers.
-c) Not all the data that could be printed is printed. 
+Probably quite a few, but I'm not aware of any major ones.
 
 Lack of consistancy on interface of some programmes like rect_in_rect,
 sym_strip, etc. 
 
 Lack of any way of changing brightness of images without a
 cpu-intenesive re-run. 
+
+Thread support on machines other than Solaris is 
+not known. I need to do more testing - preferably
+with multi-processor machines. 
+
+'make check' wouild be better named 'make test'
+as is more common. 
+
+'make examples' would be nice.
+
+The fact that some slef-tests fail on threaded 
+enabled 'atlc' is annoying. I know why, but can't
+do a lot about it. 
+
