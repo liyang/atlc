@@ -50,7 +50,8 @@ int main(int argc, char **argv)
   double Zodd, Zeven, Zo;
   int bmp_size=DEFAULT_COUPLER_BITMAP_SIZE, q; 
   FILE *image_data_fp;
-  struct data optimise;
+  struct transmission_line_properties optimise;
+  struct transmission_line_properties foo;
 
   while((q=get_options(argc,argv,"Cb:v")) != -1)
   switch (q) 
@@ -119,7 +120,7 @@ int main(int argc, char **argv)
   H=optimise.best[1];
   w=optimise.best[2];
   s=optimise.best[3];
-  write_bitmap(image_data_fp);
+  write_bitmap(image_data_fp, foo);
   calculate_Zodd_and_Zeven(&Zodd, &Zeven, &Zo, ww, HH, ss, er);
   printf("The actual dimensions you gave have theoretical imedances of:\n");
   printf("        Zodd= %f Zeven= %f Zo= %f (Ohms) ww=%f HH=%f ss=%f er=%f\n\n", Zodd, Zeven, Zo,ww,HH,ss,er);
