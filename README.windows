@@ -1,17 +1,17 @@
-atlc is primarily a Unix programme. Some Microsoft Windows
+atlc is primarily a Unix programme. Some Microsoft Windoze
 binaries have been produced, although these will *not* be
-kept up to date with the source code. Windows binaries may 
+kept up to date with the source code. Windoze binaries may 
 or may not be released in future, but certainly they will not be 
 kept current.
 
 For this reason you are advised to run atlc on a Unix or
 Linux computer. 
 
-The Windows binaries are not fancy programmes with a
+The Windoze binaries are not fancy programmes with a
 graphical front end - they are simple command-line driven
 binaries. If you want to add your own front end feel free. 
 
-The latest Windows binaries produced are for version 3.0.7
+The latest Windoze binaries produced are for version 3.0.7
 of the code.
 
 Most of the example files (.bmp's) referred to in the docs are 
@@ -20,7 +20,7 @@ Winzip can extract files from that with no problem. The
 documentation (.html) is also in there - which will *not*
 be the same as on the web site. http://atlc.sourceforge.net , 
 since the website will be much more up to date. YOU ARE 
-STRONLY ADVISED TO RUN GNI/Linux OR OTHER Unix VERSION IF 
+STRONLY ADVISED TO RUN GNU/Linux OR OTHER Unix VERSION IF 
 YOU WISH TO RUN UNDER WINDOZE. 
 
 People have managed to compile atlc with Miccrosoft's
@@ -29,4 +29,4 @@ will send me a .zip file of Windoze binaries I will put them
 up, but I will not check them myself. They are completely 
 unsupported. 
 
-Dr. David Kirkby, G8WRB, 11th Jan, 2003.
+Dr. David Kirkby, G8WRB, 30th Jan, 2003.
