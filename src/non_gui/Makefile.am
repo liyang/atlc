@@ -27,7 +27,8 @@ write_fields_for_directional_couplers.c \
 exit_codes.h
 
 atlc_CPPFLAGS = -DNEED_MPI_CODE @PTHREAD_CFLAGS@
-atlc_LDADD = @PTHREAD_LIBS@ @LIBS@ @MPILIBS@
+#atlc_LDADD = @PTHREAD_LIBS@ @LIBS@ @MPILIBS@
+atlc_LDADD = @PTHREAD_LIBS@ @LIBS@ 
 
 
 create_bmp_for_rect_in_rect_SOURCES = create_bmp_for_rect_in_rect.c \
