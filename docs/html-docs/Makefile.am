@@ -43,6 +43,7 @@ usage_design_coupler.html
 EXTRA_DIST = BUGS.html \
 FAQ.html \
 IMPORTANT.html \
+NEWS.html \
 accuracy.html \
 an_example_of_using_design_coupler.html \
 atlc.1.html \
