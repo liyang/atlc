@@ -11,14 +11,14 @@
 void give_examples_of_using_design_coupler(void)
 {
   //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  printf("Here are a list of examples of how to use desgin_coupler\n");
+  printf("Here are an examples of how to use design_coupler\n");
   printf("In the examples, the %c sign is used in front of anything you must type\n",'%');
   printf("which is what you will probably see when using the csh or tcsh as a shell. It\n");
   printf("would probably be a $ sign if using the sh or bash shell. \n\n");
   printf("To find the odd and even mode impedances and frequency response of a 50 Ohm\n"); 
   printf("coupler covering 130 to 170 MHz with a coupling coefficient of 30 dB:\n\n");
   printf("%c design_coupler 30 130 170\n\n",'%');
-  printf("Note the freqency response is symmetrical about the centre frequency at 0.192 dB");
+  printf("Note the frequency response is symmetrical about the centre frequency at 0.192 dB\n");
   printf("below that wanted. You may wish to redesign this for a coupling coefficient of \n");
   printf("about 19.9 dB, so the maximum deviation from the ideal 30.0 dB never exceeds 0.1 dB\n");
   printf("Note the length suggested is 0.5 m (nearly 20\") is a quarter wave at\n");
@@ -27,7 +27,7 @@ void give_examples_of_using_design_coupler(void)
   printf("% design_coupler -L 0.25 30 130 170\n\n",'%');
   printf("What you may notice is that while the coupling to the coupled port is exactly\n");
   printf("30 dB below the input power at the centre frequency (150 MHz) it is \n");
-  printf("no longer symmetical about the centre frequency and the deviations from the\n");
+  printf("no longer symmetrical about the centre frequency and the deviations from the\n");
   printf("ideal 30 dB are now much larger, with a maximum error of 1.012 dB\n");
   printf("Unlike the case when the length is the default quarter wave, there is not much\n");
   printf("you can do about this, since the deviations occur in both directions.\n\n");
@@ -55,17 +55,17 @@ void give_examples_of_using_design_coupler(void)
   printf("more than 7%c of the length), or 17.5 mm in this case, with a length of 250 mm\n",'%');
   printf("otherwise fringing effects will be significant. The width of the structure\n");
   printf("should be as large as possible. The program suggests making this 5*H+2*w+s. The\n");
-  printf("7%c and 5*H+2*w+s are educated gueeses, rather than exact figures. There is\n",'%');
+  printf("7%c and 5*H+2*w+s are educated guesses, rather than exact figures. There is\n",'%');
   printf("no problem in making the width  larger than than 5*H+2*w+s, as long as the\n");
   printf("length is kept at 250 mm. The RATIO of the dimensions H, w and s (but not the\n");
   printf("length) must be kept constant. W just needs to be sufficiently large - it is\n");
   printf("uncritical.  \n\n");
-  printf("If you happened to have some 15 mm sqaure brass available, then using that\n");
-  printf("for the side walls would mean H becoming 15*1.0 = 15 mm, ");
+  printf("If you happened to have some 15 mm square brass available, then using that\n");
+  printf("for the side-walls would mean H becoming 15*1.0 = 15 mm,\n");
   printf("w = 15*1.44 = 21.6 mm  and s = 15*0.44 = 6.6 mm\n\n");
   printf("There is no need to compute the above calculations with a calculator, as using\n");
   printf("The -H option allows one to specify the height H. The program then reports the\n");
-  printf("exact dimensions for the lenth L, height H, w, s and suggests a minimum width\n");
+  printf("exact dimensions for the length L, height H, w, s and suggests a minimum width\n");
   printf("for W.\n\n");
   printf("In summary we have:\n");
   printf("                   30 dB coupler +1.02 dB / -0.78 dB for 130 to 170 MHz\n");
@@ -74,6 +74,6 @@ void give_examples_of_using_design_coupler(void)
   printf("By default, design_coupler prints a lot of information to the screen.\n");
   printf("This can be reduced by the -q option or reduced to only one line with -Q\n");
   printf("Other options include -Z to change the impedance from the default 50 Ohms\n");
-  printf("and -C to see the fully copyright, Licencing and distrubution information\n");
+  printf("and -C to see the fully copyright, Licensing and distribution information\n");
   exit(0);
 }
