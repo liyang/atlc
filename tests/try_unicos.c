@@ -25,7 +25,7 @@ int try_unicos(struct computer_data *data)
 
   /* Obtain the speed of the Cray machine. */
 #ifdef _SC_CRAY_CPCYCLE
-  if((cpu_cycle_time_in_ps=getsysinfo(_SC_CRAY_CPCYCLE)) != 0)
+  if((cpu_cycle_time_in_ps=sysconf(_SC_CRAY_CPCYCLE)) > 0)
   {
       sprintf(data->mhz,"%.1f",1e6/cpu_cycle_time_in_ps);
   }
