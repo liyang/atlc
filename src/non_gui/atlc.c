@@ -63,6 +63,18 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #pragma hrdstop
 #include <condefs.h>
 #endif
+
+
+#ifdef ENABLE_MPI
+
+void mpi_setup_strip_map(int verbose_level);
+void mpi_send_initial_data();
+void mpi_kill_workers();
+
+#endif /* ENABLE_MPI */
+
+
+
 struct pixels Er_on_command_line[MAX_DIFFERENT_PERMITTIVITIES];
 struct pixels Er_in_bitmap[MAX_DIFFERENT_PERMITTIVITIES];
 
@@ -92,6 +104,7 @@ int dielectrics_to_consider_just_now;
 int coupler=FALSE;
 double r=1.95;
 
+
 extern int main(int argc, char **argv) /* Read parameters from command line */
 {
   FILE *where_to_print_fp=stdout, *image_data_fp;
@@ -104,12 +117,7 @@ extern int main(int argc, char **argv) /* Read parameters from command line */
 #ifdef ENABLE_MPI
   int my_rank;
   int width_height[2];
-  int strip_params[2];
-  int control;
-  int start_col, num_cols;
-  int strip_width, leftover;
   char *end_ptr;
-  double sum_of_weights;
 #endif
 
   
@@ -215,7 +223,7 @@ without the threads\nlibrary.\n",1);
 	  }
 
 	  for(i=0; i<num_pes; i++) {
-		printf("PE %i weight: %f\n", i, strip_weights[i]);
+		printf("PE %ld weight: %f\n", i, strip_weights[i]);
 	  }
 #else
 	  error_and_exit("bad argument -- w", 5);
@@ -268,62 +276,7 @@ without the threads\nlibrary.\n",1);
 	  num_pes = width/4;
 	}
 
-	sum_of_weights = 0.0;
-	for(i=0; i<num_pes; i++) {
-	  sum_of_weights += strip_weights[i];
-	}
-
-	/* distribute the bulk of the columns evenly across the PEs */
-	leftover = width;
-	for (i=0, start_col=0; i<num_pes; i++, start_col+=strip_width) {
-	  strip_width = width*strip_weights[i]/sum_of_weights;
-
-	  strip_map[i].start_col = start_col;
-	  strip_map[i].num_cols = strip_width;
-
-	  leftover -= strip_width;
-	}
-
-	/* give a leftover column to each PE until they are all gone */
-	if (leftover) {
-	  strip_map[0].num_cols++;
-	}
-	for(i=1; i<leftover; i++) {
-	  strip_map[i].start_col = strip_map[i-1].start_col + strip_map[i-1].num_cols;
-	  strip_map[i].num_cols++;
-	}
-	for(i=leftover; i<num_pes; i++) {
-	  strip_map[i].start_col = strip_map[i-1].start_col + strip_map[i-1].num_cols;
-	}
-
-
-	/* now rotate the map left half of the PE 0 strip_width, assigning PE 0 the
-	   resulting left and right half-strips, so that it handles
-	   both the left and right edge conditions.  this allows us to conserve
-	   memory on the worker PEs, simplify the indexing on the workers a bit, 
-	   and leave the existing computational routines unchanged in the face of all 
-	   of that. */
-	strip_width = strip_map[0].num_cols;
-	for(i=1; i<num_pes; i++) {
-	  strip_map[i].start_col -= strip_width/2;
-	}
-	strip_map[0].num_cols -= strip_width/2;
-
-	/* add an additional entry to the map to cover the rightmost strip_width/2 
-	   columns that wereuncovered by the shift to the left */
-	strip_map[num_pes].start_col = 
-	  strip_map[num_pes-1].start_col + 
-	  strip_map[num_pes-1].num_cols;
-	strip_map[num_pes].num_cols = width - strip_map[num_pes].start_col;
-
-	if (data.verbose_level > 1) {
-	  printf("map: ");
-	  for(i=0; i<=num_pes; i++) {
-		printf("(%d:%d), ", strip_map[i].start_col, 
-			   strip_map[i].start_col + strip_map[i].num_cols - 1);
-	  }
-	  printf(" (end)\n");
-	}
+	mpi_setup_strip_map(data.verbose_level);
 
 	width_height[0]= width;
 	width_height[1]= height;
@@ -385,56 +338,9 @@ without the threads\nlibrary.\n",1);
     the permittivites and 'cell_type' is either FIXED or variable, 
     indicating a dielectric (VARIABLE) or a metal */
 
-
 #ifdef ENABLE_MPI
-	/* each worker PE needs to know what part of the matrix it has
-	   been given, and needs a copy of the cell_type and Er arrays
-	   corresponding to its strip.
-	 */
-
-	for(i=1; i<num_pes; i++) {
-	  start_col = strip_map[i].start_col;
-	  num_cols = strip_map[i].num_cols;
-	  
-	  strip_params[0] = start_col;
-	  strip_params[1] = num_cols;
-	
-	  MPI_Isend(strip_params,
-				2,
-				MPI_INT,
-				i,
-				MSG_TAG_STRIP_PARAMS,
-				MPI_COMM_WORLD,
-				&strip_params_send_requests[i-1]);
-	
-	/* each worker is given two extra columns to 
-	   the left of its strip and one to the right.
-	   see the comments in finite_difference_mpi.c
-	   for details */
-	  
-	  MPI_Isend(cell_type[start_col-2],
-				(num_cols+3)*height,
-				MPI_INT,
-				i,
-				MSG_TAG_CELL_TYPE,
-				MPI_COMM_WORLD,
-				&cell_type_send_requests[i-1]);
-	  
-	  MPI_Isend(Er[start_col-2],
-				(num_cols+3)*height,
-				MPI_DOUBLE,
-				i,
-				MSG_TAG_ER,
-				MPI_COMM_WORLD,
-				&er_send_requests[i-1]);
-			 
-	}
-
-	MPI_Waitall(num_pes-1, strip_params_send_requests, ignored_statuses);
-	MPI_Waitall(num_pes-1, cell_type_send_requests, ignored_statuses);
-	MPI_Waitall(num_pes-1, er_send_requests, ignored_statuses);
+	mpi_send_initial_data();
 #endif /* ENABLE_MPI */
-
 
     /* If there are multiple dielectrics, the impedance calculations
     needs to be done twice. We start by doing them once, for an vacuum
@@ -442,20 +348,9 @@ without the threads\nlibrary.\n",1);
     do_fd_calculation(&data, where_to_print_fp,inputfile_name);
 
 #ifdef ENABLE_MPI
-	/* kill off all of the worker PEs*/
-	for(i=1; i<num_pes; i++) {
-	  control = 1;
-	  MPI_Isend(&control,
-				1,
-				MPI_INT,
-				i,
-				MSG_TAG_CONTROL,
-				MPI_COMM_WORLD,
-				&control_send_requests[i-1]);
-	}
-	MPI_Waitall(num_pes-1, control_send_requests, ignored_statuses);
+	mpi_kill_workers();
 
-	
+	MPI_Finalize();
 #endif /* ENABLE_MPI */
 
   }
@@ -466,3 +361,145 @@ without the threads\nlibrary.\n",1);
   }
   return(OKAY); 
 }
+
+
+
+#ifdef ENABLE_MPI
+
+
+void mpi_setup_strip_map (int verbose_level) {
+  int i, strip_width, leftover;
+  int start_col;
+  double sum_of_weights;
+
+  sum_of_weights = 0.0;
+  for(i=0; i<num_pes; i++) {
+	sum_of_weights += strip_weights[i];
+  }
+
+  /* distribute the bulk of the columns evenly across the PEs */
+  leftover = width;
+  for (i=0, start_col=0; i<num_pes; i++, start_col+=strip_width) {
+	strip_width = width*strip_weights[i]/sum_of_weights;
+
+	strip_map[i].start_col = start_col;
+	strip_map[i].num_cols = strip_width;
+
+	leftover -= strip_width;
+  }
+
+  /* give a leftover column to each PE until they are all gone */
+  if (leftover) {
+	strip_map[0].num_cols++;
+  }
+  for(i=1; i<leftover; i++) {
+	strip_map[i].start_col = strip_map[i-1].start_col + strip_map[i-1].num_cols;
+	strip_map[i].num_cols++;
+  }
+  for(i=leftover; i<num_pes; i++) {
+	strip_map[i].start_col = strip_map[i-1].start_col + strip_map[i-1].num_cols;
+  }
+
+
+  /* now rotate the map left half of the PE 0 strip_width, assigning PE 0 the
+	 resulting left and right half-strips, so that it handles
+	 both the left and right edge conditions.  this allows us to conserve
+	 memory on the worker PEs, simplify the indexing on the workers a bit, 
+	 and leave the existing computational routines unchanged in the face of all 
+	 of that. */
+  strip_width = strip_map[0].num_cols;
+  for(i=1; i<num_pes; i++) {
+	strip_map[i].start_col -= strip_width/2;
+  }
+  strip_map[0].num_cols -= strip_width/2;
+
+  /* add an additional entry to the map to cover the rightmost strip_width/2 
+	 columns that wereuncovered by the shift to the left */
+  strip_map[num_pes].start_col = 
+	strip_map[num_pes-1].start_col + 
+	strip_map[num_pes-1].num_cols;
+  strip_map[num_pes].num_cols = width - strip_map[num_pes].start_col;
+
+  if (verbose_level > 1) {
+	printf("map: ");
+	for(i=0; i<=num_pes; i++) {
+	  printf("(%d:%d), ", strip_map[i].start_col, 
+			 strip_map[i].start_col + strip_map[i].num_cols - 1);
+	}
+	printf(" (end)\n");
+  }
+
+}
+
+
+void mpi_send_initial_data() {
+  int i;
+  int start_col, num_cols;
+  int strip_params[2];
+
+  /* each worker PE needs to know what part of the matrix it has
+	 been given, and needs a copy of the cell_type and Er arrays
+	 corresponding to its strip.
+  */
+
+  for(i=1; i<num_pes; i++) {
+	start_col = strip_map[i].start_col;
+	num_cols = strip_map[i].num_cols;
+	  
+	strip_params[0] = start_col;
+	strip_params[1] = num_cols;
+	
+	MPI_Isend(strip_params,
+			  2,
+			  MPI_INT,
+			  i,
+			  MSG_TAG_STRIP_PARAMS,
+			  MPI_COMM_WORLD,
+			  &strip_params_send_requests[i-1]);
+	
+	/* each worker is given two extra columns to 
+	   the left of its strip and one to the right.
+	   see the comments in finite_difference_mpi.c
+	   for details */
+	  
+	MPI_Isend(cell_type[start_col-2],
+			  (num_cols+3)*height,
+			  MPI_INT,
+			  i,
+			  MSG_TAG_CELL_TYPE,
+			  MPI_COMM_WORLD,
+			  &cell_type_send_requests[i-1]);
+	  
+	MPI_Isend(Er[start_col-2],
+			  (num_cols+3)*height,
+			  MPI_DOUBLE,
+			  i,
+			  MSG_TAG_ER,
+			  MPI_COMM_WORLD,
+			  &er_send_requests[i-1]);
+			 
+  }
+
+  MPI_Waitall(num_pes-1, strip_params_send_requests, ignored_statuses);
+  MPI_Waitall(num_pes-1, cell_type_send_requests, ignored_statuses);
+  MPI_Waitall(num_pes-1, er_send_requests, ignored_statuses);
+}
+
+
+void mpi_kill_workers() {
+  int control, i;
+	/* kill off all of the worker PEs*/
+	control = CONTROL_VALUE_EXIT;
+	for(i=1; i<num_pes; i++) {
+	  MPI_Isend(&control,
+				1,
+				MPI_INT,
+				i,
+				MSG_TAG_CONTROL,
+				MPI_COMM_WORLD,
+				&control_send_requests[i-1]);
+	}
+	MPI_Waitall(num_pes-1, control_send_requests, ignored_statuses);
+}
+
+#endif /* ENABLE_MPI */
