@@ -229,7 +229,7 @@ without the threads\nlibrary.\n",1);
       do_fd_calculation(&capacitance, &inductance, &Zo, &Zodd, &Zeven, Z_ODD, \
       &velocity, &vf, stdout, cutoff, dielectrics_to_consider_just_now, \
       argv[my_optind],REQUIRE_FD_CALCULATIONS);
-      //swap_conductor_voltages(NEGATIVE_TO_POSITIVE);
+      swap_conductor_voltages(NEG_TO_POS);
       do_fd_calculation(&capacitance, &inductance, &Zo, &Zodd, &Zeven, Z_ALL, \
       &velocity, &vf, stdout, cutoff, dielectrics_to_consider_just_now, \
       argv[my_optind],REQUIRE_FD_CALCULATIONS);
