@@ -1,0 +1,5 @@
+These are m4 macros used by autoconf. Many come from:
+http://www.gnu.org/software/ac-archive/htmldoc/index.html
+The one gsl.m4 came from the gsl-1.3 distributions, but has been
+hacked a bit to define "HAVE_LIBGSL" if the library can be linked okay.
+
