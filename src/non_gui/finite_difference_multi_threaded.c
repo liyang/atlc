@@ -62,7 +62,6 @@ void *do_columns(void *thread_arg)
   }
   if(*thread==max_threads-1)
     z=width-1; 
-  //for(i=y; i<=z; ++i) /* this could have cuased a crash. 
   for(i=y; i<=z; ++i)
   {
     //printf("i=%d y=%d z=%d in do cols\n",i,y,z);
@@ -77,7 +76,7 @@ void *do_columns(void *thread_arg)
 }
 
 /* There are two versions of finite_difference. Both take the same 
-arguments and are both return the same data. One is signle threaded, the
+arguments and are both return the same data. One is single threaded, the
 other multi-threaded. */
 
 double finite_difference(int accuracy)
