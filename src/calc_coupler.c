@@ -22,12 +22,10 @@ groundplanes of spacing h. */
 
 int main(int argc, char **argv)
 {
-//#ifdef HAVE_LIBGSLCBLAS 
-#ifdef HAVE_LIBGSLP
-  double H, w, s, er, ke_dash, ko_dash,ke, ko, Zodd, Zeven, Zo;
-  gsl_complex z;
-  GSL_SET_COMPLEX(&z, 3, 4);
-  if(argc!=4)
+#ifdef HAVE_LIBGSL
+  double H, w, s, er, Zodd, Zeven, Zo;
+  double ke, ko, ko_dash, ke_dash;
+  if(argc!=5)
   {
     usage_calc_coupler();
     exit(1);
@@ -37,16 +35,28 @@ int main(int argc, char **argv)
   s=atof(argv[3]);
   er=atof(argv[4]);
 
-  ke_dash=sqrt(1-(ke*ke));
-  ko_dash=sqrt(1-(ko*ko));
-
   ke=(tanh((M_PI/2)*(w/H)))*tanh((M_PI/2)*(w+s)/H);
-  //z=(M_PI/2)*(w+s)/H;
-  //ko=(tanh((M_PI/2)*(w/H)))*coth((M_PI/2)*(w+s)/H);
+  ko=(tanh((M_PI/2)*(w/H)))/tanh((M_PI/2)*(w+s)/H);
+  //ko=tanh((M_PI/2)*(w/H)))*tanh((M_PI/2)*(w+s)/H);
+
+  ke_dash=sqrt(1-ke*ke);
+  ko_dash=sqrt(1-ko*ko);
+/*
+  GSL_SET_COMPLEX(&complex_ke_dash,ke_dash,0.0);
+  GSL_SET_COMPLEX(&complex_ko_dash,ko_dash,0.0);
+  GSL_SET_COMPLEX(&complex_ke,ke,0.0);
+  GSL_SET_COMPLEX(&complex_ko,ko,0.0);
+*/
+  Zeven=30.0*M_PI*gsl_sf_ellint_Kcomp(ke_dash/ke, GSL_PREC_DOUBLE)/sqrt(er);
+  Zodd =30.0*M_PI*gsl_sf_ellint_Kcomp(ko_dash/ko, GSL_PREC_DOUBLE)/sqrt(er);
+  printf("Zodd=%f Zeven=%f\n", Zodd, Zeven);
+
 #else
   printf("calc_coupler was not linked against the GNU scientific library, gsl.\n");
   printf("Obtain gsl from http://sources.redhat.com/gsl then run 'configure' again.\n");
   printf("and rebuild calc_coupler from the sources again.\n");
   exit(1);
 #endif
+
+  //exit(0);
 }
