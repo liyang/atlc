@@ -1,5 +1,5 @@
 # This is Makefile.am, which is proceed by automake
-AUTOMAKE_OPTIONS = gnits
+#AUTOMAKE_OPTIONS = gnits
 ACLOCAL_AMFLAGS = -I m4
 
 SUBDIRS =  . src m4 man docs examples tools tests 

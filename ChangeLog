@@ -1,4 +1,5 @@
-****** Version 4.2.13 Released April 5th 2003  ********
+
+****** Version 4.3.0 Released April 5th 2003  ********
 
 Top level directory
 
@@ -17,7 +18,9 @@ name for the old configure.in
 Significan chanes made to this. Now there is an m4 macro to check for
 gsl library and the optimal way to link for threads and the optimal 
 way to link for MPI. 
-
+Now accepts gsl version of 0.8 and above. It works on 0.8 but not 0.5. I
+don't quite know where the border line lines, but requesting 0.8 dones
+not seem unreasonable.
 
 Added a check for automake 2.57 or above. 
 
@@ -35,17 +38,40 @@ as this was a bug. Now changed code so that if the -t option is
 disabled, the code prints the reason (Windoze or not configured
 with --with-threads). Previously it gave two possible reasons.
 
-atlc/src/no_gui/usage_atlc.c
-Added thr_setconcurrancy back in, as that was missing. 
-
 
 atlc/src/no_gui/atlc.c
 removed thr_setconcurrancy and replaced with pthread_setconcurrancy
 as this is portable, whereas the other is Solaris specific. 
 
-atlc/src/no_gui
-A bit of tidying up. No significant changes. 
+atlc/src/do_fd_calculation.c
+This now calls function finite_difference_single_threaded or
+finite_difference_multi_threaded, depending on how the software is
+configured and the presence of -t0 option to atlc. 
 
+atlc/src/non_gui/finite_difference_multi_threaded.c
+The name of the function has been changed from finite_difference to
+finite_difference_multi_threaded - no longer are there two functions
+with the same name. The correct one function is called from
+do_fd_calculation.c, depending on whether the software is configured
+with threads or whether the user has elected to run a single threaded
+algorithm on a multi-threaded system, by passing the option -t0 to atlc,
+which indicates it will use the single threaded algorithm. 
+
+Changed the algorithm considerably. This has several advantages over the
+old one.
+a) The algorithm should be suitable with minor modification for MPI use.
+b) The code now produces exactly the same results whether run for single
+or multi-threaded. finite_difference_single_threaded.c needed to be
+changed to enable this.
+d) A barrier is now used for syncronisation. 
+This algorithm is apparently not very cache friendly, so it could do
+with some teaking, but at least its a decent starting point, producing
+the same data from single threaded or multi-threaded use. 
+
+atlc/src/non_gui/do_fd_calculation.c
+This now calls one of two functions.
+
+a) Code is now inline, rather than a function call.
 Directory atlc/tools/src:
 
 atlc/tools/src/Makefile.am
@@ -66,6 +92,8 @@ Commented out most of the things, so a C++ compiler is not needed. The
 # files in this directory servered no useful purpose, but the icons at 
 # least might be useful. Whether or not a GUI will be added is anyone's
 # guess. 
+
+MPI code has been almost fully removed, to start this from scratch again.
 
 ****** Version 4.2.12 Released 30/3/2003  ********
 

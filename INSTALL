@@ -2,9 +2,9 @@ Specific Installation Instructions for atlc.
 ==================
 
    These are *NOT* generic installation instructions, but have been
-   edited somewhat to be specific for atlc. Some of the edits 
-   are *very* important.  In particular, see secions 1, 2 3, 6, 9 and 
-   10 are important and not too obvoius. 
+   edited somewhat to be specific for atlc. In particular, 1,2,3,6,8
+   9 and 10 are quite specific to atlc, so it is suggested you read
+   them all. 
 
    The `configure' shell script attempts to guess correct values for
 various system-dependent variables used during compilation.  It uses
@@ -46,16 +46,18 @@ The simplest way to compile this package is:
      systems come with one (Solaris, Tru64, Sequent, AIX). Linux has a
      POSIX thread library too, but as with any system, it might not be
      installed. If you don't have a POSIX compatible thread library,
-     install pth:
+     pth should work
      http://www.gnu.org/software/pth/
+     although I've never used it, since any system I have already has a suitable
+     library.
 
   3) If you have access to a network of computers and wish to take advantages
-     of atlc's distributed program ability, download the MPICH library
+     of the distributed processors, download the MPICH library
      from http://www-unix.mcs.anl.gov/mpi/mpich/indexold.html
-     At the minute this feature is NOT complete, so only bother with
-     this if you feel like a lot of experimentation. It apparently works
-     on Linux, but I know it does not on Solaris. No idea about any
-     other OS.
+     A system that will use Message Passing Interface will be added.
+     Some work was started, but it was not portable and since then 
+     a major change was made to an algorithm and all the MPI code 
+     removed.
 
      A small test program, exists in the file tests/MPI_16a_PI.c
      which is only enabled when using the --with-mpi option to
@@ -80,43 +82,26 @@ The simplest way to compile this package is:
      Running `configure' takes a while.  While running, it prints some
      messages telling which features it is checking for.
 
-     Even if you want support for threads of message passing interface,
-     do *NOT* a this minute add those options. 
+     IF you want support for multiple processors, add the --with-threads
+     option to configure. 
+
+     In the unlikey event you want to add support for MPI (it does not 
+     work, hence it's unlikey you will want this, unless you intend
+     developing this), then add the --with-mpi or --with-mpe options.
+
+     You can NOT use --with-threads and --with-mpi, or --with-threads with
+     --with-mpe. 
 
   7) Type `make' to compile the package.
 
   8) Type 'make check' to run quite a few checks 
 
-  9) If you want threaded library, run 'make clean' then 
-     re-run configure with the option:
-     configure --with-threads
-
-     Rerun 'make check' There should be no test failures, but 
-     some tests are skipped. 
- 11)
-     If you want to build with the MPI library for distributed program
-     support, use the --with-mpi option, after doing a 'make cleaan'
-
-     configure --with-mpi
-
-     If you want to build with the MPI library, but adding logging
-     support, use the --with-mpi option:
-
-     configure --with-mpe
-
-     Note that after you do this, 'make check' should still pass all
-     tests, but it will skip several. This is because some slightly different
-     algorithm is used for multi-processing, which gives very similar,
-     but slightly different results. This is a bug and I hope to fix it
-     soon. However, as a short-term measure, certain tests have been
-     disabled if atlc is configured with --with-threads. 
-
- 11) Type 'make install' if you wish to install the programs and 
+  9) Type 'make install' if you wish to install the programs and 
      example files. If you don't want to install the examples
      (they take up about 120 Mb) run 'make install-exec' and 
      'make install-man'
 
- 12) You can remove the program binaries and object files from the
+ 10) You can remove the program binaries and object files from the
      source code directory by typing `make clean'. To also remove the
      files that `configure' created (so you can compile the package for
      a different kind of computer), type `make distclean'.  There is
