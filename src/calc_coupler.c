@@ -41,14 +41,10 @@ int main(int argc, char **argv)
 
   ke_dash=sqrt(1-ke*ke);
   ko_dash=sqrt(1-ko*ko);
-/*
-  GSL_SET_COMPLEX(&complex_ke_dash,ke_dash,0.0);
-  GSL_SET_COMPLEX(&complex_ko_dash,ko_dash,0.0);
-  GSL_SET_COMPLEX(&complex_ke,ke,0.0);
-  GSL_SET_COMPLEX(&complex_ko,ko,0.0);
-*/
-  Zeven=30.0*M_PI*gsl_sf_ellint_Kcomp(ke_dash/ke, GSL_PREC_DOUBLE)/sqrt(er);
-  Zodd =30.0*M_PI*gsl_sf_ellint_Kcomp(ko_dash/ko, GSL_PREC_DOUBLE)/sqrt(er);
+
+  Zeven=30.0*M_PI*gsl_sf_ellint_Kcomp(ke_dash, GSL_PREC_DOUBLE)/(gsl_sf_ellint_Kcomp(ke,GSL_PREC_DOUBLE)*sqrt(er));
+  Zodd= 30.0*M_PI*gsl_sf_ellint_Kcomp(ko_dash, GSL_PREC_DOUBLE)/(gsl_sf_ellint_Kcomp(ko,GSL_PREC_DOUBLE)*sqrt(er));
+
   printf("Zodd=%f Zeven=%f\n", Zodd, Zeven);
 
 #else

@@ -27,6 +27,11 @@ resulted in added new files calc_coupler.c and usage_calc_coupler.c. Its
 also meant that the GNU scientific library GSL is now needed to build
 this programme. 
 
+Added information to accuacy.html on accuaracy with coupled lines. 
+
+Changed finite_difference_multi_threaded.c & finite_difference_multi_threaded.c
+to handle correctly the case of coupled lines - at least for vacuume
+dielectric. 
 
 ********************Version 3.0.7 Dated 6/4/2002**************************
 **************************************************************************
