@@ -1,3 +1,105 @@
+****** Version 4.5.0 Released 13th September 2003 ****
+NEWS
+mention lattest news - mainly correction of a few errors
+and the fact its no longer necessary to link in gsl. 
+
+README.checks
+Removed, as information is out of date. 
+
+tests/find-zero-length.test
+Added a file to check for the existance on zero length
+files in the source distribution. 
+
+configure.ac
+Incremented version to 4.5.0
+Removed tests for gsl and all that involved. 
+Removed tets for the sizeof short, int and long
+as they are not needed. 
+
+man/man1/create_bmp_for_stripline_coupler.1
+changed email address to make it less easy for spammers to grab. 
+
+src/calculate_Zodd_and_Zeven.c:
+Added #include gsl_types.h and #include "gsl_definitions.h"
+
+src/non_gui/usage_create_bmp_for_symmetrical_stripline
+made it print the fact the -v option computes the 
+theoeretical impedance. Before the binary did it, but
+the usage message did not say so. 
+
+docs/html-docs/jpgs/home-email.gif
+Added new file with my email address, that is not easy to 
+read automatically. 
+
+Removed all occurance of my email address from the html
+files, so that those published on the web are less likely
+to attract spam. 
+
+src/ 
+All the following had my email address removed
+usage_create_bmp_for_stripline_coupler.c 
+usage_create_bmp_for_rect_in_rect.c 
+usage_create_bmp_for_rect_in_circ.c
+usage_create_bmp_for_rect_cen_in_rect_coupler.c 
+usage_create_bmp_for_rect_cen_in_rect.c 
+usage_create_bmp_for_microstrip_coupler.c
+usage_create_bmp_for_circ_in_rect.c 
+usage_create_bmp_for_circ_in_circ.c 
+usage_atlc.c swap_conductor_voltages.c setup_arrays.c
+read_bitmap_file_headers.c
+print_data_for_two_conductor_lines.c
+print_data_for_directional_couplers.c
+print_copyright.c
+memory.c
+get_options.c
+get_file_pointer_with_right_filename.c
+get_Er1_and_Er2_colours.c
+finite_difference_single_threaded.c 
+finite_difference_multi_threaded.c
+finite_difference_mpi.c
+find_maximum_values.c
+find_energy_per_metre.c
+find_electric_fields.c
+fill_rect_in_rect.c
+fill_rect_in_circ.c
+fill_circ_in_circ.c
+exit_with_msg_and_exit_code.c
+do_fd_calculation.c
+create_bmp_for_rect_in_rect.c
+create_bmp_for_rect_in_circ.c
+create_bmp_for_rect_cen_in_rect_coupler.c
+
+tests/8a-design_coupler.bmp.test
+Removed the test for gsl library and so to exit with 77 if not present. 
+
+Added a second checksum:
+aebd9a6d1c1db548d39723edec454640
+that is acceptable, as this will be produced on 
+Windoze machines.
+
+tests/6e-create_50ohm_401Pixel_high_symmetrical_stripline.test
+
+tests/7n-create_bmp_for_stripline_coupler.bmp.pre-atlc.txt.test
+Removed the test for gsl library and so to exit with 77 if not present. 
+
+tests/10b-create-lots-of-examples-check-last-one.test
+Removed the test for gsl library and so to exit with 77 if not present. 
+
+tests/10a-create-lots-of-examples-check-last-one.test
+Removed the test for gsl library and so to exit with 77 if not present. 
+
+src/non_gui/gsl_sf_ellint_Kcomp.c
+Added new file that basically has the gsl_sf_ellint_Kcomp
+function for computing the elliptic integral. This requires
+several functions for it to opperate, as it calls several 
+functions. These are all in the same file gsl_sf_ellint_Kcomp.c
+
+
+src/non_gui/definitions.h
+Added quite a few function definitions, #defines etc to allow
+the gsl_sf_ellint_Kcomp function to work. It needed several
+other functions added. 
+
 ****** Version 4.4.4 Released 13th September 2003 ****
 configure.ac
 Version incremented to 4.4.4
@@ -235,6 +337,12 @@ in the header files definitions.h, Ers.h and Erdata.h
 
 src/non_gui/man_functions...
 Tidied up, to keep Sun's lint happier
+
+BUGS
+Removed bug about linking with old versions of gsl. 
+Corrected the fact hardware data is gathered on IRIX
+okay and its only Linux and BSD it fails on. 
+
 
 ****** Version 4.4.0 Released August 30th 2003 ****
 BUGS 
