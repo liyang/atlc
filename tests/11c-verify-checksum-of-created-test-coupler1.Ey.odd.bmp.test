@@ -1,0 +1,13 @@
+#!/bin/sh
+# There should be a supplied bitmap file test-coupler1.bmp
+# We will generate all the bitmaps and check they 
+# are all okay. 
+CKSUM=`../tools/src/mycksum test-coupler1.Ey.odd.bmp`
+if [ $CKSUM != 60772 ]; then
+  echo "FAILED:" $0  >> tests.log
+  exit 1
+else 
+  echo "PASSED:" $0 >> tests.log
+  exit 0
+fi
+
