@@ -13,20 +13,26 @@
 <h1>Automatic Bitmap Generators.</h1>
 
 In order to describe the cross sections of the transmission lines, you can either use a graphics programme, or one of several programmes which will be written in order to generate bitmaps more quickly. Currently several automatica bitmap generators have been written. Unix manual pages are avialable for all the programmes:
-<OL>
-	<LI><code><a href="rect_in_rect.1html">rect_in_rect</a></code> for a rectangular conductor placed anywhere inside another  rectangular conductor.</LI>
- 	<LI><code><a href="rect_cen_in_rect.1.html">rect_cen_in_rect</a></code> for a rectangular conductor placed <STRONG>centrally</STRONG> inside another  rectangular conductor.</LI>
-	<LI><code><a href="circ_in_circ.1.html">circ_in_circ</a></code> for a circular conductor placed inside another circular conductor </LI> 
+<TABLE border>
+	<TR><TD><a href="rect_in_rect.1.html">rect_in_rect</a> 268 100 10 40 25 200 100 45 1.0 4.8 > pcb2.bmp<br>for a rectangular conductor placed anywhere<br> inside another  rectangular conductor.</TD><TD><img src="jpgs/pcb2.jpg" alt="odd rectangular"></TD></TR>
+	<TR><TD><a href="rect_cen_in_rect.1.html">rect_cen_in_rect</a>  268 100 100 50 4.8 > central.bmp<br>for a rectangular conductor placed centrally<br>inside another  rectangular conductor.</TD><TD><img src="jpgs/central.jpg" alt="centralised rectangular"></TD><TD></TD></TR>
+	<TR><TD><a href="circ_in_circ.1.html">circ_in_circ</a> 100 30 25 1.006 > off-centre2.bmp<br>For a circuilar conductor inside another circular conductor.</TD><TD><img src="jpgs/off-centre2.jpg" alt="eccentric coax" width="150"></TD><TD></TD></TR>
+	<TR><TD><a href="circ_in_rect.1.html">circ_in_rect</a> 20 200 100 50 -5 10.2 > cir.bmp<br>For a circular conductor inside a rectangular conductor.</TD><TD><img src="jpgs/cir.jpg" alt="odd one again"></TD><TD></TD></TR>
+	<TR><TD><a href="rect_in_circ.1.html">rect_in_circ</a> has not been finished yet.<br>But this is what it will do.</TD><TD><img src="jpgs/ric.jpg" alt="odd one again" width="150"></TD><TD></TD></TR>
+	<TR><TD><a href="sym_strip.1.html">sym_strip</a> 1 201 301 wide.bmp<br>For a thin strip line between two wide conductors</TD><TD><img src="jpgs/wide.jpg" atlc="wide stripline">.</TD><TD></TD></TR>
 
-	<LI><code><a href="circ_in_rect.1.html">circ_in_rect</a></code> for a circular conductor placed inside a rectangular one </LI>
-	<LI><code><a href="rect_in_circ.1.html">rect_in_circ</a></code> for a rectangular conductor placed inside a circular conductor. <FONT COLOR="#FF0000">rect_in_circ  is currently still under development</FONT></LI>
-	<LI><code><a href="sym_strip.1.html">sym_strip</a></code> for a thin conductor equally spaced between two wide groundplanes</LI>
-</OL>
+	<TR><TD></TD><TD></TD><TD></TD></TR>
+</TABLE>
+
+
+
 Slightly more comprehensive documemtation exists for <a href="rect_in_rect.html">rect_in_rect</a>
-The programmes such as <code><a href="rect_in_rect.html">rect_in_rect</a></code>  will by default produce a bitmap of around 250 kb, which should be analysed in about minutes at most, depending on the speed of your computer. You can increase or decrease the size of the bitmap, by use of the -b option. <br>
+The programmes such as <code><a href="rect_in_rect.html">rect_in_rect</a></code>  will by default produce a bitmap of around 500 kb, which should be analysed in about 3  minutes at most, depending on the speed of your computer. You can increase or decrease the size of the bitmap, by use of the -b option. <br>
 <br>
-The output from <code>rect_in_rect</code> is sent to standard output. Since this is binary data, it will possibly screw up your terminal unless it is redirectected to a file. In each case, you can either use the &gt; sign and put directly into a file, or use the -o option. <br>
+The output from all these programmes <STRONG>except sym_strip</STRONG>  is sent to standard output. Since this is binary data, it will possibly screw up your terminal unless it is redirectected to a file. In each case, you can either use the &gt; sign and put directly into a file, or use the -o option. <br>
 <br>
+<p>
+sym_strip is a bit of an odd one out, in that instead of the programme automatically determining the optimal bitmap dimensions, sym_strip must be provided with them. Whereas all the other programmes can axcept floating point numbers for the dimensions of the conductors, sym_strip will only accept integer numbers and translates them directy to the bitmap size. Its also odd in that it does not right sto standard output. Some work to bring all the programme into line with each other, with a common interface will be started soon. 
 <p>atlc is written and supported by <a href="mailto: drkirkby@ntlworld.com?subject=atlc%20-%20Arbitrary%20Transmission%20Line%20Calculator">Dr. David Kirkby (G8WRB)</A> It it issued under the <a href="http://www.gnu.org/copyleft/gpl.html">GNU General Public Licence</A><p>
 <a href="http://atlc.sourceforge.net">Return to the atlc homepage</a>
 </body>
