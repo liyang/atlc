@@ -1,15 +1,15 @@
-.TH create_coupler_bitmap 1 "atlc-4.1.0 11/12/02" "Dr. David Kirkby"
+.TH create_bmp_for_stripline_coupler 1 "atlc-4.1.0 11/12/02" "Dr. David Kirkby"
 .ds n 5
 .SH NAME
-\fBcreate_coupler_bitmap\fR - bitmap generator for coupler with thin striplines between two infinitly wide groundplanes (part of \fBatlc\fR)
+\fBcreate_bmp_for_stripline_coupler\fR - bitmap generator for coupler with thin striplines between two infinitly wide groundplanes (part of \fBatlc\fR)
 .SH SYNOPSIS
-\fBcreate_coupler_bitmap [-C] [-b bitmapsize] [-v] H w s Er outputfile\fR
+\fBcreate_bmp_for_stripline_coupler [-C] [-b bitmapsize] [-v] H w s Er outputfile\fR
 .br
 .SH DESCRIPTION
-\fBcreate_coupler_bitmap\fR is a pre-processor for \fBatlc\fR, the finite difference 
+\fBcreate_bmp_for_stripline_coupler\fR is a pre-processor for \fBatlc\fR, the finite difference 
 programme that is used to calculate the 
 properties of a two and three conductor electrical transmission lines of arbitrary 
-cross section. The programme \fBcreate_coupler_bitmap\fR is used as a fast way of
+cross section. The programme \fBcreate_bmp_for_stripline_coupler\fR is used as a fast way of
 generating bitmaps (there is no need to use a graphics programme), for a
 pair of 1 pixel thick conductors of width w, spaced a distance s apart, 
 inside a pair of
@@ -17,9 +17,9 @@ groundplanes of  separation H. This has an exact analytical
 answer, when the inner is infinitely thin and the overall width W is infinitely
 wide. This theoretical impedance is calculated and printed to stderr if:
 .br
-a) The -v option is given on create_coupler_bitmap's command line. AND
+a) The -v option is given on create_bmp_for_stripline_coupler's command line. AND
 .br
-b) create_coupler_bitmap was linked against the gsl library at http://sources.redhat.com/gsl/
+b) create_bmp_for_stripline_coupler was linked against the gsl library at http://sources.redhat.com/gsl/
 .P
 -----------------------------------------------------  ^
 .br
@@ -49,7 +49,7 @@ making it any larger will have negligable effect on the results.
 The dielectric is assumed that of vacuum.
 .PP 
 .br
-The bitmaps produced by \fBcreate_coupler_bitmap\fR are 24-bit bit colour bitmaps, as are required by \fBatlc\fR.
+The bitmaps produced by \fBcreate_bmp_for_stripline_coupler\fR are 24-bit bit colour bitmaps, as are required by \fBatlc\fR.
 
 .SH OPTIONS
 .PP
@@ -78,11 +78,11 @@ structure. This is useful to compare with the numerical result from
 In the first example, a standard coupler is created, where the 
 
 
-eg1. create_coupler_bitmap  1.23 0.7 1.2 1.0  coupler.bmp
+eg1. create_bmp_for_stripline_coupler  1.23 0.7 1.2 1.0  coupler.bmp
 .br
-eg2. create_coupler_bitmap -b 8 1.23 0.7 3.3  small.bmp 
+eg2. create_bmp_for_stripline_coupler -b 8 1.23 0.7 3.3  small.bmp 
 .br
-eg3. create_coupler_bitmap -v 12 1.23 0.7 4.8  theory.bmp  
+eg3. create_bmp_for_stripline_coupler -v 12 1.23 0.7 4.8  theory.bmp  
 .br
 
 
@@ -99,8 +99,18 @@ eg3. create_coupler_bitmap -v 12 1.23 0.7 4.8  theory.bmp
 
 .P
 .SH SEE ALSO
-atlc(1), create_bmp_for_rect_cen_in_rect(1), create_bmp_for_circ_in_circ(1). create_bmp_for_rect_in_rect(1), create_bmp_for_circ_in_rect(1).
-create_bmp_for_rect_in_circ(1), readbin(1) and create_bmp_for_sym_strip(1).
+atlc(1)
+create_bmp_for_circ_in_circ(1)
+create_bmp_for_circ_in_rect(1)
+create_bmp_for_microstrip_coupler(1)
+create_bmp_for_rect_cen_in_rect(1)
+create_bmp_for_rect_cen_in_rect_coupler(1)
+create_bmp_for_rect_in_circ(1)
+create_bmp_for_rect_in_rect(1)
+create_bmp_for_symmetrical_stripline(1)
+design_coupler(1)
+find_optimal_dimensions_for_microstrip_coupler(1)
+readbin(1)
 .P 
 .br
 http://atlc.sourceforge.net                - Home page 
