@@ -79,7 +79,8 @@ int coupler=FALSE;
 double r=1.95;
 
 char *inputfile_name;
-extern int main(int argc, char **argv) /* Read parameters from command line */
+
+int main(int argc, char **argv) /* Read parameters from command line */
 {
   FILE *where_to_print_fp=stdout, *image_data_fp;
   char *outputfile_name, *appendfile_name, *output_prefix;
@@ -251,9 +252,9 @@ hence built without the mpi\nlibrary.\n",1);
     for(i=0; (i < (long)size ) && (feof(image_data_fp)==0); i++)
       image_data[i]=(unsigned char)fgetc(image_data_fp);
 #else
-	i = fread(image_data, 1, size, image_data_fp);
+	i = fread(image_data,  size, 1, image_data_fp);
 #endif
-    if((ferror(image_data_fp) || (i != size)))
+    if((ferror(image_data_fp) || (i != 1 )))
     {
       fprintf(stderr,"Error #5. Unable to read all of the image data properly\n");
       exit_with_msg_and_exit_code("",5);
