@@ -41,23 +41,55 @@ Dr. David Kirkby, e-mail drkirkby at ntlworld.com
 #define    CONDUCTOR_ZERO_V            -100 
 #define    CONDUCTOR_PLUS_ONE_V         -99 
 #define    CONDUCTOR_MINUS_ONE_V       -101 
-#define    DIELECTRIC                      0 
 #define    DIFFERENT_DIELECTRIC_NEARBY     1
 #define    METAL_LEFT                      2
 #define    METAL_RIGHT                     4
 #define    METAL_BELOW                     8
 #define    METAL_ABOVE                    16 */
 
-#define    CONDUCTOR_FLOATING          -120
-#define    CONDUCTOR_ZERO_V            -100 
-#define    CONDUCTOR_PLUS_ONE_V         -99 
-#define    CONDUCTOR_MINUS_ONE_V       -101 
-#define    DIELECTRIC                      0 
-#define    DIFFERENT_DIELECTRIC_NEARBY     1
-#define    METAL_LEFT                      2
-#define    METAL_RIGHT                     4
-#define    METAL_BELOW                     8
-#define    METAL_ABOVE                    16
+
+#define    UNKNOWN_DIELECTRIC                                            127
+#define    DIELECTRIC                                                      0 
+#define    CONDUCTOR_FLOATING                                            -80
+#define    CONDUCTOR_ZERO_V                                              -70 
+#define    CONDUCTOR_PLUS_ONE_V                                          -60 
+#define    CONDUCTOR_MINUS_ONE_V                                         -50 
+
+/* The following follows Table VIII in Green's paper
+"Numerical Solution of Transmisssiion Line problems", 
+Harry E. Green, IEEE Transactions of Microwave theory and 
+techniques, vol MIT-13, number 5, September 1965 */
+
+#define    ORDINARY_INTERIOR_POINT                                             1
+#define    ORDINARY_POINT_BOTTOM_EDGE                                          2
+#define    ORDINARY_POINT_TOP_EDGE                                             3
+#define    ORDINARY_POINT_LEFT_HAND_EDGE                                       4
+#define    ORDINARY_POINT_RIGHT_HAND_EDGE                                      5
+#define    CORNER_POINT_BOTTOM_LEFT_HAND_EDGE                                  6
+#define    CORNER_POINT_BOTTOM_RIGHT_HAND_EDGE                                 7
+#define    CORNER_POINT_TOP_LEFT_HAND_EDGE                                     8
+#define    CORNER_POINT_TOP_RIGHT_HAND_EDGE                                    9
+#define    DIELECTRIC_ROW_INTERFACE_DIELECTRIC_TO_TOP                         10
+#define    DIELECTRIC_ROW_INTERFACE_DIELECTRIC_TO_BOTTOM                      11
+#define    DIELECTRIC_COLUMN_INTERFACE_DIELECTRIC_TO_LEFT_HAND_EDGE           12
+#define    DIELECTRIC_COLUMN_INTERFACE_DIELECTRIC_TO_RIGHT_HAND_EDGE          13
+#define    ANGLE_DIELECTRIC_ACUTE_FIRST_QUADRANT                              14
+#define    ANGLE_DIELECTRIC_ACUTE_SECOND_QUADRANT                             15
+#define    ANGLE_DIELECTRIC_ACUTE_THIRD_QUADRANT                              16
+#define    ANGLE_DIELECTRIC_ACUTE_FOURTH_QUADRANT                             17
+#define    ANGLE_DIELECTRIC_OBTUSE_FIRST_QUADRANT                             18
+#define    ANGLE_DIELECTRIC_OBTUSE_SECOND_QUADRANT                            19
+#define    ANGLE_DIELECTRIC_OBTUSE_THIRD_QUADRANT                             20
+#define    ANGLE_DIELECTRIC_OBTUSE_FOURTH_QUADRANT                            21
+#define    DIELECTRIC_INTERFACE_TO_BOTTOM_EDGE_DIELECTRIC_TO_LEFT_HAND_EDGE   22
+#define    DIELECTRIC_INTERFACE_TO_BOTTOM_EDGE_DIELECTRIC_TO_RIGHT_HAND_EDGE  23
+#define    DIELECTRIC_INTERFACE_TO_TOP_EDGE_DIELECTRIC_TO_LEFT_HAND_EDGE      24
+#define    DIELECTRIC_INTERFACE_TO_TOP_EDGE_DIELECTRIC_TO_RIGHT_HAND_EDGE     25
+#define    DIELECTRIC_INTERFACE_TO_LEFT_HAND_EDGE_DIELECTRIC_TO_TOP           26
+#define    DIELECTRIC_INTERFACE_TO_LEFT_HAND_EDGE_DIELECTRIC_TO_BOTTOM        27
+#define    DIELECTRIC_INTERFACE_TO_RIGHT_HAND_EDGE_DIELECTRIC_TO_TOP          28
+#define    DIELECTRIC_INTERFACE_TO_RIGHT_HAND_EDGE_DIELECTRIC_TO_BOTTOM       29
+
 
 
 /* The following two determine what happens when a coupler is present
@@ -139,7 +171,7 @@ Laboratory's list of physical constants found on the web. */
 #define MAX_PES 256
 #define MSG_TAG_WIDTH_HEIGHT 1
 #define MSG_TAG_STRIP_PARAMS 2
-#define MSG_TAG_CELL_TYPE    3
+#define MSG_TAG_NODE_TYPE    3
 #define MSG_TAG_ER           4
 #define MSG_TAG_CONTROL      5
 #define MSG_TAG_ITERATIONS   6
@@ -331,7 +363,7 @@ void free_scmatrix(signed char **m, long nrl, long nrh, long ncl, long nch);
 
 int print_data(FILE *fp, char *filename, double Er, double C, double L, double Zo, double
 Zodd, double Zeven, int whichZ, double v, double vf);
-void check_for_boundaries(void);
+void set_oddity_from_Greens_paper(void);
 double find_energy_per_metre(int i, int j);
 FILE *get_file_pointer_with_right_filename(char *filename, const char *ext);
 void find_maximum_values(struct max_values *maximum_values, int zero_elementsQ);
