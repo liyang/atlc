@@ -196,7 +196,7 @@ error_and_exit.c usage_find_optimal_dimensions_for_microstrip_coupler.c \
 print_copyright.c get_options.c string.c nrutil.c
 
 
-EXTRA_DIST = output_from_design_coupler-Sun-Ultra-80.txt
+EXTRA_DIST = 
 subdir = src/non_gui
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_CLEAN_FILES =
