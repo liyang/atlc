@@ -1,5 +1,27 @@
-****** Version 4.3.7 Released August 21sth 2003 ****
 
+****** Version 4.3.9 Released August ??? 2003 ****
+configure.ac
+Updated the version to 4.3.9
+Added some code that might just work to determine the OS. I don't think it will
+and don't have time to check it now. But it wont do any harm
+AC_CHECK_DECL(__FreeBSD__,,)
+AC_CHECK_DECL(__NetBSD__,,)
+AC_CHECK_DECL(__Solaris__,,)
+AC_CHECK_DECL(__Tru64__,,)
+AC_CHECK_DECL(__HPUX__,,)
+AC_CHECK_DECL(__AIX__,,)
+
+
+
+
+tests/try_linux.c
+Removed some variables that were now now longer needed and so generated
+a warning from the compiler. Variables were operating_systems, i, ret
+and one other I think. 
+
+****** Version 4.3.8 Released August 21sth 2003 ****
+NOTE THE CHANGELOG FOR VERSION 4.3.8 SHOWS 4.3.7 AT THE TOP. THIS WAS AN
+ERROR. THE DETAILS ARE VALID FOR 4.3.8. 
 configure.ac
 Added the lines
 AC_CHECK_DECL(_SC_PHYS_PAGES,,)
