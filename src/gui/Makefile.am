@@ -1,6 +1,8 @@
+#This is atlc-x.y.z/src/gui/Makefile.am
+
 bin_PROGRAMS = atlc
 
-checksum_SOURCES = atlc.cpp
+atlc_SOURCES = atlc.cpp
 
 INCLUDES = @EXTRA_WXWINDOWS_CFLAGS@
 atlc_LDADD =  @EXTRA_WXWINDOWS_LIBS@
