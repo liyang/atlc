@@ -18,7 +18,10 @@ nroff -man man/man1/create_bmp_for_stripline_coupler.1 | man2html > docs/html-do
 nroff -man man/man1/design_coupler.1 | man2html > docs/html-docs/design_coupler.1.html
 nroff -man man/man1/readbin.1 | man2html > docs/html-docs/readbin.1.html
 nroff -man man/man1/sysdata.1 | man2html > docs/html-docs/sysdata.1.html
+nroff -man man/man1/dualcoax.1 | man2html > docs/html-docs/dualcoax.1.html
+nroff -man man/man1/coax.1 | man2html > docs/html-docs/coax.1.html
 cat header BUGS footer > docs/html-docs/BUGS.html
+cat header NEWS footer > docs/html-docs/NEWS.html
 chmod 644 docs/html-docs/*.html 
 chmod 644 man/man1/*.1 README NEWS ChangeLog BUGS COPYING INSTALL THANKS TODO 
 chmod 644 README* configure.ac AUTHORS
