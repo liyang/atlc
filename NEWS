@@ -1,22 +1,16 @@
-NEWS for realease 4.2.9 on 14/1/03.
+NEWS for realease 4.2.10 on 30/1/03.
 
-This is only a bug fix of 4.2.8 - there are no new features.
-Bug fixes include:
+Main news is that a bug that caused crashes under Windoze
+ZP has been removed from setup_arrays.c This was potntially
+serious and could have caused a crash under any operating 
+system. I don't know why it was not spotted before.
 
-a) bug in the way the voltage array was updated, that could 
-cause a slight error in calculations. It will be interesting
-to see if the errors have dropped below the current levels
-(maximum under 1%, rms about 0.4%)
+Some changes to the documention, with better spelling
+(one day I'll use an HTML enitor with a spellchecker 
+as Bluefish's does not seem to work for me). 
 
-b) The maximum ratio of height H to width w of a symmetical
-stripline was previously 12, but has been extended to about
-121. 
+Added Sourceforge logo on many pages that did not have it 
+before. 
 
-c) Some files that were in the atlc-4.2.8 distribution were
-not in the CVS tree on Sourceforge, so have been added. 
-
-d) The html file showing the location of some man pages
-had the wrong filename and broken links. 
-
-Dr. David Kirkby 14/1/03
+Dr. David Kirkby 30/1/03
 
