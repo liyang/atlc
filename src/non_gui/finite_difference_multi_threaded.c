@@ -28,7 +28,7 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 /* If we are not comiling for multi-threaded use, a function
 is defined, but it is not used. This keeps the linker happy */
 
-double finite_difference_multi_threaded(int number_of_iterations)
+double finite_difference_multi_threaded()
 {
   return(0.0);
 }
@@ -330,9 +330,6 @@ double finite_difference_multi_threaded()
     if(ret != 0)
       exit_with_msg_and_exit_code("failed to join thread in finite_difference_multi_threaded.c",THREAD_FAILED_TO_JOIN);
       }
-  /* The energy in the matrix has now been minimised a number
-  (number_of_iterations) times, so we now calcuate the capacitance to see if it
-  has converged */
   energy_per_metre=0.0;
   /*
   The following code is wrong, but worked on all systems apart from AIX !!
