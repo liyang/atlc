@@ -78,7 +78,7 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
       ww=atof(argv[my_optind+2]);
       cc=atof(argv[my_optind+3]);
       Er1=atof(argv[my_optind+4]);
-      if((image_data_fp=fopen(argv[my_optind+5],"w"))==NULL)
+      if((image_data_fp=fopen(argv[my_optind+5],"wb"))==NULL)
       {
 	 fprintf(stderr,"Can't write to %s. Exiting ...\n",my_optarg);
 	 exit_with_msg_and_exit_code("",CANT_OPEN_FOR_WRITING);

@@ -53,7 +53,7 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
       ww=atof(argv[my_optind+2]);
       cc=atof(argv[my_optind+3]);
       Er1=atof(argv[my_optind+4]);
-      if((image_data_fp=fopen(argv[my_optind+5],"w"))==NULL)
+      if((image_data_fp=fopen(argv[my_optind+5],"wb"))==NULL)
 	 exit_and_error("Can't open file for writing",CANT_OPEN_FOR_WRITING);
 
       /* To make the program easier to write, rect_cen_in_rect uses 

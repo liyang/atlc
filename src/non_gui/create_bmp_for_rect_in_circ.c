@@ -63,7 +63,7 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
       case 'f':
       /* By default bitmap image goes to stdout, but we can send to a file 
       with the -f option. */
-      if((image_data_fp=fopen(my_optarg,"w"))==NULL)
+      if((image_data_fp=fopen(my_optarg,"wb"))==NULL)
       {
 	 fprintf(stderr,"Can't write to %s. Exiting ...\n",my_optarg);
 	 exit_with_msg_and_exit_code("",CANT_OPEN_FOR_WRITING);

@@ -290,7 +290,7 @@ int main( int argc, char *argv[] )
     }
     else
     {
-        if( ! ( f = fopen( argv[1], "r" ) ) )
+        if( ! ( f = fopen( argv[1], "rb" ) ) )
         {
   perror( "fopen" );
   return( 1 );

@@ -19,7 +19,7 @@ int main(int argc, char **argv)
     printf("-1\n"); /* Length is considered -1 */
     exit(1);
   }
-  if ( (fp=fopen(argv[1],"r")) == NULL)
+  if ( (fp=fopen(argv[1],"rb")) == NULL)
   {
     printf("-1\n"); /* Length is considered -1 */
     exit(1);

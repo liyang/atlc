@@ -97,12 +97,12 @@ files (the executable atlc and bitmap are both present). */
     fprintf(stderr,"Memory allocation failure in benchmark.c\n");
     exit(1);
   }
-  if ((fp=fopen(argv[1],"r")) == NULL)
+  if ((fp=fopen(argv[1],"rb")) == NULL)
   {
     fprintf(stderr,"Can't open the binary file %s for reading\n",argv[1]);
     exit(2);
   }
-  if ((fp=fopen(argv[2],"r")) == NULL)
+  if ((fp=fopen(argv[2],"rb")) == NULL)
   {
     fprintf(stderr,"Can't open the bitmap %s for reading\n",argv[2]);
     exit(3);

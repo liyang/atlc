@@ -87,7 +87,7 @@ int main(int argc, char **argv) /* Read parameters from command line here   */
       convert_create_create_bmp_for_coupled_microstrip_dimensions_to_integers(&pcb);
       W=pcb.W;
       H=pcb.H;
-      image_data_fp=fopen(argv[my_optind+7],"w");
+      image_data_fp=fopen(argv[my_optind+7],"wb");
         /*fprintf(stderr,"ints W=%d H=%d w=%d s=%d g=%d h=%d t=%d\n",pcb.W,pcb.H,pcb.w,pcb.s,pcb.g,pcb.h,pcb.t);*/
       write_bitmap(image_data_fp, pcb);
    }

@@ -12,12 +12,12 @@ int main (int argc, char **argv)
     fprintf(stderr,"Usage file1 file2 - finds the difference between them\n");
     exit(1);
   }
-  if( (fp1=fopen(argv[1],"r")) == NULL)
+  if( (fp1=fopen(argv[1],"rb")) == NULL)
   {
     fprintf(stderr,"Unable to open %s\n", argv[1]);
     exit(1);
   }
-  if( (fp2=fopen(argv[2],"r")) == NULL)
+  if( (fp2=fopen(argv[2],"rb")) == NULL)
   {
     fprintf(stderr,"Unable to open %s\n", argv[2]);
     exit(1);

@@ -98,7 +98,7 @@ extern int main(int argc, char **argv) /* Read parameters from command line here
   aligned_image_vector=ustring(0,(W+3)*3*H+100);
   unaligned_image_vector=ustring(0,(W+3)*3*H+100);
 
-  if((fp=fopen(argv[my_optind+3],"w")) == NULL)
+  if((fp=fopen(argv[my_optind+3],"wb")) == NULL)
   {
     exit_with_msg_and_exit_code("Error in opening file in create_bmp_for_symmetrical_stripline",CANT_OPEN_FOR_WRITING);
   }
