@@ -1,3 +1,4 @@
+/*
 #ifdef __GNUG__
 #pragma implementation "help.cpp"
 #pragma interface "help.cpp"
@@ -20,26 +21,39 @@
 #include <wx/wxhtml.h>
 #include <wx/filesys.h>
 #include <wx/fs_zip.h>
-//#include <wx/wx.h>
+#include <wx/tipdlg.h>
 #include <iostream.h>
+*/
 
-class checksum
+#include "atlc-gui.h"
+
+// Define a new frame type 'RoundCoaxFrame
+class RoundCoaxFrame: public wxFrame
 {
-  private:
-    unsigned short sum;
   public:
-    unsigned short get_checksum(char *data, int length);
+    RoundCoaxFrame(const wxString& title, const wxPoint& pos, const wxSize& size);
+    void OnHelp(wxCommandEvent& event);   // public functions. 
+    void OnFileMenuClose(wxCommandEvent& event);   // public functions. 
+    void OnClose(wxCloseEvent& event);
+  DECLARE_EVENT_TABLE()
 };
 
-// Create a simple checksum for comparing files to the non GUI version. 
-unsigned short checksum::get_checksum(char * data, int length)
+// RoundCoax frame constructor
+RoundCoaxFrame::RoundCoaxFrame(const wxString& title, const wxPoint& pos, const wxSize& size)
+:wxFrame((wxFrame *)NULL, -1, title, pos, size)
 {
-  int counter;
-  sum=0; // Will overflow to creat a checksum.
-  for(counter = 0; counter < length; ++ counter)
-    sum+=data[counter];
-  return(sum);
-} 
+  wxMenu *menuFile = new wxMenu;  /* Left most menue */
+  wxMenu *menuHelp = new wxMenu;
+  wxMenuBar *menuBar = new wxMenuBar;
+  CreateStatusBar();
+  SetStatusText( "Computer Zo either exactly or via finite difference methods." );
+  menuFile->Append( ID_Save, "&Save as Bitmap","Save Results to a text file"); //HACK, needs changing.  
+  menuFile->Append( ID_FileMenuClose, "&Close" , "Close this windows only - but it DONT WORK");
+  menuHelp->Append( ID_Help, "&Help" , "Help");
+  SetMenuBar( menuBar );
+  menuBar->Append( menuFile, "&File" );
+  menuBar->Append( menuHelp, "&Help" );
+}
 
 class atlc: public wxApp
 {
@@ -54,6 +68,14 @@ class atlc: public wxApp
 };
 
 
+// Define a new frame type 'CoaxFrame', which comes up when computing Z of coax. 
+
+class CoaxFrame: public wxFrame
+{
+  public:
+    CoaxFrame(const wxString& title, const wxPoint& pos, const wxSize& size);
+};
+
 // Define a new frame type 'atlcFrame': this is going to be our main frame
 class atlcFrame: public wxFrame
 {
@@ -65,14 +87,19 @@ class atlcFrame: public wxFrame
     //File menue
     void OnOpen(wxCommandEvent& event);   // public functions. 
     void OnQuit(wxCommandEvent& event);   // public functions. 
+    void OnClose(wxCloseEvent& event); // Note close is xwxCloseEvent, not wxCommandEvent
 
-    //Tools menue
+    // Generate Bitmap menue
+
     void OnRectInRect(wxCommandEvent& event);
     void OnCircInCirc(wxCommandEvent& event);
     void OnRectInCirc(wxCommandEvent& event);
     void OnCircInRect(wxCommandEvent& event);
     void OnSymStrip(wxCommandEvent& event);
     void OnCoupler(wxCommandEvent& event);
+
+    //Tools menue
+    void OnCalculateChecksum(wxCommandEvent& event);   // public functions. 
 
     // Calculate menue
     void OnFiniteDifference(wxCommandEvent& event);
@@ -85,36 +112,15 @@ class atlcFrame: public wxFrame
     //Help menue
     void OnAbout(wxCommandEvent& event);
     void OnHelp(wxCommandEvent& event);
+    void OnShowTip(wxCommandEvent& event);
 
     // QUESTION - What is the OnClose one = when hitting button or top right?
-    void OnClose(wxCloseEvent& event);
+    //void OnClose(wxCloseEvent& event);
     private:
       wxHtmlHelpController help;
 	    
 // Any class wishing to process wxWindows events must use this macro
   DECLARE_EVENT_TABLE()
-};
-
-enum
-{
-  ID_Open = 1,
-  ID_Quit = 2,
-  ID_RectInRect = 3,
-  ID_CircInCirc = 4,
-  ID_RectInCirc = 5,
-  ID_CircInRect = 6,
-  ID_SymStrip = 7,
-  ID_Coupler = 8,
-  ID_FiniteDifference = 9,
-  ID_RoundCoax = 10,
-  ID_EccentricCoax = 11,
-  ID_SquareCoax = 12,
-  ID_Stripline=13,
-  ID_CouplerStripline=14,
-  ID_Help = 15,
-  ID_Options = 16,
-  ID_CalculateCoupler = 17,
-  ID_About
 };
 
 // ----------------------------------------------------------------------------
@@ -135,7 +141,15 @@ BEGIN_EVENT_TABLE(atlcFrame, wxFrame)
     EVT_MENU(ID_EccentricCoax, atlcFrame::OnEccentricCoax)
     EVT_MENU(ID_SquareCoax, atlcFrame::OnSquareCoax)
     EVT_MENU(ID_Stripline, atlcFrame::OnStripline)
+    EVT_MENU(ID_CalculateChecksum, atlcFrame::OnCalculateChecksum)
+    EVT_MENU(ID_ShowTip, atlcFrame::OnShowTip)
     EVT_CLOSE(atlcFrame::OnClose) //QUESTION - What is This ???
+END_EVENT_TABLE()
+
+BEGIN_EVENT_TABLE(RoundCoaxFrame, wxFrame)
+    EVT_MENU(ID_Help, RoundCoaxFrame::OnHelp)
+    EVT_MENU(ID_FileMenuClose, RoundCoaxFrame::OnFileMenuClose)
+    EVT_CLOSE(RoundCoaxFrame::OnClose) //QUESTION - What is This ???
 END_EVENT_TABLE()
 
   // Create a new application object: this macro will allow wxWindows to create
@@ -183,6 +197,7 @@ atlcFrame::atlcFrame(const wxString& title, const wxPoint& pos, const wxSize& si
 {
   // Create a menue bar. 
   wxMenu *menuFile = new wxMenu;  /* Left most menue */
+  wxMenu *menuGenerateBitmap = new wxMenu;
   wxMenu *menuTools = new wxMenu;
   wxMenu *menuCalculate = new wxMenu;
   wxMenu *menuOptions = new wxMenu;
@@ -192,44 +207,52 @@ atlcFrame::atlcFrame(const wxString& title, const wxPoint& pos, const wxSize& si
 
   // File menue
   menuFile->Append( ID_Open, "&Open File","Open a bitmap"); //HACK, needs changing.  
+  menuFile->Append( ID_Close,"&Close","Close a bitmap"); //HACK, needs changing.  
   menuFile->AppendSeparator();
   menuFile->Append( ID_Quit, "E&xit" );
     
-  // Tools menue
-  menuTools->Append( ID_RectInRect,\
+  // GenerateBitmap menue
+  menuGenerateBitmap->Append( ID_RectInRect,\
   "&Rectangular conductor inside rectangular conductor",\
   "Automatically generate a bitmap for a rectangular inner and rectangular outer conductors.");   
-  menuTools->Append( ID_CircInCirc, "&Circular conductor inside circular conductor" );   
-  menuTools->Append( ID_RectInCirc, "R&ectangular conductor inside circular conductor" );   
-  menuTools->Append( ID_CircInRect, "C&ircular conductor inside rectangular conductor" );   
-  menuTools->Append( ID_SymStrip,   "&Symmetrical Stripline" );   
-  menuTools->AppendSeparator();
-  menuTools->Append( ID_Coupler,    "&Edge on coupler" );   
-  // Calculate menue
+  menuGenerateBitmap->Append( ID_CircInCirc, "&Circular conductor inside circular conductor" );   
+  menuGenerateBitmap->Append( ID_RectInCirc, "R&ectangular conductor inside circular conductor" );   
+  menuGenerateBitmap->Append( ID_CircInRect, "C&ircular conductor inside rectangular conductor" );   
+  menuGenerateBitmap->Append( ID_SymStrip,   "&Symmetrical Stripline" );   
+  menuGenerateBitmap->AppendSeparator();
+  menuGenerateBitmap->Append( ID_Coupler,    "&Edge on coupler" );   
+
+  // Tools menue
+  menuTools->Append( ID_CalculateChecksum, "&Calculate a checksum","Generate a 16-bit checksum for comparing files");
 
   // Calculate menue. 
   menuCalculate->Append( ID_FiniteDifference,    "&Finite difference (numerical)",\
   "Calculate properties using an accurate, very general but slow numerical technique.");   
+<<<<<<< atlc.cpp
+  menuCalculate->AppendSeparator();
+=======
   menuCalculate->AppendSeparator();
 
+>>>>>>> 1.6
   menuCalculate->Append( ID_RoundCoax, "&Round Coaxial cable (exact)","Calculate properties standard round coaxial cable");   
-    
   menuCalculate->Append( ID_SquareCoax, "&Square Coaxial cable (exact)","Calculate properties coaxial cable with a square outer (exact??)");   
-
   menuCalculate->Append( ID_Stripline, "&Edge on stripline (exact)","Calculate properties of thin edge-on conductors between groundplanes");   
   menuCalculate->Append( ID_Stripline, "&Edge on stripline coupler (exact)","Calculate properties of two thin edge-on conductors.");   
-  // Options
+
+  // Options menue
   menuOptions->Append( ID_Options,    "&Options" );   
 
-  // Help
+  // Help menue
   menuHelp->Append( ID_Help, "&Help" ); //HACK, needs changing.  
   menuHelp->Append( ID_About, "&About" ); //HACK, needs changing.  
+  menuHelp->Append( ID_ShowTip, "&Tip of the day" ); //HACK, needs changing.  
 
   wxMenuBar *menuBar = new wxMenuBar;
 
   // ... and attach this menu bar to the frame
   SetMenuBar( menuBar );
   menuBar->Append( menuFile, "&File" );
+  menuBar->Append( menuGenerateBitmap, "&Generate Bitmap" );
   menuBar->Append( menuTools, "&Tools" );
   menuBar->Append( menuCalculate, "&Calculate" );
   menuBar->Append( menuOptions, "&Options" );
@@ -241,8 +264,13 @@ atlcFrame::atlcFrame(const wxString& title, const wxPoint& pos, const wxSize& si
   // QUESTION - What the hell does the rest of this do ???
   help.UseConfig(wxConfig::Get());
   bool ret;
+<<<<<<< atlc.cpp
+  help.SetTempDir("");
+  ret=help.AddBook("htmdocs/testing.hhp");
+=======
   help.SetTempDir(".");
   help.AddBook("htmdocs/testing.hhp");
+>>>>>>> 1.6
   if (! ret)
     wxMessageBox("Failed adding book htmdocs/testing.hhp");
   ret = help.AddBook("htmdocs/another.hhp");
@@ -258,13 +286,19 @@ void atlcFrame::OnQuit(wxCommandEvent& WXUNUSED(event))
 
 void atlcFrame::OnOpen(wxCommandEvent& WXUNUSED(event))
 {
-  unsigned short cksum;
-  unsigned char *data;
-  int length=100;
-  data = new unsigned char (length);
-  //cksum=checksum.get_checksum(data, length);
-    wxMessageBox("The checksum is 0x12343\n\n Note - the checksum's will depend on the byte ordering of machines\n\
-- don't try comparing PCs (little-endian) to Suns (big-endian).");
+    wxFileDialog dialog(this, "Testing open file dialog", "", "", "*.bmp", 0);
+    if (dialog.ShowModal() == wxID_OK)
+    {
+        wxString info;
+        info.Printf(_T("Full file name: %s\n")
+                    _T("Path: %s\n")
+                    _T("Name: %s"),
+                    dialog.GetPath().c_str(),
+                    dialog.GetDirectory().c_str(),
+                    dialog.GetFilename().c_str());
+        wxMessageDialog dialog2(this, info, "Selected file");
+        dialog2.ShowModal();
+    }
 }
 
 void atlcFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
@@ -293,11 +327,27 @@ void atlcFrame::OnHelp(wxCommandEvent& WXUNUSED(event))
   help.Display("Main page");
 }
 
+void RoundCoaxFrame::OnHelp(wxCommandEvent& WXUNUSED(event))
+{
+  //help.Display("Main page");
+}
+
 void atlcFrame::OnFiniteDifference(wxCommandEvent& WXUNUSED(event))
 {
 }
+
 void atlcFrame::OnRoundCoax(wxCommandEvent& WXUNUSED(event))
 {
+  // Create the window for the standard round coax. 
+
+  RoundCoaxFrame *frame = new RoundCoaxFrame("Standard Round Coaxial Cable",wxPoint(50,50),wxSize(400,300) );
+  //atlcFrame *frame = new      patlcFrame("atlc",wxPoint(50,50),wxSize(600,440) );
+
+  frame->Show(TRUE);
+  //SetTopWindow(frame);
+  // success: wxApp::OnRun() will be called which will enter the main message
+  // loop and the application will run. If we returned FALSE here, the
+  // application would exit immediately.
 }
 
 void atlcFrame::OnStripline(wxCommandEvent& WXUNUSED(event))
@@ -311,6 +361,16 @@ void atlcFrame::OnSquareCoax(wxCommandEvent& WXUNUSED(event))
 void atlcFrame::OnEccentricCoax(wxCommandEvent& WXUNUSED(event))
 {
 }
+void atlcFrame::OnCalculateChecksum(wxCommandEvent& WXUNUSED(event))
+{
+  unsigned short cksum;
+  unsigned char *data;
+  int length=100;
+  data = new unsigned char (length);
+  //cksum=checksum.get_checksum(data, length);
+    wxMessageBox("The checksum is 0x12343\n\n Note - the checksum's will depend on the byte ordering of machines\n\
+- don't try comparing PCs (little-endian) to Suns (big-endian).");
+}
 
 void atlcFrame::OnClose(wxCloseEvent& event)
 {
@@ -322,6 +382,50 @@ void atlcFrame::OnClose(wxCloseEvent& event)
   event.Skip();   
   delete
   wxConfig::Set(NULL);
+  exit(1);
+}
+
+// The following gets executed if the user closes by the box in the very top left.
+void RoundCoaxFrame::OnClose(wxCloseEvent& event)
+{
+  event.Skip();   
+  delete
+  wxConfig::Set(NULL);
+}
+
+// The following gets executed if the user does File->Close on the Round Coax screen.
+void RoundCoaxFrame::OnFileMenuClose(wxCommandEvent& event)
+{
+  wxWindow::Close(TRUE); //Force a closure, window can not resist 
+}
+
+void atlcFrame::OnShowTip(wxCommandEvent& event)
+{
+#if wxUSE_STARTUP_TIPS
+    static size_t s_index = (size_t)-1;
+
+    if ( s_index == (size_t)-1 )
+    {
+        srand(time(NULL));
+
+        // this is completely bogus, we don't know how many lines are there
+        // in the file, but who cares, it's a demo only...
+        s_index = rand() % 11;
+    }
+
+    wxTipProvider *tipProvider = wxCreateFileTipProvider("tips.txt", s_index);
+
+    bool showAtStartup = wxShowTip(this, tipProvider);
+
+    if ( showAtStartup )
+    {
+        wxMessageBox("Will show tips on startup", "Tips dialog",
+                     wxOK | wxICON_INFORMATION, this);
+    }
+
+    s_index = tipProvider->GetCurrentTip();
+    delete tipProvider;
+#endif
 }
 
 
