@@ -22,9 +22,6 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 
 */
 
-#define QUARTER_WAVE_ONLY  1 /* 1 is only lamba/4, 0 is any lenght*/
-
-#define QUARTER_WAVE_ONLY  1 /* 1 is only lamba/4, 0 is any lenght*/
 
 #include "definitions.h"
 
@@ -91,28 +88,21 @@ int main(int argc, char **argv) /* Read parameters from command line */
   double wanted_coupling_factor_in_dB, step=0.02, fq;
   double Zo_x=-1, Zeven_x=-1, Zodd_x=-1, best_s=-1, best_w=-1, height_of_box=1.0;
   double best_Zodd=-1, best_Zeven=-1, best_Zo=-1;
-#if QUARTER_WAVE_ONLY==1
   while((q=get_options(argc,argv,"dCL:s:Z:H:")) != -1)
-#else 
   while((q=get_options(argc,argv,"dCs:Z:H:")) != -1)
-#endif
   switch (q) 
   {
-#ifndef QUARTER_WAVE_ONLY
     case 'd':
     calculate_physical_dimensions=TRUE;
     break;
-#endif
     case 'C':
     print_copyright((char *) "2002");
     Hflag=TRUE;
     exit(1);
     break;
-#ifndef QUARTER_WAVE_ONLY
     case 'L':
     length=atof(my_optarg);
     break;
-#endif
     case 'H':
     height_of_box=atof(my_optarg);
     Hflag=TRUE;
@@ -189,11 +179,8 @@ int main(int argc, char **argv) /* Read parameters from command line */
   fq is the frequency at which the line is a quarter-wave long, we must
   divide the vcf_for_quarter_wave_line by sin(0.5 *PI*f/fq)^2 to get
   the required vcf. */
-#if QUARTER_WAVE_ONLY==0
   vcf=vcf_for_quarter_wave_line/pow(sin(0.5*M_PI*fmean/fq),2.0);
-#else
   vcf=vcf_for_quarter_wave_line;
-#endif
   /* Check that the voltage coupling factor does not exceed one */
   if ( vcf > 1.0 )
   {
@@ -223,12 +210,10 @@ int main(int argc, char **argv) /* Read parameters from command line */
   //printf("length =%.4f mean=%.3f vcf=%.3f vcf_for_quarter_wave_line=%.3f \n",length, fmean, vcf, vcf_for_quarter_wave_line);
   for(f=fmin; f<=fmax; f+=fstep)
   {
-    cf=20*log10(vcf*pow(sin(0.5*M_PI*f/fq),2.0) ); /* This is what is now needed for some given length (and so fq) */
+    cf=20*log10(vcf*sin(0.5*M_PI*f/fq)); /* This is what is now needed for some given length (and so fq) */
     printf("frequency = %.3f MHz coupling is %.3f dB down on the main arm\n",f,cf);
   }
-#if QUARTER_WAVE_ONLY == 0
   printf("\nYou may force the length to be any value you want using the -L option - it does\nnot have to be %.4f metres long\n",length);
-#endif
   if(calculate_physical_dimensions==FALSE)
   {
     printf("You may try to find a coupler with these dimensions using the -d option\n\n");
@@ -299,11 +284,9 @@ int main(int argc, char **argv) /* Read parameters from command line */
       printf("If you know the height H of your enclosure, use the -H option to indicate\n");
       printf("its value. This will ensure all the dimensions are scaled automatically for you.\n"); 
     }
-#if QUARTER_WAVE_ONLY == 1
     printf("****NOTE 2****\n");
     printf("The length *must* be %.4f m if you use these dimensions for W, H, w and s.\n",length); 
     printf("If %.4f m is inconvenient, change it with the -L option and recalculate\n to get new values of W, H, w and s\n",length);
-#endif 
     printf("See: http://atlc.sourceforge.net\n");
     printf("See: http://atlc.sourceforge.net/couplers.html\n");
   }
