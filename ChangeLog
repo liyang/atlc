@@ -1,4 +1,72 @@
+****** Version 4.5.1 Released 16th October 2003   ****
+A problem with multiple dielectrics has been discoved, and aslo with 
+multi-threaded operating. As such, both have been disabled. This affects
+many files. 
+
+configure.ac
+changed version to 4.5.1
+No longer accepts the option --with-threads, since I have some
+suspicions about threaded code. 
+
+docs/html-docs/examples.html
+Removed the example of multi-dielectrics, as that is not working
+properly now. 
+
+docs/html-docs/FAQ.html
+Changed the answer to 'No' about the qestion of multi-dielectrics
+
+docs/html-docs/multi-processing.html
+Mentioned this has been disabled. 
+
+docs/html-docs/accuracy.html
+Pointed out multiple dielectrics are not working properly
+
+src/non_gui/definitions.h
+Removed two duplicate function definitions for 
+free_cmatrix and ustring, whilst removing the #define
+around the #ifdef ENABLE_MPI so there is only one  
+definition of do_columns now. 
+
+Added the variable 'size' to several functions - 
+do_fd_calculation.c, write_fields_for_directional_couplers.c,
+write_fields_for_two_conductor_lines.c
+
+
+src/non_gui/do_fd_calculation.c
+Added variable 'size' as a command line argument to stop
+it needing to be declared global. 
+
+src/non_gui/do_fd_calculation.c
+Added variable 'size' as a command line argument to stop
+it needing to be declared global. 
+
+src/non_gui/write_fields_for_two_conductor_lines.c
+Added variable 'size' as a command line argument to stop
+it needing to be declared global. 
+
+src/non_gui/atlc.c
+size_t size is no longer global but local to main. This would at first
+checking appear to stop the issue with all (which was one or two) 
+test failures on AIX 5.2. Later I found this is not so and there
+is a problem in the multi-threaded code for atlc.
+
+tests/WARNING--The-next-test+benchmark-takes-a-long-while.test
+return 0 (pass), as previously it did multi-dielectrics. 
+
+tests/Makefile.am
+Removed 2[b-h]* from the tests. 2a-create_bmp_for_rect_in_rect.bmp.test
+is still used. 
+
+
 ****** Version 4.5.0 Released 13th September 2003 ****
+
+The ChangeLog shows version 4.5.0 being released on
+the 13th September, when it fact it was the 11th of 
+October. 
+
+WRONG XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+****** Version 4.5.0 Released 13th September 2003 ****
+WRONG XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 NEWS
 mention lattest news - mainly correction of a few errors
