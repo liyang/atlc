@@ -5,6 +5,13 @@
 #if defined(__WXGTK__) || defined(__WXMOTIF__)
         #include "wx/wx.h"
 #endif
+#include <wx/button.h>
+#include <wx/panel.h>
+#include <wx/gdicmn.h>
+#include <wx/textctrl.h>
+#include "wx/wxprec.h"
+#include "wx/image.h"
+#include "wx/file.h"
 #include "wx/wxprec.h"
 #include "FiniteDifferenceFrame.h"
 #include "resource.h"
@@ -14,7 +21,7 @@
 // ----------------------------------------------------------------------------
 // the application icon
 #if defined(__WXGTK__) || defined(__WXMOTIF__)
-    #include "FD.xpm"
+    #include "FiniteDifference.xpm"
 #endif
 
 // ----------------------------------------------------------------------------
@@ -41,14 +48,14 @@ BEGIN_EVENT_TABLE(FiniteDifferenceFrame, wxFrame)
     EVT_MENU(ID_Cut, FiniteDifferenceFrame::OnCut)
     EVT_MENU(ID_Paste, FiniteDifferenceFrame::OnPaste)
     EVT_CLOSE(FiniteDifferenceFrame::OnClose) //QUESTION - What is This ???
+    EVT_BUTTON(DIALOG_BTN, FiniteDifferenceFrame::OnClick)
 END_EVENT_TABLE()
-
 
 // FiniteDifference frame constructor
 FiniteDifferenceFrame::FiniteDifferenceFrame(const wxString& title, const wxPoint& pos, const wxSize& size)
 :wxFrame((wxFrame *)NULL, -1, title, pos, size)
 {
-  SetIcon(wxICON(FD));
+  SetIcon(wxICON(FiniteDifference));
   // create a menu bar
   wxMenu *FileMenu = new wxMenu("", wxMENU_TEAROFF);  
   wxMenu *EditMenu = new wxMenu("", wxMENU_TEAROFF);  
@@ -89,6 +96,18 @@ FiniteDifferenceFrame::FiniteDifferenceFrame(const wxString& title, const wxPoin
   SetMenuBar(menuBar);
   CreateStatusBar(1);
   SetStatusText("You must now get a bitmap");
+  wxImage image("twin-wire3.bmp");
+
+  // Initalize the panel and button members.
+
+  myPanel = new wxPanel(this, -1, wxDefaultPosition, wxDefaultSize,wxTAB_TRAVERSAL, "MyPanel"); 
+								
+  wxPoint myPoint(20, 30);
+  wxSize mySize(-1,-1);
+  myButton = new wxButton(this, DIALOG_BTN, "Start FD Simulation", 
+  myPoint, mySize, 0, wxDefaultValidator, "MyButton");
+  myPanel->SetDefaultItem(myButton);
+
 }
 
 void FiniteDifferenceFrame::OnHelp(wxCommandEvent& WXUNUSED(event))
@@ -103,10 +122,24 @@ void FiniteDifferenceFrame::OnClose(wxCloseEvent& event)
 
 void FiniteDifferenceFrame::OnCut(wxCommandEvent& event)
 {
+  //TextFrame *frame = new TextFrame("Simple Text Editor", 100, 100, 400, 300);
+  //frame->Show(TRUE);
+
+  // Make a panel with a message
+  //wxPanel *panel = new wxPanel(frame, 0, 0, 400, 400);
+
+  //panel->SetLabelPosition(wxHORIZONTAL) ;
+  //wxMessage *msg = new wxMessage(panel, "Hello, this is a minimal wxWindows program!", 5, 5);
+
+  // Show the frame
+  //frame->Show(TRUE);
+  
+  // Return the main frame window
 }
 
 void FiniteDifferenceFrame::OnPaste(wxCommandEvent& event)
 {
+  //wxPanel(this,100,"panel", (-1,-1), (500,600));
 }
 
 // The following gets executed if the user does File->Close
@@ -139,3 +172,9 @@ void FiniteDifferenceFrame::OnCircInRect(wxCommandEvent& event)
 void FiniteDifferenceFrame::OnRectInCirc(wxCommandEvent& event)
 {
 }
+
+void FiniteDifferenceFrame::OnClick(wxCommandEvent& WXUNUSED(event))
+{
+	wxMessageBox("Clicked!", "Event", wxOK | wxICON_INFORMATION, this);
+}
+
