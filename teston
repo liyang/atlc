@@ -7,52 +7,170 @@
 # is copied by scp/scp2 to a remote machine and executed there. Trying
 # to execute the individual staments in the script via ssh takes too
 # long, as the authentication needs to be repeated each time. 
+########################################################################
+########################################################################
+# The following parameters should be set, to save specifying them on the
+# command line each time you run.
+########################################################################
+########################################################################
 
-if [ $# != 2 ] ; then
-  echo "Usage: teston hostname buildname"
-  echo "  e.g. teston dove     atlc-5.0.0"
-  echo "  will copy atlc-5.0.0.tar.gz to dove and build/test it there"
-exit 1
+USERNAME=davek                # can be overriden on the command line.
+COMPILER=gcc                  # can be set to cc or wh
+COMPILER_GLAGS="-Wall -O2"    # can be set on the command line
+LINKER_FLAGS=-L/usr/local/lib # can be set on the command line
+MAKE=make                     # can be overriden on the command line.
+MAKE_OPTIONS=                 # can be changed on the commmand line
+SCP=scp                       # can be changed to scp1 etc on commmand line.
+SSH=ssh                       # could be changed to ssh1 etc on command line.
+CONFIGURE_OUTPUT=             # chance to /dev/null if you want, but both
+MAKE_OUTPUT=                  # can be set on the command line. 
 
+########################################################################
+########################################################################
+# NOTHING BELOW HERE SHOULD NEED ALTERING !! Don't touch
+########################################################################
+########################################################################
 
+DELETE_FILES_AFTER_USE="no"  # Don't change
+TMP_NAME=
+
+EX1a="eg #1 teston dove atlc-5.0.0"
+EX1b="copies atlc-5.0.0.tar.gz to dove and builds it on dove\n"
+
+EX2a="eg #2 teston -c '--with-threads' -M check woodpecker atlc-4.2.12"
+EX2b="Builds and checks  atlc-4.2.2.tar.gz on woodpecker, configured with threads\n"
+
+EX3a="eg #3 teston -m-j2 bluetit atlc-4.0.0"
+EX3b="copies atlc-4.0.0.tar.gz to bluetit and does a parallel build\n"
+
+EX4a="eg #4 teston -Mgmake -c--with--mpi crow atlc-4.0.0"
+EX4b="copies atlc-4.0.0.tar.gz to crow and uses gmake to build with the MPICH library\n"
+
+EX5a="eg #5 teston -u root  duke@medphys.ucl.ac.uk gcc-3.2.2"
+EX5b="builds+tests gcc-3.2.2.tar.gz on duke@medphys.ucl.ac.uk using username root"
+
+TMP_DIR=  # Don't be fooled. Don't touch it. It is not what you think!
+
+while getopts c:m:M:trNn supplied_options
+do 
+  case $supplied_options in
+  c)
+  CONFIG_OPTIONS=$OPTARG;;
+  m)
+  MAKE_OPTIONS=$OPTARG;;
+  n)
+  CONFIGURE_OUTPUT=\>/dev/null;;
+  N)
+  MAKE_OUTPUT=\>/dev/null;;
+  M)
+  MAKE=$OPTARG;;
+  t)
+  TMP_DIR=$$/
+  TMP_NAME=$$.;;
+  r)
+  DELETE_FILES_AFTER_USE="yes" ;;
+  \?)
+  echo "Usage: teston [options] host package\n"
+  echo  "            -M name_of_make             # e.g. gmake (default = $MAKE)"
+  echo  "            -c option_to_configure      # e.g --with-threads"
+  echo  "            -m option_to_make           # e.g. install (default $MAKE_OPTIONS)"
+  echo  "            -u username                 # username on host (default = $USERNAME)"
+  echo  "            -t                          # Use a unique directory oy remote host"
+  echo  "            -r                          # Removes files afterwards"
+  echo  "            -n                          # Redirect output of configure to /dev/null
+  echo  "            -N                          # Redirect output of make to /dev/null
+  echo $EX1a  
+  echo $EX1b 
+  echo $EX2a  
+  echo $EX2b 
+  echo $EX3a 
+  echo $EX3b  
+  echo $EX4a  
+  echo $EX4b 
+  echo $EX5a  
+  echo $EX5b 
+  echo "exiting 1"
+  exit 1
+  esac
+  done
+shift `expr $OPTIND - 1`
+
+if [ $# -ne 2 ] ; then
+  echo "Usage: teston [options] host package\n"
+  echo  "Options are:"
+  echo  "            -M name_of_make             # e.g. gmake (default = $MAKE)"
+  echo  "            -c option_to_configure      # e.g --with-threads"
+  echo  "            -m option_to_make           # e.g. install (default $MAKE_OPTIONS)"
+  echo  "            -u username                 # username on host (default = $USERNAME)"
+  echo  "            -t                          # Use a unique directory on remote host"
+  echo  "            -r                          # Removes files afterwards"
+  echo  "            -n                          # Redirect output of configure to /dev/null
+  echo  "            -N                          # Redirect output of make to /dev/null
+  echo $EX1a  
+  echo $EX1b 
+  echo $EX2a  
+  echo $EX2b 
+  echo $EX3a 
+  echo $EX3b  
+  echo $EX4a  
+  echo $EX4b 
+  echo $EX5a  
+  echo $EX5b 
+  echo "exiting 2"
+  exit
 fi
+
+REMOTE_HOST=`echo $* | awk '{print $1}'`
+VER=`echo $* | awk '{print $2}'`
+DATE=`date`
+LOCAL_HOST=`hostname` > /dev/null
 
 # When I sort out all my keys, the following won't be necessary, but for
 # now when connecting to a machine at work, I'll use the www.ssh.com
 # version of ssh, which is just called ssh2 on my machine (it is not
 # linked to ssh. On my local machines, all of which run OpenSSH in one
 # format or another, this is called by ssh. 
-if [ $1 = duke ] || [ $1 = satchmo ] || [ $1 = lennon ] ;  then
+if [ $REMOTE_HOST = duke ] || [ $REMOTE_HOST = satchmo ] || [ $REMOTE_HOST = lennon ] ;  then
   SSH=ssh2 
   SCP=scp2
 else
   SSH=ssh
   SCP=scp
 fi
-
-# Create a file 'remote_host' on the local machine, which we want
+REMOTE_HOME=`$SSH $USERNAME@$REMOTE_HOST pwd`
+echo $REMOTE_HOST
+# Create a file 'remote_test.$REMOTE_HOST' on the local machine, which we want
 # executed elsewhere. 
-echo rm -rf $2 > remote-test
-echo rm  -f $2.tar  >> remote-test
-echo gzip -d $2.tar.gz >> remote-test
-echo tar xf $2.tar >> remote-test
-echo rm -rf build-directory >> remote-test
-echo mkdir build-directory >> remote-test
-echo cd build-directory >> remote-test
-echo ../$2/configure   >> remote-test
-echo ' make  > /dev/null ' >> remote-test
-#echo ' make   ' >> remote-test
-echo make check >> remote-test
-chmod 755 remote-test
+echo "#!/bin/sh" > remote-test.$TMP_NAME$REMOTE_HOST
+echo "# Script produced on $LOCAL_HOST at $DATE using 'teston' " >> remote-test.$TMP_NAME$REMOTE_HOST
+echo rm -f  $REMOTE_HOME/$REMOTE_HOST/$TMP_DIR$VER.tar >> remote-test.$TMP_NAME$REMOTE_HOST
+echo cd $REMOTE_HOME/$REMOTE_HOST/$TMP_DIR >> remote-test.$TMP_NAME$REMOTE_HOST
+echo gzip -d $REMOTE_HOME/$REMOTE_HOST/$TMP_DIR$VER.tar.gz >> remote-test.$TMP_NAME$REMOTE_HOST
+echo tar xf $REMOTE_HOME/$REMOTE_HOST/$TMP_DIR$VER.tar >> remote-test.$TMP_NAME$REMOTE_HOST
+echo mkdir $REMOTE_HOME/$REMOTE_HOST/$TMP_DIR$VER-build >> remote-test.$TMP_NAME$REMOTE_HOST
+echo cd $REMOTE_HOME/$REMOTE_HOST/$TMP_DIR$VER-build >> remote-test.$TMP_NAME$REMOTE_HOST
+echo $REMOTE_HOME/$REMOTE_HOST/$TMP_DIR$VER/configure $CONFIG_OPTIONS $CONFIGURE_OUTPUT >> remote-test.$TMP_NAME$REMOTE_HOST
+echo $MAKE $MAKE_OPTIONS $MAKE_OUTPUT >> remote-test.$TMP_NAME$REMOTE_HOST
+if [ $DELETE_FILES_AFTER_USE = "yes" ] ; then 
+  rm -r $REMOTE_HOME/$REMOTE_HOST/$TMP_DIR$VER >> remote-test.$TMP_NAME$REMOTE_HOST
+fi 
+chmod 755 remote-test.$TMP_NAME$REMOTE_HOST
+
+# mkdir $REMOTE_HOST on the remote machine
+$SSH $USERNAME@$REMOTE_HOST mkdir $REMOTE_HOST 2> /dev/null
+$SSH $USERNAME@$REMOTE_HOST mkdir $REMOTE_HOST/$TMP_DIR 2> /dev/null
 
 # Copy via scp/scp2 the script file in addition to the package
 # (somename.tar.gz) to the remote machine.
 
-$SCP $2.tar.gz davek@$1:$2.tar.gz
-$SCP -p remote-test davek@$1:remote-test
+$SCP -p remote-test.$REMOTE_HOST $USERNAME@$REMOTE_HOST:$REMOTE_HOST/$TMP_DIR
+$SCP $VER.tar.gz $USERNAME@$REMOTE_HOST:$REMOTE_HOST/$TMP_DIR
+ 
 
 # Execute the script on the distant machine.
-$SSH davek@$1 ./remote-test
+$SSH $USERNAME@$REMOTE_HOST $REMOTE_HOST/$TMP_DIR/remote-test.$TMP_NAME$REMOTE_HOST 
 
-# Clean up after ourselves. 
-# rm remote-test
+# Clean up the local file after ourselves. 
+if [ DELETE_FILES_AFTER_USE = "yes" ] ; then 
+  rm remote-test.$TMP_NAME$REMOTE_HOST
+fi
