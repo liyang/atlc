@@ -33,7 +33,8 @@ void usage_rect_in_rect(void)
       fprintf(stderr,"Usage: rect_in_rect [-b bmp_size] [-f outfile] [-v] W H a b c d w h Er1 Er2 \n\n");
       fprintf(stderr,"where W, H, a, b, c, d, w, and h  are all in mm or all in inches\n");      
       fprintf(stderr,"(they *must* use the same units. Non-integers allowed for all parameters)\n");
-      fprintf(stderr,"options are:\n");
+      fprintf(stderr,"Options are:\n");
+      fprintf(stderr,"  -C         \n     Print copyright, licencing and distribution information.\n");
       fprintf(stderr,"  -b bmp_size\n     Sets the size of the bitmap, in the range 1 to 15 (default %d).\n",DEFAULT_BMPSIZE);
       fprintf(stderr,"  -f outfile \n     Write output to 'outfile' instead of stdout\n");
       fprintf(stderr,"  -v         \n     Write diagnostic information to stderr\n");
