@@ -1,3 +1,55 @@
+****** Version 4.4.3 Released 11th September 2003 ****
+
+Replace 'kb' and 'Mb' with 'kB and MB, as I was advised the lower
+case is used for bit and the upper case for byte. These required 
+changes in tests/benchmarks.test
+
+man/man1/sysdata.1
+Added a man page for the program sysdata in man/man1/sysdata.1
+This has about 11 examples, which are there more for my own use
+that anyones elses. When possible I'll try to expand the files
+that gather data about the hardware.
+
+man/man1/*.1
+Corrected many typo, spelling errors etc in all the man pages.
+more significantly, the 
+
+
+docs/html-docs/accuracy.html
+Corrected a few typos and made the page a bit clearer
+I hope. Any HTML that did not strictly follow the stanard has
+been corrected, so it should pass the test at 
+http://validator.w3.org/check/referer
+hence an W3C logo has been added at the bottom of the page.
+
+docs/html-docs/accuracy.html
+A bluefish logo has been added too.
+
+The spamtrap on the page has been changed a bit, which is a bit
+annoying as it is now visable. But the code was not strict 
+HTML before, so there were problems in making it valid 
+otherwise. 
+
+tests/Makefile.am
+References to the gsl library have been removed, so the 
+thread tests will pass if the gsl library is not present.
+This was changed just in case someone runs a binary 
+in pkgadd format on a Sun without having the gsl library
+installed. Some binaries will break, but Test_threads_a
+and Test_threads_b should now still pass, even if 
+the gsl library is not present. No functions from gsl
+are needed on these two files, so it was sensless linking
+them against the library. 
+
+tests/try_portable.c
+The code has been changed a bit so it should now (I hope)
+compile under Windoze too. Someone has done a Windoze port
+but found a bug in the code, which has been corrected. 
+
+tests/try_solaris.c
+Added code to make it cleaner and so no variables 
+get declared if not needed.
+
 ****** Version 4.4.2 Released September 6th 2003 ****
 
 src/non_gui/readbin.c
@@ -7,7 +59,7 @@ it will make any difference.
 
 src/non_gui/atlc.c
 swapped the second (size) and third (number) arguments around
-on an fread, as were the wrong wary around - not that I think
+on an fread, as were the wrong way around - not that I think
 it will make any difference. 
 
 src/non_gui/check_for_boundaries.c
