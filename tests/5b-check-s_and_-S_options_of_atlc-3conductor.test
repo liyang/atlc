@@ -1,104 +1,104 @@
 #!/bin/sh
 
 # Delete any files that may be left
-rm -f ../examples/test-coupler2.E.even.bin
-rm -f ../examples/test-coupler2.E.even.bmp
-rm -f ../examples/test-coupler2.E.odd.bin
-rm -f ../examples/test-coupler2.E.odd.bmp
-rm -f ../examples/test-coupler2.Er.bin
-rm -f ../examples/test-coupler2.Er.bmp
-rm -f ../examples/test-coupler2.Ex.even.bin
-rm -f ../examples/test-coupler2.Ex.even.bmp
-rm -f ../examples/test-coupler2.Ex.odd.bin
-rm -f ../examples/test-coupler2.Ex.odd.bmp
-rm -f ../examples/test-coupler2.Ey.even.bin
-rm -f ../examples/test-coupler2.Ey.even.bmp
-rm -f ../examples/test-coupler2.Ey.odd.bin
-rm -f ../examples/test-coupler2.Ey.odd.bmp
-rm -f ../examples/test-coupler2.U.even.bin
-rm -f ../examples/test-coupler2.U.even.bmp
-rm -f ../examples/test-coupler2.U.odd.bin
-rm -f ../examples/test-coupler2.U.odd.bmp
-rm -f ../examples/test-coupler2.V.even.bin
-rm -f ../examples/test-coupler2.V.even.bmp
-rm -f ../examples/test-coupler2.V.odd.bin
-rm -f ../examples/test-coupler2.V.odd.bmp
+rm -f $top_builddir/examples/test-coupler2.E.even.bin
+rm -f $top_builddir/examples/test-coupler2.E.even.bmp
+rm -f $top_builddir/examples/test-coupler2.E.odd.bin
+rm -f $top_builddir/examples/test-coupler2.E.odd.bmp
+rm -f $top_builddir/examples/test-coupler2.Er.bin
+rm -f $top_builddir/examples/test-coupler2.Er.bmp
+rm -f $top_builddir/examples/test-coupler2.Ex.even.bin
+rm -f $top_builddir/examples/test-coupler2.Ex.even.bmp
+rm -f $top_builddir/examples/test-coupler2.Ex.odd.bin
+rm -f $top_builddir/examples/test-coupler2.Ex.odd.bmp
+rm -f $top_builddir/examples/test-coupler2.Ey.even.bin
+rm -f $top_builddir/examples/test-coupler2.Ey.even.bmp
+rm -f $top_builddir/examples/test-coupler2.Ey.odd.bin
+rm -f $top_builddir/examples/test-coupler2.Ey.odd.bmp
+rm -f $top_builddir/examples/test-coupler2.U.even.bin
+rm -f $top_builddir/examples/test-coupler2.U.even.bmp
+rm -f $top_builddir/examples/test-coupler2.U.odd.bin
+rm -f $top_builddir/examples/test-coupler2.U.odd.bmp
+rm -f $top_builddir/examples/test-coupler2.V.even.bin
+rm -f $top_builddir/examples/test-coupler2.V.even.bmp
+rm -f $top_builddir/examples/test-coupler2.V.odd.bin
+rm -f $top_builddir/examples/test-coupler2.V.odd.bmp
 
 # Check that the -s and -S options are indeed doing
 # what they are supposed to be doing. 
 
 
 # Check the -S and -s options together allow no .bmp or .bin files
-../src/non_gui/atlc -s -S ../examples/test-coupler2.bmp > /dev/null
-if [ -f ../examples/test-coupler2.Ex.even.bmp ]  || [ -f ../examples/test-coupler2.Ey.odd.bin ] || [ -f ../examples/test-coupler2.Er.bin ] ; then
+$top_builddir/src/non_gui/atlc -s -S $top_builddir/examples/test-coupler2.bmp > /dev/null
+if [ -f $top_builddir/examples/test-coupler2.Ex.even.bmp ]  || [ -f $top_builddir/examples/test-coupler2.Ey.odd.bin ] || [ -f $top_builddir/examples/test-coupler2.Er.bin ] ; then
   echo "FAILED:" $0 >> tests.log 
   exit 1
 fi  
 
 # Delete any files created. There should be none.
-rm -f ../examples/test-coupler2.E.even.bin
-rm -f ../examples/test-coupler2.E.even.bmp
-rm -f ../examples/test-coupler2.E.odd.bin
-rm -f ../examples/test-coupler2.E.odd.bmp
-rm -f ../examples/test-coupler2.Er.bin
-rm -f ../examples/test-coupler2.Er.bmp
-rm -f ../examples/test-coupler2.Ex.even.bin
-rm -f ../examples/test-coupler2.Ex.even.bmp
-rm -f ../examples/test-coupler2.Ex.odd.bin
-rm -f ../examples/test-coupler2.Ex.odd.bmp
-rm -f ../examples/test-coupler2.Ey.even.bin
-rm -f ../examples/test-coupler2.Ey.even.bmp
-rm -f ../examples/test-coupler2.Ey.odd.bin
-rm -f ../examples/test-coupler2.Ey.odd.bmp
-rm -f ../examples/test-coupler2.U.even.bin
-rm -f ../examples/test-coupler2.U.even.bmp
-rm -f ../examples/test-coupler2.U.odd.bin
-rm -f ../examples/test-coupler2.U.odd.bmp
-rm -f ../examples/test-coupler2.V.even.bin
-rm -f ../examples/test-coupler2.V.even.bmp
-rm -f ../examples/test-coupler2.V.odd.bin
-rm -f ../examples/test-coupler2.V.odd.bmp
+rm -f $top_builddir/examples/test-coupler2.E.even.bin
+rm -f $top_builddir/examples/test-coupler2.E.even.bmp
+rm -f $top_builddir/examples/test-coupler2.E.odd.bin
+rm -f $top_builddir/examples/test-coupler2.E.odd.bmp
+rm -f $top_builddir/examples/test-coupler2.Er.bin
+rm -f $top_builddir/examples/test-coupler2.Er.bmp
+rm -f $top_builddir/examples/test-coupler2.Ex.even.bin
+rm -f $top_builddir/examples/test-coupler2.Ex.even.bmp
+rm -f $top_builddir/examples/test-coupler2.Ex.odd.bin
+rm -f $top_builddir/examples/test-coupler2.Ex.odd.bmp
+rm -f $top_builddir/examples/test-coupler2.Ey.even.bin
+rm -f $top_builddir/examples/test-coupler2.Ey.even.bmp
+rm -f $top_builddir/examples/test-coupler2.Ey.odd.bin
+rm -f $top_builddir/examples/test-coupler2.Ey.odd.bmp
+rm -f $top_builddir/examples/test-coupler2.U.even.bin
+rm -f $top_builddir/examples/test-coupler2.U.even.bmp
+rm -f $top_builddir/examples/test-coupler2.U.odd.bin
+rm -f $top_builddir/examples/test-coupler2.U.odd.bmp
+rm -f $top_builddir/examples/test-coupler2.V.even.bin
+rm -f $top_builddir/examples/test-coupler2.V.even.bmp
+rm -f $top_builddir/examples/test-coupler2.V.odd.bin
+rm -f $top_builddir/examples/test-coupler2.V.odd.bmp
 
 # Check that -S suppresses the creation of .bin, but not .bmp's
-../src/non_gui/atlc -S ../examples/test-coupler2.bmp > ../examples/test-coupler2.bmp.txt
-if [ -f ../examples/test-coupler2.Ex.odd.bin ]  || [ -f ../examples/test-coupler2.Ey.odd.bin ] || [ ! -f ../examples/test-coupler2.Er.bmp ] ; then
+$top_builddir/src/non_gui/atlc -S $top_builddir/examples/test-coupler2.bmp > $top_builddir/examples/test-coupler2.bmp.txt
+if [ -f $top_builddir/examples/test-coupler2.Ex.odd.bin ]  || [ -f $top_builddir/examples/test-coupler2.Ey.odd.bin ] || [ ! -f $top_builddir/examples/test-coupler2.Er.bmp ] ; then
   echo "FAILED:" $0 >> tests.log 
   exit 1
 fi  
 
-rm -f ../examples/test-coupler2.E.even.bin
-rm -f ../examples/test-coupler2.E.even.bmp
-rm -f ../examples/test-coupler2.E.odd.bin
-rm -f ../examples/test-coupler2.E.odd.bmp
-rm -f ../examples/test-coupler2.Er.bin
-rm -f ../examples/test-coupler2.Er.bmp
-rm -f ../examples/test-coupler2.Ex.even.bin
-rm -f ../examples/test-coupler2.Ex.even.bmp
-rm -f ../examples/test-coupler2.Ex.odd.bin
-rm -f ../examples/test-coupler2.Ex.odd.bmp
-rm -f ../examples/test-coupler2.Ey.even.bin
-rm -f ../examples/test-coupler2.Ey.even.bmp
-rm -f ../examples/test-coupler2.Ey.odd.bin
-rm -f ../examples/test-coupler2.Ey.odd.bmp
-rm -f ../examples/test-coupler2.U.even.bin
-rm -f ../examples/test-coupler2.U.even.bmp
-rm -f ../examples/test-coupler2.U.odd.bin
-rm -f ../examples/test-coupler2.U.odd.bmp
-rm -f ../examples/test-coupler2.V.even.bin
-rm -f ../examples/test-coupler2.V.even.bmp
-rm -f ../examples/test-coupler2.V.odd.bin
-rm -f ../examples/test-coupler2.V.odd.bmp
+rm -f $top_builddir/examples/test-coupler2.E.even.bin
+rm -f $top_builddir/examples/test-coupler2.E.even.bmp
+rm -f $top_builddir/examples/test-coupler2.E.odd.bin
+rm -f $top_builddir/examples/test-coupler2.E.odd.bmp
+rm -f $top_builddir/examples/test-coupler2.Er.bin
+rm -f $top_builddir/examples/test-coupler2.Er.bmp
+rm -f $top_builddir/examples/test-coupler2.Ex.even.bin
+rm -f $top_builddir/examples/test-coupler2.Ex.even.bmp
+rm -f $top_builddir/examples/test-coupler2.Ex.odd.bin
+rm -f $top_builddir/examples/test-coupler2.Ex.odd.bmp
+rm -f $top_builddir/examples/test-coupler2.Ey.even.bin
+rm -f $top_builddir/examples/test-coupler2.Ey.even.bmp
+rm -f $top_builddir/examples/test-coupler2.Ey.odd.bin
+rm -f $top_builddir/examples/test-coupler2.Ey.odd.bmp
+rm -f $top_builddir/examples/test-coupler2.U.even.bin
+rm -f $top_builddir/examples/test-coupler2.U.even.bmp
+rm -f $top_builddir/examples/test-coupler2.U.odd.bin
+rm -f $top_builddir/examples/test-coupler2.U.odd.bmp
+rm -f $top_builddir/examples/test-coupler2.V.even.bin
+rm -f $top_builddir/examples/test-coupler2.V.even.bmp
+rm -f $top_builddir/examples/test-coupler2.V.odd.bin
+rm -f $top_builddir/examples/test-coupler2.V.odd.bmp
 
 # Check that -s suppresses the creation of .bmp's, but not .bin's
-../src/non_gui/atlc -s ../examples/test-coupler2.bmp > ../examplestest-coupler2.bmp.txt
-if [ -f ../examples/test-coupler2.Ex.even.bmp ]  || [ -f ../examples/test-coupler2.Ey.odd.bmp ] || [ ! -f ../examples/test-coupler2.Er.bin ]  ; then
+$top_builddir/src/non_gui/atlc -s $top_builddir/examples/test-coupler2.bmp > $top_builddir/examplestest-coupler2.bmp.txt
+if [ -f $top_builddir/examples/test-coupler2.Ex.even.bmp ]  || [ -f $top_builddir/examples/test-coupler2.Ey.odd.bmp ] || [ ! -f $top_builddir/examples/test-coupler2.Er.bin ]  ; then
   echo "FAILED:" $0 >> tests.log 
   exit 1
 fi
 
 # Check that no options creates both the .bmp's and .bin's
-../src/non_gui/atlc  ../examples/test-coupler2.bmp > /dev/null
-if [ ! -f ../examples/test-coupler2.Ex.odd.bmp ]  || [ ! -f ../examples/test-coupler2.Ey.odd.bmp ] || [ ! -f ../examples/test-coupler2.Er.bin ]  ; then
+$top_builddir/src/non_gui/atlc  $top_builddir/examples/test-coupler2.bmp > /dev/null
+if [ ! -f $top_builddir/examples/test-coupler2.Ex.odd.bmp ]  || [ ! -f $top_builddir/examples/test-coupler2.Ey.odd.bmp ] || [ ! -f $top_builddir/examples/test-coupler2.Er.bin ]  ; then
   echo "FAILED:" $0 >> tests.log 
   exit 1
 fi

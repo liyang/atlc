@@ -21,11 +21,11 @@
 
 # Any failure to generate the correct checksums are noted. 
 
-# Any failure in an Xa-... where X is an integer will cause
-# Xb, Xc, Xd ...etc to fail. Any pass of Xa, but faiure of Xb will cause
-# all the Xc, Xd ... to fail. If both Xa and Xb pass, then hopefully Xc,
+# Any failure in an Xa-$top_builddir. where X is an integer will cause
+# Xb, Xc, Xd $top_builddir.etc to fail. Any pass of Xa, but faiure of Xb will cause
+# all the Xc, Xd $top_builddir. to fail. If both Xa and Xb pass, then hopefully Xc,
 # Xd etc will. However, Xd, Xe etc does not rely on the correct functioning of 
-# Xc. The Xc, Xd, ... only need Xa and Xb to pass, so Xc, Xd etc are
+# Xc. The Xc, Xd, $top_builddir. only need Xa and Xb to pass, so Xc, Xd etc are
 # independent of each other. 
 
 # I would add that these checksums have been checked using the GNU
@@ -37,18 +37,13 @@
 # 'sum' and see what that gives. If any failures do occur, please let me
 # know. email drkirkby@ntlworld.com and/or davek@medphys.ucl.ac.uk 
 
-CKSUM=`../tools/src/mycksum test2.txt`
-Zodd=`../src/no*/create_bmp_for_stripline_coupler -v 1.0 1.0 1.0 1.0 ../examples/coupler1.bmp | tail -1 | awk '{print $2 }' `
-Zeven=`../src/no*/create_bmp_for_stripline_coupler -v 1.0 1.0 1.0 1.0 ../examples/coupler1.bmp | tail -1 | awk '{print $4 }' `
-Zo=`../src/no*/create_bmp_for_stripline_coupler -v 1.0 1.0 1.0 1.0 ../examples/coupler1.bmp | tail -1 | awk '{print $6 }' `
+Zodd=`$top_builddir/src/no*/create_bmp_for_stripline_coupler -v 1.0 1.0 1.0 1.0 $top_builddir/examples/coupler1.bmp | tail -1 | awk '{print $2 }' `
+Zeven=`$top_builddir/src/no*/create_bmp_for_stripline_coupler -v 1.0 1.0 1.0 1.0 $top_builddir/examples/coupler1.bmp | tail -1 | awk '{print $4 }' `
+Zo=`$top_builddir/src/no*/create_bmp_for_stripline_coupler -v 1.0 1.0 1.0 1.0 $top_builddir/examples/coupler1.bmp | tail -1 | awk '{print $6 }' `
 if [ $Zodd = 64.767502 ] && [ $Zeven = 66.015168 ] && [ $Zo = 65.388359 ] ; then
   echo "PASSED:" $0 >> tests.log
   exit 0
 else
-  echo "FAILED:" $0 "This will happen if"
-  echo "                                                        if the GNU scientific"
-  echo "                                                        library (gsl) is not"
-  echo "                                                        installed." 
-  echo "FAILED:" $0 "This will happen if the GNU scientific library (gsl) is not installed" >> tests.log
+  echo "The following test will always fail if  not linked against the gsl library"
   exit 1
 fi

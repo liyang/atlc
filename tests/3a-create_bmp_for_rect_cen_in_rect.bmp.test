@@ -21,11 +21,11 @@
 
 # Any failure to generate the correct checksums are noted. 
 
-# Any failure in an Xa-... where X is an integer will cause
-# Xb, Xc, Xd ...etc to fail. Any pass of Xa, but faiure of Xb will cause
-# all the Xc, Xd ... to fail. If both Xa and Xb pass, then hopefully Xc,
+# Any failure in an Xa-$top_builddir. where X is an integer will cause
+# Xb, Xc, Xd $top_builddir.etc to fail. Any pass of Xa, but faiure of Xb will cause
+# all the Xc, Xd $top_builddir. to fail. If both Xa and Xb pass, then hopefully Xc,
 # Xd etc will. However, Xd, Xe etc does not rely on the correct functioning of 
-# Xc. The Xc, Xd, ... only need Xa and Xb to pass, so Xc, Xd etc are
+# Xc. The Xc, Xd, $top_builddir. only need Xa and Xb to pass, so Xc, Xd etc are
 # independent of each other. 
 
 # I would add that these checksums have been checked using the GNU
@@ -37,8 +37,8 @@
 # 'sum' and see what that gives. If any failures do occur, please let me
 # know. email drkirkby@ntlworld.com and/or davek@medphys.ucl.ac.uk 
 
-../src/non_gui/create_bmp_for_rect_cen_in_rect -b 4 500 100 20 20 1 test.bmp
-CKSUM=`../tools/src/mycksum test.bmp`
+$top_builddir/src/non_gui/create_bmp_for_rect_cen_in_rect -b 4 500 100 20 20 1 test.bmp
+CKSUM=`$top_builddir/tools/src/mycksum test.bmp`
 if [ $CKSUM = 17785 ]; then
   echo "PASSED:" $0 >> tests.log 
   exit 0

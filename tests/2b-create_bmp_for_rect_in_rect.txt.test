@@ -21,11 +21,11 @@
 
 # Any failure to generate the correct checksums are noted. 
 
-# Any failure in an Xa-... where X is an integer will cause
-# Xb, Xc, Xd ...etc to fail. Any pass of Xa, but faiure of Xb will cause
-# all the Xc, Xd ... to fail. If both Xa and Xb pass, then hopefully Xc,
+# Any failure in an Xa-$top_builddir. where X is an integer will cause
+# Xb, Xc, Xd $top_builddir.etc to fail. Any pass of Xa, but faiure of Xb will cause
+# all the Xc, Xd $top_builddir. to fail. If both Xa and Xb pass, then hopefully Xc,
 # Xd etc will. However, Xd, Xe etc does not rely on the correct functioning of 
-# Xc. The Xc, Xd, ... only need Xa and Xb to pass, so Xc, Xd etc are
+# Xc. The Xc, Xd, $top_builddir. only need Xa and Xb to pass, so Xc, Xd etc are
 # independent of each other. 
 
 # I would add that these checksums have been checked using the GNU
@@ -36,13 +36,13 @@
 # unlikely. So if any problems occur, check the checksum with the GNU
 # 'sum' and see what that gives. If any failures do occur, please let me
 # know. email drkirkby@ntlworld.com and/or davek@medphys.ucl.ac.uk 
-../src/non_gui/atlc  test_rect_in_rect.bmp > test_rect_in_rect.txt
-# .bin files are unchecked, so let removed them.
+
+$top_builddir/src/non_gui/atlc  $top_builddir/examples/test_rect_in_rect.bmp > $top_builddir/examples/test_rect_in_rect.txt
+
+# .bin files are unchecked, so remove them.
 # The capacitance should be 121.0 pF/m and is in column 9
-cat test_rect_in_rect.txt | awk '{print $9}' > /tmp/atlc-test.$$
-CKSUM=`../tools/src/mycksum /tmp/atlc-test.$$`
-rm /tmp/atlc-test.$$
-if [ $CKSUM = 18488 ]; then
+CAP=`cat $top_builddir/examples/test_rect_in_rect.txt | awk '{print $9}'`
+if [ $CAP = 121.0 ]; then
   echo "PASSED:" $0 >> tests.log
   exit 0
 else

@@ -19,8 +19,9 @@
 # Little Endian like PCs. It will also be too dependent on rounding
 # difference caused by the different FPUs in the different machines. 
 
-../src/non_gui/create_bmp_for_microstrip_coupler -b 12 1.5 2.0 1 1.593 0.035 1 3.7 ../examples/microstrip_coupler.bmp
-CKSUM=`../tools/src/mycksum ../examples/microstrip_coupler.bmp`
+$top_builddir/src/non_gui/create_bmp_for_microstrip_coupler -b 12 1.5 2.0 1 1.593 0.035 1 3.7 microstrip_coupler.bmp
+CKSUM=`$top_builddir/tools/src/mycksum microstrip_coupler.bmp`
+rm microstrip_coupler.bmp
 if [ $CKSUM = 07795 ]; then
   echo "PASSED:" $0 >> tests.log 
   exit 0

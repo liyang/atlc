@@ -2,113 +2,97 @@
 # Check that the -s and -S options are indeed doing
 # what they are supposed to be doing. 
 # going to execute a pwd as soon as entering the test. 
-pwd 
 
 # Delete any files that may be left by mistake
 
-rm  ../examples/coax2.Ex.bmp
-rm  ../examples/coax2.Ey.bmp
-rm  ../examples/coax2.E.bmp
-rm  ../examples/coax2.U.bmp
-rm  ../examples/coax2.V.bmp
-rm  ../examples/coax2.Er.bmp
+rm  -f $top_builddir/examples/coax2.Ex.bmp
+rm  -f $top_builddir/examples/coax2.Ey.bmp
+rm  -f $top_builddir/examples/coax2.E.bmp
+rm  -f $top_builddir/examples/coax2.U.bmp
+rm  -f $top_builddir/examples/coax2.V.bmp
+rm  -f $top_builddir/examples/coax2.Er.bmp
 
-rm  ../examples/coax2.Ex.bin
-rm  ../examples/coax2.Ey.bin
-rm  ../examples/coax2.E.bin
-rm  ../examples/coax2.U.bin
-rm  ../examples/coax2.V.bin
-rm  ../examples/coax2.Er.bin
+rm  -f $top_builddir/examples/coax2.Ex.bin
+rm  -f $top_builddir/examples/coax2.Ey.bin
+rm  -f $top_builddir/examples/coax2.E.bin
+rm  -f $top_builddir/examples/coax2.U.bin
+rm  -f $top_builddir/examples/coax2.V.bin
+rm  -f $top_builddir/examples/coax2.Er.bin
 
-# There should now be no coax2* files, except ../examples/coax2.bmp
+# There should now be no coax2* files, except $top_srcdir/examples/coax2.bmp and
+# $top_builddir/examples/coax2.bmp
 
-echo here
 
 # Check the -S and -s options together prevent all ( .bmp or .bin files ) being created. 
-../src/non_gui/atlc -s -S ../examples/coax2.bmp 
-if [ -f ../examples/coax2.Ex.bmp ]  || [ -f ../examples/coax2.Ey.bin ] || [ -f ../examples/coax2.Er.bin ] ; then
+$top_builddir/src/non_gui/atlc -s -S $top_builddir/examples/coax2.bmp > /dev/null
+if [ -f $top_builddir/examples/coax2.Ex.bmp ]  || [ -f $top_builddir/examples/coax2.Ey.bin ] || [ -f top_builddir/examples/coax2.Er.bin ] ; then
   echo failed at first state
   echo "FAILED:" $0 >> tests.log 
   exit 1
 fi  
 
-pwd
-ls -l examples
-ls -l ../examples/coax2* 
-ls -ld
-
-echo done 1
-
 # Delete any files created. There should be none.
 
-rm -f ../examples/coax2.Ex.bmp
-rm -f ../examples/coax2.Ey.bmp
-rm -f ../examples/coax2.E.bmp
-rm -f ../examples/coax2.U.bmp
-rm -f ../examples/coax2.V.bmp
-rm -f ../examples/coax2.Er.bmp
 
-rm -f ../examples/coax2.Ex.bin
-rm -f ../examples/coax2.Ey.bin
-rm -f ../examples/coax2.E.bin
-rm -f ../examples/coax2.U.bin
-rm -f ../examples/coax2.V.bin
-rm -f ../examples/coax2.Er.bin
-
-echo checking -S now
+#echo checking -S now
 # Check that -S suppresses the creation of .bin, but not .bmp's
-../src/non_gui/atlc -S ../examples/coax2.bmp > /dev/null
-if [ -f ../examples/coax2.Ex.bin ]  || [ -f ../examples/coax2.Ey.bin ] || [ -f ../examples/coax2.Er.bin ] || [ ! -f  ../examples/coax2.Er.bmp ] ; then
+$top_builddir/src/non_gui/atlc -S $top_builddir/examples/coax2.bmp > /dev/null
+if [ -f $top_builddir/examples/coax2.Ex.bin ]  || [ -f $top_builddir/examples/coax2.Ey.bin ] || [ -f $top_builddir/examples/coax2.Er.bin ] || [ ! -f  $top_builddir/examples/coax2.Er.bmp ] ; then
+  echo failed at second state
   echo "FAILED:" $0 >> tests.log 
   exit 1
 fi
-echo done 2
 
-rm -f ../examples/coax2.Ex.bmp
-rm -f ../examples/coax2.Ey.bmp
-rm -f ../examples/coax2.E.bmp
-rm -f ../examples/coax2.U.bmp
-rm -f ../examples/coax2.V.bmp
-rm -f ../examples/coax2.Er.bmp
+rm  -f $top_builddir/examples/coax2.Ex.bmp
+rm  -f $top_builddir/examples/coax2.Ey.bmp
+rm  -f $top_builddir/examples/coax2.E.bmp
+rm  -f $top_builddir/examples/coax2.U.bmp
+rm  -f $top_builddir/examples/coax2.V.bmp
+rm  -f $top_builddir/examples/coax2.Er.bmp
 
-rm -f ../examples/coax2.Ex.bin
-rm -f ../examples/coax2.Ey.bin
-rm -f ../examples/coax2.E.bin
-rm -f ../examples/coax2.U.bin
-rm -f ../examples/coax2.V.bin
-rm -f ../examples/coax2.Er.bin
+rm  -f $top_builddir/examples/coax2.Ex.bin
+rm  -f $top_builddir/examples/coax2.Ey.bin
+rm  -f $top_builddir/examples/coax2.E.bin
+rm  -f $top_builddir/examples/coax2.U.bin
+rm  -f $top_builddir/examples/coax2.V.bin
+rm  -f $top_builddir/examples/coax2.Er.bin
 
-echo done 3
+# Check that no options creates.bmp's and  bin's
 
 # Check that -s suppresses the creation of .bmp's, but not .bin's
-../src/non_gui/atlc -s ../examples/coax2.bmp > /dev/null
-if [ -f ../examples/coax2.Ex.bmp ]  || [ -f ../examples/coax2.Ey.bmp ] || [ ! -f ../examples/coax2.Er.bin ]  ; then
+$top_builddir/src/non_gui/atlc -s $top_builddir/examples/coax2.bmp > /dev/null
+if [ -f $top_builddir/examples/coax2.Ex.bmp ]  || [ -f $top_builddir/examples/coax2.Ey.bmp ] || [ ! -f $top_builddir/examples/coax2.Er.bin ]  ; then
+  echo failed at third stage
   echo "FAILED:" $0 >> tests.log 
   exit 1
 fi
 
-rm -f ../examples/coax2.Ex.bmp
-rm -f ../examples/coax2.Ey.bmp
-rm -f ../examples/coax2.E.bmp
-rm -f ../examples/coax2.U.bmp
-rm -f ../examples/coax2.V.bmp
-rm -f ../examples/coax2.Er.bmp
+rm  -f $top_builddir/examples/coax2.Ex.bmp
+rm  -f $top_builddir/examples/coax2.Ey.bmp
+rm  -f $top_builddir/examples/coax2.E.bmp
+rm  -f $top_builddir/examples/coax2.U.bmp
+rm  -f $top_builddir/examples/coax2.V.bmp
+rm  -f $top_builddir/examples/coax2.Er.bmp
 
-rm -f ../examples/coax2.Ex.bin
-rm -f ../examples/coax2.Ey.bin
-rm -f ../examples/coax2.E.bin
-rm -f ../examples/coax2.U.bin
-rm -f ../examples/coax2.V.bin
-rm -f ../examples/coax2.Er.bin
+rm  -f $top_builddir/examples/coax2.Ex.bin
+rm  -f $top_builddir/examples/coax2.Ey.bin
+rm  -f $top_builddir/examples/coax2.E.bin
+rm  -f $top_builddir/examples/coax2.U.bin
+rm  -f $top_builddir/examples/coax2.V.bin
+rm  -f $top_builddir/examples/coax2.Er.bin
 
-echo done 4
 # Check that no options creates.bmp's and  bin's
-../src/non_gui/atlc ../examples/coax2.bmp  > /dev/null
-if [ ! -f ../examples/coax2.Ex.bmp ]  || [ ! -f ../examples/coax2.Ey.bmp ] || [ ! -f ../examples/coax2.Er.bin ]  ; then
+$top_builddir/src/non_gui/atlc $top_builddir/examples/coax2.bmp > /dev/null
+if [ ! -f $top_builddir/examples/coax2.Ex.bmp ]  || [ ! -f $top_builddir/examples/coax2.Ey.bmp ] || [ ! -f $top_builddir/examples/coax2.Er.bin ]  ; then
+  echo failed at 4th stage
   echo "FAILED:" $0 >> tests.log 
   exit 1
 fi
-echo done 5
-echo "PASSED:" $0 >> tests.log 
+  rm  -f $top_builddir/examples/coax2.Ex.bin
+  rm  -f $top_builddir/examples/coax2.Ey.bin
+  rm  -f $top_builddir/examples/coax2.E.bin
+  rm  -f $top_builddir/examples/coax2.U.bin
+  rm  -f $top_builddir/examples/coax2.V.bin
+  rm  -f $top_builddir/examples/coax2.Er.bin
+  echo "PASSED:" $0 >> tests.log 
 exit 0
-

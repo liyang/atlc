@@ -21,11 +21,11 @@
 
 # Any failure to generate the correct checksums are noted. 
 
-# Any failure in an Xa-... where X is an integer will cause
-# Xb, Xc, Xd ...etc to fail. Any pass of Xa, but faiure of Xb will cause
-# all the Xc, Xd ... to fail. If both Xa and Xb pass, then hopefully Xc,
+# Any failure in an Xa-$top_builddir. where X is an integer will cause
+# Xb, Xc, Xd $top_builddir.etc to fail. Any pass of Xa, but faiure of Xb will cause
+# all the Xc, Xd $top_builddir. to fail. If both Xa and Xb pass, then hopefully Xc,
 # Xd etc will. However, Xd, Xe etc does not rely on the correct functioning of 
-# Xc. The Xc, Xd, ... only need Xa and Xb to pass, so Xc, Xd etc are
+# Xc. The Xc, Xd, $top_builddir. only need Xa and Xb to pass, so Xc, Xd etc are
 # independent of each other. 
 
 # I would add that these checksums have been checked using the GNU
@@ -38,12 +38,18 @@
 # know. email drkirkby@ntlworld.com and/or davek@medphys.ucl.ac.uk 
 
 
-CKSUM=`../tools/src/mycksum ../examples/test_stripline_coupler.Ey.odd.bmp`
-if [ $CKSUM = 37407 ]; then
+CKSUM=`$top_builddir/tools/src/mycksum $top_builddir/examples/test_stripline_coupler.Ey.odd.bmp`
+INPUTSIZE=`$top_builddir/tools/src/myfilelength $top_builddir/examples/test_stripline_coupler.bmp`
+GENERATEDSIZE=`$top_builddir/tools/src/myfilelength $top_builddir/examples/test_stripline_coupler.Ey.odd.bmp`
+if [ $GENERATEDSIZE != 112194 ] ; then
+  echo "FAILED (size mismatch):" $0 >> tests.log
+  echo "FAILED (size mismatch):" $0
+  exit 1
+elif [ $CKSUM != 37407 ] ; then
+  echo "FAILED (checksum error):" $0 >> tests.log
+  echo "FAILED (checksum error):" $0 
+  exit 1
+else
   echo "PASSED:" $0 >> tests.log
   exit 0
-else
-  echo "FAILED:" $0 
-  echo "FAILED:" $0 
-  exit 1
 fi

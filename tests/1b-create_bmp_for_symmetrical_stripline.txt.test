@@ -21,11 +21,11 @@
 
 # Any failure to generate the correct checksums are noted. 
 
-# Any failure in an Xa-... where X is an integer will cause
-# Xb, Xc, Xd ...etc to fail. Any pass of Xa, but faiure of Xb will cause
-# all the Xc, Xd ... to fail. If both Xa and Xb pass, then hopefully Xc,
+# Any failure in an Xa-$top_builddir. where X is an integer will cause
+# Xb, Xc, Xd $top_builddir.etc to fail. Any pass of Xa, but faiure of Xb will cause
+# all the Xc, Xd $top_builddir. to fail. If both Xa and Xb pass, then hopefully Xc,
 # Xd etc will. However, Xd, Xe etc does not rely on the correct functioning of 
-# Xc. The Xc, Xd, ... only need Xa and Xb to pass, so Xc, Xd etc are
+# Xc. The Xc, Xd, $top_builddir. only need Xa and Xb to pass, so Xc, Xd etc are
 # independent of each other. 
 
 # I would add that these checksums have been checked using the GNU
@@ -36,7 +36,7 @@
 # unlikely. So if any problems occur, check the checksum with the GNU
 # 'sum' and see what that gives. If any failures do occur, please let me
 # know. email drkirkby@ntlworld.com and/or davek@medphys.ucl.ac.uk 
-Zo=`../src/non_gui/atlc test_sym_strip.bmp | awk '{print $6}'`
+Zo=`$top_builddir/src/non_gui/atlc $top_builddir/examples/test_sym_strip.bmp | awk '{print $6}'`
 #Check the impedance Zo which should be 122.44 Ohms
 if [ $Zo = 122.44 ]; then
   echo "PASSED:" $0 >> tests.log

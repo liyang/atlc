@@ -4,7 +4,7 @@
 # is computed. 
 # To save time, atlc is not called to give its estimate of Zo, like it was
 # in 6a-create_and_check_25ohm_201Pixel_high_symmetrical_stripline.test
-Zo=`../src/non_gui/create_bmp_for_symmetrical_stripline -v 2978 401 1334 ../examples/25ohm-401h.bmp  | awk '{print $4}'`
+Zo=`$top_builddir/src/non_gui/create_bmp_for_symmetrical_stripline -v 2978 401 1334 $top_builddir/examples/25ohm-401h.bmp  | awk '{print $4}'`
 if [ $Zo = 24.995678 ]; then
   echo "PASSED:" $0 >> tests.log
   exit 0

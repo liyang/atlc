@@ -1,5 +1,5 @@
 #!/bin/sh
-Zo=`../src/non_gui/create_bmp_for_symmetrical_stripline -v  1846 401 202 ../examples/100ohm-401h.bmp | awk '{print $4}'`
+Zo=`$top_builddir/src/non_gui/create_bmp_for_symmetrical_stripline -v  1846 401 202 $top_builddir/examples/100ohm-401h.bmp | awk '{print $4}'`
 if [ $Zo = 100.024637 ]; then
   echo "PASSED:" $0 >> tests.log
   exit 0

@@ -21,11 +21,11 @@
 
 # Any failure to generate the correct checksums are noted. 
 
-# Any failure in an Xa-... where X is an integer will cause
-# Xb, Xc, Xd ...etc to fail. Any pass of Xa, but faiure of Xb will cause
-# all the Xc, Xd ... to fail. If both Xa and Xb pass, then hopefully Xc,
+# Any failure in an Xa-$top_builddir. where X is an integer will cause
+# Xb, Xc, Xd $top_builddir.etc to fail. Any pass of Xa, but faiure of Xb will cause
+# all the Xc, Xd $top_builddir. to fail. If both Xa and Xb pass, then hopefully Xc,
 # Xd etc will. However, Xd, Xe etc does not rely on the correct functioning of 
-# Xc. The Xc, Xd, ... only need Xa and Xb to pass, so Xc, Xd etc are
+# Xc. The Xc, Xd, $top_builddir. only need Xa and Xb to pass, so Xc, Xd etc are
 # independent of each other. 
 
 # I would add that these checksums have been checked using the GNU
@@ -40,13 +40,11 @@
 # .bin files are unchecked, so let removed them.
 rm -f test.*.bin
 
-../src/non_gui/atlc test.bmp > test.txt
+$top_builddir/src/non_gui/atlc test.bmp > test.txt
 # Check the inductance per metre, which should be in column 12 and 
 # should be 340.8 nH/m
-cat test.txt | awk '{print $12}' > /tmp/atlc-test.$$
-CKSUM=`../tools/src/mycksum /tmp/atlc-test.$$`
-rm /tmp/atlc-test.$$
-if [ $CKSUM = 22588 ]; then
+Zo=`cat test.txt | awk '{print $12}'`
+if [ $Zo = 340.8 ]; then
   echo "PASSED:" $0 >> tests.log
   exit 0
 else

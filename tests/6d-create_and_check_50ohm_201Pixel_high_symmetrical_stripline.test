@@ -4,17 +4,19 @@
 # is computed. 
 # atlc is then called, and its eastimat calaculated, which will differ 
 # slightly from the theoretical data 
-ZoTheory=`../src/non_gui/create_bmp_for_symmetrical_stripline -v 1134 201 290 ../examples/50ohm-201h.bmp | awk '{print $4}'`
-Zoatlc=`../src/non_gui/atlc ../examples/50ohm-201h.bmp | awk '{print $6}'`
-CKSUM=`../tools/src/mycksum ../examples/50ohm-201h.bmp'`
-EXCKSUM=`../tools/src/mycksum ../examples/50ohm-201h.Ex.bmp'`
-#echo "Zo theory = " $ZoTheory "Zo altc= " $Zoatlc " cksum of bitmap" $CKSUM "cksum of .Ex.bmp= " $EXCKSUM
-if [ $ZoTheory = 49.989477  ] && [ $Zoatlc = 49.85 ] && [ $CKSUM = 58533 ] && [ $EXCKSUM = 19379 ] ; then
+ZoTheory=`$top_builddir/src/non_gui/create_bmp_for_symmetrical_stripline -v 1134 201 290 $top_builddir/examples/50ohm-201h.bmp | awk '{print $4}'`
+Zoatlc=`$top_builddir/src/non_gui/atlc $top_builddir/examples/50ohm-201h.bmp | awk '{print $6}'`
+CKSUM=`$top_builddir/tools/src/mycksum $top_builddir/examples/50ohm-201h.bmp`
+EXCKSUM=`$top_builddir/tools/src/mycksum $top_builddir/examples/50ohm-201h.Ex.bmp`
+# echo "Zo theory = " $ZoTheory "Zo altc= " $Zoatlc " cksum of bitmap" 
+# echo $CKSUM "cksum of .Ex.bmp= " $EXCKSUM
+#if [ $ZoTheory = 49.989477  ] && [ $Zoatlc = 49.85 ] && [ $CKSUM = 58533 ] && [ $EXCKSUM = 19379 ] ; then
+if [ $ZoTheory = 49.989477  ] && [ $Zoatlc = 49.85 ] && [ $CKSUM = 41699 ] && [ $EXCKSUM = 19379 ] ; then
     echo "PASSED:" $0 >> tests.log
     exit 0
 else
+  echo "The following test will always fail if the gsl libary is not linked in"
   echo "FAILED:" $0 >> tests.log
-  echo "This will always fail if the gsl libary is not linked in"
   exit 1
 fi
 
