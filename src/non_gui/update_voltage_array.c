@@ -79,19 +79,8 @@ void update_voltage_array(int nmax, int imin, int imax, int jmin, int jmax, doub
       for (i = k&1 ? imax : imin;   k&1 ? i >=imin : i <= imax ;  k&1 ? i-- : i++)
         for (j = (k==0 || k ==3) ? jmin : jmax; (k ==0 || k == 3)  ? j <= jmax : j >= jmin ; (k == 0 || k ==3) ?  j++ : j--){
         oddity_value=oddity[i][j];
-	// if(i==2 && j == 2)
-	  // printf("i=2 and j=2\n");
-
-        if( oddity_value == CONDUCTOR_MINUS_ONE_V )
-           V_to[i][j]= -1.0;
-
-        else if( oddity_value == CONDUCTOR_ZERO_V ) 
-           V_to[i][j]= 0.0;
-
-        else if( oddity_value == CONDUCTOR_PLUS_ONE_V ) 
-	  V_to[i][j]= +1.0;
         
-        else if(oddity_value == ORDINARY_INTERIOR_POINT)  
+        if(oddity_value == ORDINARY_INTERIOR_POINT)  
           V_to[i][j]=r*(V_from[i][j+1]+V_from[i+1][j]+V_from[i][j-1]+V_from[i-1][j])/4.0+(1-r)*V_from[i][j];
         else if (i > 1 && j > 0 && i < width-1 && j < height-1) {
         a=(Er[i][j] * Er[i][j-1] * V_from[i][j-1])/(Er[i][j] + Er[i][j-1]);
