@@ -1,17 +1,10 @@
-NEWS for realease 4.3.2 on 12 June 2003.
+NEWS for realease 4.3.4 on  19th July 2003.
 
-A benchmark has been added, so that one can check the 
-speed of execution. This shouuld also be able to gather
-some hardware information such as
-a) CPU type
-b) FPU type
-c) CPU speed
-c) RAM 
-d) Number of CPUs
-e) Maximum number of CPUs support by system.
+This is a bug release. Code had been tidied a bit
+with lint, but the main change is to declare 
+singned char **cell_type, rather than leave the 
+signed out. Previously it would not compile on 
+AIX or IRIX, but now it does. 
 
-Currently, the above data has only been gathered on 
-Solaris and Tru64, but some may work on other platforms.
-
-Dr. David Kirkby 12/6/2003
+Dr. David Kirkby  19th July 2003
 
