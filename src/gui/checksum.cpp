@@ -1,11 +1,10 @@
 /*
- * hworld.cpp
- * Hello world sample by Robert Roebling
+checksum
  */
 
 #include "wx/wx.h" 
 
-class MyApp: public wxApp
+class MyyApp: public wxApp
 {
     virtual bool OnInit();
 };
@@ -33,11 +32,11 @@ BEGIN_EVENT_TABLE(MyFrame, wxFrame)
     EVT_MENU(ID_About, MyFrame::OnAbout)
 END_EVENT_TABLE()
 
-IMPLEMENT_APP(MyApp)
+IMPLEMENT_APP(MyyApp)
 
-bool MyApp::OnInit()
+bool MyyApp::OnInit()
 {
-    MyFrame *frame = new MyFrame( "Hello World", wxPoint(50,50), wxSize(450,340) );
+    MyFrame *frame = new MyFrame( "checksum", wxPoint(50,50), wxSize(450,340) );
     frame->Show(TRUE);
     SetTopWindow(frame);
     return TRUE;
@@ -58,7 +57,7 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size)
     SetMenuBar( menuBar );
 
     CreateStatusBar();
-    SetStatusText( "Welcome to wxWindows!" );
+    SetStatusText( "'checksum' is part of atlc" );
 }
 
 void MyFrame::OnQuit(wxCommandEvent& WXUNUSED(event))
@@ -68,7 +67,11 @@ void MyFrame::OnQuit(wxCommandEvent& WXUNUSED(event))
 
 void MyFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 {
-    wxMessageBox("This is a wxWindows Hello world sample",
-        "About Hello World", wxOK | wxICON_INFORMATION, this);
+    wxMessageBox("This generates a simple 16-bit checksum for comparing files\n \
+checksum is part of atlc, which may be found at http://atlc.sourceforge.net.\n \
+atlc is used for finding the impedance of arbitary transmission lines.\n\n \
+Copyright (C) 2002. Dr. David Kirkby PhD (G8WRB). e-mail drkirkby@ntlworld.com\n\n \
+This may be copied and distribted under the terms of GNU General Public Licence",
+        "About checksum", wxOK | wxICON_INFORMATION, this);
 }
 
