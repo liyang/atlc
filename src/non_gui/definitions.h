@@ -178,6 +178,8 @@ int int_values[10];
 int importance[10];
 int odd_or_even[10];
 int best[10];
+int non_metallic_pixels;
+int tenth_of_estimated_iterations_needed;
 };
 
 #define NOT_IMPORTANT 0   /* The importance to attach to getting the */
