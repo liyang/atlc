@@ -242,12 +242,12 @@ atlcFrame::atlcFrame(const wxString& title, const wxPoint& pos, const wxSize& si
   help.UseConfig(wxConfig::Get());
   bool ret;
   help.SetTempDir(".");
-  help.AddBook("html-docs/testing.hhp");
+  help.AddBook("htmdocs/testing.hhp");
   if (! ret)
-    wxMessageBox("Failed adding book html-docs/testing.hhp");
-  ret = help.AddBook("html-docs/another.hhp");
+    wxMessageBox("Failed adding book htmdocs/testing.hhp");
+  ret = help.AddBook("htmdocs/another.hhp");
   if (! ret)
-    wxMessageBox("Failed adding book html-docs/another.hhp");
+    wxMessageBox("Failed adding book htmdocs/another.hhp");
 }
 
 // event handlers
