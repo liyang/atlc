@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 TRANSITIONAL//EN">
+<HTML>
+<HEAD>
+<TITLE>Homepage of atlc - Arbitrary Transmission Line Calculator</TITLE>
+<META name="generator" content="Mostly bluefish & vi. Sometimes netscape">
+<META http-equiv="CONTENT-TYPE" content="text/html; charset=iso-8859-1">
+<META name="AUTHOR" content="Dr. David Kirkby, drkirkby@ntlworld.com">
+<META name="DESCRIPTION" content="Transmission line calculator, of *any* cross section">
+<META name="KEYWORDS" content="Transmission line calculator arbitrary any shape cross section finite difference">
+
+</HEAD>
+<BODY>
+
+<H1><CODE>atlc</CODE> - Arbitrary Transmission Line Calculator.</H1>
+
+The programme <COde>atlc</code> calculates the impedance of two or three wire electrical transmission lines of totally arbitrary cross section, using a numerical technique called <EM>finite difference</EM>. The conductors can be coaxial, run side by side, or in just about any configuration you can think of. The diagrammes below shows 3 types of 2-wire  transmission lines and a directional copuler, all of which may be analysed. In each diagramme, one conductor is shown red, the other conductor shown green and in the case of a coupler, the third conductor is shown blue. The dielectrics are shown in a few other colours, with white being a vacuum and turquoise being a dielectric with an effective permittivity of 4.8 (about the same as fibreglass PCB). 
+<TABLE>
+<TR>
+<TD><img src="jpgs/coax2.jpg" ALT="round coax" > </TD>
+<TD><img src="jpgs/twin-wire.jpg" ALT="twin wire" ></TD>
+<TD><img src="jpgs/very-odd.jpg" ALT="very odd line" ></TD>
+<TD><img src="jpgs/cop1.jpg" ALT="directional coupler" width="128" height="128"></TD>
+</TR>
+<TR>
+<TD>Zo=69.690 Ohms<BR>C=47.865 pF/m<BR>L=232.454 nH/m<BR></TD>
+<TD>Zo= 49.335 Ohms<br>C= 67.611 pF/m<br>L= 164.565 nH/m </TD>
+<TD>Zo= 56.020  Ohms<br> C= 59.544 pF/m <br>L= 186.862 nH/m</TD>
+<TD>Zo= 66.3699  Ohms<br> Zeven=138.9950 Ohms<br>Zodd= 31.6915 Ohms<br></TD>
+</TR>
+</TABLE>
+The programme  <COde>atlc</code> needs to know shape of the transmission line's cross section. This cross section is stored in a data file, which happens to be a Windows bitmap file. The  bitmap file is read by <COde>atlc</code>, following which the  programme performs the analysis. <br><br>There are two ways to generate the bitmap for <COde>atlc</code>. 
+<OL>
+        <LI> As you might expect, you can draw the transmission line's cross-section in a graphics programme such as <A HREF="http://www.gimp.org">Gimp</A>, <A HREF="http://www.adobe.com/products/photoshop/main.html">Photoshop</A>, Windows <A HREF="http://www.microsoft.com">Paint</A> Corel Photopaint etc.  The programme must be able to save images as bitmap (.BMP or .bmp) files, in 24-bit (true colour) mode The graphics programme can run under whatever operating system you like.  If for example you have some U-section brass and some hollow rectangular tube, and wanted to know the properties of a transmission line formed from these, you might draw something like this, and save it as a file, which we might call <CODE>ushape.bmp</CODE><br><br></LI>
+       <img src="jpgs/ushape.jpg" ALT="U-section" > <br><br>
+	<LI> In the case of simple cross-sections, the bitmaps can be generated automatically. Currently 6 such programms have been written, to quickly generate bitmaps for rectangular and circular conductors, striplines and a directional copuler. An example of such as programme is <CODE><a href="rect_in_rect.html">rect_in_rect</a></CODE>, which is able to automatically generate a bitmap for any <STRONG>rect</STRONG>angular conductor, <STRONG>in</STRONG>side any other <STRONG>rect</STRONG>angular conductor, with no more than 2 dielectrics. One dielectric must lie under the centre conductor. Other programs include <CODE>circ_in_circ</CODE>  <br>
+
+<br>
+	Using rect_in_rect,.is very fast - much faster than generating the bitmaps with a graphics programme.</LI>
+</OL>
+A unix computer, with a <A HREF="http://www.gnu.org/software/gcc/gcc.html">gcc</A> or other C compiler, is needed  to compile and run <COde>atlc</code>. The programme should compile very easily and quickly. Being rather CPU intensive, <COde>atlc</code> has been written to support multiple processors if available. Here is an example of using atlc, with the file <CODE>ushape.bmp</CODE> being drawn by a graphics programme. <br>
+
+<br>
+<pre>
+% atlc -v ushape.bmp
+ushape.bmp Er= 1.000000 C= 77.2797 pF/m L= 143.977094 nH/m Zo= 43.163247 Ohms v= 299792458.010503 m/s v_f= 1.000000    VERSION= 3.0.0
+ushape.bmp Er= 1.000000 C= 77.1386 pF/m L= 144.240432 nH/m Zo= 43.242194 Ohms v= 299792458.010503 m/s v_f= 1.000000    VERSION= 3.0.0
+ushape.bmp Er= 1.000000 C= 77.1385 pF/m L= 144.240554 nH/m Zo= 43.242230 Ohms v= 299792458.010503 m/s v_f= 1.000000    VERSION= 3.0.0
+ushape.bmp Er= 1.000000 C= 77.1385 pF/m L= 144.240554 nH/m Zo= 43.242230 Ohms v= 299792458.010503 m/s v_f= 1.000000    VERSION= 3.0.0
+</pre>
+It will be seen that <CODE>atlc</CODE> makes several estimates of the transmission line's properties, each subsequent one being closer to the true values (normally only the final result is shown, but the -v option added above causes <CODE>atlc</CODE> to print intermediate results).
+<br><br>
+Here's an example of using <CODE>rect_in_rect</CODE> to generate a bitmap The programme needs 11 parameters on its command line, which are described fully <a href="generators.html">elsewhere</a>. For now, just accept that these 11 parameters describe a transmission line. The output of <CODE>rect_in_rect</CODE> is redirected to the file <CODE>ex2.bmp</CODE>, which is then read by <CODE>atlc</CODE>>
+<pre>
+% rect_in_rect 250 175 10 32 4 200 56 25 1.0 2.5  &gt  ex2.bmp
+% atlc  ex2.bmp
+ex2.bmp Er= MIXED C= 87.8016 pF/m L= 240.9628 nH/m Zo= 52.387023 Ohms v= 217407041.146 m/s     v_f= 0.725192 VERSION=3.0.0
+
+
+</pre>
+<br>
+
+The programme <COde>atlc</code> was written by, and is supported by, Dr. David Kirkby (G8WRB). 
+<p>atlc is written and supported by <a href="mailto: drkirkby@ntlworld.com?subject=atlc%20-%20Arbitrary%20Transmission%20Line%20Calculator">Dr. David Kirkby (G8WRB)</A>It is issued under the GNU public license. <p>
+<a href="http://atlc.sourceforge.net">Return to the atlc homepage</a>
+</BODY>
+</HTML>
