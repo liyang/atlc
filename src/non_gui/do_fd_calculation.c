@@ -31,7 +31,6 @@ Dr. David Kirkby, e-mail drkirkby at ntlworld.com
 
 #include "definitions.h"
 
-
 extern int append_flag;
 extern int dielectrics_to_consider_just_now, coupler;
 extern int num_pes;
@@ -44,7 +43,13 @@ void do_fd_calculation(struct transmission_line_properties *data, size_t size, F
   double capacitance_old, capacitance;
   double velocity_of_light_in_vacuum;
   int count=0;
-
+  if (data->dielectrics_in_bitmap > 1) {
+    fprintf(stderr,"\nSorry, but on the 15th October 2003 I was advised there is an\n");
+    fprintf(stderr,"error in atlc when computing systems with multiple dielectrics.\n");
+    fprintf(stderr,"So until this problem is fixed, the facility has been disabled.\n\n");
+    fprintf(stderr,"I hope to release a new version shortly without this problem.\n");
+    exit(1);
+  }
   /* The line of best fit of non_metalic_pixels vs iterations required
   is y=0.0011 * non_metallic_pixels  + 283. 
 
