@@ -13,7 +13,7 @@
 # checks for system services
 # AC_OUTPUT([file...])
 
-AC_INIT([atlc], [4.4.0], [drkirkby@ntlworld.com])
+AC_INIT([atlc], [4.4.1], [drkirkby@ntlworld.com])
 AM_INIT_AUTOMAKE
 AC_PREREQ([2.57])
 AC_CONFIG_SRCDIR([tools/src/myfilelength.c])
@@ -42,7 +42,7 @@ AC_CHECK_HEADERS([stdio.h math.h malloc.h stdlib.h string.h time.h limits.h ])
 AC_CHECK_HEADERS([strings.h sys/types.h machine/hal_sysinfo.h sys/sysinfo.h ])
 AC_CHECK_HEADERS([sys/processor.h sched.h sys/param.h sys/pstat.h sys/unistd.h ])
 AC_CHECK_HEADERS([ sys/utsname.h sys/systeminfo.h unistd.h aixfont.h ])
-AC_CHECK_HEADERS([ linux/ip.h errno.h sys/vid.h invent.h ])
+AC_CHECK_HEADERS([ linux/ip.h errno.h sys/vid.h invent.h sys/sysctl.h ])
 
 # Checks for typedefs
 AC_HEADER_STDBOOL
@@ -62,7 +62,7 @@ AC_CHECK_SIZEOF([size_t])
 AC_FUNC_STRTOD
 AC_CHECK_FUNCS([memset strchr strtol processor_info getsysinfo pthread_num_processors_np ])
 AC_CHECK_FUNCS([ cpu_get_max pstat pstat_getdynamic pstat_getprocessor uname sysconf sysinfo ])
-AC_CHECK_FUNCS([ cpusetcreate cpucountset cpu_get_num ])
+AC_CHECK_FUNCS([ cpusetcreate cpucountset cpu_get_num sysctl ])
 
 # checks for system services
 
