@@ -1,3 +1,18 @@
+NEWS for realease 4.4.2 on  5th September 2003.
+
+Within a few hours of releasing 4.4.1, I realised
+there was a bug that prevented it compiling on 
+at least one BSD system. I'm hoping this prevents that
+problem, but if not, add the option 
+--disable-hardware-info and re-configure.
+
+Added a system call to get the number of configured 
+processors online in Linux. This seems to be undocumented
+so it not without its risks, but it seems to work okay on the 
+limited number of systems tested on. 
+
+***********************
+
 NEWS for realease 4.4.1 on  4th September 2003.
 
 I new program 'tests/sysdata' has been added, which
@@ -20,6 +35,3 @@ try_solaris.c
 so should no longer generate *any* compiler warnings, on
 any files on any operating systems. If you get any
 compiler warnings, let me know. 
-
-Dr. David Kirkby, 4th Auguest 2003 Re: atlc-4.4.1
-
