@@ -8,6 +8,23 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+
+/* On BSD 3.2 for SPARC, NGROUPS don't seem to be defined, but
+it is on other systems. To be safe, the relavant header files
+will only be included if NGROUPS is not defined */
+
+#ifndef NGROUPS
+
+#ifdef HAVE_SYS_PARAM_H
+#include <sys/param.h>
+#endif
+
+#ifdef HAVE_SYS_SYSLIMITS_H
+#include <sys/syslimits.h>
+#endif
+
+#endif /* End of ifndef NGROUPS */
+
 #include <sys/types.h>
 #include <sys/sysctl.h>
 
@@ -44,15 +61,9 @@ int try_bsd(struct computer_data *data)
     sprintf(data->cpus,"%d ",  cpus);
 #endif
 
-
-  /*  sprintf(data->cpu_type,"%ld ",12); */
-
   /* Obtain the CPU speed in MHz - as a double */
-      sprintf(data->mhz,"%.1f",1080);
 
   /* Obtain the of CPU and FPU on the ???? box */
-      sprintf(data->cpu_type,"%s","80386");
-      sprintf(data->fpu_type,"%s","80387");
 
   /* Obtain the RAM, cache etc on the BSD system. */
 
@@ -61,7 +72,7 @@ int try_bsd(struct computer_data *data)
   mib[1]=HW_PHYSMEM;
   ret=sysctl(mib, 2, &ram , &len, NULL, 0);
   if( ram > 0 && ret ==0 )
-    sprintf(data->memory,"%d", ram/(1024*1024) , ret);
+    sprintf(data->memory,"%d", ram/(1024*1024));
 #endif
 
 
