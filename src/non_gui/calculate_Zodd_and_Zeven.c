@@ -28,20 +28,11 @@ groundplanes of spacing h. */
 
 #include "definitions.h"
 
-#ifdef HAVE_GSL_GSL_SF_ELLINT_H 
+#ifdef  HAVE_LIBGSL
 #include <gsl/gsl_sf_ellint.h>
-#endif
-
-#ifdef HAVE_GSL_GSL_COMPLEX_H
 #include <gsl/gsl_complex.h>
-#endif
-
-#ifdef HAVE_GSL_GSL_COMPLEX_MATH_H
 #include <gsl/gsl_complex_math.h>
-#endif
-
-#ifdef HAVE_GSL_GSL_BESSEL_MATH_H
-#include <gsl/gsl_bessel_math.h>
+//#include <gsl/gsl_bessel_math.h>
 #endif
 
 #ifdef HAVE_STDLIB_H
@@ -56,7 +47,7 @@ void calculate_Zodd_and_Zeven(double *Zodd, double *Zeven, double *Zo, double w,
 #if defined(AS_SPARC64_FLAG) || (defined(IN_LIBGCC2) && (defined(__arch64__) || defined(__sparcv9)))
 */
 
-#if defined(HAVE_LIBGSL) && defined(HAVE_GSL_GSL_SF_ELLINT_H) 
+#ifdef HAVE_LIBGSL
 
   double ke, ko, ko_dash, ke_dash;
   ke=(tanh((M_PI/2)*(w/H)))*tanh((M_PI/2)*(w+s)/H);
