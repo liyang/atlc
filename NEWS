@@ -1,16 +1,12 @@
-NEWS for realease 4.3.7 on  16th August 2003.
+NEWS for realease 4.3.8 on  21st August 2003.
 
-This is a bug release. Code had been tidied a bit so now gcc
--Wconversion does not complain about much code. I think there is a bug
-in gcc-3.2.2 with this option, as it sometimes thinks code is wrong when it is
-not.
+Some changes have been made to the bests so that when
+the benchmark runs it should not produce junk for
+the hardware information on any system. Previosly
+is could create a lot of junk, that was all wrong. 
 
-Added some support for gathering hardware data under Linux. 
+uname is now only called once from try_portable.c
+and the splatform specific stuff computed elsewhere
 
-Removed MPI support, as its not working at all. 
-
-Changes made to the code to remove the need for a type long long, 
-which should make the code more portable. 
-
-Dr. David Kirkby, 16th August 2003
+Dr. David Kirkby, 21st August 2003
 
