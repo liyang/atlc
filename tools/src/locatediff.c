@@ -9,15 +9,39 @@ int main (int argc, char **argv)
 
   if (argc != 3)
   {
-    fprintf(stderr,"Usage file1 file2 - finds the diffence between them\n");
+    fprintf(stderr,"Usage file1 file2 - finds the difference between them\n");
     exit(1);
   }
-  fp1=fopen(argv[1],"r");
-  fp2=fopen(argv[2],"r");
-  fseek(fp1,0,SEEK_END);
-  fseek(fp2,0,SEEK_END);
-  length1=ftell(fp1);
-  length2=ftell(fp2);
+  if( (fp1=fopen(argv[1],"r")) == NULL)
+  {
+    fprintf(stderr,"Unable to open %s\n", argv[1]);
+    exit(1);
+  }
+  if( (fp2=fopen(argv[1],"r")) == NULL)
+  {
+    fprintf(stderr,"Unable to open %s\n", argv[2]);
+    exit(1);
+  }
+  if( fseek(fp1,0,SEEK_END) == -1) 
+  {
+    fprintf(stderr,"fseek failure on fp1 in locatediff.c\n");
+    exit(1);
+  }
+  if( fseek(fp2,0,SEEK_END) == -1) 
+  {
+    fprintf(stderr,"fseek failure on fp2 in locatediff.c\n");
+    exit(1);
+  }
+  if ((length1=ftell(fp1)) == -1)
+  {
+    fprintf(stderr,"Unable to determine file pointer position with ftelll on fp1\n");
+    exit(1);
+  }
+  if ((length2=ftell(fp2)) == -1)
+  {
+    fprintf(stderr,"Unable to determine file pointer position with ftelll on fp2\n");
+    exit(1);
+  }
   if(length1 != length2)
   {
     fprintf(stderr,"file1 and file2 are not of the same length\n");
