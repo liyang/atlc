@@ -235,13 +235,16 @@ without the threads\nlibrary.\n",1);
     needs to be done twice. We start by doing them once, for an vacuum
     dielectric. If necessary, they will be done again */
 
+    
     dielectrics_to_consider_just_now=1;
+
     if(coupler==FALSE)
       do_fd_calculation(&capacitance, &inductance, &Zo, &Zodd, &Zeven, Z0, \
       &velocity, &vf, stdout, cutoff, dielectrics_to_consider_just_now, \
       input_filename,REQUIRE_FD_CALCULATIONS);
     else if(coupler==TRUE)
     {
+      /* ***************************************/
       /* Do odd mode, as it what must be drawn */
       do_fd_calculation(&capacitance, &inductance, &Zo, &Zodd, &Zeven, Z_ODD, \
       &velocity, &vf, stdout, cutoff, dielectrics_to_consider_just_now, \
@@ -258,7 +261,12 @@ without the threads\nlibrary.\n",1);
       argv[my_optind],REQUIRE_FD_CALCULATIONS);
 
       //swap_conductor_voltages(POS_TO_NEG);
+      /* ***************************************/
     } /* end of      else if(coupler==TRUE) */
+
+
+
+
     /* The calculation of inductance above is correct, and does not
     need to be altered. However, if there are multiple dielectrics,
     then the capacitance needs to be computed again, this time taking
@@ -315,10 +323,9 @@ without the threads\nlibrary.\n",1);
       } /* if(coupler==FALSE) */
       else if (coupler==TRUE)
       {
-        print_data(stdout,argv[my_optind],-1.0,capacitance,\
-        inductance,Zo,Zodd,Zeven,Z_ALL,velocity,vf);
-        print_data(resultfile_fp,argv[my_optind],-1.0,capacitance,\
-        inductance,Zo,Zodd,Zeven,Z_ALL,velocity,vf);
+	printf("pcb type coupler\n");
+        print_data(stdout,argv[my_optind],-1.0,capacitance,inductance,Zo,Zodd,Zeven,Z_ALL,velocity,vf);
+        print_data(resultfile_fp,argv[my_optind],-1.0,capacitance,inductance,Zo,Zodd,Zeven,Z_ALL,velocity,vf);
       } 
       if(append_flag==TRUE)
       {
@@ -356,7 +363,6 @@ without the threads\nlibrary.\n",1);
       }
       else if(coupler==TRUE)
       {
-	printf("hello\n");
         print_data(stdout,argv[my_optind],1.0,capacitance,inductance,\
 	  Zo,Zodd,Zeven,Z_ALL,velocity,vf);
 
