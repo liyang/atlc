@@ -34,20 +34,7 @@ it or regenerate `configure' using a newer version of `autoconf'.
 
 The simplest way to compile this package is:
 
-  1) Make sure you have the GNU scientific library (gsl) installed.
-     See
-     http://sources.redhat.com/gsl/
-     ftp://ftp.gnu.org/pub/gnu/gsl/ to download
-
-     atlc will build without it, but some functionality is reduced
-     and some of the self-checks will fail when you run 'make check' 
-     which you are stronly advised to do.
-
-     I've tested this with gsl version 0.8, 1.1, 1.2 and 1.3, which was the
-     latest version at the time of writing. It may or may not work
-     with older versions.
-
-  2) *IF* you have a multi-procressor machine atlc will run considerably
+  1) *IF* you have a multi-procressor machine atlc will run considerably
      faster if you built it as a mutli-threded program. To do this you
      MUST have a POSIX compatible thread library. Many operating
      systems come with one (Solaris, Tru64, Sequent, AIX). Linux has a
@@ -61,13 +48,13 @@ The simplest way to compile this package is:
      So far, I've been unsuccesful in getting the SPARC versions of Linux
      (Debian or Redhat) to support multi-processing, 
 
-  3) Unzip the compressed tar file
+  2) Unzip the compressed tar file
      gzip -d atlc-x.y.tar.gz
 
-  4) Extract the tar archieve
+  3) Extract the tar archieve
      tar xvf atlc-x..y.z.tar
 
-  5) Set the varialble CFLAGS to whatever flags are appropiate with
+  4) Set the varialble CFLAGS to whatever flags are appropiate with
      your compiler and system. This is particularly important
      on Alpha platforms, when increases in speed of 3.5x were noticed
      when running with appropiate flags. 
@@ -75,14 +62,14 @@ The simplest way to compile this package is:
      A benchmark is provide (see section 8) which can be used
      as a guide to optimising the compiler flags. 
 
-  6) If you have a multi-processor machine, with more than 8 CPUs
+  5) If you have a multi-processor machine, with more than 8 CPUs
      (lucky you), change the variable MAX_THREADS in the file
      src/non_gui/definitions.h to reflect the number of CPUs. You
      can achieve the same result on the command line with the -t
      options, but changing it here will prevent you needing to 
      do this each time to get best peformance. 
 
-  7) `cd' to atlc-X.Y.z (whatever X, Y and Z are for the specific
+  6) `cd' to atlc-X.Y.z (whatever X, Y and Z are for the specific
       vesion) and type
      `./configure' to configure the package for your system.  If you're
      using `csh' on an old version of System V, you might need to type
@@ -107,19 +94,19 @@ The simplest way to compile this package is:
      You can NOT use --with-threads and --with-mpi, or --with-threads with
      --with-mpe. 
 
-   9) Type `make' to compile the package.
+   7) Type `make' to compile the package.
 
-  10) Type 'make check' to run quite a few checks 
+   8) Type 'make check' to run quite a few checks 
 
      This will also run a benchmark, which will generate so
      timing information. This can be used to optimise the flags. 
 
-  11) Type 'make install' if you wish to install the programs and 
+   9) Type 'make install' if you wish to install the programs and 
      example files. If you don't want to install the examples
      (they take up about 120 Mb) run 'make install-exec' and 
      'make install-man'
 
-  12) You can remove the program binaries and object files from the
+  10) You can remove the program binaries and object files from the
      source code directory by typing `make clean'. To also remove the
      files that `configure' created (so you can compile the package for
      a different kind of computer), type `make distclean'.  There is
