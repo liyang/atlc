@@ -1,15 +1,15 @@
-NEWS for realease 4.3.8 on  21st August 2003.
+NEWS for realease 4.4.0 on  30th August 2003.
 
-Some changes have been made to the tests so that when the benchmark 
-runs it should not produce junk for the hardware information on any 
-system. Previosly is could create a lot of junk, that was all wrong. 
+atlc now runs on anything from a toy to a supercomuter! Yes, that is
+right. An early version of atlc has been run on a Sony Playstation 2
+games console and version 4.4.0 has been tested on the Cray Y-MP
+supercomputer!! It has also been run on a very large number of other
+UNIX systems, so is hopefully very portable. 
 
-It should now build on a system that needs errno.h for errno to be
-defined. Previously, errno.h was not included, which one of the testers
-found on his Suse Linux system. 
+An option that was previously reccommended --enable-hardware-info
+has been removed. It is now enabled by default, but can be   
+over-ridden with --disable-hardware-info.
 
-uname is now only called once from try_portable.c and the platform 
-specific stuff computed elsewhere
 
-Dr. David Kirkby, 21st August 2003
+Dr. David Kirkby, 39st August 2003 Re: atlc-4.4.0
 
