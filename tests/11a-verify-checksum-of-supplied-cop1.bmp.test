@@ -2,7 +2,7 @@
 # There should be a bitmap included in the distribution
 # in the 'examples' directory called 'file cop1.bmp'
 # The checksum of this will be checked.
-CKSUM=`../tools/src/mycksum      ../examples/cop1.bmp`
+CKSUM=`../tools/src/mycksum ../examples/cop1.bmp `
 if [ $CKSUM = 38436 ]; then
   echo "PASSED:" $0 >> tests.log
   exit 0

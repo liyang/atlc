@@ -1,9 +1,9 @@
 #!/bin/sh
 
 # This is the one of a set of test that generate checksums after files are
-# created. Generally a bitmap if first produced by a program such as create_bmp_for_sym_strip, 
+# created. Generally a bitmap if first produced by a program such as create_bmp_for_symmmetrical_stripline, 
 # create_bmp_for_create_bmp_for_rect_in_rect, create_bmp_for_rect_cen_in_rect, create_bmp_for_circ_in_circ, create_bmp_for_circ_in_rect, 
-# create_bmp_for_coupler etc.
+# create_bmp_for_stripline_coupler etc.
 
 # The checksum of the bitmap generated is compared to what is known to be 
 # the correct checksum using a program 'mycksum' which is a cut-down version of
@@ -38,7 +38,7 @@
 # know. email drkirkby@ntlworld.com and/or davek@medphys.ucl.ac.uk 
 
 # First remove any old files, which might cause problems
-rm -rf test*.bmp test.txt test*.bin 
+#rm -rf test*.bmp test.txt test*.bin 
 
 ../src/non_gui/design_coupler -d 20 144 146 > test.txt
 CKSUM=`../tools/src/mycksum test.txt`

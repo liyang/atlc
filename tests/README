@@ -1,7 +1,6 @@
-This directory has a set of tests that generate checksums after files are
-created. Generally a bitmap is first produced by a program such as sym_strip, 
-create_bmp_for_rect_in_rect, create_bmp_for_rect_cen_in_rect, 
-create_bmp_for_circ_in_circ, create_bmp_for_circ_in_rect, 
+This is the first of a set of test that generate checksums after files are
+created. Generally a bitmap if first produced by a program such as 
+create_bmp_for_symmetrical_stripline, create_bmp_for_rect_in_rect, 
 create_bmp_for_coupler etc.
 
 The checksum of the bitmap generated is compared to what is known to be 
@@ -17,10 +16,8 @@ the .txt file are checked. The .bin's are not, since they will be
 dependent on the whether the machine is Big Endian (like Suns) or
 Little Endian like PCs. It will also be too dependent on rounding
 difference caused by the different FPUs in the different machines. 
-The size of some .bin files are checked. 
 
-Any failure to generate the correct checksums are noted as a failure.
-Not linking against the gsl library will cause failures. 
+Any failure to generate the correct checksums are noted. 
 
 Any failure in an Xa-... where X is an integer will cause
 Xb, Xc, Xd ...etc to fail. Any pass of Xa, but faiure of Xb will cause
@@ -29,6 +26,7 @@ Xd etc will. However, Xd, Xe etc does not rely on the correct functioning of
 Xc. The Xc, Xd, ... only need Xa and Xb to pass, so Xc, Xd etc are
 independent of each other. 
 
-Dr. David Kirkby 15/12/02,
+Dr. David Kirkby,
 email drkirkby@ntlworld.com and/or davek@medphys.ucl.ac.uk 
+10/1/02
 

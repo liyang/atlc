@@ -2,20 +2,21 @@ AUTOMAKE_OPTIONS = gnits
 
 XFAIL_TESTS = 
 
-TESTS = 1a-create_bmp_for_sym_strip.bmp.test \
-1b-create_bmp_for_sym_strip.txt.test \
-1c-create_bmp_for_sym_strip.E.bmp.test \
-1d-create_bmp_for_sym_strip.Er.bmp.test \
-1e-create_bmp_for_sym_strip.Ey.bmp.test \
-1f-create_bmp_for_sym_strip.Ex.bmp.test \
-1g-create_bmp_for_sym_strip.U.bmp.test \
-1h-create_bmp_for_sym_strip.V.bmp.test \
-1i-create_bmp_for_sym_strip.E.bin.test \
-1j-create_bmp_for_sym_strip.Er.bin.test \
-1k-create_bmp_for_sym_strip.Ey.bin.test \
-1l-create_bmp_for_sym_strip.Ex.bin.test \
-1m-create_bmp_for_sym_strip.U.bin.test \
-1n-create_bmp_for_sym_strip.V.bin.test \
+TESTS =  \
+1a-create_bmp_for_symmmetrical_stripline.bmp.test \
+1b-create_bmp_for_symmmetrical_stripline.txt.test \
+1c-create_bmp_for_symmmetrical_stripline.E.bmp.test \
+1d-create_bmp_for_symmmetrical_stripline.Er.bmp.test \
+1e-create_bmp_for_symmmetrical_stripline.Ey.bmp.test \
+1f-create_bmp_for_symmmetrical_stripline.Ex.bmp.test \
+1g-create_bmp_for_symmmetrical_stripline.U.bmp.test \
+1h-create_bmp_for_symmmetrical_stripline.V.bmp.test \
+1i-create_bmp_for_symmmetrical_stripline.E.bin.test \
+1j-create_bmp_for_symmmetrical_stripline.Er.bin.test \
+1k-create_bmp_for_symmmetrical_stripline.Ey.bin.test \
+1l-create_bmp_for_symmmetrical_stripline.Ex.bin.test \
+1m-create_bmp_for_symmmetrical_stripline.U.bin.test \
+1n-create_bmp_for_symmmetrical_stripline.V.bin.test \
 2a-create_bmp_for_rect_in_rect.bmp.test \
 2b-create_bmp_for_rect_in_rect.txt.test \
 2c-create_bmp_for_rect_in_rect.E.bmp.test \
@@ -28,6 +29,7 @@ TESTS = 1a-create_bmp_for_sym_strip.bmp.test \
 3b-rect_cen_in_rect.txt.test \
 7a-generate_coupler_bitmap.bmp.test \
 7b-generate_coupler_bitmap.bmp.test \
+7c-generate_coupler_bitmap.Ex.test \
 7c-generate_coupler_bitmap.txt.test \
 8a-design_coupler.bmp.test \
 9a-create-25-Ohm-201b.bmp.test \
@@ -40,5 +42,103 @@ TESTS = 1a-create_bmp_for_sym_strip.bmp.test \
 9h-create-200-Ohm-401b.bmp.test \
 9i-create-200-Ohm-801b.bmp.test \
 10a-create-lots-of-examples-check-last-one.test \
-10b-create-lots-of-examples-check-last-one.test 
-EXTRA_DIST = *.test generate.list README
+10b-create-lots-of-examples-check-last-one.test \
+11a-verify-checksum-of-supplied-cop1.bmp.test \
+11b-verify-checksum-of-created-cop1.Ex.odd.bmp.test \
+11c-verify-checksum-of-created-cop1.Ey.odd.bmp.test \
+11d-verify-checksum-of-created-cop1.E.odd.bmp.test \
+11e-verify-checksum-of-created-cop1.V.odd.bmp.test \
+11f-verify-checksum-of-created-cop1.U.odd.bmp.test \
+11g-verify-checksum-of-created-cop1.Er.bmp.test \
+11h-verify-checksum-of-created-cop1.Ex.even.bmp.test \
+11i-verify-checksum-of-created-cop1.Ey.even.bmp.test \
+11j-verify-checksum-of-created-cop1.E.even.bmp.test \
+11k-verify-checksum-of-created-cop1.U.even.bmp.test \
+11l-verify-checksum-of-created-cop1.V.even.bmp.test 
+
+EXTRA_DIST = \
+10a-create-lots-of-examples-check-last-one.test \
+10b-create-lots-of-examples-check-last-one.test \
+11a-verify-checksum-of-supplied-cop1.bmp.test \
+11b-verify-checksum-of-created-cop1.Ex.odd.bmp.test \
+11c-verify-checksum-of-created-cop1.Ey.odd.bmp.test \
+11d-verify-checksum-of-created-cop1.E.odd.bmp.test \
+11e-verify-checksum-of-created-cop1.V.odd.bmp.test \
+11f-verify-checksum-of-created-cop1.U.odd.bmp.test \
+11g-verify-checksum-of-created-cop1.Er.bmp.test \
+11h-verify-checksum-of-created-cop1.Ex.even.bmp.test \
+11i-verify-checksum-of-created-cop1.Ey.even.bmp.test \
+11j-verify-checksum-of-created-cop1.E.even.bmp.test \
+11k-verify-checksum-of-created-cop1.U.even.bmp.test \
+11l-verify-checksum-of-created-cop1.V.even.bmp.test \
+1a-create_bmp_for_symmmetrical_stripline.bmp.test \
+1b-create_bmp_for_symmmetrical_stripline.txt.test \
+1c-create_bmp_for_symmmetrical_stripline.E.bmp.test \
+1d-create_bmp_for_symmmetrical_stripline.Er.bmp.test \
+1e-create_bmp_for_symmmetrical_stripline.Ey.bmp.test \
+1f-create_bmp_for_symmmetrical_stripline.Ex.bmp.test \
+1g-create_bmp_for_symmmetrical_stripline.U.bmp.test \
+1h-create_bmp_for_symmmetrical_stripline.V.bmp.test \
+1i-create_bmp_for_symmmetrical_stripline.E.bin.test \
+1j-create_bmp_for_symmmetrical_stripline.Er.bin.test \
+1k-create_bmp_for_symmmetrical_stripline.Ey.bin.test \
+1l-create_bmp_for_symmmetrical_stripline.Ex.bin.test \
+1m-create_bmp_for_symmmetrical_stripline.U.bin.test \
+1n-create_bmp_for_symmmetrical_stripline.V.bin.test \
+2a-create_bmp_for_rect_in_rect.bmp.test \
+2b-create_bmp_for_rect_in_rect.txt.test \
+2c-create_bmp_for_rect_in_rect.E.bmp.test \
+2d-create_bmp_for_rect_in_rect.Er.bmp.test \
+2e-create_bmp_for_rect_in_rect.Ey.bmp.test \
+2f-create_bmp_for_rect_in_rect.Ex.bmp.test \
+2g-create_bmp_for_rect_in_rect.U.bmp.test \
+2h-create_bmp_for_rect_in_rect.V.bmp.test \
+3a-rect_cen_in_rect.bmp.test \
+3b-rect_cen_in_rect.txt.test \
+7a-generate_coupler_bitmap.bmp.test \
+7b-generate_coupler_bitmap.bmp.test \
+7c-generate_coupler_bitmap.Ex.test \
+7c-generate_coupler_bitmap.txt.test \
+8a-design_coupler.bmp.test \
+9a-create-25-Ohm-201b.bmp.test \
+9b-create-25-Ohm-401b.bmp.test \
+9c-create-50-Ohm-201b.bmp.test \
+9d-create-50-Ohm-401b.bmp.test \
+9e-create-100-Ohm-201b.bmp.test \
+9f-create-100-Ohm-401b.bmp.test \
+9g-create-200-Ohm-201b.bmp.test \
+9h-create-200-Ohm-401b.bmp.test \
+9i-create-200-Ohm-801b.bmp.test 
+
+CLEANFILES = \
+test.bmp \
+test2.txt \
+tests.log \
+test.txt \
+test.Ex.bmp \
+test.Ex.bin \
+test.Ey.bmp \
+test.Ey.bin \
+test.E.bmp \
+test.E.bin \
+test.V.bmp \
+test.V.bin \
+test.U.bmp \
+test.U.bin \
+test.Er.bmp \
+test.Er.bin \
+test.Ex.odd.bin \
+test.Ey.odd.bin \
+test.E.odd.bin \
+test.V.odd.bin \
+test.U.odd.bin \
+test.Ex.odd.bmp \
+test.Ey.odd.bmp \
+test.E.odd.bmp \
+test.V.odd.bmp \
+test.U.odd.bmp \
+test.Ex.even.bin \
+test.Ey.even.bin \
+test.E.even.bin \
+test.V.even.bin \
+test.U.even.bin 

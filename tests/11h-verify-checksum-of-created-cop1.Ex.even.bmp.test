@@ -3,7 +3,7 @@
 # We will generate all the bitmaps and check they 
 # are all okay. 
 CKSUM=`../tools/src/mycksum ../examples/cop1.Ex.even.bmp`
-if [ $CKSUM != 09736 ]; then
+if [ $CKSUM != 05912 ]; then
   echo "FAILED:" $0  >> tests.log
   exit 1
 else 
