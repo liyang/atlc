@@ -1,14 +1,23 @@
-NEWS for realease 4.5.0 on  28th September 2003.
+NEWS for realease 4.5.1 on  16th October 2003.
 
-The main changes are
-1) Improved documentation - including a couple of corrections
+This is the sort of release I don't like to make. I have to disable two
+features in atlc, since I have some concerns the results may not be
+accurate in these cases.
 
-2) It is no longer necessary to have the gsl library present
-as the single function that was called from the gsl library
-has been integrated into atlc. 
+1) When there are multiple dielectrics - there is clearly a problem
+here. This does *not* affect configurations with single dielectrics,
+but does (at least under some circumstances) affect multi-dielectric 
+cases.     
 
-3) I've removed my email address from all html files
-and replaced it by a jpg that has the same information. 
-This is to fool spammers. 
+2) There is a small possibility that the multi-threaded code may be
+wrong, so I'm disabling the ability to built it multi-threaded. 
+code for now. This will be re-instated soon. 
 
-Dr. David Kirkby, 28th September 2003. 
+
+I woudld add I have every confidence in the results for single 
+dielectrics and for single threaded code. EXTENSIVE testing has
+shown this to be so. It should be impossible to get the wrong 
+results with atlc now, as any attempt to use feature that I
+have some suspicions about have been disabled. 
+
+Dr. David Kirkby, 16th October 2003. Re: atlc-4.5.1
