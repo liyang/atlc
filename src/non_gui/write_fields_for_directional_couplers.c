@@ -34,6 +34,10 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 #include <string.h>
 #endif
 
+#ifdef HAVE_SYS_STAT_H
+#include <sys/stat.h>
+#endif
+
 #include "exit_codes.h"
 
 /* Write the following files, assuming an input of example.bmp 
