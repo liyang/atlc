@@ -1,4 +1,4 @@
-#!/bin/sh
+#! /bin/sh
 # This is one of a set of test that generate checksums after files are
 # created. Generally a bitmap if first produced by a program such as sym_strip, 
 # rect_in_rect, rect_cen_in_rect, circ_in_circ, circ_in_rect, 
@@ -20,14 +20,16 @@
 # rehat Linux and a Dec Alpha. Any failure probably indicates a 
 # program bug, so PLEASE PLEASE let me know about it!!
 # Dr. David Kirkby, drkirkby@ntlworld.com
-
-$top_builddir/src/non_gui/design_coupler -d 20 144 146 > /tmp/$$ 2> /dev/null
-MD5SUM=`$top_builddir/tools/src/mymd5sum /tmp/$$`
-rm /tmp/$$
+if [ "x$no_gsl" = "xyes" ] ; then
+  exit 77
+fi
+$top_builddir/src/non_gui/design_coupler -d 20 144 146 > /tmp/atlc.$$ 2> /dev/null
+MD5SUM=`$top_builddir/tools/src/mymd5sum /tmp/atlc.$$`
+rm /tmp/atlc.$$
 if [ $MD5SUM = f53d09bdc334c3f0508b4f44e789e216 ]; then
   echo "PASSED:" $0 >> tests.log 
   exit 0
 else
-  echo "The following test will always fail if  not linked against the gsl library"
+  echo "FAILED:" $0 >> tests.log 
   exit 1
 fi
