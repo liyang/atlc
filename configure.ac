@@ -42,7 +42,7 @@ AC_CHECK_HEADERS([stdio.h math.h malloc.h stdlib.h string.h time.h limits.h ])
 AC_CHECK_HEADERS([strings.h sys/types.h machine/hal_sysinfo.h sys/sysinfo.h ])
 AC_CHECK_HEADERS([sys/processor.h sched.h sys/param.h sys/pstat.h sys/unistd.h ])
 AC_CHECK_HEADERS([ sys/utsname.h sys/systeminfo.h unistd.h aixfont.h ])
-AC_CHECK_HEADERS([ linux/ip.h errno.h sys/vid.h ])
+AC_CHECK_HEADERS([ linux/ip.h errno.h sys/vid.h invent.h ])
 
 # Checks for typedefs
 AC_HEADER_STDBOOL
