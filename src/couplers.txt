@@ -1,0 +1,3 @@
+coupler5 H=201, w=100 s=11 Zodd=62.246132 Zeven=126.64465
+coupler4 W=201  w=100 s=42. Zodd=81.013243 Zeven=117.089376 (
+coupler3 W=201  w=100 s=329  bit off cente and one is 99. 
