@@ -111,14 +111,12 @@ int try_tru64(struct computer_data *data)
   }
   // sprintf(data->hw_platform,"%s", hw); 
 #endif
-
   return(PROBABLY_TRU64);
-#else
-  return(-1);
 #endif
 #endif
 #endif
 #endif
 #endif
 #endif  /* End of things likely to be on Tru64 system */
+  return(-1);
 }
