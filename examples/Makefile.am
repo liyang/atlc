@@ -1,7 +1,6 @@
 # This is Makefile.am, which is processed by automake
-EXTRA_DIST = README \
-13inner_22outer_coax.bmp \
-13inner_22outer_coax.bmp.txt \
+
+EXTRA_DIST = \
 aliased.bmp \
 aliased.bmp.txt \
 an_odd_er.bmp \
@@ -28,6 +27,8 @@ coaxtest2.bmp \
 coaxtest2.bmp.txt \
 test-coupler1.bmp \
 test-coupler1.bmp.txt \
+test-coupler2.bmp \
+test-coupler2.bmp.txt \
 coupler.bmp \
 coupler.bmp.txt \
 enclosed-microstrip.bmp \
@@ -60,8 +61,6 @@ positive-negative-short.bmp \
 positive-negative-short.bmp.txt \
 test.bmp \
 test.bmp.txt \
-test-coupler1.bmp \
-test-coupler2.bmp \
 test3.bmp \
 test3.bmp.txt \
 test4.bmp \
@@ -81,11 +80,53 @@ ushape.bmp.txt \
 very-odd.bmp \
 very-odd.bmp.txt \
 wide-9pixel.bmp \
+README \
 wide-9pixel.bmp.txt 
 
 CLEANFILES =
 
 DISTCLEANFILES = eccentric-a.bmp \
+13inner_22outer_coax.bmp \
+test_sym_strip.bmp \
+test_sym_strip.Ex.bin \
+test_sym_strip.Ey.bin \
+test_sym_strip.E.bin \
+test_sym_strip.V.bin \
+test_sym_strip.U.bin \
+test_sym_strip.Er.bin \
+test_sym_strip.Ex.bmp \
+test_sym_strip.Ey.bmp \
+test_sym_strip.E.bmp \
+test_sym_strip.V.bmp \
+test_sym_strip.U.bmp \
+test_sym_strip.Er.bmp \
+test_rect_in_rect.bmp \
+test_rect_in_rect.txt \
+test_rect_in_rect.Ex.bin \
+test_rect_in_rect.Ey.bin \
+test_rect_in_rect.E.bin \
+test_rect_in_rect.V.bin \
+test_rect_in_rect.U.bin \
+test_rect_in_rect.Er.bin \
+test_rect_in_rect.Ex.bmp \
+test_rect_in_rect.Ey.bmp \
+test_rect_in_rect.E.bmp \
+test_rect_in_rect.V.bmp \
+test_rect_in_rect.U.bmp \
+test_rect_in_rect.Er.bmp \
+coax2.V.bmp \
+25ohm-201h.Ex.bmp \
+25ohm-201h.Ey.bmp \
+25ohm-201h.E.bmp \
+25ohm-201h.V.bmp \
+25ohm-201h.U.bmp \
+25ohm-201h.Er.bmp \
+50ohm-201h.Ex.bmp \
+50ohm-201h.Ey.bmp \
+50ohm-201h.E.bmp \
+50ohm-201h.V.bmp \
+50ohm-201h.U.bmp \
+50ohm-201h.Er.bmp \
 eccentric-b.bmp \
 eccentric-c.bmp \
 eccentric-d.bmp \
@@ -116,10 +157,6 @@ coupler5.bmp \
 coupler6.bmp \
 coupler7.bmp \
 coupler8.bmp \
-wide.bmp \
-central.bmp \
-off-centre2.bmp \
-cir.bmp \
 test-coupler1.E.even.bin \
 test-coupler1.E.even.bmp \
 test-coupler1.E.odd.bin \
@@ -210,14 +247,79 @@ pcb-coupler.Ey.even.bmp \
 pcb-coupler.U.even.bmp \
 pcb-coupler.V.even.bmp \
 pcb-coupler.Er.bmp \
-test-coupler1.E.even.bmp \
-test-coupler1.E.odd.bmp \
-test-coupler1.Er.bmp \
-test-coupler1.Ex.even.bmp \
-test-coupler1.Ex.odd.bmp \
-test-coupler1.Ey.even.bmp \
-test-coupler1.Ey.odd.bmp \
-test-coupler1.U.even.bmp \
-test-coupler1.U.odd.bmp \
-test-coupler1.V.even.bmp \
-test-coupler1.V.odd.bmp 
+test_stripline_coupler.Ex.odd.bmp\
+test_stripline_coupler.Ey.odd.bmp\
+test_stripline_coupler.E.odd.bmp\
+test_stripline_coupler.V.odd.bmp\
+test_stripline_coupler.U.odd.bmp\
+test_stripline_coupler.Ex.even.bmp\
+test_stripline_coupler.Ey.even.bmp\
+test_stripline_coupler.E.even.bmp\
+test_stripline_coupler.V.even.bmp\
+test_stripline_coupler.U.even.bmp\
+test_stripline_coupler.Er.bmp\
+25ohm-201h.E.bin \
+25ohm-201h.Er.bin \
+25ohm-201h.Ex.bin \
+25ohm-201h.Ey.bin \
+25ohm-201h.U.bin \
+25ohm-201h.V.bin \
+50ohm-201h.E.bin \
+50ohm-201h.Er.bin \
+50ohm-201h.Ex.bin \
+50ohm-201h.Ey.bin \
+50ohm-201h.U.bin \
+50ohm-201h.V.bin \
+test-coupler2.E.even.bin \
+test-coupler2.E.odd.bin \
+test-coupler2.Er.bin \
+test-coupler2.Ex.even.bin \
+test-coupler2.Ex.odd.bin \
+test-coupler2.Ey.even.bin \
+test-coupler2.Ey.odd.bin \
+test-coupler2.U.even.bin \
+test-coupler2.U.odd.bin \
+test-coupler2.V.even.bin \
+test-coupler2.V.odd.bin \
+test_stripline_coupler.E.even.bin \
+test_stripline_coupler.E.odd.bin \
+test_stripline_coupler.Er.bin \
+test_stripline_coupler.Ex.even.bin \
+test_stripline_coupler.Ex.odd.bin \
+test_stripline_coupler.Ey.even.bin \
+test_stripline_coupler.Ey.odd.bin \
+test_stripline_coupler.U.even.bin \
+test_stripline_coupler.U.odd.bin \
+test_stripline_coupler.V.even.bin \
+test_stripline_coupler.V.odd.bin  \
+test-coupler2.Ex.odd.bmp \
+test-coupler2.Ey.odd.bmp \
+test-coupler2.E.odd.bmp \
+test-coupler2.V.odd.bmp \
+test-coupler2.U.odd.bmp \
+test-coupler2.Ex.even.bmp \
+test-coupler2.Ey.even.bmp \
+test-coupler2.E.even.bmp \
+test-coupler2.V.even.bmp \
+test-coupler2.U.even.bmp \
+test-coupler2.Er.bmp \
+25ohm-201h.bmp \
+25ohm-401h.bmp \
+25ohm-801h.bmp \
+50ohm-201h.bmp \
+50ohm-401h.bmp \
+50ohm-801h.bmp \
+100ohm-201h.bmp \
+100ohm-401h.bmp \
+100ohm-801h.bmp \
+200ohm-201h.bmp \
+200ohm-401h.bmp \
+200ohm-801h.bmp \
+400ohm-1551h.bmp \
+test_stripline_coupler.bmp \
+central.bmp \
+off-centre2.bmp \
+cir.bmp  \
+test-coupler2.bmp.txt \
+test_stripline_coupler.bmp.pre-atlc.txt
+
