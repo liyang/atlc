@@ -100,7 +100,7 @@ if test "x$with_mpi" != "x" \
 	path_to_mpe=$with_mpe
     fi	
     CFLAGS="$CFLAGS -I$path_to_mpe/include -L$path_to_mpe/lib"
-    AC_CHECK_LIB(pmpich,  PMPI_Init , , [AC_MSG_ERROR([Could not link test program with libpmpich.a])])
+    AC_CHECK_LIB(pmpich,  MPI_Init , , [AC_MSG_ERROR([Could not link test program with libpmpich.a])])
     AC_CHECK_LIB(mpe,  MPE_Init_log , , [AC_MSG_ERROR([Could not link test program with libmpe.a])])
     AC_CHECK_LIB(lmpe,  MPE_Init_log , ,[AC_MSG_ERROR([Could not link test program with liblmpe.a])] , -lmpe)
   else
@@ -110,7 +110,7 @@ if test "x$with_mpi" != "x" \
 	path_to_mpi=$with_mpi
     fi	
     CFLAGS="$CFLAGS -I$path_to_mpi/include -L$path_to_mpi/lib"
-    AC_CHECK_LIB(mpich,  PMPI_Init, , [AC_MSG_ERROR([Could not link test program with libmpich.a])])
+    AC_CHECK_LIB(mpich,  MPI_Init, , [AC_MSG_ERROR([Could not link test program with libmpich.a])])
   fi
 fi
 
