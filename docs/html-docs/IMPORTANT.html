@@ -1,0 +1,31 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 TRANSITIONAL//EN">
+<HTML>
+<HEAD>
+<META name="generator" content="Bluefish">
+<META http-equiv="CONTENT-TYPE" content="text/html; charset=iso-8859-1">
+<META name="AUTHOR" content="Dr. David Kirkby, drkirkby@ntlworld.com">
+<META name="DESCRIPTION" content="atlc - Important notice">
+<META name="KEYWORDS" content="atlc arbitrary transmission line any cross section">
+<TITLE>IMPORTANT NOTICE about atlc</TITLE>
+</HEAD>
+<BODY>
+<H1>IMPORTANT NOTICE</H1>
+Many of the examples in the documentation were produced with atlc prior to verision 3.1.0. The only impedance these will give an answer for is the characteristic impedance Zo. Versions of atlc 3.1.0 and later will give an output for odd and even mode impedances Zodd and Zeven, although these will be marked N/A and can be ignored. For all cases in analying standard transmission lines Zodd and Zeven must be ignored. They are only used when analysing couplers, which as of version 3.1.0  is highly experimental and can not be relied upon. <p>
+<STRONG>Please just ignore the Zodd and Zeven outputs.</STRONG> 
+<p>
+I took the decision to leave Zodd and Zeven  in with the answer of N/A at all times, so if anyone writes scripts that read the output files, they can be sure the answers remain in the same column, independant of the type of structure. 
+<p>
+Analysing a simple coax prior to version 3.1 will give<p>
+<CODE>coax2.bmp Er= 1.0000 C= 47.6374 pF/m L= 233.5667 nH/m Zo= 70.0215 Ohms v= 2.99792e+08 m/s v_f= 1.0000 VERSION= 3.0.6<p>
+</CODE>versions 3.1.0 and later will give<p>
+<CODE>coax2.bmp Er= 1.0000 C= 47.6374 pF/m L= 233.5667 nH/m Zo= 70.0215 Ohms Zodd= N/A Ohms Zeven= N/A Ohms v= 2.99792e+08 m/s v_f= 1.0000 VERSION= 3.1.0</CODE><p>
+Analysing a coupler in version 3.1.0 will give the following output, where the even and odd mode impedances are given too. <STRONG>As I must re-itterate, this is experimental at this time</STRONG>. 
+<p>
+
+<CODE>**WARNING** This has a negative conductor and is therefore       
+considered in atlc as a coupler. This is highly experimental and       
+expected to be suspect<br>
+coupler.bmp Er= 1.0000 C= 30.7840 pF/m L= 361.4372 nH/m Zo= 55.9033 Ohms Zodd= N/A Ohms Zeven= N/A Ohms v= 2.99792e+08 m/s v_f= 1.0000 VERSION= 3.1.0</CODE>
+</BODY>
+
+</HTML>
