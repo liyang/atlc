@@ -96,9 +96,8 @@ example.Er.bin       binary file, showing dielectric constant as on grayscale
 extern double **Vij;
 extern double **Er;
 extern unsigned char *bitmap_file_buffer;
-extern int width, height, errno;
+extern int width, height;
 extern size_t size;
-extern char **cell_type;
 
 void write_fields_for_directional_couplers(char * filename, struct transmission_line_properties data, int odd_or_even)
 {
