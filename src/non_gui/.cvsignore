@@ -1,4 +1,5 @@
 .deps SunWS_config 
+create_for_Makefile.am
 atlc create_any_bitmap:create_bmp_for_circ_in_circ
 create_bmp_for_circ_in_rect 
 create_any_bitmap
