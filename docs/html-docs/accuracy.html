@@ -540,7 +540,7 @@ ko=(tanh((pi/2)*(w/H)))*coth((pi/2)*(w+s)/H)<p>
 ke'=sqrt(1-(ke^2))<br>
 ko'=sqrt(1-(ko^2))<p>
 
-Those equations are taken from Matthaei, Young and Jones, <EM>Microwave Filters, Impedance Matching Networks and Coupling Structures</EM>,  Artech House, Dedham, MA., 1980. I'm very grateful to Paul Mason AA1LL / KB1CZP  <aa1ll@email.com> for prviding me with these equations, references and nomographs. 
+Those equations are taken from Matthaei, Young and Jones, <EM>Microwave Filters, Impedance Matching Networks and Coupling Structures</EM>,  Artech House, Dedham, MA., 1980. I'm very grateful to Paul Gili AA1LL / KB1CZP  <aa1ll@email.com> for prviding me with these equations, references and nomographs. 
 <p>
 A programme <CODE>make_coupler</CODE> was written to automatically generate bitmaps given the height H between the groundplanes, the conductor widths w and spacing s. Ideally this needs simulating from -infinity to +infinity, but that is not practical. It was assumed that if the complete stucture width W was equal to 2*w+s+8*H that would be adequate (this seemed <EM>about right</EM>, but I've no proof it is optimal). As well as producing a bitmap, <CODE>make_coupler</CODE>also calculate the theoetical values of impedance. In order to perform calculations of the theoetical impedance, <CODE>make_coupler </CODE> uses the GNU scientific library <a href="http://sources.redhat.com/gsl">gsl</a>  for the elliptic integral calculations. Hence to obtain the theoretical values, gsl, available at <a href="http://sources.redhat.com/gsl">http://sources.redhat.com/gsl</a>,  <STRONG>must</STRONG> be installed. The bitmaps will still be produces without the gsl library.<p>
 <TABLE border>
