@@ -36,7 +36,7 @@
 # unlikely. So if any problems occur, check the checksum with the GNU
 # 'sum' and see what that gives. If any failures do occur, please let me
 # know. email drkirkby@ntlworld.com and/or davek@medphys.ucl.ac.uk 
-CKSUM=`../tools/src/mycksum test.Er.bmp`
+CKSUM=`../tools/src/mycksum test_sym_strip.Er.bmp`
 if [ $CKSUM = 21148 ]; then
   echo "PASSED:" $0 >> tests.log
   exit 0

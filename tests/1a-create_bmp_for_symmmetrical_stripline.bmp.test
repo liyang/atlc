@@ -41,8 +41,8 @@
 rm -rf test*.bmp test.txt test*.bin 
 echo "Testing stated at" `date` >  tests.log
 
-../src/non_gui/create_bmp_for_symmmetrical_stripline 950 201 68 test.bmp > /dev/null
-CKSUM=`../tools/src/mycksum test.bmp`
+../src/non_gui/create_bmp_for_symmmetrical_stripline 950 201 68 test_sym_strip.bmp > /dev/null
+CKSUM=`../tools/src/mycksum test_sym_strip.bmp`
 if [ $CKSUM = 25604 ]; then
   echo "PASSED:" $0 >> tests.log 
   exit 0
