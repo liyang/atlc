@@ -1,13 +1,14 @@
-NEWS for realease 4.4.4 on  13th September 2003.
+NEWS for realease 4.5.0 on  28th September 2003.
 
-The main changes in this release are a those that 
-allow the code to work under Windoze somewhat better
-I hope, although I personally can't be bothered   
-buiding Windoze binaries, I have tried to change the 
-code to be compatable with Windoze where it is can
-be done without affecting the UNIX code's peformance.
+The main changes are
+1) Improved documentation - including a couple of corrections
 
-There are a couple of changes to make the documetation
-to improve it. 
+2) It is no longer necessary to have the gsl library present
+as the single function that was called from the gsl library
+has been integrated into atlc. 
 
-Dr. David Kirkby, 13th September 2003. 
+3) I've removed my email address from all html files
+and replaced it by a jpg that has the same information. 
+This is to fool spammers. 
+
+Dr. David Kirkby, 28th September 2003. 
