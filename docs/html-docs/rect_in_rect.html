@@ -10,12 +10,12 @@
 </HEAD>
 <BODY>
 
-<H1><CODE>rect_in_rect</CODE></H1>
-<strong><a name="rect_in_rect">rect_in_rect</a></strong> is used for generating a bitmap containing a  <strong>rect</strong>angular conductor placed <STRONG>in</STRONG>side  another <strong>rect</strong>angular conductor. There can be two dielectrics and the inner conductor can be placed at any position inside the outer conductor. This makes <STRONG>rect_in_rect</STRONG> very powerful. If there is only one dielectric and the two rectangular conductors are coaxial with one another, then <a href="rect_cen_in_rect.1.html">rect_cen_in_rect</a> is easier to use. 
+<H1><CODE>create_bmp_for_rect_in_rect</CODE></H1>
+<strong><a name="create_bmp_for_rect_in_rect">create_bmp_for_rect_in_rect</a></strong> is used for generating a bitmap containing a  <strong>rect</strong>angular conductor placed <STRONG>in</STRONG>side  another <strong>rect</strong>angular conductor. There can be two dielectrics and the inner conductor can be placed at any position inside the outer conductor. This makes <STRONG>create_bmp_for_rect_in_rect</STRONG> very powerful. If there is only one dielectric and the two rectangular conductors are coaxial with one another, then <a href="create_bmp_for_rect_cen_in_rect.1.html">create_bmp_for_rect_cen_in_rect</a> is easier to use. 
 
 <pre>
-parrot /export/home/davek/atlc-2.02/src % rect_in_rect
-Usage: rect_in_rect [-b bmp_size] [-f outfile] [-v] W H a b c d w h Er1 Er2 
+parrot /export/home/davek/atlc-2.02/src % create_bmp_for_rect_in_rect
+Usage: create_bmp_for_rect_in_rect [-b bmp_size] [-f outfile] [-v] W H a b c d w h Er1 Er2 
 
 where W, H, a, b, c, d, w, and h  are all in mm or all in inches
 (they *must* use the same units. Non-integers allowed for all parameters)
@@ -48,18 +48,18 @@ options are:
 -----------------------------------------------------------------------  v
 &lt;----------------------------------W---------------------------------&gt;
 
-***WARNING*** Since the output from rect_in_rect is binary data (the bitmap) it
+***WARNING*** Since the output from create_bmp_for_rect_in_rect is binary data (the bitmap) it
 will screw up your terminal unless you redirect the output to a file. The '-f' option can be used to send the output to 'outfile' 
 parrot /export/home/davek/atlc-2.02/src % 
 
 </pre>
 
-Here's an example of using <code>rect_in_rect</code>.<br>
-<img src="jpgs/test.jpg" alt="test for rect_in_rect" height="128"><br>
-The outer conductor (green) has internal dimensons of 61.5 x 20.13 mm (W=61.5, H=20.13), the dielectric PTFE (blue) is 50 x 5.1 mm (d=50.0, h=5.1) and the conductor has dimensions of 15 x 1 mm (w=15.0, h=1.0). The left hand edge of the dielectric is 5.1 mm from the outer conductor's side wall (a=5.1) and the left hand edge of the conductor is 22.5 mm (b=22.5) from outer conductor's side wall. Since PTFE has a relative permittivity of 2.1 (a value known by <code>atlc</code> and <code>rect_in_rect</code>) it is simply put on the command line, as is the vacuum (white region). 
+Here's an example of using <code>create_bmp_for_rect_in_rect</code>.<br>
+<img src="jpgs/test.jpg" alt="test for create_bmp_for_rect_in_rect" height="128"><br>
+The outer conductor (green) has internal dimensons of 61.5 x 20.13 mm (W=61.5, H=20.13), the dielectric PTFE (blue) is 50 x 5.1 mm (d=50.0, h=5.1) and the conductor has dimensions of 15 x 1 mm (w=15.0, h=1.0). The left hand edge of the dielectric is 5.1 mm from the outer conductor's side wall (a=5.1) and the left hand edge of the conductor is 22.5 mm (b=22.5) from outer conductor's side wall. Since PTFE has a relative permittivity of 2.1 (a value known by <code>atlc</code> and <code>create_bmp_for_rect_in_rect</code>) it is simply put on the command line, as is the vacuum (white region). 
 
 <pre>
-rect_in_rect 61.5 20.13 5.1 22.5 0.5 50 15.0 5.0 1.0 2.1 &gt; test.bmp
+create_bmp_for_rect_in_rect 61.5 20.13 5.1 22.5 0.5 50 15.0 5.0 1.0 2.1; test.bmp
 </pre>
 
 The output was redirected to a file <code>test.bmp</code>, which would then be read with atlc. 
@@ -70,7 +70,7 @@ The output was redirected to a file <code>test.bmp</code>, which would then be r
 
 That is all that needs to be done.<br>
 <br>
-It should be noted that <code>rect_in_rect</code> must attempt to fit your dimensions to a square grid. If all dimensions are small integers, this is easy to do, but in some cases this is not possible without having very large grids. In this case, <code>rect_in_rect</code> can only generate an approximation of what you want. For example, assume a structure is 120x240.0001 mm wide. It's impossible to represent that on a square grid, without having a grid of at least 1200000 x 2400001, which would be prohibitively large and requre an enormous amount of time for <code>atlc</code> to analyse. In this case, <code>rect_in_rect</code> will approximate this structure. Here is a very approximate idea of the sizes of the bitmaps, and the time to analyse in atlc, for various values of b. 
+It should be noted that <code>create_bmp_for_rect_in_rect</code> must attempt to fit your dimensions to a square grid. If all dimensions are small integers, this is easy to do, but in some cases this is not possible without having very large grids. In this case, <code>create_bmp_for_rect_in_rect</code> can only generate an approximation of what you want. For example, assume a structure is 120x240.0001 mm wide. It's impossible to represent that on a square grid, without having a grid of at least 1200000 x 2400001, which would be prohibitively large and requre an enormous amount of time for <code>atlc</code> to analyse. In this case, <code>create_bmp_for_rect_in_rect</code> will approximate this structure. Here is a very approximate idea of the sizes of the bitmaps, and the time to analyse in atlc, for various values of b. 
 
 <table border="10">
 <tr>
@@ -166,11 +166,11 @@ It should be noted that <code>rect_in_rect</code> must attempt to fit your dimen
 
 <br>
 <br>
-There are a few options to rect_in_rect that might be useful.<br><br>
+There are a few options to create_bmp_for_rect_in_rect that might be useful.<br><br>
  One that might be very useful, is the -v option, which prints information about the grid sizes to stderr. 
 
 <pre>
-% rect_in_rect -v 61.5 20.13 5.1 22.5 0.5 50 15.0 5.0 1.0 2.1 &gt; test.bmp
+% create_bmp_for_rect_in_rect -v 61.5 20.13 5.1 22.5 0.5 50 15.0 5.0 1.0 2.1  test.bmp
 User requested: WW=61.500000 HH=20.130000 a=5.100000 b=22.500000 c=0.500000
 d=50.000000 w=15.000000 h=5.000000Er1=1.000000 Er2=2.100000
 
@@ -191,17 +191,18 @@ parrot /export/home/davek/atlc-2.02/src %
 <br>
 Another the -b option, which alters the size of the bitmap produced, and so the accuracy. The default bitmap size is 3, which equates to bitmaps of around 250 kb, which should mean they can be analysed with <code>atlc</code> in a reasonable time. It's possible to reduce the size of the bitmap, so giving lower accuracy, but in less time, by setting b to 1 or 2, as like this.<br>
 <pre>
-% rect_in_rect  -b 1 61.5 20.13 5.1 22.5 0.5 50 15.0 5.0 1.0 2.1 &gt; test2.bmp
+% create_bmp_for_rect_in_rect  -b 1 61.5 20.13 5.1 22.5 0.5 50 15.0 5.0 1.0 2.1  test2.bmp
 % atlc test2.bmp
 </pre>
 
 or of course accuracy can be improved, by making b larger, as in: 
 
 <pre>
-% rect_in_rect  -b 6 61.5 20.13 5.1 22.5 0.5 50 15.0 5.0 1.0 2.1 &gt; test3.bmp
+% create_bmp_for_rect_in_rect  -b 6 61.5 20.13 5.1 22.5 0.5 50 15.0 5.0 1.0 2.1  test3.bmp
 % atlc test3.bmp
 </pre>
 
 <p>atlc is written and supported by <a href="mailto: drkirkby@ntlworld.com?subject=atlc%20-%20Arbitrary%20Transmission%20Line%20Calculator">Dr. David Kirkby (G8WRB)</A> It it issued under the <a href="http://www.gnu.org/copyleft/gpl.html">GNU General Public License</A><p>
 <a href="http://atlc.sourceforge.net">Return to the atlc homepage</a>
 </body>
+</html>

@@ -5,62 +5,94 @@
 <META name="generator" content="Mostly bluefish & vi. Sometimes netscape">
 <META http-equiv="CONTENT-TYPE" content="text/html; charset=iso-8859-1">
 <META name="AUTHOR" content="Dr. David Kirkby, drkirkby@ntlworld.com">
-<META name="DESCRIPTION" content="Transmission line calculator, of *any* cross section">
-<META name="KEYWORDS" content="Transmission line calculator arbitrary any shape cross section finite difference">
-
+<META name="DESCRIPTION" content="Transmission line calculator, for any
+cross section">
+<META name="KEYWORDS" content="CAD Transmission line calculator arbitrary shape cross section finite difference">
 </HEAD>
 <BODY>
 
 <H1><CODE>atlc</CODE> - Arbitrary Transmission Line Calculator.</H1>
 
-The programme <COde>atlc</code> calculates the impedance of two or three wire electrical transmission lines of totally arbitrary cross section, using a numerical technique called <EM>finite difference</EM>. The conductors can be coaxial, run side by side, or in just about any configuration you can think of. The diagrammes below shows 3 types of 2-wire  transmission lines and a directional copuler, all of which may be analysed. In each diagramme, one conductor is shown red, the other conductor shown green and in the case of a coupler, the third conductor is shown blue. The dielectrics are shown in a few other colours, with white being a vacuum and turquoise being a dielectric with an effective permittivity of 4.8 (about the same as fibreglass PCB). 
+<EM>atlc</EM> is a computer aided design (CAD) package for the <STRONG>design</STRONG> and <STRONG>analysis</STRONG>  of electrical transmission lines and directional couplers of totally arbitary cross section.  By <STRONG>analysis</STRONG>, it is assumed one requires to find the electrical properties of a transmissiion line or coupler, where the physical dimensions of the device are known.  By <STRONG>design</STRONG>, it is assumed one requires a transmission line or coupler to have certain electrical properties and one wishes to find how to physically realise such a structure
+
+<P><EM>atlc</EM>  likely to be of use to radio amatuers, professional RF engineers, students and academics.</P> 
+
 <TABLE>
 <TR>
 <TD><img src="jpgs/coax2.jpg" ALT="round coax" > </TD>
-<TD><img src="jpgs/twin-wire.jpg" ALT="twin wire" ></TD>
 <TD><img src="jpgs/very-odd.jpg" ALT="very odd line" ></TD>
 <TD><img src="jpgs/cop1.jpg" ALT="directional coupler" width="128" height="128"></TD>
+<TD><img src="jpgs/coupler9.jpg" ALT="directional coupler" height="128"></TD>
 </TR>
 <TR>
-<TD>Zo=69.690 Ohms<BR>C=47.865 pF/m<BR>L=232.454 nH/m<BR></TD>
-<TD>Zo= 49.335 Ohms<br>C= 67.611 pF/m<br>L= 164.565 nH/m </TD>
-<TD>Zo= 56.020  Ohms<br> C= 59.544 pF/m <br>L= 186.862 nH/m</TD>
-<TD>Zo= 66.3699  Ohms<br> Zeven=138.9950 Ohms<br>Zodd= 31.6915 Ohms<br></TD>
+<TD>Coaxial cable<br>Zo= 70.0215 Ohms<BR>C=47.637 pF/m<BR>L=233.557 nH/m<BR></TD>
+<TD>Really odd!!!<br>Zo= 56.020  Ohms<br> C= 59.544 pF/m <br>L= 186.862 nH/m</TD>
+<TD>Directional coupler<br>Zo= 64.7449  Ohms<br> Zeven=65.3682 Ohms<br>Zodd= 64.1275 Ohms<br></TD>
+<TD>Microstrip coupler on double-sided PCB<br>Zodd=  35.10 Ohms Zeven=  50.93 Ohms<br>Zdiff=  70.21 Ohms Zcomm=  25.46 Ohms</td>
 </TR>
 </TABLE>
-The programme  <COde>atlc</code> needs to know shape of the transmission line's cross section. This cross section is stored in a data file, which happens to be a Windows bitmap file. The  bitmap file is read by <COde>atlc</code>, following which the  programme performs the analysis. <br><br>There are two ways to generate the bitmap for <COde>atlc</code>. 
+There are 12 programs that comprise the package <EM>atlc</EM>. One of the programs is called <CODE>atlc</CODE>, the other 11  have different names. Using the programs comprising the package <EM>atlc</EM> one is able to:.
 <OL>
-        <LI> As you might expect, you can draw the transmission line's cross-section in a graphics programme such as <A HREF="http://www.gimp.org">Gimp</A>, <A HREF="http://www.adobe.com/products/photoshop/main.html">Photoshop</A>, Windows <A HREF="http://www.microsoft.com">Paint</A> Corel Photopaint etc.  The programme must be able to save images as bitmap (.BMP or .bmp) files, in 24-bit (true colour) mode The graphics programme can run under whatever operating system you like.  If for example you have some U-section brass and some hollow rectangular tube, and wanted to know the properties of a transmission line formed from these, you might draw something like this, and save it as a file, which we might call <CODE>ushape.bmp</CODE><br><br></LI>
-       <img src="jpgs/ushape.jpg" ALT="U-section" > <br><br>
-	<LI> In the case of simple cross-sections, the bitmaps can be generated automatically. Currently 6 such programms have been written, to quickly generate bitmaps for rectangular and circular conductors, striplines and a directional copuler. An example of such as programme is <CODE><a href="rect_in_rect.html">rect_in_rect</a></CODE>, which is able to automatically generate a bitmap for any <STRONG>rect</STRONG>angular conductor, <STRONG>in</STRONG>side any other <STRONG>rect</STRONG>angular conductor, with no more than 2 dielectrics. One dielectric must lie under the centre conductor. Other programs include <CODE>circ_in_circ</CODE>  <br>
-
-<br>
-	Using rect_in_rect,.is very fast - much faster than generating the bitmaps with a graphics programme.</LI>
+	<LI>Calculate the characteristic impedance and other properties of two conductor transmission lines, like coaxial cable (far left below), but the cross section can be of any shape whatsoever, including that second from the left. A technique known as finite difference is used for this. There can be an arbitrary number of different dielectrics. Note the inner conductor is shown red, the outer green and a vacuum dielectric is shown as white - for all practical purposes, the permittivity of a vacuum (1.0 by definition) dielectric is the same as that of air (approximately 1.0006)</LI>
+	<LI>Calculate the impedance's for both the odd-mode and even-mode, along with many other properties of <a href="couplers.html">directional couplers</a> of arbitrary cross section, like that third from the left below. Note, with couplers, there is two inner conductors, with - one red as before, but another one blue, in addition to the green outer conductor.  The finite difference technique is used for this too. Analysis extends to couplers with multiple dielectrics, such as the microstrip coupler on the PCB on the right below. </LI>
+	<LI>Compute the common-mode impedance Zcomm and differential-mode impdance Zdiff of arbitrary directional couplers. </LI>
+	<LI><a href="examples.html">Compute the values of electric field, voltage, energy stored etc</a> in 2 and 3 conductor transmission lines and save this data to binary files, as well as bitmaps which can be viewed in a graphics package. </LI>
+	<LI> <a href="generators.html">Automatically create bitmaps</a> for some common transmission lines, to save the user having to create them in a graphics package, which would soon become tedious.</LI>
+	<LI>Compute the odd and even mode impedances required of an arbitrary directional coupler to satisfy a given frequency response and coupling factor.</LI>
+	<LI>In the case of a coupled stripline with thin conductors, the program <code>design_coupler</code> can fairly quickly (with a few minutes) compute the dimensions of a directional coupler to satisfy your requirements of frequency response, coupling factor and optionally length. If you wish to implement the design on a double-sided printed circuit board like that on the right below, the program <code>find_optimal_dimensions_for_microstrip_coupler</code> will do this for you, but it takes several hours (perhaps a couple of days) to find a solution, although some well-timed and sensible human intervention can reduce this considerably.</LI>
+	<LI>Since the program <code>atlc</code> can save quantitative data on the x and y components of electric field, energy, voltage etc to binary files, there is a program <code>readbin</code> that can read the binary files and tell you something about the data saved in them. This information is for debugging only - it is not expected the user will use <code>readbin</code>. The user is expected to write their own programs to read this binary information, in the very unlikely event they wish to use the information. It is likely to be of academic interest only. The normal output from <code>atlc</code> is in simply text. 
 </OL>
-A unix computer, with a <A HREF="http://www.gnu.org/software/gcc/gcc.html">gcc</A> or other C compiler, is needed  to compile and run <COde>atlc</code>. The programme should compile very easily and quickly. Being rather CPU intensive, <COde>atlc</code> has been written to support multiple processors if available. Here is an example of using atlc, with the file <CODE>ushape.bmp</CODE> being drawn by a graphics programme. <br>
+
+<p>In any example which has been checked against exact analytical solutions, the <a href="accuracy.html">errors</a> in <code>atlc</code> are under 1% and usually under 0.4%</p>
+In order to perform 1, 2, 3 or 4 above, the programme  <COde>atlc</code> needs to know shape of the transmission line's cross section. This cross section is stored in a data file, which happens to be a Windows bitmap file. The  bitmap file is read by <COde>atlc</code>, following which the  programme performs the analysis. <br><br>There are two ways to generate the bitmap for <COde>atlc</code>. 
+<OL>
+        <LI> As you might expect, you can draw the transmission line's cross-section in a graphics programme such as <A HREF="http://www.gimp.org">Gimp</A>, <A HREF="http://www.adobe.com/products/photoshop/main.html">Photoshop</A>, Windows <A HREF="http://www.microsoft.com">Paint</A>, Corel Photopaint etc. The programme must be able to save images as bitmap (.BMP or .bmp) files, in 24-bit (true colour) mode. The graphics programme can run under whatever operating system you like.  If for example you have some U-section brass and some hollow rectangular tube, and wanted to know the properties of a transmission line formed from these, you might draw something like this, and save it as a file, which we might call <CODE>ushape.bmp</CODE><br><br></LI>
+       <img src="jpgs/ushape.jpg" ALT="U-section" > <br><br>
+	<LI> In the case of simple cross-sections, the bitmaps can be generated automatically. Currently 7 such programmes have been written:
+	<OL>
+<LI><CODE>create_bmp_for_circ_in_circ</CODE></LI>
+<LI><CODE>create_bmp_for_circ_in_rect</CODE></LI>
+<LI><CODE>create_bmp_for_rect_cen_in_rect</CODE></LI>
+<LI><CODE>create_bmp_for_rect_in_rect</CODE></LI>
+<LI><CODE>create_bmp_for_sym_strip</CODE></LI>
+<LI><CODE>create_bmp_for_stripline_coupler</CODE></LI>
+<LI><CODE>create_bmp_for_microstrip_coupler</CODE></LI>
+</OL>
+	to quickly generate bitmaps for transmission lines. The first five are for two-conductor transmission lines, whereas the last two are for directional couplers. See the section <a href="generators.html">Automatic Bitmap Generators</a> for information about what cross sections these programs generate. Using these programs to create bitmaps is very fast - much faster than creating them with a graphics programme. </LI>
+</OL>
+A Unix computer, with a <A HREF="http://www.gnu.org/software/gcc/gcc.html">gcc</A> or other C compiler, is needed  to build <EM>atlc</EM>. The programme should compile very easily and quickly. Being rather CPU intensive, <COde>atlc</code> has been written to support multiple processors if available. Here is an example of using atlc, with the file <CODE>ushape.bmp</CODE>, which was drawn by a graphics programme. <br>
 
 <br>
 <pre>
-% atlc -v ushape.bmp
-ushape.bmp Er= 1.000000 C= 77.2797 pF/m L= 143.977094 nH/m Zo= 43.163247 Ohms v= 299792458.010503 m/s v_f= 1.000000    VERSION= 3.0.0
-ushape.bmp Er= 1.000000 C= 77.1386 pF/m L= 144.240432 nH/m Zo= 43.242194 Ohms v= 299792458.010503 m/s v_f= 1.000000    VERSION= 3.0.0
-ushape.bmp Er= 1.000000 C= 77.1385 pF/m L= 144.240554 nH/m Zo= 43.242230 Ohms v= 299792458.010503 m/s v_f= 1.000000    VERSION= 3.0.0
-ushape.bmp Er= 1.000000 C= 77.1385 pF/m L= 144.240554 nH/m Zo= 43.242230 Ohms v= 299792458.010503 m/s v_f= 1.000000    VERSION= 3.0.0
+sparrow % atlc -v ushape.bmp
+ushape.bmp 2 Er= 1.00 Zo= 43.55 Ohms C= 76.6 pF/m L= 145.3 nH/m v= 2.998e+08 m/s v_f= 1.000 VERSION= 4.2.2
+ushape.bmp 2 Er= 1.00 Zo= 43.64 Ohms C= 76.4 pF/m L= 145.6 nH/m v= 2.998e+08 m/s v_f= 1.000 VERSION= 4.2.2
+ushape.bmp 2 Er= 1.00 Zo= 43.64 Ohms C= 76.4 pF/m L= 145.6 nH/m v= 2.998e+08 m/s v_f= 1.000 VERSION= 4.2.2
 </pre>
 It will be seen that <CODE>atlc</CODE> makes several estimates of the transmission line's properties, each subsequent one being closer to the true values (normally only the final result is shown, but the -v option added above causes <CODE>atlc</CODE> to print intermediate results).
 <br><br>
-Here's an example of using <CODE>rect_in_rect</CODE> to generate a bitmap The programme needs 11 parameters on its command line, which are described fully <a href="generators.html">elsewhere</a>. For now, just accept that these 11 parameters describe a transmission line. The output of <CODE>rect_in_rect</CODE> is redirected to the file <CODE>ex2.bmp</CODE>, which is then read by <CODE>atlc</CODE>>
+<CODE>atlc</CODE> produces numberous bitmap and binary files, in addition to the text shown above. Hopefully some of the text output is comprehensible, but the exact format of all of atlc's outputs is disucced in the <a href="fileformat.html">fileformat</a> section. <br><br>
+Here's an example of using <CODE>create_bmp_for_circ_in_circ</CODE> to create a bitmap, following which is it analysed using <CODE>atlc</CODE>. The programme <CODE>create_bmp_for_circ_in_circ</CODE> creates a bitmap (.bmp file) for a cicular conductor inside another circular conductor - like coaxial cable. The program takes takes 5 command line arguments which (in order) are:
+<OL>
+	<LI>D - The inner diameter of the outer conductor.</LI>
+	<LI>d  - The outer diameter of the inner conductor</LI>
+	<LI>O - The offset between the inner and outer conductors (this is zero for standard coax)</LI>
+	<LI>Er - The relative permittivity of the dielectric between the conductors</LI>
+	<LI>filename - The filename to write the bitmap file to, which would normally end in .bmp</LI>
+</OL>
+
+
 <pre>
-% rect_in_rect 250 175 10 32 4 200 56 25 1.0 2.5  &gt  ex2.bmp
-% atlc  ex2.bmp
-ex2.bmp Er= MIXED C= 87.8016 pF/m L= 240.9628 nH/m Zo= 52.387023 Ohms v= 217407041.146 m/s     v_f= 0.725192 VERSION=3.0.0
-
-
+sparrow % create_bmp_for_circ_in_circ 500 100 100 1 x.bmp
+sparrow % atlc  x.bmp
+x.bmp 2 Er=1.00 Zo= 85.44 Ohms C= 39.0 pF/m L= 285.0 nH/m v= 2.998e+08 m/s v_f= 1.000 VERSION= 4.2 2
 </pre>
+
+How to use  <CODE>create_bmp_for_circ_in_circ</CODE> (or any other program) is best determined by reading the Unix man page, seeing an <a href="generators.html">example</a> or by running the program with no arguments, where it will print a usage message. An html version of the  <a href="create_bmp_for_circ_in_circ.1.html">man page for <CODE>create_bmp_for_circ_in_circ</CODE> </a> is available, but the all-important diagram is not clear. <br>
 <br>
 
-The programme <COde>atlc</code> was written by, and is supported by, Dr. David Kirkby (G8WRB). 
-<p>atlc is written and supported by <a href="mailto: drkirkby@ntlworld.com?subject=atlc%20-%20Arbitrary%20Transmission%20Line%20Calculator">Dr. David Kirkby (G8WRB)</A>It is issued under the GNU public license. <p>
-<a href="http://atlc.sourceforge.net">Return to the atlc homepage</a>
+ 
+<p>atlc is written and supported by <a href="mailto: drkirkby@ntlworld.com?subject=atlc%20-%20Arbitrary%20Transmission%20Line%20Calculator">Dr. David Kirkby (G8WRB)</A> It is issued under the GNU General Public License. <p>
+<a href="http://atlc.sourceforge.net">Return to the <EM>atlc</EM> homepage</a>
 </BODY>
 </HTML>

@@ -6,105 +6,110 @@
 <META name="AUTHOR" content="Dr. David Kirkby, drkirkby@ntlworld.com">
 <META name="DESCRIPTION" content="How to determine the physical dimensions of a directional coupler for its specifiations of frequency and coupling factor.">
 <META name="KEYWORDS" content="directional coupler Zodd Zeven mode">
-<TITLE>How to determine the physical dimensions of directional couplers from their specifications of frequency and coupling factor</TITLE>
+<TITLE>How to determine the physical dimensions of directional coupler</TITLE>
 </HEAD>
 <BODY>
-<H1>How to determine the physical dimensions of a directional coupler from its specifications of frequency and coupling factor</H1>
+<H1>How to convert a specification of a coupler in to a practical design</H1>
 
 The program program <CODE>design_coupler</CODE> can generate a set of dimensions needed for making a directional coupler like that below<br>
-<img src="jpgs/3dcoup.jpg" wiidth="616" height="140" ALT="a directional coupler"><br>
+<img src="jpgs/3dcoup.jpg" width="616" height="140" ALT="a directional coupler"><br>
 and end-view of which is shown here:<br>
-<img src="jpgs/coupler3.jpg"  wiidth="616" height="140" ALT="a directional coupler"><br>
-The width of the blue and red conductors (w) is computed as is the spacing between them s. The user can specify the height H of the enclosure and the length L of the coupler. If the height H is not specified, it defaults to 1.0. You can consider that 1", or 1 mm, it makes no difference, as only the ratio between all the sizes is important - not the absolutte values. has to perform three tasks to do this, all of which are fully automated, requiring only 3 arguments and a couple of options to do this.
-<OL>
-	<LI><CODE>design_coupler</CODE> must first compute the required parameters (which are the even and odd-mode impedances Zodd and Zeven) for a directional coupler, such that it covers the frequency range of interest and has the required coupling factor at the centre of the band. For example, if you want to make a 20 dB directional coupler cover 144-146, <CODE>design_coupler</CODE> will first calcaulate the required values of Zodd and Zeven. These are printed, although you <STRONG>don't need to use them</STRONG>. By default the length of the directional coupler is assumed to be a quarter wave long, but this can easily be changed if it is an impractical length to use. A quarter wave gives maximum coupling, but it is always possible to use a shorter length, for which Zodd and Zeven will be different from those calculated for a quarter wave. In fact, the shorter yo make the coupler, there will be  less the variation of coupling factor with freqnency.  However, if the length L is made too short (say less than 10 x the height, fringing effect will be significant, which are not accounted for.</LI>
-	<LI><CODE>design_coupler</CODE> will next provide data on the coupling as a function of frequency. By default the coupling at 5 points between the maximum and minimum freqencies is displayed, but this can be changed at will by the <CODE>-s</CODE> command line parameter to <CODE>design_coupler</CODE>. The value at the centre of the chosen band will be correct, but at the endpionts it will not be. You may want to tweak the value you enter for the required coupling factor a little, so for example the coupling factor is a little higher in the centre of the band a little lower at the edges.</LI>
-	<LI>After you are satisfied with the directional couplers performance, you should re-run  <CODE>design_coupler</CODE> with the -c option. This will cause <CODE>design_coupler</CODE> to try to find the correct physical dimensions for a directional coupler shown below to meet the required specification. It will calculate H, s and s such that the impedances Zodd and Zeven match those required. The physical dimensions for this structure (and only this structure) can be computed with <CODE>design_coupler</CODE>. The reason this structure can only be used is that it is the only one for which an analytical solution is known. The analytical solution assumes that the thickness of the conductors is infinitely thin and the width of the enclosure W is infinite. In practice, W only has to be about 6*H+2*w+s to be acceptably wide.<br>
- <TD><img src="jpgs/coupler3.jpg"  wiidth="616" height="140" ALT="a directional coupler"></TD><br>
-There is nothing stopping anyone using any other design of directional coupler, like any of those shown below. <br>
-<TD><img src="jpgs/coupler4.jpg"  ALT="directional couplers"></TD><br>
-However, <CODE>design_coupler</CODE> is unable to estimate the correct dimensions for such structures. The only way currently to do this with the <EM>atlc</EM> package is to do this is by trial and error with <CODE>atlc</CODE>, whereby one attempts to optimise the dimensions to arrive at the required values for Zodd and Zeven. <p>In future, the aim is to extend this set of programs to find an automated way with any structure that is likely to be useful in practice, but so far this has not been implemented. When it is, it is likely to be very CPU intensive.</LI>
-</OL>
-In order so show how to use design_directional coupler for determining the physical dimensions of directional coupler from its specifications of frequency and coupling factor , a number of example will be given. 
-It should be noted that if you run design_coupler with no arguments, or the wrong number of arguments or an invalid option, it will print a usage message. Hence the easiest way to see what options design_coupler takes is to run it with no arguments:
-<PRE>
-<CODE>
-sparrow /export/home/davek/atlc/src/non_gui % design_coupler
-Usage: design_coupler [-c] [-P] [-H height] [-L length] [-s fstep] [-z Zo] CF fmin fmax
-where: 
-      CF          is the coupling factor required in dB [10 log(P1/P2)]
-      fmin        is the minimum frequency (MHz)
-      fman        is the maximum frequency (MHz)
-Options are:
-     -c           calculate physical dimensions (takes a while)
-     -P           Print copyright, licencing and distribution information.
-     -H height    to set the height of the enclosure (defaults to 1 unit) 
-     -L length    to set the coupler length (m). Defaults to lambda/4
-     -s fstep     to set the analysis frequency in MHz step
-     -z Zo        to set the impedance (default 50 Ohms)
-coupled port 2 ****                                        **** reflected port 3                  *                                        *
-                  ******************************************
-                  ******************************************
-                  *                                        *
-input port 1   ****                                        **** through port 4
-                  <-----------------L---------------------->
+<img src="jpgs/coupler3.jpg"  width="616" height="140" ALT="a directional coupler"><br>
+The width of the blue and red conductors (w) is computed as is the spacing between them s, for any frequency range and coupling factor.
+Here is an  example of how to use <CODE>design_coupler</CODE>. In this example, the % sign is used in front of anything you must type which is what you will probably see when using the csh or tcsh as a shell. It would probably be a $ sign if using the sh or bash shell. <p>
 
-Drive Port 1. The main power comes out from port 4.
-A fraction of the forward power comes from port 2
-A fraction of the reflected power comes from port 3
-All ports must present an impedance Zo.
+Currently a man page does not exist for design_couupler. However, running the program with no arguments <a href="usage_design_coupler.html">gives usage information.</a>
 
-</PRE></CODE>
-Note the diagram at the bottom showing the input port and the coupled port. 
-<OL>
-<LI>Assume we wish to design a directional coupler for 140 to1350 MHz, with a coupling coefficient of 20 dB, so 10% of the forward power is coupled off to another port. First we run design_coupler like this:
-<PRE>
-<CODE>
+To find the odd and even mode impedances and frequency response of a 50 Ohm coupler, covering 130 to 170 MHz, with a coupling coefficient of 30 dB:<pre>
 
-sparrow /export/home/davek/atlc/src/non_gui % design_coupler 20 140 150
+% design_coupler 30 130 170
 
-For a 20.000000 dB 50.000000 Ohm coupler with a length of 0.517241 m,
-you need Zodd to be 47.559487 Ohms and Zeven to be 52.565748 Ohms
+For a 30.000 dB 50.000 Ohm coupler with a length of 0.5000 m,
+you need to have an odd-mode impedance Zodd of 48.443 Ohms and
+an even mode impedance Zeven of 51.607 Ohms
 
- 20.000 dB down <-- *                        * ---> 50.000000 Ohm termination
-                    *                        *
-                    *************************
-                                             
-                                              
-                    **************************
-                    *                        *
-Drive this port --> *                        * ---> 50.000000 Ohm termination
-                    <------  0.5172414 m ---->
+30.000 dB down &lt--- ************************** ---&gt 50.000 Ohm termination
+
+Drive this port --&gt ************************** ---&gt 50.000 Ohm termination
+                    &lt-------   0.5000 m -----&gt
 
 Drive Port 1, coupler out of port 2 and terminate the other ports in Zo
 Such a coupler will have the response indicated below.
 
-frequency = 140.000000 MHz coupling is -20.025496 dB down on the main arm
-frequency = 142.500000 MHz coupling is -20.006372 dB down on the main arm
-frequency = 145.000000 MHz coupling is -20.000000 dB down on the main arm
-frequency = 147.500000 MHz coupling is -20.006372 dB down on the main arm
-frequency = 150.000000 MHz coupling is -20.025496 dB down on the main arm
+f = 130.000 MHz   coupling is -30.192 dB down on the main arm
+f = 140.000 MHz   coupling is -30.048 dB down on the main arm
+f = 150.000 MHz   coupling is -30.000 dB down on the main arm
+f = 160.000 MHz   coupling is -30.048 dB down on the main arm
+f = 170.000 MHz   coupling is -30.192 dB down on the main arm
 
-You may force the length to be any value you want using the -L option
-You may try to find a coupler with these dimensions using the -c option
-Currently the -c option is not that fast, as it uses a brain-dead algorithm
-</CODE>
-</PRE>
-Note:
-<UL>
+</pre>
 
-	<LI> The coupler has defaulted to being designed for 50 Ohms, but the value may be changed by use of the -z option.</LI>
-	<LI>The required odd-mode impedance Zodd is printed (47.559487 Ohms)</LI>
-	<LI>The required even-modem impedance Zeven is printed too (52.565748 Ohms</LI>
-	<LI>The characteristic impedance of the coupler Zo =sqrt(Zodd*Zeven)</LI>
-	<LI>That the length of the coupler has defaulted to 0.5717241 m, which is a quarter-wave at the centre frequnecy (145 MHz) of the band of interest. 
-	<LI>The coupling at the centre is what was wanted (20 dB) but it falls off very slightly at the ends of the band of interest (140-150 MHz). The coupler's length can be changed with the -L option.</LI>
-</UL>
-t<br>
-You will probably want the coupler to be less than 0.5717241 mm (about 19"). You might have an enclosure that looks like the top diagram but is only 100 mm (about 4 inches)  long. This time we will run design_coupler with the -L option to set the length to 0.1 m
+Note the frequency response is symmetrical about the centre frequency at 0.192 dB below that wanted. You may wish to redesign this for a coupling coefficient of  about 29.9 dB, so the maximum deviation from the ideal 30.0 dB never exceeds 0.1 dB Note the length suggested is 0.5 m (nearly 20") is a quarter wave at the centre frequency of 150 MHz. You might find this a bit too long, so let's specify a length of 0.25 m.<p>
 
-Now lets try a similar coupler, but this time using a much wider bandwidth
-</LI>
-</OL>
+<pre>% design_coupler -L 0.25 30 130 170
+
+f = 130.000 MHz   coupling is -31.012 dB down on the main arm
+f = 140.000 MHz   coupling is -30.479 dB down on the main arm
+f = 150.000 MHz   coupling is -30.000 dB down on the main arm
+f = 160.000 MHz   coupling is -29.568 dB down on the main arm
+f = 170.000 MHz   coupling is -29.180 dB down on the main arm
+</pre>
+<p>
+What you may notice is that while the coupling to the coupled port is exactly 30 dB below the input power at the centre frequency (150 MHz) it is  no longer symmetrical about the centre frequency. Also, deviations from the ideal 30 dB are now much larger, with a maximum error of 1.012 dB Unlike the case when the length is the default quarter wave, there is not much you can do about this, since the deviations occur in both directions.
+<p>
+Now assume you are reasonably happy with the response when the length is 250 mm but would like to see the response at every 2.5 MHz. This can be done using the -s option to design_coupler.
+<p>
+<pre>% design_coupler -L 0.25 -s 2.5 30 130 170
+f = 130.000 MHz   coupling is -31.012 dB down on the main arm
+f = 132.500 MHz   coupling is -30.874 dB down on the main arm
+f = 135.000 MHz   coupling is -30.739 dB down on the main arm
+f = 137.500 MHz   coupling is -30.607 dB down on the main arm
+f = 140.000 MHz   coupling is -30.479 dB down on the main arm
+f = 142.500 MHz   coupling is -30.355 dB down on the main arm
+f = 145.000 MHz   coupling is -30.233 dB down on the main arm
+f = 147.500 MHz   coupling is -30.115 dB down on the main arm
+f = 150.000 MHz   coupling is -30.000 dB down on the main arm
+f = 152.500 MHz   coupling is -29.888 dB down on the main arm
+f = 155.000 MHz   coupling is -29.778 dB down on the main arm
+f = 157.500 MHz   coupling is -29.672 dB down on the main arm
+f = 160.000 MHz   coupling is -29.568 dB down on the main arm
+f = 162.500 MHz   coupling is -29.467 dB down on the main arm
+f = 165.000 MHz   coupling is -29.369 dB down on the main arm
+f = 167.500 MHz   coupling is -29.273 dB down on the main arm
+f = 170.000 MHz   coupling is -29.180 dB down on the main arm
+</pre>
+<p>
+Assuming the performance is acceptable, the dimensions of the coupler can be determined by adding the -d option. This will design a coupler that must look like the structure below. The two inner conductors, which are spaced equally between the top and bottom edges of the outer conductor, must be very thin. These are placed along the length of a box of width W, height H and of a length L determined by the user, which in this case is 250 mm.
+
+<pre>
+|-----------^------------------------------------------------------------------|
+|           |                                                                  |
+|           |              &lt---w---&gt&lt-----s----&gt&lt--w---&gt                       |
+|           H              ---------            --------                       |
+|           |                                                                  |
+|           |   Er=1.0 (air)                                                   |
+------------v------------------------------------------------------------------
+&lt-----------------------------------------W-----------------------------------&gt
+</pre>
+
+The program reports: 
+<PRE>H = 1.0, ; w = 1.44 ; s = 0.44 </PRE>
+The height of the box H must be small compared to the length L, (perhaps no more than 7% of the length), or 17.5 mm in this case, with a length of 250 mm, otherwise fringing effects will be significant. The width of the structure W should be as large as possible. The program suggests making this 5*H+2*w+s. The 7% and 5*H+2*w+s are educated guesses, rather than exact figures. There is no problem in making the width  larger than 5*H+2*w+s. The length L must be kept at 250 mm. The RATIO of the dimensions H, w and s (but not L or W must be kept constant. W just needs to be sufficiently large - it is uncritical.  
+ <p>
+If you happened to have some 15 mm square brass available, then using that  or the side-walls would require that H becomes 15*1.0 = 15 mm,
+w = 15*1.44 = 21.6 mm  and s = 15*0.44 = 6.6 mm
+<p>
+There is no need to compute the above scaling with a calculator, as using The -H option allows one to specify the height H. The program then reports the exact dimensions for the length L, height H, w, s and suggests a minimum width for W.
+
+In summary we have:
+<pre>
+                   30 dB coupler +1.02 dB / -0.78 dB for 130 to 170 MHz
+                   Length L = 250 mm, height H = 15 mm, stripline spacing s
+                   = 6.6 mm, stripline width w = 21.6 mm, width W &gt= 124 mm
+</pre>            
+       <p>
+By default, design_coupler prints a lot of information to the screen. This can be reduced by the -q option or reduced to only one line with -Q Other options include -Z to change the impedance from the default 50 Ohms and -C to see the fully copyright, Licensing and distribution information<p>
+<CODE>atlc</CODE> is written and supported by <a href="mailto: drkirkby@ntlworld.com?subject=atlc%20-%20Arbitrary%20Transmission%20Line%20Calculator">Dr. David Kirkby (G8WRB)</A><p>
+<a href="http://atlc.sourceforge.net">Return to the atlc homepage</a>
 </BODY>
 </HTML>

@@ -286,18 +286,19 @@ In all of these situations, accuracy can be improved at the expense of memory an
 </TR>
 
 </TABLE><p>
-Note, due to their large size, the eccentric coax files are not distributed. They can however easily be made with the supplied script <a href="../../examples/create">create</a>, which itself calls the programme <a href="circ_in_circ.1.html">circ_in_circ</a>, which is used for creating a circular conductor  inside another circular conductor. 
-<pre><CODE>circ_in_circ 500 400 0 1 &gt eccentric-a.bmp
-circ_in_circ 500 400 40 1 &gt eccentric-b.bmp
-circ_in_circ 500 200 0 1 &gt eccentric-c.bmp</CODE>
+Note, due to their large size, the eccentric coax files are not distributed. They are made automatically when you run
+<code>make check</code>, which should be done as part of the installation procedure (see the file INSTALL). Running
+<code>make check</code> calls <a href="create_bmp_for_circ_in_circ.1.html">create_bmp_for_circ_in_circ</a>, which is used for creating a circular conductor inside another circular conductor. 
+<pre><CODE>create_bmp_for_circ_in_circ 500 400 0 1 eccentric-a.bmp
+create_bmp_for_circ_in_circ 500 400 40 1 eccentric-b.bmp
+create_bmp_for_circ_in_circ 500 200 0 1 eccentric-c.bmp</CODE>
 </pre>
-the file <CODE>create </CODE>. 
 <p>
 <STRONG><H2><a name="Accuracy_symmetrical_strip" >Comparisions between atlc and a symmetrical strip transmission line</A></H2></STRONG>
 Another obvious test is a symmetrical strip transmission line - see diagramme below. <p>
 <img src="jpgs/symmetrical_strip.jpg" ALT="Symmetrical Strip Transmission Line"><p>
-This has an exact analytical solution, dependent on the ratio of the width of the inner conductor w, to the distance between the two outer conductors H.  This assumes that the outer conductors extend to plus and minus infinity and the inner conductor is infinitely thin. This structure has the advantage of requiring no curves, so can be represented more accurately with the square grid used in <CODE>atlc.</CODE> However, its impossible to have an inner conductor that is less than 1 pixel high and it is impossible to make the dimension W  infinity wide as it was take an infinite amount of disk space, RAM and CPU time).  However, if the width W is made at least 4xH+w, then making it any larger does not seem to have much affect on the result. Hence the results below were obtained by setting the internal W equal to 4 times the internal height plus the inner width W. The actual bitmaps used by atlc are 10 pixels higher and 10 pixels wider, to enforce a boundary. The programme <CODE>sym_strip</CODE> can be used to quickly produce suitable bitmaps for such circumstances. It enforces having the width W of the  equal to at least w+4*h, as well as H being at least 201 pixels. It must be odd, since the one pixel inner conductor must fit centrally between the two outer conductors.<br>
-<CODE>sym_strip 1200 201 290 50-201.bmp<br>
+This has an exact analytical solution, dependent on the ratio of the width of the inner conductor w, to the distance between the two outer conductors H.  This assumes that the outer conductors extend to plus and minus infinity and the inner conductor is infinitely thin. This structure has the advantage of requiring no curves, so can be represented more accurately with the square grid used in <CODE>atlc.</CODE> However, its impossible to have an inner conductor that is less than 1 pixel high and it is impossible to make the dimension W  infinity wide as it was take an infinite amount of disk space, RAM and CPU time).  However, if the width W is made at least 4xH+w, then making it any larger does not seem to have much affect on the result. Hence the results below were obtained by setting the internal W equal to 4 times the internal height plus the inner width W. The actual bitmaps used by atlc are 10 pixels higher and 10 pixels wider, to enforce a boundary. The programme <CODE>create_bmp_for_sym_strip</CODE> can be used to quickly produce suitable bitmaps for such circumstances. It enforces having the width W of the  equal to at least w+4*h, as well as H being at least 201 pixels. It must be odd, since the one pixel inner conductor must fit centrally between the two outer conductors.<br>
+<CODE>create_bmp_for_sym_strip 1200 201 290 50-201.bmp<br>
 w=290 H=201 w/H=1.442786 xo=23.753772<br>
 Zo is theoretically 49.989477 Ohms (assuming W is infinite)<br></CODE>
 <br>
@@ -451,8 +452,8 @@ Notes:
 <p>
 <OL>
 <LI>
-Due to their large size, most of the  files *Ohm*.bmp are not distributed with <CODE>atlc</CODE>. but may be produced easily with the aid of a script called <CODE>create</CODE> in the examples directory. The script create calls a programme <CODE>sym_strip</CODE>, which was developed for the purpose of producing symmetrical stripline bitmaps. 
-<LI>
+Due to their large size, most of the  files *Ohm*.bmp are not distributed with <CODE>atlc</CODE>. but may be produced easily with the aid of a script called <CODE>create</CODE> in the examples directory. The script create calls a programme <CODE>create_bmp_for_sym_strip</CODE>, which was developed for the purpose of producing symmetrical stripline bitmaps. 
+</LI>
 <LI>Run times were up to 1977 s when atlc was compiled with support for multiple processors and up to 3447 s when it was not.</LI></OL>
  <H2><a name="Accuracy_coupler">Accuracy of <CODE>atlc</CODE> with coupled lines</a></H2>
 Testing the accuracy of <CODE>atlc</CODE> with coupled lines is more difficult that with single isolated lines, since there is to my knowledge only one structure for which exact analytical results exist. For two infinitely thin conductors halfway between two infinitely wide groundplanes (see below)
@@ -460,15 +461,15 @@ Testing the accuracy of <CODE>atlc</CODE> with coupled lines is more difficult t
 <img src="jpgs/coupler.jpg" ALT="coupled lines" width="400"><p>
 the odd and even mode impedances can be calculated analytically. If the spacing between the two groundplanes is H, the width of the conductors w, the spacing between the conductors s, and the permittivity of the medium Er, 
  
-<CODE><pre>
-----------^-------------------------------------------------------------
+<pre>
+----------^--------------------------------------------------------------
           |                                               
-          |               <---w---> <-----s----><---w-->
-          H              ---------                                 --------            Er
-          |                                      
+          |                &lt---w---&gt&lt-----s----&gt&lt---w--&gt
+          H                ---------            --------         
+          |       Er                               
           |                               
-----------v-------------------------------------------------------------
-</pre></CODE>
+----------v--------------------------------------------------------------
+</pre>
  
 then the impedances are given by. <p>
  
@@ -485,7 +486,7 @@ ko'=sqrt(1-(ko^2))<p>
 
 Those equations are taken from Matthaei, Young and Jones, <EM>Microwave Filters, Impedance Matching Networks and Coupling Structures</EM>,  Artech House, Dedham, MA., 1980. I'm very grateful to Paul Gili AA1LL / KB1CZP  <a href="mailto:aa1ll@email.com">aa1l@email.com</a>  for providing me with these equations, references and nomographs. 
 <p>
-A programme <CODE>make_coupler</CODE> was written to automatically generate bitmaps given the height H between the groundplanes, the conductor widths w and spacing s. Ideally this needs simulating from -infinity to +infinity, but that is not practical. It was assumed that if the complete structure width W was equal to 2*w+s+8*H that would be adequate (this seemed <EM>about right</EM>, but I've no proof it is optimal). As well as producing a bitmap, <CODE>make_coupler</CODE>also calculate the theoretical values of impedance. In order to perform calculations of the theoetical impedance, <CODE>make_coupler </CODE> uses the GNU scientific library <a href="http://sources.redhat.com/gsl">gsl</a>  for the elliptic integral calculations. Hence to obtain the theoretical values, gsl, available at <a href="http://sources.redhat.com/gsl">http://sources.redhat.com/gsl</a>,  <STRONG>must</STRONG> be installed. The bitmaps will still be produced without the gsl library.<p>
+A programme <CODE>create_bmp_for_coupler</CODE> was written to automatically generate bitmaps given the height H between the groundplanes, the conductor widths w and spacing s. Ideally this needs simulating from -infinity to +infinity, but that is not practical. It was assumed that if the complete structure width W was equal to 2*w+s+8*H that would be adequate (this seemed <EM>about right</EM>, but I've no proof it is optimal). As well as producing a bitmap, <CODE>create_bmp_for_coupler</CODE>also calculate the theoretical values of impedance. In order to perform calculations of the theoetical impedance, <CODE>create_bmp_for_coupler </CODE> uses the GNU scientific library <a href="http://sources.redhat.com/gsl">gsl</a>  for the elliptic integral calculations. Hence to obtain the theoretical values, gsl, available at <a href="http://sources.redhat.com/gsl">http://sources.redhat.com/gsl</a>,  <STRONG>must</STRONG> be installed. The bitmaps will still be produced without the gsl library.<p>
 <TABLE border align="bottom">
 <TR>
 <TD><STRONG>Filename</STRONG></TD>
@@ -494,12 +495,12 @@ A programme <CODE>make_coupler</CODE> was written to automatically generate bitm
 <TD><STRONG>w</STRONG></TD>
 <TD><STRONG>s</STRONG></TD>
 <TD><STRONG>Er</STRONG></TD>
-<TD><STRONG>Zodd</STRONG></TD>
+<TD><STRONG>Zodd<sup>theory</sup></STRONG></TD>
 <TD><STRONG>Zodd<sup>atlc</sup></STRONG></TD>
-<TD><STRONG>Error</STRONG></TD>
-<TD><STRONG>Zeven</STRONG></TD>
+<TD><STRONG>Error<sup>odd<//sup></STRONG></TD>
+<TD><STRONG>Zeven<sup>theory</sup></STRONG></TD>
 <TD><STRONG>Zeven<sup>atlc</sup></STRONG></TD>
-<TD><STRONG>Error</STRONG></TD>
+<TD><STRONG>Error<sup>even</sup></STRONG></TD>
 </TR>
 <TR>
 <TD>coupler1</TD>
@@ -522,12 +523,12 @@ A programme <CODE>make_coupler</CODE> was written to automatically generate bitm
 <TD>1.0</TD>
 <TD>1.0</TD>
 <TD>1.0</TD>
-<TD>93.282</TD>
+<TD>93.12</TD>
 <TD>92.418</TD>
-<TD>-0.93%</TD>
-<TD>107.23</TD>
+<TD>-0.32%</TD>
+<TD>106.90</TD>
 <TD>106.36 </TD>
-<TD>-0.80%</TD>
+<TD>-0.53%</TD>
 </TR>
 <TR>
 <TD>coupler3</TD>
