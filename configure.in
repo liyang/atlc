@@ -15,7 +15,7 @@ AC_OUTPUT_COMMANDS([exit])
 
 dnl Checks for libraries.
 AC_CHECK_LIB(m,main)
-AC_CHECK_LIB(c,memalign)
+AC_CHECK_LIB(c,memalign, AC_DEFINE(HAVE_MEMALIGN))
 
 
 dnl check for optimised math library on SPARC
@@ -70,13 +70,14 @@ if test "x$with_gui" = "xyes"; then
 fi
 
 dnl Multi-Processor Support
-AC_ARG_WITH(mp, AC_HELP_STRING([--with-mp=[no]],[support multiple processors (needs pthreads installed) ]))
-if test "x$with_mp" = "xyes"; then
+AC_ARG_WITH(threads, AC_HELP_STRING([--with-threads=[no]],[support multiple processors (needs pthreads or similar installed)]))
+if test "x$with_threads" = "xyes"; then
 AC_DEFINE(ENABLE_MP)
 AC_DEFINE(_REENTRANT)
 AC_DEFINE(_THREAD_SAFE)
 AC_CHECK_LIB(thread,  pthread_create)
 AC_CHECK_LIB(pthread,  pthread_create)
+dnl thr_setconcurrency is only needed on Solaris as far as I know. 
 AC_CHECK_LIB(thread, thr_setconcurrency, [AC_DEFINE(HAVE_THR_SETCONCURRENCY)])
 fi
 
@@ -123,7 +124,6 @@ if test "x$GCC" = "xyes"; then
     CFLAGS="$CFLAGS -Wall"
   fi
 fi
- 
 
 dnl Only use -O3 if we have gcc
 if test "x$GCC" = "xyes"; then
