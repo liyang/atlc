@@ -16,8 +16,7 @@ README.threads \
 README.windows \
 BUGS \
 compile \
-stoptests \
-teston \
+missing \
 TODO
 
 CLEANFILES = examplestest-coupler2.bmp.txt
