@@ -56,7 +56,7 @@ int main(int argc, char **argv) /* Read parameters from command line here   */
    int q;
    FILE *image_data_fp=stdout;
    struct transmission_line_properties not_used_currently;
-   int verbose_level;
+   int verbose_level=0;
 
    /* The following jut keeps compilers happy. SGI's is very fussy!! */
 
