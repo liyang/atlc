@@ -8,14 +8,13 @@ find_optimal_dimensions_for_microstrip_coupler \
 create_bmp_for_rect_cen_in_rect_coupler 
 
 atlc_SOURCES = atlc.c read_bitmap_file_headers.c \
-check_convergence.c  \
 memory.c setup_arrays.c \
 finite_difference_single_threaded.c \
 finite_difference_multi_threaded.c \
 usage_atlc.c \
 check_for_shorts.c bmp.h definitions.h Erdata.h \
 check_for_boundaries.c find_energy_per_metre.c \
-update_voltage_array.c get_file_pointer_with_right_filename.c \
+get_file_pointer_with_right_filename.c \
 find_maximum_values.c calculate_colour_data.c find_electric_fields.c \
 get_options.c exit_with_msg_and_exit_code.c do_fd_calculation.c \
 swap_conductor_voltages.c print_copyright.c \
@@ -24,7 +23,7 @@ print_data_for_two_conductor_lines.c \
 set_data_to_sensible_starting_values.c \
 write_fields_for_two_conductor_lines.c \
 write_fields_for_directional_couplers.c \
-exit_codes.h
+exit_codes.h definitions.h
 
 atlc_CPPFLAGS = -DNEED_MPI_CODE @PTHREAD_CFLAGS@
 #atlc_LDADD = @PTHREAD_LIBS@ @LIBS@ @MPILIBS@
@@ -40,7 +39,7 @@ align_bitmap_image.c fill_rect_in_rect.c \
 check_parameters_of_create_bmp_for_rect_in_rect.c \
 check_error.c get_options.c definitions.h \
 exit_with_msg_and_exit_code.c print_copyright.c \
-exit_codes.h
+exit_codes.h definitions.h
 
 create_bmp_for_rect_in_rect_LDADD = @LIBS@ 
 
@@ -51,7 +50,8 @@ usage_create_bmp_for_rect_cen_in_rect_coupler.c \
 get_options.c definitions.h memory.c \
 write_bitmap_out.c  \
 align_bitmap_image.c check_error.c exit_with_msg_and_exit_code.c \
-print_copyright.c
+print_copyright.c \
+exit_codes.h definitions.h
 #create_bmp_for_rect_cen_in_rect_coupler_LDADD = @LIBS@ 
 
 
@@ -99,7 +99,7 @@ check_parameters_of_create_bmp_for_circ_in_rect.c \
 memory.c write_bitmap_out.c  \
 align_bitmap_image.c fill_circ_in_rect.c  \
 check_error.c get_options.c definitions.h exit_with_msg_and_exit_code.c \
-print_copyright.c Erdata.h
+print_copyright.c Erdata.h exit_codes.h
 create_bmp_for_circ_in_rect_LDADD = @LIBS@ 
 
 create_bmp_for_rect_in_circ_SOURCES = create_bmp_for_rect_in_circ.c \
