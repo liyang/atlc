@@ -14,7 +14,7 @@
 // ----------------------------------------------------------------------------
 // the application icon
 #if defined(__WXGTK__) || defined(__WXMOTIF__)
-    #include "atlc.xpm"
+    #include "FD.xpm"
 #endif
 
 // ----------------------------------------------------------------------------
@@ -48,6 +48,7 @@ END_EVENT_TABLE()
 FiniteDifferenceFrame::FiniteDifferenceFrame(const wxString& title, const wxPoint& pos, const wxSize& size)
 :wxFrame((wxFrame *)NULL, -1, title, pos, size)
 {
+  SetIcon(wxICON(FD));
   // create a menu bar
   wxMenu *FileMenu = new wxMenu("", wxMENU_TEAROFF);  
   wxMenu *EditMenu = new wxMenu("", wxMENU_TEAROFF);  
@@ -67,13 +68,13 @@ FiniteDifferenceFrame::FiniteDifferenceFrame(const wxString& title, const wxPoin
   RunMenu->Append( ID_RunFD, "&Run FD simulation","Run the finite difference simulation");
 
   // GenerateBitmap menue
-  GenerateBitmapMenu->Append( ID_RectInRect, "&Rectangular conductor inside rectangular conductor" , "Generate rectinrect");
-  GenerateBitmapMenu->Append( ID_CircInCirc, "&Circular conductor inside circular conductor" );   
-  GenerateBitmapMenu->Append( ID_RectInCirc, "R&ectangular conductor inside circular conductor" );   
-  GenerateBitmapMenu->Append( ID_CircInRect, "C&ircular conductor inside rectangular conductor" );   
-  GenerateBitmapMenu->Append( ID_SymStrip,   "&Symmetrical Stripline" );   
+  GenerateBitmapMenu->Append( ID_RectInRect, "&Rectangular conductor inside rectangular conductor" , "Quickly generate a bitmap for one rectangular conductor inside another.");
+  GenerateBitmapMenu->Append( ID_CircInCirc, "&Circular conductor inside circular conductor" ,"Quickly generate a bitmap for one circular conductor inside another");   
+  GenerateBitmapMenu->Append( ID_RectInCirc, "R&ectangular conductor inside circular conductor" ,"Quickly generate a bitmap for a rectangular conductor inside a circular one");   
+  GenerateBitmapMenu->Append( ID_CircInRect, "C&ircular conductor inside rectangular conductor","Quickly generate a bitmap for a circular conductor inside a rectangular one." );   
+  GenerateBitmapMenu->Append( ID_SymStrip,   "&Symmetrical Stripline" ,"Quickly generate a bitmap for a stripline between parallel groundplanes");   
   GenerateBitmapMenu->AppendSeparator();
-  GenerateBitmapMenu->Append( ID_Coupler,    "&Edge on coupler" );   
+  GenerateBitmapMenu->Append( ID_Coupler,    "&Coupler (rectangular conductors)" ,"Quickly generate a bitmap for a coupler with rectangular conductors");   
 
   HelpMenu->Append( ID_Help, "&Help" , "Help");
 
@@ -120,6 +121,15 @@ void FiniteDifferenceFrame::OnRectInRect(wxCommandEvent& event)
 
 void FiniteDifferenceFrame::OnCircInCirc(wxCommandEvent& event)
 {
+  wxMessageBox("Note, there is an exact analytical result\n\
+for a geometry of one circular conductor inside another -\n\
+even when they are not coaxial (i.e. centres offset). Hence\n\
+you may prefer to select 'Elliptical Coax' from the main atlc\n\
+menu and not use this menue to generate a bitmap, so it\n\
+may subsequently be calcualted using the finite difference\n\
+method.\n\nThis option is used so the finite difference and\n\
+analytical methods can be compared, but it not the most\n\ 
+accurate, or the fastest way, of analysing such a stucture","Warning for circular conductors", wxCANCEL | wxOK | wxICON_EXCLAMATION);
 }
 
 void FiniteDifferenceFrame::OnCircInRect(wxCommandEvent& event)
