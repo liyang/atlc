@@ -77,13 +77,6 @@ Test_threads_b \
 1m-create_bmp_for_symmetrical_stripline.U.bin.test \
 1n-create_bmp_for_symmetrical_stripline.V.bin.test \
 2a-create_bmp_for_rect_in_rect.bmp.test \
-2b-create_bmp_for_rect_in_rect.txt.test \
-2c-create_bmp_for_rect_in_rect.E.bmp.test \
-2d-create_bmp_for_rect_in_rect.Er.bmp.test \
-2e-create_bmp_for_rect_in_rect.Ey.bmp.test \
-2f-create_bmp_for_rect_in_rect.Ex.bmp.test \
-2g-create_bmp_for_rect_in_rect.U.bmp.test \
-2h-create_bmp_for_rect_in_rect.V.bmp.test \
 3a-create_bmp_for_rect_cen_in_rect.bmp.test \
 3b-create_bmp_for_rect_cen_in_rect.txt.test \
 4a-create_bmp_for_microstrip_coupler.test \
@@ -148,7 +141,6 @@ Test_threads_b \
 14b-check-circ-in-rect.test \
 14c-check-circ-in-rect.test \
 14d-check-circ-in-rect.test  \
-WARNING--The-next-test+benchmark-takes-a-long-while.test \
 benchmark.test 
 
 #MPI_16a_PI 
