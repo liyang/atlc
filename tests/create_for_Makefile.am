@@ -1,0 +1,2 @@
+#!/bin/sh
+ls *.test | awk '{ print $1,"\\"}'
