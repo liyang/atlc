@@ -6,8 +6,14 @@
 #ifdef HAVE_AIXFONT_H
 #ifdef HAVE_UNISTD_H
 #ifdef HAVE_STRING_H
+#ifdef HAVE_STDLIB_H
+#ifdef HAVE_STDIO_H  
+#include <stdlib.h>
+#include <stdio.h>
 #include <unistd.h>
 #include <string.h>
+#endif
+#endif
 #endif
 #endif
 #endif
@@ -17,6 +23,8 @@ int try_aix(struct computer_data *data)
 #ifdef HAVE_AIXFONT_H
 #ifdef HAVE_UNISTD_H
 #ifdef HAVE_STRING_H
+#ifdef HAVE_STDLIB_H
+#ifdef HAVE_STDIO_H  
   long ram_in_kb;
   char *model;
   model=malloc(12);
@@ -165,6 +173,8 @@ int try_aix(struct computer_data *data)
 #endif
 
   return(PROBABLY_AIX);
+#endif
+#endif
 #endif
 #endif
 #endif
