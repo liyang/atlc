@@ -11,7 +11,7 @@ extern double found_this_dielectric;
 void do_fd_calculation(double *capacitance, double *inductance, double *Zo, double *Zodd, double *Zeven, int whichZ, double *velocity,double *vf,FILE *where_to_print, double cutoff, int dielectrics_to_consider_just_now, char * filename ,
 int a_requirement_for_fd_calculations_Q)
 {
-  double c_old, c;
+  double c_old, c, impedance;
   FILE *appendfile_fp;
   char *appendfile;
   appendfile=(char *) malloc(100);
@@ -32,14 +32,26 @@ int a_requirement_for_fd_calculations_Q)
         *inductance=MU_0*EPSILON_0/(*capacitance);
       /* Once the capacitance is know, we can calculate L, Zo  and the
       velocity of propogation */
-      *Zo=sqrt((*inductance)/(*capacitance));
+      impedance=sqrt((*inductance)/(*capacitance));
       *velocity=1.0/pow((*inductance)*(*capacitance),0.5);
       c=1.0/(sqrt(MU_0 * EPSILON_0)); /* approx 3x10^8 m/s */
       *vf=(*velocity)/c;  /* Velocity factor */
 
       /* If the -v option is given on the command line, more data is
       produced */
-
+      
+      if(whichZ==Z0)  
+	*Zo=impedance;
+      else if(whichZ==Z_ODD)
+        *Zodd=impedance;
+      /* In this case Zodd is alreadly known, so Zeven must be
+      calculated, but also Zo, which is the geometric mean of the two
+      */
+      else if (whichZ==Z_ALL)
+      {
+	*Zeven=impedance;
+        *Zo=sqrt((*Zodd)*(*Zeven));
+      }
       if(verbose)
       {
         print_data(stdout,filename,1.0,*capacitance,*inductance,*Zo,*Zodd,*Zeven,whichZ,\
