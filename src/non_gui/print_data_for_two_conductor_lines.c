@@ -23,20 +23,12 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 */
 #include "definitions.h"
 
-#ifdef HAVE_STDIO_H
-#include <stdio.h>
-#endif
-
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
 #endif
 
 #ifdef SYS_TYPES_H
 #include <sys/types.h>
-#endif
-
-#ifdef HAVE_MATH_H
-#include <math.h>
 #endif
 
 /* The following simple function just prints data into a file, or if
