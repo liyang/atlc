@@ -35,41 +35,55 @@ else
   L1data=`echo $ret | awk '{print $19}'`
   L1instruction=`echo $ret | awk '{print $20}'`
   L2=`echo $ret | awk '{print $21}'`
-  filename=foo
   echo " "
   echo "                  BENCHMARK DATA"
+  echo "                  BENCHMARK DATA" > tests.log
+  echo "                  <STRONG><div align="center">BENCHMARK DATA</div></STRONG> <BR>" > tests.html
+
   echo "To get hardware data, atlc MUST be configured with --enable-hardware-info"
+  echo "To get hardware data, atlc MUST be configured with --enable-hardware-info" > tests.log
+  echo "To get hardware data, atlc MUST be configured with --enable-hardware-info<BR>" >> tests.html
+
   echo "Hardware data working 95% on Solaris, less so on other OS's"
+  echo "Hardware data working 95% on Solaris, less so on other OS's" >> tests.log
+  echo "Hardware data working 95% on Solaris, less so on other OS's<BR><BR>" >> tests.html
+
   echo " "
   echo "Hardware provider is $hw_provider. Hardware platform is $hw_platform."
   echo "Hardware provider is $hw_provider. Hardware platform is $hw_platform." >> tests.log
-  echo "Hardware provider is $hw_provider. Hardware platform is $hw_platform." >> benchmark.$filename.html
-  echo "<STRONG>Hardware provider is $hw_provider. Hardware platform is $hw_platform.</STRONG>" > benchmark.$filename.html
+  echo "Hardware provider is $hw_provider. Hardware platform is $hw_platform.<BR>" >> tests.html
+
   echo "Machine: $machine. Sysname: $sysname. Release: $release. Nodename: $nodename."
   echo "Machine: $machine. Sysname: $sysname. Release: $release. Nodename: $nodename." >> tests.log
-  echo "<BR>Machine: $machine. Sysname: $sysname. Release: $release. Nodename: $nodename." >> benchmark.$filename.html
+  echo "Machine: $machine. Sysname: $sysname. Release: $release. Nodename: $nodename.<BR>" >> tests.html
+
   echo "Number of CPUs supported by system is $supported_cpus. Number of CPUs online is  $N_cpus."
-  echo "Number of CPUs supported by system is $supported_cpus. Number of CPUs online is  $N_cpus." >> tests.html
-  echo "<BR>Number of CPUs supported by system is $supported_cpus. Number of CPUs online is  $N_cpus." >> benchmark.$filename.dat
+  echo "Number of CPUs supported by system is $supported_cpus. Number of CPUs online is  $N_cpus." >> tests.log
+  echo "Number of CPUs supported by system is $supported_cpus. Number of CPUs online is  $N_cpus.<BR>" >> tests.html
+
   echo "CPU_type is $cpu_type. FPU_type is $fpu_type. Speed of CPU(s) is $mhz MHz."
   echo "CPU_type is $cpu_type. FPU_type is $fpu_type. Speed of CPU(s) is $mhz MHz." >> tests.log
-  echo "<BR>CPU_type is $cpu_type. FPU_type is $fpu_type. Speed of CPU(s) is $mhz MHz." >> benchmark.$filename.html
+  echo "CPU_type is $cpu_type. FPU_type is $fpu_type. Speed of CPU(s) is $mhz MHz.<BR>" >> tests.html
+
   echo "RAM is $ram Mb."
   echo "RAM is $ram Mb." >> tests.log
-  echo "<BR>RAM is $ram Mb." >> benchmark.$filename.html
+  echo "RAM is $ram Mb.<BR>" >> tests.html
+
   echo "L1 data cache is $L1data; L1 instruction cache is $L1instruction; L2 cache is $L2"
   echo "L1 data cache is $L1data; L1 instruction cache is $L1instruction; L2 cache is $L2" >> tests.log
-  echo "<BR>L1 data cache is $L1data; L1 instruction cache is $L1instruction; L2 cache is $L2" >> benchmark.$filename.html
+  echo "L1 data cache is $L1data; L1 instruction cache is $L1instruction; L2 cache is $L2<BR>" >> tests.html
+
   if [ "x$built_with_posix_threads" = "xyes" ] ; then
     echo "Run times: T_sequential is $t1 s. T_parallel is $t2 s."
     echo "Run times: T_sequential is $t1 s. T_parallel is $t2 s." >> tests.log
-    echo "<BR>Run times: T_sequential is $t1 s. T_parallel is $t2 s." >> benchmark.$filename.html
+    echo "Run times: T_sequential is $t1 s. T_parallel is $t2 s.<BR>" >> tests.html
+
     echo "Speedup=T_sequential/T_parallel is $speedup. Efficiency=Speedup/N_cpus is $efficiency"
     echo "Speedup=T_sequential/T_parallel is $speedup. Efficiency=Speedup/N_cpus is $efficiency" >> tests.log
-    echo "<BR>Speedup=T_sequential/T_parallel is $speedup. Efficiency=Speedup/N_cpus is $efficiency" >> benchmark.$filename.html
+    echo "Speedup=T_sequential/T_parallel is $speedup. Efficiency=Speedup/N_cpus is $efficiency<BR>" >> tests.html
   else
     echo "Run times: T_sequential is $t1 s. Not configured for parallel operation."
     echo "Run times: T_sequential is $t1 s. Not configured for parallel operation." >> tests.log
-    echo "<BR>Run times: T_sequential is $t1 s. Not configured for parallel operation." >> benchmark.$filename.html
+    echo "Run times: T_sequential is $t1 s. Not configured for parallel operation.<BR>" >> tests.html
   fi 
 fi
