@@ -1,29 +1,31 @@
-1.   There seems to be problems on SPARC running old versions of Linux 
-     (Redhat 6.2, kernel 2.2.14-5.0smp) and Debian, when configured for
-     multi-processor support.. I'm tempted to belive this is a bug in the 
-     thread support on old versions of Linux. It's fine on newer versions on a 
-     PC. 
+   
+  1.There are two test failures on IBM's AIX operating system, using IBM's 
+    compiler version 6.0 when compiled multi-threaded I've no idea of the
+    source of these problems. Many pixels differ, but by a small amount. I 
+    find it hard to believe this is rounding errors. 
+  2.Data on machines is only gathered properly on a few machines (Solaris,
+     Tru64, AIX and HP-UX). On IRIX, Linux, *BSD, it is next to useless. 
+  3.If there is a version of the gsl library installed, but it is too old 
+    (< version 0.8), then the linker will link in -lgsl. However, there will 
+    be no gsl functions called, so *some* linkers (well the only one known is 
+    on SGI's IRIX platform, will generate the warning message
 
-2    Data on machines is only gathered properly on a few machines (Solaris
-     Tru64 and HP-UX). On AIX, IRIX, Linux, *BSD, it is next to useless.
+    ld32: WARNING 84 : /usr/freeware/lib32/libgsl.so is not used for resolving any symbol. 
 
-3.   Lack of any way of changing brightness of images without a cpu-intenesive 
-     re-run. The two example files ' Thread support on machines other than 
-     Solaris is not known. I need to do more testing - preferably with 
-     multi-processor machines. 
-
-4.   There are no manual pages for several programs 
-
-5.   The error message shown in the files docs/htlm-docs/errors.html is wrong 
-     and was generated on an earlier release. However, it makes little 
-     difference - the meaning should be clear. 
-
-6.   HTML versions of the man pages have diagrams that are completely stupid.
-     This is a problem with the program 'man2html' I'm using - I think so 
-     anyway. 
-
-7.   The script 'teston' does not seem to work to the local host, with instead 
-     it giving a lot of failures. Wny ??? 
-
-
-Dr. David Kirkby, July 26th 2003 Re: atlc-4.3.5 
+    This is harmless and may be ignored. The top-level configure.ac or the 
+    m4/gsl.m4
+    files need sorting out to correct this 
+  4.There seems to be problems on SPARC running old versions of Linux 
+    (Redhat 6.2, kernel 2.2.14-5.0smp) and Debian, when configured for
+    multi-processor support. I'm tempted to believe this is a bug in the 
+    thread support on old versions of Linux. It's fine on newer versions on a 
+    PC. 
+  5.The lack of any way of changing brightness of images without a 
+    cpu-intensive re-run. 
+  6.There are no manual pages for several programs 
+  7.The error messages shown in the files docs/htlm-docs/errors.html are 
+    wrong and were generated on an earlier release. However, it makes little
+    difference - the meaning should be clear. 
+  8.HTML versions of the man pages have diagrams that are completely stupid. #
+    This is a problem with the program 'man2html' I'm using - I think so anyway. 
+Dr. David Kirkby, 15th Aug 2003 Re: atlc-4.3.7 
