@@ -35,7 +35,7 @@ void give_examples_of_using_design_coupler(void)
   printf("but would like to see the response at every 2.5 MHz. This can be done using the\n");
   printf("-s option to design_coupler.\n\n");
   printf("%c design_coupler -L 0.25 -s 2.5 30 130 170\n\n",'%');
-  printf("Assuming the performance is acceptable, the dimensions of the coupler can\n"); //XX
+  printf("Assuming the performance is acceptable, the dimensions of the coupler can\n"); 
   printf("be determined by adding the -d option. This will design a coupler that must look\n");
   printf("like the structure below. The two inner conductors, which are spaced equally\n");
   printf("between the top and bottom edges of the outer conductor, must be very thin.\n");

@@ -85,7 +85,7 @@ void find_maximum_values(struct max_values *maximum_values, int zero_elementsQ)
       if(U> 1.0)             
         printf("U=%f v=%f Er=%f at %d %d\n",U,V,Er[i][j],i, j);
 
-      if(E>maximum_values->E_max) // line 88
+      if(E>maximum_values->E_max) 
         maximum_values->E_max=E;
 /*
 Read from uninitialized (rui):
@@ -112,5 +112,5 @@ Attempting to read 4 bytes at address 0xffbfe6a8
         maximum_values->permittivity_max=permittivity; 
     }
   }
-  //printf("Ex_or_Ey_max=%f E_max=%f V_max=%f U_max=%g Er_max=%f\n",maximum_values->Ex_or_Ey_max, maximum_values->E_max, maximum_values->V_max, maximum_values->U_max, maximum_values->permittivity_max);
+  /* printf("Ex_or_Ey_max=%f E_max=%f V_max=%f U_max=%g Er_max=%f\n",maximum_values->Ex_or_Ey_max, maximum_values->E_max, maximum_values->V_max, maximum_values->U_max, maximum_values->permittivity_max); */
 }

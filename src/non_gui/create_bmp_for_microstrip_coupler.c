@@ -88,7 +88,7 @@ int main(int argc, char **argv) /* Read parameters from command line here   */
       W=pcb.W;
       H=pcb.H;
       image_data_fp=fopen(argv[my_optind+7],"w");
-        //fprintf(stderr,"ints W=%d H=%d w=%d s=%d g=%d h=%d t=%d\n",pcb.W,pcb.H,pcb.w,pcb.s,pcb.g,pcb.h,pcb.t);
+        /*fprintf(stderr,"ints W=%d H=%d w=%d s=%d g=%d h=%d t=%d\n",pcb.W,pcb.H,pcb.w,pcb.s,pcb.g,pcb.h,pcb.t);*/
       write_bitmap(image_data_fp, pcb);
    }
    else

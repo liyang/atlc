@@ -245,7 +245,7 @@ int main(int argc, char **argv) /* Read parameters from command line */
     printf("                    <------- %8.4f m ----->\n",length);
     printf("\nDrive Port 1, coupler out of port 2 and terminate the other ports in Zo\n");
     printf("Such a coupler will have the response indicated below.\n\n");
-  //printf("length =%.4f mean=%.3f vcf=%.3f vcf_for_quarter_wave_line=%.3f \n",length, fmean, vcf, vcf_for_quarter_wave_line);
+  /*printf("length =%.4f mean=%.3f vcf=%.3f vcf_for_quarter_wave_line=%.3f \n",length, fmean, vcf, vcf_for_quarter_wave_line);*/
   }
   for(f=fmin; f<=fmax; f+=fstep)
   {

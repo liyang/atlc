@@ -59,8 +59,6 @@ double calculate_integer_values(struct transmission_line_properties *optimise,in
   min_pixel_size=sqrt(W*H/max_pixels);
   max_pixel_size=sqrt(W*H/min_pixels);
 
-  //printf("W=%f H=%f w=%f s=%f min=%d max=%d nmax=%d\n",W,H,w,s,min_pixels, max_pixels, nmax);
-  //printf("min_pixel_size=%f max_pixels_size=%f \n",min_pixel_size, max_pixel_size);
   /* find the most critical dimension */
   for(n=0;n<nmax;n++)
   {
@@ -73,10 +71,8 @@ double calculate_integer_values(struct transmission_line_properties *optimise,in
   min_critical_pixels = optimise->float_values[most_critical]/max_pixel_size;
   max_critical_pixels = optimise->float_values[most_critical]/min_pixel_size;
 
-  //printf("mcd = %f min crit = %d max crit = %d\n", optimise->float_values[most_critical],min_critical_pixels,max_critical_pixels);
 
   /* Normally we would try every combination of i, but it may be necessary to keep it even or odd */
-  //printf("od or even=%d\n", optimise->odd_or_even[most_critical]);
   if(optimise->odd_or_even[most_critical] == ODD  &&  min_critical_pixels%2==0) 
     min_critical_pixels--;
   else if(optimise->odd_or_even[most_critical] == EVEN  &&  min_critical_pixels%2==1) 
@@ -101,7 +97,6 @@ double calculate_integer_values(struct transmission_line_properties *optimise,in
       if (optimise->importance[n] != NOT_IMPORTANT)
       {
        error+=fabs((double)optimise->int_values[n]*grid_size-optimise->float_values[n]);
-       //printf("error=%f i=%d n=%d int_values[%d]=%d float_values[%d]=%f\n",error,i,n,n,optimise->int_values[n],n,optimise->float_values[n]);
       }
     }
     /* Since the numbers generated for the integers seeme to differ on different
@@ -115,11 +110,7 @@ double calculate_integer_values(struct transmission_line_properties *optimise,in
      error_max=error;
      for(n=0; n<nmax;++n)
        optimise->best[n]=optimise->int_values[n];
-     //printf("good at i=%d\n",i);
     }
-    //printf("grid_size=%f error=%g ermax=%f\n",grid_size,error,error_max);
   }
-  //printf("optimal are: %d %d %d %d best_grid_size=%f %f %f %f %f\n",optimise->best[0], optimise->best[1], optimise->best[2], optimise->best[3], best_grid_size, best_grid_size*optimise->best[0], best_grid_size*optimise->best[1], best_grid_size*optimise->best[2], best_grid_size*optimise->best[3]);
-  //printf("size=W*H=%d\n",optimise->best[0]*optimise->best[1]);
   return(error_max); /* return the error */
 }

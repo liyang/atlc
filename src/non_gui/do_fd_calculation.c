@@ -92,7 +92,7 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
       data->velocity=1.0/pow(data->L_vacuum*data->C,0.5);
       data->velocity_factor=data->velocity/velocity_of_light_in_vacuum;
       data->relative_permittivity=sqrt(data->velocity_factor); /* ??? XXXXXX */
-      if(data->verbose_level > 0 ) // Only needed if intermediate results wanted. 
+      if(data->verbose_level > 0 ) /* Only needed if intermediate results wanted.  */
         print_data_for_two_conductor_lines(*data, where_to_print_fp, inputfile_filename);
       count++;
     } while (fabs((capacitance_old-capacitance)/capacitance_old) > data->cutoff); /* end of FD loop */
@@ -137,7 +137,7 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
         data->velocity_factor=data->velocity/velocity_of_light_in_vacuum;
         data->relative_permittivity=sqrt(data->velocity_factor); /* ??? XXXXXX */
 		data->Er=data->C/data->C_vacuum;
-        if(data->verbose_level > 0 ) // Only needed if intermediate results wanted. 
+        if(data->verbose_level > 0 ) /* Only needed if intermediate results wanted. */
           print_data_for_two_conductor_lines(*data, where_to_print_fp, inputfile_filename);
       } while (fabs((capacitance_old-capacitance)/capacitance_old) > data->cutoff); /* end of FD loop */
 
@@ -200,7 +200,7 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
 		data->Er=1.0;
       data->Zodd=sqrt(data->Lodd_vacuum/data->Codd);  /* Standard formula for Zo */
       velocity_of_light_in_vacuum=1.0/(sqrt(MU_0 * EPSILON_0)); /* around 3x10^8 m/s */
-      // FPE trapdata->velocity_odd=1.0/pow(data->L_vacuum*data->Codd,0.5);
+      /* FPE trapdata->velocity_odd=1.0/pow(data->L_vacuum*data->Codd,0.5); */
       data->velocity_odd=1.0/pow(data->Lodd_vacuum*data->Codd,0.5);
       data->velocity_factor_odd=data->velocity_odd/velocity_of_light_in_vacuum;
       data->relative_permittivity_odd=sqrt(data->velocity_factor_odd); /* ??? XXXXXX */
@@ -355,7 +355,7 @@ void *do_fd_calculation(struct transmission_line_properties *data, FILE *where_t
         data->relative_permittivity_even=sqrt(data->velocity_factor); /* ??? XXXXXX */
 		data->Er_even=data->Ceven/data->Ceven_vacuum;
 		data->Zdiff=2.0*data->Zodd;
-        data->Zcomm=data->Zeven/2.0; //XXXXXXx
+        data->Zcomm=data->Zeven/2.0; 
 		data->Zo=sqrt(data->Zeven*data->Zodd);
 		if(data->verbose_level>=1)
           print_data_for_directional_couplers(*data, where_to_print_fp, inputfile_filename);

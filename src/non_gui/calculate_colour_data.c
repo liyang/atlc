@@ -67,11 +67,7 @@ unsigned char *red, unsigned char *green, unsigned char *blue)
       *red=0; 
       *green=0; 
       *blue=255*pow(-x/xmax,1.0/image_fiddle_factor); 
-    //  if(fabs(255*pow(-x/xmax,1.0/image_fiddle_factor)-blue) < 1e-9)
-//	fprintf(stderr,"close at %d %d\n",w,h);
     }
-    //printf("%d %d %g %d %d %d\n",w,h,x,red,green,blue);
-    //printf("%d %d %d %d %d\n",w,h,red,green,blue);
   }
   else if (image_type==MONOCHROME) /* E, energy, permittivity */
   {

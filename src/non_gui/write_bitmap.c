@@ -41,7 +41,6 @@ Dr. David Kirkby, e-mail drkirkby@ntlworld.com
 in a structure as they are all linked closely, but they are not and I
 can't be bothered to change it */
 
-//extern double WW, HH, aa, bb, cc, dd, ww, hh, Er1, Er2;
 extern int W, H;
 
 void write_bitmap(FILE *image_data_fp, struct transmission_line_properties xyz)
@@ -69,7 +68,7 @@ void write_bitmap(FILE *image_data_fp, struct transmission_line_properties xyz)
    unaligned_image_vector=ustring(0,(W+3)*3*H);
 
 #ifdef HAVE_MEMSET
-   memset((void *) (image_data),0x0,(W+3)*3*H);
+   memset((void *) (image_data),0x0,(size_t) ((W+3)*3*H));
 #else
    for(memory_location=0; memory_location < (W+3)*3*H; ++ memory_location)
      image_data[memory_location]=0;

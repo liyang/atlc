@@ -89,8 +89,8 @@ void convert_create_create_bmp_for_coupled_microstrip_dimensions_to_integers(str
       pcb->h=(int)(pcb->hh/gridsize + 0.5);
       pcb->t=(int)(pcb->tt/gridsize + 0.5);
       error=0.0;
-      //error+=pow((pcb->WW-pcb->W*gridsize)/pcb->WW,2.0); /* relative error in W */
-      //error+=pow((pcb->HH-pcb->H*gridsize)/pcb->HH,2.0);
+      /*error+=pow((pcb->WW-pcb->W*gridsize)/pcb->WW,2.0); */ /* relative error in W */
+      /*error+=pow((pcb->HH-pcb->H*gridsize)/pcb->HH,2.0); */ 
       if(pcb->w>0)
          error+=pow((pcb->ww-pcb->w*gridsize)/pcb->ww,2.0);
       if(pcb->s>0)

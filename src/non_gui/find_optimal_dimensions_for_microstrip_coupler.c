@@ -46,7 +46,6 @@ int main(int argc, char **argv)
   double ideal_Zodd=0, ideal_Zeven=0; 
   char *outfile_name, *temporary_bmp_file, *temporary_txt_file;
   int x, q;
-  //int bmp_size=DEFAULT_BMP_SIZE;
   int return_value_from_create_bmp_for_microstrip_coupler=0;
   int return_value_from_atlc=0;
   char *cmd, *null;
@@ -112,8 +111,6 @@ int main(int argc, char **argv)
   }
   else
    usage_find_optimal_dimensions_for_microstrip_coupler(); 
-  //(void) tmpnam(temporary_bmp_file); 
-  //(void) temporary_txt_file=tmpnam(temporary_txt_file);
   strcpy(temporary_bmp_file,"1.bmp");
   strcpy(temporary_txt_file,"1.txt");
   pclose(popen("rm 1.txt 1.bmp","w"));
@@ -124,14 +121,9 @@ int main(int argc, char **argv)
       for(s=smin; s<=smax; s+=sstep)
       {
 	sprintf(cmd,"create_bmp_for_microstrip_coupler %f %f %f %f %f %f %f %s\n",w, s, g, h, t, Er1, Er2,temporary_bmp_file);
-	//system(cmd);
 	return_value_from_create_bmp_for_microstrip_coupler=pclose(popen(cmd,"w"));
 	sprintf(cmd,"atlc -S -s %s > %s\n", temporary_bmp_file, temporary_txt_file);
-	//printf(cmd);
 	return_value_from_atlc=pclose(popen(cmd,"w"));
-	//printf("atlc ret= %d create_bmp_for_microstrip_coupler ret = %d \n",return_value_from_atlc,
-	//return_value_from_create_bmp_for_microstrip_coupler);
-	//system(cmd);
 	if ((fp=fopen(temporary_txt_file,"r")) ==NULL)
 	  exit_with_msg_and_exit_code("Error #1 cant't open file in find_optimal_dimensions_for_microstrip_coupler.c", CANT_OPEN_FILE_FOR_READING);
 	fscanf(fp,"%s %d %s %lf %s %lf %s %lf %s %lf %s %lf %s %lf %s %lf",null,&x,null,&Er_odd,null,&Er_even, null, &Zodd,null,&Zeven,null,&Zo, null, &Zdiff,null,&Zcomm);
@@ -154,10 +146,10 @@ int main(int argc, char **argv)
 	  fprintf(fp_best,"best so far = s=%f w=%f g=%f Zodd=%f Zeven=%f Zdiff=%f Zcomm=%f\n",s,w,g, Zdiff, Zcomm,Zodd, Zeven);
 	  if (fclose(fp_best)  != 0)
 	    exit_with_msg_and_exit_code("Error #4 Unable to close file in optimal_dimensions_for_microstrip_coupler.c",CANT_CLOSE_FILE);
-        } // end of if
-      } // end of for s
-    } // end of for w
-  } // end of for g
+        } /* end of if */
+      } /* end of for s */
+    } /* end of for w */
+  } /* end of for g */
   return(0);
 }
 	

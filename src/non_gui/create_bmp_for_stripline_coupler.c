@@ -118,7 +118,6 @@ int main(int argc, char **argv)
   H=optimise.best[1];
   w=optimise.best[2];
   s=optimise.best[3];
-  //fprintf(stderr,"W=%d H=%d 3*W*H=%d\n",W,H,3*W*H);
   write_bitmap(image_data_fp, foo);
   if(verbose >= 1)
   {

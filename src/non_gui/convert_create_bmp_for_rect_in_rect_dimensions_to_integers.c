@@ -68,8 +68,8 @@ int convert_create_bmp_for_rect_in_rect_dimensions_to_integers(int accuracy_leve
    double error, error_min=VERY_LARGE, gridsize=-1, best_grid_size=-1;
 
    /* scale grid size,  according to a command line option */
-   //lowest*=(int) 0.5+pow(2,accuracy_level);
-   //highest*=(int) 0.5+pow(2,accuracy_level);
+   /*lowest*=(int) 0.5+pow(2,accuracy_level); */
+   /*highest*=(int) 0.5+pow(2,accuracy_level); */
    lowest*=1<<accuracy_level;
    highest*=1<<accuracy_level;
 
