@@ -26,8 +26,6 @@ coaxtest.bmp \
 coaxtest.bmp.txt \
 coaxtest2.bmp \
 coaxtest2.bmp.txt \
-cop1.bmp \
-cop1.bmp.txt \
 coupler.bmp \
 coupler.bmp.txt \
 enclosed-microstrip.bmp \
@@ -208,16 +206,4 @@ pcb-coupler.Ex.even.bmp \
 pcb-coupler.Ey.even.bmp \
 pcb-coupler.U.even.bmp \
 pcb-coupler.V.even.bmp \
-pcb-coupler.Er.bmp \
-cop1.E.even.bmp \
-cop1.E.odd.bmp \
-cop1.Er.bmp \
-cop1.Ex.even.bmp \
-cop1.Ex.odd.bmp \
-cop1.Ey.even.bmp \
-cop1.Ey.odd.bmp \
-cop1.U.even.bmp \
-cop1.U.odd.bmp \
-cop1.V.even.bmp \
-cop1.V.odd.bmp \
-cop1.bmp
+pcb-coupler.Er.bmp 

@@ -98,6 +98,71 @@ EXTRA_DIST = \
 11k-verify-checksum-of-created-cop1.U.even.bmp.test \
 11l-verify-checksum-of-created-cop1.V.even.bmp.test 
 
+DISTCLEANFILES = \
+test_sym_strip.E.bin \
+test_sym_strip.E.bmp \
+test_sym_strip.Er.bin \
+test_sym_strip.Er.bmp \
+test_sym_strip.Ex.bin \
+test_sym_strip.Ex.bmp \
+test_sym_strip.Ey.bin \
+test_sym_strip.Ey.bmp \
+test_sym_strip.U.bin \
+test_sym_strip.U.bmp \
+test_sym_strip.V.bin \
+test_sym_strip.V.bmp \
+test_sym_strip.bmp \
+test_sym_strip.txt \
+test_rect_in_rect.E.bmp \
+test_rect_in_rect.Er.bmp \
+test_rect_in_rect.Ex.bmp \
+test_rect_in_rect.Ey.bmp \
+test_rect_in_rect.U.bmp \
+test_rect_in_rect.V.bmp \
+test_rect_in_rect.bmp \
+test_rect_in_rect.txt \
+test_rect_in_rect.E.bin \
+test_rect_in_rect.Er.bin \
+test_rect_in_rect.Ex.bin \
+test_rect_in_rect.Ey.bin \
+test_rect_in_rect.U.bin \
+test_rect_in_rect.V.bin \
+test.E.bin \
+test.E.bmp \
+test.E.even.bin \
+test.E.even.bmp \
+test.E.odd.bin \
+test.E.odd.bmp \
+test.Er.bin \
+test.Er.bmp \
+test.Ex.bin \
+test.Ex.bmp \
+test.Ex.even.bin \
+test.Ex.even.bmp \
+test.Ex.odd.bin \
+test.Ex.odd.bmp \
+test.Ey.bin \
+test.Ey.bmp \
+test.Ey.even.bin \
+test.Ey.even.bmp \
+test.Ey.odd.bin \
+test.Ey.odd.bmp \
+test.U.bin \
+test.U.bmp \
+test.U.even.bin \
+test.U.even.bmp \
+test.U.odd.bin \
+test.U.odd.bmp \
+test.V.bin \
+test.V.bmp \
+test.V.even.bin \
+test.V.even.bmp \
+test.V.odd.bin \
+test.V.odd.bmp \
+test.bmp \
+test.txt \
+tests.log 
+
 CLEANFILES = \
 test_sym_strip.E.bin \
 test_sym_strip.E.bmp \
@@ -163,3 +228,4 @@ test.bmp \
 test.txt \
 tests.log \
 test2.txt
+
