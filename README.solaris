@@ -15,16 +15,20 @@ Other make versions like smake may work, but I've never tried them.
 CFLAGS are suggested. Using Sun's compiler will give about a 25% reduction 
 in run times. 
 
-'-dalign -fns -fsimple=1 -fsingle -xalias_level=basic -xdepend -xlibmil -xO5 -I/usr/local/include -R/usr/local/lib'
+'-dalign -fns -fsimple=1 -xalias_level=basic -xdepend -xlibmil -xO5 -I/usr/local/include -R/usr/local/lib'
+
+If you find a better set of options for Sun's cc, that still allow all
+the tests to pass, then please let me know. 
  
 3) pth does *not* need to be installed in configuring this for multiple
 processors on a Sun. Sun has its own threaded library.
 
-4) Someone has requerested that 'atlc' be added to the www.sunfreeware.com
+4) Someone has requested that 'atlc' be added to the www.sunfreeware.com
 web site for Solaris 8 SPARC (which means it will almost certainly work on 
 Solaris 9 too). This should happen at some time in the near future
 (month or two).
 
-Dr. David Kirkby, 21st August 2003
+
+Dr. David Kirkby, 6th September 2003
 
 
