@@ -48,21 +48,26 @@ int try_solaris(struct computer_data *data)
 #ifdef HAVE_SYS_UNISTD_H
 #ifdef HAVE_UNISTD_H 
 #ifdef HAVE_SYS_UTSNAME_H
-#ifdef HAVE_PROCESSOR_INFO
 #ifdef HAVE_SYSCONF
 
-#ifdef _SC_NPROCESSORS_MAX
+#ifdef _SC_AVPHYS_PAGES   
 
-  long max_CPUs=0;
   int clock_speed_in_MHz;
+#ifdef HAVE_PROCESSOR_INFO
   processor_info_t infop;
+#endif
+
+#ifdef _SC_NPROCESSORS_MAX
+  long max_CPUs=0;
 
   /* Obtain the maximum number of CPUs supported on the Solaris system */
   max_CPUs=0;
   max_CPUs=(long) sysconf(_SC_NPROCESSORS_MAX);
   if(max_CPUs >=1 )
     sprintf(data->max_cpus,"%ld",max_CPUs);
+#endif
 
+#ifdef HAVE_PROCESSOR_INFO
   /* Obtain the of CPU and FPU on the Solaris box */
   if( processor_info((processorid_t) 0, &infop) == 0)
   {
@@ -72,20 +77,20 @@ int try_solaris(struct computer_data *data)
     if(clock_speed_in_MHz > 1)
       sprintf(data->mhz,"%d",clock_speed_in_MHz);
   }
-
-
-  /* Obtain operating system informaton, which should have 
-  been found with try_portable.c */
-
-  /* Obtain the manufacturer */
-  sysinfo(SI_HW_PROVIDER,data->hw_provider,MAX_SIZE);
+#endif
 
   /* Obtain the Platform */
+#ifdef SI_PLATFORM
   sysinfo(SI_PLATFORM,data->hw_platform,MAX_SIZE);
+#endif
+
+  /* Obtain the manufacturer */
+#ifdef SI_HW_PROVIDER
+  sysinfo(SI_HW_PROVIDER,data->hw_provider,MAX_SIZE);
+#endif
 
   return(PROBABLY_SOLARIS);
 
-#endif
 #endif
 #endif
 #endif
