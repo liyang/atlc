@@ -85,22 +85,20 @@ am__quote = @am__quote@
 install_sh = @install_sh@
 
 bin_PROGRAMS = mycksum myfilelength
-myfilelength_SOURCES = myfilelength.c ../../src/non_gui/exit_with_msg_and_exit_code.c
-mycksum_SOURCES = mycksum.c ../../src/non_gui/exit_with_msg_and_exit_code.c
+myfilelength_SOURCES = myfilelength.c 
+mycksum_SOURCES = mycksum.c 
 subdir = tools/src
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_CLEAN_FILES =
 bin_PROGRAMS = mycksum$(EXEEXT) myfilelength$(EXEEXT)
 PROGRAMS = $(bin_PROGRAMS)
 
-am_mycksum_OBJECTS = mycksum.$(OBJEXT) \
-	exit_with_msg_and_exit_code.$(OBJEXT)
+am_mycksum_OBJECTS = mycksum.$(OBJEXT)
 mycksum_OBJECTS = $(am_mycksum_OBJECTS)
 mycksum_LDADD = $(LDADD)
 mycksum_DEPENDENCIES =
 mycksum_LDFLAGS =
-am_myfilelength_OBJECTS = myfilelength.$(OBJEXT) \
-	exit_with_msg_and_exit_code.$(OBJEXT)
+am_myfilelength_OBJECTS = myfilelength.$(OBJEXT)
 myfilelength_OBJECTS = $(am_myfilelength_OBJECTS)
 myfilelength_LDADD = $(LDADD)
 myfilelength_DEPENDENCIES =
@@ -113,8 +111,8 @@ LDFLAGS = @LDFLAGS@
 LIBS = @LIBS@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
-@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/exit_with_msg_and_exit_code.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/mycksum.Po ./$(DEPDIR)/myfilelength.Po
+@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/mycksum.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/myfilelength.Po
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
@@ -159,8 +157,6 @@ uninstall-binPROGRAMS:
 
 clean-binPROGRAMS:
 	-test -z "$(bin_PROGRAMS)" || rm -f $(bin_PROGRAMS)
-exit_with_msg_and_exit_code.$(OBJEXT): \
-	../../src/non_gui/exit_with_msg_and_exit_code.c
 mycksum$(EXEEXT): $(mycksum_OBJECTS) $(mycksum_DEPENDENCIES) 
 	@rm -f mycksum$(EXEEXT)
 	$(LINK) $(mycksum_LDFLAGS) $(mycksum_OBJECTS) $(mycksum_LDADD) $(LIBS)
@@ -174,7 +170,6 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exit_with_msg_and_exit_code.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mycksum.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/myfilelength.Po@am__quote@
 
@@ -192,18 +187,6 @@ distclean-depend:
 @AMDEP_TRUE@	depfile='$(DEPDIR)/$*.Po' tmpdepfile='$(DEPDIR)/$*.TPo' @AMDEPBACKSLASH@
 @AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 	$(COMPILE) -c `cygpath -w $<`
-
-exit_with_msg_and_exit_code.o: ../../src/non_gui/exit_with_msg_and_exit_code.c
-@AMDEP_TRUE@	source='../../src/non_gui/exit_with_msg_and_exit_code.c' object='exit_with_msg_and_exit_code.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@	depfile='$(DEPDIR)/exit_with_msg_and_exit_code.Po' tmpdepfile='$(DEPDIR)/exit_with_msg_and_exit_code.TPo' @AMDEPBACKSLASH@
-@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o exit_with_msg_and_exit_code.o `test -f '../../src/non_gui/exit_with_msg_and_exit_code.c' || echo '$(srcdir)/'`../../src/non_gui/exit_with_msg_and_exit_code.c
-
-exit_with_msg_and_exit_code.obj: ../../src/non_gui/exit_with_msg_and_exit_code.c
-@AMDEP_TRUE@	source='../../src/non_gui/exit_with_msg_and_exit_code.c' object='exit_with_msg_and_exit_code.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@	depfile='$(DEPDIR)/exit_with_msg_and_exit_code.Po' tmpdepfile='$(DEPDIR)/exit_with_msg_and_exit_code.TPo' @AMDEPBACKSLASH@
-@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o exit_with_msg_and_exit_code.obj `cygpath -w ../../src/non_gui/exit_with_msg_and_exit_code.c`
 CCDEPMODE = @CCDEPMODE@
 uninstall-info-am:
 
