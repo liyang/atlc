@@ -13,7 +13,7 @@
 # checks for system services
 # AC_OUTPUT([file...])
 
-AC_INIT([atlc], [4.3.7], [drkirkby@ntlworld.com])
+AC_INIT([atlc], [4.3.8], [drkirkby@ntlworld.com])
 AM_INIT_AUTOMAKE
 AC_PREREQ([2.57])
 AC_CONFIG_SRCDIR([tools/src/myfilelength.c])
@@ -37,12 +37,12 @@ AC_ISC_POSIX
 AC_CHECK_LIB(m,log)
 
 # Checks for header files.
-
-AC_CHECK_HEADERS([stdio.h math.h malloc.h stdlib.h string.h time.h ])
+AC_HEADER_STDC
+AC_CHECK_HEADERS([stdio.h math.h malloc.h stdlib.h string.h time.h limits.h ])
 AC_CHECK_HEADERS([strings.h sys/types.h machine/hal_sysinfo.h sys/sysinfo.h ])
 AC_CHECK_HEADERS([sys/processor.h sched.h sys/param.h sys/pstat.h sys/unistd.h ])
 AC_CHECK_HEADERS([ sys/utsname.h sys/systeminfo.h unistd.h aixfont.h ])
-AC_CHECK_HEADERS([ linux/ip.h  ])
+AC_CHECK_HEADERS([ linux/ip.h errno.h ])
 
 # Checks for typedefs
 AC_HEADER_STDBOOL
@@ -132,6 +132,8 @@ if test "x$with_threads" = "xyes"; then
   AC_CHECK_FUNC([pthread_setconcurrency],AC_DEFINE([HAVE_PTHREAD_SETCONCURRENCY]))
   AC_SUBST(built_with_posix_threads,yes)
 fi
+AC_CHECK_DECL(_SC_PHYS_PAGES,,)
+AC_CHECK_DECL(_SC_PAGESIZE,,)
 
 # MPI and MPE Support
 #AC_ARG_WITH(mpi, AC_HELP_STRING([--with-mpi=[mpi_install_prefix]],[support MPI-based parallel computation (needs MPICH installed)]))
