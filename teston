@@ -36,6 +36,7 @@ echo rm -rf $2 > remote-test
 echo rm  -f $2.tar  >> remote-test
 echo gzip -d $2.tar.gz >> remote-test
 echo tar xf $2.tar >> remote-test
+echo rm -rf build-directory >> remote-test
 echo mkdir build-directory >> remote-test
 echo cd build-directory >> remote-test
 echo ../$2/configure   >> remote-test
