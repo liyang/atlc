@@ -1,7 +1,22 @@
 ****** Version 4.5.0 Released 13th September 2003 ****
+
 NEWS
 mention lattest news - mainly correction of a few errors
 and the fact its no longer necessary to link in gsl. 
+
+remoterun 
+changed, as the old version was accidently deleted and 
+I could not be bothered to read from tape. Might not be
+100% okay, but it is not needed for use of atlc - only
+during testing. 
+
+'update' added to CVS tree
+Added a file called 'update' that generates docs/html-docs/*.1.html
+and docs/html-docs/BUGS.html This uses header and footer for the 
+generation of docs/html-docs/BUGS.html
+
+'header' and 'footer'' added to CVS tree
+used with 'update' to generate docs/html-docs/BUGS.html
 
 README.checks
 Removed, as information is out of date. 
@@ -19,6 +34,9 @@ as they are not needed.
 man/man1/create_bmp_for_stripline_coupler.1
 changed email address to make it less easy for spammers to grab. 
 
+man/man1/man-pages.html 
+Added a new man page for design_coupler.1.html
+
 src/calculate_Zodd_and_Zeven.c:
 Added #include gsl_types.h and #include "gsl_definitions.h"
 
@@ -27,7 +45,7 @@ made it print the fact the -v option computes the
 theoeretical impedance. Before the binary did it, but
 the usage message did not say so. 
 
-docs/html-docs/jpgs/home-email.gif
+docs/html-docs/jpgs/home-email.jpg 
 Added new file with my email address, that is not easy to 
 read automatically. 
 
@@ -99,6 +117,7 @@ src/non_gui/definitions.h
 Added quite a few function definitions, #defines etc to allow
 the gsl_sf_ellint_Kcomp function to work. It needed several
 other functions added. 
+
 
 ****** Version 4.4.4 Released 13th September 2003 ****
 configure.ac
