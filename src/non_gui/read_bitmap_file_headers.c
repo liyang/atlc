@@ -87,11 +87,12 @@ even if sizeof(short)=8 and sizeof(int)=8. See below for that. */
 
    Bitmap_File_Head.zzMagic[0x0] = bmp_buff[0];
    Bitmap_File_Head.zzMagic[0x1] = bmp_buff[1];
-   Bitmap_File_Head.bfSize = bmp_buff[0x2] + (bmp_buff[3] + (bmp_buff[4] + (bmp_buff[5] << 8) << 8) <<8);
+   //Bitmap_File_Head.bfSize = bmp_buff[0x2] + (bmp_buff[3] + (bmp_buff[4] + (bmp_buff[5] << 8) << 8) <<8);
+   Bitmap_File_Head.bfSize = bmp_buff[0x2] + ((bmp_buff[3] + ((bmp_buff[4] + (bmp_buff[5] << 8)) << 8)) <<8);
    Bitmap_File_Head.zzHotX = bmp_buff[0x6] + (bmp_buff[7] << 8);
    Bitmap_File_Head.zzHotY = bmp_buff[0x8] + (bmp_buff[0x09] << 8);
-   Bitmap_File_Head.bfOffs = bmp_buff[0x0a] + (bmp_buff[0xb] + (bmp_buff[0xc] + (bmp_buff[0x0d] << 8) << 8) <<8);
-   Bitmap_File_Head.biSize = bmp_buff[0x0E] + (bmp_buff[0x0f] + (bmp_buff[0x10] + (bmp_buff[0x11] << 8) << 8) <<8);
+   Bitmap_File_Head.bfOffs = bmp_buff[0x0a] + ((bmp_buff[0xb] + ((bmp_buff[0xc] + (bmp_buff[0x0d] << 8)) << 8)) <<8);
+   Bitmap_File_Head.biSize = bmp_buff[0x0E] + ((bmp_buff[0x0f] + ((bmp_buff[0x10] + (bmp_buff[0x11] << 8)) << 8)) <<8);
 #ifdef DEBUG
    printf("Bitmap_File_Head.bfSize = %d \n",Bitmap_File_Head.bfSize);
    printf("Bitmap_File_Head.zzHotX = %d\n",Bitmap_File_Head.zzHotX);
@@ -100,16 +101,16 @@ even if sizeof(short)=8 and sizeof(int)=8. See below for that. */
    printf("Bitmap_File_Head.biSize = %d\n\n",Bitmap_File_Head.biSize); 
 #endif
 
-   Bitmap_Head.biWidth=bmp_buff[0x12] + (bmp_buff[0x13] + (bmp_buff[0x14] + (bmp_buff[0x15] << 8) << 8) <<8);
-   Bitmap_Head.biHeight=bmp_buff[0x16] + (bmp_buff[0x17] + (bmp_buff[0x18] + (bmp_buff[0x19] << 8) << 8) <<8);
+   Bitmap_Head.biWidth=bmp_buff[0x12] + ((bmp_buff[0x13] + ((bmp_buff[0x14] + (bmp_buff[0x15] << 8)) << 8)) <<8);
+   Bitmap_Head.biHeight=bmp_buff[0x16] + ((bmp_buff[0x17] + ((bmp_buff[0x18] + (bmp_buff[0x19] << 8)) << 8)) <<8);
    Bitmap_Head.biPlanes = bmp_buff[0x1A] + (bmp_buff[0x1b] << 8);
    Bitmap_Head.biBitCnt = bmp_buff[0x1C] + (bmp_buff[0x1d] << 8);
-   Bitmap_Head.biCompr= bmp_buff[0x1E] + (bmp_buff[0x1f] + (bmp_buff[0x20] + (bmp_buff[0x21] << 8) << 8) <<8);
-   Bitmap_Head.biSizeIm=bmp_buff[0x22] + (bmp_buff[0x23] + (bmp_buff[0x24] + (bmp_buff[0x25] << 8) << 8) <<8);
-   Bitmap_Head.biXPels  = bmp_buff[0x26] + (bmp_buff[0x27] + (bmp_buff[0x28] + (bmp_buff[0x29] << 8) << 8) <<8);
-   Bitmap_Head.biYPels= bmp_buff[0x2A] + (bmp_buff[0x2b] + (bmp_buff[0x2c] + (bmp_buff[0x2d] << 8) << 8) <<8);
-   Bitmap_Head.biClrUsed = bmp_buff[0x2E] + (bmp_buff[0x2f] + (bmp_buff[0x30] + (bmp_buff[0x31] << 8) << 8) <<8);
-   Bitmap_Head.biClrImp  = bmp_buff[0x32] + (bmp_buff[0x33] + (bmp_buff[0x34] + (bmp_buff[0x35] << 8) << 8) <<8);
+   Bitmap_Head.biCompr= bmp_buff[0x1E] + ((bmp_buff[0x1f] + ((bmp_buff[0x20] + (bmp_buff[0x21] << 8)) << 8)) <<8);
+   Bitmap_Head.biSizeIm=bmp_buff[0x22] + ((bmp_buff[0x23] + ((bmp_buff[0x24] + (bmp_buff[0x25] << 8)) << 8)) <<8);
+   Bitmap_Head.biXPels  = bmp_buff[0x26] + ((bmp_buff[0x27] + ((bmp_buff[0x28] + (bmp_buff[0x29] << 8)) << 8)) <<8);
+   Bitmap_Head.biYPels= bmp_buff[0x2A] + ((bmp_buff[0x2b] + ((bmp_buff[0x2c] + (bmp_buff[0x2d] << 8)) << 8)) <<8);
+   Bitmap_Head.biClrUsed = bmp_buff[0x2E] + ((bmp_buff[0x2f] + ((bmp_buff[0x30] + (bmp_buff[0x31] << 8)) << 8)) <<8);
+   Bitmap_Head.biClrImp  = bmp_buff[0x32] + ((bmp_buff[0x33] + ((bmp_buff[0x34] + (bmp_buff[0x35] << 8)) << 8)) <<8);
 
    Maps=4;
    if(Bitmap_Head.biBitCnt!=24)
