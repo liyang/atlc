@@ -64,34 +64,6 @@ AC_CHECK_FUNCS([ cpu_get_max pstat pstat_getdynamic pstat_getprocessor uname sys
 AC_CHECK_FUNCS([ cpusetcreate cpucountset cpu_get_num sysctl ])
 
 # checks for system services
-
-# Check if the user wants a GUI. If so makes sure GTK and wxWindows are around.
-# The macro is in the file gtk.m4 in the 'm4' subdirectory.
-
-#AC_ARG_WITH(gui, AC_HELP_STRING([--with-gui=[no]],[Add a GUI (needs GTK >= 1.2.7 installed) but the GUI does not work!! ]))
-#AC_PROG_CXX # Test for C++ compiler characteristics
-#if test "x$with_gui" = "xyes"; then
-#        AC_PATH_GTK(1.2.7, GTK127=1)
-#        if test "$GTK127" != 1; then
-#            AC_MSG_ERROR([
-#                Please check that gtk-config is in path, the directory
-#                where GTK+ libraries are installed (returned by
-#                'gtk-config --libs' command) is in LD_LIBRARY_PATH or
-#                equivalent variable and GTK+ is version 1.2.7 or above.
-#            ])
-#        fi
-#	AC_CHECK_PROG(WXWINDOWS,wx-config, 1, 0)   
-#       if test "$WXWINDOWS" != 1; then
-#            AC_MSG_ERROR([
-#	       wxWindows must be installed to use the GUI version of atlc
-#        ])
-#        fi
-#        AC_SUBST(EXTRA_WXWINDOWS_LIBS,`wx-config --libs`)
-#        AC_SUBST(EXTRA_WXWINDOWS_CFLAGS,`wx-config --cflags`)
-#        AC_SUBST(GUI_DIRECTORY,gui)
-#fi
-
-
 #AC_ARG_ENABLE(debug, AC_HELP_STRING([--enable-debug],[ with debugging code]), AC_DEFINE([DEBUG],[1]))
 AC_ARG_ENABLE(debug, AC_HELP_STRING([--enable-debug],[ with debugging code]), AC_DEFINE([DEBUG],[1],[with debugging code]))
 AC_ARG_ENABLE(hardware-info, AC_HELP_STRING([--disable-hardware-info],[ Find out information about hardware (Disable if compilation fails during 'make check')]), [1],AC_DEFINE([TRY_TO_GET_HARDWARE_INFO],[1],[try to get hardware information]))
